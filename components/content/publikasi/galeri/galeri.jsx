@@ -15,7 +15,7 @@ import ButtonAction from '../../../ButtonAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
 
-const Artikel = () => {
+const Galeri = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -63,11 +63,11 @@ const Artikel = () => {
             <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen Artikel</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Managemen Vidio</h3>
                         <div className="card-toolbar">
-                            <Link href='/publikasi/artikel/tambah'>
+                            <Link href='/publikasi/vidio/tambah'>
                                 <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
-                                    Tambah Artikel
+                                    Tambah Vidio
                                 </a>
                             </Link>
                         </div>
@@ -200,4 +200,4 @@ const Artikel = () => {
     )
 }
 
-export default Artikel
+export default Galeri

@@ -1,8 +1,10 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from "next/router";
 
 const Sidebar = () => {
+    const router = useRouter();
     return (
         <>
             {/* <!--begin::Aside--> */}
@@ -50,7 +52,7 @@ const Sidebar = () => {
                                                 <span className="menu-text">Dashboard</span>
                                             </span>
                                         </li>
-                                        <li className="menu-item" aria-haspopup="true">
+                                        <li className="menu-item menu-item-active" aria-haspopup="true">
                                             <a className="menu-link">
                                                 <span className="menu-text">Pelatihan</span>
                                             </a>
@@ -116,55 +118,69 @@ const Sidebar = () => {
                                 <div className="menu-submenu">
                                     <i className="menu-arrow"></i>
                                     <ul className="menu-subnav">
-                                        <li className="menu-item menu-item-parent" aria-haspopup="true">
+                                        <li className={router.pathname == "/publikasi" ? "menu-item menu-item-parent menu-item-active" : "menu-item menu-item-parent"} aria-haspopup="true">
                                             <span className="menu-link">
                                                 <span className="menu-text">Publikasi</span>
                                             </span>
                                         </li>
-                                        <li className="menu-item" aria-haspopup="true">
+                                        <li className={router.pathname == "/publikasi/artikel" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
                                             <Link href='/publikasi/artikel'>
                                                 <a className="menu-link">
                                                     <span className="menu-text">Artikel</span>
                                                 </a>
                                             </Link>
                                         </li>
-                                        <li className="menu-item" aria-haspopup="true">
-                                            <a className="menu-link">
-                                                <span className="menu-text">Artikel Peserta</span>
-                                            </a>
+                                        <li className={router.pathname == "/publikasi/artikel-peserta" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
+                                            <Link href='/publikasi/artikel-peserta'>
+                                                <a className="menu-link">
+                                                    <span className="menu-text">Artikel Peserta</span>
+                                                </a>
+                                            </Link>
                                         </li>
-                                        <li className="menu-item" aria-haspopup="true">
-                                            <a className="menu-link">
-                                                <span className="menu-text">Berita</span>
-                                            </a>
+                                        <li className={router.pathname == "/publikasi/artikel-berita" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
+                                            <Link href='/publikasi/berita'>
+                                                <a className="menu-link">
+                                                    <span className="menu-text">Berita</span>
+                                                </a>
+                                            </Link>
                                         </li>
-                                        <li className="menu-item" aria-haspopup="true">
-                                            <a className="menu-link">
-                                                <span className="menu-text">Vidio</span>
-                                            </a>
+                                        <li className={router.pathname == "/publikasi/vidio" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
+                                            <Link href='/publikasi/vidio'>
+                                                <a className="menu-link">
+                                                    <span className="menu-text">Vidio</span>
+                                                </a>
+                                            </Link>
                                         </li>
-                                        <li className="menu-item" aria-haspopup="true">
-                                            <a className="menu-link">
-                                                <span className="menu-text">Galeri</span>
-                                            </a>
-                                        </li>
-
-                                        <li className="menu-item" aria-haspopup="true">
-                                            <a className="menu-link">
-                                                <span className="menu-text">Kategori</span>
-                                            </a>
-                                        </li>
-
-                                        <li className="menu-item" aria-haspopup="true">
-                                            <a className="menu-link">
-                                                <span className="menu-text">FAQ</span>
-                                            </a>
+                                        <li className={router.pathname == "/publikasi/galeri" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
+                                            <Link href='/publikasi/galeri'>
+                                                <a className="menu-link">
+                                                    <span className="menu-text">Galeri</span>
+                                                </a>
+                                            </Link>
                                         </li>
 
-                                        <li className="menu-item" aria-haspopup="true">
-                                            <a className="menu-link">
-                                                <span className="menu-text">Imagetron</span>
-                                            </a>
+                                        <li className={router.pathname == "/publikasi/kategori" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
+                                            <Link href='/publikasi/kategori'>
+                                                <a className="menu-link">
+                                                    <span className="menu-text">Kategori</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+
+                                        <li className={router.pathname == "/publikasi/faq" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
+                                            <Link href='/publikasi/faq'>
+                                                <a className="menu-link">
+                                                    <span className="menu-text">FAQ</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+
+                                        <li className={router.pathname == "/publikasi/imagetron" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
+                                            <Link href='/publikasi/imagetron'>
+                                                <a className="menu-link">
+                                                    <span className="menu-text">Imagetron</span>
+                                                </a>
+                                            </Link>
                                         </li>
 
                                     </ul>

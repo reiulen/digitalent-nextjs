@@ -137,7 +137,7 @@ const TambahArtikel = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Thumbnail</label>
                                 <div className="col-sm-2">
-                                    <figure className='avatar item-rtl'>
+                                    <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
                                         <Image
                                             src={gambarPreview}
                                             alt='image'
@@ -203,6 +203,30 @@ const TambahArtikel = () => {
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <div className="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLongTitle">Image Preview</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body text-center" style={{ height: '400px' }}>
+                            <Image
+                                src={gambarPreview}
+                                alt='image'
+                                layout='fill'
+                                objectFit='cover'
+                            />
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
                     </div>
                 </div>
             </div>

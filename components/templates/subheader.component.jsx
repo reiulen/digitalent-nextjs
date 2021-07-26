@@ -1,6 +1,34 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+
+const convertBreadcrumb = string => {
+    return string
+        .charAt(0)
+        .toUpperCase() + string.slice(1);
+};
 
 const SubHeader = () => {
+    const router = useRouter();
+    const [breadcrumbs, setBreadcrumbs] = useState(null);
+
+    useEffect(() => {
+        if (router) {
+            const linkPath = router.asPath.split('/');
+            linkPath.shift();
+
+            const pathArray = linkPath.map((path, i) => {
+                return { breadcrumb: path, href: '/' + linkPath.slice(0, i + 1).join('/') };
+            });
+
+            setBreadcrumbs(pathArray);
+        }
+    }, [router]);
+
+    if (!breadcrumbs) {
+        return null;
+    }
+
     return (
         <>
             {/* <!--begin::Subheader--> */}
@@ -9,8 +37,18 @@ const SubHeader = () => {
                     {/* <!--begin::Info--> */}
                     <div className="d-flex align-items-center flex-wrap mr-2">
                         {/* <!--begin::Page Title--> */}
-                        <h5 className="text-dark font-weight-bold mt-2 mb-2 mr-5">Dashboard Publikasi</h5>
                         {/* // <!--end::Page Title--> */}
+                        {breadcrumbs.map((breadcrumb, i) => {
+                            return (
+                                <Link href={breadcrumb.href}>
+                                    <a>
+                                        <h5 className="text-default mt-2 mb-2">
+                                            {convertBreadcrumb(breadcrumb.breadcrumb)} /
+                                        </h5>
+                                    </a>
+                                </Link>
+                            );
+                        })}
 
                     </div>
                     {/* // <!--end::Info--> */}

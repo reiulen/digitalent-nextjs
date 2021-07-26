@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Script from 'next/script'
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -30,17 +31,13 @@ class MyDocument extends Document {
 
                     {/* <!--end::Layout Themes--> */}
                     <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+
                 </Head>
                 <body className='header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading'>
                     <Main />
                     <NextScript />
-                    {/* <!--begin::Global Config(global config for global JS scripts)--> */}
-                    {/* <!--end::Global Config--> */}
-                    {/* <!--begin::Global Theme Bundle(used by all pages)--> */}
                     <script src="/assets/plugins/global/plugins.bundle.js"></script>
                     <script src="/assets/js/scripts.bundle.js"></script>
-                    {/* <!--end::Global Theme Bundle--> */}
-
                 </body>
             </Html>
         )

@@ -26,6 +26,7 @@ export const allArtikelReducer = (state = { artikel: [] }, action) => {
 
         case ARTIKEL_FAIL:
             return {
+                loading: false,
                 error: action.payload
             }
 

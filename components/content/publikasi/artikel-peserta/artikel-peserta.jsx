@@ -15,7 +15,7 @@ import ButtonAction from '../../../ButtonAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
 
-const Artikel = () => {
+const ArtikelPeserta = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -53,8 +53,6 @@ const Artikel = () => {
             <div className="col-lg-12 col-md-3">
                 <div className="row">
                     <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Artikel' title='Total Publish' />
-                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Artikel' title='Total Author' />
-                    <CardPage background='bg-light-success' icon='orang-tambah-green.svg' color='#74BBB7' value='64' titleValue='K' title='Total Yang Baca' />
                     <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Artikel' title='Total Unpublish' />
                 </div>
             </div>
@@ -64,13 +62,6 @@ const Artikel = () => {
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Managemen Artikel</h3>
-                        <div className="card-toolbar">
-                            <Link href='/publikasi/artikel/tambah'>
-                                <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
-                                    Tambah Artikel
-                                </a>
-                            </Link>
-                        </div>
                     </div>
 
                     <div className="card-body pt-0">
@@ -200,4 +191,4 @@ const Artikel = () => {
     )
 }
 
-export default Artikel
+export default ArtikelPeserta
