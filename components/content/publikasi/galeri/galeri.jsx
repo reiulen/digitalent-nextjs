@@ -63,11 +63,11 @@ const Galeri = () => {
             <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen Vidio</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Managemen Galeri</h3>
                         <div className="card-toolbar">
-                            <Link href='/publikasi/vidio/tambah'>
+                            <Link href='/publikasi/galeri/tambah'>
                                 <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
-                                    Tambah Vidio
+                                    Tambah Galeri
                                 </a>
                             </Link>
                         </div>

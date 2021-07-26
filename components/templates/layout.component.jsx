@@ -27,7 +27,7 @@ const Layout = ({ children, title = 'Dashboard' }) => {
                         <SubHeader />
                         {children}
                     </ContentWrapper>
-                    <Footer />
+                    {/* <Footer /> */}
                 </div>
             </div >
 

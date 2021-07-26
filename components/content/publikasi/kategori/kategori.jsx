@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import Pagination from 'react-js-pagination';
@@ -9,7 +8,6 @@ import { css } from '@emotion/react'
 import BeatLoader from 'react-spinners/BeatLoader'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
-import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -50,16 +48,6 @@ const Kategori = () => {
                 : ''
             }
 
-            <div className="col-lg-12 col-md-3">
-                <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Artikel' title='Total Publish' />
-                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Artikel' title='Total Author' />
-                    <CardPage background='bg-light-success' icon='orang-tambah-green.svg' color='#74BBB7' value='64' titleValue='K' title='Total Yang Baca' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Artikel' title='Total Unpublish' />
-                </div>
-            </div>
-
-
             <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
@@ -88,19 +76,13 @@ const Kategori = () => {
                             </div>
                             <div className="row align-items-right">
                                 <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                                    <input type="date" className="form-control form-control-sm form-search-date" />
+                                    <input type="text" className="form-control form-control-sm form-search-date" />
                                     <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
-                                </div>
-                                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                                    <input type="date" className="form-control form-control-sm form-search-date" />
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
+                                        Jenis Kategori
                                     </small>
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block">Cari</a>
+                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block">Filter</a>
                                 </div>
                             </div>
                         </div>
@@ -116,13 +98,8 @@ const Kategori = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
-                                                <th className='text-center'>Thumbnail</th>
-                                                <th>Kategori</th>
+                                                <th className='text-center'>Kategori</th>
                                                 <th>Judul</th>
-                                                <th>Tanggal Membuat</th>
-                                                <th>Dibuat</th>
-                                                <th>Status</th>
-                                                <th>Role</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -132,15 +109,8 @@ const Kategori = () => {
                                                     '' :
                                                     artikel && artikel.map((artikel) => {
                                                         return <tr key={artikel.id}>
-                                                            <td className='text-center'>
-                                                                <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
-                                                            </td>
-                                                            <td className='align-middle'>{artikel.kategori_id}</td>
+                                                            <td className='align-middle text-center'>{artikel.kategori_id}</td>
                                                             <td className='align-middle'>{artikel.judul_artikel}</td>
-                                                            <td className='align-middle'>{artikel.created_at}</td>
-                                                            <td className='align-middle'>{artikel.users_id}</td>
-                                                            <td className='align-middle'>{artikel.publish}</td>
-                                                            <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
                                                                 <ButtonAction icon='write.svg' />
