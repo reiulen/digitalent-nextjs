@@ -1,0 +1,35 @@
+{
+  "name": "dts-fe",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^29.0.0",
+    "@ckeditor/ckeditor5-react": "^3.0.2",
+    "@ckeditor/ckeditor5-upload": "^29.0.0",
+    "@emotion/react": "^11.4.0",
+    "axios": "^0.21.1",
+    "bootstrap-switch-button-react": "^1.2.0",
+    "next": "11.0.1",
+    "next-redux-wrapper": "^7.0.2",
+    "nextjs-breadcrumbs": "^1.1.4",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-dropzone": "^11.3.4",
+    "react-js-pagination": "^3.0.3",
+    "react-redux": "^7.2.4",
+    "react-spinners": "^0.11.0",
+    "redux": "^4.1.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "eslint": "7.31.0",
+    "eslint-config-next": "11.0.1"
+  }
+}
