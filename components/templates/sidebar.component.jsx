@@ -58,9 +58,11 @@ const Sidebar = () => {
                                             </a>
                                         </li>
                                         <li className="menu-item" aria-haspopup="true">
-                                            <a className="menu-link">
-                                                <span className="menu-text">Publikasi</span>
-                                            </a>
+                                            <Link href='/'>
+                                                <a className="menu-link">
+                                                    <span className="menu-text">Publikasi</span>
+                                                </a>
+                                            </Link>
                                         </li>
                                         <li className="menu-item" aria-haspopup="true">
                                             <a className="menu-link">
@@ -181,6 +183,39 @@ const Sidebar = () => {
                                                     <span className="menu-text">Imagetron</span>
                                                 </a>
                                             </Link>
+                                        </li>
+
+                                        <li class="menu-item menu-item-submenu" aria-haspopup="true"
+                                            data-menu-toggle="hover">
+                                            <a href="javascript:;" class="menu-link menu-toggle">
+                                                <span class="menu-text">Managemen Admin</span>
+                                                <i class="menu-arrow"></i>
+                                            </a>
+                                            <div class="menu-submenu">
+                                                <i class="menu-arrow"></i>
+                                                <ul class="menu-subnav">
+                                                    <li class="menu-item" aria-haspopup="true">
+                                                        <Link href='/publikasi/managemen-admin/role'>
+                                                            <a class="menu-link">
+                                                                {/* <i class="menu-bullet menu-bullet-dot">
+                                                                <span></span>
+                                                            </i> */}
+                                                                <span class="menu-text">List Role</span>
+                                                            </a>
+                                                        </Link>
+                                                    </li>
+                                                    <li class="menu-item" aria-haspopup="true">
+                                                        <Link href='/publikasi/managemen-admin/admin'>
+                                                            <a class="menu-link">
+                                                                {/* <i class="menu-bullet menu-bullet-dot">
+                                                                <span></span>
+                                                            </i> */}
+                                                                <span class="menu-text">List Admin</span>
+                                                            </a>
+                                                        </Link>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </li>
 
                                     </ul>

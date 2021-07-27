@@ -32,12 +32,13 @@ class MyDocument extends Document {
                     {/* <!--end::Layout Themes--> */}
                     <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
 
+                    <script type="text/javascript" src="/assets/plugins/global/plugins.bundle.js"></script>
+                    <script type="text/javascript" src="/assets/js/scripts.bundle.js"></script>
                 </Head>
                 <body className='header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading'>
                     <Main />
                     <NextScript />
-                    <script src="/assets/plugins/global/plugins.bundle.js"></script>
-                    <script src="/assets/js/scripts.bundle.js"></script>
+
                 </body>
             </Html>
         )
