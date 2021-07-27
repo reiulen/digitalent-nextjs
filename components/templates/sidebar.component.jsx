@@ -13,6 +13,7 @@ const Sidebar = () => {
     const [menuItem5, setMenuItem5] = useState('')
     const [menuItem6, setMenuItem6] = useState('')
     const [menuItem7, setMenuItem7] = useState('')
+    const [menuItemS, setMenuItemS] = useState('')
 
     const onSetMenuItem1 = () => {
         if (menuItem1 !== '') {
@@ -67,6 +68,14 @@ const Sidebar = () => {
             setMenuItem7('')
         } else {
             setMenuItem7('menu-item-open')
+        }
+    }
+
+    const onSetMenuItemS = () => {
+        if (menuItemS !== '') {
+            setMenuItemS('')
+        } else {
+            setMenuItemS('menu-item-open')
         }
     }
 
@@ -174,8 +183,8 @@ const Sidebar = () => {
                                 </div>
                             </li>
 
-                            <li className={`menu-item menu-item-submenu ${menuItem3}`} onClick={onSetMenuItem3} aria-haspopup="true" data-menu-toggle="hover">
-                                <a href="javascript:;" className="menu-link menu-toggle">
+                            <li className={`menu-item menu-item-submenu ${menuItem3}`} aria-haspopup="true" data-menu-toggle="hover">
+                                <a href="javascript:;" onClick={onSetMenuItem3} className="menu-link menu-toggle">
                                     <span className="svg-icon menu-icon">
                                         <Image alt='icon-sidebar-picture' src='/assets/icon/picture.svg' width={24} height={24} />
                                     </span>
@@ -225,7 +234,6 @@ const Sidebar = () => {
                                                 </a>
                                             </Link>
                                         </li>
-
                                         <li className={router.pathname == "/publikasi/kategori" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
                                             <Link href='/publikasi/kategori'>
                                                 <a className="menu-link">
@@ -233,7 +241,6 @@ const Sidebar = () => {
                                                 </a>
                                             </Link>
                                         </li>
-
                                         <li className={router.pathname == "/publikasi/faq" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
                                             <Link href='/publikasi/faq'>
                                                 <a className="menu-link">
@@ -241,7 +248,6 @@ const Sidebar = () => {
                                                 </a>
                                             </Link>
                                         </li>
-
                                         <li className={router.pathname == "/publikasi/imagetron" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
                                             <Link href='/publikasi/imagetron'>
                                                 <a className="menu-link">
@@ -250,32 +256,32 @@ const Sidebar = () => {
                                             </Link>
                                         </li>
 
-                                        <li class="menu-item menu-item-submenu" aria-haspopup="true"
+                                        <li className={`menu-item menu-item-submenu ${menuItemS}`} aria-haspopup="true"
                                             data-menu-toggle="hover">
-                                            <a href="javascript:;" class="menu-link menu-toggle">
-                                                <span class="menu-text">Managemen Admin</span>
-                                                <i class="menu-arrow"></i>
+                                            <a href="javascript:;" className="menu-link menu-toggle" onClick={onSetMenuItemS}>
+                                                <span className="menu-text">Managemen Admin</span>
+                                                <i className="menu-arrow"></i>
                                             </a>
-                                            <div class="menu-submenu">
-                                                <i class="menu-arrow"></i>
-                                                <ul class="menu-subnav">
-                                                    <li class="menu-item" aria-haspopup="true">
+                                            <div className="menu-submenu">
+                                                <i className="menu-arrow"></i>
+                                                <ul className="menu-subnav">
+                                                    <li className="menu-item" aria-haspopup="true">
                                                         <Link href='/publikasi/managemen-admin/role'>
-                                                            <a class="menu-link">
-                                                                {/* <i class="menu-bullet menu-bullet-dot">
+                                                            <a className="menu-link">
+                                                                {/* <i className="menu-bullet menu-bullet-dot">
                                                                 <span></span>
                                                             </i> */}
-                                                                <span class="menu-text">List Role</span>
+                                                                <span className="menu-text">List Role</span>
                                                             </a>
                                                         </Link>
                                                     </li>
-                                                    <li class="menu-item" aria-haspopup="true">
+                                                    <li className="menu-item" aria-haspopup="true">
                                                         <Link href='/publikasi/managemen-admin/admin'>
-                                                            <a class="menu-link">
-                                                                {/* <i class="menu-bullet menu-bullet-dot">
+                                                            <a className="menu-link">
+                                                                {/* <i className="menu-bullet menu-bullet-dot">
                                                                 <span></span>
                                                             </i> */}
-                                                                <span class="menu-text">List Admin</span>
+                                                                <span className="menu-text">List Admin</span>
                                                             </a>
                                                         </Link>
                                                     </li>

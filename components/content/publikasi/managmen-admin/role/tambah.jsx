@@ -77,21 +77,21 @@ const TambahRole = () => {
                                     <div className="form-group row">
                                         <label htmlFor="staticEmail" className="col-sm-4 col-form-label">Artikel</label>
                                         <div className="col-sm-8">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Create, Read, Update, and Delete
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Publish
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     View
                                                 </label>
                                             </div>
@@ -102,21 +102,21 @@ const TambahRole = () => {
                                     <div className="form-group row">
                                         <label htmlFor="staticEmail" className="col-sm-4 col-form-label">Video</label>
                                         <div className="col-sm-8">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Create, Read, Update, and Delete
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Publish
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     View
                                                 </label>
                                             </div>
@@ -127,21 +127,21 @@ const TambahRole = () => {
                                     <div className="form-group row">
                                         <label htmlFor="staticEmail" className="col-sm-4 col-form-label">Beerita</label>
                                         <div className="col-sm-8">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Create, Read, Update, and Delete
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Publish
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     View
                                                 </label>
                                             </div>
@@ -152,21 +152,21 @@ const TambahRole = () => {
                                     <div className="form-group row">
                                         <label htmlFor="staticEmail" className="col-sm-4 col-form-label">FAQ</label>
                                         <div className="col-sm-8">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Create, Read, Update, and Delete
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Publish
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     View
                                                 </label>
                                             </div>
@@ -177,21 +177,21 @@ const TambahRole = () => {
                                     <div className="form-group row">
                                         <label htmlFor="staticEmail" className="col-sm-4 col-form-label">Galeri</label>
                                         <div className="col-sm-8">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Create, Read, Update, and Delete
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Publish
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     View
                                                 </label>
                                             </div>
@@ -202,21 +202,21 @@ const TambahRole = () => {
                                     <div className="form-group row">
                                         <label htmlFor="staticEmail" className="col-sm-4 col-form-label">Imagetron</label>
                                         <div className="col-sm-8">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Create, Read, Update, and Delete
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     Publish
                                                 </label>
                                             </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                                                <label class="form-check-label" for="defaultCheck1">
+                                            <div className="form-check">
+                                                <input className="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                                                <label className="form-check-label" htmlFor="defaultCheck1">
                                                     View
                                                 </label>
                                             </div>

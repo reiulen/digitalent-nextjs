@@ -6,8 +6,6 @@ import { useRouter } from 'next/router'
 import Pagination from 'react-js-pagination';
 import { css } from '@emotion/react'
 import BeatLoader from 'react-spinners/BeatLoader'
-import DatePicker from 'react-datepicker'
-import { addDays } from 'date-fns'
 
 import PageWrapper from '../../../../wrapper/page.wrapper'
 import ButtonAction from '../../../../ButtonAction'
@@ -21,8 +19,6 @@ const Admin = () => {
     const router = useRouter()
 
     const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
 
     let { page = 1 } = router.query
     page = Number(page)
