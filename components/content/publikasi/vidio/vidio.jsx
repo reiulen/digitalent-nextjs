@@ -15,14 +15,14 @@ import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { getAllVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 
 const Vidio = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
+    const { loading, error, video } = useSelector(state => state.allVideo)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -31,7 +31,7 @@ const Vidio = () => {
 
     useEffect(() => {
 
-        dispatch(getAllArtikel())
+        dispatch(getAllVideo())
 
     }, [dispatch])
 
@@ -151,9 +151,9 @@ const Vidio = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
+                                                video && video.video.length === 0 ?
                                                     '' :
-                                                    artikel && artikel.map((artikel) => {
+                                                    video && video.map((artikel) => {
                                                         return <tr key={artikel.id}>
                                                             <td className='text-center'>
                                                                 <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
@@ -170,7 +170,6 @@ const Vidio = () => {
                                                                 <ButtonAction icon='trash.svg' />
                                                             </td>
                                                         </tr>
-
                                                     })
                                             }
                                         </tbody>
@@ -179,7 +178,7 @@ const Vidio = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {video && video.perPage < video.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
@@ -196,7 +195,7 @@ const Vidio = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {video && video.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

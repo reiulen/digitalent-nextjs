@@ -8,6 +8,11 @@ import {
     NEW_ARTIKEL_RESET,
     NEW_ARTIKEL_FAIL,
 
+    DELETE_ARTIKEL_REQUEST,
+    DELETE_ARTIKEL_SUCCESS,
+    DELETE_ARTIKEL_RESET,
+    DELETE_ARTIKEL_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/artikel.type'
 
@@ -68,6 +73,26 @@ export const newArtikel = (artikelData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: NEW_ARTIKEL_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const deleteRoom = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DELETE_ARTIKEL_REQUEST })
+
+        const { data } = await axios.delete(process.env.END_POINT_API + `publikasi/api/artikel/${id}`)
+
+        dispatch({
+            type: DELETE_ARTIKEL_SUCCESS,
+            payload: data.success
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_ROOM_FAIL,
             payload: error.response.data.message
         })
     }

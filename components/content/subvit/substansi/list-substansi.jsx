@@ -7,31 +7,26 @@ import { useRouter } from 'next/router'
 import Pagination from 'react-js-pagination';
 import { css } from '@emotion/react'
 import BeatLoader from 'react-spinners/BeatLoader'
-import DatePicker from 'react-datepicker'
-import { addDays } from 'date-fns'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
-import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllFaq, clearErrors } from '../../../../redux/actions/publikasi/faq.actions'
+import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
 
-const Faq = () => {
+const ListSubstansi = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allFaq)
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
 
     let { page = 1 } = router.query
     page = Number(page)
 
     useEffect(() => {
 
-        dispatch(getAllFaq())
+        dispatch(getAllArtikel())
 
     }, [dispatch])
 
@@ -54,25 +49,12 @@ const Faq = () => {
                 : ''
             }
 
-            <div className="col-lg-12 col-md-3">
-                <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Artikel' title='Total Publish' />
-                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Artikel' title='Total Author' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Artikel' title='Total Unpublish' />
-                </div>
-            </div>
-
-
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen FAQ</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">List Test Substansi</h3>
                         <div className="card-toolbar">
-                            <Link href='/publikasi/faq/tambah'>
-                                <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
-                                    Tambah FAQ
-                                </a>
-                            </Link>
+
                         </div>
                     </div>
 
@@ -80,7 +62,7 @@ const Faq = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-12 col-xl-12">
+                                <div className="col-lg-6 col-xl-6">
                                     <div className="input-icon">
                                         <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" />
                                         <span>
@@ -88,41 +70,30 @@ const Faq = () => {
                                         </span>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
+
+                                <div className="col-lg-2 col-xl-2">
+                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
+                                        <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
+                                            <i className="flaticon-file-1"></i>
+                                            Clone Test
+                                        </a>
+                                    </Link>
                                 </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        maxDate={addDays(startDate, 20)}
-                                        dateFormat="dd/MM/yyyy"
-                                    />
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
+                                <div className="col-lg-2 col-xl-2">
+                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
+                                        <a className="btn btn-sm btn-light-warning px-6 font-weight-bold btn-block ">
+                                            <i className="flaticon2-paper"></i>
+                                            Tipe Soal
+                                        </a>
+                                    </Link>
                                 </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block">Cari</a>
+                                <div className="col-lg-2 col-xl-2">
+                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
+                                        <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                                            <i className="flaticon2-notepad"></i>
+                                            Tambah Soal
+                                        </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -138,11 +109,9 @@ const Faq = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
-                                                <th className='text-center'>Thumbnail</th>
-                                                <th>Kategori</th>
-                                                <th>Judul</th>
+                                                <th className='text-center'>Nama</th>
+                                                <th>Email</th>
                                                 <th>Tanggal Membuat</th>
-                                                <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 <th>Action</th>
@@ -154,17 +123,13 @@ const Faq = () => {
                                                     '' :
                                                     artikel && artikel.map((artikel) => {
                                                         return <tr key={artikel.id}>
-                                                            <td className='text-center'>
-                                                                <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
-                                                            </td>
-                                                            <td className='align-middle'>{artikel.kategori_id}</td>
+
+                                                            <td className='align-middle text-center'>{artikel.kategori_id}</td>
+                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
                                                             <td className='align-middle'>{artikel.judul_artikel}</td>
                                                             <td className='align-middle'>{artikel.created_at}</td>
-                                                            <td className='align-middle'>{artikel.users_id}</td>
-                                                            <td className='align-middle'>{artikel.publish}</td>
-                                                            <td className='align-middle'>Admin Publikasi</td>
+                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
                                                                 <ButtonAction icon='write.svg' />
                                                                 <ButtonAction icon='trash.svg' />
                                                             </td>
@@ -222,4 +187,4 @@ const Faq = () => {
     )
 }
 
-export default Faq
+export default ListSubstansi

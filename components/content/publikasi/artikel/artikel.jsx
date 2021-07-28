@@ -9,25 +9,50 @@ import { css } from '@emotion/react'
 import BeatLoader from 'react-spinners/BeatLoader'
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
+import Swal from 'sweetalert2'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { getAllArtikel, deleteRoom, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
 
 const Artikel = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
+    const { loading, error, artikel } = useSelector(state => state.allArtikel)
+    const { error: deleteError, isDeleted } = useSelector(state => state.deleteArtikel)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
     let { page = 1 } = router.query
     page = Number(page)
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Apakah anda yakin ?',
+            text: "Data ini tidak bisa dikembalikan !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya !',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            dispatch(deleteRoom(id))
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Berhasil ',
+                    'Data berhasil dihapus.',
+                    'success'
+                )
+            }
+            dispatch(getAllArtikel())
+        })
+    }
 
     useEffect(() => {
 
@@ -35,10 +60,7 @@ const Artikel = () => {
 
     }, [dispatch])
 
-    const override = css`
-        margin: 0 auto;
-    `;
-
+    const override = css`margin: 0 auto;`;
     return (
         <PageWrapper>
             {error ?
@@ -151,9 +173,9 @@ const Artikel = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
+                                                artikel && artikel.artikel.length === 0 ?
                                                     '' :
-                                                    artikel && artikel.map((artikel) => {
+                                                    artikel.artikel && artikel.artikel.map((artikel) => {
                                                         return <tr key={artikel.id}>
                                                             <td className='text-center'>
                                                                 <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
@@ -167,7 +189,9 @@ const Artikel = () => {
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
                                                                 <ButtonAction icon='write.svg' />
-                                                                <ButtonAction icon='trash.svg' />
+                                                                <button onClick={() => handleDelete(artikel.id)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
+                                                                    <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
+                                                                </button>
                                                             </td>
                                                         </tr>
 
@@ -179,12 +203,12 @@ const Artikel = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {artikel && artikel.perPage < artikel.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={artikel.perPage}
+                                            totalItemsCount={artikel.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -196,7 +220,7 @@ const Artikel = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {artikel && artikel.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

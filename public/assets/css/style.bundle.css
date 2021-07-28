@@ -81765,7 +81765,7 @@ body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown):not(.sweetalert
   padding-right: 0 !important;
 }
 
-.swal2-popup {
+/* .swal2-popup {
   padding: 2rem;
   border-radius: 0.42rem;
 }
@@ -81838,7 +81838,7 @@ body.swal2-height-auto {
 .swal2-icon.swal2-question {
   border-color: #3699FF;
   color: #3699FF;
-}
+} */
 
 .tagify {
   border-radius: 0.42rem;

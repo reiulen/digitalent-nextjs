@@ -15,14 +15,14 @@ import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { getAllBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 
 const Berita = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
+    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allBerita)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -32,7 +32,7 @@ const Berita = () => {
 
     useEffect(() => {
 
-        dispatch(getAllArtikel())
+        dispatch(getAllBerita())
 
     }, [dispatch])
 

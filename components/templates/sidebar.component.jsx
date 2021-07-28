@@ -149,9 +149,11 @@ const Sidebar = () => {
                                             </a>
                                         </li>
                                         <li className="menu-item" aria-haspopup="true">
-                                            <a className="menu-link">
-                                                <span className="menu-text">Subvit</span>
-                                            </a>
+                                            <Link href='/subvit'>
+                                                <a className="menu-link">
+                                                    <span className="menu-text">Subvit</span>
+                                                </a>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
@@ -362,8 +364,22 @@ const Sidebar = () => {
                                             </span>
                                         </li>
                                         <li className="menu-item" aria-haspopup="true">
+                                            <Link href='/subvit/substansi'>
+                                                <a className="menu-link">
+                                                    <span className="menu-text">Tes Substansi</span>
+                                                </a>
+                                            </Link>
+                                        </li>
+
+                                        <li className="menu-item" aria-haspopup="true">
                                             <a className="menu-link">
-                                                <span className="menu-text">Sample Link</span>
+                                                <span className="menu-text">Survey</span>
+                                            </a>
+                                        </li>
+
+                                        <li className="menu-item" aria-haspopup="true">
+                                            <a className="menu-link">
+                                                <span className="menu-text">TRIVIA</span>
                                             </a>
                                         </li>
 
