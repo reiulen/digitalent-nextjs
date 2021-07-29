@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -7,27 +7,32 @@ import { useRouter } from 'next/router'
 import Pagination from 'react-js-pagination';
 import { css } from '@emotion/react'
 import BeatLoader from 'react-spinners/BeatLoader'
+import DatePicker from 'react-datepicker'
+import { addDays } from 'date-fns'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { getAllBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 
 const Berita = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
+    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allBerita)
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+
 
     let { page = 1 } = router.query
     page = Number(page)
 
     useEffect(() => {
 
-        dispatch(getAllArtikel())
+        dispatch(getAllBerita())
 
     }, [dispatch])
 
@@ -60,7 +65,7 @@ const Berita = () => {
             </div>
 
 
-            <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+            <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Managemen Berita</h3>
@@ -87,14 +92,33 @@ const Berita = () => {
                                 </div>
                             </div>
                             <div className="row align-items-right">
-                                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                                    <input type="date" className="form-control form-control-sm form-search-date" />
+                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                    <DatePicker
+                                        className="form-search-date form-control-sm form-control"
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        selectsStart
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        dateFormat="dd/MM/yyyy"
+                                    // minDate={addDays(new Date(), 20)}
+                                    />
                                     <small className="form-text text-muted">
                                         Dari Tanggal
                                     </small>
                                 </div>
-                                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                                    <input type="date" className="form-control form-control-sm form-search-date" />
+                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                    <DatePicker
+                                        className="form-search-date form-control-sm form-control"
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        selectsEnd
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        minDate={startDate}
+                                        maxDate={addDays(startDate, 20)}
+                                        dateFormat="dd/MM/yyyy"
+                                    />
                                     <small className="form-text text-muted">
                                         Sampai Tanggal
                                     </small>

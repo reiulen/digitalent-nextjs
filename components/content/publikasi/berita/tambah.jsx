@@ -147,10 +147,10 @@ const TambahBerita = () => {
                                     </figure>
                                 </div>
                                 <div className="col-sm-8">
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name='gambar' class="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
-                                            <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                                    <div className="input-group">
+                                        <div className="custom-file">
+                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
+                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
                                         </div>
                                     </div>
                                 </div>
@@ -207,7 +207,7 @@ const TambahBerita = () => {
                 </div>
             </div>
 
-            <div className="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">

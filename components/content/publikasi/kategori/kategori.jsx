@@ -11,21 +11,21 @@ import PageWrapper from '../../../wrapper/page.wrapper'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { getAllKategori, clearErrors } from '../../../../redux/actions/publikasi/kategori.actions'
 
 const Kategori = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
+    const { loading, error, kategori } = useSelector(state => state.allKategori)
 
     let { page = 1 } = router.query
     page = Number(page)
 
     useEffect(() => {
 
-        dispatch(getAllArtikel())
+        dispatch(getAllKategori())
 
     }, [dispatch])
 
@@ -48,7 +48,7 @@ const Kategori = () => {
                 : ''
             }
 
-            <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+            <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Managemen Kategori</h3>
@@ -105,12 +105,12 @@ const Kategori = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
+                                                kategori && kategori.length === 0 ?
                                                     '' :
-                                                    artikel && artikel.map((artikel) => {
-                                                        return <tr key={artikel.id}>
-                                                            <td className='align-middle text-center'>{artikel.kategori_id}</td>
-                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
+                                                    kategori && kategori.map((row) => {
+                                                        return <tr key={row.id}>
+                                                            <td className='align-middle text-center'>{row.nama}</td>
+                                                            <td className='align-middle'>{row.jenis_kategori}</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
                                                                 <ButtonAction icon='write.svg' />
@@ -126,12 +126,12 @@ const Kategori = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {/* {kategori.perPage < kategori.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={kategori.perPage}
+                                            totalItemsCount={kategori.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -143,7 +143,7 @@ const Kategori = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {kategori.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
@@ -160,7 +160,7 @@ const Kategori = () => {
                                             </div>
                                         </div>
                                     </div> : ''
-                                }
+                                } */}
                             </div>
                         </div>
                     </div>

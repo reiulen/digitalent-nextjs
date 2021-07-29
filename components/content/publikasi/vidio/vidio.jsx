@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -7,27 +7,31 @@ import { useRouter } from 'next/router'
 import Pagination from 'react-js-pagination';
 import { css } from '@emotion/react'
 import BeatLoader from 'react-spinners/BeatLoader'
+import DatePicker from 'react-datepicker'
+import { addDays } from 'date-fns'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { getAllVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 
 const Vidio = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
+    const { loading, error, video } = useSelector(state => state.allVideo)
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
 
     let { page = 1 } = router.query
     page = Number(page)
 
     useEffect(() => {
 
-        dispatch(getAllArtikel())
+        dispatch(getAllVideo())
 
     }, [dispatch])
 
@@ -87,14 +91,33 @@ const Vidio = () => {
                                 </div>
                             </div>
                             <div className="row align-items-right">
-                                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                                    <input type="date" className="form-control form-control-sm form-search-date" />
+                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                    <DatePicker
+                                        className="form-search-date form-control-sm form-control"
+                                        selected={startDate}
+                                        onChange={(date) => setStartDate(date)}
+                                        selectsStart
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        dateFormat="dd/MM/yyyy"
+                                    // minDate={addDays(new Date(), 20)}
+                                    />
                                     <small className="form-text text-muted">
                                         Dari Tanggal
                                     </small>
                                 </div>
-                                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                                    <input type="date" className="form-control form-control-sm form-search-date" />
+                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                    <DatePicker
+                                        className="form-search-date form-control-sm form-control"
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        selectsEnd
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        minDate={startDate}
+                                        maxDate={addDays(startDate, 20)}
+                                        dateFormat="dd/MM/yyyy"
+                                    />
                                     <small className="form-text text-muted">
                                         Sampai Tanggal
                                     </small>
@@ -128,9 +151,9 @@ const Vidio = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
+                                                video && video.video.length === 0 ?
                                                     '' :
-                                                    artikel && artikel.map((artikel) => {
+                                                    video && video.map((artikel) => {
                                                         return <tr key={artikel.id}>
                                                             <td className='text-center'>
                                                                 <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
@@ -147,7 +170,6 @@ const Vidio = () => {
                                                                 <ButtonAction icon='trash.svg' />
                                                             </td>
                                                         </tr>
-
                                                     })
                                             }
                                         </tbody>
@@ -156,7 +178,7 @@ const Vidio = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {video && video.perPage < video.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
@@ -173,7 +195,7 @@ const Vidio = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {video && video.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

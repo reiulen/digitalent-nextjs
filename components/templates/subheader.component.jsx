@@ -10,6 +10,8 @@ const convertBreadcrumb = string => {
 
 const SubHeader = () => {
     const router = useRouter();
+
+    const days = new Date().toLocaleTimeString('in-ID', { weekday: 'long' })
     const [breadcrumbs, setBreadcrumbs] = useState(null);
 
     useEffect(() => {
@@ -40,7 +42,7 @@ const SubHeader = () => {
                         {/* // <!--end::Page Title--> */}
                         {breadcrumbs.map((breadcrumb, i) => {
                             return (
-                                <Link href={breadcrumb.href}>
+                                <Link href={breadcrumb.href} key={i}>
                                     <a>
                                         <h5 className="text-default mt-2 mb-2">
                                             {convertBreadcrumb(breadcrumb.breadcrumb)} /
@@ -55,16 +57,8 @@ const SubHeader = () => {
                     {/* // <!--begin::Toolbar--> */}
                     <div className="d-flex align-items-center">
 
-                        {/* // <!--begin::Daterange--> */}
-                        <a href="#" className="btn btn-sm btn-light font-weight-bold mr-2"
-                            id="kt_dashboard_daterangepicker" data-toggle="tooltip"
-                            title="Select dashboard daterange" data-placement="left">
-                            <span className="text-muted font-size-base font-weight-bold mr-2"
-                                id="kt_dashboard_daterangepicker_title">Today</span>
-                            <span className="text-primary font-size-base font-weight-bolder"
-                                id="kt_dashboard_daterangepicker_date">Aug 16</span>
-                        </a>
-                        {/* // <!--end::Daterange--> */}
+                        <span className="text-muted font-size-base font-weight-bold mr-2"
+                            id="kt_dashboard_daterangepicker_title">{days}</span>
 
                     </div>
                     {/* // <!--end::Toolbar--> */}

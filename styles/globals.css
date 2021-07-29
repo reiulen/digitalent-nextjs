@@ -61,3 +61,10 @@ a {
   background: #F3F6F9 !important;
   border: #F3F6F9 !important;
 }
+
+@media only screen and (max-width: 768px) {
+  .ilustrator-dashboard{
+    visibility: hidden;
+    display: none;
+  }
+}

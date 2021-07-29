@@ -37,9 +37,15 @@ const TambahArtikel = () => {
         // }
 
         if (success) {
-            dispatch({
-                type: NEW_ARTIKEL_RESET
-            })
+            setJudulArtikel('')
+            setIsiArtikel('')
+            setGambar('')
+            setGambarPreview('/assets/media/default.jpg')
+            setKategoriId('')
+            setTag('')
+            // dispatch({
+            //     type: NEW_ARTIKEL_RESET
+            // })
         }
 
     }, [dispatch, error, success]);
@@ -50,7 +56,7 @@ const TambahArtikel = () => {
     const [gambar, setGambar] = useState('')
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
     const [kategori_id, setKategoriId] = useState('')
-    const [user_id, setUserId] = useState(1)
+    const [users_id, setUserId] = useState(1)
     const [tag, setTag] = useState('')
 
     const onChangeGambar = (e) => {
@@ -72,17 +78,27 @@ const TambahArtikel = () => {
             dispatch(clearErrors())
         }
 
+        if (success) {
+            dispatch({
+                type: NEW_ARTIKEL_RESET
+            })
+        }
+
         const data = {
             judul_artikel,
             isi_artikel,
             gambar,
             kategori_id,
-            user_id,
+            users_id,
             tag
         }
 
         dispatch(newArtikel(data))
         console.log(data)
+    }
+
+    const onNewReset = () => {
+        dispatch({ type: NEW_ARTIKEL_RESET })
     }
 
     return (
@@ -93,6 +109,18 @@ const TambahArtikel = () => {
                     <div className="alert-text">{error}</div>
                     <div className="alert-close">
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+                : ''
+            }
+            {success ?
+                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                    <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+                    <div className="alert-text">{success}</div>
+                    <div className="alert-close">
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
                             <span aria-hidden="true"><i className="ki ki-close"></i></span>
                         </button>
                     </div>
@@ -147,10 +175,10 @@ const TambahArtikel = () => {
                                     </figure>
                                 </div>
                                 <div className="col-sm-8">
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name='gambar' class="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
-                                            <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                                    <div className="input-group">
+                                        <div className="custom-file">
+                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
+                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
                                         </div>
                                     </div>
                                 </div>
@@ -159,8 +187,9 @@ const TambahArtikel = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
                                 <div className="col-sm-10">
-                                    <select name="" id="" className='form-control' onChange={e => setKategoriId(e.target.value)}>
-                                        <option value="Kategori">Kategori</option>
+                                    <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => setKategoriId(e.target.value)} >
+                                        <option value="1">Kategori</option>
+                                        <option value="2">Kategori 2</option>
                                     </select>
                                 </div>
                             </div>
@@ -207,7 +236,7 @@ const TambahArtikel = () => {
                 </div>
             </div>
 
-            <div className="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
