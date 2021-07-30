@@ -1,24 +1,70 @@
 import React, { useState, useEffect } from "react";
+
 import Link from "next/link";
+import Image from "next/image";
 import Pagination from "react-js-pagination";
+import { useRouter } from "next/router";
+
 import PageWrapper from "../../../wrapper/page.wrapper";
-import CardPage from "../../../CardPage";
+// import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
-const TableMitra = () => {
+import { useDispatch, useSelector } from "react-redux";
+
+// import {
+//   getAllArtikel,
+//   clearErrors,
+// } from "../../../../redux/actions/publikasi/artikel.actions";
+
+const TableKerjasama = () => {
+  // const dispatch = useDispatch();
+  // const router = useRouter();
+
+  // const { loading, error, artikel } = useSelector((state) => state.allArtikel);
+
+  // useEffect(() => {
+  //   dispatch(getAllArtikel());
+  // }, [dispatch]);
   return (
     <PageWrapper>
-      <div className="col-lg-10 col-xxl-4 order-1 order-xxl-2">
+      {/* {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )} */}
+
+      {/* <div className="col-lg-10 col-xxl-4 order-1 order-xxl-2">
         <div className="row">
           <CardPage
             background="bg-light-success"
-            icon="user-blue.svg"
+            icon="user-soft-blue.svg"
             color="#2E5654"
             value="12"
             titleValue="Kerjasama"
             title="Kerjasama Aktif"
           />
           <CardPage
+            // style={{ backgroundColor: "#FFF4DE" }}
             background="bg-light-warning"
             icon="user-orange.svg"
             color="#C8A561"
@@ -33,15 +79,23 @@ const TableMitra = () => {
             value="32"
             titleValue="Kerjasama"
             title="Kerjasama akan Habis"
-          />
-        </div>
-      </div>
+          /> */}
+      {/* <CardPage
+            background="bg-light-danger"
+            icon="kotak-kotak-red.svg"
+            color="#F65464"
+            value="64"
+            titleValue="Artikel"
+            title="Total Unpublish"
+          /> */}
+      {/* </div>
+      </div> */}
 
       <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Manajemen Kerjasama
+              Kerjasama Microsoft
             </h3>
             <div className="card-toolbar">
               <Link href="/partnership/manajemen-kerjasama/tambah">
@@ -88,9 +142,9 @@ const TableMitra = () => {
                   </a>
                 </div>
               </div>
-
+              {/* ------------------------------------- */}
               <div className="row align-items-right mt-5">
-                {/* <div className="ml-3">
+                <div className="ml-3">
                   <div class="input-group mb-3" style={{ width: "100px" }}>
                     <select
                       class="custom-select"
@@ -106,8 +160,8 @@ const TableMitra = () => {
                       <option value="3">Three</option>
                     </select>
                   </div>
-                </div> */}
-                {/* <div className="ml-3" style={{ width: "200px;" }}>
+                </div>
+                <div className="ml-3" style={{ width: "200px;" }}>
                   <select
                     class="custom-select"
                     id="inputGroupSelect02"
@@ -121,8 +175,8 @@ const TableMitra = () => {
                     <option value="2">Two</option>
                     <option value="3">Three</option>
                   </select>
-                </div> */}
-                <div className="ml-3" style={{ width: "24%;" }}>
+                </div>
+                <div className="ml-3" style={{ width: "120px;" }}>
                   <select
                     class="custom-select"
                     id="inputGroupSelect02"
@@ -131,7 +185,7 @@ const TableMitra = () => {
                         "#ffffff url('/tes.png') right 1rem center/18px 20px no-repeat",
                     }}
                   >
-                    <option selected>Semua Status</option>
+                    <option selected>Status</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
@@ -143,7 +197,7 @@ const TableMitra = () => {
                     className="btn btn-sm btn-light-primary font-weight-bold btn-block"
                     style={{ width: "7rem !important" }}
                   >
-                    Cari
+                    Filter
                   </a>
                 </div>
                 <div className="col-lg-1 col-xl-1">
@@ -157,6 +211,20 @@ const TableMitra = () => {
                     }}
                   >
                     Reset
+                  </a>
+                </div>
+                <div className="col-lg-2 col-xl-2 ml-auto">
+                  <a
+                    href="#"
+                    style={{
+                      color: "#FFFFFF !important",
+                      backgroundColor: "#40A9FF",
+                      width: "100px",
+                      marginLeft: "auto",
+                    }}
+                    className="btn btn-sm font-weight-bold btn-block"
+                  >
+                    Export .csv
                   </a>
                 </div>
               </div>
@@ -191,7 +259,20 @@ const TableMitra = () => {
                           style={{ background: "#F3F6F9", borderRadius: "6px" }}
                         >
                           1
+                          {/* <Image
+                            alt="button-action"
+                            src={`/assets/icon/${icon}`}
+                            width={18}
+                            height={18}
+                          /> */}
                         </button>
+                        {/* 1 */}
+                        {/* <Image
+                          alt="name_image"
+                          src="https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg"
+                          width={80}
+                          height={50}
+                        /> */}
                       </td>
                       <td className="align-middle text-center">DQ Lab</td>
                       <td className="align-middle text-center">
@@ -199,8 +280,14 @@ const TableMitra = () => {
                       </td>
                       <td className="align-middle text-center">3 Tahun</td>
                       <td className="align-middle text-center">12 Juli 2021</td>
+                      {/* <td className="align-middle text-center">12 juli 2024</td> */}
                       <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
+                        <select
+                          name=""
+                          id=""
+                          className="form-control"
+                          // onChange={(e) => setKategoriId(e.target.value)}
+                        >
                           <option value="Kategori" selected>
                             aktif
                           </option>
@@ -208,6 +295,9 @@ const TableMitra = () => {
                             pengajuan - pembahasan
                           </option>
                           <option value="Kategori">pengajuan - revisi</option>
+                          {/* <option value="Kategori">
+                            tesssssssssssssssssssssssssssssssssssss
+                          </option> */}
                         </select>
                       </td>
                       <td className="align-middle">
@@ -216,6 +306,10 @@ const TableMitra = () => {
                         <ButtonAction icon="trash.svg" />
                       </td>
                     </tr>
+                    {/* {
+                                            artikel && artikel.artikel.data.map((artikel) => {
+                                            })
+                                        } */}
                   </tbody>
                 </table>
               </div>
@@ -275,4 +369,4 @@ const TableMitra = () => {
   );
 };
 
-export default TableMitra;
+export default TableKerjasama;

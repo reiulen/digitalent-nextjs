@@ -1,10 +1,45 @@
 import React, { useState, useRef, useEffect } from "react";
+
 import Link from "next/link";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  newArtikel,
+  clearErrors,
+} from "../../../../redux/actions/publikasi/artikel.actions";
+import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.type";
+
 import PageWrapper from "../../../wrapper/page.wrapper";
 
-const RevisiKerjasama = () => {
+const TambahKerjasama = () => {
   return (
     <PageWrapper>
+      {/* {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )} */}
       <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -147,4 +182,4 @@ const RevisiKerjasama = () => {
   );
 };
 
-export default RevisiKerjasama;
+export default TambahKerjasama;
