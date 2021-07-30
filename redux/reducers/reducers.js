@@ -8,9 +8,8 @@ import { allKategoriReducer, newKategoriReducer, deleteKategoriReducer } from '.
 import { allGaleriReducer, newGaleriReducer, deleteGaleriReducer } from './publikasi/galeri.reducers'
 import { allFaqReducer, newFaqReducer } from './publikasi/faq.reducers'
 import { allVideoReducer, newVideoReducer } from './publikasi/video.reducers'
-import { allKategoriReducer, newKategoriReducer } from './publikasi/kategori.reducers'
-// Subvit
 
+// Subvit
 import { allSubtanceQuestionBanksReducer, newSubtanceQuestionBanksReducer, deleteSubtanceQuestionBanksReducer } from './subvit/subtance.reducers'
 const reducer = combineReducers({
 
@@ -45,7 +44,7 @@ const reducer = combineReducers({
     allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
     newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
     deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
-    
+
     // PARTNERSHIP
 })
 
