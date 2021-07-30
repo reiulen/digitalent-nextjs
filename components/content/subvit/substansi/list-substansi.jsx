@@ -54,7 +54,7 @@ const ListSubstansi = () => {
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">List Test Substansi</h3>
                         <div className="card-toolbar">
-
+                            {/* for add */}
                         </div>
                     </div>
 
