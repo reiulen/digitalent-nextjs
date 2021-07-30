@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 
-const Tambah = () => {
+const DetailRevisiKerjasama = () => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Tambah Kerjasama
+              Detail Kerjasama
             </h3>
           </div>
           <div className="card-body">
@@ -19,44 +19,17 @@ const Tambah = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Nama Lembaga
+                  Periode Kerjasama
                 </label>
-                <div className="col-sm-3">
-                  <select name="" id="" className="form-control">
-                    <option value="Kategori" selected>
-                      Dqlab
-                    </option>
-                    <option value="Kategori">Microsoft</option>
-                    <option value="Kategori">Google</option>
-                  </select>
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Email
-                </label>
-                <div className="col-sm-3">
-                  <select name="" id="" className="form-control">
-                    <option value="Kategori" selected>
-                      info@dqlab.co.id
-                    </option>
-                    <option value="Kategori">pengajuan - pembahasan</option>
-                    <option value="Kategori">pengajuan - revisi</option>
-                  </select>
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Tanggal
-                </label>
-                <div className="col-sm-3">
-                  <input type="date" className="form-control" />
+                <div className="col-sm-10">
+                  <div className="row align-items-right">
+                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                      <input
+                        type="date"
+                        className="form-control form-control-sm"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -65,7 +38,7 @@ const Tambah = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Judul kerjasama
+                  Judul Kerjasama
                 </label>
                 <div className="col-sm-10">
                   <input type="text" className="form-control" />
@@ -77,19 +50,10 @@ const Tambah = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Kategori kerjasama
+                  Kategori Kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <select
-                    name=""
-                    id=""
-                    className="form-control"
-                    onChange={(e) => setKategoriId(e.target.value)}
-                  >
-                    <option value="Kategori" selected>
-                      Pilih Kategori Kerjasama
-                    </option>
-                  </select>
+                  <input type="text" className="form-control" />
                 </div>
               </div>
 
@@ -98,7 +62,7 @@ const Tambah = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Periode
+                  Periode Kerjasama
                 </label>
                 <div className="col-sm-10">
                   <div className="row align-items-right">
@@ -125,7 +89,19 @@ const Tambah = () => {
                 >
                   Tujuan Kerjasama
                 </label>
-                <div className="col-sm-10">
+                <div className="col-sm-6">
+                  <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="5"
+                    className="form-control"
+                  ></textarea>
+                </div>
+                <div className="col-sm-4" style={{ marginTop: "-2.7%" }}>
+                  <label htmlFor="staticEmail" className="col-sm-10">
+                    Catatan Revisi
+                  </label>
                   <textarea
                     name=""
                     id=""
@@ -143,7 +119,16 @@ const Tambah = () => {
                 >
                   Ruang Lingkup Kerjasama
                 </label>
-                <div className="col-sm-10">
+                <div className="col-sm-6">
+                  <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="5"
+                    className="form-control"
+                  ></textarea>
+                </div>
+                <div className="col-sm-4">
                   <textarea
                     name=""
                     id=""
@@ -153,12 +138,40 @@ const Tambah = () => {
                   ></textarea>
                 </div>
               </div>
+
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
                   Target Kerjasama
+                </label>
+                <div className="col-sm-6">
+                  <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="5"
+                    className="form-control"
+                  ></textarea>
+                </div>
+                <div className="col-sm-4">
+                  <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="5"
+                    className="form-control"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Catatan Tambahan
                 </label>
                 <div className="col-sm-10">
                   <textarea
@@ -174,8 +187,11 @@ const Tambah = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
-                  <Link href="/publikasi/artikel">
-                    <a className="btn btn-outline-primary mr-2 btn-sm">
+                  <Link href="/">
+                    <a
+                      className="btn bg- mr-2 btn-sm btn-outline-primary"
+                      style={{ color: "#40A9FF" }}
+                    >
                       Kembali
                     </a>
                   </Link>
@@ -190,4 +206,4 @@ const Tambah = () => {
   );
 };
 
-export default Tambah;
+export default DetailRevisiKerjasama;

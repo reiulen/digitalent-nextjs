@@ -1,70 +1,24 @@
 import React, { useState, useEffect } from "react";
-
 import Link from "next/link";
-import Image from "next/image";
 import Pagination from "react-js-pagination";
-import { useRouter } from "next/router";
-
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
-import { useDispatch, useSelector } from "react-redux";
-
-// import {
-//   getAllArtikel,
-//   clearErrors,
-// } from "../../../../redux/actions/publikasi/artikel.actions";
-
 const TableKerjasama = () => {
-  // const dispatch = useDispatch();
-  // const router = useRouter();
-
-  // const { loading, error, artikel } = useSelector((state) => state.allArtikel);
-
-  // useEffect(() => {
-  //   dispatch(getAllArtikel());
-  // }, [dispatch]);
   return (
     <PageWrapper>
-      {/* {error ? (
-        <div
-          className="alert alert-custom alert-light-danger fade show mb-5"
-          role="alert"
-        >
-          <div className="alert-icon">
-            <i className="flaticon-warning"></i>
-          </div>
-          <div className="alert-text">{error}</div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
-      ) : (
-        ""
-      )} */}
-
       <div className="col-lg-10 col-xxl-4 order-1 order-xxl-2">
         <div className="row">
           <CardPage
             background="bg-light-success"
-            icon="user-soft-blue.svg"
+            icon="user-blue.svg"
             color="#2E5654"
             value="12"
             titleValue="Kerjasama"
             title="Kerjasama Aktif"
           />
           <CardPage
-            // style={{ backgroundColor: "#FFF4DE" }}
             background="bg-light-warning"
             icon="user-orange.svg"
             color="#C8A561"
@@ -80,14 +34,6 @@ const TableKerjasama = () => {
             titleValue="Kerjasama"
             title="Kerjasama akan Habis"
           />
-          {/* <CardPage
-            background="bg-light-danger"
-            icon="kotak-kotak-red.svg"
-            color="#F65464"
-            value="64"
-            titleValue="Artikel"
-            title="Total Unpublish"
-          /> */}
         </div>
       </div>
 
@@ -259,20 +205,7 @@ const TableKerjasama = () => {
                           style={{ background: "#F3F6F9", borderRadius: "6px" }}
                         >
                           1
-                          {/* <Image
-                            alt="button-action"
-                            src={`/assets/icon/${icon}`}
-                            width={18}
-                            height={18}
-                          /> */}
                         </button>
-                        {/* 1 */}
-                        {/* <Image
-                          alt="name_image"
-                          src="https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg"
-                          width={80}
-                          height={50}
-                        /> */}
                       </td>
                       <td className="align-middle text-center">DQ Lab</td>
                       <td className="align-middle text-center">
@@ -280,14 +213,8 @@ const TableKerjasama = () => {
                       </td>
                       <td className="align-middle text-center">3 Tahun</td>
                       <td className="align-middle text-center">12 Juli 2021</td>
-                      {/* <td className="align-middle text-center">12 juli 2024</td> */}
                       <td className="align-middle text-center">
-                        <select
-                          name=""
-                          id=""
-                          className="form-control"
-                          // onChange={(e) => setKategoriId(e.target.value)}
-                        >
+                        <select name="" id="" className="form-control">
                           <option value="Kategori" selected>
                             aktif
                           </option>
@@ -295,9 +222,6 @@ const TableKerjasama = () => {
                             pengajuan - pembahasan
                           </option>
                           <option value="Kategori">pengajuan - revisi</option>
-                          {/* <option value="Kategori">
-                            tesssssssssssssssssssssssssssssssssssss
-                          </option> */}
                         </select>
                       </td>
                       <td className="align-middle">
@@ -306,10 +230,6 @@ const TableKerjasama = () => {
                         <ButtonAction icon="trash.svg" />
                       </td>
                     </tr>
-                    {/* {
-                                            artikel && artikel.artikel.data.map((artikel) => {
-                                            })
-                                        } */}
                   </tbody>
                 </table>
               </div>

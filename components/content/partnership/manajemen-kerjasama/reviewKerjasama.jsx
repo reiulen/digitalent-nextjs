@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 
-const RevisiKerjasama = () => {
+const ReviewKerjasama = () => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Submit Dokumen Kerjasama Revisi
+              Review Kerjasama
             </h3>
           </div>
           <div className="card-body">
@@ -19,7 +19,50 @@ const RevisiKerjasama = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Periode Kerjasama
+                  Tanggal
+                </label>
+                <div className="col-sm-10">
+                  <div className="row align-items-right">
+                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                      <input
+                        type="date"
+                        className="form-control form-control-sm"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Judul Kerjasama
+                </label>
+                <div className="col-sm-10">
+                  <input type="text" className="form-control" />
+                </div>
+              </div>
+
+              <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Kategori Kerjasama
+                </label>
+                <div className="col-sm-10">
+                  <input type="text" className="form-control" />
+                </div>
+              </div>
+
+              <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Periode
                 </label>
                 <div className="col-sm-10">
                   <div className="row align-items-right">
@@ -45,10 +88,16 @@ const RevisiKerjasama = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Nomer Perjanjian Lembaga
+                  Tujuan Kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="5"
+                    className="form-control"
+                  ></textarea>
                 </div>
               </div>
 
@@ -57,10 +106,16 @@ const RevisiKerjasama = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Nomer Perjanjian Kemkominfo
+                  Ruang Lingkup Kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="5"
+                    className="form-control"
+                  ></textarea>
                 </div>
               </div>
 
@@ -69,59 +124,16 @@ const RevisiKerjasama = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Tanggal Penandatangan
+                  Tanggal Kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      <input
-                        type="date"
-                        className="form-control form-control-sm"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Upload Dokumen Kerjasama
-                </label>
-                <div className="col-sm-3">
-                  <div class="input-group">
-                    <div class="custom-file">
-                      <input
-                        type="file"
-                        name="gambar"
-                        class="custom-file-input"
-                        id="inputGroupFile04"
-                      />
-                      <label class="custom-file-label" for="inputGroupFile04">
-                        Cari Dokumen
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="col-sm-7" style={{ marginTop: "-5rem;" }}>
-                  <div>
-                    <label
-                      htmlFor="staticEmail"
-                      className="col-sm-5 col-form-label"
-                    >
-                      Catatan Revisi
-                    </label>
-                    <textarea
-                      name=""
-                      id=""
-                      cols="50"
-                      rows="3"
-                      className="form-control"
-                    ></textarea>
-                  </div>
+                  <textarea
+                    name=""
+                    id=""
+                    cols="30"
+                    rows="5"
+                    className="form-control"
+                  ></textarea>
                 </div>
               </div>
 
@@ -130,13 +142,18 @@ const RevisiKerjasama = () => {
                 <div className="col-sm-10">
                   <Link href="/">
                     <a
-                      className="btn bg-light-danger mr-2 btn-sm"
+                      className="btn bg-light-danger mr-3 btn-sm"
                       style={{ color: "red" }}
                     >
-                      Batalkan
+                      Tolak Kerjasama
                     </a>
                   </Link>
-                  <button className="btn btn-primary btn-sm">Submit</button>
+                  <button className="btn bg-light-success btn-sm">
+                    Ajukan Revisi
+                  </button>
+                  <button className="btn btn-primary btn-sm ml-3">
+                    Terima
+                  </button>
                 </div>
               </div>
             </form>
@@ -147,4 +164,4 @@ const RevisiKerjasama = () => {
   );
 };
 
-export default RevisiKerjasama;
+export default ReviewKerjasama;
