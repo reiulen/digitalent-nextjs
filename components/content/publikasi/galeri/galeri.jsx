@@ -15,14 +15,14 @@ import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { getAllGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
 
 const Galeri = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
+    const { loading, error, galeri } = useSelector(state => state.allGaleri)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -31,7 +31,7 @@ const Galeri = () => {
 
     useEffect(() => {
 
-        dispatch(getAllArtikel())
+        dispatch(getAllGaleri())
 
     }, [dispatch])
 
@@ -54,7 +54,7 @@ const Galeri = () => {
                 : ''
             }
 
-            <div className="col-lg-12 col-md-3">
+            <div className="col-lg-12 col-md-12">
                 <div className="row">
                     <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Artikel' title='Total Publish' />
                     <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Artikel' title='Total Author' />
@@ -151,18 +151,18 @@ const Galeri = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
-                                                    '' :
-                                                    artikel && artikel.map((artikel) => {
-                                                        return <tr key={artikel.id}>
+                                                !galeri || galeri && galeri.galeri.length === 0 ?
+                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    galeri && galeri.galeri.map((row) => {
+                                                        return <tr key={row.id}>
                                                             <td className='text-center'>
                                                                 <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
                                                             </td>
-                                                            <td className='align-middle'>{artikel.kategori_id}</td>
-                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
-                                                            <td className='align-middle'>{artikel.created_at}</td>
-                                                            <td className='align-middle'>{artikel.users_id}</td>
-                                                            <td className='align-middle'>{artikel.publish}</td>
+                                                            <td className='align-middle'>{row.kategori_id}</td>
+                                                            <td className='align-middle'>{row.judul}</td>
+                                                            <td className='align-middle'>{row.created_at}</td>
+                                                            <td className='align-middle'>{row.users_id}</td>
+                                                            <td className='align-middle'>{row.publish}</td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
@@ -179,12 +179,12 @@ const Galeri = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {galeri && galeri.perPage < galeri.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={galeri.perPage}
+                                            totalItemsCount={galeri.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -196,7 +196,7 @@ const Galeri = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {galeri && galeri.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

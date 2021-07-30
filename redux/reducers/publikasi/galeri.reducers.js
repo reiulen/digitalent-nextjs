@@ -1,35 +1,35 @@
 import {
-    KATEGORI_REQUEST,
-    KATEGORI_SUCCESS,
-    KATEGORI_FAIL,
+    GALERI_REQUEST,
+    GALERI_SUCCESS,
+    GALERI_FAIL,
 
-    NEW_KATEGORI_REQUEST,
-    NEW_KATEGORI_SUCCESS,
-    NEW_KATEGORI_RESET,
-    NEW_KATEGORI_FAIL,
+    NEW_GALERI_REQUEST,
+    NEW_GALERI_SUCCESS,
+    NEW_GALERI_RESET,
+    NEW_GALERI_FAIL,
 
-    DELETE_KATEGORI_REQUEST,
-    DELETE_KATEGORI_SUCCESS,
-    DELETE_KATEGORI_RESET,
-    DELETE_KATEGORI_FAIL,
+    DELETE_GALERI_REQUEST,
+    DELETE_GALERI_SUCCESS,
+    DELETE_GALERI_RESET,
+    DELETE_GALERI_FAIL,
 
     CLEAR_ERRORS,
-} from '../../types/publikasi/kategori.type'
+} from '../../types/publikasi/galeri.type'
 
-export const allKategoriReducer = (state = { kategori: [] }, action) => {
+export const allGaleriReducer = (state = { galeri: [] }, action) => {
     switch (action.type) {
-        case KATEGORI_REQUEST:
+        case GALERI_REQUEST:
             return {
                 loading: true
             }
 
-        case KATEGORI_SUCCESS:
+        case GALERI_SUCCESS:
             return {
                 loading: false,
-                kategori: action.payload.data
+                galeri: action.payload.data
             }
 
-        case KATEGORI_FAIL:
+        case GALERI_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -45,27 +45,27 @@ export const allKategoriReducer = (state = { kategori: [] }, action) => {
     }
 }
 
-export const newKategoriReducer = (state = { kategori: {} }, action) => {
+export const newGaleriReducer = (state = { galeri: {} }, action) => {
     switch (action.type) {
-        case NEW_KATEGORI_REQUEST:
+        case NEW_GALERI_REQUEST:
             return {
                 loading: true
             }
 
-        case NEW_KATEGORI_SUCCESS:
+        case NEW_GALERI_SUCCESS:
             return {
                 loading: false,
                 success: action.payload.message,
-                kategori: action.payload.data
+                galeri: action.payload.data
             }
 
-        case NEW_KATEGORI_FAIL:
+        case NEW_GALERI_FAIL:
             return {
                 loading: false,
                 error: action.payload
             }
 
-        case NEW_KATEGORI_RESET:
+        case NEW_GALERI_RESET:
             return {
                 success: false
             }
@@ -80,26 +80,26 @@ export const newKategoriReducer = (state = { kategori: {} }, action) => {
     }
 }
 
-export const deleteKategoriReducer = (state = {}, action) => {
+export const deleteGaleriReducer = (state = {}, action) => {
     switch (action.type) {
-        case DELETE_KATEGORI_REQUEST:
+        case DELETE_GALERI_REQUEST:
             return {
                 loading: true
             }
 
-        case DELETE_KATEGORI_SUCCESS:
+        case DELETE_GALERI_SUCCESS:
             return {
                 loading: false,
                 isDeleted: action.payload
             }
 
-        case DELETE_KATEGORI_RESET:
+        case DELETE_GALERI_RESET:
             return {
                 loading: false,
                 isDeleted: false
             }
 
-        case DELETE_KATEGORI_FAIL:
+        case DELETE_GALERI_FAIL:
             return {
                 loading: false,
                 error: action.payload

@@ -65,7 +65,7 @@ const TambahGaleri = () => {
     const thumbs = files.map(file => (
         <div style={thumb} key={file.name}>
             <div style={thumbInner}>
-                <Image
+                <img
                     src={file.preview}
                     style={img}
                     width={img.width}
@@ -105,15 +105,10 @@ const TambahGaleri = () => {
         }
 
         const data = {
-            judul_video,
-            isi_artikel,
-            gambar,
-            kategori_id,
-            user_id,
-            tag
+            files
         }
 
-        dispatch(newArtikel(data))
+        // dispatch(newArtikel(data))
         console.log(data)
     }
 

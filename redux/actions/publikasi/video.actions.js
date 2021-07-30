@@ -28,7 +28,7 @@ export const getAllVideo = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/video')
+        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/index-administrator-video')
 
         dispatch({
             type: VIDEO_SUCCESS,
@@ -58,7 +58,7 @@ export const newVideo = (videoData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/video', videoData)
+        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/create-administrator-video', videoData)
 
         dispatch({
             type: NEW_VIDEO_SUCCESS,
