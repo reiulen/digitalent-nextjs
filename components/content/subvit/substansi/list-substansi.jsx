@@ -72,7 +72,7 @@ const ListSubstansi = () => {
                                 </div>
 
                                 <div className="col-lg-2 col-xl-2">
-                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
+                                    <Link href='/subvit/substansi/clone'>
                                         <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
                                             <i className="flaticon-file-1"></i>
                                             Clone Test
@@ -80,7 +80,7 @@ const ListSubstansi = () => {
                                     </Link>
                                 </div>
                                 <div className="col-lg-2 col-xl-2">
-                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
+                                    <Link href='/subvit/substansi/tipe-soal'>
                                         <a className="btn btn-sm btn-light-warning px-6 font-weight-bold btn-block ">
                                             <i className="flaticon2-paper"></i>
                                             Tipe Soal
