@@ -62,6 +62,10 @@ a {
   border: #F3F6F9 !important;
 }
 
+.bg-accent-info {
+  background-color: #F4E1F0;
+}
+
 @media only screen and (max-width: 768px) {
   .ilustrator-dashboard{
     visibility: hidden;

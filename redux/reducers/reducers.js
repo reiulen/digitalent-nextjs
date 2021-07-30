@@ -8,7 +8,10 @@ import { allKategoriReducer, newKategoriReducer, deleteKategoriReducer } from '.
 import { allGaleriReducer, newGaleriReducer, deleteGaleriReducer } from './publikasi/galeri.reducers'
 import { allFaqReducer, newFaqReducer } from './publikasi/faq.reducers'
 import { allVideoReducer, newVideoReducer } from './publikasi/video.reducers'
+import { allKategoriReducer, newKategoriReducer } from './publikasi/kategori.reducers'
+// Subvit
 
+import { allSubtanceQuestionBanksReducer, newSubtanceQuestionBanksReducer, deleteSubtanceQuestionBanksReducer } from './subvit/subtance.reducers'
 const reducer = combineReducers({
 
     // PUBLIKASI
@@ -38,8 +41,11 @@ const reducer = combineReducers({
     newKategori: newKategoriReducer,
     deleteKategori: deleteKategoriReducer,
 
-    // TRIVIA
-
+    // Subvit
+    allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
+    newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
+    deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
+    
     // PARTNERSHIP
 })
 
