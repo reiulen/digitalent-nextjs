@@ -1,29 +1,29 @@
 import {
-    BERITA_REQUEST,
-    BERITA_SUCCESS,
-    BERITA_FAIL,
+    GALERI_REQUEST,
+    GALERI_SUCCESS,
+    GALERI_FAIL,
 
-    NEW_BERITA_REQUEST,
-    NEW_BERITA_SUCCESS,
-    NEW_BERITA_RESET,
-    NEW_BERITA_FAIL,
+    NEW_GALERI_REQUEST,
+    NEW_GALERI_SUCCESS,
+    NEW_GALERI_RESET,
+    NEW_GALERI_FAIL,
 
-    DELETE_BERITA_REQUEST,
-    DELETE_BERITA_SUCCESS,
-    DELETE_BERITA_RESET,
-    DELETE_BERITA_FAIL,
+    DELETE_GALERI_REQUEST,
+    DELETE_GALERI_SUCCESS,
+    DELETE_GALERI_RESET,
+    DELETE_GALERI_FAIL,
 
     CLEAR_ERRORS,
-} from '../../types/publikasi/berita.type'
+} from '../../types/publikasi/galeri.type'
 
 import axios from 'axios'
 
 
 // get all data
-export const getAllBerita = () => async (dispatch) => {
+export const getAllGaleri = () => async (dispatch) => {
     try {
 
-        dispatch({ type: BERITA_REQUEST })
+        dispatch({ type: GALERI_REQUEST })
 
         // const config = {
         //     headers: {
@@ -33,26 +33,26 @@ export const getAllBerita = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/index-administrator-berita')
+        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/galeri')
 
         dispatch({
-            type: BERITA_SUCCESS,
+            type: GALERI_SUCCESS,
             payload: data
         })
 
     } catch (error) {
         dispatch({
-            type: BERITA_FAIL,
+            type: GALERI_FAIL,
             payload: error.message
         })
     }
 }
 
-export const newBerita = (beritaData) => async (dispatch) => {
+export const newGaleri = (galeriData) => async (dispatch) => {
     try {
 
         dispatch({
-            type: NEW_BERITA_REQUEST
+            type: NEW_GALERI_REQUEST
         })
 
         // const config = {
@@ -63,36 +63,36 @@ export const newBerita = (beritaData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/create-administrator-berita', beritaData)
+        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/galeri', galeriData)
 
         dispatch({
-            type: NEW_BERITA_SUCCESS,
+            type: NEW_GALERI_SUCCESS,
             payload: data
         })
 
     } catch (error) {
         dispatch({
-            type: NEW_BERITA_FAIL,
+            type: NEW_GALERI_FAIL,
             payload: error.response.data.message
         })
     }
 }
 
-export const deleteBerita = (id) => async (dispatch) => {
+export const deleteGaleri = (id) => async (dispatch) => {
     try {
 
-        dispatch({ type: DELETE_BERITA_REQUEST })
+        dispatch({ type: DELETE_GALERI_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API + `publikasi/api/berita/${id}`)
+        const { data } = await axios.delete(process.env.END_POINT_API + `publikasi/api/galeri/${id}`)
 
         dispatch({
-            type: DELETE_BERITA_SUCCESS,
+            type: DELETE_GALERI_SUCCESS,
             payload: data.success
         })
 
     } catch (error) {
         dispatch({
-            type: DELETE_BERITA_FAIL,
+            type: DELETE_GALERI_FAIL,
             payload: error.response.data.message
         })
     }

@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link'
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from 'react-redux'
-import { newArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
-import { NEW_ARTIKEL_RESET } from '../../../../redux/types/publikasi/artikel.type'
+import { newFaq, clearErrors } from '../../../../redux/actions/publikasi/faq.actions'
+import { NEW_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 
@@ -17,7 +17,7 @@ const TambahFaq = () => {
         ssr: false
     })
 
-    const { loading, error, success } = useSelector(state => state.newArtikel)
+    const { loading, error, success } = useSelector(state => state.newFaq)
 
     useEffect(() => {
 
@@ -25,36 +25,41 @@ const TambahFaq = () => {
         //     dispatch(clearErrors())
         // }
 
-        if (success) {
-            dispatch({
-                type: NEW_ARTIKEL_RESET
-            })
-        }
+        // if (success) {
+        //     dispatch({
+        //         type: NEW_FAQ_RESET
+        //     })
+        // }
 
     }, [dispatch, error, success]);
 
 
-    const [judul_pertanyaan, setJudulPertanyaan] = useState('')
-    const [isi_vedeo, setJawaban] = useState('');
+    const [judul, setJudulPertanyaan] = useState('')
+    const [jawaban, setJawaban] = useState('');
     const [kategori_id, setKategoriId] = useState('')
+    const [users_id, setUsersId] = useState(1)
+    const [publish, setPublish] = useState(false)
 
     const onSubmit = (e) => {
         e.preventDefault()
+
         if (error) {
             dispatch(clearErrors())
         }
 
         const data = {
-            judul_pertanyaan,
-            isi_artikel,
-            gambar,
             kategori_id,
-            user_id,
-            tag
+            judul,
+            jawaban,
+            users_id,
         }
 
-        dispatch(newArtikel(data))
+        dispatch(newFaq(data))
         console.log(data)
+    }
+
+    const onNewReset = () => {
+        dispatch({ type: NEW_FAQ_RESET })
     }
 
     return (
@@ -71,6 +76,18 @@ const TambahFaq = () => {
                 </div>
                 : ''
             }
+            {success ?
+                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                    <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+                    <div className="alert-text">{success}</div>
+                    <div className="alert-close">
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
+                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+                : ''
+            }
             <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
@@ -81,14 +98,14 @@ const TambahFaq = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul Pertanyaan</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_pertanyaan} onChange={(e) => setJudulPertanyaan(e.target.value)} />
+                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul} onChange={(e) => setJudulPertanyaan(e.target.value)} />
                                 </div>
                             </div>
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Jawaban</label>
                                 <div className="col-sm-10">
-                                    <textarea className='form-control' placeholder='isi deskripsi jawaban disini' name="jawaban" id="" rows="10" onChange={e => setJawaban(e.target.value)} value={isi_vedeo}></textarea>
+                                    <textarea className='form-control' placeholder='isi deskripsi jawaban disini' name="jawaban" id="" rows="10" onChange={e => setJawaban(e.target.value)} value={jawaban}></textarea>
                                 </div>
                             </div>
 
@@ -96,8 +113,9 @@ const TambahFaq = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
                                 <div className="col-sm-10">
-                                    <select name="" id="" className='form-control' onChange={e => setKategoriId(e.target.value)}>
-                                        <option value="Kategori">Kategori</option>
+                                    <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => setKategoriId(e.target.value)} >
+                                        <option value="1">Kategori</option>
+                                        <option value="2">Kategori 2</option>
                                     </select>
                                 </div>
                             </div>
@@ -107,12 +125,14 @@ const TambahFaq = () => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ ?</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
-                                        checked={false}
+                                        checked={publish}
                                         onlabel=' '
                                         onstyle='primary'
                                         offlabel=' '
                                         offstyle='danger'
                                         size='sm'
+                                        width={30}
+                                        onChange={(checked) => setPublish(checked)}
                                     />
                                 </div>
                             </div>
@@ -121,12 +141,14 @@ const TambahFaq = () => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
-                                        checked={false}
+                                        checked={publish}
                                         onlabel=' '
                                         onstyle='primary'
                                         offlabel=' '
                                         offstyle='danger'
                                         size='sm'
+                                        width={30}
+                                        onChange={(checked) => setPublish(checked)}
                                     />
                                 </div>
                             </div>

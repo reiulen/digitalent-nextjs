@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 import Pagination from 'react-js-pagination';
 import { css } from '@emotion/react'
@@ -11,7 +12,7 @@ import PageWrapper from '../../../wrapper/page.wrapper'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllKategori, clearErrors } from '../../../../redux/actions/publikasi/kategori.actions'
+import { getAllKategori, deleteKategori, clearErrors } from '../../../../redux/actions/publikasi/kategori.actions'
 
 const Kategori = () => {
 
@@ -19,6 +20,7 @@ const Kategori = () => {
     const router = useRouter()
 
     const { loading, error, kategori } = useSelector(state => state.allKategori)
+    const { error: deleteError, isDeleted } = useSelector(state => state.deleteKategori)
 
     let { page = 1 } = router.query
     page = Number(page)
@@ -32,6 +34,29 @@ const Kategori = () => {
     const override = css`
         margin: 0 auto;
     `;
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Apakah anda yakin ?',
+            text: "Data ini tidak bisa dikembalikan !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya !',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteKategori(id))
+                Swal.fire(
+                    'Berhasil ',
+                    'Data berhasil dihapus.',
+                    'success'
+                )
+                // dispatch(getAllBerita())
+            }
+        })
+    }
 
     return (
         <PageWrapper>
@@ -105,8 +130,8 @@ const Kategori = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                kategori && kategori.length === 0 ?
-                                                    '' :
+                                                !kategori || kategori && kategori.length === 0 ?
+                                                    <td className='align-middle text-center' colSpan={3}>Data Masih Kosong</td> :
                                                     kategori && kategori.map((row) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>{row.nama}</td>
@@ -114,7 +139,9 @@ const Kategori = () => {
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
                                                                 <ButtonAction icon='write.svg' />
-                                                                <ButtonAction icon='trash.svg' />
+                                                                <button onClick={() => handleDelete(row.id)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
+                                                                    <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
+                                                                </button>
                                                             </td>
                                                         </tr>
 
@@ -126,7 +153,7 @@ const Kategori = () => {
                             </div>
 
                             <div className="row">
-                                {/* {kategori.perPage < kategori.total &&
+                                {kategori && kategori.perPage < kategori.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
@@ -143,7 +170,7 @@ const Kategori = () => {
                                         />
                                     </div>
                                 }
-                                {kategori.total > 5 ?
+                                {kategori && kategori.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
@@ -160,7 +187,7 @@ const Kategori = () => {
                                             </div>
                                         </div>
                                     </div> : ''
-                                } */}
+                                }
                             </div>
                         </div>
                     </div>

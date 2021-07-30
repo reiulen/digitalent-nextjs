@@ -5,24 +5,25 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import Pagination from 'react-js-pagination';
-import { css } from '@emotion/react'
-import BeatLoader from 'react-spinners/BeatLoader'
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
+import Swal from 'sweetalert2'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
+import LoadingTable from '../../../LoadingTable';
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
+import { getAllBerita, deleteBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 
 const Berita = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allBerita)
+    const { loading, error, berita } = useSelector(state => state.allBerita)
+    const { error: deleteError, isDeleted } = useSelector(state => state.deleteBerita)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -36,9 +37,28 @@ const Berita = () => {
 
     }, [dispatch])
 
-    const override = css`
-        margin: 0 auto;
-    `;
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Apakah anda yakin ?',
+            text: "Data ini tidak bisa dikembalikan !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya !',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteBerita(id))
+                Swal.fire(
+                    'Berhasil ',
+                    'Data berhasil dihapus.',
+                    'success'
+                )
+                // dispatch(getAllBerita())
+            }
+        })
+    }
 
     return (
         <PageWrapper>
@@ -55,7 +75,7 @@ const Berita = () => {
                 : ''
             }
 
-            <div className="col-lg-12 col-md-3">
+            <div className="col-lg-12 col-md-12">
                 <div className="row">
                     <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Artikel' title='Total Publish' />
                     <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Artikel' title='Total Author' />
@@ -132,9 +152,7 @@ const Berita = () => {
                         <div className="table-page mt-5">
                             <div className="table-responsive">
 
-                                <div className="loading text-center justify-content-center">
-                                    <BeatLoader color='#3699FF' loading={loading} css={override} size={10} />
-                                </div>
+                                <LoadingTable loading={loading} />
 
                                 {loading === false ?
                                     <table className='table table-separate table-head-custom table-checkable'>
@@ -152,23 +170,42 @@ const Berita = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
-                                                    '' :
-                                                    artikel && artikel.map((artikel) => {
-                                                        return <tr key={artikel.id}>
+                                                !berita || berita && berita.berita.length === 0 ?
+                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    berita && berita.berita.map((row) => {
+                                                        return <tr key={row.id}>
                                                             <td className='text-center'>
-                                                                <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
+                                                                <Image
+                                                                    alt={row.judul_berita}
+                                                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                                                    src={process.env.END_POINT_API_IMAGE + 'berita/' + row.gambar}
+                                                                    width={80}
+                                                                    height={50}
+                                                                />
                                                             </td>
-                                                            <td className='align-middle'>{artikel.kategori_id}</td>
-                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
-                                                            <td className='align-middle'>{artikel.created_at}</td>
-                                                            <td className='align-middle'>{artikel.users_id}</td>
-                                                            <td className='align-middle'>{artikel.publish}</td>
+                                                            <td className='align-middle'>{row.jenis_kategori}</td>
+                                                            <td className='align-middle'>{row.judul_berita}</td>
+                                                            <td className='align-middle'>{row.created_at}</td>
+                                                            <td className='align-middle'>{row.users_id}</td>
+                                                            <td className='align-middle'>
+                                                                {row.publish === 1 ?
+                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                        Publish
+                                                                    </span>
+                                                                    :
+                                                                    <span class="label label-inline label-light-warning font-weight-bold">
+                                                                        Unpublish
+                                                                    </span>
+                                                                }
+
+                                                            </td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
                                                                 <ButtonAction icon='write.svg' />
-                                                                <ButtonAction icon='trash.svg' />
+                                                                <button onClick={() => handleDelete(row.id)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
+                                                                    <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
+                                                                </button>
                                                             </td>
                                                         </tr>
 
@@ -180,12 +217,12 @@ const Berita = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {berita && berita.perPage < berita.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={berita.perPage}
+                                            totalItemsCount={berita.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -197,7 +234,7 @@ const Berita = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {berita && berita.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

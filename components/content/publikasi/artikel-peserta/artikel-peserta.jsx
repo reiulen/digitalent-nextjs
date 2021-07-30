@@ -4,30 +4,55 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
-import { css } from '@emotion/react'
 import Pagination from 'react-js-pagination';
+import { css } from '@emotion/react'
 import BeatLoader from 'react-spinners/BeatLoader'
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
+import Swal from 'sweetalert2'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { getAllArtikel, deleteArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
 
 const ArtikelPeserta = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
+    const { loading, error, artikel } = useSelector(state => state.allArtikel)
+    const { error: deleteError, isDeleted } = useSelector(state => state.deleteArtikel)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
     let { page = 1 } = router.query
     page = Number(page)
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Apakah anda yakin ?',
+            text: "Data ini tidak bisa dikembalikan !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya !',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteArtikel(id))
+                dispatch(getAllArtikel())
+                Swal.fire(
+                    'Berhasil ',
+                    'Data berhasil dihapus.',
+                    'success'
+                )
+            }
+        })
+    }
 
     useEffect(() => {
 
@@ -35,10 +60,7 @@ const ArtikelPeserta = () => {
 
     }, [dispatch])
 
-    const override = css`
-        margin: 0 auto;
-    `;
-
+    const override = css`margin: 0 auto;`;
     return (
         <PageWrapper>
             {error ?
@@ -54,7 +76,7 @@ const ArtikelPeserta = () => {
                 : ''
             }
 
-            <div className="col-lg-12 col-md-3">
+            <div className="col-lg-12 col-md-12">
                 <div className="row">
                     <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Artikel' title='Total Publish' />
                     <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Artikel' title='Total Unpublish' />
@@ -66,6 +88,9 @@ const ArtikelPeserta = () => {
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Managemen Artikel</h3>
+                        <div className="card-toolbar">
+
+                        </div>
                     </div>
 
                     <div className="card-body pt-0">
@@ -133,7 +158,7 @@ const ArtikelPeserta = () => {
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
-                                                <th>Tanggal Membuat</th>
+                                                <th>Tanggal Publish</th>
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
@@ -142,23 +167,42 @@ const ArtikelPeserta = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
-                                                    '' :
-                                                    artikel && artikel.map((artikel) => {
+                                                !artikel || artikel && artikel.artikel.length === 0 ?
+                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    artikel && artikel.artikel && artikel.artikel.map((artikel) => {
                                                         return <tr key={artikel.id}>
                                                             <td className='text-center'>
-                                                                <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
+                                                                <Image
+                                                                    alt={artikel.judul_artikel}
+                                                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                                                    src={process.env.END_POINT_API_IMAGE + 'artikel/' + artikel.gambar}
+                                                                    width={80}
+                                                                    height={50}
+                                                                />
                                                             </td>
-                                                            <td className='align-middle'>{artikel.kategori_id}</td>
+                                                            <td className='align-middle'>{artikel.jenis_kategori}</td>
                                                             <td className='align-middle'>{artikel.judul_artikel}</td>
                                                             <td className='align-middle'>{artikel.created_at}</td>
                                                             <td className='align-middle'>{artikel.users_id}</td>
-                                                            <td className='align-middle'>{artikel.publish}</td>
+                                                            <td className='align-middle'>
+                                                                {artikel.publish === 1 ?
+                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                        Publish
+                                                                    </span>
+                                                                    :
+                                                                    <span class="label label-inline label-light-warning font-weight-bold">
+                                                                        Unpublish
+                                                                    </span>
+                                                                }
+
+                                                            </td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
                                                                 <ButtonAction icon='write.svg' />
-                                                                <ButtonAction icon='trash.svg' />
+                                                                <button onClick={() => handleDelete(artikel.id)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
+                                                                    <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
+                                                                </button>
                                                             </td>
                                                         </tr>
 
@@ -170,12 +214,12 @@ const ArtikelPeserta = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {artikel && artikel.perPage < artikel.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={artikel.perPage}
+                                            totalItemsCount={artikel.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -187,7 +231,7 @@ const ArtikelPeserta = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {artikel && artikel.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

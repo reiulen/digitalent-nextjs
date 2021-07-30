@@ -5,14 +5,13 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import Pagination from 'react-js-pagination';
-import { css } from '@emotion/react'
-import BeatLoader from 'react-spinners/BeatLoader'
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
+import LoadingTable from '../../../LoadingTable';
 
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
@@ -34,10 +33,6 @@ const Vidio = () => {
         dispatch(getAllVideo())
 
     }, [dispatch])
-
-    const override = css`
-        margin: 0 auto;
-    `;
 
     return (
         <PageWrapper>
@@ -131,9 +126,7 @@ const Vidio = () => {
                         <div className="table-page mt-5">
                             <div className="table-responsive">
 
-                                <div className="loading text-center justify-content-center">
-                                    <BeatLoader color='#3699FF' loading={loading} css={override} size={10} />
-                                </div>
+                                <LoadingTable loading={loading} />
 
                                 {loading === false ?
                                     <table className='table table-separate table-head-custom table-checkable'>
@@ -142,7 +135,7 @@ const Vidio = () => {
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
-                                                <th>Tanggal Membuat</th>
+                                                <th>Tanggal Publish</th>
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
@@ -151,23 +144,42 @@ const Vidio = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                video && video.video.length === 0 ?
-                                                    '' :
-                                                    video && video.map((artikel) => {
-                                                        return <tr key={artikel.id}>
+                                                !video || video && video.video.length === 0 ?
+                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    video && video.video.map((row) => {
+                                                        return <tr key={row.id}>
                                                             <td className='text-center'>
-                                                                <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
+                                                                <Image
+                                                                    alt={row.judul_berita}
+                                                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                                                    src={process.env.END_POINT_API_IMAGE + 'video/' + row.gambar}
+                                                                    width={80}
+                                                                    height={50}
+                                                                />
                                                             </td>
-                                                            <td className='align-middle'>{artikel.kategori_id}</td>
-                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
-                                                            <td className='align-middle'>{artikel.created_at}</td>
-                                                            <td className='align-middle'>{artikel.users_id}</td>
-                                                            <td className='align-middle'>{artikel.publish}</td>
+                                                            <td className='align-middle'>{row.judul_video}</td>
+                                                            <td className='align-middle'>{row.judul_video}</td>
+                                                            <td className='align-middle'>{row.created_at}</td>
+                                                            <td className='align-middle'>{row.users_id}</td>
+                                                            <td className='align-middle'>
+                                                                {row.publish === 1 ?
+                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                        Publish
+                                                                    </span>
+                                                                    :
+                                                                    <span class="label label-inline label-light-warning font-weight-bold">
+                                                                        Unpublish
+                                                                    </span>
+                                                                }
+
+                                                            </td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
                                                                 <ButtonAction icon='write.svg' />
-                                                                <ButtonAction icon='trash.svg' />
+                                                                <button onClick={() => handleDelete(row.id)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
+                                                                    <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     })

@@ -8,6 +8,11 @@ import {
     NEW_KATEGORI_RESET,
     NEW_KATEGORI_FAIL,
 
+    DELETE_KATEGORI_REQUEST,
+    DELETE_KATEGORI_SUCCESS,
+    DELETE_KATEGORI_RESET,
+    DELETE_KATEGORI_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/kategori.type'
 
@@ -68,6 +73,26 @@ export const newKategori = (kategoriData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: NEW_KATEGORI_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const deleteKategori = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DELETE_KATEGORI_REQUEST })
+
+        const { data } = await axios.delete(process.env.END_POINT_API + `publikasi/api/kategori/${id}`)
+
+        dispatch({
+            type: DELETE_KATEGORI_SUCCESS,
+            payload: data.success
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_KATEGORI_FAIL,
             payload: error.response.data.message
         })
     }
