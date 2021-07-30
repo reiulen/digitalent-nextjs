@@ -126,7 +126,7 @@ const ListSubstansi = () => {
                                                     subtance && subtance.map((subtance) => {
                                                         return <tr key={subtance.id}>
 
-                                                            <td className='align-middle text-center'><span className="badge badge-secondary">{subtance.no}</span></td>
+                                                            <td className='align-middle text-center'>{subtance.no}</td>
                                                             <td className='align-middle'>{subtance.academy}</td>
                                                             <td className='align-middle'>{subtance.theme}</td>
                                                             <td className='align-middle'>200 Soal</td>

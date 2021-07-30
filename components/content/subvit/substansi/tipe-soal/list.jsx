@@ -8,13 +8,13 @@ import Pagination from 'react-js-pagination';
 import { css } from '@emotion/react'
 import BeatLoader from 'react-spinners/BeatLoader'
 
-import PageWrapper from '../../../wrapper/page.wrapper'
-import ButtonAction from '../../../ButtonAction'
+import PageWrapper from '/components//wrapper/page.wrapper'
+import ButtonAction from '/components//ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllSubtanceQuestionBanks, clearErrors } from '/redux/actions/subvit/subtance.actions'
 
-const ListSubstansi = () => {
+const ListTipeSoal = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -52,7 +52,7 @@ const ListSubstansi = () => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">List Test Substansi</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">List Tipe Soal Test Substansi</h3>
                         <div className="card-toolbar">
 
                         </div>
@@ -71,27 +71,14 @@ const ListSubstansi = () => {
                                     </div>
                                 </div>
 
-                                <div className="col-lg-2 col-xl-2">
-                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
-                                        <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
-                                            <i className="flaticon-file-1"></i>
-                                            Clone Test
-                                        </a>
-                                    </Link>
+                                <div className="col-lg-4 col-xl-4">
                                 </div>
+
                                 <div className="col-lg-2 col-xl-2">
-                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
-                                        <a className="btn btn-sm btn-light-warning px-6 font-weight-bold btn-block ">
-                                            <i className="flaticon2-paper"></i>
-                                            Tipe Soal
-                                        </a>
-                                    </Link>
-                                </div>
-                                <div className="col-lg-2 col-xl-2">
-                                    <Link href='/subvit/substansi/tambah'>
+                                    <Link href='/subvit/substansi/tipe-soal/tambah'>
                                         <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
                                             <i className="flaticon2-notepad"></i>
-                                            Tambah Soal
+                                            Tambah Tipe Soal
                                         </a>
                                     </Link>
                                 </div>
@@ -110,11 +97,8 @@ const ListSubstansi = () => {
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
                                                 <th className='text-center'>No</th>
-                                                <th>Akademi</th>
-                                                <th>Tema</th>
-                                                <th>Bank Soal</th>
-                                                <th>Pelaksaan</th>
-                                                <th>Kategori</th>
+                                                <th>Tipe Soal</th>
+                                                <th>Bobot Nilai</th>
                                                 <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -127,11 +111,8 @@ const ListSubstansi = () => {
                                                         return <tr key={subtance.id}>
 
                                                             <td className='align-middle text-center'><span className="badge badge-secondary">{subtance.no}</span></td>
-                                                            <td className='align-middle'>{subtance.academy}</td>
-                                                            <td className='align-middle'>{subtance.theme}</td>
-                                                            <td className='align-middle'>200 Soal</td>
-                                                            <td className='align-middle'>{subtance.start_at}</td>
-                                                            <td className='align-middle'>{subtance.category}</td>
+                                                            <td className='align-middle'>Ingatan</td>
+                                                            <td className='align-middle'>2</td>
                                                             <td className='align-middle'><span className="badge badge-success">Publish</span></td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
@@ -193,4 +174,4 @@ const ListSubstansi = () => {
     )
 }
 
-export default ListSubstansi
+export default ListTipeSoal

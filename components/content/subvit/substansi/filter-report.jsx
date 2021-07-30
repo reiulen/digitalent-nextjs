@@ -51,8 +51,16 @@ const ListSubstansi = () => {
 
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">List Test Substansi</h3>
+                    <div className="card-header border-0 align-items-center row">
+                        <div className="col-lg-10 col-xl-10">
+                            <h3 className="card-title font-weight-bolder text-dark">Report Test Substansi - Sudah Mengerjakan</h3>
+                            <p className="text-muted">FGA - Cloud Computing</p>
+                        </div>
+                        <div className="col-lg-2 col-xl-2">                            
+                            <button className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
+                                Export .CSV
+                            </button>
+                        </div>
                         <div className="card-toolbar">
 
                         </div>
@@ -62,7 +70,7 @@ const ListSubstansi = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-6 col-xl-6">
+                                <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
                                         <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" />
                                         <span>
@@ -72,28 +80,38 @@ const ListSubstansi = () => {
                                 </div>
 
                                 <div className="col-lg-2 col-xl-2">
-                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
-                                        <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
-                                            <i className="flaticon-file-1"></i>
-                                            Clone Test
-                                        </a>
-                                    </Link>
+                                    <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                                        Cari
+                                    </button>
                                 </div>
-                                <div className="col-lg-2 col-xl-2">
-                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
-                                        <a className="btn btn-sm btn-light-warning px-6 font-weight-bold btn-block ">
-                                            <i className="flaticon2-paper"></i>
-                                            Tipe Soal
-                                        </a>
-                                    </Link>
+                            </div>
+
+                            <div className="row align-items-center mt-2">
+                                <div className="col-lg-3 col-xl-3">
+                                    <div className="form-group">
+                                        <select className="form-control">
+                                            <option>Semua</option>
+                                        </select>
+                                    <p className="text-muted mt-1">Filter by Pelatihan</p>
+                                    </div>
                                 </div>
-                                <div className="col-lg-2 col-xl-2">
-                                    <Link href='/subvit/substansi/tambah'>
-                                        <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
-                                            <i className="flaticon2-notepad"></i>
-                                            Tambah Soal
-                                        </a>
-                                    </Link>
+
+                                <div className="col-lg-3 col-xl-3">
+                                    <div className="form-group">
+                                        <select className="form-control">
+                                            <option>Semua</option>
+                                        </select>
+                                    <p className="text-muted mt-1">Filter by Status</p>
+                                    </div>
+                                </div>
+
+                                <div className="col-lg-3 col-xl-3">
+                                    <div className="form-group">
+                                        <select className="form-control">
+                                            <option>Semua</option>
+                                        </select>
+                                    <p className="text-muted mt-1">Filter by Nilai</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -110,23 +128,22 @@ const ListSubstansi = () => {
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
                                                 <th className='text-center'>No</th>
-                                                <th>Akademi</th>
-                                                <th>Tema</th>
-                                                <th>Bank Soal</th>
-                                                <th>Pelaksaan</th>
-                                                <th>Kategori</th>
+                                                <th>Peserta Test</th>
+                                                <th>Pelatihan</th>
+                                                <th>Nilai</th>
+                                                <th>Total Pengerjaan</th>
+                                                <th>Jawaban</th>
                                                 <th>Status</th>
-                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {
+                                            {/* {
                                                 subtance && subtance.length === 0 ?
                                                     '' :
                                                     subtance && subtance.map((subtance) => {
                                                         return <tr key={subtance.id}>
 
-                                                            <td className='align-middle text-center'><span className="badge badge-secondary">{subtance.no}</span></td>
+                                                            <td className='align-middle text-center'>{subtance.no}</td>
                                                             <td className='align-middle'>{subtance.academy}</td>
                                                             <td className='align-middle'>{subtance.theme}</td>
                                                             <td className='align-middle'>200 Soal</td>
@@ -142,7 +159,59 @@ const ListSubstansi = () => {
                                                         </tr>
 
                                                     })
-                                            }
+                                            } */}
+                                            <tr>
+                                                <td className='align-middle text-center'><p className="badge badge-secondary h6">1</p></td>
+                                                <td className='align-middle'>
+                                                    <div>
+                                                        <p className="my-0 h6">Dimas Rifai Lombu</p>
+                                                        <p className="my-0">dimas@mail.com</p>
+                                                        <p className="my-0">202309182982998</p>
+                                                    </div>
+                                                </td>
+                                                <td className='align-middle'><p className="h6">Cloud Computing</p></td>
+                                                <td className='align-middle'><p className="h6">60.00</p></td>
+                                                <td className='align-middle'>
+                                                    <div>
+                                                        <p className="my-0 h6">05/28/2021</p>
+                                                        <p className="my-0">36:23</p>
+                                                    </div>
+                                                </td>
+                                                <td className='align-middle'>
+                                                    <div>
+                                                        <p className="my-0">Benar: 20 Jawaban</p>
+                                                        <p className="my-0">Salah: 20 Jawaban</p>
+                                                        <p className="my-0">Jumlah: 40 Jawaban</p>
+                                                    </div>
+                                                </td>
+                                                <td className='align-middle'><p className="badge badge-success">Diterima</p></td>
+                                            </tr>
+                                            <tr>
+                                                <td className='align-middle text-center'><p className="badge badge-secondary h6">2</p></td>
+                                                <td className='align-middle'>
+                                                    <div>
+                                                        <p className="my-0 h6">Dimas Rifai Lombu</p>
+                                                        <p className="my-0">dimas@mail.com</p>
+                                                        <p className="my-0">202309182982998</p>
+                                                    </div>
+                                                </td>
+                                                <td className='align-middle'><p className="h6">Cloud Computing</p></td>
+                                                <td className='align-middle'><p className="h6">60.00</p></td>
+                                                <td className='align-middle'>
+                                                    <div>
+                                                        <p className="my-0 h6">05/28/2021</p>
+                                                        <p className="my-0">36:23</p>
+                                                    </div>
+                                                </td>
+                                                <td className='align-middle'>
+                                                    <div>
+                                                        <p className="my-0">Benar: 20 Jawaban</p>
+                                                        <p className="my-0">Salah: 20 Jawaban</p>
+                                                        <p className="my-0">Jumlah: 40 Jawaban</p>
+                                                    </div>
+                                                </td>
+                                                <td className='align-middle'><p className="badge badge-danger">Ditolak</p></td>
+                                            </tr>
                                         </tbody>
                                     </table> : ''
                                 }
