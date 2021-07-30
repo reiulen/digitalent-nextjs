@@ -2,29 +2,28 @@ import React, { useState, useEffect } from 'react';
 
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
-import { newArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
-import { NEW_ARTIKEL_RESET } from '../../../../redux/types/publikasi/artikel.type'
+import { newKategori, clearErrors } from '../../../../redux/actions/publikasi/kategori.actions'
+import { NEW_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.type'
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 
 const TambahKategori = () => {
     const dispatch = useDispatch()
 
-    const { loading, error, success } = useSelector(state => state.newArtikel)
+    const { loading, error, success } = useSelector(state => state.newKategori)
 
     useEffect(() => {
 
         if (success) {
-            dispatch({
-                type: NEW_ARTIKEL_RESET
-            })
+            setNamaKategori('')
+            setJenisKategori('')
         }
 
     }, [dispatch, success]);
 
 
-    const [nama_kategori, setNamaKategori] = useState('')
-    const [jenis_kategori_id, setJenisKategoriId] = useState('')
+    const [nama, setNamaKategori] = useState('')
+    const [jenis_kategori, setJenisKategori] = useState('')
 
 
     const onSubmit = (e) => {
@@ -33,14 +32,25 @@ const TambahKategori = () => {
             dispatch(clearErrors())
         }
 
-        const data = {
-            nama_kategori,
-            jenis_kategori_id,
+        if (success) {
+            dispatch({
+                type: NEW_KATEGORI_RESET
+            })
         }
 
-        dispatch(newArtikel(data))
+        const data = {
+            nama,
+            jenis_kategori,
+        }
+
+        dispatch(newKategori(data))
         console.log(data)
     }
+
+    const onNewReset = () => {
+        dispatch({ type: NEW_KATEGORI_RESET })
+    }
+
 
     return (
         <PageWrapper>
@@ -50,6 +60,18 @@ const TambahKategori = () => {
                     <div className="alert-text">{error}</div>
                     <div className="alert-close">
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+                : ''
+            }
+            {success ?
+                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                    <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+                    <div className="alert-text">{success}</div>
+                    <div className="alert-close">
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
                             <span aria-hidden="true"><i className="ki ki-close"></i></span>
                         </button>
                     </div>
@@ -66,15 +88,20 @@ const TambahKategori = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Nama Kategori</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" placeholder="Isi Nama kategori disini" value={nama_kategori} onChange={(e) => setNamaKategori(e.target.value)} />
+                                    <input type="text" className="form-control" placeholder="Isi Nama kategori disini" value={nama} onChange={(e) => setNamaKategori(e.target.value)} />
                                 </div>
                             </div>
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Jenis Kategori</label>
                                 <div className="col-sm-10">
-                                    <select name="" id="" className='form-control' onChange={e => setJenisKategoriId(e.target.value)}>
-                                        <option value="Kategori">Kategori</option>
+                                    <select name="" id="" value={jenis_kategori} className='form-control' onChange={e => setJenisKategori(e.target.value)} onBlur={e => setJenisKategori(e.target.value)} >
+                                        <option value="Berita">Berita</option>
+                                        <option value="Artikel">Artikel</option>
+                                        <option value="Galeri">Galeri</option>
+                                        <option value="Video">Video</option>
+                                        <option value="Imagetron">Imagetron</option>
+                                        <option value="Faq">Faq</option>
                                     </select>
                                 </div>
                             </div>

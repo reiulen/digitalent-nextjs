@@ -22,7 +22,7 @@ const Faq = () => {
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allFaq)
+    const { loading, error, faq } = useSelector(state => state.allFaq)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -138,11 +138,11 @@ const Faq = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
-                                                <th className='text-center'>Thumbnail</th>
+                                                <th className='text-center'>Judul</th>
                                                 <th>Kategori</th>
-                                                <th>Judul</th>
                                                 <th>Tanggal Membuat</th>
                                                 <th>Dibuat</th>
+                                                <th>Pin FAQ</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
                                                 <th>Action</th>
@@ -150,18 +150,16 @@ const Faq = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
-                                                    '' :
-                                                    artikel && artikel.map((artikel) => {
-                                                        return <tr key={artikel.id}>
-                                                            <td className='text-center'>
-                                                                <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
-                                                            </td>
-                                                            <td className='align-middle'>{artikel.kategori_id}</td>
-                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
-                                                            <td className='align-middle'>{artikel.created_at}</td>
-                                                            <td className='align-middle'>{artikel.users_id}</td>
-                                                            <td className='align-middle'>{artikel.publish}</td>
+                                                !faq || faq && faq.faq.length === 0 ?
+                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    faq && faq.faq.map((row) => {
+                                                        return <tr key={row.id}>
+                                                            <td className='align-middle'>{row.judul}</td>
+                                                            <td className='align-middle'>{row.kategori_id}</td>
+                                                            <td className='align-middle'>{row.users_id}</td>
+                                                            <td className='align-middle'>{row.judul}</td>
+                                                            <td className='align-middle'>{row.created_at}</td>
+                                                            <td className='align-middle'>{row.publish}</td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
@@ -178,12 +176,12 @@ const Faq = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {faq && faq.perPage < faq.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={faq.perPage}
+                                            totalItemsCount={faq.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -195,7 +193,7 @@ const Faq = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {faq && faq.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

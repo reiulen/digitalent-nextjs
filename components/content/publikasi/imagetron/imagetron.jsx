@@ -15,14 +15,14 @@ import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { getAllImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
 
 const Imagetron = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
+    const { loading, error, imagetron } = useSelector(state => state.allImagetron)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -31,7 +31,7 @@ const Imagetron = () => {
 
     useEffect(() => {
 
-        dispatch(getAllArtikel())
+        dispatch(getAllImagetron())
 
     }, [dispatch])
 
@@ -150,18 +150,18 @@ const Imagetron = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
-                                                    '' :
-                                                    artikel && artikel.map((artikel) => {
-                                                        return <tr key={artikel.id}>
+                                                !imagetron || imagetron && imagetron.imagetron.length === 0 ?
+                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    imagetron && imagetron.imagetron.map((row) => {
+                                                        return <tr key={row.id}>
                                                             <td className='text-center'>
                                                                 <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
                                                             </td>
-                                                            <td className='align-middle'>{artikel.kategori_id}</td>
-                                                            <td className='align-middle'>{artikel.judul_artikel}</td>
-                                                            <td className='align-middle'>{artikel.created_at}</td>
-                                                            <td className='align-middle'>{artikel.users_id}</td>
-                                                            <td className='align-middle'>{artikel.publish}</td>
+                                                            <td className='align-middle'>{row.kategori_id}</td>
+                                                            <td className='align-middle'>{row.judul}</td>
+                                                            <td className='align-middle'>{row.created_at}</td>
+                                                            <td className='align-middle'>{row.users_id}</td>
+                                                            <td className='align-middle'>{row.publish}</td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
@@ -178,12 +178,12 @@ const Imagetron = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {imagetron && imagetron.perPage < imagetron.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={imagetron.perPage}
+                                            totalItemsCount={imagetron.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -195,7 +195,7 @@ const Imagetron = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {imagetron && imagetron.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

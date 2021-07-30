@@ -4,10 +4,12 @@ import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from 'react-redux'
-import { newArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
-import { NEW_ARTIKEL_RESET } from '../../../../redux/types/publikasi/artikel.type'
+
+import { newVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
+import { NEW_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
 
 import PageWrapper from '../../../wrapper/page.wrapper';
+import LoadingPage from '../../../LoadingPage';
 
 const TambahVidio = () => {
     const editorRef = useRef()
@@ -19,7 +21,7 @@ const TambahVidio = () => {
         ssr: false
     })
 
-    const { loading, error, success } = useSelector(state => state.newArtikel)
+    const { loading, error, success } = useSelector(state => state.newVideo)
 
     useEffect(() => {
 
@@ -28,22 +30,31 @@ const TambahVidio = () => {
         // }
 
         if (success) {
-            dispatch({
-                type: NEW_ARTIKEL_RESET
-            })
+            setKategoriId('')
+            setJudulVideo('')
+            setIsiVideo('')
+            setUrlVideo('')
+            setGambar('')
+            setPublish(false)
+            setTag('')
+            setGambarPreview('/assets/media/default.jpg')
+            // dispatch({
+            //     type: NEW_ARTIKEL_RESET
+            // })
         }
 
     }, [dispatch, error, success]);
 
 
-    const [judul_video, setJudulVideo] = useState('')
-    const [isi_vedeo, setIsiVideo] = useState('');
-    const [gambar, setGambar] = useState('')
-    const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
-    const [url_video, setUrlVideo] = useState('')
     const [kategori_id, setKategoriId] = useState('')
-    const [user_id, setUserId] = useState(1)
+    const [users_id, setUserId] = useState(1)
+    const [judul_video, setJudulVideo] = useState('')
+    const [isi_video, setIsiVideo] = useState('');
+    const [url_video, setUrlVideo] = useState('')
+    const [gambar, setGambar] = useState('')
     const [tag, setTag] = useState('')
+    const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
+    const [publish, setPublish] = useState(false)
 
     const onChangeGambar = (e) => {
         if (e.target.name === 'gambar') {
@@ -63,18 +74,29 @@ const TambahVidio = () => {
         if (error) {
             dispatch(clearErrors())
         }
-
-        const data = {
-            judul_video,
-            isi_artikel,
-            gambar,
-            kategori_id,
-            user_id,
-            tag
+        if (success) {
+            dispatch({
+                type: NEW_VIDEO_RESET
+            })
         }
 
-        dispatch(newArtikel(data))
+        const data = {
+            kategori_id,
+            users_id,
+            judul_video,
+            isi_video,
+            url_video,
+            gambar,
+            tag,
+            publish
+        }
+
+        dispatch(newVideo(data))
         console.log(data)
+    }
+
+    const onNewReset = () => {
+        dispatch({ type: NEW_VIDEO_RESET })
     }
 
     return (
@@ -91,7 +113,24 @@ const TambahVidio = () => {
                 </div>
                 : ''
             }
+            {success ?
+                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                    <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+                    <div className="alert-text">{success}</div>
+                    <div className="alert-close">
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
+                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+                : ''
+            }
             <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+                {
+                    loading ?
+                        <LoadingPage loading={loading} />
+                        : ''
+                }
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Tambah Video</h3>
@@ -108,14 +147,14 @@ const TambahVidio = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi Video</label>
                                 <div className="col-sm-10">
-                                    <textarea className='form-control' placeholder='isi deskripsi video disini' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_vedeo}></textarea>
+                                    <textarea className='form-control' placeholder='isi deskripsi video disini' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video}></textarea>
                                     <small className='text-danger'>*Maksimal 160 Karakter</small>
                                 </div>
                             </div>
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Thumbnail</label>
-                                <div className="col-sm-2">
+                                <div className="col-sm-1">
                                     <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
                                         <Image
                                             src={gambarPreview}
@@ -125,7 +164,7 @@ const TambahVidio = () => {
                                         />
                                     </figure>
                                 </div>
-                                <div className="col-sm-8">
+                                <div className="col-sm-9">
                                     <div className="input-group">
                                         <div className="custom-file">
                                             <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
@@ -150,8 +189,9 @@ const TambahVidio = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
                                 <div className="col-sm-10">
-                                    <select name="" id="" className='form-control' onChange={e => setKategoriId(e.target.value)}>
-                                        <option value="Kategori">Kategori</option>
+                                    <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => setKategoriId(e.target.value)} >
+                                        <option value="1">Kategori</option>
+                                        <option value="2">Kategori 2</option>
                                     </select>
                                 </div>
                             </div>
@@ -167,12 +207,14 @@ const TambahVidio = () => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
-                                        checked={false}
+                                        checked={publish}
                                         onlabel=' '
                                         onstyle='primary'
                                         offlabel=' '
                                         offstyle='danger'
                                         size='sm'
+                                        width={30}
+                                        onChange={(checked) => setPublish(checked)}
                                     />
                                 </div>
                             </div>

@@ -1,35 +1,35 @@
 import {
-    KATEGORI_REQUEST,
-    KATEGORI_SUCCESS,
-    KATEGORI_FAIL,
+    IMAGETRON_REQUEST,
+    IMAGETRON_SUCCESS,
+    IMAGETRON_FAIL,
 
-    NEW_KATEGORI_REQUEST,
-    NEW_KATEGORI_SUCCESS,
-    NEW_KATEGORI_RESET,
-    NEW_KATEGORI_FAIL,
+    NEW_IMAGETRON_REQUEST,
+    NEW_IMAGETRON_SUCCESS,
+    NEW_IMAGETRON_RESET,
+    NEW_IMAGETRON_FAIL,
 
-    DELETE_KATEGORI_REQUEST,
-    DELETE_KATEGORI_SUCCESS,
-    DELETE_KATEGORI_RESET,
-    DELETE_KATEGORI_FAIL,
+    DELETE_IMAGETRON_REQUEST,
+    DELETE_IMAGETRON_SUCCESS,
+    DELETE_IMAGETRON_RESET,
+    DELETE_IMAGETRON_FAIL,
 
     CLEAR_ERRORS,
-} from '../../types/publikasi/kategori.type'
+} from '../../types/publikasi/imagetron.type'
 
-export const allKategoriReducer = (state = { kategori: [] }, action) => {
+export const allImagetronReducer = (state = { imagetron: [] }, action) => {
     switch (action.type) {
-        case KATEGORI_REQUEST:
+        case IMAGETRON_REQUEST:
             return {
                 loading: true
             }
 
-        case KATEGORI_SUCCESS:
+        case IMAGETRON_SUCCESS:
             return {
                 loading: false,
-                kategori: action.payload.data
+                imagetron: action.payload.data
             }
 
-        case KATEGORI_FAIL:
+        case IMAGETRON_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -45,27 +45,27 @@ export const allKategoriReducer = (state = { kategori: [] }, action) => {
     }
 }
 
-export const newKategoriReducer = (state = { kategori: {} }, action) => {
+export const newImagetronReducer = (state = { imagetron: {} }, action) => {
     switch (action.type) {
-        case NEW_KATEGORI_REQUEST:
+        case NEW_IMAGETRON_REQUEST:
             return {
                 loading: true
             }
 
-        case NEW_KATEGORI_SUCCESS:
+        case NEW_IMAGETRON_SUCCESS:
             return {
                 loading: false,
                 success: action.payload.message,
-                kategori: action.payload.data
+                imagetron: action.payload.data
             }
 
-        case NEW_KATEGORI_FAIL:
+        case NEW_IMAGETRON_FAIL:
             return {
                 loading: false,
                 error: action.payload
             }
 
-        case NEW_KATEGORI_RESET:
+        case NEW_IMAGETRON_RESET:
             return {
                 success: false
             }
@@ -80,26 +80,26 @@ export const newKategoriReducer = (state = { kategori: {} }, action) => {
     }
 }
 
-export const deleteKategoriReducer = (state = {}, action) => {
+export const deleteImagetronReducer = (state = {}, action) => {
     switch (action.type) {
-        case DELETE_KATEGORI_REQUEST:
+        case DELETE_IMAGETRON_REQUEST:
             return {
                 loading: true
             }
 
-        case DELETE_KATEGORI_SUCCESS:
+        case DELETE_IMAGETRON_SUCCESS:
             return {
                 loading: false,
                 isDeleted: action.payload
             }
 
-        case DELETE_KATEGORI_RESET:
+        case DELETE_IMAGETRON_RESET:
             return {
                 loading: false,
                 isDeleted: false
             }
 
-        case DELETE_KATEGORI_FAIL:
+        case DELETE_IMAGETRON_FAIL:
             return {
                 loading: false,
                 error: action.payload

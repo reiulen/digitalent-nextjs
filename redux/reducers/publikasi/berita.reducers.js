@@ -8,6 +8,11 @@ import {
     NEW_BERITA_RESET,
     NEW_BERITA_FAIL,
 
+    DELETE_BERITA_REQUEST,
+    DELETE_BERITA_SUCCESS,
+    DELETE_BERITA_RESET,
+    DELETE_BERITA_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/berita.type'
 
@@ -67,6 +72,42 @@ export const newBeritaReducer = (state = { berita: {} }, action) => {
 
         case CLEAR_ERRORS:
             return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const deleteBeritaReducer = (state = {}, action) => {
+    switch (action.type) {
+        case DELETE_BERITA_REQUEST:
+            return {
+                loading: true
+            }
+
+        case DELETE_BERITA_SUCCESS:
+            return {
+                loading: false,
+                isDeleted: action.payload
+            }
+
+        case DELETE_BERITA_RESET:
+            return {
+                loading: false,
+                isDeleted: false
+            }
+
+        case DELETE_BERITA_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
                 error: null
             }
 

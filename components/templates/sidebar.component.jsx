@@ -126,7 +126,7 @@ const Sidebar = () => {
                                                 <span className="menu-text">Dashboard</span>
                                             </span>
                                         </li>
-                                        <li className="menu-item menu-item-active" aria-haspopup="true">
+                                        <li className="menu-item" aria-haspopup="true">
                                             <a className="menu-link">
                                                 <span className="menu-text">Pelatihan</span>
                                             </a>
