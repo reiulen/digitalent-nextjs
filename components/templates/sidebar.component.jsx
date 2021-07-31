@@ -215,17 +215,17 @@ const Sidebar = () => {
                         </a>
                       </Link>
                     </li>
-                    <li className={router.pathname == "/publikasi/artikel-berita" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
+                    <li className={router.pathname == "/publikasi/berita" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
                       <Link href='/publikasi/berita'>
                         <a className="menu-link">
                           <span className="menu-text">Berita</span>
                         </a>
                       </Link>
                     </li>
-                    <li className={router.pathname == "/publikasi/vidio" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
-                      <Link href='/publikasi/vidio'>
+                    <li className={router.pathname == "/publikasi/video" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
+                      <Link href='/publikasi/video'>
                         <a className="menu-link">
-                          <span className="menu-text">Vidio</span>
+                          <span className="menu-text">Video</span>
                         </a>
                       </Link>
                     </li>
@@ -254,6 +254,13 @@ const Sidebar = () => {
                       <Link href='/publikasi/imagetron'>
                         <a className="menu-link">
                           <span className="menu-text">Imagetron</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className={router.pathname == "/publikasi/pengaturan" ? "menu-item menu-item-active" : "menu-item"} aria-haspopup="true">
+                      <Link href='/publikasi/pengaturan'>
+                        <a className="menu-link">
+                          <span className="menu-text">Pengaturan</span>
                         </a>
                       </Link>
                     </li>
@@ -348,13 +355,15 @@ const Sidebar = () => {
               </li>
 
               <li className={`menu-item menu-item-submenu ${menuItem6}`} onClick={onSetMenuItem6} aria-haspopup="true" data-menu-toggle="hover">
-                <a href="javascript:;" className="menu-link menu-toggle">
-                  <span className="svg-icon menu-icon">
-                    <Image alt='icon-sidebar-kotak-kotak' src='/assets/icon/kotak-kotak.svg' width={24} height={24} />
-                  </span>
-                  <span className="menu-text">Subvit</span>
-                  <i className="menu-arrow"></i>
-                </a>
+                <Link href='/subvit/'>
+                  <a href="javascript:;" className="menu-link menu-toggle">
+                    <span className="svg-icon menu-icon">
+                      <Image alt='icon-sidebar-kotak-kotak' src='/assets/icon/kotak-kotak.svg' width={24} height={24} />
+                    </span>
+                    <span className="menu-text">Subvit</span>
+                    <i className="menu-arrow"></i>
+                  </a>
+                </Link>
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
                   <ul className="menu-subnav">

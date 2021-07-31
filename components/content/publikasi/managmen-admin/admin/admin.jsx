@@ -113,9 +113,9 @@ const Admin = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
+                                                artikel && artikel.artikel.length === 0 ?
                                                     '' :
-                                                    artikel && artikel.map((artikel) => {
+                                                    artikel && artikel.artikel.map((artikel) => {
                                                         return <tr key={artikel.id}>
 
                                                             <td className='align-middle text-center'>{artikel.kategori_id}</td>
@@ -137,12 +137,12 @@ const Admin = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {artikel && artikel.perPage < artikel.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={artikel.perPage}
+                                            totalItemsCount={artikel.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -154,7 +154,7 @@ const Admin = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {artikel && artikel.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

@@ -10,7 +10,6 @@ import PageWrapper from '../../../../wrapper/page.wrapper';
 const TambahRole = () => {
     const dispatch = useDispatch()
 
-
     const { loading, error, success } = useSelector(state => state.newArtikel)
 
     useEffect(() => {

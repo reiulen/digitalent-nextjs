@@ -38,6 +38,7 @@ const TambahFaq = () => {
     const [jawaban, setJawaban] = useState('');
     const [kategori_id, setKategoriId] = useState('')
     const [users_id, setUsersId] = useState(1)
+    const [publishFaq, setPublishFaq] = useState(false)
     const [publish, setPublish] = useState(false)
 
     const onSubmit = (e) => {
@@ -125,14 +126,14 @@ const TambahFaq = () => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ ?</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
-                                        checked={publish}
+                                        checked={publishFaq}
                                         onlabel=' '
                                         onstyle='primary'
                                         offlabel=' '
                                         offstyle='danger'
                                         size='sm'
                                         width={30}
-                                        onChange={(checked) => setPublish(checked)}
+                                        onChange={(checked) => setPublishFaq(checked)}
                                     />
                                 </div>
                             </div>
