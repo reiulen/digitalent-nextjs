@@ -71,23 +71,7 @@ const ListSubstansi = () => {
                                     </div>
                                 </div>
 
-                                <div className="col-lg-2 col-xl-2">
-                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
-                                        <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
-                                            <i className="flaticon-file-1"></i>
-                                            Clone Test
-                                        </a>
-                                    </Link>
-                                </div>
-                                <div className="col-lg-2 col-xl-2">
-                                    <Link href='/publikasi/managemen-admin/admin/tambah'>
-                                        <a className="btn btn-sm btn-light-warning px-6 font-weight-bold btn-block ">
-                                            <i className="flaticon2-paper"></i>
-                                            Tipe Soal
-                                        </a>
-                                    </Link>
-                                </div>
-                                <div className="col-lg-2 col-xl-2">
+                                <div className="col-lg-2 col-xl-2 ml-auto">
                                     <Link href='/subvit/substansi/tambah'>
                                         <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
                                             <i className="flaticon2-notepad"></i>
