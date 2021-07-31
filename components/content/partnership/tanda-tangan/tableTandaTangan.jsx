@@ -88,15 +88,15 @@ const TableTandaTangan = () => {
                       <td className="align-middle text-center">
                         Web Developer
                       </td>
-                      <td className="align-middle text-center">
+                      <td className="align-middle text-center col-2">
                         <select name="" id="" className="form-control">
                           <option value="Kategori" selected>
                             aktif
                           </option>
-                          <option value="Kategori">
+                          {/* <option value="Kategori">
                             pengajuan - pembahasan
-                          </option>
-                          <option value="Kategori">pengajuan - revisi</option>
+                          </option> */}
+                          <option value="Kategori">tidak aktif</option>
                         </select>
                       </td>
                       <td className="align-middle text-center">

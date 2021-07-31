@@ -40,17 +40,33 @@ const Penandatanganan = () => {
               Tambah Tanda Tangan Digital
             </h3>
           </div>
-          <div className="d-flex justify-content-center">
+          <h1
+            className="text-center"
+            style={{
+              /* Heading 20 / bold */
+              fontWeight: "500",
+              fontSize: "20px",
+              lineHeight: "28px",
+              color: "rgba(0, 0, 0, 0.85)",
+            }}
+          >
+            Dokumen Kerjasama
+          </h1>
+          <div
+            className="d-flex justify-content-center"
+            style={{ marginBottom: "7%" }}
+          >
             <div
               style={{
-                border: "1px solid black",
                 width: "47rem",
-                height: "36rem",
+                height: "40rem",
+                background: "#FFFFFF",
+                boxShadow: "inset 10px 10px 40px rgba(0, 0, 0, 0.08)",
+                borderRadius: "10px",
               }}
             >
               <div
                 style={{
-                  border: "1px solid red;",
                   width: "auto",
                   position: "absolute",
                   left: "50%",
@@ -61,52 +77,131 @@ const Penandatanganan = () => {
                 <div
                   {...getRootProps({ className: "dropzone" })}
                   style={{
+                    marginTop: "13%",
                     background: "#f3f6f9",
                     border: " 1px dashed #3699FF",
-                    minHeight: "10rem",
-                    width: "30rem",
+                    MinHeight: "10rem",
+                    Minwidth: "30rem",
                   }}
                 >
                   <input {...getInputProps()} />
                   <div className="text-center">
-                    Click or drag file to this area to upload <br />
-                    Support for a single upload. Strictly prohibit from
-                    uploading <br /> company data or other band files
+                    <Image
+                      src="/assets/icon/file-upload.svg"
+                      height={40}
+                      width={40}
+                    ></Image>
                   </div>
-                  <div className="text-center"></div>
+                  <div
+                    className="text-center mt-5"
+                    color={{ color: "rgba(0, 0, 0, 0.85)" }}
+                  >
+                    Click or drag file to this area to upload <br />
+                    <span style={{ color: "rgba(0, 0, 0, 0.45)" }}>
+                      Support for a single upload. Strictly prohibit from
+                      uploading <br /> company data or other band files
+                    </span>
+                  </div>
                 </div>
                 <aside style={thumbsContainer}>{/* {thumbs} */}</aside>
               </div>
             </div>
           </div>
-
-          {/* <div className="card-body">
-            <div class="card mx-auto" style={{ width: "60%", height: "35rem" }}>
-              <div
-                {...getRootProps({ className: "dropzone" })}
+          <div
+            style={{
+              // border: "1px solid black",
+              position: "relative",
+              left: "50%",
+              top: "50%",
+              width: "62%",
+              marginTop: "5%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <div
+              className="d-flex justify-content-start"
+              // style={{ marginTop: "10%" }}
+            >
+              <label htmlFor="staticEmail" className=" col-form-label">
+                Pihak 1
+              </label>
+              <div className="col-sm-4 ml-3">
+                <select name="" id="" className="form-control">
+                  <option value="Kategori" selected>
+                    Dqlab
+                  </option>
+                  <option value="Kategori">Microsoft</option>
+                  <option value="Kategori">Google</option>
+                </select>
+              </div>
+              <button
+                className="text-center ml-5"
+                type="submit"
                 style={{
-                  background: "#f3f6f9",
-                  border: " 1px dashed #3699FF",
-                  height: "200px",
-                  margin: "20%",
+                  backgroundColor: "#FFE2E6",
+                  color: "#F65464",
+                  border: "none",
+                  padding: "5px 16px",
+                  borderRadius: "4px",
                 }}
               >
-                <input {...getInputProps()} />
-                <div>
-                  <Image
-                    src="/file-dragNdrop.svg"
-                    alt="Picture of the author"
-                    width={500}
-                    height={500}
-                  />
-                </div>
-                <span className="text-center">
-                  Support for a single upload. Strictly prohibit from uploading
-                  company data or other band files
-                </span>
-              </div>
+                Batalkan
+              </button>
+              <button
+                className="text-center ml-3"
+                type="submit"
+                style={{
+                  backgroundColor: "#C7F9C9",
+                  color: "#52A655",
+                  border: "none",
+                  padding: "5px 16px",
+                  borderRadius: "4px",
+                }}
+              >
+                Sisipkan
+              </button>
             </div>
-          </div> */}
+            <div className="d-flex justify-content-start mt-5">
+              <label htmlFor="staticEmail" className=" col-form-label">
+                Pihak 2
+              </label>
+              <div className="col-md-4 ml-3">
+                <select name="" id="" className="form-control">
+                  <option value="Kategori" selected>
+                    Dqlab
+                  </option>
+                  <option value="Kategori">Microsoft</option>
+                  <option value="Kategori">Google</option>
+                </select>
+              </div>
+              <button
+                className="text-center ml-5"
+                type="submit"
+                style={{
+                  backgroundColor: "#FFE2E6",
+                  color: "#F65464",
+                  border: "none",
+                  padding: "5px 16px",
+                  borderRadius: "4px",
+                }}
+              >
+                Batalkan
+              </button>
+              <button
+                className="text-center ml-3"
+                type="submit"
+                style={{
+                  backgroundColor: "#C7F9C9",
+                  color: "#52A655",
+                  border: "none",
+                  padding: "5px 16px",
+                  borderRadius: "4px",
+                }}
+              >
+                Sisipkan
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </PageWrapper>

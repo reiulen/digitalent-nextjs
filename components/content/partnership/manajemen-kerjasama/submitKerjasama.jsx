@@ -100,7 +100,7 @@ const SubmitKerjasama = () => {
                         id="inputGroupFile04"
                       />
                       <label class="custom-file-label" for="inputGroupFile04">
-                        Choose file
+                        Cari Dokumen
                       </label>
                     </div>
                   </div>

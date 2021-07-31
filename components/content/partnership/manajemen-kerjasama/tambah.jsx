@@ -68,7 +68,11 @@ const Tambah = () => {
                   Judul kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Judul Kerjasama"
+                  />
                 </div>
               </div>
 
@@ -80,15 +84,12 @@ const Tambah = () => {
                   Kategori kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <select
-                    name=""
-                    id=""
-                    className="form-control"
-                    onChange={(e) => setKategoriId(e.target.value)}
-                  >
+                  <select name="" id="" className="form-control">
+                    <option value="Kategori">Pilih Kategori Kerjasama</option>
                     <option value="Kategori" selected>
-                      Pilih Kategori Kerjasama
+                      Pelatihan
                     </option>
+                    <option value="Kategori">Bootcamp</option>
                   </select>
                 </div>
               </div>
@@ -132,6 +133,7 @@ const Tambah = () => {
                     cols="30"
                     rows="5"
                     className="form-control"
+                    placeholder="Masukan Tujuan Kerjasama"
                   ></textarea>
                 </div>
               </div>
@@ -150,6 +152,7 @@ const Tambah = () => {
                     cols="30"
                     rows="5"
                     className="form-control"
+                    placeholder="Masukan Ruang Lingkup Kerjasama"
                   ></textarea>
                 </div>
               </div>
@@ -167,6 +170,7 @@ const Tambah = () => {
                     cols="30"
                     rows="5"
                     className="form-control"
+                    placeholder="Masukan Target Kerjasama disini"
                   ></textarea>
                 </div>
               </div>

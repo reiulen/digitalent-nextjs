@@ -106,7 +106,7 @@ const RevisiKerjasama = () => {
                   </div>
                 </div>
 
-                <div className="col-sm-7" style={{ marginTop: "-5rem;" }}>
+                <div className="col-sm-7" style={{ marginTop: "-6rem;" }}>
                   <div>
                     <label
                       htmlFor="staticEmail"

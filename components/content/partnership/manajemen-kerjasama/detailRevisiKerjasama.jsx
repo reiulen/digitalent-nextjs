@@ -19,7 +19,7 @@ const DetailRevisiKerjasama = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Periode Kerjasama
+                  Periode
                 </label>
                 <div className="col-sm-10">
                   <div className="row align-items-right">
@@ -62,7 +62,7 @@ const DetailRevisiKerjasama = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Periode Kerjasama
+                  Periode
                 </label>
                 <div className="col-sm-10">
                   <div className="row align-items-right">

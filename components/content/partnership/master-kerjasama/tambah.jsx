@@ -40,6 +40,28 @@ const Tambah = () => {
                 </label>
                 <div className="col-sm-10">
                   <input type="text" className="form-control" />
+                </div>
+              </div>
+
+              <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Form Kerjasama
+                </label>
+                <div className="col-sm-10">
+                  <input type="text" className="form-control" />
+                </div>
+              </div>
+
+              <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                ></label>
+                <div className="col-sm-10">
+                  <input type="text" className="form-control" />
                   <div className="mt-5">
                     <Link href="/publikasi/artikel">
                       <a

@@ -288,7 +288,6 @@ const DetailKerjaSama = () => {
                       Kembali
                     </a>
                   </Link>
-                  {/* <button className="btn btn-primary btn-sm">Submit</button> */}
                 </div>
               </div>
             </form>

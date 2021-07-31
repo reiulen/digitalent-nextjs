@@ -88,7 +88,7 @@ const TableKerjasama = () => {
                   </a>
                 </div>
               </div>
-              {/* ------------------------------------- */}
+
               <div className="row align-items-right mt-5">
                 <div className="ml-3">
                   <div class="input-group mb-3" style={{ width: "100px" }}>
