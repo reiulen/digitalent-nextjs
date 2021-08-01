@@ -8,7 +8,7 @@ const RegisterAdmin = () => {
         <>
             <div className="authentication-wraper">
                 <div className="row m-0 bg-white " style={{ minHeight: '100vh' }}>
-                    <div className="col-lg-5 p-0 d-none d-lg-block" style={{ backgroundImage: "url('/assets/media/ilustrator-2.svg')", backgroundRepeat: 'no-repeat', backgroundPosition: 'center bottom', backgroundSize: '500px' }}>
+                    <div className="col-lg-5 p-0 d-none d-lg-block" style={{ backgroundImage: "url('/assets/media/ilustrator-2.svg')", backgroundRepeat: 'no-repeat', backgroundPosition: 'center bottom', backgroundSize: '90%' }}>
                         <div className="container">
                             <div className="body-right text-center" style={{ marginTop: '90px' }}>
                                 <Image src='/assets/logo/logo-3.svg' width={200} height={90} />

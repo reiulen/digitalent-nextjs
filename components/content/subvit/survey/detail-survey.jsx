@@ -54,9 +54,11 @@ const DetailSurvey = () => {
                     <div className="card-header">
                         <h3 className="card-title font-weight-bolder text-dark">Survey FGA - Cloud Computing</h3>
                         <div className="card-toolbar">
-                            <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
-                                Edit
-                            </a>
+                            <Link href='/subvit/survey/edit/step-1'>
+                                <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
+                                    Edit
+                                </a>
+                            </Link>
                         </div>
                     </div>
 
@@ -102,7 +104,7 @@ const DetailSurvey = () => {
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Bank Soal</h3>
                         <div className="card-toolbar">
-                            <Link href='/subvit/substansi/tambah'>
+                            <Link href='/subvit/survey/tambah/step-2'>
                                 <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block ">
                                     Tambah Soal
                                 </a>

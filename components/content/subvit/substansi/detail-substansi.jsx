@@ -17,7 +17,7 @@ import {
   clearErrors,
 } from "/redux/actions/subvit/subtance.actions";
 
-const ListSubstansi = () => {
+const DetailSubstansi = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -66,17 +66,79 @@ const ListSubstansi = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
+          <div className="card-header">
+            <h3 className="card-title font-weight-bolder text-dark">
+              Substansi FGA - Cloud Computing
+            </h3>
+            <div className="card-toolbar">
+              <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
+                Edit
+              </a>
+            </div>
+          </div>
+
+          <div className="card-body">
+            <div className="row">
+              <div className="col-md-4">
+                <div className="row">
+                  <div
+                    className="col title-1 font-weight-bold"
+                    style={{ color: "#80808F" }}
+                  >
+                    <p>Akademi</p>
+                    <p>Tema</p>
+                    <p>Pelatihan</p>
+                    <p>Status</p>
+                  </div>
+                  <div className="col value-1">
+                    <p>FGA</p>
+                    <p>Cloude Computing</p>
+                    <p>-</p>
+                    <p>Publish</p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-4">
+                <div className="row">
+                  <div
+                    className="col title-1 font-weight-bold"
+                    style={{ color: "#80808F" }}
+                  >
+                    <p>Pelaksanaan</p>
+                    <p>Jumlah Soal</p>
+                    <p>Durasi Tes</p>
+                  </div>
+                  <div className="col value-1">
+                    <p>1 - 5 Juli 2021</p>
+                    <p>40 Soal</p>
+                    <p>60 Menit</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="col-lg-12 order-1 px-0">
+        <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              List Test Substansi
+              Bank Soal
             </h3>
-            <div className="card-toolbar">{/* for add */}</div>
+            <div className="card-toolbar">
+              <Link href="/subvit/substansi/tambah">
+                <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block ">
+                  Tambah Soal
+                </a>
+              </Link>
+            </div>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-6 col-xl-6">
+                <div className="col-lg-12 col-xl-12">
                   <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
@@ -89,31 +151,6 @@ const ListSubstansi = () => {
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
                   </div>
-                </div>
-
-                <div className="col-lg-2 col-xl-2">
-                  <Link href="/subvit/substansi/clone">
-                    <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
-                      <i className="flaticon-file-1"></i>
-                      Clone Test
-                    </a>
-                  </Link>
-                </div>
-                <div className="col-lg-2 col-xl-2">
-                  <Link href="/subvit/substansi/tipe-soal">
-                    <a className="btn btn-sm btn-light-warning px-6 font-weight-bold btn-block ">
-                      <i className="flaticon2-paper"></i>
-                      Tipe Soal
-                    </a>
-                  </Link>
-                </div>
-                <div className="col-lg-2 col-xl-2">
-                  <Link href="/subvit/substansi/tambah/step-1">
-                    <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
-                      <i className="flaticon2-notepad"></i>
-                      Tambah Soal
-                    </a>
-                  </Link>
                 </div>
               </div>
             </div>
@@ -134,13 +171,10 @@ const ListSubstansi = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>Akademi</th>
-                        <th>Tema</th>
-                        <th>Bank Soal</th>
-                        <th>Pelaksaan</th>
-                        <th>Kategori</th>
+                        <th>ID Soal</th>
+                        <th>Soal</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+                        <th className="text-center">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -151,9 +185,7 @@ const ListSubstansi = () => {
                             return (
                               <tr key={subtance.id}>
                                 <td className="align-middle text-center">
-                                  <span className="badge badge-secondary">
-                                    {subtance.no}
-                                  </span>
+                                  {subtance.no}
                                 </td>
                                 <td className="align-middle">
                                   {subtance.academy}
@@ -161,29 +193,16 @@ const ListSubstansi = () => {
                                 <td className="align-middle">
                                   {subtance.theme}
                                 </td>
-                                <td className="align-middle">200 Soal</td>
-                                <td className="align-middle">
-                                  {subtance.start_at}
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.category}
-                                </td>
                                 <td className="align-middle">
                                   <span className="badge badge-success">
                                     Publish
                                   </span>
                                 </td>
-                                <td className="align-middle">
-                                  <Link href="/subvit/substansi/report">
-                                    <a>
-                                      <ButtonAction icon="setting.svg" />
-                                    </a>
-                                  </Link>
+                                <td className="align-middle text-center">
                                   <ButtonAction
                                     icon="write.svg"
-                                    link="/subvit/substansi/1"
+                                    link="/subvit/substansi/soal/1"
                                   />
-                                  <ButtonAction icon="detail.svg" />
                                   <ButtonAction icon="trash.svg" />
                                 </td>
                               </tr>
@@ -257,4 +276,4 @@ const ListSubstansi = () => {
   );
 };
 
-export default ListSubstansi;
+export default DetailSubstansi;
