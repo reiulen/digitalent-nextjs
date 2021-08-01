@@ -21,7 +21,7 @@ const TambahTandaTangan = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Tambah Kerjasama
+              Tambah Tanda Tangan Digital
             </h3>
           </div>
           <div className="card-body">
@@ -34,7 +34,11 @@ const TambahTandaTangan = () => {
                   Nama
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Nama"
+                  />
                 </div>
               </div>
               <div className="form-group row">
@@ -45,7 +49,11 @@ const TambahTandaTangan = () => {
                   Jabatan
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Jabatan"
+                  />
                 </div>
               </div>
               <div className="form-group row">
@@ -122,12 +130,14 @@ const TambahTandaTangan = () => {
               <div className="form-group row">
                 <div className="row align-items-right mt-5 ml-auto">
                   <div className="col-sm mr-4">
-                    <Link href="/publikasi/artikel">
+                    <Link href="/partnership/tanda-tangan">
                       <a className="btn btn-outline-primary btn-sm mr-3">
                         Kembali
                       </a>
                     </Link>
-                    <button className="btn btn-primary btn-sm">Simpan</button>
+                    <Link href="/partnership/tanda-tangan">
+                      <button className="btn btn-primary btn-sm">Simpan</button>
+                    </Link>
                   </div>
                 </div>
               </div>
