@@ -355,15 +355,15 @@ const Sidebar = () => {
               </li>
 
               <li className={`menu-item menu-item-submenu ${menuItem6}`} onClick={onSetMenuItem6} aria-haspopup="true" data-menu-toggle="hover">
-                <Link href='/subvit/'>
-                  <a href="javascript:;" className="menu-link menu-toggle">
-                    <span className="svg-icon menu-icon">
-                      <Image alt='icon-sidebar-kotak-kotak' src='/assets/icon/kotak-kotak.svg' width={24} height={24} />
-                    </span>
-                    <span className="menu-text">Subvit</span>
-                    <i className="menu-arrow"></i>
-                  </a>
-                </Link>
+                <a href="javascript:;" className="menu-link menu-toggle">
+                  <span className="svg-icon menu-icon">
+                    <Image alt='icon-sidebar-kotak-kotak' src='/assets/icon/kotak-kotak.svg' width={24} height={24} />
+                  </span>
+                  <span className="menu-text">Subvit</span>
+                  <i className="menu-arrow"></i>
+                </a>
+                {/* <Link href='/subvit/'>
+                </Link> */}
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
                   <ul className="menu-subnav">
@@ -381,9 +381,11 @@ const Sidebar = () => {
                     </li>
 
                     <li className="menu-item" aria-haspopup="true">
-                      <a className="menu-link">
-                        <span className="menu-text">Survey</span>
-                      </a>
+                      <Link href='/subvit/survey'>
+                        <a className="menu-link">
+                          <span className="menu-text">Survey</span>
+                        </a>
+                      </Link>
                     </li>
 
                     <li className="menu-item" aria-haspopup="true">
