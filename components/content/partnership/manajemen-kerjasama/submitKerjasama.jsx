@@ -41,6 +41,7 @@ const SubmitKerjasama = () => {
                         startDate={startDate}
                         endDate={endDate}
                         dateFormat="dd/MM/yyyy"
+                        placeholderText="Dari Tanggal"
                         // minDate={addDays(new Date(), 20)}
                       />
                     </div>
@@ -60,6 +61,7 @@ const SubmitKerjasama = () => {
                         minDate={startDate}
                         maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
+                        placeholderText="Sampai Tanggal"
                       />
                     </div>
                   </div>
@@ -74,7 +76,11 @@ const SubmitKerjasama = () => {
                   Nomer Perjanjian Lembaga
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Nomor Perjanjian Lembaga"
+                  />
                 </div>
               </div>
 
@@ -86,7 +92,11 @@ const SubmitKerjasama = () => {
                   Nomer Perjanjian Kemkominfo
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Nomor Perjanjian Kemkominfo"
+                  />
                 </div>
               </div>
 
@@ -100,9 +110,17 @@ const SubmitKerjasama = () => {
                 <div className="col-sm-10">
                   <div className="row align-items-right">
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      <input
-                        type="date"
-                        className="form-control form-control-sm"
+                      <DatePicker
+                        className="form-search-date form-control-sm form-control"
+                        selected={endDate}
+                        onChange={(date) => setEndDate(date)}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
+                        maxDate={addDays(startDate, 20)}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Dari Tanggal"
                       />
                     </div>
                   </div>
@@ -136,7 +154,7 @@ const SubmitKerjasama = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
-                  <Link href="/">
+                  <Link href="/partnership/manajemen-kerjasama/tambah">
                     <a
                       className="btn bg-light-danger mr-2 btn-sm"
                       style={{ color: "red" }}
@@ -145,13 +163,7 @@ const SubmitKerjasama = () => {
                     </a>
                   </Link>
 
-                  <Link href="/partnership/manajemen-kerjasama/detail-kerjasama">
-                    {/* <a
-                      className="btn bg-light-danger mr-2 btn-sm"
-                      style={{ color: "red" }}
-                    >
-                      Batalkan
-                    </a> */}
+                  <Link href="/partnership/manajemen-kerjasama/review-kerjasama">
                     <button className="btn btn-primary btn-sm">Submit</button>
                   </Link>
                 </div>

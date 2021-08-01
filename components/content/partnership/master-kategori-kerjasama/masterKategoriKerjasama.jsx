@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-
 import Link from "next/link";
-import { useRouter } from "next/router";
-
 import Pagination from "react-js-pagination";
-import DatePicker from "react-datepicker";
-
 import PageWrapper from "../../../wrapper/page.wrapper";
-import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
-
-import { useDispatch, useSelector } from "react-redux";
 
 const Table = () => {
   return (
@@ -19,7 +11,7 @@ const Table = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Manajemen Kerjasama
+              Master Kerjasama
             </h3>
             <div className="card-toolbar">
               <Link href="/partnership/master-kategori-kerjasama/tambah">

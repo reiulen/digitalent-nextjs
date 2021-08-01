@@ -14,7 +14,7 @@ const Tambah = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Tambah Kerjasama
+              Tambah Master Kerjasama
             </h3>
           </div>
           <div className="card-body">
@@ -101,12 +101,14 @@ const Tambah = () => {
               <div className="form-group row">
                 <div className="row align-items-right mt-5 ml-auto">
                   <div className="col-sm mr-4">
-                    <Link href="/publikasi/artikel">
+                    <Link href="/partnership/master-kategori-kerjasama">
                       <a className="btn btn-outline-primary btn-sm mr-3">
                         Kembali
                       </a>
                     </Link>
-                    <button className="btn btn-primary btn-sm">Simpan</button>
+                    <Link href="/partnership/tanda-tangan">
+                      <button className="btn btn-primary btn-sm">Simpan</button>
+                    </Link>
                   </div>
                 </div>
               </div>

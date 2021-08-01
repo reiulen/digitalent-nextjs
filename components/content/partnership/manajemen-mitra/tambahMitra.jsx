@@ -46,7 +46,11 @@ const TambahMitra = () => {
                   Nama Lembaga
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Nama Lembaga"
+                  />
                 </div>
               </div>
 
@@ -58,7 +62,11 @@ const TambahMitra = () => {
                   Email
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Email"
+                  />
                 </div>
               </div>
 
@@ -70,7 +78,11 @@ const TambahMitra = () => {
                   Website
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Website"
+                  />
                 </div>
               </div>
 
@@ -82,7 +94,11 @@ const TambahMitra = () => {
                   Alamat
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Alamat"
+                  />
                 </div>
               </div>
 
@@ -94,7 +110,11 @@ const TambahMitra = () => {
                   Provinsi
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Provinsi"
+                  />
                 </div>
               </div>
 
@@ -106,7 +126,11 @@ const TambahMitra = () => {
                   Kota / Kabupaten
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Kota / Kabupaten"
+                  />
                 </div>
               </div>
 
@@ -118,7 +142,11 @@ const TambahMitra = () => {
                   Kode Pos
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Kode Pos"
+                  />
                 </div>
               </div>
 
@@ -130,7 +158,11 @@ const TambahMitra = () => {
                   Nama PIC
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Nama"
+                  />
                 </div>
               </div>
 
@@ -142,7 +174,11 @@ const TambahMitra = () => {
                   No. Kontak PIC
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan NO. Kontak"
+                  />
                 </div>
               </div>
 
@@ -154,19 +190,25 @@ const TambahMitra = () => {
                   Email PIC
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Email"
+                  />
                 </div>
               </div>
 
               <div className="form-group row">
                 <div className="row align-items-right mt-5 ml-auto">
                   <div className="col-sm mr-4">
-                    <Link href="/publikasi/artikel">
+                    <Link href="/partnership/manajemen-kerjasama">
                       <a className="btn btn-outline-primary btn-sm mr-3">
                         Kembali
                       </a>
                     </Link>
-                    <button className="btn btn-primary btn-sm">Simpan</button>
+                    <Link href="/partnership/manajemen-kerjasama">
+                      <button className="btn btn-primary btn-sm">Simpan</button>
+                    </Link>
                   </div>
                 </div>
               </div>

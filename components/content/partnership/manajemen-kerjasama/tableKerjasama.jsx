@@ -19,7 +19,7 @@ const Table = () => {
         <div className="row">
           <CardPage
             background="bg-light-success"
-            icon="orang-tambah-green.svg"
+            icon="user-blue.svg"
             color="#74BBB7"
             value="12"
             titleValue="Kerjasama"
@@ -27,7 +27,7 @@ const Table = () => {
           />
           <CardPage
             background="bg-light-warning"
-            icon="garis-yellow.svg"
+            icon="user-orange.svg"
             color="#634100"
             value="2"
             titleValue="Kerjasama"
@@ -35,7 +35,7 @@ const Table = () => {
           />
           <CardPage
             background="bg-light-danger"
-            icon="mail-purple.svg"
+            icon="info-danger.svg"
             color="#F65464"
             value="32"
             titleValue="Kerjasama"
@@ -165,9 +165,12 @@ const Table = () => {
                         </select>
                       </td>
                       <td className="align-middle text-center">
+                        <ButtonAction
+                          icon="detail.svg"
+                          link="manajemen-kerjasama/detail-data-kerjasama"
+                        />
                         <ButtonAction icon="setting.svg" />
                         <ButtonAction icon="write.svg" />
-                        <ButtonAction icon="trash.svg" />
                       </td>
                     </tr>
                   </tbody>

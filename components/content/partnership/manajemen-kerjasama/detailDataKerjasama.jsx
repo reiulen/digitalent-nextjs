@@ -5,7 +5,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
-const TableKerjasama = () => {
+const DetailDataKerjasama = () => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -16,13 +16,7 @@ const TableKerjasama = () => {
             </h3>
             <div className="card-toolbar">
               <Link href="/partnership/manajemen-kerjasama/submit">
-                <a
-                  className="btn px-6 font-weight-bold btn-block"
-                  style={{
-                    color: "#FFFFFF !important",
-                    backgroundColor: "#40A9FF",
-                  }}
-                >
+                <a className="btn px-6 font-weight-bold btn-block btn-primary">
                   Tambah Kerjasama Baru
                 </a>
               </Link>
@@ -264,4 +258,4 @@ const TableKerjasama = () => {
   );
 };
 
-export default TableKerjasama;
+export default DetailDataKerjasama;
