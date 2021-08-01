@@ -5,17 +5,17 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
-const tableKerjasama = () => {
+const TableKerjasama = () => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Manajemen Kerjasama
+              Kerjasama Microsoft
             </h3>
             <div className="card-toolbar">
-              <Link href="/partnership/manajemen-kerjasama/tambah">
+              <Link href="/partnership/manajemen-kerjasama/submit">
                 <a
                   className="btn px-6 font-weight-bold btn-block"
                   style={{
@@ -59,6 +59,92 @@ const tableKerjasama = () => {
                   </a>
                 </div>
               </div>
+
+              <div className="row align-items-right mt-5">
+                <div className="ml-3">
+                  <div class="input-group mb-3" style={{ width: "100px" }}>
+                    <select
+                      class="custom-select"
+                      id="inputGroupSelect02"
+                      style={{
+                        background:
+                          "#ffffff url('/tes.png') right 1rem center/18px 20px no-repeat",
+                      }}
+                    >
+                      <option selected>Mitra</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="ml-3" style={{ width: "200px;" }}>
+                  <select
+                    class="custom-select"
+                    id="inputGroupSelect02"
+                    style={{
+                      background:
+                        "#ffffff url('/tes.png') right 1rem center/18px 20px no-repeat",
+                    }}
+                  >
+                    <option selected>Kategori Kerjasama</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+                <div className="ml-3" style={{ width: "120px;" }}>
+                  <select
+                    class="custom-select"
+                    id="inputGroupSelect02"
+                    style={{
+                      background:
+                        "#ffffff url('/tes.png') right 1rem center/18px 20px no-repeat",
+                    }}
+                  >
+                    <option selected>Status</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+                <div className="col-lg-1 col-xl-1">
+                  <a
+                    href="#"
+                    className="btn btn-sm btn-light-primary font-weight-bold btn-block"
+                    style={{ width: "7rem !important" }}
+                  >
+                    Filter
+                  </a>
+                </div>
+                <div className="col-lg-1 col-xl-1">
+                  <a
+                    href="#"
+                    className="btn btn-sm bg-light-danger px-2 font-weight-bold btn-block"
+                    style={{
+                      color: "#F65464",
+                      width: "6rem !important",
+                      marginLeft: "2rem",
+                    }}
+                  >
+                    Reset
+                  </a>
+                </div>
+                <div className="col-lg-2 col-xl-2 ml-auto">
+                  <a
+                    href="#"
+                    style={{
+                      color: "#FFFFFF !important",
+                      backgroundColor: "#40A9FF",
+                      width: "100px",
+                      marginLeft: "auto",
+                    }}
+                    className="btn btn-sm font-weight-bold btn-block"
+                  >
+                    Export .csv
+                  </a>
+                </div>
+              </div>
             </div>
 
             <div className="table-page mt-5">
@@ -67,9 +153,17 @@ const tableKerjasama = () => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center align-middle">No</th>
+                      <th className="text-center align-middle">Mitra</th>
                       <th className="text-center align-middle">
-                        Kategori Kerjasama
+                        Judul Kerjasama
                       </th>
+                      <th className="text-center align-middle">Periode</th>
+                      <th className="text-center align-middle">
+                        Tanggal Penandatanganan
+                      </th>
+                      {/* <th className="text-center align-middle">
+                        Tanggal Selesai
+                      </th> */}
                       <th className="text-center align-middle">Status</th>
                       <th className="text-center align-middle">Action</th>
                     </tr>
@@ -84,19 +178,29 @@ const tableKerjasama = () => {
                           1
                         </button>
                       </td>
+                      <td className="align-middle text-center">Microsoft</td>
                       <td className="align-middle text-center">
                         Proposal Pelatihan Programmer Web
                       </td>
+                      <td className="align-middle text-center">3 Tahun</td>
+                      <td className="align-middle text-center">12 Juli 2021</td>
                       <td className="align-middle text-center">
                         <select name="" id="" className="form-control">
                           <option value="Kategori" selected>
                             aktif
                           </option>
-                          <option value="Kategori">deadactive</option>
+                          <option value="Kategori">non aktif</option>
+                          <option value="Kategori">pengajuan - revisi</option>
                         </select>
                       </td>
-                      <td className="align-middle text-center">
-                        {/* <ButtonAction icon="setting.svg" /> */}
+                      <td className="align-middle">
+                        <Link href="/partnership/manajemen-kerjasama/detail-kerjasama">
+                          <a className="menu-link">
+                            <ButtonAction icon="detail.svg" />
+                            {/* <span className="menu-text">Tes Substansi</span> */}
+                          </a>
+                        </Link>
+                        <ButtonAction icon="setting.svg" />
                         <ButtonAction icon="write.svg" />
                         <ButtonAction icon="trash.svg" />
                       </td>
@@ -160,4 +264,4 @@ const tableKerjasama = () => {
   );
 };
 
-export default tableKerjasama;
+export default TableKerjasama;

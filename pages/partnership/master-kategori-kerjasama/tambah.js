@@ -1,5 +1,5 @@
 import Layout from "../../../components/templates/layout.component";
-import Tambah from "../../../components/content/partnership/master-kerjasama/tambah";
+import Tambah from "../../../components/content/partnership/master-kategori-kerjasama/tambah";
 
 export default function KerjaSamaPage() {
   return (
