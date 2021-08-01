@@ -5,7 +5,7 @@ export default function VidioPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Managemen Vidio'>
+                <Layout title='Managemen Video'>
                     <Vidio />
                 </Layout>
             </div>

@@ -22,7 +22,7 @@ const Role = () => {
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel, perPage, total, } = useSelector(state => state.allArtikel)
+    const { loading, error, artikel } = useSelector(state => state.allArtikel)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -137,12 +137,12 @@ const Role = () => {
                                         </thead>
                                         <tbody>
                                             {
-                                                artikel && artikel.length === 0 ?
+                                                artikel && artikel.artikel.length === 0 ?
                                                     '' :
-                                                    artikel && artikel.map((artikel) => {
+                                                    artikel && artikel.artikel.map((artikel) => {
                                                         return <tr key={artikel.id}>
 
-                                                            <td className='align-middle text-center'>{artikel.kategori_id}</td>
+                                                            <td className='align-middle text-center'>{artikel.jenis_kategori}</td>
                                                             <td className='align-middle'>{artikel.judul_artikel}</td>
                                                             <td className='align-middle'>{artikel.created_at}</td>
                                                             <td className='align-middle'>
@@ -159,12 +159,12 @@ const Role = () => {
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {artikel && artikel.perPage < artikel.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={artikel.perPage}
+                                            totalItemsCount={artikel.total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -176,7 +176,7 @@ const Role = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {artikel && artikel.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">

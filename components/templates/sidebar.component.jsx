@@ -295,7 +295,7 @@ const Sidebar = () => {
                     </li>
                     <li
                       className={
-                        router.pathname == "/publikasi/artikel-berita"
+                        router.pathname == "/publikasi/berita"
                           ? "menu-item menu-item-active"
                           : "menu-item"
                       }
@@ -309,15 +309,15 @@ const Sidebar = () => {
                     </li>
                     <li
                       className={
-                        router.pathname == "/publikasi/vidio"
+                        router.pathname == "/publikasi/video"
                           ? "menu-item menu-item-active"
                           : "menu-item"
                       }
                       aria-haspopup="true"
                     >
-                      <Link href="/publikasi/vidio">
+                      <Link href="/publikasi/video">
                         <a className="menu-link">
-                          <span className="menu-text">Vidio</span>
+                          <span className="menu-text">Video</span>
                         </a>
                       </Link>
                     </li>
@@ -374,6 +374,20 @@ const Sidebar = () => {
                       <Link href="/publikasi/imagetron">
                         <a className="menu-link">
                           <span className="menu-text">Imagetron</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li
+                      className={
+                        router.pathname == "/publikasi/pengaturan"
+                          ? "menu-item menu-item-active"
+                          : "menu-item"
+                      }
+                      aria-haspopup="true"
+                    >
+                      <Link href="/publikasi/pengaturan">
+                        <a className="menu-link">
+                          <span className="menu-text">Pengaturan</span>
                         </a>
                       </Link>
                     </li>
@@ -540,6 +554,8 @@ const Sidebar = () => {
                   <span className="menu-text">Subvit</span>
                   <i className="menu-arrow"></i>
                 </a>
+                {/* <Link href='/subvit/'>
+                </Link> */}
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
                   <ul className="menu-subnav">
@@ -560,9 +576,11 @@ const Sidebar = () => {
                     </li>
 
                     <li className="menu-item" aria-haspopup="true">
-                      <a className="menu-link">
-                        <span className="menu-text">Survey</span>
-                      </a>
+                      <Link href="/subvit/survey">
+                        <a className="menu-link">
+                          <span className="menu-text">Survey</span>
+                        </a>
+                      </Link>
                     </li>
 
                     <li className="menu-item" aria-haspopup="true">
