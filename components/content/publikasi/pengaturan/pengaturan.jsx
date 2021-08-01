@@ -99,7 +99,7 @@ const Pengaturan = () => {
                                 </div>
                             </div>
                             <div className="form-group row form-inline">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Masimal FAQ</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Maksimal FAQ</label>
                                 <div className="col-sm-5">
                                     <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={judul} onChange={(e) => setJudulImagetron(e.target.value)} /> Page
                                 </div>

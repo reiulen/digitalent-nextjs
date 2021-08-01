@@ -45,7 +45,7 @@ const EditSoalSurvey = () => {
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Soal A</h3>
                         <div className="card-toolbar">
-                            <Link href='/subvit/substansi/tambah'>
+                            <Link href='/subvit/survey/tambah'>
                                 <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
                                     Edit
                                 </a>
