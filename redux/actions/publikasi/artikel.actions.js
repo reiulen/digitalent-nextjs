@@ -33,7 +33,7 @@ export const getAllArtikel = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/index-administrator-artikel')
+        const { data } = await axios.get(process.env.END_POINT_API + '/api/index-administrator-artikel')
 
         dispatch({
             type: ARTIKEL_SUCCESS,
@@ -63,7 +63,7 @@ export const newArtikel = (artikelData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/create-administrator-artikel', artikelData)
+        const { data } = await axios.post(process.env.END_POINT_API + '/api/create-administrator-artikel', artikelData)
 
         dispatch({
             type: NEW_ARTIKEL_SUCCESS,
@@ -83,7 +83,7 @@ export const deleteArtikel = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_ARTIKEL_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API + `publikasi/api/artikel/${id}`)
+        const { data } = await axios.delete(process.env.END_POINT_API + `/api/artikel/${id}`)
 
         dispatch({
             type: DELETE_ARTIKEL_SUCCESS,
