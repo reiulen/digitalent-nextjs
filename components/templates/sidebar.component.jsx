@@ -164,7 +164,7 @@ const Sidebar = () => {
                       </a>
                     </li>
                     <li className="menu-item" aria-haspopup="true">
-                      <Link href="/">
+                      <Link href="/publikasi">
                         <a className="menu-link">
                           <span className="menu-text">Publikasi</span>
                         </a>

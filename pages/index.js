@@ -1,13 +1,10 @@
-import DashbardPublikasi from '../components/content/publikasi/dashboard/dashboard-publikasi'
-import Layout from '../components/templates/layout.component'
+import LoginAdmin from "../components/content/auth/admin/login"
 
-export default function Home() {
+export default function LoginAdminPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title='Dashboard Publikasi'>
-          <DashbardPublikasi />
-        </Layout>
+        <LoginAdmin />
       </div>
     </>
   )
