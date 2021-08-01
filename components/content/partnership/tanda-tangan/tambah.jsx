@@ -2,9 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
+import SignaturePad from "react-signature-pad-wrapper";
 
 const TambahTandaTangan = () => {
   const importSwitch = () => import("bootstrap-switch-button-react");
+
+  const signCanvas = useRef({});
+  const clear = () => {
+    signCanvas.current.clear();
+  };
+
   const SwitchButton = dynamic(importSwitch, {
     ssr: false,
   });
@@ -30,7 +37,6 @@ const TambahTandaTangan = () => {
                   <input type="text" className="form-control" />
                 </div>
               </div>
-
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -42,7 +48,6 @@ const TambahTandaTangan = () => {
                   <input type="text" className="form-control" />
                 </div>
               </div>
-
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -51,13 +56,22 @@ const TambahTandaTangan = () => {
                   Buat Tanda Tangan
                 </label>
                 <div className="col-sm-10">
-                  <textarea
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="5"
-                    className="form-control"
-                  ></textarea>
+                  <div
+                    style={{
+                      background: "#FFFFFF",
+                      boxShadow: "inset 10px 10px 40px rgba(0, 0, 0, 0.08)",
+                      borderRadius: "10px",
+                    }}
+                  >
+                    <SignaturePad
+                      ref={signCanvas}
+                      options={{
+                        minWidth: 1,
+                        maxWidth: 3,
+                        penColor: "rgb(66, 133, 244)",
+                      }}
+                    />
+                  </div>
                   <div className="col-sm-10 mt-5">
                     <Link href="/publikasi/artikel">
                       <a
@@ -71,6 +85,8 @@ const TambahTandaTangan = () => {
                       </a>
                     </Link>
                     <button
+                      type="button"
+                      onClick={clear}
                       className="btn btn-sm"
                       style={{
                         backgroundColor: "#EDEF80",
@@ -83,7 +99,9 @@ const TambahTandaTangan = () => {
                 </div>
               </div>
 
-              <div className="form-group row">
+              {/* masih rancu di pakai atau tidaknya */}
+
+              {/* <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
@@ -100,8 +118,7 @@ const TambahTandaTangan = () => {
                     size="sm"
                   />
                 </div>
-              </div>
-
+              </div> */}
               <div className="form-group row">
                 <div className="row align-items-right mt-5 ml-auto">
                   <div className="col-sm mr-4">

@@ -218,13 +218,16 @@ const TableKerjasama = () => {
                           <option value="Kategori" selected>
                             aktif
                           </option>
-                          <option value="Kategori">
-                            pengajuan - pembahasan
-                          </option>
+                          <option value="Kategori">non aktif</option>
                           <option value="Kategori">pengajuan - revisi</option>
                         </select>
                       </td>
                       <td className="align-middle">
+                        <Link href="/partnership/manajemen-kerjasama/view-list">
+                          <a className="menu-link">
+                            <ButtonAction icon="detail.svg" />
+                          </a>
+                        </Link>
                         <ButtonAction icon="setting.svg" />
                         <ButtonAction icon="write.svg" />
                         <ButtonAction icon="trash.svg" />

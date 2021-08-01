@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
-
 import Link from "next/link";
 import Pagination from "react-js-pagination";
-
 import PageWrapper from "../../../wrapper/page.wrapper";
+import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
-const TableTandaTangan = () => {
+const tableKerjasama = () => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Tanda Tangan Digital
+              Master Kategori Kerjasama
             </h3>
             <div className="card-toolbar">
-              <Link href="/partnership/tanda-tangan/tambah">
+              <Link href="/partnership/master-kategori-kerjasama/tambah">
                 <a
                   className="btn px-6 font-weight-bold btn-block"
                   style={{
@@ -24,7 +23,7 @@ const TableTandaTangan = () => {
                     backgroundColor: "#40A9FF",
                   }}
                 >
-                  Tambah Tanda Tangan
+                  Tambah Kerjasama Baru
                 </a>
               </Link>
             </div>
@@ -68,15 +67,16 @@ const TableTandaTangan = () => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center align-middle">No</th>
-                      <th className="text-center align-middle">Nama</th>
-                      <th className="text-center align-middle">Jabatan</th>
+                      <th className="text-center align-middle">
+                        Kategori Kerjasama
+                      </th>
                       <th className="text-center align-middle">Status</th>
                       <th className="text-center align-middle">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="text-center align-middle">
+                      <td className="text-center align-middle   ">
                         <button
                           className="btn mr-1"
                           style={{ background: "#F3F6F9", borderRadius: "6px" }}
@@ -84,23 +84,19 @@ const TableTandaTangan = () => {
                           1
                         </button>
                       </td>
-                      <td className="align-middle text-center">Lord Dendy</td>
                       <td className="align-middle text-center">
-                        Web Developer
+                        Proposal Pelatihan Programmer Web
                       </td>
-                      <td className="align-middle text-center col-2">
+                      <td className="align-middle text-center">
                         <select name="" id="" className="form-control">
                           <option value="Kategori" selected>
                             aktif
                           </option>
-                          {/* <option value="Kategori">
-                            pengajuan - pembahasan
-                          </option> */}
-                          <option value="Kategori">tidak aktif</option>
+                          <option value="Kategori">deadactive</option>
                         </select>
                       </td>
                       <td className="align-middle text-center">
-                        <ButtonAction icon="setting.svg" />
+                        {/* <ButtonAction icon="setting.svg" /> */}
                         <ButtonAction icon="write.svg" />
                         <ButtonAction icon="trash.svg" />
                       </td>
@@ -164,4 +160,4 @@ const TableTandaTangan = () => {
   );
 };
 
-export default TableTandaTangan;
+export default tableKerjasama;

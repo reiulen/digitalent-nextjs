@@ -178,12 +178,17 @@ const Tambah = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
-                  <Link href="/publikasi/artikel">
+                  <Link href="/">
                     <a className="btn btn-outline-primary mr-2 btn-sm">
                       Kembali
                     </a>
                   </Link>
-                  <button className="btn btn-primary btn-sm">Submit</button>
+                  <Link href="/partnership/manajemen-kerjasama/submit ">
+                    {/* <a className="btn btn-outline-primary mr-2 btn-sm">
+                      Kembali
+                    </a> */}
+                    <button className="btn btn-primary btn-sm">Submit</button>
+                  </Link>
                 </div>
               </div>
             </form>

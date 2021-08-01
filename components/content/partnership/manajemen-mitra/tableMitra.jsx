@@ -45,7 +45,7 @@ const TableMitra = () => {
               Manajemen Mitra
             </h3>
             <div className="card-toolbar">
-              <Link href="/partnership/manajemen-kerjasama/tambah">
+              <Link href="/partnership/manajemen-mitra/tambah">
                 <a
                   className="btn px-6 font-weight-bold btn-block"
                   style={{
@@ -181,7 +181,11 @@ const TableMitra = () => {
                         </select>
                       </td>
                       <td className="align-middle">
-                        <ButtonAction icon="setting.svg" />
+                        <Link href="/partnership/manajemen-kerjasama/detail-data-kerjasama">
+                          <a>
+                            <ButtonAction icon="detail.svg" />
+                          </a>
+                        </Link>
                         <ButtonAction icon="write.svg" />
                         <ButtonAction icon="trash.svg" />
                       </td>
