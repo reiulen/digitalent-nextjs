@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  newArtikel,
-  clearErrors,
-} from "/redux/actions/publikasi/artikel.actions";
+
 import { NEW_ARTIKEL_RESET } from "/redux/types/publikasi/artikel.type";
 import { useRouter } from "next/router";
 
@@ -23,7 +19,7 @@ const StepTwo = () => {
   const router = useRouter();
 
   const saveAndContinue = () => {
-    router.push("/subvit/substansi/tambah/step-3");
+    router.push("/subvit/survey/tambah/step-3");
   };
 
   const saveDraft = () => {
@@ -44,10 +40,6 @@ const StepTwo = () => {
     }
   }, [dispatch, error, success]);
 
-  const [nama, setNama] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm_password, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
   const [answerKey, setAnswerKey] = useState("");
 
@@ -82,7 +74,7 @@ const StepTwo = () => {
       ) : (
         ""
       )}
-      <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+      <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">

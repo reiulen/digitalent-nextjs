@@ -33,10 +33,6 @@ const StepThree = () => {
     }
   }, [dispatch, error, success]);
 
-  const [nama, setNama] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm_password, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
 
   const onSubmit = (e) => {
@@ -70,7 +66,7 @@ const StepThree = () => {
       ) : (
         ""
       )}
-      <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+      <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="3"></StepInput>
           <div className="card-header border-0">
@@ -192,9 +188,11 @@ const StepThree = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <button className="btn btn-light-primary btn-sm mr-2">
-                    Simpan & Lanjut
-                  </button>
+                  <Link href='/subvit/survey/'>
+                    <a className="btn btn-light-primary btn-sm mr-2">
+                      Simpan & Lanjut
+                    </a>
+                  </Link>
                   <button className="btn btn-primary btn-sm">
                     Simpan Draft
                   </button>
