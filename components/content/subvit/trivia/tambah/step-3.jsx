@@ -11,6 +11,7 @@ import { NEW_ARTIKEL_RESET } from "/redux/types/publikasi/artikel.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
+import { useRouter } from "next/router";
 
 const StepThree = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ const StepThree = () => {
   const SwitchButton = dynamic(importSwitch, {
     ssr: false,
   });
+  const router = useRouter();
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
 
@@ -39,20 +41,17 @@ const StepThree = () => {
   const [confirm_password, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (error) {
-      dispatch(clearErrors());
-    }
-
-    const data = {
-      nama_role,
-    };
-
-    dispatch(newArtikel(data));
-    console.log(data);
+  const saveAndContinue = () => {
+    router.push("/subvit/substansi/clone/step-2");
   };
 
+  const saveDraft = () => {
+    router.push("/subvit/substansi");
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <PageWrapper>
       {error ? (
@@ -202,10 +201,16 @@ const StepThree = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <button className="btn btn-light-primary btn-sm mr-2">
+                  <button
+                    className="btn btn-light-primary btn-sm mr-2"
+                    onClick={saveAndContinue}
+                  >
                     Simpan & Lanjut
                   </button>
-                  <button className="btn btn-primary btn-sm">
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={saveDraft}
+                  >
                     Simpan Draft
                   </button>
                 </div>

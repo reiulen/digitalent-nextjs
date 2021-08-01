@@ -80,7 +80,7 @@ const StepOne = () => {
       ) : (
         ""
       )}
-      <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+      <div className="col-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="1"></StepInput>
           <div className="card-header border-0">

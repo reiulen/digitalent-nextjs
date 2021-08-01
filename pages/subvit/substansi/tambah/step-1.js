@@ -1,5 +1,5 @@
 import Layout from "/components/templates/layout.component";
-import StepOne from "/components/content/subvit/trivia/tambah/step-1";
+import StepOne from "/components/content/subvit/substansi/tambah/step-1";
 
 export default function TambahBankSoalTesSubstansiStep1() {
   return (
