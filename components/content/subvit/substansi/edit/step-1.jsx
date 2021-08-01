@@ -35,14 +35,10 @@ const StepOne = () => {
     }
   }, [dispatch, error, success]);
 
-  const [nama, setNama] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm_password, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
 
   const saveAndContinue = () => {
-    router.push("/subvit/substansi/clone/step-2");
+    router.push("/subvit/substansi/edit/step-2");
   };
 
   const saveDraft = () => {
@@ -80,12 +76,12 @@ const StepOne = () => {
       ) : (
         ""
       )}
-      <div className="col-12 order-1 order-xxl-2 px-0">
+      <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="1"></StepInput>
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Clone Test Subtansi
+              Edit Test Substansi
             </h3>
           </div>
           <div className="card-body">

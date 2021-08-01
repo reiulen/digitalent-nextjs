@@ -35,10 +35,6 @@ const StepTwo = () => {
     }
   }, [dispatch, error, success]);
 
-  const [nama, setNama] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm_password, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
 
   const saveAndContinue = () => {
@@ -48,6 +44,7 @@ const StepTwo = () => {
   const saveDraft = () => {
     router.push("/subvit/substansi");
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
   };
@@ -79,7 +76,7 @@ const StepTwo = () => {
       ) : (
         ""
       )}
-      <div className="col-lg-12 order-1 order-xxl-2 px-0">
+      <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">

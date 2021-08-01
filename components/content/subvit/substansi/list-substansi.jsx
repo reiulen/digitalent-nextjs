@@ -174,16 +174,18 @@ const ListSubstansi = () => {
                                   </span>
                                 </td>
                                 <td className="align-middle">
-                                  <Link href="/subvit/substansi/report">
-                                    <a>
-                                      <ButtonAction icon="setting.svg" />
-                                    </a>
-                                  </Link>
+                                  <ButtonAction
+                                    icon="setting.svg"
+                                    link="/subvit/substansi/report"
+                                  />
                                   <ButtonAction
                                     icon="write.svg"
                                     link="/subvit/substansi/1"
                                   />
-                                  <ButtonAction icon="detail.svg" />
+                                  <ButtonAction
+                                    icon="detail.svg"
+                                    link="/subvit/substansi/edit/step-1"
+                                  />
                                   <ButtonAction icon="trash.svg" />
                                 </td>
                               </tr>
