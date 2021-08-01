@@ -56,7 +56,7 @@ const SubHeader = () => {
                     {/* // <!--end::Info--> */}
                     {/* // <!--begin::Toolbar--> */}
                     <div className="d-flex align-items-center">
-
+                        <i className='flaticon2-crisp-icons-1 mr-2'></i>
                         <span className="text-muted font-size-base font-weight-bold mr-2"
                             id="kt_dashboard_daterangepicker_title">{days}</span>
 

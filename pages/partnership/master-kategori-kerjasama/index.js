@@ -1,12 +1,12 @@
 import Layout from "../../../components/templates/layout.component";
-import DetailKerjasama from "../../../components/content/partnership/manajemen-kerjasama/detailKerjasama";
+import MasterKategoriKerjasama from "../../../components/content/partnership/master-kategori-kerjasama/masterKategoriKerjasama";
 
 export default function KerjaSamaPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
         <Layout title="Dashboard Publikasi">
-          <DetailKerjasama />
+          <MasterKategoriKerjasama />
         </Layout>
       </div>
     </>

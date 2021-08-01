@@ -222,7 +222,7 @@ const TambahVidio = () => {
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10">
-                                    <Link href='/publikasi/vidio'>
+                                    <Link href='/publikasi/video'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
                                     <button className='btn btn-primary btn-sm'>Submit</button>

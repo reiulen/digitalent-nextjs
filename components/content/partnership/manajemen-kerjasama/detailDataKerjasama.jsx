@@ -4,50 +4,26 @@ import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
-import Image from "next/image";
 
-const TableMitra = () => {
+const TableKerjasama = () => {
   return (
     <PageWrapper>
-      <div className="col-lg-10 col-xxl-4 order-1 order-xxl-2">
-        <div className="row">
-          <CardPage
-            background="bg-light-success"
-            icon="user-blue.svg"
-            color="#2E5654"
-            value="120"
-            titleValue="Mitra"
-            title="Total Mitra"
-          />
-          <CardPage
-            background="bg-light-warning"
-            icon="user-orange.svg"
-            color="#C8A561"
-            value="100"
-            titleValue="Mitra"
-            title="Mitra Yang Aktif"
-          />
-          <CardPage
-            background="bg-light-danger"
-            icon="info-danger.svg"
-            color="#F65464"
-            value="12"
-            titleValue="Mitra"
-            title="Mitra Yang Tidak Aktif"
-          />
-        </div>
-      </div>
-
       <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Manajemen Mitra
+              Kerjasama Microsoft
             </h3>
             <div className="card-toolbar">
-              <Link href="/partnership/manajemen-mitra/tambah">
-                <a className="btn px-6 font-weight-bold btn-block btn-primary">
-                  Tambah Mitra Baru
+              <Link href="/partnership/manajemen-kerjasama/submit">
+                <a
+                  className="btn px-6 font-weight-bold btn-block"
+                  style={{
+                    color: "#FFFFFF !important",
+                    backgroundColor: "#40A9FF",
+                  }}
+                >
+                  Tambah Kerjasama Baru
                 </a>
               </Link>
             </div>
@@ -85,7 +61,24 @@ const TableMitra = () => {
               </div>
 
               <div className="row align-items-right mt-5">
-                <div className="ml-3" style={{ width: "24%;" }}>
+                <div className="ml-3">
+                  <div class="input-group mb-3" style={{ width: "100px" }}>
+                    <select
+                      class="custom-select"
+                      id="inputGroupSelect02"
+                      style={{
+                        background:
+                          "#ffffff url('/tes.png') right 1rem center/18px 20px no-repeat",
+                      }}
+                    >
+                      <option selected>Mitra</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="ml-3" style={{ width: "200px;" }}>
                   <select
                     class="custom-select"
                     id="inputGroupSelect02"
@@ -94,7 +87,22 @@ const TableMitra = () => {
                         "#ffffff url('/tes.png') right 1rem center/18px 20px no-repeat",
                     }}
                   >
-                    <option selected>Semua Status</option>
+                    <option selected>Kategori Kerjasama</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+                </div>
+                <div className="ml-3" style={{ width: "120px;" }}>
+                  <select
+                    class="custom-select"
+                    id="inputGroupSelect02"
+                    style={{
+                      background:
+                        "#ffffff url('/tes.png') right 1rem center/18px 20px no-repeat",
+                    }}
+                  >
+                    <option selected>Status</option>
                     <option value="1">One</option>
                     <option value="2">Two</option>
                     <option value="3">Three</option>
@@ -106,7 +114,7 @@ const TableMitra = () => {
                     className="btn btn-sm btn-light-primary font-weight-bold btn-block"
                     style={{ width: "7rem !important" }}
                   >
-                    Cari
+                    Filter
                   </a>
                 </div>
                 <div className="col-lg-1 col-xl-1">
@@ -122,6 +130,20 @@ const TableMitra = () => {
                     Reset
                   </a>
                 </div>
+                <div className="col-lg-2 col-xl-2 ml-auto">
+                  <a
+                    href="#"
+                    style={{
+                      color: "#FFFFFF !important",
+                      backgroundColor: "#40A9FF",
+                      width: "100px",
+                      marginLeft: "auto",
+                    }}
+                    className="btn btn-sm font-weight-bold btn-block"
+                  >
+                    Export .csv
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -131,10 +153,17 @@ const TableMitra = () => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center align-middle">No</th>
-                      <th className="text-center align-middle">Logo</th>
                       <th className="text-center align-middle">Mitra</th>
-                      <th className="text-center align-middle">Website</th>
-                      <th className="text-center align-middle">Kerjasama</th>
+                      <th className="text-center align-middle">
+                        Judul Kerjasama
+                      </th>
+                      <th className="text-center align-middle">Periode</th>
+                      <th className="text-center align-middle">
+                        Tanggal Penandatanganan
+                      </th>
+                      {/* <th className="text-center align-middle">
+                        Tanggal Selesai
+                      </th> */}
                       <th className="text-center align-middle">Status</th>
                       <th className="text-center align-middle">Action</th>
                     </tr>
@@ -149,37 +178,29 @@ const TableMitra = () => {
                           1
                         </button>
                       </td>
-                      <td className="align-middle text-center">
-                        <Image
-                          src="/assets/icon/dummy-logo.svg"
-                          width={50}
-                          height={50}
-                        />
-                      </td>
+                      <td className="align-middle text-center">Microsoft</td>
                       <td className="align-middle text-center">
                         Proposal Pelatihan Programmer Web
                       </td>
-                      <td className="align-middle text-center">
-                        www.google.com
-                      </td>
-                      <td className="align-middle text-center">3 Kerjasama</td>
+                      <td className="align-middle text-center">3 Tahun</td>
+                      <td className="align-middle text-center">12 Juli 2021</td>
                       <td className="align-middle text-center">
                         <select name="" id="" className="form-control">
                           <option value="Kategori" selected>
                             aktif
                           </option>
-                          {/* <option value="Kategori">
-                            pengajuan - pembahasan
-                          </option> */}
+                          <option value="Kategori">non aktif</option>
                           <option value="Kategori">pengajuan - revisi</option>
                         </select>
                       </td>
                       <td className="align-middle">
-                        <Link href="/partnership/manajemen-kerjasama/detail-data-kerjasama">
-                          <a>
+                        <Link href="/partnership/manajemen-kerjasama/detail-kerjasama">
+                          <a className="menu-link">
                             <ButtonAction icon="detail.svg" />
+                            {/* <span className="menu-text">Tes Substansi</span> */}
                           </a>
                         </Link>
+                        <ButtonAction icon="setting.svg" />
                         <ButtonAction icon="write.svg" />
                         <ButtonAction icon="trash.svg" />
                       </td>
@@ -243,4 +264,4 @@ const TableMitra = () => {
   );
 };
 
-export default TableMitra;
+export default TableKerjasama;

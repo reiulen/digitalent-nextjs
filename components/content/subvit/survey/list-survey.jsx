@@ -7,31 +7,26 @@ import { useRouter } from 'next/router'
 import Pagination from 'react-js-pagination';
 import { css } from '@emotion/react'
 import BeatLoader from 'react-spinners/BeatLoader'
-import DatePicker from 'react-datepicker'
-import { addDays } from 'date-fns'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
-import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllFaq, clearErrors } from '../../../../redux/actions/publikasi/faq.actions'
+import { getAllSubtanceQuestionBanks, clearErrors } from '/redux/actions/subvit/subtance.actions'
 
-const Faq = () => {
+const ListSubstansi = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, faq } = useSelector(state => state.allFaq)
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const { loading, error, subtance, perPage, total, } = useSelector(state => state.allSubtanceQuestionBanks)
 
     let { page = 1 } = router.query
     page = Number(page)
 
     useEffect(() => {
 
-        dispatch(getAllFaq())
+        dispatch(getAllSubtanceQuestionBanks())
 
     }, [dispatch])
 
@@ -54,25 +49,12 @@ const Faq = () => {
                 : ''
             }
 
-            <div className="col-lg-12 col-md-3">
-                <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='FAQ' title='Total Publish' />
-                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='FAQ' title='Total Author' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='FAQ' title='Total Unpublish' />
-                </div>
-            </div>
-
-
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen FAQ</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">List Test Substansi</h3>
                         <div className="card-toolbar">
-                            <Link href='/publikasi/faq/tambah'>
-                                <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
-                                    Tambah FAQ
-                                </a>
-                            </Link>
+
                         </div>
                     </div>
 
@@ -80,7 +62,7 @@ const Faq = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-12 col-xl-12">
+                                <div className="col-lg-6 col-xl-6">
                                     <div className="input-icon">
                                         <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" />
                                         <span>
@@ -88,41 +70,14 @@ const Faq = () => {
                                         </span>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        maxDate={addDays(startDate, 20)}
-                                        dateFormat="dd/MM/yyyy"
-                                    />
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block">Cari</a>
+
+                                <div className="col-lg-2 col-xl-2 ml-auto">
+                                    <Link href='/subvit/survey/tambah/step1'>
+                                        <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                                            <i className="flaticon2-notepad"></i>
+                                            Tambah Soal
+                                        </a>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -138,32 +93,34 @@ const Faq = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
-                                                <th className='text-center'>Judul</th>
+                                                <th className='text-center'>No</th>
+                                                <th>Akademi</th>
+                                                <th>Tema</th>
+                                                <th>Bank Soal</th>
+                                                <th>Pelaksaan</th>
                                                 <th>Kategori</th>
-                                                <th>Tanggal Membuat</th>
-                                                <th>Dibuat</th>
-                                                <th>Pin FAQ</th>
                                                 <th>Status</th>
-                                                <th>Role</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {
-                                                !faq || faq && faq.faq.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    faq && faq.faq.map((row) => {
-                                                        return <tr key={row.id}>
-                                                            <td className='align-middle'>{row.judul}</td>
-                                                            <td className='align-middle'>{row.kategori_id}</td>
-                                                            <td className='align-middle'>{row.users_id}</td>
-                                                            <td className='align-middle'>{row.judul}</td>
-                                                            <td className='align-middle'>{row.created_at}</td>
-                                                            <td className='align-middle'>{row.publish}</td>
-                                                            <td className='align-middle'>Admin Publikasi</td>
+                                                subtance && subtance.length === 0 ?
+                                                    '' :
+                                                    subtance && subtance.map((subtance) => {
+                                                        return <tr key={subtance.id}>
+
+                                                            <td className='align-middle text-center'>{subtance.no}</td>
+                                                            <td className='align-middle'>{subtance.academy}</td>
+                                                            <td className='align-middle'>{subtance.theme}</td>
+                                                            <td className='align-middle'>200 Soal</td>
+                                                            <td className='align-middle'>{subtance.start_at}</td>
+                                                            <td className='align-middle'>{subtance.category}</td>
+                                                            <td className='align-middle'><span className="badge badge-success">Publish</span></td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
-                                                                <ButtonAction icon='write.svg' />
+                                                                <ButtonAction icon='setting.svg' link='/subvit/survey/report/1' />
+                                                                <ButtonAction icon='write.svg' link='/subvit/survey/1' />
+                                                                <ButtonAction icon='detail.svg' />
                                                                 <ButtonAction icon='trash.svg' />
                                                             </td>
                                                         </tr>
@@ -176,12 +133,12 @@ const Faq = () => {
                             </div>
 
                             <div className="row">
-                                {faq && faq.perPage < faq.total &&
+                                {perPage < total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={faq.perPage}
-                                            totalItemsCount={faq.total}
+                                            itemsCountPerPage={perPage}
+                                            totalItemsCount={total}
                                             pageRangeDisplayed={3}
                                             // onChange={handlePagination}
                                             nextPageText={'>'}
@@ -193,7 +150,7 @@ const Faq = () => {
                                         />
                                     </div>
                                 }
-                                {faq && faq.total > 5 ?
+                                {total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
@@ -220,4 +177,4 @@ const Faq = () => {
     )
 }
 
-export default Faq
+export default ListSubstansi

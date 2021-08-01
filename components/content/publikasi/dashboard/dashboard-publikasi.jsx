@@ -8,7 +8,39 @@ const DashbardPublikasi = () => {
         <>
             <PageWrapper>
                 <div className="row">
-                    <div className="card-spacer col-lg-12 col-xxl-4">
+                    <div className="col-lg-12 col-xxl-12 mt-4">
+                        <div className="card card-custom bg-light-primary">
+                            <div className="card-body pt-2" style={{ backgroundPosition: 'left bottom', backgroundImage: "url('/assets/media/jukut.svg')", backgroundRepeat: 'no-repeat' }}>
+                                <div className="d-flex align-items-center mb-10" >
+                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold"  >
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <div className="col-md-12 mt-5">
+                                                    <h4 className="font-weight-bolder text-primary">Halo Admin A</h4>
+                                                </div>
+                                                <div className="col-md-12">
+                                                    <p className='font-weight-bold text-muted'>Sudah Makan Hari ini? <br /> Kalau sudah yuk dicheck verifikasi Test untuk hari ini :)</p>
+                                                </div>
+                                            </div>
+
+                                            <div className="col-md-6">
+                                                <div className="ml-auto float-right ilustrator-dashboard"
+                                                    style={{
+                                                        position: 'absolute', right: '10px',
+                                                        top: '-50px'
+                                                    }}>
+                                                    <Image src='/assets/media/ilustrator-1.svg' width={300} height={200} />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-lg-12 col-xxl-4 my-5">
                         {/* <!--begin::Row--> */}
                         <div className="row m-0">
                             <CardDashboard background='bg-white' color='text-dark' icon='mail.svg' title='Total Berita yang dibaca' muted='Dibaca' mutedValue='200k' />
@@ -19,7 +51,7 @@ const DashbardPublikasi = () => {
                     </div>
                     {/* <!--end::Stats--> */}
 
-                    <div className="col-lg-6 col-xxl-4 order-1 order-xxl-2">
+                    <div className="col-lg-6 col-xxl-4">
                         {/* <!--begin::List Widget 3--> */}
                         <div className="card card-custom card-stretch gutter-b">
                             {/* <!--begin::Header--> */}

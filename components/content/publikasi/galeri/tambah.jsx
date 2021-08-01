@@ -97,6 +97,7 @@ const TambahGaleri = () => {
     const [kategori_id, setKategoriId] = useState('')
     const [user_id, setUserId] = useState(1)
     const [tag, setTag] = useState('')
+    const [publish, setPublish] = useState(false)
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -181,12 +182,14 @@ const TambahGaleri = () => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
-                                        checked={false}
+                                        checked={publish}
                                         onlabel=' '
                                         onstyle='primary'
                                         offlabel=' '
                                         offstyle='danger'
                                         size='sm'
+                                        width={30}
+                                        onChange={(checked) => setPublish(checked)}
                                     />
                                 </div>
                             </div>

@@ -23,7 +23,7 @@ const Berita = () => {
     const router = useRouter()
 
     const { loading, error, berita } = useSelector(state => state.allBerita)
-    const { error: deleteError, isDeleted } = useSelector(state => state.deleteBerita)
+    // const { error: deleteError, isDeleted } = useSelector(state => state.deleteBerita)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -49,7 +49,7 @@ const Berita = () => {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteBerita(id))
+                // dispatch(deleteBerita(id))
                 Swal.fire(
                     'Berhasil ',
                     'Data berhasil dihapus.',
@@ -77,10 +77,10 @@ const Berita = () => {
 
             <div className="col-lg-12 col-md-12">
                 <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Artikel' title='Total Publish' />
-                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Artikel' title='Total Author' />
+                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Berita' title='Total Publish' />
+                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Berita' title='Total Author' />
                     <CardPage background='bg-light-success' icon='orang-tambah-green.svg' color='#74BBB7' value='64' titleValue='K' title='Total Yang Baca' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Artikel' title='Total Unpublish' />
+                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Berita' title='Total Unpublish' />
                 </div>
             </div>
 

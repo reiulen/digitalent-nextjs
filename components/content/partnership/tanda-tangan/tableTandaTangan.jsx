@@ -16,14 +16,8 @@ const TableTandaTangan = () => {
               Tanda Tangan Digital
             </h3>
             <div className="card-toolbar">
-              <Link href="/partnership/manajemen-kerjasama/tambah">
-                <a
-                  className="btn px-6 font-weight-bold btn-block"
-                  style={{
-                    color: "#FFFFFF !important",
-                    backgroundColor: "#40A9FF",
-                  }}
-                >
+              <Link href="/partnership/tanda-tangan/tambah">
+                <a className="btn px-6 font-weight-bold btn-block btn-primary">
                   Tambah Tanda Tangan
                 </a>
               </Link>
