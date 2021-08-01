@@ -54,7 +54,7 @@ const Faq = () => {
                 : ''
             }
 
-            <div className="col-lg-12 col-md-3">
+            <div className="col-lg-12 col-md-12">
                 <div className="row">
                     <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='FAQ' title='Total Publish' />
                     <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='FAQ' title='Total Author' />

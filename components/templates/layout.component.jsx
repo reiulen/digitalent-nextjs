@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Head from 'next/head'
+import Link from 'next/link'
 
 import Sidebar from './sidebar.component'
 import Header from './header.component'
@@ -31,9 +32,7 @@ const Layout = ({ children, title = 'Dashboard' }) => {
                 </div>
             </div >
 
-            {/* // <!-- begin::User Panel--> */}
             <div id="kt_quick_user" className="offcanvas offcanvas-right p-10">
-                {/* // <!--begin::Header--> */}
                 <div className="offcanvas-header d-flex align-items-center justify-content-between pb-5">
                     <h3 className="font-weight-bold m-0">User Profile
                     </h3>
@@ -41,54 +40,43 @@ const Layout = ({ children, title = 'Dashboard' }) => {
                         <i className="ki ki-close icon-xs text-muted"></i>
                     </a>
                 </div>
-                {/* // <!--end::Header--> */}
-                {/* // <!--begin::Content--> */}
+
                 <div className="offcanvas-content pr-5 mr-n5">
-                    {/* // <!--begin::Header--> */}
                     <div className="d-flex align-items-center mt-5">
                         <div className="symbol symbol-100 mr-5">
-                            <div className="symbol-label" style={{ backgroundImage: 'url("assets/media/users/300_21.jpg")' }}></div>
+                            <div className="symbol-label" style={{ backgroundImage: 'url("/assets/media/default.jpg")' }}></div>
                             <i className="symbol-badge bg-success"></i>
                         </div>
                         <div className="d-flex flex-column">
-                            <a href="#" className="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">James Jones</a>
-                            <div className="text-muted mt-1">Application Developer</div>
+                            <a href="#" className="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">Dendy Juliano</a>
+                            <div className="text-muted mt-1">Admin Publikasi</div>
                             <div className="navi mt-2">
                                 <a href="#" className="navi-item">
                                     <span className="navi-link p-0 pb-2">
                                         <span className="navi-icon mr-1">
                                             <span className="svg-icon svg-icon-lg svg-icon-primary">
-                                                {/* // <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Mail-notification.svg--> */}
-                                                <rect x="0" y="0" width="24" height="24" />
-                                                <circle fill="#000000" opacity="0.3" cx="19.5" cy="17.5" r="2.5" />
-                                                {/* // <!--end::Svg Icon--> */}
+
                                             </span>
                                         </span>
-                                        <span className="navi-text text-muted text-hover-primary">jm@softplus.com</span>
+                                        <span className="navi-text text-muted text-hover-primary">dendy@gmail.com</span>
                                     </span>
                                 </a>
-                                <a href="#" className="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Sign Out</a>
+                                <Link href='/'>
+                                    <a className="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Sign Out</a>
+                                </Link>
                             </div>
                         </div>
                     </div>
-                    {/* // <!--end::Header--> */}
 
-                    {/* // <!--begin::Separator--> */}
                     <div className="separator separator-dashed mt-8 mb-5"></div>
-                    {/* // <!--end::Separator--> */}
 
-                    {/* // <!--begin::Nav--> */}
-                    <div className="navi navi-spacer-x-0 p-0">
-                        {/* // <!--begin::Item--> */}
-                        <a href="custom/apps/user/profile-1/personal-information.html" className="navi-item">
+                    {/* <div className="navi navi-spacer-x-0 p-0">
+                        <a href="#" className="navi-item">
                             <div className="navi-link">
                                 <div className="symbol symbol-40 bg-light mr-3">
                                     <div className="symbol-label">
                                         <span className="svg-icon svg-icon-md svg-icon-success">
-                                            {/* // <!--begin::Svg Icon | path:assets/media/svg/icons/General/Notification2.svg--> */}
-                                            <rect x="0" y="0" width="24" height="24" />
-                                            <circle fill="#000000" opacity="0.3" cx="18.5" cy="5.5" r="2.5" />
-                                            {/* // <!--end::Svg Icon--> */}
+
                                         </span>
                                     </div>
                                 </div>
@@ -100,19 +88,13 @@ const Layout = ({ children, title = 'Dashboard' }) => {
                                 </div>
                             </div>
                         </a>
-                        {/* // <!--end:Item--> */}
-                        {/* // <!--begin::Item--> */}
-                        <a href="custom/apps/user/profile-3.html" className="navi-item">
+
+                        <a href="#" className="navi-item">
                             <div className="navi-link">
                                 <div className="symbol symbol-40 bg-light mr-3">
                                     <div className="symbol-label">
                                         <span className="svg-icon svg-icon-md svg-icon-warning">
-                                            {/* // <!--begin::Svg Icon | path:assets/media/svg/icons/Shopping/Chart-bar1.svg--> */}
-                                            <rect x="0" y="0" width="24" height="24" />
-                                            <rect fill="#000000" opacity="0.3" x="12" y="4" width="3" height="13" rx="1.5" />
-                                            <rect fill="#000000" opacity="0.3" x="7" y="9" width="3" height="8" rx="1.5" />
-                                            <rect fill="#000000" opacity="0.3" x="17" y="11" width="3" height="6" rx="1.5" />
-                                            {/* // <!--end::Svg Icon--> */}
+
                                         </span>
                                     </div>
                                 </div>
@@ -122,23 +104,16 @@ const Layout = ({ children, title = 'Dashboard' }) => {
                                 </div>
                             </div>
                         </a>
-                        {/* // <!--end:Item--> */}
-                    </div>
-                    {/* // <!--end::Nav--> */}
+                    </div> */}
 
                 </div>
-                {/* // <!--end::Content--> */}
             </div>
-            {/* // <!-- end::User Panel--> */}
-            {/* // <!--begin::Scrolltop--> */}
+
             <div id="kt_scrolltop" className="scrolltop">
                 <span className="svg-icon">
-                    {/* // <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg--> */}
-                    <rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
-                    {/* // <!--end::Svg Icon--> */}
+                    <i className='flaticon2-up'></i>
                 </span>
             </div>
-            {/* // <!--end::Scrolltop--> */}
         </>
     )
 }
