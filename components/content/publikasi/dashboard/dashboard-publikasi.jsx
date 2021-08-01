@@ -40,7 +40,7 @@ const DashbardPublikasi = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-12 col-xxl-4 my-5">
+                    <div className="col-lg-12 col-xxl-12 my-5">
                         {/* <!--begin::Row--> */}
                         <div className="row m-0">
                             <CardDashboard background='bg-white' color='text-dark' icon='mail.svg' title='Total Berita yang dibaca' muted='Dibaca' mutedValue='200k' />

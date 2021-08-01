@@ -33,9 +33,7 @@ const Header = () => {
                     {/* <!--end::Header Menu Wrapper--> */}
                     {/* <!--begin::Topbar--> */}
                     <div className="topbar">
-                        {/* <!--begin::Search--> */}
-                        <div className="dropdown" id="kt_quick_search_toggle">
-                            {/* <!--begin::Toggle--> */}
+                        {/* <div className="dropdown" id="kt_quick_search_toggle">
                             <div className="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
                                 <div className="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
                                     <span className="svg-icon svg-icon-xl svg-icon-primary">
@@ -43,12 +41,9 @@ const Header = () => {
                                     </span>
                                 </div>
                             </div>
-                            {/* <!--end::Toggle--> */}
-                            {/* <!--begin::Dropdown--> */}
                             <div
                                 className="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
                                 <div className="quick-search quick-search-dropdown" id="kt_quick_search_dropdown">
-                                    {/* <!--begin:Form--> */}
                                     <form method="get" className="quick-search-form">
                                         <div className="input-group">
                                             <div className="input-group-prepend">
@@ -66,19 +61,12 @@ const Header = () => {
                                             </div>
                                         </div>
                                     </form>
-                                    {/* <!--end::Form--> */}
-                                    {/* <!--begin::Scroll--> */}
                                     <div className="quick-search-wrapper scroll" data-scroll="true" data-height="325"
                                         data-mobile-height="200"></div>
-                                    {/* <!--end::Scroll--> */}
                                 </div>
                             </div>
-                            {/* <!--end::Dropdown--> */}
                         </div>
-                        {/* <!--end::Search--> */}
-                        {/* <!--begin::Notifications--> */}
                         <div className="dropdown">
-                            {/* <!--begin::Toggle--> */}
                             <div className="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
                                 <div className="btn btn-icon btn-clean btn-dropdown btn-lg mr-1 pulse pulse-primary">
                                     <span className="svg-icon svg-icon-xl svg-icon-primary">
@@ -87,23 +75,17 @@ const Header = () => {
                                     <span className="pulse-ring"></span>
                                 </div>
                             </div>
-                            {/* <!--end::Toggle--> */}
-                            {/* <!--begin::Dropdown--> */}
                             <div
                                 className="dropdown-menu p-0 m-0 dropdown-menu-right dropdown-menu-anim-up dropdown-menu-lg">
                                 <form>
-                                    {/* <!--begin::Header--> */}
                                     <div className="d-flex flex-column pt-12 bgi-size-cover bgi-no-repeat rounded-top"
                                         style={{ backgroundImage: 'url(assets/media/misc/bg-1.jpg)' }}>
-                                        {/* <!--begin::Title--> */}
                                         <h4 className="d-flex flex-center rounded-top">
                                             <span className="text-white">User Notifications</span>
                                             <span
                                                 className="btn btn-text btn-success btn-sm font-weight-bold btn-font-md ml-2">23
                                                 new</span>
                                         </h4>
-                                        {/* <!--end::Title--> */}
-                                        {/* <!--begin::Tabs--> */}
                                         <ul className="nav nav-bold nav-tabs nav-tabs-line nav-tabs-line-3x nav-tabs-line-transparent-white nav-tabs-line-active-border-success mt-3 px-8"
                                             role="tablist">
                                             <li className="nav-item">
@@ -119,206 +101,43 @@ const Header = () => {
                                                     href="#topbar_notifications_logs">Logs</a>
                                             </li>
                                         </ul>
-                                        {/* <!--end::Tabs--> */}
                                     </div>
-                                    {/* <!--end::Header--> */}
 
-                                    {/* <!--begin::Content--> */}
                                     <div className="tab-content">
-                                        {/* <!--begin::Tabpane--> */}
                                         <div className="tab-pane active show p-8"
                                             id="topbar_notifications_notifications" role="tabpanel">
-                                            {/* <!--begin::Scroll--> */}
                                             <div className="scroll pr-7 mr-n7" data-scroll="true" data-height="300"
                                                 data-mobile-height="200">
-                                                {/* <!--begin::Item--> */}
                                                 <div className="d-flex align-items-center mb-6">
-                                                    {/* <!--begin::Symbol--> */}
                                                     <div className="symbol symbol-40 symbol-light-primary mr-5">
                                                         <span className="symbol-label">
                                                             <span className="svg-icon svg-icon-lg svg-icon-primary">
-                                                                {/* <!--begin::Svg Icon | path:assets/media/svg/icons/Home/Library.svg--> */}
                                                                 <rect x="0" y="0" width="24" height="24" />
                                                                 <rect fill="#000000" opacity="0.3"
                                                                     transform="translate(17.825568, 11.945519) rotate(-19.000000) translate(-17.825568, -11.945519)"
                                                                     x="16.3255682" y="2.94551858" width="3"
                                                                     height="18" rx="1" />
-                                                                {/* <!--end::Svg Icon--> */}
                                                             </span>
                                                         </span>
                                                     </div>
-                                                    {/* <!--end::Symbol--> */}
-                                                    {/* <!--begin::Text--> */}
                                                     <div className="d-flex flex-column font-weight-bold">
                                                         <a href="#"
                                                             className="text-dark text-hover-primary mb-1 font-size-lg">Cool
                                                             App</a>
                                                         <span className="text-muted">Marketing campaign planning</span>
                                                     </div>
-                                                    {/* <!--end::Text--> */}
                                                 </div>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <div className="d-flex align-items-center mb-6">
-                                                    {/* <!--begin::Symbol--> */}
-                                                    <div className="symbol symbol-40 symbol-light-warning mr-5">
-                                                        <span className="symbol-label">
-                                                            <span className="svg-icon svg-icon-lg svg-icon-warning">
-                                                                {/* <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Write.svg--> */}
-                                                                <rect x="0" y="0" width="24" height="24" />
-                                                                {/* <!--end::Svg Icon--> */}
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    {/* <!--end::Symbol--> */}
-                                                    {/* <!--begin::Text--> */}
-                                                    <div className="d-flex flex-column font-weight-bold">
-                                                        <a href="#"
-                                                            className="text-dark-75 text-hover-primary mb-1 font-size-lg">Awesome
-                                                            SAAS</a>
-                                                        <span className="text-muted">Project status update
-                                                            meeting</span>
-                                                    </div>
-                                                    {/* <!--end::Text--> */}
-                                                </div>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <div className="d-flex align-items-center mb-6">
-                                                    {/* <!--begin::Symbol--> */}
-                                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                                        <span className="symbol-label">
-                                                            <span className="svg-icon svg-icon-lg svg-icon-success">
-                                                                {/* <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Group-chat.svg--> */}
-                                                                <rect x="0" y="0" width="24" height="24" />
-                                                                {/* <!--end::Svg Icon--> */}
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    {/* <!--end::Symbol--> */}
-                                                    {/* <!--begin::Text--> */}
-                                                    <div className="d-flex flex-column font-weight-bold">
-                                                        <a href="#"
-                                                            className="text-dark text-hover-primary mb-1 font-size-lg">Claudy
-                                                            Sys</a>
-                                                        <span className="text-muted">Project Deployment &amp;
-                                                            Launch</span>
-                                                    </div>
-                                                    {/* <!--end::Text--> */}
-                                                </div>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <div className="d-flex align-items-center mb-6">
-                                                    {/* <!--begin::Symbol--> */}
-                                                    <div className="symbol symbol-40 symbol-light-danger mr-5">
-                                                        <span className="symbol-label">
-                                                            <span className="svg-icon svg-icon-lg svg-icon-danger">
-                                                                {/* <!--begin::Svg Icon | path:assets/media/svg/icons/General/Attachment2.svg--> */}
-                                                                <rect x="0" y="0" width="24" height="24" />
-                                                                {/* <!--end::Svg Icon--> */}
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    {/* <!--end::Symbol--> */}
-                                                    {/* <!--begin::Text--> */}
-                                                    <div className="d-flex flex-column font-weight-bold">
-                                                        <a href="#"
-                                                            className="text-dark text-hover-primary mb-1 font-size-lg">Trilo
-                                                            Service</a>
-                                                        <span className="text-muted">Analytics &amp; Requirement
-                                                            Study</span>
-                                                    </div>
-                                                    {/* <!--end::Text--> */}
-                                                </div>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <div className="d-flex align-items-center mb-6">
-                                                    {/* <!--begin::Symbol--> */}
-                                                    <div className="symbol symbol-40 symbol-light-info mr-5">
-                                                        <span className="symbol-label">
-                                                            <span className="svg-icon svg-icon-lg svg-icon-info">
-                                                                {/* <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Shield-user.svg--> */}
-                                                                <rect x="0" y="0" width="24" height="24" />
-                                                                {/* <!--end::Svg Icon--> */}
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    {/* <!--end::Symbol--> */}
-                                                    {/* <!--begin::Text--> */}
-                                                    <div className="d-flex flex-column font-weight-bold">
-                                                        <a href="#"
-                                                            className="text-dark text-hover-primary mb-1 font-size-lg">Bravia
-                                                            SAAS</a>
-                                                        <span className="text-muted">Reporting Application</span>
-                                                    </div>
-                                                    {/* <!--end::Text--> */}
-                                                </div>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <div className="d-flex align-items-center mb-6">
-                                                    {/* <!--begin::Symbol--> */}
-                                                    <div className="symbol symbol-40 symbol-light-danger mr-5">
-                                                        <span className="symbol-label">
-                                                            <span className="svg-icon svg-icon-lg svg-icon-danger">
-                                                                {/* <!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Mail-notification.svg--> */}
-                                                                <rect x="0" y="0" width="24" height="24" />
-                                                                <circle fill="#000000" opacity="0.3" cx="19.5"
-                                                                    cy="17.5" r="2.5" />
-                                                                {/* <!--end::Svg Icon--> */}
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    {/* <!--end::Symbol--> */}
-                                                    {/* <!--begin::Text--> */}
-                                                    <div className="d-flex flex-column font-weight-bold">
-                                                        <a href="#"
-                                                            className="text-dark text-hover-primary mb-1 font-size-lg">Express
-                                                            Wind</a>
-                                                        <span className="text-muted">Software Analytics &amp;
-                                                            Design</span>
-                                                    </div>
-                                                    {/* <!--end::Text--> */}
-                                                </div>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <div className="d-flex align-items-center mb-6">
-                                                    {/* <!--begin::Symbol--> */}
-                                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                                        <span className="symbol-label">
-                                                            <span className="svg-icon svg-icon-lg svg-icon-success">
-                                                                {/* <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Bucket.svg--> */}
-                                                                <rect x="0" y="0" width="24" height="24" />
-                                                                {/* <!--end::Svg Icon--> */}
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    {/* <!--end::Symbol--> */}
-                                                    {/* <!--begin::Text--> */}
-                                                    <div className="d-flex flex-column font-weight-bold">
-                                                        <a href="#"
-                                                            className="text-dark text-hover-primary mb-1 font-size-lg">Bruk
-                                                            Fitness</a>
-                                                        <span className="text-muted">Web Design &amp; Development</span>
-                                                    </div>
-                                                    {/* <!--end::Text--> */}
-                                                </div>
-                                                {/* <!--end::Item--> */}
                                             </div>
-                                            {/* <!--end::Scroll--> */}
-                                            {/* <!--begin::Action--> */}
                                             <div className="d-flex flex-center pt-7">
                                                 <a href="#"
                                                     className="btn btn-light-primary font-weight-bold text-center">See
                                                     All</a>
                                             </div>
-                                            {/* <!--end::Action--> */}
                                         </div>
-                                        {/* <!--end::Tabpane--> */}
-                                        {/* <!--begin::Tabpane--> */}
+
                                         <div className="tab-pane" id="topbar_notifications_events" role="tabpanel">
-                                            {/* <!--begin::Nav--> */}
                                             <div className="navi navi-hover scroll my-4" data-scroll="true"
                                                 data-height="300" data-mobile-height="200">
-                                                {/* <!--begin::Item--> */}
                                                 <a href="#" className="navi-item">
                                                     <div className="navi-link">
                                                         <div className="navi-icon mr-2">
@@ -331,229 +150,29 @@ const Header = () => {
                                                         </div>
                                                     </div>
                                                 </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon2-paper-plane text-danger"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">Finance report has been
-                                                                generated</div>
-                                                            <div className="text-muted">25 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i
-                                                                className="flaticon2-user flaticon2-line- text-success"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">New order has been
-                                                                received</div>
-                                                            <div className="text-muted">2 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon2-pin text-primary"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">New customer is registered
-                                                            </div>
-                                                            <div className="text-muted">3 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon2-sms text-danger"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">Application has been
-                                                                approved</div>
-                                                            <div className="text-muted">3 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon2-pie-chart-3 text-warning"></i>
-                                                        </div>
-                                                        <div className="navinavinavi-text">
-                                                            <div className="font-weight-bold">New file has been uploaded
-                                                            </div>
-                                                            <div className="text-muted">5 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon-pie-chart-1 text-info"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">New user feedback received
-                                                            </div>
-                                                            <div className="text-muted">8 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon2-settings text-success"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">System reboot has been
-                                                                successfully completed</div>
-                                                            <div className="text-muted">12 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i
-                                                                className="flaticon-safe-shield-protection text-primary"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">New order has been placed
-                                                            </div>
-                                                            <div className="text-muted">15 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon2-notification text-primary"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">Company meeting canceled
-                                                            </div>
-                                                            <div className="text-muted">19 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon2-fax text-success"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">New report has been
-                                                                received</div>
-                                                            <div className="text-muted">23 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon-download-1 text-danger"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">Finance report has been
-                                                                generated</div>
-                                                            <div className="text-muted">25 hrs ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon-security text-warning"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">New customer comment
-                                                                recieved</div>
-                                                            <div className="text-muted">2 days ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
-                                                {/* <!--begin::Item--> */}
-                                                <a href="#" className="navi-item">
-                                                    <div className="navi-link">
-                                                        <div className="navi-icon mr-2">
-                                                            <i className="flaticon2-analytics-1 text-success"></i>
-                                                        </div>
-                                                        <div className="navi-text">
-                                                            <div className="font-weight-bold">New customer is registered
-                                                            </div>
-                                                            <div className="text-muted">3 days ago</div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                {/* <!--end::Item--> */}
                                             </div>
-                                            {/* <!--end::Nav--> */}
                                         </div>
-                                        {/* <!--end::Tabpane--> */}
-                                        {/* <!--begin::Tabpane--> */}
                                         <div className="tab-pane" id="topbar_notifications_logs" role="tabpanel">
-                                            {/* <!--begin::Nav--> */}
                                             <div className="d-flex flex-center text-center text-muted min-h-200px">All
                                                 caught up!
                                                 <br />No new notifications.
                                             </div>
-                                            {/* <!--end::Nav--> */}
                                         </div>
-                                        {/* <!--end::Tabpane--> */}
                                     </div>
-                                    {/* <!--end::Content--> */}
                                 </form>
                             </div>
-                            {/* <!--end::Dropdown--> */}
                         </div>
-                        {/* <!--end::Notifications--> */}
 
-                        {/* <!--begin::Languages--> */}
                         <div className="dropdown">
-                            {/* <!--begin::Toggle--> */}
                             <div className="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
                                 <div className="btn btn-icon btn-clean btn-dropdown btn-lg mr-1">
                                     <Image width={20} height={20} className="h-20px w-20px rounded-sm"
                                         src="/assets/media/svg/flags/226-united-states.svg" alt="us" />
                                 </div>
                             </div>
-                            {/* <!--end::Toggle--> */}
-                            {/* <!--begin::Dropdown--> */}
                             <div
                                 className="dropdown-menu p-0 m-0 dropdown-menu-anim-up dropdown-menu-sm dropdown-menu-right">
-                                {/* <!--begin::Nav--> */}
                                 <ul className="navi navi-hover py-4">
-                                    {/* <!--begin::Item--> */}
                                     <li className="navi-item">
                                         <a href="#" className="navi-link">
                                             <span className="symbol symbol-20 mr-3">
@@ -562,13 +181,9 @@ const Header = () => {
                                             <span className="navi-text">English</span>
                                         </a>
                                     </li>
-                                    {/* <!--end::Item--> */}
                                 </ul>
-                                {/* <!--end::Nav--> */}
                             </div>
-                            {/* <!--end::Dropdown--> */}
-                        </div>
-                        {/* <!--end::Languages--> */}
+                        </div> */}
 
                         {/* <!--begin::User--> */}
                         <div className="topbar-item">
