@@ -16,13 +16,7 @@ const tableKerjasama = () => {
             </h3>
             <div className="card-toolbar">
               <Link href="/partnership/master-kategori-kerjasama/tambah">
-                <a
-                  className="btn px-6 font-weight-bold btn-block"
-                  style={{
-                    color: "#FFFFFF !important",
-                    backgroundColor: "#40A9FF",
-                  }}
-                >
+                <a className="btn px-6 font-weight-bold btn-block btn-primary">
                   Tambah Kerjasama Baru
                 </a>
               </Link>
