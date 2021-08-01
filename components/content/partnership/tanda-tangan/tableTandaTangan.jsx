@@ -1,15 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 import Pagination from "react-js-pagination";
+import DatePicker from "react-datepicker";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
+import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
-const TableTandaTangan = () => {
+import { useDispatch, useSelector } from "react-redux";
+
+const Table = () => {
   return (
     <PageWrapper>
-      <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+      <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
@@ -17,7 +23,7 @@ const TableTandaTangan = () => {
             </h3>
             <div className="card-toolbar">
               <Link href="/partnership/tanda-tangan/tambah">
-                <a className="btn px-6 font-weight-bold btn-block btn-primary">
+                <a className="btn btn-primary px-6 font-weight-bold btn-block ">
                   Tambah Tanda Tangan
                 </a>
               </Link>
@@ -27,31 +33,19 @@ const TableTandaTangan = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="row align-items-center">
-                    <div className="col-md-12 my-2 my-md-0">
-                      <div className="input-icon">
-                        <input
-                          style={{ background: "#F3F6F9", border: "none" }}
-                          type="text"
-                          className="form-control"
-                          placeholder="Pencarian"
-                          id="kt_datatable_search_query"
-                        />
-                        <span>
-                          <i className="flaticon2-search-1 text-muted"></i>
-                        </span>
-                      </div>
-                    </div>
+                <div className="col-lg-12 col-xl-12">
+                  <div className="input-icon">
+                    <input
+                      style={{ background: "#F3F6F9", border: "none" }}
+                      type="text"
+                      className="form-control"
+                      placeholder="Search..."
+                      id="kt_datatable_search_query"
+                    />
+                    <span>
+                      <i className="flaticon2-search-1 text-muted"></i>
+                    </span>
                   </div>
-                </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-0">
-                  <a
-                    href="#"
-                    className="btn btn-light-primary px-6 font-weight-bold btn-block"
-                  >
-                    Cari
-                  </a>
                 </div>
               </div>
             </div>
@@ -72,30 +66,25 @@ const TableTandaTangan = () => {
                     <tr>
                       <td className="text-center align-middle">
                         <button
-                          className="btn mr-1"
+                          className="btn"
                           style={{ background: "#F3F6F9", borderRadius: "6px" }}
                         >
                           1
                         </button>
                       </td>
-                      <td className="align-middle text-center">Lord Dendy</td>
-                      <td className="align-middle text-center">
+                      <td className="text-center align-middle">Lord Dendy</td>
+                      <td className="text-center align-middle">
                         Web Developer
                       </td>
-                      <td className="align-middle text-center col-2">
+                      <td className="text-center align-middle">
                         <select name="" id="" className="form-control">
-                          <option value="Kategori" selected>
-                            aktif
-                          </option>
-                          {/* <option value="Kategori">
-                            pengajuan - pembahasan
-                          </option> */}
-                          <option value="Kategori">tidak aktif</option>
+                          <option value="1">Aktif</option>
+                          <option value="2">No Aktif</option>
                         </select>
                       </td>
-                      <td className="align-middle text-center">
-                        <ButtonAction icon="setting.svg" />
+                      <td className="text-center align-middle">
                         <ButtonAction icon="write.svg" />
+                        <ButtonAction icon="setting.svg" />
                         <ButtonAction icon="trash.svg" />
                       </td>
                     </tr>
@@ -106,14 +95,13 @@ const TableTandaTangan = () => {
               <div className="row">
                 <div className="table-pagination">
                   <Pagination
-                    // activePage={page}
-                    itemsCountPerPage={10}
-                    totalItemsCount={60}
+                    activePage={5}
+                    itemsCountPerPage={2}
+                    totalItemsCount={5}
                     pageRangeDisplayed={3}
-                    // onChange={handlePagination}
                     nextPageText={">"}
                     prevPageText={"<"}
-                    // firstPageText={"<<"}
+                    firstPageText={"<<"}
                     lastPageText={">>"}
                     itemClass="page-item"
                     linkClass="page-link"
@@ -158,4 +146,4 @@ const TableTandaTangan = () => {
   );
 };
 
-export default TableTandaTangan;
+export default Table;

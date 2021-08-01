@@ -10,7 +10,7 @@ const Tambah = () => {
   });
   return (
     <PageWrapper>
-      <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+      <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
@@ -78,7 +78,8 @@ const Tambah = () => {
                 </div>
               </div>
 
-              <div className="form-group row">
+              {/* masih rancu di pake tidaknya */}
+              {/* <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
@@ -95,7 +96,7 @@ const Tambah = () => {
                     size="sm"
                   />
                 </div>
-              </div>
+              </div> */}
 
               <div className="form-group row">
                 <div className="row align-items-right mt-5 ml-auto">
