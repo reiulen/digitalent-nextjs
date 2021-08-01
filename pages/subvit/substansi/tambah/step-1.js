@@ -1,12 +1,12 @@
 import Layout from "/components/templates/layout.component";
-import Tambah from "/components/content/subvit/substansi/tambah";
+import StepOne from "/components/content/subvit/substansi/tambah/step-1";
 
-export default function TambahPage() {
+export default function TambahBankSoalTesSubstansiStep1() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
                 <Layout title='Tambah Bank Soal Tes Subtansi'>
-                    <Tambah />
+                    <StepOne />
                 </Layout>
             </div>
         </>
