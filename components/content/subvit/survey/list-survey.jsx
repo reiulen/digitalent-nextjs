@@ -131,45 +131,45 @@ const ListSurvey = () => {
                       {subtance && subtance.length === 0
                         ? ""
                         : subtance &&
-                          subtance.map((subtance) => {
-                            return (
-                              <tr key={subtance.id}>
-                                <td className="align-middle text-center">
-                                  {subtance.no}
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.academy}
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.theme}
-                                </td>
-                                <td className="align-middle">200 Soal</td>
-                                <td className="align-middle">
-                                  {subtance.start_at}
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.category}
-                                </td>
-                                <td className="align-middle">
-                                  <span className="badge badge-success">
-                                    Publish
-                                  </span>
-                                </td>
-                                <td className="align-middle">
-                                  <ButtonAction
-                                    icon="setting.svg"
-                                    link="/subvit/survey/report/1"
-                                  />
-                                  <ButtonAction
-                                    icon="write.svg"
-                                    link="/subvit/survey/1"
-                                  />
-                                  <ButtonAction icon="detail.svg" />
-                                  <ButtonAction icon="trash.svg" />
-                                </td>
-                              </tr>
-                            );
-                          })}
+                        subtance.map((subtance) => {
+                          return (
+                            <tr key={subtance.id}>
+                              <td className="align-middle text-center">
+                                {subtance.no}
+                              </td>
+                              <td className="align-middle">
+                                {subtance.academy}
+                              </td>
+                              <td className="align-middle">
+                                {subtance.theme}
+                              </td>
+                              <td className="align-middle">200 Soal</td>
+                              <td className="align-middle">
+                                {subtance.start_at}
+                              </td>
+                              <td className="align-middle">
+                                {subtance.category}
+                              </td>
+                              <td className="align-middle">
+                                <span className="badge badge-success">
+                                  Publish
+                                </span>
+                              </td>
+                              <td className="align-middle">
+                                <ButtonAction
+                                  icon="setting.svg"
+                                  link="/subvit/survey/report/1"
+                                />
+                                <ButtonAction
+                                  icon="write.svg"
+                                  link="/subvit/survey/1"
+                                />
+                                <ButtonAction icon="detail.svg" link='/subvit/survey/edit/step-1' />
+                                <ButtonAction icon="trash.svg" />
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 ) : (

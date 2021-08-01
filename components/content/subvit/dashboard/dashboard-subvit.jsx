@@ -40,7 +40,7 @@ const DashbardSubvit = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2 mt-5">
+                    <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
                         <div className="row mx-auto">
                             <CardDashboardMini background='bg-primary' icon='book-white.svg' color='text-white' title='Tes Subtansi' />
                             <CardDashboardMini background='bg-white' icon='blok4-secondary.svg' color='text-muted' title='Survey' />
@@ -61,7 +61,7 @@ const DashbardSubvit = () => {
                     </div>
                     <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
                         <div className="row h-100">
-                            <div className="col-md-6 mt-5">
+                            <div className="col-md-6">
                                 <div className="card card-custom h-100" style={{ background: '#C9F7F5', backgroundImage: "url('/assets/media/human2.svg')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right bottom', backgroundSize: '100px' }}>
                                     <div className="row">
                                         <div className="card-body">
@@ -72,7 +72,7 @@ const DashbardSubvit = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-md-6 mt-5">
+                            <div className="col-md-6">
                                 <div className="card card-custom h-100 p-5" style={{ background: '#8950FC', backgroundImage: "url('/assets/media/human3.svg')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right bottom', backgroundSize: '120px' }}>
                                     <div className="row">
                                         <div className="card-body">

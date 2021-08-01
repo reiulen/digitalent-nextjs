@@ -33,7 +33,7 @@ export const getAllArtikel = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/index-administrator-artikel')
+        const { data } = await axios.get(process.env.END_POINT_API + 'api/index-administrator-artikel')
 
         dispatch({
             type: ARTIKEL_SUCCESS,
