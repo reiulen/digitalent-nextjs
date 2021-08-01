@@ -10,17 +10,13 @@ import {
 import { NEW_ARTIKEL_RESET } from "/redux/types/publikasi/artikel.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
-import StepInput from "/components/StepInputClone";
+import StepInput from "/components/StepInput";
 import { useRouter } from "next/router";
 
 const StepOne = () => {
   const dispatch = useDispatch();
   const importSwitch = () => import("bootstrap-switch-button-react");
-  const SwitchButton = dynamic(importSwitch, {
-    ssr: false,
-  });
   const router = useRouter();
-
   const { loading, error, success } = useSelector((state) => state.newArtikel);
 
   useEffect(() => {
@@ -42,7 +38,7 @@ const StepOne = () => {
   const [role, setRole] = useState("");
 
   const saveAndContinue = () => {
-    router.push("/subvit/substansi/clone/step-2");
+    router.push("/subvit/substansi/tambah/step-2");
   };
 
   const saveDraft = () => {
@@ -85,7 +81,7 @@ const StepOne = () => {
           <StepInput step="1"></StepInput>
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Clone Test Subtansi
+              Tambah Test Subtansi
             </h3>
           </div>
           <div className="card-body">
@@ -179,17 +175,52 @@ const StepOne = () => {
               </div>
 
               <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label "
+                >
+                  Metode
+                </label>
+                <div className="col-sm-10">
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="method"
+                      value="option1"
+                    />
+                    <label className="form-check-label">Entry Soal</label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="method"
+                      value="option2"
+                    />
+                    <label className="form-check-label">Import .csv/.xls</label>
+                  </div>
+
+                  <div>
+                    <span className="text-muted">
+                      Silahkan Pilih Metode Tambah Test Substansi
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-primary btn-sm mr-2"
                     onClick={saveAndContinue}
+                    className="btn btn-light-primary btn-sm mr-2"
                   >
                     Simpan & Lanjut
                   </button>
                   <button
-                    className="btn btn-primary btn-sm"
                     onClick={saveDraft}
+                    className="btn btn-primary btn-sm"
                   >
                     Simpan Draft
                   </button>

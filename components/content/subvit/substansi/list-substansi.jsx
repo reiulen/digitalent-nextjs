@@ -134,7 +134,11 @@ const ListSubstansi = () => {
                                                             <td className='align-middle'>{subtance.category}</td>
                                                             <td className='align-middle'><span className="badge badge-success">Publish</span></td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
+                                                                <Link href='/subvit/substansi/report'>
+                                                                    <a>
+                                                                        <ButtonAction icon='setting.svg' />
+                                                                    </a>
+                                                                </Link>
                                                                 <ButtonAction icon='write.svg' />
                                                                 <ButtonAction icon='detail.svg' />
                                                                 <ButtonAction icon='trash.svg' />

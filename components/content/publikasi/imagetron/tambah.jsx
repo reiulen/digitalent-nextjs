@@ -106,7 +106,7 @@ const TambahImagetron = () => {
                 </div>
                 : ''
             }
-            <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+            <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Tambah Imagetron</h3>

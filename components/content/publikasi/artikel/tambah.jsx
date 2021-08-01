@@ -125,7 +125,7 @@ const TambahArtikel = () => {
                     : ''
                 }
 
-                <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+                <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                     {
                         loading ?
                             <LoadingPage loading={loading} />

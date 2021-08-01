@@ -10,9 +10,9 @@ import {
 import { NEW_ARTIKEL_RESET } from "/redux/types/publikasi/artikel.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
-import StepInput from "/components/StepInputClone";
+import StepInput from "/components/StepInput";
 
-const StepTwo = () => {
+const StepThree = () => {
   const dispatch = useDispatch();
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
@@ -82,10 +82,10 @@ const StepTwo = () => {
       )}
       <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInput step="3"></StepInput>
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Publish Soal Cloning
+              Publish Soal
             </h3>
           </div>
           <div className="card-body">
@@ -218,4 +218,4 @@ const StepTwo = () => {
   );
 };
 
-export default StepTwo;
+export default StepThree;
