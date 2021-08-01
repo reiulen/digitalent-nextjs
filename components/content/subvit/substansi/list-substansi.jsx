@@ -184,7 +184,7 @@ const ListSubstansi = () => {
                                   />
                                   <ButtonAction
                                     icon="detail.svg"
-                                    link="/subvit/substansi/edit/1"
+                                    link="/subvit/substansi/edit/step-1"
                                   />
                                   <ButtonAction icon="trash.svg" />
                                 </td>
