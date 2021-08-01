@@ -62,8 +62,35 @@ const DetailSurvey = () => {
 
                     <div className="card-body">
                         <div className="row">
-                            <div className="col-md-3">
-
+                            <div className="col-md-4">
+                                <div className="row">
+                                    <div className="col title-1 font-weight-bold" style={{ color: '#80808F' }}>
+                                        <p>Akademi</p>
+                                        <p>Tema</p>
+                                        <p>Pelatihan</p>
+                                        <p>Status</p>
+                                    </div>
+                                    <div className="col value-1">
+                                        <p>FGA</p>
+                                        <p>Cloude Computing</p>
+                                        <p>-</p>
+                                        <p>Publish</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-md-4">
+                                <div className="row">
+                                    <div className="col title-1 font-weight-bold" style={{ color: '#80808F' }}>
+                                        <p>Pelaksanaan</p>
+                                        <p>Jumlah Soal</p>
+                                        <p>Durasi Tes</p>
+                                    </div>
+                                    <div className="col value-1">
+                                        <p>1 - 5 Juli 2021</p>
+                                        <p>40 Soal</p>
+                                        <p>60 Menit</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -115,7 +142,7 @@ const DetailSurvey = () => {
                                                 <th>ID Soal</th>
                                                 <th>Soal</th>
                                                 <th>Status</th>
-                                                <th>Aksi</th>
+                                                <th className='text-center'>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -129,10 +156,8 @@ const DetailSurvey = () => {
                                                             <td className='align-middle'>{subtance.academy}</td>
                                                             <td className='align-middle'>{subtance.theme}</td>
                                                             <td className='align-middle'><span className="badge badge-success">Publish</span></td>
-                                                            <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
-                                                                <ButtonAction icon='write.svg' />
-                                                                <ButtonAction icon='detail.svg' />
+                                                            <td className='align-middle text-center'>
+                                                                <ButtonAction icon='write.svg' link='/subvit/survey/soal/1' />
                                                                 <ButtonAction icon='trash.svg' />
                                                             </td>
                                                         </tr>

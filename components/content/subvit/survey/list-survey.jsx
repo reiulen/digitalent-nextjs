@@ -72,7 +72,7 @@ const ListSubstansi = () => {
                                 </div>
 
                                 <div className="col-lg-2 col-xl-2 ml-auto">
-                                    <Link href='/subvit/substansi/tambah'>
+                                    <Link href='/subvit/survey/tambah/step1'>
                                         <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
                                             <i className="flaticon2-notepad"></i>
                                             Tambah Soal
@@ -118,8 +118,8 @@ const ListSubstansi = () => {
                                                             <td className='align-middle'>{subtance.category}</td>
                                                             <td className='align-middle'><span className="badge badge-success">Publish</span></td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
-                                                                <ButtonAction icon='write.svg' />
+                                                                <ButtonAction icon='setting.svg' link='/subvit/survey/report/1' />
+                                                                <ButtonAction icon='write.svg' link='/subvit/survey/1' />
                                                                 <ButtonAction icon='detail.svg' />
                                                                 <ButtonAction icon='trash.svg' />
                                                             </td>
