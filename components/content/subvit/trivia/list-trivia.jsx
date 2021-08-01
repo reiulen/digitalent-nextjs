@@ -17,7 +17,7 @@ import {
   clearErrors,
 } from "/redux/actions/subvit/subtance.actions";
 
-const ListSubstansi = () => {
+const ListTrivia = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -68,9 +68,9 @@ const ListSubstansi = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              List Test Substansi
+              List Trivia
             </h3>
-            <div className="card-toolbar">{/* for add */}</div>
+            <div className="card-toolbar"></div>
           </div>
 
           <div className="card-body pt-0">
@@ -91,24 +91,8 @@ const ListSubstansi = () => {
                   </div>
                 </div>
 
-                <div className="col-lg-2 col-xl-2">
-                  <Link href="/subvit/substansi/clone">
-                    <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
-                      <i className="flaticon-file-1"></i>
-                      Clone Test
-                    </a>
-                  </Link>
-                </div>
-                <div className="col-lg-2 col-xl-2">
-                  <Link href="/subvit/substansi/tipe-soal">
-                    <a className="btn btn-sm btn-light-warning px-6 font-weight-bold btn-block ">
-                      <i className="flaticon2-paper"></i>
-                      Tipe Soal
-                    </a>
-                  </Link>
-                </div>
-                <div className="col-lg-2 col-xl-2">
-                  <Link href="/subvit/substansi/tambah/step-1">
+                <div className="col-lg-2 col-xl-2 ml-auto">
+                  <Link href="/subvit/trivia/tambah/step-1">
                     <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
                       <i className="flaticon2-notepad"></i>
                       Tambah Soal
@@ -151,9 +135,7 @@ const ListSubstansi = () => {
                             return (
                               <tr key={subtance.id}>
                                 <td className="align-middle text-center">
-                                  <span className="badge badge-secondary">
-                                    {subtance.no}
-                                  </span>
+                                  {subtance.no}
                                 </td>
                                 <td className="align-middle">
                                   {subtance.academy}
@@ -174,14 +156,13 @@ const ListSubstansi = () => {
                                   </span>
                                 </td>
                                 <td className="align-middle">
-                                  <Link href="/subvit/substansi/report">
-                                    <a>
-                                      <ButtonAction icon="setting.svg" />
-                                    </a>
-                                  </Link>
+                                  <ButtonAction
+                                    icon="setting.svg"
+                                    link="/subvit/trivia/report/1"
+                                  />
                                   <ButtonAction
                                     icon="write.svg"
-                                    link="/subvit/substansi/1"
+                                    link="/subvit/trivia/1"
                                   />
                                   <ButtonAction icon="detail.svg" />
                                   <ButtonAction icon="trash.svg" />
@@ -257,4 +238,4 @@ const ListSubstansi = () => {
   );
 };
 
-export default ListSubstansi;
+export default ListTrivia;

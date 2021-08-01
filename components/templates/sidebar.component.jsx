@@ -584,9 +584,11 @@ const Sidebar = () => {
                     </li>
 
                     <li className="menu-item" aria-haspopup="true">
-                      <a className="menu-link">
-                        <span className="menu-text">TRIVIA</span>
-                      </a>
+                      <Link href="/subvit/trivia">
+                        <a className="menu-link">
+                          <span className="menu-text">TRIVIA</span>
+                        </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
