@@ -80,7 +80,7 @@ const Table = () => {
                   </select>
                 </div>
 
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2">
+                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
                   <a
                     href="#"
                     className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
@@ -88,7 +88,7 @@ const Table = () => {
                     Filter
                   </a>
                 </div>
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2">
+                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
                   <a
                     href="#"
                     className="btn btn-sm btn-light-danger px-6 font-weight-bold btn-block"

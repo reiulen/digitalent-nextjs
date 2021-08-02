@@ -187,7 +187,7 @@ const DetailRevisiKerjasama = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
-                  <Link href="/">
+                  <Link href="/partnership/manajemen-kerjasama/review-kerjasama">
                     <a
                       className="btn bg- mr-2 btn-sm btn-outline-primary"
                       style={{ color: "#40A9FF" }}
@@ -195,7 +195,9 @@ const DetailRevisiKerjasama = () => {
                       Kembali
                     </a>
                   </Link>
-                  <button className="btn btn-primary btn-sm">Submit</button>
+                  <Link href="/partnership/manajemen-kerjasama/review-kerjasama">
+                    <button className="btn btn-primary btn-sm">Submit</button>
+                  </Link>
                 </div>
               </div>
             </form>

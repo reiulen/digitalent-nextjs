@@ -11,12 +11,12 @@ const Table = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Master Kerjasama
+              Master Kategori Kerjasama
             </h3>
             <div className="card-toolbar">
               <Link href="/partnership/master-kategori-kerjasama/tambah">
                 <a className="btn btn-primary px-6 font-weight-bold btn-block ">
-                  Tambah Master Kerjasama
+                  Tambah Kategori Kerjasama
                 </a>
               </Link>
             </div>
@@ -48,9 +48,7 @@ const Table = () => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center align-middle">No</th>
-                      <th className="text-center align-middle">
-                        Kategori Kerjasama
-                      </th>
+                      <th className="text-center align-middle">Kategori</th>
                       <th className="text-center align-middle">Status</th>
                       <th className="text-center align-middle">Action</th>
                     </tr>

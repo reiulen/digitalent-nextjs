@@ -78,8 +78,7 @@ const Tambah = () => {
                 </div>
               </div>
 
-              {/* masih rancu di pake tidaknya */}
-              {/* <div className="form-group row">
+              <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
@@ -96,7 +95,7 @@ const Tambah = () => {
                     size="sm"
                   />
                 </div>
-              </div> */}
+              </div>
 
               <div className="form-group row">
                 <div className="row align-items-right mt-5 ml-auto">
@@ -106,7 +105,7 @@ const Tambah = () => {
                         Kembali
                       </a>
                     </Link>
-                    <Link href="/partnership/tanda-tangan">
+                    <Link href="/partnership/master-kategori-kerjasama">
                       <button className="btn btn-primary btn-sm">Simpan</button>
                     </Link>
                   </div>

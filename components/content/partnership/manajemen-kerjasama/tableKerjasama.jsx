@@ -85,7 +85,7 @@ const Table = () => {
                     <option value="2">Microsoft</option>
                   </select>
                 </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
                   <select name="" id="" className="form-control">
                     <option value="1">Kategori Kerjasama</option>
                     <option value="2">Kategori 2</option>
@@ -97,7 +97,7 @@ const Table = () => {
                     <option value="2">Aktif</option>
                   </select>
                 </div>
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2">
+                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
                   <a
                     href="#"
                     className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
@@ -105,7 +105,7 @@ const Table = () => {
                     Filter
                   </a>
                 </div>
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2">
+                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
                   <a
                     href="#"
                     className="btn btn-sm btn-light-danger px-6 font-weight-bold btn-block"
@@ -155,6 +155,10 @@ const Table = () => {
                       <td className="align-middle text-center">DQ Lab</td>
                       <td className="align-middle text-center">
                         Proposal Pelatihan Programmer Web
+                        <br />
+                        <small style={{ color: "grey" }}>
+                          Memodanrum of Understanding (MoU)
+                        </small>
                       </td>
                       <td className="align-middle text-center">3 Tahun</td>
                       <td className="align-middle text-center">12 Juli 2021</td>

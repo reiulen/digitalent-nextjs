@@ -179,12 +179,16 @@ const ReviewKerjasama = () => {
                       Tolak Kerjasama
                     </a>
                   </Link>
-                  <button className="btn bg-light-success btn-sm">
-                    Ajukan Revisi
-                  </button>
-                  <button className="btn btn-primary btn-sm ml-3">
-                    Terima
-                  </button>
+                  <Link href="/partnership/manajemen-kerjasama/detail-revisi-kerjasama">
+                    <button className="btn bg-light-success btn-sm">
+                      Ajukan Revisi
+                    </button>
+                  </Link>
+                  <Link href="/partnership/manajemen-kerjasama">
+                    <button className="btn btn-primary btn-sm ml-3">
+                      Terima
+                    </button>
+                  </Link>
                 </div>
               </div>
             </form>
