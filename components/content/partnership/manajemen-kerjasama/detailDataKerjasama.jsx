@@ -15,7 +15,7 @@ const DetailDataKerjasama = () => {
               Kerjasama Microsoft
             </h3>
             <div className="card-toolbar">
-              <Link href="/partnership/manajemen-kerjasama/submit">
+              <Link href="/partnership/manajemen-kerjasama/tambah">
                 <a className="btn px-6 font-weight-bold btn-block btn-primary">
                   Tambah Kerjasama Baru
                 </a>
@@ -26,7 +26,7 @@ const DetailDataKerjasama = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
+                <div className="col-lg-12 col-xl-12">
                   <div className="row align-items-center">
                     <div className="col-md-12 my-2 my-md-0">
                       <div className="input-icon">
@@ -44,96 +44,41 @@ const DetailDataKerjasama = () => {
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-0">
-                  <a
-                    href="#"
-                    className="btn btn-light-primary px-6 font-weight-bold btn-block"
-                  >
-                    Cari
-                  </a>
-                </div>
               </div>
 
-              <div className="row align-items-right mt-5">
-                <div className="ml-3">
-                  <div class="input-group mb-3" style={{ width: "100px" }}>
-                    <select
-                      class="custom-select"
-                      id="inputGroupSelect02"
-                      style={{
-                        background:
-                          "#ffffff url('/tes.png') right 1rem center/18px 20px no-repeat",
-                      }}
-                    >
-                      <option selected>Mitra</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
-                  </div>
-                </div>
-                <div className="ml-3" style={{ width: "200px;" }}>
-                  <select
-                    class="custom-select"
-                    id="inputGroupSelect02"
-                    style={{
-                      background:
-                        "#ffffff url('/tes.png') right 1rem center/18px 20px no-repeat",
-                    }}
-                  >
-                    <option selected>Kategori Kerjasama</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+              <div className="row align-items-right">
+                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                  <select name="" id="" className="form-control">
+                    <option value="1">Kategori Kerjasama</option>
+                    <option value="2">Kategori 2</option>
                   </select>
                 </div>
-                <div className="ml-3" style={{ width: "120px;" }}>
-                  <select
-                    class="custom-select"
-                    id="inputGroupSelect02"
-                    style={{
-                      background:
-                        "#ffffff url('/tes.png') right 1rem center/18px 20px no-repeat",
-                    }}
-                  >
-                    <option selected>Status</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                  <select name="" id="" className="form-control">
+                    <option value="1">Status</option>
+                    <option value="2">Aktif</option>
                   </select>
                 </div>
-                <div className="col-lg-1 col-xl-1">
+                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
                   <a
                     href="#"
-                    className="btn btn-sm btn-light-primary font-weight-bold btn-block"
-                    style={{ width: "7rem !important" }}
+                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
                   >
                     Filter
                   </a>
                 </div>
-                <div className="col-lg-1 col-xl-1">
+                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
                   <a
                     href="#"
-                    className="btn btn-sm bg-light-danger px-2 font-weight-bold btn-block"
-                    style={{
-                      color: "#F65464",
-                      width: "6rem !important",
-                      marginLeft: "2rem",
-                    }}
+                    className="btn btn-sm btn-light-danger px-6 font-weight-bold btn-block"
                   >
                     Reset
                   </a>
                 </div>
-                <div className="col-lg-2 col-xl-2 ml-auto">
+                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
                   <a
                     href="#"
-                    style={{
-                      color: "#FFFFFF !important",
-                      backgroundColor: "#40A9FF",
-                      width: "100px",
-                      marginLeft: "auto",
-                    }}
-                    className="btn btn-sm font-weight-bold btn-block"
+                    className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
                   >
                     Export .csv
                   </a>
@@ -153,7 +98,7 @@ const DetailDataKerjasama = () => {
                       </th>
                       <th className="text-center align-middle">Periode</th>
                       <th className="text-center align-middle">
-                        Tanggal Penandatanganan
+                        Tanggal Pendaftaran
                       </th>
                       {/* <th className="text-center align-middle">
                         Tanggal Selesai
@@ -188,12 +133,7 @@ const DetailDataKerjasama = () => {
                         </select>
                       </td>
                       <td className="align-middle">
-                        <Link href="/partnership/manajemen-kerjasama/detail-kerjasama">
-                          <a className="menu-link">
-                            <ButtonAction icon="detail.svg" />
-                            {/* <span className="menu-text">Tes Substansi</span> */}
-                          </a>
-                        </Link>
+                        <ButtonAction icon="detail.svg" />
                         <ButtonAction icon="setting.svg" />
                         <ButtonAction icon="write.svg" />
                         <ButtonAction icon="trash.svg" />

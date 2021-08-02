@@ -201,12 +201,12 @@ const TambahMitra = () => {
               <div className="form-group row">
                 <div className="row align-items-right mt-5 ml-auto">
                   <div className="col-sm mr-4">
-                    <Link href="/partnership/manajemen-kerjasama">
+                    <Link href="/partnership/manajemen-mitra">
                       <a className="btn btn-outline-primary btn-sm mr-3">
                         Kembali
                       </a>
                     </Link>
-                    <Link href="/partnership/manajemen-kerjasama">
+                    <Link href="/partnership/manajemen-mitra">
                       <button className="btn btn-primary btn-sm">Simpan</button>
                     </Link>
                   </div>

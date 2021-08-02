@@ -254,7 +254,7 @@ const DetailDokumenKerjasama = () => {
                 </div>
               </div>
 
-              <div className="form-group row">
+              {/* <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
@@ -270,7 +270,7 @@ const DetailDokumenKerjasama = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div className="form-group row">
                 <label
