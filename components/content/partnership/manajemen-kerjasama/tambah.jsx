@@ -3,10 +3,34 @@ import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
+import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 const Tambah = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  const router = useRouter();
+  const Swal = require("sweetalert2");
+
+  const submit = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then((result) => {
+      if (result.value) {
+        router.push("/partnership/manajemen-kerjasama/submit");
+      }
+    });
+  };
 
   return (
     <PageWrapper>
@@ -203,12 +227,17 @@ const Tambah = () => {
                       Kembali
                     </a>
                   </Link>
-                  <Link href="/partnership/manajemen-kerjasama/submit ">
-                    {/* <a className="btn btn-outline-primary mr-2 btn-sm">
+                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
+                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
                       Kembali
                     </a> */}
-                    <button className="btn btn-primary btn-sm">Submit</button>
-                  </Link>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={(e) => submit(e)}
+                  >
+                    Submit
+                  </button>
+                  {/* </Link> */}
                 </div>
               </div>
             </form>
