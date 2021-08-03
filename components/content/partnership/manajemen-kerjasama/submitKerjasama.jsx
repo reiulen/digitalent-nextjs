@@ -3,11 +3,36 @@ import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
+import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 const SubmitKerjasama = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
+  const router = useRouter();
+  const Swal = require("sweetalert2");
+
+  const submit = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then((result) => {
+      if (result.value) {
+        router.push(
+          "/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
+        );
+      }
+    });
+  };
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -163,9 +188,15 @@ const SubmitKerjasama = () => {
                     </a>
                   </Link>
 
-                  <Link href="/partnership/manajemen-kerjasama/detail-dokumen-kerjasama">
-                    <button className="btn btn-primary btn-sm">Submit</button>
-                  </Link>
+                  {/* <Link href="/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"> */}
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-sm"
+                    onClick={(e) => submit(e)}
+                  >
+                    Submit
+                  </button>
+                  {/* </Link> */}
                 </div>
               </div>
             </form>

@@ -3,6 +3,8 @@ import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 import SignaturePad from "react-signature-pad-wrapper";
+import Swal from "sweetalert2";
+import { useRouter } from "next/router";
 
 const TambahTandaTangan = () => {
   const importSwitch = () => import("bootstrap-switch-button-react");
@@ -15,6 +17,28 @@ const TambahTandaTangan = () => {
   const SwitchButton = dynamic(importSwitch, {
     ssr: false,
   });
+
+  const router = useRouter();
+  const Swal = require("sweetalert2");
+
+  const submit = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then((result) => {
+      if (result.value) {
+        router.push("/partnership/tanda-tangan");
+      }
+    });
+  };
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -135,9 +159,14 @@ const TambahTandaTangan = () => {
                         Kembali
                       </a>
                     </Link>
-                    <Link href="/partnership/tanda-tangan">
-                      <button className="btn btn-primary btn-sm">Simpan</button>
-                    </Link>
+                    {/* <Link href="/partnership/tanda-tangan"> */}
+                    <button
+                      className="btn btn-primary btn-sm"
+                      onClick={(e) => submit(e)}
+                    >
+                      Simpan
+                    </button>
+                    {/* </Link> */}
                   </div>
                 </div>
               </div>

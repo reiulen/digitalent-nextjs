@@ -1,7 +1,7 @@
 import Layout from "../../../components/templates/layout.component";
 import DetailDataKerjasama from "../../../components/content/partnership/manajemen-kerjasama/detailDataKerjasama";
 
-export default function KerjaSamaPage() {
+export default function DetailDataKerjasama() {
   return (
     <>
       <div className="d-flex flex-column flex-root">

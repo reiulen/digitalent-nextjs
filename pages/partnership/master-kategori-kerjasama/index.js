@@ -1,7 +1,7 @@
 import Layout from "../../../components/templates/layout.component";
 import MasterKategoriKerjasama from "../../../components/content/partnership/master-kategori-kerjasama/masterKategoriKerjasama";
 
-export default function KerjaSamaPage() {
+export default function KategoriKerjasama() {
   return (
     <>
       <div className="d-flex flex-column flex-root">

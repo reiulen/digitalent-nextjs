@@ -1,7 +1,7 @@
 import Layout from "../../../components/templates/layout.component";
 import SubmitKerjasama from "../../../components/content/partnership/manajemen-kerjasama/submitKerjasama";
 
-export default function KerjaSamaPage() {
+export default function Submit() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
