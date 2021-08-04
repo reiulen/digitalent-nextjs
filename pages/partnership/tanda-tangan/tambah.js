@@ -1,7 +1,7 @@
 import Layout from "../../../components/templates/layout.component";
 import Tambah from "../../../components/content/partnership/tanda-tangan/tambah";
 
-export default function KerjaSamaPage() {
+export default function TambahPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">

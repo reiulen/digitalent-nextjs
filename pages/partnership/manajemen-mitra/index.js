@@ -1,7 +1,7 @@
 import Layout from "../../../components/templates/layout.component";
 import Table from "../../../components/content/partnership/manajemen-mitra/tableMitra";
 
-export default function KerjaSamaPage() {
+export default function MitraPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
