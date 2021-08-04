@@ -225,7 +225,6 @@ const Artikel = () => {
                     startDate={startDate}
                     endDate={endDate}
                     dateFormat="dd/MM/yyyy"
-                  // minDate={addDays(new Date(), 20)}
                   />
                   <small className="form-text text-muted">Dari Tanggal</small>
                 </div>
