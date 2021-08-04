@@ -33,7 +33,7 @@ export const getAllKategori = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/kategori')
+        const { data } = await axios.get(process.env.END_POINT_API + 'api/kategori')
 
         dispatch({
             type: KATEGORI_SUCCESS,
@@ -63,7 +63,7 @@ export const newKategori = (kategoriData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/kategori', kategoriData)
+        const { data } = await axios.post(process.env.END_POINT_API + 'api/kategori', kategoriData)
 
         dispatch({
             type: NEW_KATEGORI_SUCCESS,
@@ -83,7 +83,7 @@ export const deleteKategori = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_KATEGORI_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API + `publikasi/api/kategori/${id}`)
+        const { data } = await axios.delete(process.env.END_POINT_API + `api/kategori/${id}`)
 
         dispatch({
             type: DELETE_KATEGORI_SUCCESS,

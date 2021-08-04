@@ -13,17 +13,26 @@ import {
     DELETE_ARTIKEL_RESET,
     DELETE_ARTIKEL_FAIL,
 
+    DETAIL_ARTIKEL_REQUEST,
+    DETAIL_ARTIKEL_SUCCESS,
+    DETAIL_ARTIKEL_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/artikel.type'
 
 import axios from 'axios'
-
+import absoluteUrl from 'next-absolute-url'
 
 // get all data
-export const getAllArtikel = () => async (dispatch) => {
+export const getAllArtikel = (page = 1, keyword = '', limit = 5) => async (dispatch) => {
     try {
 
         dispatch({ type: ARTIKEL_REQUEST })
+
+        let link = process.env.END_POINT_API + `api/artikel?page=${page}`
+        if (keyword) link = link.concat(`&keyword=${keyword}`)
+        if (limit) link = link.concat(`&limit=${limit}`)
+        // let link = process.env.END_POINT_API + `api/artikel`
 
         // const config = {
         //     headers: {
@@ -33,7 +42,7 @@ export const getAllArtikel = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API + 'api/index-administrator-artikel')
+        const { data } = await axios.get(link)
 
         dispatch({
             type: ARTIKEL_SUCCESS,
@@ -44,6 +53,26 @@ export const getAllArtikel = () => async (dispatch) => {
         dispatch({
             type: ARTIKEL_FAIL,
             payload: error.message
+        })
+    }
+}
+
+export const getDetailArtikel = (id) => async (dispatch) => {
+    try {
+
+        let link = process.env.END_POINT_API + `api/artikel/${id}`
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: DETAIL_ARTIKEL_SUCCESS,
+            payload: data.data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DETAIL_ARTIKEL_FAIL,
+            payload: error.response.data.message
         })
     }
 }
@@ -63,7 +92,7 @@ export const newArtikel = (artikelData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'api/create-administrator-artikel', artikelData)
+        const { data } = await axios.post(process.env.END_POINT_API + 'api/artikel', artikelData)
 
         dispatch({
             type: NEW_ARTIKEL_SUCCESS,
@@ -87,12 +116,12 @@ export const deleteArtikel = (id) => async (dispatch) => {
 
         dispatch({
             type: DELETE_ARTIKEL_SUCCESS,
-            payload: data.success
+            payload: data.status
         })
 
     } catch (error) {
         dispatch({
-            type: DELETE_ROOM_FAIL,
+            type: DELETE_ARTIKEL_FAIL,
             payload: error.response.data.message
         })
     }

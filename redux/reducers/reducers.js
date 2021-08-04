@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 
 // PUBLIKASI
-import { allArtikelReducer, newArtikelReducer, deleteArtikelReducer } from './publikasi/artikel.reducers'
+import { allArtikelReducer, newArtikelReducer, deleteArtikelReducer, detailArtikelReducer } from './publikasi/artikel.reducers'
 import { allBeritaReducer, newBeritaReducer, deleteBeritaReducer } from './publikasi/berita.reducers'
 import { allImagetronReducer, newImagetronReducer, deleteImagetronReducer } from './publikasi/imagetron.reducers'
 import { allKategoriReducer, newKategoriReducer, deleteKategoriReducer } from './publikasi/kategori.reducers'
@@ -17,6 +17,7 @@ const reducer = combineReducers({
     allArtikel: allArtikelReducer,
     newArtikel: newArtikelReducer,
     deleteArtikel: deleteArtikelReducer,
+    detailArtikel: detailArtikelReducer,
 
     allBerita: allBeritaReducer,
     newBerita: newBeritaReducer,
