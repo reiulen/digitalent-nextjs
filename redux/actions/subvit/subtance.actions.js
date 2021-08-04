@@ -20,9 +20,10 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllSubtanceQuestionBanks = () => async (dispatch) => {
+export const getAllSubtanceQuestionBanks = (page = 1, keyword = '') => async (dispatch) => {
     try {
 
+        let link = process.env.END_POINT_API + `survai-trivia/api/subtance-question-banks?page=${page}&keyword=${keyword}`
         dispatch({ type: SUBTANCE_QUESTION_BANKS_REQUEST })
 
         // const config = {
@@ -32,54 +33,8 @@ export const getAllSubtanceQuestionBanks = () => async (dispatch) => {
         //         'apikey': process.env.END_POINT_KEY_AUTH
         //     }
         // }
+        const { data } = await axios.get(link)
 
-        // const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/artikel')
-        const data = {
-            status: true,
-            message: "Berhasil",
-            data: [
-                {
-                    no: 1,
-                    academy: "FGA",
-                    theme: "UI/UX Designer",
-                    start_at: "2021-02-01",
-                    category: "Mid Test",
-                    status: true,
-                },
-                {
-                    no: 2,
-                    academy: "FGA",
-                    theme: "UI/UX Designer",
-                    start_at: "2021-02-01",
-                    category: "Mid Test",
-                    status: true,
-                },
-                {
-                    no: 3,
-                    academy: "FGA",
-                    theme: "UI/UX Designer",
-                    start_at: "2021-02-01",
-                    category: "Mid Test",
-                    status: true,
-                },
-                {
-                    no: 4,
-                    academy: "FGA",
-                    theme: "UI/UX Designer",
-                    start_at: "2021-02-01",
-                    category: "Mid Test",
-                    status: true,
-                },
-                {
-                    no: 5,
-                    academy: "FGA",
-                    theme: "UI/UX Designer",
-                    start_at: "2021-02-01",
-                    category: "Mid Test",
-                    status: true,
-                },
-            ]
-        }
         dispatch({
             type: SUBTANCE_QUESTION_BANKS_SUCCESS,
             payload: data
@@ -108,7 +63,7 @@ export const newSubtanceQuestionBanks = (subtanceData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/artikel', artikelData)
+        const { data } = await axios.post(process.env.END_POINT_API + 'survai-trivia/api/subtance-question-banks', subtanceData)
 
         dispatch({
             type: NEW_SUBTANCE_QUESTION_BANKS_SUCCESS,
@@ -128,7 +83,7 @@ export const deleteRoom = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_SUBTANCE_QUESTION_BANKS_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API + `publikasi/api/artikel/${id}`)
+        const { data } = await axios.delete(process.env.END_POINT_API + `survai-trivia/api/subtance-question-banks/${id}`)
 
         dispatch({
             type: DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,

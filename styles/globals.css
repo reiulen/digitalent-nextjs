@@ -52,6 +52,24 @@ a {
   border: #F3F6F9 !important;
 }
 
+.rti--container {
+  background: #F3F6F9 !important;
+  --rti-border: "#F3F6F9" !important;
+  --rti-main: "#3182ce";
+  --rti-radius: "0.375rem";
+  --rti-s: "0.5rem"; /* spacing */
+  --rti-tag: "#edf2f7";
+  --rti-tag-remove: "#e53e3e";
+}
+
+.rti--input{
+  background: #F3F6F9 !important;
+}
+
+.rti--tag{
+  background: #dbdbdb !important;
+}
+
 .form-control-auth{
   background: #FFFFFF !important;
   border-radius: 10px;
