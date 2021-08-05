@@ -106,9 +106,9 @@ const Table = () => {
                     <tr>
                       <th className="text-center align-middle">No</th>
                       <th className="text-center align-middle">Logo</th>
+                      <th className="text-center align-middle">Mitra</th>
                       <th className="text-center align-middle">Website</th>
                       <th className="text-center align-middle">Kerjasama</th>
-                      <th className="text-center align-middle">Status</th>
                       <th className="text-center align-middle">Action</th>
                     </tr>
                   </thead>
@@ -122,7 +122,7 @@ const Table = () => {
                           1
                         </button>
                       </td>
-                      <td className="align-middle">
+                      <td className="align-middle text-center">
                         <Image
                           src="/assets/icon/dummy-logo.svg"
                           width={40}

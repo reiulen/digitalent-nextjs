@@ -98,13 +98,15 @@ const DetailDataKerjasama = () => {
                       </th>
                       <th className="text-center align-middle">Periode</th>
                       <th className="text-center align-middle">
-                        Tanggal Pendaftaran
+                        Tanggal Tanda Tangan
                       </th>
                       {/* <th className="text-center align-middle">
                         Tanggal Selesai
                       </th> */}
+                      <th className="text-center align-middle">
+                        Tanggal Selesai
+                      </th>
                       <th className="text-center align-middle">Status</th>
-                      <th className="text-center align-middle">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -120,9 +122,14 @@ const DetailDataKerjasama = () => {
                       <td className="align-middle text-center">Microsoft</td>
                       <td className="align-middle text-center">
                         Proposal Pelatihan Programmer Web
+                        <br />
+                        <small style={{ color: "grey" }}>
+                          Memodanrum of Understanding (MoU)
+                        </small>
                       </td>
                       <td className="align-middle text-center">3 Tahun</td>
                       <td className="align-middle text-center">12 Juli 2021</td>
+                      <td className="align-middle">15 Juli 2021</td>
                       <td className="align-middle text-center">
                         <select name="" id="" className="form-control">
                           <option value="Kategori" selected>
@@ -131,12 +138,6 @@ const DetailDataKerjasama = () => {
                           <option value="Kategori">non aktif</option>
                           <option value="Kategori">pengajuan - revisi</option>
                         </select>
-                      </td>
-                      <td className="align-middle">
-                        <ButtonAction icon="detail.svg" />
-                        <ButtonAction icon="setting.svg" />
-                        <ButtonAction icon="write.svg" />
-                        <ButtonAction icon="trash.svg" />
                       </td>
                     </tr>
                   </tbody>

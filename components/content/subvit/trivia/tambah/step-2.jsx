@@ -111,6 +111,49 @@ const StepTwo = () => {
                 </div>
               </div>
 
+              {/* bagian kunci jawaban yang benar hanya tampil saat memilih checkbox */}
+              <div>Jenis Pertanyaan</div>
+              <div className="form-group row mt-4 ml-1">
+                <div className="col-sm-12 col-md-8">
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="inlineRadio1"
+                      value="option1"
+                    />
+                    <label class="form-check-label" for="inlineRadio1">
+                      Polling
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="inlineRadio2"
+                      value="option2"
+                    />
+                    <label class="form-check-label" for="inlineRadio2">
+                      Checkbox
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="inlineRadio3"
+                      value="option2"
+                    />
+                    <label class="form-check-label" for="inlineRadio3">
+                      Fill in the blank
+                    </label>
+                  </div>
+                </div>
+              </div>
+
               <div className="form-group row">
                 <div className="col-4">
                   <p>Jawaban</p>

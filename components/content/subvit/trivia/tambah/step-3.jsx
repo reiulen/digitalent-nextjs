@@ -42,11 +42,11 @@ const StepThree = () => {
   const [role, setRole] = useState("");
 
   const saveAndContinue = () => {
-    router.push("/subvit/substansi/clone/step-2");
+    router.push("/subvit/trivia");
   };
 
   const saveDraft = () => {
-    router.push("/subvit/substansi");
+    router.push("/subvit/trivia");
   };
 
   const onSubmit = (e) => {
@@ -159,7 +159,7 @@ const StepThree = () => {
                 </div>
               </div>
 
-              <div className="form-group row">
+              {/* <div className="form-group row">
                 <div className="col-sm-6 col-md-2">
                   <span>Passing Grade</span>
                   <div class="input-group">
@@ -178,7 +178,7 @@ const StepThree = () => {
                     Silahkan Input Passing Grade
                   </small>
                 </div>
-              </div>
+              </div> */}
 
               <div className="form-group row">
                 <div className="col-sm-12 col-md-8">

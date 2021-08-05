@@ -48,7 +48,9 @@ const Table = () => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center align-middle">No</th>
-                      <th className="text-center align-middle">Kategori</th>
+                      <th className="text-center align-middle">
+                        Kategori Kerjasama
+                      </th>
                       <th className="text-center align-middle">Status</th>
                       <th className="text-center align-middle">Action</th>
                     </tr>
