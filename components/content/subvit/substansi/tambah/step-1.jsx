@@ -35,7 +35,7 @@ const StepOne = () => {
       const id = subtance.id
       if (typeSave === 'lanjut') {
         router.push({
-          pathname: `/subvit/substansi/tambah/step-2`,
+          pathname: `/subvit/substansi/tambah-step-2`,
           query: { metode, id }
         })
       } else if (typeSave === 'draft') {

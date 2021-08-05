@@ -11,6 +11,10 @@ import { allVideoReducer, newVideoReducer } from './publikasi/video.reducers'
 
 // Subvit
 import { allSubtanceQuestionBanksReducer, newSubtanceQuestionBanksReducer, deleteSubtanceQuestionBanksReducer } from './subvit/subtance.reducers'
+
+// Partnership
+import { allMitraReducer } from './partnership/mitra.reducers'
+
 const reducer = combineReducers({
 
     // PUBLIKASI
@@ -47,6 +51,7 @@ const reducer = combineReducers({
     deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
 
     // PARTNERSHIP
+    allMitra: allMitraReducer,
 })
 
 export default reducer
