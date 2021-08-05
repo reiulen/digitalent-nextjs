@@ -175,7 +175,7 @@ const ArtikelPeserta = () => {
                                                                 <Image
                                                                     alt={artikel.judul_artikel}
                                                                     unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                                                                    src={process.env.END_POINT_API_IMAGE + 'artikel/' + artikel.gambar}
+                                                                    src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'artikel/' + artikel.gambar}
                                                                     width={80}
                                                                     height={50}
                                                                 />

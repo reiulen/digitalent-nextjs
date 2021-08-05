@@ -35,7 +35,7 @@ const Artikel = () => {
   const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteArtikel);
 
   const [search, setSearch] = useState('')
-  const [limit, setLimit] = useState(5)
+  const [limit, setLimit] = useState(null)
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -49,9 +49,9 @@ const Artikel = () => {
   page = Number(page);
 
   useEffect(() => {
-    // if (limit) {
-    //   router.push(`${router.pathname}?page=1&limit=${limit}`)
-    // }
+    if (limit) {
+      router.push(`${router.pathname}?page=1&limit=${limit}`)
+    }
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
         if (result.isConfirmed) {
@@ -86,11 +86,19 @@ const Artikel = () => {
   };
 
   const handlePagination = (pageNumber) => {
-    router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    if (limit != null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    } else {
+      router.push(`${router.pathname}?page=${pageNumber}`)
+    }
   }
 
   const handleSearch = () => {
-    router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    if (limit != null) {
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    } else {
+      router.push(`${router.pathname}?page=1&keyword=${search}`)
+    }
   }
 
   const handleSearchDate = () => {
@@ -300,7 +308,7 @@ const Artikel = () => {
                                     process.env.ENVIRONMENT !== "PRODUCTION"
                                   }
                                   src={
-                                    process.env.END_POINT_API_IMAGE +
+                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                     "artikel/" +
                                     artikel.gambar
                                   }

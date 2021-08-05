@@ -178,7 +178,7 @@ const Berita = () => {
                                                                 <Image
                                                                     alt={row.judul_berita}
                                                                     unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                                                                    src={process.env.END_POINT_API_IMAGE + 'berita/' + row.gambar}
+                                                                    src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'berita/' + row.gambar}
                                                                     width={80}
                                                                     height={50}
                                                                 />

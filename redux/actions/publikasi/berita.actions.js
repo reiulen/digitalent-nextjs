@@ -33,7 +33,7 @@ export const getAllBerita = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/index-administrator-berita')
+        const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/index-administrator-berita')
 
         dispatch({
             type: BERITA_SUCCESS,
@@ -63,7 +63,7 @@ export const newBerita = (beritaData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/create-administrator-berita', beritaData)
+        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/create-administrator-berita', beritaData)
 
         dispatch({
             type: NEW_BERITA_SUCCESS,
@@ -83,7 +83,7 @@ export const deleteBerita = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_BERITA_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API + `publikasi/api/berita/${id}`)
+        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `publikasi/api/berita/${id}`)
 
         dispatch({
             type: DELETE_BERITA_SUCCESS,
