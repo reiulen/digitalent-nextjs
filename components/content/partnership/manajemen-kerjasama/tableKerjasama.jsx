@@ -138,6 +138,9 @@ const Table = () => {
                       <th className="text-center align-middle">
                         Tanggal Tanda Tangan
                       </th>
+                      <th className="text-center align-middle">
+                        Tanggal Selesai
+                      </th>
                       <th className="text-center align-middle">Status</th>
                       <th className="text-center align-middle">Action</th>
                     </tr>
@@ -162,25 +165,205 @@ const Table = () => {
                       </td>
                       <td className="align-middle text-center">3 Tahun</td>
                       <td className="align-middle text-center">12 Juli 2021</td>
+                      <td className="align-middle text-center">15 juli 2021</td>
                       <td className="align-middle text-center">
                         <select name="" id="" className="form-control">
-                          <option value="1">Status</option>
                           <option value="2">Aktif</option>
                         </select>
                       </td>
+                      <td
+                        className="align-middle text-center "
+                        // style={{ border: "1px solid black" }}
+                      >
+                        <ButtonAction icon="trash.svg" />
+                        <ButtonAction icon="trash.svg" />
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-center align-middle">
+                        <button
+                          className="btn"
+                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
+                        >
+                          2
+                        </button>
+                      </td>
+                      <td className="align-middle text-center">Microsoft</td>
                       <td className="align-middle text-center">
-                        <ButtonAction
-                          icon="detail.svg"
-                          link="manajemen-kerjasama/detail-data-kerjasama"
-                        />
-                        <ButtonAction icon="setting.svg" />
-                        <ButtonAction icon="write.svg" />
+                        Proposal Pelatihan Programmer Web
+                        <br />
+                        <small style={{ color: "grey" }}>
+                          Memodanrum of Understanding (MoU)
+                        </small>
+                      </td>
+                      <td className="align-middle text-center">3 Tahun</td>
+                      <td className="align-middle text-center">12 Juli 2021</td>
+                      <td className="align-middle text-center">15 juli 2021</td>
+                      <td className="align-middle text-center">
+                        <select name="" id="" className="form-control">
+                          <option value="2">Pengajuan - Review</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-center align-middle">
+                        <button
+                          className="btn"
+                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
+                        >
+                          3
+                        </button>
+                      </td>
+                      <td className="align-middle text-center">Google</td>
+                      <td className="align-middle text-center">
+                        Proposal Pelatihan Programmer Web
+                        <br />
+                        <small style={{ color: "grey" }}>
+                          Memodanrum of Understanding (MoU)
+                        </small>
+                      </td>
+                      <td className="align-middle text-center">3 Tahun</td>
+                      <td className="align-middle text-center">12 Juli 2021</td>
+                      <td className="align-middle text-center">15 juli 2021</td>
+                      <td className="align-middle text-center">
+                        <select name="" id="" className="form-control">
+                          <option value="2">Pengajuan - Revisi</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-center align-middle">
+                        <button
+                          className="btn"
+                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
+                        >
+                          4
+                        </button>
+                      </td>
+                      <td className="align-middle text-center">Youtube</td>
+                      <td className="align-middle text-center">
+                        Proposal Pelatihan Programmer Web
+                        <br />
+                        <small style={{ color: "grey" }}>
+                          Memodanrum of Understanding (MoU)
+                        </small>
+                      </td>
+                      <td className="align-middle text-center">3 Tahun</td>
+                      <td className="align-middle text-center">12 Juli 2021</td>
+                      <td className="align-middle text-center">15 juli 2021</td>
+                      <td className="align-middle text-center">
+                        <select name="" id="" className="form-control">
+                          <option value="2">Pengajuan - pembahasan</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-center align-middle">
+                        <button
+                          className="btn"
+                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
+                        >
+                          5
+                        </button>
+                      </td>
+                      <td className="align-middle text-center">Google</td>
+                      <td className="align-middle text-center">
+                        Proposal Pelatihan Programmer Web
+                        <br />
+                        <small style={{ color: "grey" }}>
+                          Memodanrum of Understanding (MoU)
+                        </small>
+                      </td>
+                      <td className="align-middle text-center">3 Tahun</td>
+                      <td className="align-middle text-center">12 Juli 2021</td>
+                      <td className="align-middle text-center">15 juli 2021</td>
+                      <td className="align-middle text-center">
+                        <select name="" id="" className="form-control">
+                          <option value="2">Pengajuan - selesai</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-center align-middle">
+                        <button
+                          className="btn"
+                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
+                        >
+                          6
+                        </button>
+                      </td>
+                      <td className="align-middle text-center">Skype</td>
+                      <td className="align-middle text-center">
+                        Proposal Pelatihan Programmer Web
+                        <br />
+                        <small style={{ color: "grey" }}>
+                          Memodanrum of Understanding (MoU)
+                        </small>
+                      </td>
+                      <td className="align-middle text-center">3 Tahun</td>
+                      <td className="align-middle text-center">12 Juli 2021</td>
+                      <td className="align-middle text-center">15 juli 2021</td>
+                      <td className="align-middle text-center">
+                        <select name="" id="" className="form-control">
+                          <option value="2">Pengajuan - Dokumen</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-center align-middle">
+                        <button
+                          className="btn"
+                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
+                        >
+                          7
+                        </button>
+                      </td>
+                      <td className="align-middle text-center">Facebook</td>
+                      <td className="align-middle text-center">
+                        Proposal Pelatihan Programmer Web
+                        <br />
+                        <small style={{ color: "grey" }}>
+                          Memodanrum of Understanding (MoU)
+                        </small>
+                      </td>
+                      <td className="align-middle text-center">3 Tahun</td>
+                      <td className="align-middle text-center">12 Juli 2021</td>
+                      <td className="align-middle text-center">15 juli 2021</td>
+                      <td className="align-middle text-center">
+                        <select name="" id="" className="form-control">
+                          <option value="2">Ditolak</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-center align-middle">
+                        <button
+                          className="btn"
+                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
+                        >
+                          8
+                        </button>
+                      </td>
+                      <td className="align-middle text-center">Instagram</td>
+                      <td className="align-middle text-center">
+                        Proposal Pelatihan Programmer Web
+                        <br />
+                        <small style={{ color: "grey" }}>
+                          Memodanrum of Understanding (MoU)
+                        </small>
+                      </td>
+                      <td className="align-middle text-center">3 Tahun</td>
+                      <td className="align-middle text-center">12 Juli 2021</td>
+                      <td className="align-middle text-center">15 juli 2021</td>
+                      <td className="align-middle text-center">
+                        <select name="" id="" className="form-control">
+                          <option value="2">Nonaktif</option>
+                        </select>
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-
               <div className="row">
                 <div className="table-pagination">
                   <Pagination
@@ -221,7 +404,7 @@ const Table = () => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data 120
+                        Total Data 120 {process.env.END_POINT_API_PARTNERSHIP}
                       </p>
                     </div>
                   </div>

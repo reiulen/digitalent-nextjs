@@ -133,16 +133,11 @@ const Table = () => {
                       <td className="align-middle text-center">
                         www.google.com
                       </td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="1">Aktif</option>
-                          <option value="2">No Aktif</option>
-                        </select>
-                      </td>
+                      <td className="align-middle text-center">3 Kerjasama</td>
                       <td className="align-middle text-center">
                         <ButtonAction
                           icon="detail.svg"
-                          link="/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
+                          link="/partnership/manajemen-mitra/detail-data-kerjasama"
                         />
                         <ButtonAction icon="write.svg" />
                         <ButtonAction icon="trash.svg" />

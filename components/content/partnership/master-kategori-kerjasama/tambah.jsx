@@ -71,9 +71,7 @@ const Tambah = () => {
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
-                >
-                  Form Kerjasama
-                </label>
+                ></label>
                 <div className="col-sm-10">
                   <input type="text" className="form-control" />
                 </div>

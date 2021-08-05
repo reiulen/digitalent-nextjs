@@ -1,5 +1,5 @@
 import Layout from "../../../components/templates/layout.component";
-import DetailDataKerjasama from "../../../components/content/partnership/manajemen-kerjasama/detailDataKerjasama";
+import DetailDataKerjasama from "../../../components/content/partnership/manajemen-mitra/detailDataKerjasama";
 
 export default function DetailDataKerjasamaPage() {
   return (
