@@ -156,7 +156,7 @@ const ListSubstansi = () => {
                   </Link>
                 </div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
-                  <Link href="/subvit/substansi/tambah/step-1">
+                  <Link href="/subvit/substansi/tambah-step-1">
                     <a className="btn btn-sm btn-light-info px-6 font-weight-bold btn-block">
                       <i className="flaticon2-notepad"></i>
                       Tambah Soal

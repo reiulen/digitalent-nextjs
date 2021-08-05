@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
+
 import Link from "next/link";
 import Pagination from "react-js-pagination";
+import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
+
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
-import Image from "next/image";
 
 const Table = () => {
+
+  const dispatch = useDispatch()
+
+  const { loading, error, mitra } = useSelector((state) => state.allMitra)
+
+  useEffect(() => {
+    console.log(mitra.mitra)
+  }, [mitra])
+
   return (
     <PageWrapper>
       <div className="col-lg-10 col-md-10">

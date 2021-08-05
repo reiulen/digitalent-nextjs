@@ -21,7 +21,6 @@ import {
 } from '../../types/publikasi/artikel.type'
 
 import axios from 'axios'
-import absoluteUrl from 'next-absolute-url'
 
 // get all data
 export const getAllArtikel = (page = 1, keyword = '', limit = 5) => async (dispatch) => {
