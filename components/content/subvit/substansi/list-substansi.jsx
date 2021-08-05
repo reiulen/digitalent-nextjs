@@ -5,11 +5,10 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
+import LoadingTable from '../../../LoadingTable'
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -21,7 +20,7 @@ const ListSubstansi = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, subtance, perPage, total } = useSelector(
+  const { loading, error, subtance } = useSelector(
     (state) => state.allSubtanceQuestionBanks
   );
 
@@ -29,12 +28,8 @@ const ListSubstansi = () => {
   page = Number(page);
 
   useEffect(() => {
-    dispatch(getAllSubtanceQuestionBanks());
+    // dispatch(getAllSubtanceQuestionBanks());
   }, [dispatch]);
-
-  const override = css`
-    margin: 0 auto;
-  `;
 
   return (
     <PageWrapper>
@@ -120,14 +115,7 @@ const ListSubstansi = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <div className="loading text-center justify-content-center">
-                  <BeatLoader
-                    color="#3699FF"
-                    loading={loading}
-                    css={override}
-                    size={10}
-                  />
-                </div>
+                <LoadingTable loading={loading} />
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -144,53 +132,57 @@ const ListSubstansi = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {subtance && subtance.length === 0
-                        ? ""
+                      {!subtance || (subtance && subtance.list_substance.length === 0)
+                        ? (
+                          <td className="align-middle text-center" colSpan={8}>
+                            Data Masih Kosong
+                          </td>
+                        )
                         : subtance &&
-                          subtance.map((subtance) => {
-                            return (
-                              <tr key={subtance.id}>
-                                <td className="align-middle text-center">
-                                  <span className="badge badge-secondary">
-                                    {subtance.no}
-                                  </span>
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.academy}
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.theme}
-                                </td>
-                                <td className="align-middle">200 Soal</td>
-                                <td className="align-middle">
-                                  {subtance.start_at}
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.category}
-                                </td>
-                                <td className="align-middle">
-                                  <span className="badge badge-success">
-                                    Publish
-                                  </span>
-                                </td>
-                                <td className="align-middle">
-                                  <ButtonAction
-                                    icon="setting.svg"
-                                    link="/subvit/substansi/report"
-                                  />
-                                  <ButtonAction
-                                    icon="write.svg"
-                                    link="/subvit/substansi/1"
-                                  />
-                                  <ButtonAction
-                                    icon="detail.svg"
-                                    link="/subvit/substansi/edit/step-1"
-                                  />
-                                  <ButtonAction icon="trash.svg" />
-                                </td>
-                              </tr>
-                            );
-                          })}
+                        subtance.list_substance.map((subtance) => {
+                          return (
+                            <tr key={subtance.id}>
+                              <td className="align-middle text-center">
+                                <span className="badge badge-secondary">
+                                  {subtance.no}
+                                </span>
+                              </td>
+                              <td className="align-middle">
+                                {subtance.academy}
+                              </td>
+                              <td className="align-middle">
+                                {subtance.theme}
+                              </td>
+                              <td className="align-middle">200 Soal</td>
+                              <td className="align-middle">
+                                {subtance.start_at}
+                              </td>
+                              <td className="align-middle">
+                                {subtance.category}
+                              </td>
+                              <td className="align-middle">
+                                <span className="badge badge-success">
+                                  Publish
+                                </span>
+                              </td>
+                              <td className="align-middle">
+                                <ButtonAction
+                                  icon="setting.svg"
+                                  link="/subvit/substansi/report"
+                                />
+                                <ButtonAction
+                                  icon="write.svg"
+                                  link="/subvit/substansi/1"
+                                />
+                                <ButtonAction
+                                  icon="detail.svg"
+                                  link="/subvit/substansi/edit/step-1"
+                                />
+                                <ButtonAction icon="trash.svg" />
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 ) : (
@@ -199,12 +191,12 @@ const ListSubstansi = () => {
               </div>
 
               <div className="row">
-                {perPage < total && (
+                {subtance && subtance.perPage < subtance.total && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={perPage}
-                      totalItemsCount={total}
+                      itemsCountPerPage={subtance.perPage}
+                      totalItemsCount={subtance.total}
                       pageRangeDisplayed={3}
                       // onChange={handlePagination}
                       nextPageText={">"}
@@ -216,7 +208,7 @@ const ListSubstansi = () => {
                     />
                   </div>
                 )}
-                {total > 5 ? (
+                {subtance && subtance.total > 5 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">

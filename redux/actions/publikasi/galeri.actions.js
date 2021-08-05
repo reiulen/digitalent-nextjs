@@ -33,7 +33,7 @@ export const getAllGaleri = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/galeri')
+        const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/galeri')
 
         dispatch({
             type: GALERI_SUCCESS,
@@ -63,7 +63,7 @@ export const newGaleri = (galeriData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/galeri', galeriData)
+        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/galeri', galeriData)
 
         dispatch({
             type: NEW_GALERI_SUCCESS,
@@ -83,7 +83,7 @@ export const deleteGaleri = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_GALERI_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API + `publikasi/api/galeri/${id}`)
+        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `publikasi/api/galeri/${id}`)
 
         dispatch({
             type: DELETE_GALERI_SUCCESS,
