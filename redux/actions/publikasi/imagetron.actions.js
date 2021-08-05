@@ -33,7 +33,7 @@ export const getAllImagetron = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/imagetron')
+        const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/imagetron')
 
         dispatch({
             type: IMAGETRON_SUCCESS,
@@ -63,7 +63,7 @@ export const newImagetron = (imagetronData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/imagetron', imagetronData)
+        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/imagetron', imagetronData)
 
         dispatch({
             type: NEW_IMAGETRON_SUCCESS,
@@ -83,7 +83,7 @@ export const deleteImagetron = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_IMAGETRON_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API + `publikasi/api/imagetron/${id}`)
+        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `publikasi/api/imagetron/${id}`)
 
         dispatch({
             type: DELETE_IMAGETRON_SUCCESS,

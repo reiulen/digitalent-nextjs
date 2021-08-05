@@ -28,7 +28,7 @@ export const getAllFaq = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API + 'publikasi/api/faq')
+        const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/faq')
 
         dispatch({
             type: FAQ_SUCCESS,
@@ -58,7 +58,7 @@ export const newFaq = (faqData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'publikasi/api/faq', faqData)
+        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/faq', faqData)
 
         dispatch({
             type: NEW_FAQ_SUCCESS,

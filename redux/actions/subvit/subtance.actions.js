@@ -20,11 +20,14 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllSubtanceQuestionBanks = (page = 1, keyword = '') => async (dispatch) => {
+export const getAllSubtanceQuestionBanks = (page = 1, keyword = '', limit = 5) => async (dispatch) => {
     try {
 
-        let link = process.env.END_POINT_API + `survai-trivia/api/subtance-question-banks?page=${page}&keyword=${keyword}`
         dispatch({ type: SUBTANCE_QUESTION_BANKS_REQUEST })
+
+        let link = process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks?page=${page}`
+        if (keyword) link = link.concat(`&keyword=${keyword}`)
+        if (limit) link = link.concat(`&limit=${limit}`)
 
         // const config = {
         //     headers: {
@@ -33,6 +36,7 @@ export const getAllSubtanceQuestionBanks = (page = 1, keyword = '') => async (di
         //         'apikey': process.env.END_POINT_KEY_AUTH
         //     }
         // }
+
         const { data } = await axios.get(link)
 
         dispatch({
@@ -63,7 +67,7 @@ export const newSubtanceQuestionBanks = (subtanceData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API + 'survai-trivia/api/subtance-question-banks', subtanceData)
+        const { data } = await axios.post(process.env.END_POINT_API_SUBVIT + 'api/subtance-question-banks', subtanceData)
 
         dispatch({
             type: NEW_SUBTANCE_QUESTION_BANKS_SUCCESS,
@@ -83,7 +87,7 @@ export const deleteRoom = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_SUBTANCE_QUESTION_BANKS_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API + `survai-trivia/api/subtance-question-banks/${id}`)
+        const { data } = await axios.delete(process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`)
 
         dispatch({
             type: DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,

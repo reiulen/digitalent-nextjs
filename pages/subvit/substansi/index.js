@@ -17,5 +17,5 @@ export default function Substansi() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-    await store.dispatch(getAllSubtanceQuestionBanks(query.page, query.keyword))
+    await store.dispatch(getAllSubtanceQuestionBanks(query.page, query.keyword, query.limit))
 })

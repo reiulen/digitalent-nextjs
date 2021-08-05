@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
+import LoadingTable from '../../../LoadingTable'
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAllSubtanceQuestionBanks,
   clearErrors,
 } from "/redux/actions/subvit/subtance.actions";
 
@@ -21,20 +18,54 @@ const ListSubstansi = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, subtance, perPage, total } = useSelector(
+  const { loading, error, subtance } = useSelector(
     (state) => state.allSubtanceQuestionBanks
   );
 
-  let { page = 1 } = router.query;
+  let { page = 1, success } = router.query;
   page = Number(page);
 
-  useEffect(() => {
-    dispatch(getAllSubtanceQuestionBanks());
-  }, [dispatch]);
+  const [search, setSearch] = useState('')
+  const [limit, setLimit] = useState(null)
 
-  const override = css`
-    margin: 0 auto;
-  `;
+  useEffect(() => {
+    if (limit) {
+      router.push(`${router.pathname}?page=1&limit=${limit}`)
+    }
+  }, [dispatch, limit]);
+
+  const handlePagination = (pageNumber) => {
+    if (limit != null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    } else if (search != '' && limit != null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${search}`)
+    } else if (search != '') {
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+    } else {
+      router.push(`${router.pathname}?page=${pageNumber}`)
+    }
+  }
+
+  const handleSearch = () => {
+    if (limit != null) {
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    } else {
+      router.push(`${router.pathname}?page=1&keyword=${search}`)
+    }
+  }
+
+  const handleLimit = (val) => {
+    setLimit(val)
+  }
+
+  const onNewReset = () => {
+    router.replace('/subvit/substansi', undefined, { shallow: true })
+  }
+
+  let count = subtance.total
+  if (search || limit && limit != 5) {
+    count = subtance.totalFiltered
+  }
 
   return (
     <PageWrapper>
@@ -64,6 +95,19 @@ const ListSubstansi = () => {
         ""
       )}
 
+      {success ?
+        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+          <div className="alert-text">Berhasil Menambah Data</div>
+          <div className="alert-close">
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
+              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            </button>
+          </div>
+        </div>
+        : ''
+      }
+
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -76,7 +120,7 @@ const ListSubstansi = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-6 col-xl-6">
+                <div className="col-lg-5 col-xl-5">
                   <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
@@ -84,6 +128,7 @@ const ListSubstansi = () => {
                       className="form-control"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
+                      onChange={e => setSearch(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
@@ -91,25 +136,28 @@ const ListSubstansi = () => {
                   </div>
                 </div>
 
-                <div className="col-lg-2 col-xl-2">
+                <div className="col-lg-1 col-xl-1">
+                  <button className='btn btn-sm btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
+                </div>
+                <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
                   <Link href="/subvit/substansi/clone">
-                    <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
+                    <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block">
                       <i className="flaticon-file-1"></i>
-                      Clone Test
+                      Clone {count}
                     </a>
                   </Link>
                 </div>
-                <div className="col-lg-2 col-xl-2">
+                <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
                   <Link href="/subvit/substansi/tipe-soal">
-                    <a className="btn btn-sm btn-light-warning px-6 font-weight-bold btn-block ">
+                    <a className="btn btn-sm btn-light-warning px-6 font-weight-bold btn-block">
                       <i className="flaticon2-paper"></i>
                       Tipe Soal
                     </a>
                   </Link>
                 </div>
-                <div className="col-lg-2 col-xl-2">
+                <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
                   <Link href="/subvit/substansi/tambah/step-1">
-                    <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                    <a className="btn btn-sm btn-light-info px-6 font-weight-bold btn-block">
                       <i className="flaticon2-notepad"></i>
                       Tambah Soal
                     </a>
@@ -120,14 +168,7 @@ const ListSubstansi = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <div className="loading text-center justify-content-center">
-                  <BeatLoader
-                    color="#3699FF"
-                    loading={loading}
-                    css={override}
-                    size={10}
-                  />
-                </div>
+                <LoadingTable loading={loading} />
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -144,53 +185,63 @@ const ListSubstansi = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {subtance && subtance.length === 0
-                        ? ""
-                        : subtance &&
-                          subtance.map((subtance) => {
-                            return (
-                              <tr key={subtance.id}>
-                                <td className="align-middle text-center">
-                                  <span className="badge badge-secondary">
-                                    {subtance.no}
-                                  </span>
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.academy}
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.theme}
-                                </td>
-                                <td className="align-middle">200 Soal</td>
-                                <td className="align-middle">
-                                  {subtance.start_at}
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.category}
-                                </td>
-                                <td className="align-middle">
-                                  <span className="badge badge-success">
+                      {!subtance || (subtance && subtance.list_substance.length === 0)
+                        ? (
+                          <td className="align-middle text-center" colSpan={8}>
+                            Data Masih Kosong
+                          </td>
+                        )
+                        : subtance && subtance.list_substance &&
+                        subtance.list_substance.map((subtance, i) => {
+                          return (
+                            <tr key={subtance.id}>
+                              <td className="align-middle text-center">
+                                <span className="badge badge-secondary text-muted">
+                                  {i + 1 * (page * 5 || limit) - 4}
+                                </span>
+                              </td>
+                              <td className="align-middle">
+                                {subtance.academy_id}
+                              </td>
+                              <td className="align-middle">
+                                {subtance.theme_id}
+                              </td>
+                              <td className="align-middle">{subtance.bank_soal} Soal</td>
+                              <td className="align-middle">
+                                {subtance.start_at}
+                              </td>
+                              <td className="align-middle">
+                                {subtance.category}
+                              </td>
+                              <td className="align-middle">
+                                {subtance.status === true ? (
+                                  <span class="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
-                                </td>
-                                <td className="align-middle">
-                                  <ButtonAction
-                                    icon="setting.svg"
-                                    link="/subvit/substansi/report"
-                                  />
-                                  <ButtonAction
-                                    icon="write.svg"
-                                    link="/subvit/substansi/1"
-                                  />
-                                  <ButtonAction
-                                    icon="detail.svg"
-                                    link="/subvit/substansi/edit/step-1"
-                                  />
-                                  <ButtonAction icon="trash.svg" />
-                                </td>
-                              </tr>
-                            );
-                          })}
+                                ) : (
+                                  <span class="label label-inline label-light-warning font-weight-bold">
+                                    Draft
+                                  </span>
+                                )}
+                              </td>
+                              <td className="align-middle">
+                                <ButtonAction
+                                  icon="setting.svg"
+                                  link="/subvit/substansi/report"
+                                />
+                                <ButtonAction
+                                  icon="write.svg"
+                                  link="/subvit/substansi/1"
+                                />
+                                <ButtonAction
+                                  icon="detail.svg"
+                                  link="/subvit/substansi/edit/step-1"
+                                />
+                                <ButtonAction icon="trash.svg" />
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 ) : (
@@ -199,14 +250,14 @@ const ListSubstansi = () => {
               </div>
 
               <div className="row">
-                {perPage < total && (
+                {subtance && subtance.perPage < subtance.total && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={perPage}
-                      totalItemsCount={total}
+                      itemsCountPerPage={subtance.perPage}
+                      totalItemsCount={subtance.total}
                       pageRangeDisplayed={3}
-                      // onChange={handlePagination}
+                      onChange={handlePagination}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -216,7 +267,7 @@ const ListSubstansi = () => {
                     />
                   </div>
                 )}
-                {total > 5 ? (
+                {subtance && subtance.total > 5 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -229,6 +280,8 @@ const ListSubstansi = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
+                          onChange={e => handleLimit(e.target.value)}
+                          onBlur={e => handleLimit(e.target.value)}
                         >
                           <option>5</option>
                           <option>10</option>
@@ -242,7 +295,7 @@ const ListSubstansi = () => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data 120
+                          Total Data {subtance.total}
                         </p>
                       </div>
                     </div>
