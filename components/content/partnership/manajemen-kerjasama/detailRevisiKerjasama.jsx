@@ -19,7 +19,7 @@ const DetailRevisiKerjasama = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Periode
+                  Tanggal
                 </label>
                 <div className="col-sm-10">
                   <div className="row align-items-right">
@@ -41,7 +41,11 @@ const DetailRevisiKerjasama = () => {
                   Judul Kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Judul Kerjasama"
+                  />
                 </div>
               </div>
 
@@ -53,7 +57,11 @@ const DetailRevisiKerjasama = () => {
                   Kategori Kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Memorandum of Understanding (MoU)"
+                  />
                 </div>
               </div>
 
@@ -96,6 +104,7 @@ const DetailRevisiKerjasama = () => {
                     cols="30"
                     rows="5"
                     className="form-control"
+                    placeholder="Masukkan Tujuan Kerjasama disini"
                   ></textarea>
                 </div>
                 <div className="col-sm-4" style={{ marginTop: "-2.7%" }}>
@@ -108,6 +117,7 @@ const DetailRevisiKerjasama = () => {
                     cols="30"
                     rows="5"
                     className="form-control"
+                    placeholder="kurang rapih, kurang titik koma, kurang kondusif"
                   ></textarea>
                 </div>
               </div>
@@ -126,6 +136,7 @@ const DetailRevisiKerjasama = () => {
                     cols="30"
                     rows="5"
                     className="form-control"
+                    placeholder="Masukkan Ruang Lingkup Kerjasama disini"
                   ></textarea>
                 </div>
                 <div className="col-sm-4">
@@ -135,6 +146,7 @@ const DetailRevisiKerjasama = () => {
                     cols="30"
                     rows="5"
                     className="form-control"
+                    placeholder="kurang rapih, kurang titik koma, kurang kondusif"
                   ></textarea>
                 </div>
               </div>
@@ -153,6 +165,8 @@ const DetailRevisiKerjasama = () => {
                     cols="30"
                     rows="5"
                     className="form-control"
+                    placeholder="Masukkan Target Kerjasama disini
+"
                   ></textarea>
                 </div>
                 <div className="col-sm-4">
@@ -162,6 +176,7 @@ const DetailRevisiKerjasama = () => {
                     cols="30"
                     rows="5"
                     className="form-control"
+                    placeholder="kurang rapih, kurang titik koma, kurang kondusif"
                   ></textarea>
                 </div>
               </div>
@@ -180,6 +195,9 @@ const DetailRevisiKerjasama = () => {
                     cols="30"
                     rows="5"
                     className="form-control"
+                    placeholder="kurang rapih, kurang titik koma, kurang kondusif
+                    kurang rapih, kurang titik koma, kurang kondusif
+                    kurang rapih, kurang titik koma, kurang kondusif"
                   ></textarea>
                 </div>
               </div>

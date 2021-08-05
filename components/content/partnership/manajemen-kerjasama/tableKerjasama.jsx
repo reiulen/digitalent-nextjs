@@ -136,7 +136,7 @@ const Table = () => {
                       </th>
                       <th className="text-center align-middle">Periode</th>
                       <th className="text-center align-middle">
-                        Tanggal Pendaftaran
+                        Tanggal Tanda Tangan
                       </th>
                       <th className="text-center align-middle">Status</th>
                       <th className="text-center align-middle">Action</th>

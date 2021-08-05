@@ -131,13 +131,14 @@ const EditTipeSoal = () => {
                 </div>
               </div>
 
+              {/* disini akan di ubah */}
               <div className="form-group row">
                 <div className="col-sm-12 text-right">
                   <button
                     className="btn btn-light-primary btn-sm mr-2"
                     onClick={saveAndContinue}
                   >
-                    Simpan & Lanjut
+                    Kembali
                   </button>
                   <button
                     className="btn btn-primary btn-sm"
