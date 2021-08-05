@@ -33,38 +33,29 @@ const SubHeader = () => {
 
     return (
         <>
-            {/* <!--begin::Subheader--> */}
             <div className="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
                 <div className="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-                    {/* <!--begin::Info--> */}
                     <div className="d-flex align-items-center flex-wrap mr-2">
-                        {/* <!--begin::Page Title--> */}
-                        {/* // <!--end::Page Title--> */}
                         {breadcrumbs.map((breadcrumb, i) => {
                             return (
                                 <Link href={breadcrumb.href} key={i}>
                                     <a>
-                                        <h5 className="text-default mt-2 mb-2">
+                                        <p className="text-default mt-2 mb-2 font-weight-bold">
                                             {convertBreadcrumb(breadcrumb.breadcrumb)} /
-                                        </h5>
+                                        </p>
                                     </a>
                                 </Link>
                             );
                         })}
 
                     </div>
-                    {/* // <!--end::Info--> */}
-                    {/* // <!--begin::Toolbar--> */}
                     <div className="d-flex align-items-center">
                         <i className='flaticon2-crisp-icons-1 mr-2'></i>
                         <span className="text-muted font-size-base font-weight-bold mr-2"
                             id="kt_dashboard_daterangepicker_title">{days}</span>
-
                     </div>
-                    {/* // <!--end::Toolbar--> */}
                 </div>
             </div>
-            {/* // <!--end::Subheader--> */}
         </>
     )
 }

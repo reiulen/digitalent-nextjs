@@ -1,6 +1,9 @@
 import Layout from "../../../components/templates/layout.component";
 import Artikel from "../../../components/content/publikasi/artikel/artikel";
 
+import { getAllArtikel } from '../../../redux/actions/publikasi/artikel.actions'
+import { wrapper } from '../../../redux/store'
+
 export default function ArtikelPage() {
     return (
         <>
@@ -12,3 +15,7 @@ export default function ArtikelPage() {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+    await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit))
+})

@@ -13,6 +13,10 @@ import {
     DELETE_ARTIKEL_RESET,
     DELETE_ARTIKEL_FAIL,
 
+    DETAIL_ARTIKEL_REQUEST,
+    DETAIL_ARTIKEL_SUCCESS,
+    DETAIL_ARTIKEL_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/artikel.type'
 
@@ -68,6 +72,28 @@ export const newArtikelReducer = (state = { artikel: {} }, action) => {
         case NEW_ARTIKEL_RESET:
             return {
                 success: false
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const detailArtikelReducer = (state = { artikel: {} }, action) => {
+    switch (action.type) {
+        case DETAIL_ARTIKEL_SUCCESS:
+            return {
+                artikel: action.payload
+            }
+
+        case DETAIL_ARTIKEL_FAIL:
+            return {
+                error: action.payload
             }
 
         case CLEAR_ERRORS:

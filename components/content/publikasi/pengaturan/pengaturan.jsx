@@ -27,7 +27,10 @@ const Pengaturan = () => {
     }, [dispatch, error, success]);
 
 
-    const [judul, setJudulImagetron] = useState('')
+    const [upload_image, setUploadImage] = useState(0)
+    const [upload_imagetron, setUploadImagetron] = useState(0)
+    const [batas_slider, setBatasSlider] = useState(0)
+    const [maxfaq, setMaxfaq] = useState(0)
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -36,10 +39,13 @@ const Pengaturan = () => {
         }
 
         const data = {
-            judul,
+            upload_image,
+            upload_imagetron,
+            batas_slider,
+            maxfaq,
         }
 
-        dispatch(newImagetron(data))
+        // dispatch(newImagetron(data))
         console.log(data)
     }
 
@@ -83,25 +89,25 @@ const Pengaturan = () => {
                             <div className="form-group row form-inline">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Image</label>
                                 <div className="col-sm-5">
-                                    <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={judul} onChange={(e) => setJudulImagetron(e.target.value)} /> MB
+                                    <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} min='0' /> MB
                                 </div>
                             </div>
                             <div className="form-group row form-inline">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Imagetron</label>
                                 <div className="col-sm-5">
-                                    <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={judul} onChange={(e) => setJudulImagetron(e.target.value)} /> MB
+                                    <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={upload_imagetron} onChange={(e) => setUploadImagetron(e.target.value)} /> MB
                                 </div>
                             </div>
                             <div className="form-group row form-inline">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Batas Slider</label>
                                 <div className="col-sm-5">
-                                    <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={judul} onChange={(e) => setJudulImagetron(e.target.value)} /> Page
+                                    <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={batas_slider} onChange={(e) => setBatasSlider(e.target.value)} /> Page
                                 </div>
                             </div>
                             <div className="form-group row form-inline">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Maksimal FAQ</label>
                                 <div className="col-sm-5">
-                                    <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={judul} onChange={(e) => setJudulImagetron(e.target.value)} /> Page
+                                    <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={maxfaq} onChange={(e) => setMaxfaq(e.target.value)} /> Page
                                 </div>
                             </div>
 
@@ -109,9 +115,6 @@ const Pengaturan = () => {
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10">
-                                    <Link href='/publikasi/imagetron'>
-                                        <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
-                                    </Link>
                                     <button className='btn btn-primary btn-sm'>Submit</button>
                                 </div>
                             </div>
