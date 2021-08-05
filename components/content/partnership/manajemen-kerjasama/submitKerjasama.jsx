@@ -130,7 +130,7 @@ const SubmitKerjasama = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Periode Kerjasama
+                  Tanggal Penandantangan
                 </label>
                 <div className="col-sm-10">
                   <div className="row align-items-right">

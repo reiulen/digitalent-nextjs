@@ -42,7 +42,7 @@ const StepThree = () => {
   const [role, setRole] = useState("");
 
   const saveAndContinue = () => {
-    router.push("/subvit/substansi/clone/step-2");
+    router.push("/subvit/substansi");
   };
 
   const saveDraft = () => {

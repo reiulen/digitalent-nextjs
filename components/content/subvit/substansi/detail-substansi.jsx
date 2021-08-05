@@ -71,9 +71,11 @@ const DetailSubstansi = () => {
               Substansi FGA - Cloud Computing
             </h3>
             <div className="card-toolbar">
-              <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
-                Edit
-              </a>
+              <Link href="/subvit/substansi/edit/step-1">
+                <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
+                  Edit
+                </a>
+              </Link>
             </div>
           </div>
 
@@ -123,11 +125,14 @@ const DetailSubstansi = () => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Bank Soal
-            </h3>
             <div className="card-toolbar">
-              <Link href="/subvit/substansi/tambah">
+              <h3 className="card-title font-weight-bolder text-dark">
+                Bank Soal
+              </h3>
+              {/* <label htmlFor=""></label> */}
+            </div>
+            <div className="card-toolbar">
+              <Link href="/subvit/substansi/tambah/step-1">
                 <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block ">
                   Tambah Soal
                 </a>
@@ -201,7 +206,7 @@ const DetailSubstansi = () => {
                                 <td className="align-middle text-center">
                                   <ButtonAction
                                     icon="write.svg"
-                                    link="/subvit/substansi/soal/1"
+                                    link="/subvit/substansi/edit/step-1"
                                   />
                                   <ButtonAction icon="trash.svg" />
                                 </td>
