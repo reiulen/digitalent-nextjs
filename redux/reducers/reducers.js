@@ -11,6 +11,8 @@ import { allVideoReducer, newVideoReducer } from './publikasi/video.reducers'
 
 // Subvit
 import { allSubtanceQuestionBanksReducer, newSubtanceQuestionBanksReducer, deleteSubtanceQuestionBanksReducer } from './subvit/subtance.reducers'
+import { allSubtanceQuestionTypeReducer } from './subvit/subtance-question-type.reducers'
+import { newSubtanceQuestionDetailReducer } from './subvit/subtance-question-detail.reducers'
 
 // Partnership
 import { allMitraReducer } from './partnership/mitra.reducers'
@@ -49,6 +51,10 @@ const reducer = combineReducers({
     allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
     newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
     deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
+
+    allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
+
+    newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
 
     // PARTNERSHIP
     allMitra: allMitraReducer,
