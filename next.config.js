@@ -22,3 +22,5 @@ module.exports = {
     END_POINT_KEY_AUTH: '12131231231210923123',
   },
 }
+
+
