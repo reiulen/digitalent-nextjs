@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from 'simple-react-validator'
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"
 
 import {
   newSubtanceQuestionBanks,
@@ -224,7 +224,7 @@ const StepOne = () => {
                     name="training_id"
                     id=""
                     onChange={(e) => setTrainingId(e.target.value)}
-                    onBlur={e => { setTrainingId(e.target.value); simpleValidator.current.showMessageFor('training_id') }}
+                    onBlur={e => setTrainingId(e.target.value)}
                     className="form-control"
                   >
                     <option selected disabled> -Pilih Pelatihan-</option>
@@ -232,7 +232,6 @@ const StepOne = () => {
                     <option value="1"> Adobe UI/UX Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Pelatihan</span>
-                  {simpleValidator.current.message('training_id', training_id, 'required', { className: 'text-danger' })}
                 </div>
               </div>
 
