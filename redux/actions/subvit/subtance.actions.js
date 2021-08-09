@@ -5,13 +5,16 @@ import {
 
     NEW_SUBTANCE_QUESTION_BANKS_REQUEST,
     NEW_SUBTANCE_QUESTION_BANKS_SUCCESS,
-    NEW_SUBTANCE_QUESTION_BANKS_RESET,
     NEW_SUBTANCE_QUESTION_BANKS_FAIL,
 
     DELETE_SUBTANCE_QUESTION_BANKS_REQUEST,
     DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,
-    DELETE_SUBTANCE_QUESTION_BANKS_RESET,
     DELETE_SUBTANCE_QUESTION_BANKS_FAIL,
+
+    UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST,
+    UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_SUCCESS,
+    UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET,
+    UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_FAIL,
 
     CLEAR_ERRORS,
 } from '../../types/subvit/subtance.type'
@@ -96,7 +99,37 @@ export const deleteRoom = (id) => async (dispatch) => {
 
     } catch (error) {
         dispatch({
-            type: DELETE_ROOM_FAIL,
+            type: DELETE_SUBTANCE_QUESTION_BANKS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const updateSubtanceQuestionBanksPublish = (subtanceData, id) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST
+        })
+
+        // const config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+        //         'Access-Control-Allow-Origin': '*',
+        //         'apikey': process.env.END_POINT_KEY_AUTH
+        //     }
+        // }
+
+        const { data } = await axios.post(process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/publish/${id}`, subtanceData)
+
+        dispatch({
+            type: UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_FAIL,
             payload: error.response.data.message
         })
     }

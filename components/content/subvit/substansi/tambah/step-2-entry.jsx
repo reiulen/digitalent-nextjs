@@ -8,9 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   getAllSubtanceQuestionBanks,
-  clearErrors,
 } from '../../../../../redux/actions/subvit/subtance-question-type.actions';
-import { newSubtanceQuestionDetail } from '../../../../../redux/actions/subvit/subtance-question-detail.action'
+import { newSubtanceQuestionDetail, clearErrors } from '../../../../../redux/actions/subvit/subtance-question-detail.action'
 import { NEW_SUBTANCE_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/subtance-question-detail.type";
 import { useRouter } from "next/router";
 
@@ -26,25 +25,9 @@ const StepTwo = () => {
   });
   const router = useRouter();
 
-  const saveDraft = () => {
-    // router.push("/subvit/substansi");
-  };
-
   let { metode, id } = router.query;
   const { loading, error, success } = useSelector((state) => state.newSubtanceQuestionDetail);
   const { loading: allLoading, error: allError, subtance_question_type } = useSelector((state) => state.allSubtanceQuestionType);
-
-  useEffect(() => {
-
-    dispatch(getAllSubtanceQuestionBanks())
-    // if (error) {
-    //     dispatch(clearErrors())
-    // }
-
-    if (success) {
-      console.log("berhasil")
-    }
-  }, [dispatch, error, success]);
 
   const [question, setSoal] = useState('')
   const [question_image, setSoalImage] = useState('')
@@ -56,6 +39,29 @@ const StepTwo = () => {
   ])
   const [answer_key, setAnswerKey] = useState('')
   const [question_type_id, setQuestionTypeId] = useState('')
+  const [typeSave, setTypeSave] = useState('lanjut')
+
+  useEffect(() => {
+
+    dispatch(getAllSubtanceQuestionBanks())
+    // if (error) {
+    //     dispatch(clearErrors())
+    // }
+
+    if (success) {
+      if (typeSave === 'lanjut') {
+        router.push({
+          pathname: `/subvit/substansi/tambah-step-3`,
+          query: { id }
+        })
+      } else if (typeSave === 'draft') {
+        router.push({
+          pathname: `/subvit/substansi/tambah-step-2`,
+          query: { metode, id }
+        });
+      }
+    }
+  }, [dispatch, error, success, typeSave]);
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -110,9 +116,25 @@ const StepTwo = () => {
     setSoalList([...answer, { key: newKey, question: '', image: '', is_right: false }])
   }
 
+  const saveDraft = () => {
+    setTypeSave('draft')
+    // router.push("/subvit/substansi");
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
+    setTypeSave('lanjut')
     let valid = true
+
+    if (error) {
+      dispatch(clearErrors())
+    }
+
+    if (success) {
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_DETAIL_RESET
+      })
+    }
 
     if (answer_key === '') {
       valid = false
@@ -152,16 +174,16 @@ const StepTwo = () => {
       })
     }
 
+    const answers = JSON.stringify(answer)
     if (valid) {
       const data = {
         subtance_question_bank_id: id,
         question,
-        answer,
+        answer: answers,
         question_image,
         question_type_id,
         answer_key,
       }
-      console.log(data)
 
       dispatch(newSubtanceQuestionDetail(data))
     }
@@ -210,7 +232,7 @@ const StepTwo = () => {
               <div className="form-group row">
                 <div className="col-sm-12 col-md-8">
                   <span>Pertanyaan</span>
-                  <input type="text" className="form-control" value={question} onChange={e => setSoal(e.target.value)} />
+                  <input type="text" className="form-control" value={question} onChange={e => setSoal(e.target.value)} autoComplete='off' />
                   <span className="text-muted">Silahkan Input Pertanyaan</span>
                 </div>
               </div>
@@ -243,7 +265,7 @@ const StepTwo = () => {
                   return (
                     <>
                       <div className="col-sm-12 col-md-4">
-                        <input type="text" className="form-control" name='option' value={x.option} placeholder={x.key} onChange={e => handleInputChange(e, i)} />
+                        <input type="text" className="form-control" name='option' value={x.option} placeholder={x.key} onChange={e => handleInputChange(e, i)} autoComplete='off' />
                         <span className="text-muted">Silahkan Pilihan {x.key}</span>
                       </div>
                       <div className="col-sm-12 col-md-3">
