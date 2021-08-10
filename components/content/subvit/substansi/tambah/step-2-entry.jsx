@@ -44,9 +44,6 @@ const StepTwo = () => {
   useEffect(() => {
 
     dispatch(getAllSubtanceQuestionBanks())
-    // if (error) {
-    //     dispatch(clearErrors())
-    // }
 
     if (success) {
       if (typeSave === 'lanjut') {
