@@ -3,8 +3,13 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
+import SimpleReactValidator from 'simple-react-validator'
+import { TagsInput } from 'react-tag-input-component';
+
 import { newBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
+import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import { NEW_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
 
 import PageWrapper from '../../../wrapper/page.wrapper';
@@ -13,6 +18,7 @@ import LoadingPage from '../../../LoadingPage';
 const TambahBerita = () => {
     const editorRef = useRef()
     const dispatch = useDispatch()
+    const router = useRouter();
 
     const importSwitch = () => import('bootstrap-switch-button-react')
     const [editorLoaded, setEditorLoaded] = useState(false)
@@ -20,10 +26,13 @@ const TambahBerita = () => {
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
-
+    const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const { loading, error, success } = useSelector(state => state.newBerita)
+    const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
 
     useEffect(() => {
+
+        dispatch(getAllKategori())
 
         editorRef.current = {
             CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
@@ -31,23 +40,31 @@ const TambahBerita = () => {
             // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
         }
 
-        setEditorLoaded(true)
+        // setEditorLoaded(true)
 
         // if (error) {
         //     dispatch(clearErrors())
         // }
 
+        // if (success) {
+        //     setKategoriId('')
+        //     setJudulBerita('')
+        //     setIsiBerita('')
+        //     setGambar('')
+        //     setPublish(false)
+        //     setTag('')
+        //     setGambarPreview('/assets/media/default.jpg')
+        //     // dispatch({
+        //     //     type: NEW_ARTIKEL_RESET
+        //     // })
+        // }
+
+        setEditorLoaded(true)
         if (success) {
-            setKategoriId('')
-            setJudulBerita('')
-            setIsiBerita('')
-            setGambar('')
-            setPublish(false)
-            setTag('')
-            setGambarPreview('/assets/media/default.jpg')
-            // dispatch({
-            //     type: NEW_ARTIKEL_RESET
-            // })
+            router.push({
+                pathname: `/publikasi/berita`,
+                query: { success: true }
+            })
         }
 
     }, [dispatch, error, success]);
@@ -59,7 +76,7 @@ const TambahBerita = () => {
     const [isi_berita, setIsiBerita] = useState('');
     const [gambar, setGambar] = useState('')
     const [publish, setPublish] = useState(false)
-    const [tag, setTag] = useState('')
+    const [tag, setTag] = useState([])
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
 
     const onChangeGambar = (e) => {
@@ -196,17 +213,33 @@ const TambahBerita = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
                                 <div className="col-sm-10">
-                                    <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => setKategoriId(e.target.value)} >
-                                        <option value="1">Kategori</option>
-                                        <option value="2">Kategori 2</option>
+                                    <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
+                                        <option selected disabled value=''>-- Kategori --</option>
+                                        {!kategori || (kategori && kategori.length === 0) ? (
+                                            <option value="">Data kosong</option>
+                                        ) : (
+                                            kategori && kategori.kategori && kategori.kategori.map((row) => {
+                                                return (
+                                                    <option key={row.id} value={row.id}>{row.nama}</option>
+                                                )
+                                            })
+                                        )}
+
                                     </select>
+                                    {simpleValidator.current.message('kategori_id', kategori_id, 'required', { className: 'text-danger' })}
                                 </div>
                             </div>
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} />
+                                    <TagsInput
+                                        value={tag}
+                                        onChange={setTag}
+                                        name="tag"
+                                        placeHolder="Isi Tag disini"
+                                    />
+                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                 </div>
                             </div>
 

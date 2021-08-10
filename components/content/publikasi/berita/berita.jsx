@@ -49,12 +49,12 @@ const Berita = () => {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                // dispatch(deleteBerita(id))
-                Swal.fire(
-                    'Berhasil ',
-                    'Data berhasil dihapus.',
-                    'success'
-                )
+                dispatch(deleteBerita(id))
+                // Swal.fire(
+                //     'Berhasil ',
+                //     'Data berhasil dihapus.',
+                //     'success'
+                // )
                 // dispatch(getAllBerita())
             }
         })
@@ -185,7 +185,7 @@ const Berita = () => {
                                                             </td>
                                                             <td className='align-middle'>{row.jenis_kategori}</td>
                                                             <td className='align-middle'>{row.judul_berita}</td>
-                                                            <td className='align-middle'>{row.created_at}</td>
+                                                            <td className='align-middle'>{new Date(row.created_at).toLocaleDateString("fr-CA")}</td>
                                                             <td className='align-middle'>{row.users_id}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
@@ -202,9 +202,20 @@ const Berita = () => {
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='setting.svg' />
-                                                                <ButtonAction icon='write.svg' />
-                                                                <button onClick={() => handleDelete(row.id)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
-                                                                    <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
+                                                                <ButtonAction icon='write.svg' link={`/publikasi/berita/${row.id}`}/>
+                                                                <button 
+                                                                    onClick={() => handleDelete(row.id)} 
+                                                                    className='btn mr-1' 
+                                                                    style={{ 
+                                                                        background: '#F3F6F9', 
+                                                                        borderRadius: '6px' 
+                                                                    }}>
+                                                                    <Image 
+                                                                        alt='button-action' 
+                                                                        src={`/assets/icon/trash.svg`} 
+                                                                        width={18} 
+                                                                        height={18} 
+                                                                    />
                                                                 </button>
                                                             </td>
                                                         </tr>

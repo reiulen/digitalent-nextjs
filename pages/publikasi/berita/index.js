@@ -1,6 +1,9 @@
 import Layout from "../../../components/templates/layout.component";
 import Berita from "../../../components/content/publikasi/berita/berita";
 
+import { getAllBerita } from "../../../redux/actions/publikasi/berita.actions"
+import { wrapper } from "../../../redux/store"
+
 export default function BeritaPage() {
     return (
         <>
@@ -12,3 +15,7 @@ export default function BeritaPage() {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps (store => async ({ query }) => {
+    await store.dispatch (getAllBerita (query.page, query.keyword, query.limit))
+})
