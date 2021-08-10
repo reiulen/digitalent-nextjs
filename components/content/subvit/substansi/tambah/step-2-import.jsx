@@ -2,54 +2,68 @@ import React, { useState, useEffect } from "react";
 
 import Link from "next/link";
 import Swal from "sweetalert2"
+import Image from 'next/image'
 import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 
 import {
-    getAllSubtanceQuestionBanks,
-} from '../../../../../redux/actions/subvit/subtance-question-type.actions';
-import { newSubtanceQuestionDetail, clearErrors } from '../../../../../redux/actions/subvit/subtance-question-detail.action'
-import { NEW_SUBTANCE_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/subtance-question-detail.type";
+    importFileSubtanceQuestionDetail,
+    importImagesSubtanceQuestionDetail,
+    clearErrors
+} from '../../../../../redux/actions/subvit/subtance-question-detail.action'
+import {
+    IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_RESET,
+    IMPORT_IMAGES_SUBTANCE_QUESTION_DETAIL_RESET
+} from "../../../../../redux/types/subvit/subtance-question-detail.type";
 import { useRouter } from "next/router";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage"
+import LoadingTable from "../../../../LoadingTable";
+import ButtonAction from '../../../../ButtonAction'
 
 const StepTwo = () => {
     const dispatch = useDispatch()
     const router = useRouter();
 
+    const { loading: loadingFile, error: errorFile, success: successFile, subtance_question_file } = useSelector((state) => state.importFileSubtanceQuestionDetail);
+    const { loading: loadingImages, error: errorImages, success: successImages, subtance_question_images } = useSelector((state) => state.importImagesSubtanceQuestionDetail);
     let { page = 1, metode, id } = router.query;
-    const { loading, error, success } = useSelector((state) => state.newSubtanceQuestionDetail);
     page = Number(page);
 
-    const [question_file, setQuestionFile] = useState('')
-    const [image_file, setImageFile] = useState('')
+    let error;
+    if (errorFile) {
+        error = errorFile
+    } else if (errorImages) {
+        error = errorImages
+    }
+    let loading = false;
+    if (loadingFile) {
+        loading = loadingFile
+    } else if (loadingImages) {
+        loading = loadingImages
+    }
+    let questionsArrModel;
+
+    const [question_file, setQuestionFile] = useState(null)
+    const [image_file, setImageFile] = useState(null)
+    const [bankSoal, setBankSoal] = useState([])
+    const [questionsArr, setQuestionArr] = useState([])
     const [typeSave, setTypeSave] = useState('lanjut')
 
     useEffect(() => {
 
-        dispatch(getAllSubtanceQuestionBanks())
         // if (error) {
         //     dispatch(clearErrors())
         // }
 
-        if (success) {
-            if (typeSave === 'lanjut') {
-                router.push({
-                    pathname: `/subvit/substansi/tambah-step-3`,
-                    query: { id }
-                })
-            } else if (typeSave === 'draft') {
-                router.push({
-                    pathname: `/subvit/substansi/tambah-step-2`,
-                    query: { metode, id }
-                });
-            }
+        if (successFile) {
+            questionsArrModel = bankSoal.concat(subtance_question_file.questions)
+            setQuestionArr(questionsArrModel)
         }
-    }, [dispatch, error, success, typeSave]);
+
+    }, [dispatch, successFile, questionsArrModel]);
 
     const saveDraft = () => {
         setTypeSave('draft')
@@ -58,27 +72,25 @@ const StepTwo = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        console.log(questionsArr.length)
         setTypeSave('lanjut')
 
     };
 
     const handleImportFile = async () => {
-        const data = {
-            subtance_question_bank_id: id,
-            question_file
-        }
+        const data = new FormData()
+        data.append('subtance_question_bank_id', id)
+        data.append('question_file', question_file, question_file.name)
 
-        console.log(data)
-        // await axios.post(process.env.END_POINT_API_SUBVIT + 'api/subtance-question-bank-details/import-file', data)
-        //     .then((res) => {
-        //         console.log(res)
-        //     }).catch((err) => {
-        //         console.log(err)
-        //     })
+        dispatch(importFileSubtanceQuestionDetail(data))
     }
 
-    const handleImportImage = () => {
-        console.log(image_file)
+    const handleImportImage = async () => {
+        const data = new FormData()
+        data.append('subtance_question_bank_id', id)
+        data.append('image_file', image_file, image_file.name)
+
+        dispatch(importImagesSubtanceQuestionDetail(data))
     }
 
     return (
@@ -187,24 +199,86 @@ const StepTwo = () => {
                         <div className="table-page" style={{ marginTop: '20px' }}>
                             <div className="table-responsive">
 
-                                <table className="table table-separate table-head-custom table-checkable">
-                                    <thead style={{ background: "#F3F6F9" }}>
-                                        <tr>
-                                            <th className="text-center">No</th>
-                                            <th>Akademi</th>
-                                            <th>Tema</th>
-                                            <th>Bank Soal</th>
-                                            <th>Pelaksaan</th>
-                                            <th>Kategori</th>
-                                            <th>Status</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                <LoadingTable loading={loading} />
 
-                                    </tbody>
-                                </table>
-
+                                {loading === false ? (
+                                    <table className="table table-separate table-head-custom table-checkable">
+                                        <thead style={{ background: "#F3F6F9" }}>
+                                            <tr>
+                                                <th className="text-center">No</th>
+                                                <th>ID Soal</th>
+                                                <th>Soal</th>
+                                                <th>Kategori</th>
+                                                <th>Bobot</th>
+                                                <th>Status</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {questionsArr.length === 0 ? (
+                                                <td className="align-middle text-center" colSpan={8}>
+                                                    Data Masih Kosong
+                                                </td>
+                                            ) : (
+                                                questionsArr &&
+                                                questionsArr.map((question, i) => {
+                                                    return (
+                                                        <tr key={question.id}>
+                                                            <td className="align-middle text-center">
+                                                                <span className="badge badge-secondary text-muted">
+                                                                    {i + 1 * (page * 5 || limit) - 4}
+                                                                </span>
+                                                            </td>
+                                                            <td className="align-middle">
+                                                                {question.subtance_question_bank_id}
+                                                            </td>
+                                                            <td className="align-middle">
+                                                                {question.question}
+                                                            </td>
+                                                            <td className="align-middle">
+                                                                {question.question_type_id}
+                                                            </td>
+                                                            <td className="align-middle">
+                                                                {question.question_type_id}
+                                                            </td>
+                                                            <td className="align-middle">
+                                                                {question.status === true ? (
+                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                        Publish
+                                                                    </span>
+                                                                ) : (
+                                                                    <span class="label label-inline label-light-warning font-weight-bold">
+                                                                        Draft
+                                                                    </span>
+                                                                )}
+                                                            </td>
+                                                            <td className="align-middle">
+                                                                <ButtonAction icon="write.svg" />
+                                                                <button
+                                                                    //   onClick={() => handleDelete(artikel.id)}
+                                                                    className="btn mr-1"
+                                                                    style={{
+                                                                        background: "#F3F6F9",
+                                                                        borderRadius: "6px",
+                                                                    }}
+                                                                >
+                                                                    <Image
+                                                                        alt="button-action"
+                                                                        src={`/assets/icon/trash.svg`}
+                                                                        width={18}
+                                                                        height={18}
+                                                                    />
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })
+                                            )}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    ""
+                                )}
                             </div>
 
                             <div className="row">
@@ -258,8 +332,8 @@ const StepTwo = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-        </PageWrapper>
+            </div >
+        </PageWrapper >
     );
 };
 

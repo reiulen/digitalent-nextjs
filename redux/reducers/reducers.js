@@ -17,7 +17,11 @@ import {
     updateSubtanceQuestionBanksPublishReducer
 } from './subvit/subtance.reducers'
 import { allSubtanceQuestionTypeReducer } from './subvit/subtance-question-type.reducers'
-import { newSubtanceQuestionDetailReducer } from './subvit/subtance-question-detail.reducers'
+import {
+    newSubtanceQuestionDetailReducer,
+    importFileSubtanceQuestionDetailReducer,
+    importImagesSubtanceQuestionDetailReducer,
+} from './subvit/subtance-question-detail.reducers'
 
 // Partnership
 import { allMitraReducer } from './partnership/mitra.reducers'
@@ -61,6 +65,8 @@ const reducer = combineReducers({
     allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
 
     newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
+    importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
+    importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
 
     // PARTNERSHIP
     allMitra: allMitraReducer,
