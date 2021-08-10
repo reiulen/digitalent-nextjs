@@ -282,4 +282,5 @@ const EditBerita = () => {
     )
 }
 
+
 export default EditBerita
