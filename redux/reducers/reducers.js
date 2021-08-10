@@ -10,9 +10,18 @@ import { allFaqReducer, newFaqReducer } from './publikasi/faq.reducers'
 import { allVideoReducer, newVideoReducer } from './publikasi/video.reducers'
 
 // Subvit
-import { allSubtanceQuestionBanksReducer, newSubtanceQuestionBanksReducer, deleteSubtanceQuestionBanksReducer } from './subvit/subtance.reducers'
+import {
+    allSubtanceQuestionBanksReducer,
+    newSubtanceQuestionBanksReducer,
+    deleteSubtanceQuestionBanksReducer,
+    updateSubtanceQuestionBanksPublishReducer
+} from './subvit/subtance.reducers'
 import { allSubtanceQuestionTypeReducer } from './subvit/subtance-question-type.reducers'
-import { newSubtanceQuestionDetailReducer } from './subvit/subtance-question-detail.reducers'
+import {
+    newSubtanceQuestionDetailReducer,
+    importFileSubtanceQuestionDetailReducer,
+    importImagesSubtanceQuestionDetailReducer,
+} from './subvit/subtance-question-detail.reducers'
 
 // Partnership
 import { allMitraReducer } from './partnership/mitra.reducers'
@@ -51,10 +60,13 @@ const reducer = combineReducers({
     allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
     newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
     deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
+    updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
 
     allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
 
     newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
+    importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
+    importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
 
     // PARTNERSHIP
     allMitra: allMitraReducer,
