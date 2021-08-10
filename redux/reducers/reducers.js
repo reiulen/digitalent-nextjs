@@ -18,7 +18,9 @@ import {
 } from './subvit/subtance.reducers'
 import { allSubtanceQuestionTypeReducer } from './subvit/subtance-question-type.reducers'
 import {
+    allSubtanceQuestionDetailReducer,
     newSubtanceQuestionDetailReducer,
+    deleteSubtanceQuestionDetailReducer,
     importFileSubtanceQuestionDetailReducer,
     importImagesSubtanceQuestionDetailReducer,
 } from './subvit/subtance-question-detail.reducers'
@@ -66,7 +68,9 @@ const reducer = combineReducers({
 
     allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
 
+    allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
     newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
+    deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
     importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
     importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
 

@@ -166,6 +166,7 @@ const StepThree = () => {
                     startDate={startDate}
                     endDate={endDate}
                     dateFormat="dd/MM/yyyy"
+                    autoComplete="off"
                   />
                   <small className="text-muted">
                     Silahkan Pilih Tanggal Dari
@@ -185,6 +186,7 @@ const StepThree = () => {
                     endDate={endDate}
                     minDate={startDate}
                     dateFormat="dd/MM/yyyy"
+                    autoComplete="off"
                   />
                   <small className="text-muted">
                     Silahkan Pilih Tanggal Sampai

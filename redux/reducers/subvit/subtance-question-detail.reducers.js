@@ -1,8 +1,18 @@
 import {
+
+    SUBTANCE_QUESTION_DETAIL_REQUEST,
+    SUBTANCE_QUESTION_DETAIL_SUCCESS,
+    SUBTANCE_QUESTION_DETAIL_FAIL,
+
     NEW_SUBTANCE_QUESTION_DETAIL_REQUEST,
     NEW_SUBTANCE_QUESTION_DETAIL_SUCCESS,
     NEW_SUBTANCE_QUESTION_DETAIL_RESET,
     NEW_SUBTANCE_QUESTION_DETAIL_FAIL,
+
+    DELETE_SUBTANCE_QUESTION_DETAIL_REQUEST,
+    DELETE_SUBTANCE_QUESTION_DETAIL_SUCCESS,
+    DELETE_SUBTANCE_QUESTION_DETAIL_RESET,
+    DELETE_SUBTANCE_QUESTION_DETAIL_FAIL,
 
     IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_REQUEST,
     IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_SUCCESS,
@@ -16,6 +26,36 @@ import {
 
     CLEAR_ERRORS,
 } from '../../types/subvit/subtance-question-detail.type'
+
+export const allSubtanceQuestionDetailReducer = (state = { subtance_question_detail: [] }, action) => {
+    switch (action.type) {
+        case SUBTANCE_QUESTION_DETAIL_REQUEST:
+            return {
+                loading: true
+            }
+
+        case SUBTANCE_QUESTION_DETAIL_SUCCESS:
+            return {
+                loading: false,
+                subtance_question_detail: action.payload.data
+            }
+
+        case SUBTANCE_QUESTION_DETAIL_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
 
 export const newSubtanceQuestionDetailReducer = (state = { subtance_question_detail: {} }, action) => {
     switch (action.type) {
@@ -44,6 +84,42 @@ export const newSubtanceQuestionDetailReducer = (state = { subtance_question_det
 
         case CLEAR_ERRORS:
             return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const deleteSubtanceQuestionDetailReducer = (state = {}, action) => {
+    switch (action.type) {
+        case DELETE_SUBTANCE_QUESTION_DETAIL_REQUEST:
+            return {
+                loading: true
+            }
+
+        case DELETE_SUBTANCE_QUESTION_DETAIL_SUCCESS:
+            return {
+                loading: false,
+                isDeleted: action.payload
+            }
+
+        case DELETE_SUBTANCE_QUESTION_DETAIL_RESET:
+            return {
+                loading: false,
+                isDeleted: false
+            }
+
+        case DELETE_SUBTANCE_QUESTION_DETAIL_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
                 error: null
             }
 
