@@ -13,6 +13,7 @@ import LoadingTable from '../../../LoadingTable'
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearErrors,
+  deleteSubtanceQuestionBanks
 } from "/redux/actions/subvit/subtance.actions";
 
 const ListSubstansi = () => {
@@ -75,6 +76,7 @@ const ListSubstansi = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
+        dispatch(deleteSubtanceQuestionBanks(id))
       }
     });
   };
