@@ -13,6 +13,15 @@ import {
     DELETE_BERITA_RESET,
     DELETE_BERITA_FAIL,
 
+    DETAIL_BERITA_REQUEST,
+    DETAIL_BERITA_SUCCESS,
+    DETAIL_BERITA_FAIL,
+
+    UPDATE_BERITA_REQUEST,
+    UPDATE_BERITA_SUCCESS,
+    UPDATE_BERITA_RESET,
+    UPDATE_BERITA_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/berita.type'
 
@@ -20,10 +29,14 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllBerita = () => async (dispatch) => {
+export const getAllBerita = (page = 1, keyword = '', limit = 5) => async (dispatch) => {
     try {
 
         dispatch({ type: BERITA_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/berita?page=${page}`
+        if (keyword) link = link.concat(`&keyword=${keyword}`)
+        if (limit) link = link.concat(`&limit=${limit}`)
 
         // const config = {
         //     headers: {
@@ -33,7 +46,7 @@ export const getAllBerita = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/index-administrator-berita')
+        const { data } = await axios.get (link)
 
         dispatch({
             type: BERITA_SUCCESS,
@@ -63,7 +76,7 @@ export const newBerita = (beritaData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/create-administrator-berita', beritaData)
+        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/berita', beritaData)
 
         dispatch({
             type: NEW_BERITA_SUCCESS,
@@ -78,16 +91,105 @@ export const newBerita = (beritaData) => async (dispatch) => {
     }
 }
 
-export const deleteBerita = (id) => async (dispatch) => {
+export const getDetailBerita = (id) => async (dispatch) => {
     try {
 
-        dispatch({ type: DELETE_BERITA_REQUEST })
+        dispatch({
+            type: DETAIL_BERITA_REQUEST
+        })
 
-        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `publikasi/api/berita/${id}`)
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/berita/${id}`
+
+        const { data } = await axios.get(link)
 
         dispatch({
-            type: DELETE_BERITA_SUCCESS,
-            payload: data.success
+            type: DETAIL_BERITA_SUCCESS,
+            payload: data.data
+        })
+
+        // console.log (data.data)
+
+    } catch (error) {
+        dispatch({
+            type: DETAIL_BERITA_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+
+export const updateBerita = (beritaData) => async (dispatch) => {
+    try {
+
+        dispatch({ type: UPDATE_BERITA_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/berita/${beritaData.id}`
+
+        const { data } = await axios.post (link, beritaData)
+
+        dispatch ({
+            type: UPDATE_BERITA_SUCCESS,
+            payload: data
+        })
+        
+    } catch (error) {
+        dispatch({
+            type: UPDATE_BERITA_FAIL,
+            payload: error.response.data.message
+        })
+    }
+} 
+
+export const deleteBerita = (id) => async (dispatch) => {
+    try {
+        
+        dispatch({ type: DELETE_BERITA_REQUEST })
+
+        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `api/berita/${id}`)
+
+        // dispatch({
+        //     type: DELETE_BERITA_SUCCESS,
+        //     payload: data.success
+        // })
+
+        .then ((res) => {
+            // console.log (res)
+            
+            try {
+                dispatch({ type: BERITA_REQUEST })
+
+                let link = process.env.END_POINT_API_PUBLIKASI + `api/berita?page=${1}&limit=${5}`
+                axios.get (link)
+
+                .then ((res) => {
+                    dispatch({
+                        type: BERITA_SUCCESS,
+                        payload: res.data
+                    })
+                })
+
+                .catch ((err) => {
+                    dispatch({
+                        type: BERITA_FAIL,
+                        payload: err.message
+                    })
+                })
+                
+
+            } catch (error) {
+                dispatch({
+                    type: BERITA_FAIL,
+                    payload: error.message
+                })
+            }
+            
+        })
+
+        .catch ((err) => {
+            dispatch({
+                type: DELETE_BERITA_FAIL,
+                payload: err.response.data.message
+            })
         })
 
     } catch (error) {
