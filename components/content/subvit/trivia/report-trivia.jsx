@@ -99,14 +99,14 @@ const ReportTrivia = () => {
             titleValue=""
             title="Belum Mengerjakan"
           />
-          <CardPage
+          {/* <CardPage
             background="bg-light-danger"
             icon="kotak-kotak-red.svg"
             color="#F65464"
             value="64"
             titleValue=""
             title="Gagal Test"
-          />
+          /> */}
         </div>
       </div>
 

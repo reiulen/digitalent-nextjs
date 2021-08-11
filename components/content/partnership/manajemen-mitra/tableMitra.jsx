@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
+
 import Link from "next/link";
 import Pagination from "react-js-pagination";
+import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
+
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
-import Image from "next/image";
 
 const Table = () => {
+  const dispatch = useDispatch();
+
+  const { loading, error, mitra } = useSelector((state) => state.allMitra);
+
+  useEffect(() => {}, [mitra]);
+
   return (
     <PageWrapper>
       <div className="col-lg-10 col-md-10">
@@ -113,36 +122,49 @@ const Table = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          1
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">
-                        <Image
-                          src="/assets/icon/dummy-logo.svg"
-                          width={40}
-                          height={40}
-                        />
-                      </td>
-                      <td className="align-middle text-center">DQ Lab</td>
-                      <td className="align-middle text-center">
-                        www.google.com
-                      </td>
-                      <td className="align-middle text-center">3 Kerjasama</td>
-                      <td className="align-middle text-center">
-                        <ButtonAction
-                          icon="detail.svg"
-                          link="/partnership/manajemen-mitra/detail-data-kerjasama"
-                        />
-                        <ButtonAction icon="write.svg" />
-                        <ButtonAction icon="trash.svg" />
-                      </td>
-                    </tr>
+                    {mitra.mitra.map((dataMitra, id) => {
+                      console.log(dataMitra);
+                      return (
+                        <tr>
+                          <td className="text-center align-middle">
+                            <button
+                              className="btn"
+                              style={{
+                                background: "#F3F6F9",
+                                borderRadius: "6px",
+                              }}
+                            >
+                              {id + 1}
+                            </button>
+                          </td>
+                          <td className="align-middle text-center">
+                            <Image
+                              src={`/assets/icon/${dataMitra.agency_logo}`}
+                              width={40}
+                              height={40}
+                              alt="logo"
+                            />
+                          </td>
+                          <td className="align-middle text-center">
+                            {dataMitra.partner}
+                          </td>
+                          <td className="align-middle text-center">
+                            {dataMitra.website}
+                          </td>
+                          <td className="align-middle text-center">
+                            {dataMitra.cooperations}
+                          </td>
+                          <td className="align-middle text-center">
+                            <ButtonAction
+                              icon="detail.svg"
+                              link="/partnership/manajemen-mitra/detail-data-kerjasama"
+                            />
+                            <ButtonAction icon="write.svg" />
+                            <ButtonAction icon="trash.svg" />
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
