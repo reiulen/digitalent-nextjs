@@ -146,16 +146,6 @@ const StepTwo = () => {
         }
     };
 
-    const handleDownloadTemplate = async () => {
-        await axios.get('http://dts-subvit-dev.majapahit.id/api/survey-question-bank-details/template', {
-            responseType: 'blob'
-        })
-            .then((res) => res.blob())
-            .then((blob) => {
-                blob => saveAs(blob, 'file.csv')
-            })
-    }
-
     const handleImportFile = async () => {
         const data = new FormData()
         data.append('subtance_question_bank_id', id)
