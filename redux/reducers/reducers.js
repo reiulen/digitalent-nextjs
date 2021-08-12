@@ -44,6 +44,7 @@ import {
     newSubtanceQuestionTypeReducer,
     detailSubtanceQuestionTypeReducer,
     deleteSubtanceQuestionTypeReducer,
+    updateSubtanceQuestionTypeReducer,
 } from './subvit/subtance-question-type.reducers'
 import {
     allSubtanceQuestionDetailReducer,
@@ -98,6 +99,7 @@ const reducer = combineReducers({
     newSubtanceQuestionType: newSubtanceQuestionTypeReducer,
     detailSubtanceQuestionType: detailSubtanceQuestionTypeReducer,
     deleteSubtanceQuestionType: deleteSubtanceQuestionTypeReducer,
+    updateSubtanceQuestionType: updateSubtanceQuestionTypeReducer,
 
     allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
     newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
