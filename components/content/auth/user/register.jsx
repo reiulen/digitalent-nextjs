@@ -8,7 +8,7 @@ const RegisterAdmin = () => {
   return (
     <>
       <AuthWrapper
-        image="ilustrator-2.svg"
+        image="login-user.svg"
         desc="Tagline Digitalen Scholarship Tagline Digitalen Scholarship Tagline Digitalen Scholarship"
       >
         <div
