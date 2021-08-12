@@ -1,13 +1,36 @@
-import { combineReducers } from 'redux'
+import { combineReducers } from "redux";
 
 // PUBLIKASI
-import { allArtikelReducer, newArtikelReducer, deleteArtikelReducer, detailArtikelReducer } from './publikasi/artikel.reducers'
-import { allBeritaReducer, newBeritaReducer, deleteBeritaReducer, detailBeritaReducer, updateBeritaReducer } from './publikasi/berita.reducers'
-import { allImagetronReducer, newImagetronReducer, deleteImagetronReducer } from './publikasi/imagetron.reducers'
-import { allKategoriReducer, newKategoriReducer, deleteKategoriReducer } from './publikasi/kategori.reducers'
-import { allGaleriReducer, newGaleriReducer, deleteGaleriReducer } from './publikasi/galeri.reducers'
-import { allFaqReducer, newFaqReducer } from './publikasi/faq.reducers'
-import { allVideoReducer, newVideoReducer } from './publikasi/video.reducers'
+import {
+    allArtikelReducer,
+    newArtikelReducer,
+    deleteArtikelReducer,
+    detailArtikelReducer,
+} from "./publikasi/artikel.reducers";
+import {
+    allBeritaReducer,
+    newBeritaReducer,
+    deleteBeritaReducer,
+    detailBeritaReducer,
+    updateBeritaReducer,
+} from "./publikasi/berita.reducers";
+import {
+    allImagetronReducer,
+    newImagetronReducer,
+    deleteImagetronReducer,
+} from "./publikasi/imagetron.reducers";
+import {
+    allKategoriReducer,
+    newKategoriReducer,
+    deleteKategoriReducer,
+} from "./publikasi/kategori.reducers";
+import {
+    allGaleriReducer,
+    newGaleriReducer,
+    deleteGaleriReducer,
+} from "./publikasi/galeri.reducers";
+import { allFaqReducer, newFaqReducer } from "./publikasi/faq.reducers";
+import { allVideoReducer, newVideoReducer } from "./publikasi/video.reducers";
 
 // Subvit
 import {
@@ -28,10 +51,10 @@ import {
     deleteSubtanceQuestionDetailReducer,
     importFileSubtanceQuestionDetailReducer,
     importImagesSubtanceQuestionDetailReducer,
-} from './subvit/subtance-question-detail.reducers'
+} from "./subvit/subtance-question-detail.reducers";
 
 // Partnership
-import { allMitraReducer } from './partnership/mitra.reducers'
+import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
 
 const reducer = combineReducers({
 
