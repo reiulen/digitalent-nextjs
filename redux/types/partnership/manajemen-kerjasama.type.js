@@ -1,3 +1,0 @@
-export const MITRA_REQUEST = 'MITRA_REQUEST'
-export const MITRA_SUCCESS = 'MITRA_SUCCESS'
-export const MITRA_FAIL = 'MITRA_FAIL'

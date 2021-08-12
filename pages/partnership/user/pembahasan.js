@@ -1,12 +1,12 @@
 import Layout from "../../../components/templates/layout.component";
-import DetailDataKerjasama from "../../../components/content/partnership/manajemen-kerjasama/detailDataKerjasama";
+import Pembahasan from "../../../components/content/partnership/user/pembahasan";
 
-export default function DetailDataKerjasamaPage() {
+export default function PembahasanPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
         <Layout title="Dashboard Publikasi">
-          <DetailDataKerjasama />
+          <Pembahasan />
         </Layout>
       </div>
     </>

@@ -1,36 +1,77 @@
 import {
-    MITRA_REQUEST,
-    MITRA_SUCCESS,
-    MITRA_FAIL,
+  // MITRA
+  MITRA_REQUEST,
+  MITRA_SUCCESS,
+  MITRA_FAIL,
+  CLEAR_ERRORS,
 
-    CLEAR_ERRORS,
-} from '../../types/partnership/manajemen-kerjasama.type'
+  // NEW MITRA
+  NEW_MITRA_REQUEST,
+  NEW_MITRA_SUCCESS,
+  NEW_MITRA_RESET,
+  NEW_MITRA_FAIL,
+} from "../../types/partnership/mitra.type";
 
 export const allMitraReducer = (state = { mitra: [] }, action) => {
-    switch (action.type) {
-        case MITRA_REQUEST:
-            return {
-                loading: true
-            }
+  switch (action.type) {
+    case MITRA_REQUEST:
+      return {
+        loading: true,
+      };
 
-        case MITRA_SUCCESS:
-            return {
-                loading: false,
-                mitra: action.payload.data
-            }
+    case MITRA_SUCCESS:
+      return {
+        loading: false,
+        mitra: action.payload.data,
+      };
 
-        case MITRA_FAIL:
-            return {
-                loading: false,
-                error: action.payload
-            }
+    case MITRA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
 
-        case CLEAR_ERRORS:
-            return {
-                error: null
-            }
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
 
-        default:
-            return state
-    }
-}
+    default:
+      return state;
+  }
+};
+
+export const newMitraReducer = (state = { mitra: {} }, action) => {
+  switch (action.type) {
+    case NEW_MITRA_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case NEW_MITRA_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.message,
+        mitra: action.payload.data,
+      };
+
+    case NEW_MITRA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case NEW_MITRA_RESET:
+      return {
+        success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};

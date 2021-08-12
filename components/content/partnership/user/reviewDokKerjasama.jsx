@@ -1,0 +1,87 @@
+import React, { useState, useRef, useEffect } from "react";
+import PageWrapper from "../../../wrapper/page.wrapper";
+import Image from "next/image";
+
+import Style from "../../../../styles/progressbar.module.css";
+
+function reviewDokKerjasama() {
+  const headText = {
+    "font-weight": "bold",
+    "line-height": "124.5%",
+    "margin-top": "2rem",
+    color: "#626262",
+  };
+
+  const childText = {
+    "font-weight": "normal",
+    "font-size": "15px",
+    "line-height": "124.5%",
+    "margin-top": "1rem",
+    color: "#626262",
+  };
+
+  return (
+    <div className="container">
+      <PageWrapper>
+        <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+          <div className="card card-custom card-stretch gutter-b">
+            <div className="card-header border-0">
+              <h3 className="card-title font-weight-bolder text-dark">
+                Pembahasan
+              </h3>
+            </div>
+            <div className={`card-body ${Style.refreshZindex}`}>
+              <div className={Style.containerProggres}>
+                <ul className={Style.progressbar}>
+                  <li class={Style.active}>Submit Kerjasama</li>
+                  <li class={Style.active}>Review Kerjasama</li>
+                  <li class={Style.active}>Pembahasan</li>
+                  <li class={Style.active}>Dokumen Kerjasama</li>
+                  <li class={Style.active}>Review Dokumen </li>
+                  <li class={Style.active}>Selesai</li>
+                </ul>
+              </div>
+              <div className={`row ${Style.clearRow}`}>
+                <div className="col-md">
+                  <Image
+                    src="/assets/media/hubungi-kami-1.svg"
+                    height={300}
+                    width={400}
+                  />
+                </div>
+                <div className="col-md mt-5">
+                  <div className="display-4" style={headText}>
+                    Dokumen Kerjasama Anda Telah Diterima
+                  </div>
+                  <div style={childText}>
+                    <p>
+                      Terimas Kasih telah Melakukan Pengajuan Kerjasama Dengan
+                      Kami.
+                      <br />
+                    </p>
+                    <span className="mt-5">
+                      Mohon tunggu beberapa saat untuk proses review berkas yang
+                      anda submit
+                    </span>
+                  </div>
+
+                  <div className="mt-5">
+                    <button
+                      type="button"
+                      className="btn border border-primary mr-2 btn-sm"
+                      style={{ color: "#04AA77" }}
+                    >
+                      Selesai
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </PageWrapper>
+    </div>
+  );
+}
+
+export default reviewDokKerjasama;

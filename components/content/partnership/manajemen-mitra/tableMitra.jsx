@@ -10,14 +10,11 @@ import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
 const Table = () => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  const { loading, error, mitra } = useSelector((state) => state.allMitra);
 
-  const { loading, error, mitra } = useSelector((state) => state.allMitra)
-
-  useEffect(() => {
-    console.log(mitra.mitra)
-  }, [mitra])
+  useEffect(() => {}, [mitra]);
 
   return (
     <PageWrapper>
@@ -125,41 +122,49 @@ const Table = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          1
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">
-                        <Image
-                          src="/assets/icon/dummy-logo.svg"
-                          width={40}
-                          height={40}
-                        />
-                      </td>
-                      <td className="align-middle text-center">DQ Lab</td>
-                      <td className="align-middle text-center">
-                        www.google.com
-                      </td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="1">Aktif</option>
-                          <option value="2">No Aktif</option>
-                        </select>
-                      </td>
-                      <td className="align-middle text-center">
-                        <ButtonAction
-                          icon="detail.svg"
-                          link="/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
-                        />
-                        <ButtonAction icon="write.svg" />
-                        <ButtonAction icon="trash.svg" />
-                      </td>
-                    </tr>
+                    {mitra.mitra.map((dataMitra, id) => {
+                      console.log(dataMitra);
+                      return (
+                        <tr>
+                          <td className="text-center align-middle">
+                            <button
+                              className="btn"
+                              style={{
+                                background: "#F3F6F9",
+                                borderRadius: "6px",
+                              }}
+                            >
+                              {id + 1}
+                            </button>
+                          </td>
+                          <td className="align-middle text-center">
+                            <Image
+                              src={`/assets/icon/${dataMitra.agency_logo}`}
+                              width={40}
+                              height={40}
+                              alt="logo"
+                            />
+                          </td>
+                          <td className="align-middle text-center">
+                            {dataMitra.partner}
+                          </td>
+                          <td className="align-middle text-center">
+                            {dataMitra.website}
+                          </td>
+                          <td className="align-middle text-center">
+                            {dataMitra.cooperations}
+                          </td>
+                          <td className="align-middle text-center">
+                            <ButtonAction
+                              icon="detail.svg"
+                              link="/partnership/manajemen-mitra/detail-data-kerjasama"
+                            />
+                            <ButtonAction icon="write.svg" />
+                            <ButtonAction icon="trash.svg" />
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>

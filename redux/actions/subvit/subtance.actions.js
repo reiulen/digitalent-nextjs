@@ -85,7 +85,7 @@ export const newSubtanceQuestionBanks = (subtanceData) => async (dispatch) => {
     }
 }
 
-export const deleteRoom = (id) => async (dispatch) => {
+export const deleteSubtanceQuestionBanks = (id) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_SUBTANCE_QUESTION_BANKS_REQUEST })
