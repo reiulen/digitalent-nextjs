@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
+import Swal from "sweetalert2";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
@@ -12,6 +13,7 @@ import LoadingTable from '../../../LoadingTable'
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearErrors,
+  deleteSubtanceQuestionBanks
 } from "/redux/actions/subvit/subtance.actions";
 
 const ListSubstansi = () => {
@@ -61,6 +63,23 @@ const ListSubstansi = () => {
   const onNewReset = () => {
     router.replace('/subvit/substansi', undefined, { shallow: true })
   }
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteSubtanceQuestionBanks(id))
+      }
+    });
+  };
 
   let count = subtance.total
   if (search || limit && limit != 5) {
@@ -143,7 +162,7 @@ const ListSubstansi = () => {
                   <Link href="/subvit/substansi/clone">
                     <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block">
                       <i className="flaticon-file-1"></i>
-                      Clone {count}
+                      Clone
                     </a>
                   </Link>
                 </div>

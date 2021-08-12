@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import Link from "next/link";
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from 'simple-react-validator'
-import Swal from "sweetalert2";
+import Swal from "sweetalert2"
 
 import {
   newSubtanceQuestionBanks,
   clearErrors,
 } from "../../../../../redux/actions/subvit/subtance.actions";
-import { NEW_SUBTANCE_QUESTION_BANKS_SUCCESS } from "../../../../../redux/types/subvit/subtance.type";
+import { NEW_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../../redux/types/subvit/subtance.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
@@ -35,8 +33,8 @@ const StepOne = () => {
       const id = subtance.id
       if (typeSave === 'lanjut') {
         router.push({
-          pathname: `/subvit/substansi/tambah-step-2`,
-          query: { metode, id }
+          pathname: `/subvit/substansi/tambah-step-2-${metode}`,
+          query: { id }
         })
       } else if (typeSave === 'draft') {
         router.push({
@@ -61,7 +59,7 @@ const StepOne = () => {
     }
     if (success) {
       dispatch({
-        type: NEW_SUBTANCE_QUESTION_BANKS_SUCCESS
+        type: NEW_SUBTANCE_QUESTION_BANKS_RESET
       })
     }
     if (simpleValidator.current.allValid()) {
@@ -95,7 +93,7 @@ const StepOne = () => {
     }
     if (success) {
       dispatch({
-        type: NEW_SUBTANCE_QUESTION_BANKS_SUCCESS
+        type: NEW_SUBTANCE_QUESTION_BANKS_RESET
       })
     }
     if (simpleValidator.current.allValid()) {
@@ -224,7 +222,7 @@ const StepOne = () => {
                     name="training_id"
                     id=""
                     onChange={(e) => setTrainingId(e.target.value)}
-                    onBlur={e => { setTrainingId(e.target.value); simpleValidator.current.showMessageFor('training_id') }}
+                    onBlur={e => setTrainingId(e.target.value)}
                     className="form-control"
                   >
                     <option selected disabled> -Pilih Pelatihan-</option>
@@ -232,7 +230,6 @@ const StepOne = () => {
                     <option value="1"> Adobe UI/UX Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Pelatihan</span>
-                  {simpleValidator.current.message('training_id', training_id, 'required', { className: 'text-danger' })}
                 </div>
               </div>
 

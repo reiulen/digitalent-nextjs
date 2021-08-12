@@ -293,13 +293,10 @@ const Artikel = () => {
                         artikel.artikel.map((artikel, i) => {
                           return (
                             <tr key={artikel.id}>
-                              <td className="text-center">
-                                <button
-                                  className="btn"
-                                  style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                                >
-                                  {i + 1}
-                                </button>
+                              <td className="align-middle text-center">
+                                <span className="badge badge-secondary text-muted">
+                                  {i + 1 * (page * 5 || limit) - 4}
+                                </span>
                               </td>
                               <td >
                                 <Image

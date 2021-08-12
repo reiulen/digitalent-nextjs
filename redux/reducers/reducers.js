@@ -11,6 +11,8 @@ import {
   allBeritaReducer,
   newBeritaReducer,
   deleteBeritaReducer,
+  detailBeritaReducer,
+  updateBeritaReducer,
 } from "./publikasi/berita.reducers";
 import {
   allImagetronReducer,
@@ -35,7 +37,16 @@ import {
   allSubtanceQuestionBanksReducer,
   newSubtanceQuestionBanksReducer,
   deleteSubtanceQuestionBanksReducer,
+  updateSubtanceQuestionBanksPublishReducer,
 } from "./subvit/subtance.reducers";
+import { allSubtanceQuestionTypeReducer } from "./subvit/subtance-question-type.reducers";
+import {
+  allSubtanceQuestionDetailReducer,
+  newSubtanceQuestionDetailReducer,
+  deleteSubtanceQuestionDetailReducer,
+  importFileSubtanceQuestionDetailReducer,
+  importImagesSubtanceQuestionDetailReducer,
+} from "./subvit/subtance-question-detail.reducers";
 
 // Partnership
 import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
@@ -51,9 +62,11 @@ const reducer = combineReducers({
   newBerita: newBeritaReducer,
   deleteBerita: deleteBeritaReducer,
 
-  allImagetron: allImagetronReducer,
-  newImagetron: newImagetronReducer,
-  deleteImagetron: deleteImagetronReducer,
+  allBerita: allBeritaReducer,
+  newBerita: newBeritaReducer,
+  deleteBerita: deleteBeritaReducer,
+  detailBerita: detailBeritaReducer,
+  updatedBerita: updateBeritaReducer,
 
   allGaleri: allGaleriReducer,
   newGaleri: newGaleriReducer,
@@ -74,9 +87,18 @@ const reducer = combineReducers({
   newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
   deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
 
-  // PARTNERSHIP
-  allMitra: allMitraReducer,
-  newMitra: newMitraReducer,
-});
+  // Subvit
+  allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
+  newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
+  deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
+  updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
 
+  allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
+
+  allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
+  newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
+  deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
+  importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
+  importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
+});
 export default reducer;
