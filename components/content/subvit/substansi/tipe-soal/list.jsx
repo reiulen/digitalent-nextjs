@@ -28,7 +28,7 @@ const ListTipeSoal = () => {
   );
   const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteSubtanceQuestionType);
 
-  let { page = 1, success } = router.query;
+  let { page = 1, success, successUpdate } = router.query;
   let loading = false
   page = Number(page);
   if (allLoading) {
@@ -128,6 +128,18 @@ const ListTipeSoal = () => {
         <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
           <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
           <div className="alert-text">Berhasil Menambah Data</div>
+          <div className="alert-close">
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
+              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            </button>
+          </div>
+        </div>
+        : ''
+      }
+      {successUpdate ?
+        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+          <div className="alert-text">Berhasil Merubah Data</div>
           <div className="alert-close">
             <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
               <span aria-hidden="true"><i className="ki ki-close"></i></span>
