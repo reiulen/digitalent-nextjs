@@ -5,6 +5,7 @@ import Swal from "sweetalert2"
 import Image from 'next/image'
 import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
+import { saveAs } from 'file-saver'
 
 import {
     getAllSubtanceQuestionDetail,
@@ -24,6 +25,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from '../../../../ButtonAction'
+import axios from "axios";
 
 const StepTwo = () => {
     const dispatch = useDispatch()
@@ -144,6 +146,16 @@ const StepTwo = () => {
         }
     };
 
+    const handleDownloadTemplate = async () => {
+        await axios.get('http://dts-subvit-dev.majapahit.id/api/survey-question-bank-details/template', {
+            responseType: 'blob'
+        })
+            .then((res) => res.blob())
+            .then((blob) => {
+                blob => saveAs(blob, 'file.csv')
+            })
+    }
+
     const handleImportFile = async () => {
         const data = new FormData()
         data.append('subtance_question_bank_id', id)
@@ -151,7 +163,7 @@ const StepTwo = () => {
 
         Swal.fire({
             title: "Perhatian",
-            text: "Jika file anda mempunyai gambar harap import gambar terlebih dahulu, atau kamu ingin tetap melanjutkan !",
+            text: "Jika file anda mempunyai gambar harap import gambar terlebih dahulu, atau kamu tetap ingin melanjutkan !",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -257,7 +269,7 @@ const StepTwo = () => {
                                 <div className="col">
                                     <div className="float-right">
                                         <span className='mr-2'>Unduh Template Soal</span>
-                                        <button className='btn btn-outline-light btn-sm' style={{ border: '1px solid #DADADA' }}> <i className='flaticon-download'></i> Click to Download</button>
+                                        <button type='button' className='btn btn-outline-light btn-sm' style={{ border: '1px solid #DADADA' }} onClick={handleDownloadTemplate}> <i className='flaticon-download'></i> Click to Download</button>
                                     </div>
                                 </div>
                             </div>

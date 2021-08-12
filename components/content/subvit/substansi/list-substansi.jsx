@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import Image from 'next/image'
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -15,6 +16,9 @@ import {
   clearErrors,
   deleteSubtanceQuestionBanks
 } from "/redux/actions/subvit/subtance.actions";
+import {
+  DELETE_SUBTANCE_QUESTION_BANKS_RESET
+} from '../../../../redux/types/subvit/subtance.type'
 
 const ListSubstansi = () => {
   const dispatch = useDispatch();
@@ -23,6 +27,7 @@ const ListSubstansi = () => {
   const { loading, error, subtance } = useSelector(
     (state) => state.allSubtanceQuestionBanks
   );
+  const { loading: loadingDelete, error: errorDelete, isDeleted } = useSelector((state) => state.deleteSubtanceQuestionBanks)
 
   let { page = 1, success } = router.query;
   page = Number(page);
@@ -34,7 +39,17 @@ const ListSubstansi = () => {
     if (limit) {
       router.push(`${router.pathname}?page=1&limit=${limit}`)
     }
-  }, [dispatch, limit]);
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload()
+        }
+      });
+      dispatch({
+        type: DELETE_SUBTANCE_QUESTION_BANKS_RESET
+      })
+    }
+  }, [dispatch, limit, isDeleted]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
@@ -256,7 +271,21 @@ const ListSubstansi = () => {
                                   icon="detail.svg"
                                   link="/subvit/substansi/edit/step-1"
                                 />
-                                <ButtonAction icon="trash.svg" />
+                                <button
+                                  onClick={() => handleDelete(subtance.id)}
+                                  className="btn mr-1"
+                                  style={{
+                                    background: "#F3F6F9",
+                                    borderRadius: "6px",
+                                  }}
+                                >
+                                  <Image
+                                    alt="button-action"
+                                    src={`/assets/icon/trash.svg`}
+                                    width={18}
+                                    height={18}
+                                  />
+                                </button>
                               </td>
                             </tr>
                           );
