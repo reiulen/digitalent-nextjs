@@ -5,36 +5,33 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
 
 import PageWrapper from "/components//wrapper/page.wrapper";
 import ButtonAction from "/components//ButtonAction";
+import LoadingTable from "../../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAllSubtanceQuestionBanks,
   clearErrors,
-} from "/redux/actions/subvit/subtance.actions";
+} from "../../../../../redux/actions/subvit/subtance-question-type.actions";
 
 const ListTipeSoal = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, subtance, perPage, total } = useSelector(
-    (state) => state.allSubtanceQuestionBanks
+  const { loading, error, subtance_question_type } = useSelector(
+    (state) => state.allSubtanceQuestionType
   );
 
-  let { page = 1 } = router.query;
+  let { page = 1, success } = router.query;
   page = Number(page);
 
   useEffect(() => {
-    dispatch(getAllSubtanceQuestionBanks());
   }, [dispatch]);
 
-  const override = css`
-    margin: 0 auto;
-  `;
+  const onNewReset = () => {
+    router.replace('/subvit/substansi/tipe-soal', undefined, { shallow: true })
+  }
 
   return (
     <PageWrapper>
@@ -63,6 +60,18 @@ const ListTipeSoal = () => {
       ) : (
         ""
       )}
+      {success ?
+        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+          <div className="alert-text">Berhasil Menambah Data</div>
+          <div className="alert-close">
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
+              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            </button>
+          </div>
+        </div>
+        : ''
+      }
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -76,7 +85,7 @@ const ListTipeSoal = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-6 col-xl-6">
+                <div className="col-lg-7 col-xl-7 col-sm-9">
                   <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
@@ -84,18 +93,22 @@ const ListTipeSoal = () => {
                       className="form-control"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
+                      autoComplete="off"
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
                   </div>
+
                 </div>
 
-                <div className="col-lg-4 col-xl-4"></div>
+                <div className="col-lg-2 col-xl-2 col-sm-3">
+                  <button className='btn btn-light-primary'>Cari</button>
+                </div>
 
-                <div className="col-lg-2 col-xl-2">
+                <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto">
                   <Link href="/subvit/substansi/tipe-soal/tambah">
-                    <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                    <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block px-0">
                       <i className="flaticon2-notepad"></i>
                       Tambah Tipe Soal
                     </a>
@@ -106,14 +119,7 @@ const ListTipeSoal = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <div className="loading text-center justify-content-center">
-                  <BeatLoader
-                    color="#3699FF"
-                    loading={loading}
-                    css={override}
-                    size={10}
-                  />
-                </div>
+                <LoadingTable loading={loading} />
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -127,34 +133,40 @@ const ListTipeSoal = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {subtance && subtance.length === 0
+                      {subtance_question_type && subtance_question_type.list_types.length === 0
                         ? ""
-                        : subtance &&
-                          subtance.map((subtance) => {
-                            return (
-                              <tr key={subtance.id}>
-                                <td className="align-middle text-center">
-                                  <span className="badge badge-secondary">
-                                    {subtance.no}
-                                  </span>
-                                </td>
-                                <td className="align-middle">Ingatan</td>
-                                <td className="align-middle">2</td>
-                                <td className="align-middle">
-                                  <span className="badge badge-success">
+                        : subtance_question_type &&
+                        subtance_question_type.list_types.map((row) => {
+                          return (
+                            <tr key={row.id}>
+                              <td className="align-middle text-center">
+                                <span className="badge badge-secondary">
+                                  {row.no}
+                                </span>
+                              </td>
+                              <td className="align-middle">{row.name}</td>
+                              <td className="align-middle">{row.value}</td>
+                              <td className="align-middle">
+                                {row.status === true ? (
+                                  <span class="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
-                                </td>
-                                <td className="align-middle">
-                                  <ButtonAction
-                                    icon="write.svg"
-                                    link="/subvit/substansi/tipe-soal/edit"
-                                  />
-                                  <ButtonAction icon="trash.svg" />
-                                </td>
-                              </tr>
-                            );
-                          })}
+                                ) : (
+                                  <span class="label label-inline label-light-warning font-weight-bold">
+                                    Draft
+                                  </span>
+                                )}
+                              </td>
+                              <td className="align-middle">
+                                <ButtonAction
+                                  icon="write.svg"
+                                  link="/subvit/substansi/tipe-soal/edit"
+                                />
+                                <ButtonAction icon="trash.svg" />
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   </table>
                 ) : (
@@ -163,7 +175,7 @@ const ListTipeSoal = () => {
               </div>
 
               <div className="row">
-                {perPage < total && (
+                {subtance_question_type && subtance_question_type.perPage < subtance_question_type.total && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
@@ -180,7 +192,7 @@ const ListTipeSoal = () => {
                     />
                   </div>
                 )}
-                {total > 5 ? (
+                {subtance_question_type && subtance_question_type.total > 5 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
