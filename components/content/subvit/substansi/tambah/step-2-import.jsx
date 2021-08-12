@@ -190,6 +190,7 @@ const StepTwo = () => {
         router.push(`${router.pathname}?id=${id}&page=${pageNumber}`)
         dispatch(getAllSubtanceQuestionDetail(id, pageNumber))
     }
+
     const handleLimit = (val) => {
         router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`)
         dispatch(getAllSubtanceQuestionDetail(id, 1, val))
@@ -213,11 +214,18 @@ const StepTwo = () => {
         });
     };
 
+    const handleDownloadTemplate = async () => {
+        await axios.get('http://dts-subvit-dev.majapahit.id/api/subtance-question-bank-details/template').then((res) => {
+            window.location.href = res.data.data
+        })
+    }
+
     const handleResetDelete = () => {
         dispatch({
             type: DELETE_SUBTANCE_QUESTION_DETAIL_RESET
         })
     }
+
     return (
         <PageWrapper>
             {error ? (
@@ -269,7 +277,7 @@ const StepTwo = () => {
                                 <div className="col">
                                     <div className="float-right">
                                         <span className='mr-2'>Unduh Template Soal</span>
-                                        <button type='button' className='btn btn-outline-light btn-sm' style={{ border: '1px solid #DADADA' }} onClick={handleDownloadTemplate}> <i className='flaticon-download'></i> Click to Download</button>
+                                        <button type='button' onClick={handleDownloadTemplate} className='btn btn-outline-light btn-sm' style={{ border: '1px solid #DADADA' }}> <i className='flaticon-download'></i> Click to Download</button>
                                     </div>
                                 </div>
                             </div>

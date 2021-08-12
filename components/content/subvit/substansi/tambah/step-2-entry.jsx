@@ -7,7 +7,7 @@ import Swal from "sweetalert2"
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  getAllSubtanceQuestionBanks,
+  getAllSubtanceQuestionBanksType,
 } from '../../../../../redux/actions/subvit/subtance-question-type.actions';
 import { newSubtanceQuestionDetail, clearErrors } from '../../../../../redux/actions/subvit/subtance-question-detail.action'
 import { NEW_SUBTANCE_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/subtance-question-detail.type";
@@ -43,7 +43,7 @@ const StepTwo = () => {
 
   useEffect(() => {
 
-    dispatch(getAllSubtanceQuestionBanks())
+    dispatch(getAllSubtanceQuestionBanksType())
 
     if (success) {
       if (typeSave === 'lanjut') {
