@@ -12,26 +12,90 @@ import LoadingTable from "../../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteSubtanceQuestionBanksType,
   clearErrors,
 } from "../../../../../redux/actions/subvit/subtance-question-type.actions";
+import {
+  DELETE_SUBTANCE_QUESTION_TYPE_RESET
+} from '../../../../../redux/types/subvit/subtance-question-type.type'
 
 const ListTipeSoal = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, subtance_question_type } = useSelector(
+  const { loading: allLoading, error, subtance_question_type } = useSelector(
     (state) => state.allSubtanceQuestionType
   );
+  const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteSubtanceQuestionType);
 
   let { page = 1, success } = router.query;
+  let loading = false
   page = Number(page);
+  if (allLoading) {
+    loading = allLoading
+  } else if (deleteLoading) {
+    loading = deleteLoading
+  }
+
+  const [limit, setLimit] = useState(null)
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
-  }, [dispatch]);
+    if (limit) {
+      router.push(`${router.pathname}?page=1&limit=${limit}`)
+    }
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload()
+        }
+      });
+      dispatch({
+        type: DELETE_SUBTANCE_QUESTION_TYPE_RESET
+      })
+    }
+  }, [dispatch, limit, isDeleted]);
 
   const onNewReset = () => {
     router.replace('/subvit/substansi/tipe-soal', undefined, { shallow: true })
   }
+
+  const handlePagination = (pageNumber) => {
+    if (limit != null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    } else {
+      router.push(`${router.pathname}?page=${pageNumber}`)
+    }
+  }
+
+  const handleSearch = () => {
+    if (limit != null) {
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    } else {
+      router.push(`${router.pathname}?page=1&keyword=${search}`)
+    }
+  }
+
+  const handleLimit = (val) => {
+    setLimit(val)
+  }
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteSubtanceQuestionBanksType(id));
+      }
+    });
+  };
 
   return (
     <PageWrapper>
@@ -94,6 +158,7 @@ const ListTipeSoal = () => {
                       placeholder="Search..."
                       id="kt_datatable_search_query"
                       autoComplete="off"
+                      onChange={e => setSearch(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
@@ -103,7 +168,7 @@ const ListTipeSoal = () => {
                 </div>
 
                 <div className="col-lg-2 col-xl-2 col-sm-3">
-                  <button className='btn btn-light-primary'>Cari</button>
+                  <button className='btn btn-light-primary' onClick={handleSearch}>Cari</button>
                 </div>
 
                 <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto">
@@ -119,7 +184,12 @@ const ListTipeSoal = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <LoadingTable loading={loading} />
+
+                {
+                  loading === true ?
+                    <LoadingTable loading={loading} />
+                    : ""
+                }
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -160,9 +230,23 @@ const ListTipeSoal = () => {
                               <td className="align-middle">
                                 <ButtonAction
                                   icon="write.svg"
-                                  link="/subvit/substansi/tipe-soal/edit"
+                                  link={`/subvit/substansi/tipe-soal/${row.id}`}
                                 />
-                                <ButtonAction icon="trash.svg" />
+                                <button
+                                  onClick={() => handleDelete(row.id)}
+                                  className="btn mr-1"
+                                  style={{
+                                    background: "#F3F6F9",
+                                    borderRadius: "6px",
+                                  }}
+                                >
+                                  <Image
+                                    alt="button-action"
+                                    src={`/assets/icon/trash.svg`}
+                                    width={18}
+                                    height={18}
+                                  />
+                                </button>
                               </td>
                             </tr>
                           );
@@ -179,10 +263,10 @@ const ListTipeSoal = () => {
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={perPage}
-                      totalItemsCount={total}
+                      itemsCountPerPage={subtance_question_type.perPage}
+                      totalItemsCount={subtance_question_type.total}
                       pageRangeDisplayed={3}
-                      // onChange={handlePagination}
+                      onChange={handlePagination}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -205,12 +289,13 @@ const ListTipeSoal = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
+                          onChange={e => handleLimit(e.target.value)}
+                          onBlur={e => handleLimit(e.target.value)}
                         >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
+                          <option value='5'>5</option>
+                          <option value='10'>10</option>
+                          <option value='15'>15</option>
+                          <option value='20'>20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -218,7 +303,7 @@ const ListTipeSoal = () => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data 120
+                          Total Data {subtance_question_type.total}
                         </p>
                       </div>
                     </div>

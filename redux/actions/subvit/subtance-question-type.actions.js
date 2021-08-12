@@ -22,14 +22,14 @@ import {
 
 import axios from 'axios'
 
-export const getAllSubtanceQuestionBanksType = (page = 1, keyword = '', limit = 5) => async (dispatch) => {
+export const getAllSubtanceQuestionBanksType = (page = 1, keyword = '', limit = null) => async (dispatch) => {
     try {
 
         dispatch({ type: SUBTANCE_QUESTION_TYPE_REQUEST })
 
         let link = process.env.END_POINT_API_SUBVIT + `api/subtance-question-types?page=${page}`
         if (keyword) link = link.concat(`&keyword=${keyword}`)
-        // if (limit) link = link.concat(`&limit=${limit}`)
+        if (limit) link = link.concat(`&limit=${limit}`)
 
         // const config = {
         //     headers: {

@@ -1,44 +1,36 @@
 import React, { useState, useEffect } from "react";
 
-import Link from "next/link";
-import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  newArtikel,
   clearErrors,
-} from "/redux/actions/publikasi/artikel.actions";
+} from "../../../../../redux/actions/subvit/subtance-question-type.actions";
 import { NEW_ARTIKEL_RESET } from "/redux/types/publikasi/artikel.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
-import StepInput from "/components/StepInput";
 import { useRouter } from "next/router";
 
 const EditTipeSoal = () => {
   const dispatch = useDispatch();
-  const importSwitch = () => import("bootstrap-switch-button-react");
-  const SwitchButton = dynamic(importSwitch, {
-    ssr: false,
-  });
   const router = useRouter();
 
-  const { loading, error, success } = useSelector((state) => state.newArtikel);
+  const { subtance_question_type } = useSelector((state) => state.detailSubtanceQuestionType);
 
   useEffect(() => {
     // if (error) {
     //     dispatch(clearErrors())
     // }
 
-    if (success) {
-      dispatch({
-        type: NEW_ARTIKEL_RESET,
-      });
-    }
-  }, [dispatch, error, success]);
+    // if (success) {
+    //   dispatch({
+    //     type: NEW_ARTIKEL_RESET,
+    //   });
+    // }
 
-  const [nama, setNama] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm_password, setConfirmPassword] = useState("");
+  }, [dispatch]);
+
+  const [name, setName] = useState(subtance_question_type.name)
+  const [value, setValue] = useState(subtance_question_type.value)
+  const [status, setStatus] = useState(subtance_question_type.status)
   const [role, setRole] = useState("");
 
   const saveAndContinue = () => {
@@ -55,7 +47,7 @@ const EditTipeSoal = () => {
 
   return (
     <PageWrapper>
-      {error ? (
+      {/* {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -79,7 +71,7 @@ const EditTipeSoal = () => {
         </div>
       ) : (
         ""
-      )}
+      )} */}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -96,6 +88,7 @@ const EditTipeSoal = () => {
                     type="text"
                     className="form-control"
                     placeholder="*Contoh: Analitik"
+                    value={name}
                   />
                   <span className="text-muted">Silahkan Input Tipe Soal</span>
                 </div>
@@ -108,6 +101,7 @@ const EditTipeSoal = () => {
                     type="number"
                     className="form-control"
                     placeholder="*Contoh: 2"
+                    value={value}
                   />
                   <span className="text-muted">Silahkan Input Bobot Nilai</span>
                 </div>
@@ -122,8 +116,12 @@ const EditTipeSoal = () => {
                     onChange={(e) => setRole(e.target.value)}
                     className="form-control"
                   >
-                    <option value="1"> Publish </option>
-                    <option value="1"> Draft </option>
+                    {
+                      status == false ?
+                        <option value={false} selected> Draft </option>
+                        :
+                        <option value={true}> Publish </option>
+                    }
                   </select>
                   <span className="text-muted">
                     Silahkan Pilih Status Publish
