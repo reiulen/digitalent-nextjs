@@ -306,7 +306,7 @@ const Artikel = () => {
                                   }
                                   src={
                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                    "artikel/" +
+                                    "publikasi/images/" +
                                     artikel.gambar
                                   }
                                   width={80}
