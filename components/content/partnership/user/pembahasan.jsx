@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
+import Link from "next/link";
 
 import Style from "../../../../styles/progressbar.module.css";
 
@@ -73,13 +74,15 @@ function Pembahasan() {
                     >
                       Input Tanda Tangan Digital
                     </button>
-                    <button
-                      type="button"
-                      className="btn border border-primary bg-light-primary mr-2 btn-sm"
-                      style={{ color: "#6AA0D6" }}
-                    >
-                      Submit Dokumen Kerjasama
-                    </button>
+                    <Link href="/partnership/user/pembahasan">
+                      <button
+                        type="button"
+                        className="btn border border-primary bg-light-primary mr-2 btn-sm"
+                        style={{ color: "#6AA0D6" }}
+                      >
+                        Submit Dokumen Kerjasama
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>
