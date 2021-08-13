@@ -42,6 +42,7 @@ import {
     deleteSubtanceQuestionBanksReducer,
     updateSubtanceQuestionBanksPublishReducer,
     allReportSubtanceQuestionBanksReducer,
+    newCloneSubtanceQuestionBanksReducer,
 } from './subvit/subtance.reducers'
 import {
     allSubtanceQuestionTypeReducer,
@@ -102,6 +103,7 @@ const reducer = combineReducers({
     updateSubtanceQuestion: updateSubtanceQuestionReducer,
     updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
     allReportSubtanceQuestionBanks: allReportSubtanceQuestionBanksReducer,
+    newCloneSubtanceQuestionBanks: newCloneSubtanceQuestionBanksReducer,
 
     allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
     newSubtanceQuestionType: newSubtanceQuestionTypeReducer,
