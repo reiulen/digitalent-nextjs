@@ -13,28 +13,57 @@ import ButtonAction from "../../../ButtonAction";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  getAllSubtanceQuestionBanks,
-  clearErrors,
-} from "/redux/actions/subvit/subtance.actions";
+  deleteSubtanceQuestionDetail,
+  clearErrors
+} from '../../../../redux/actions/subvit/subtance-question-detail.action'
 
 const DetailSubstansi = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, subtance, perPage, total } = useSelector(
-    (state) => state.allSubtanceQuestionBanks
-  );
+  const { subtance_question_detail } = useSelector((state) => state.allSubtanceQuestionDetail)
+  const { error, isDeleted } = useSelector((state) => state.deleteSubtanceQuestionDetail)
+  const { subtance } = useSelector((state) => state.detailSubtanceQuestionBanks)
 
-  let { page = 1 } = router.query;
+  let { page = 1, id } = router.query;
   page = Number(page);
 
   useEffect(() => {
-    dispatch(getAllSubtanceQuestionBanks());
-  }, [dispatch]);
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload()
+        }
+      });
+    }
+  }, [isDeleted]);
 
-  const override = css`
-    margin: 0 auto;
-  `;
+
+  const handlePagination = (pageNumber) => {
+    router.push(`${router.pathname}?id=${id}&page=${pageNumber}`)
+  }
+
+  const handleLimit = (val) => {
+    router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`)
+  }
+
+  const handleDelete = (id) => {
+    console.log(id)
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteSubtanceQuestionDetail(id));
+      }
+    });
+  };
 
   return (
     <PageWrapper>
@@ -143,7 +172,7 @@ const DetailSubstansi = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-12 col-xl-12">
+                <div className="col-lg-10 col-xl-10">
                   <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
@@ -157,78 +186,133 @@ const DetailSubstansi = () => {
                     </span>
                   </div>
                 </div>
+
+                <div className="col-lg-2 col-xl-2">
+                  <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                    Cari
+                  </button>
+                </div>
+              </div>
+
+              <div className="row align-items-center my-5">
+                <div className="col-lg-3 col-xl-3 ">
+                  <div className="form-group mb-0">
+                    <select className="form-control">
+                      <option>Semua</option>
+                    </select>
+                    <small className="text-muted mt-1 p-0">
+                      Filter by Pelatihan
+                    </small>
+                  </div>
+                </div>
+
+                <div className="col-lg-3 col-xl-3 ">
+                  <div className="form-group mb-0">
+                    <select className="form-control">
+                      <option>Semua</option>
+                    </select>
+                    <small className="text-muted mt-1 p-0">
+                      Filter by Status
+                    </small>
+                  </div>
+                </div>
+
+                <div className="col-lg-3 col-xl-3 ">
+                  <div className="form-group mb-0">
+                    <select className="form-control">
+                      <option>Semua</option>
+                    </select>
+                    <small className="text-muted mt-1 p-0">
+                      Filter by Nilai
+                    </small>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <div className="loading text-center justify-content-center">
-                  <BeatLoader
-                    color="#3699FF"
-                    loading={loading}
-                    css={override}
-                    size={10}
-                  />
-                </div>
-
-                {loading === false ? (
-                  <table className="table table-separate table-head-custom table-checkable">
-                    <thead style={{ background: "#F3F6F9" }}>
-                      <tr>
-                        <th className="text-center">No</th>
-                        <th>ID Soal</th>
-                        <th>Soal</th>
-                        <th>Status</th>
-                        <th className="text-center">Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {/* {subtance && subtance.length === 0
-                        ? ""
-                        : subtance &&
-                          subtance.map((subtance) => {
-                            return (
-                              <tr key={subtance.id}>
-                                <td className="align-middle text-center">
-                                  {subtance.no}
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.academy}
-                                </td>
-                                <td className="align-middle">
-                                  {subtance.theme}
-                                </td>
-                                <td className="align-middle">
-                                  <span className="badge badge-success">
-                                    Publish
-                                  </span>
-                                </td>
-                                <td className="align-middle text-center">
-                                  <ButtonAction
-                                    icon="write.svg"
-                                    link="/subvit/substansi/edit/step-1"
-                                  />
-                                  <ButtonAction icon="trash.svg" />
-                                </td>
-                              </tr>
-                            );
-                          })} */}
-                    </tbody>
-                  </table>
-                ) : (
-                  ""
-                )}
+                <table className="table table-separate table-head-custom table-checkable">
+                  <thead style={{ background: "#F3F6F9" }}>
+                    <tr>
+                      <th className="text-center">No</th>
+                      <th>ID Soal</th>
+                      <th>Soal</th>
+                      <th>Kategori</th>
+                      <th>Bobot</th>
+                      <th>Status</th>
+                      <th className="text-center">Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      subtance_question_detail && subtance_question_detail.list_questions &&
+                      subtance_question_detail.list_questions.map((question, i) => {
+                        return (
+                          <tr key={question.id}>
+                            <td className="align-middle text-center">
+                              <span className="badge badge-secondary text-muted">
+                                {i + 1 * (page * 5 || limit) - 4}
+                              </span>
+                            </td>
+                            <td className="align-middle">
+                              {question.subtance_question_bank_id}
+                            </td>
+                            <td className="align-middle">
+                              {question.question}
+                            </td>
+                            <td className="align-middle">
+                              {question.type.name}
+                            </td>
+                            <td className="align-middle">
+                              {question.type.value}
+                            </td>
+                            <td className="align-middle">
+                              {question.status === true ? (
+                                <span class="label label-inline label-light-success font-weight-bold">
+                                  Publish
+                                </span>
+                              ) : (
+                                <span class="label label-inline label-light-warning font-weight-bold">
+                                  Draft
+                                </span>
+                              )}
+                            </td>
+                            <td className="align-middle">
+                              <ButtonAction icon="write.svg" />
+                              <button
+                                onClick={() => handleDelete(question.id)}
+                                className="btn mr-1"
+                                style={{
+                                  background: "#F3F6F9",
+                                  borderRadius: "6px",
+                                }}
+                              >
+                                <Image
+                                  alt="button-action"
+                                  src={`/assets/icon/trash.svg`}
+                                  width={18}
+                                  height={18}
+                                />
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    }
+                  </tbody>
+                </table>
               </div>
 
               <div className="row">
-                {perPage < total && (
+                {subtance_question_detail && subtance_question_detail.perPage < subtance_question_detail.total && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={perPage}
-                      totalItemsCount={total}
+                      itemsCountPerPage={subtance_question_detail.perPage}
+                      totalItemsCount={subtance_question_detail.total}
                       pageRangeDisplayed={3}
-                      // onChange={handlePagination}
+                      onChange={handlePagination}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -238,7 +322,7 @@ const DetailSubstansi = () => {
                     />
                   </div>
                 )}
-                {total > 5 ? (
+                {subtance_question_detail && subtance_question_detail.total > 5 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -251,12 +335,14 @@ const DetailSubstansi = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
+                          onChange={e => handleLimit(e.target.value)}
+                          onBlur={e => handleLimit(e.target.value)}
                         >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
+                          <option value='5'>5</option>
+                          <option value='10'>10</option>
+                          <option value='15'>15</option>
+                          <option value='20'>20</option>
+                          <option value='30'>30</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -264,7 +350,7 @@ const DetailSubstansi = () => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data 120
+                          Total Data {subtance_question_detail.total}
                         </p>
                       </div>
                     </div>

@@ -269,7 +269,7 @@ const ListSubstansi = () => {
                                 />
                                 <ButtonAction
                                   icon="detail.svg"
-                                  link="/subvit/substansi/1"
+                                  link={`/subvit/substansi/${subtance.id}`}
                                 />
                                 <button
                                   onClick={() => handleDelete(subtance.id)}
