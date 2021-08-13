@@ -36,6 +36,8 @@ import { allVideoReducer, newVideoReducer } from "./publikasi/video.reducers";
 import {
     allSubtanceQuestionBanksReducer,
     newSubtanceQuestionBanksReducer,
+    detailSubtanceQuestionBanksReducer,
+    updateSubtanceQuestionReducer,
     deleteSubtanceQuestionBanksReducer,
     updateSubtanceQuestionBanksPublishReducer,
     allReportSubtanceQuestionBanksReducer,
@@ -94,6 +96,8 @@ const reducer = combineReducers({
     allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
     newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
     deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
+    detailSubtanceQuestionBanks: detailSubtanceQuestionBanksReducer,
+    updateSubtanceQuestion: updateSubtanceQuestionReducer,
     updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
     allReportSubtanceQuestionBanks: allReportSubtanceQuestionBanksReducer,
 

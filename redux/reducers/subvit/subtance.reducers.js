@@ -8,10 +8,19 @@ import {
     NEW_SUBTANCE_QUESTION_BANKS_RESET,
     NEW_SUBTANCE_QUESTION_BANKS_FAIL,
 
+    UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    UPDATE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    UPDATE_SUBTANCE_QUESTION_BANKS_RESET,
+    UPDATE_SUBTANCE_QUESTION_BANKS_FAIL,
+
     DELETE_SUBTANCE_QUESTION_BANKS_REQUEST,
     DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,
     DELETE_SUBTANCE_QUESTION_BANKS_RESET,
     DELETE_SUBTANCE_QUESTION_BANKS_FAIL,
+
+    DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST,
+    DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
 
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST,
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_SUCCESS,
@@ -81,6 +90,72 @@ export const newSubtanceQuestionBanksReducer = (state = { subtance: {} }, action
 
         case CLEAR_ERRORS:
             return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const detailSubtanceQuestionBanksReducer = (state = { subtance: {} }, action) => {
+    switch (action.type) {
+        case DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST:
+            return {
+                loading: true
+            }
+
+        case DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS:
+            return {
+                loading: false,
+                subtance: action.payload
+            }
+
+        case DETAIL_SUBTANCE_QUESTION_BANKS_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const updateSubtanceQuestionReducer = (state = {}, action) => {
+    switch (action.type) {
+        case UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST:
+            return {
+                loading: true
+            }
+
+        case UPDATE_SUBTANCE_QUESTION_BANKS_SUCCESS:
+            return {
+                loading: false,
+                isUpdated: action.payload
+            }
+
+        case UPDATE_SUBTANCE_QUESTION_BANKS_RESET:
+            return {
+                loading: false,
+                isUpdated: false
+            }
+
+        case UPDATE_SUBTANCE_QUESTION_BANKS_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
                 error: null
             }
 
