@@ -14,6 +14,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
+import ButtonNewTab from "../../../ButtonNewTab";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -181,7 +182,7 @@ const Artikel = () => {
             color="#F65464"
             value={artikel && artikel.unpublish != '' ? artikel.unpublish : 0}
             titleValue="Artikel"
-            title="Total Unpublish"
+            title="Total Belum Publish"
           />
         </div>
       </div>
@@ -306,7 +307,7 @@ const Artikel = () => {
                                   }
                                   src={
                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                    "artikel/" +
+                                    "publikasi/images/" +
                                     artikel.gambar
                                   }
                                   width={80}
@@ -338,13 +339,13 @@ const Artikel = () => {
                                   </span>
                                 ) : (
                                   <span class="label label-inline label-light-warning font-weight-bold">
-                                    Unpublish
+                                    Belum di publish
                                   </span>
                                 )}
                               </td>
                               <td className="align-middle">Admin Publikasi</td>
                               <td className="align-middle">
-                                <ButtonAction icon="setting.svg" />
+                                <ButtonNewTab icon="setting.svg" link={`/publikasi/artikel/preview/${artikel.id}`}/>
                                 <ButtonAction icon="write.svg" link={`/publikasi/artikel/${artikel.id}`} />
                                 <button
                                   onClick={() => handleDelete(artikel.id)}

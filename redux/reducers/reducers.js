@@ -6,6 +6,7 @@ import {
     newArtikelReducer,
     deleteArtikelReducer,
     detailArtikelReducer,
+    updateArtikelReducer
 } from "./publikasi/artikel.reducers";
 import {
     allBeritaReducer,
@@ -67,6 +68,7 @@ const reducer = combineReducers({
     newArtikel: newArtikelReducer,
     deleteArtikel: deleteArtikelReducer,
     detailArtikel: detailArtikelReducer,
+    updatedArtikel: updateArtikelReducer,
 
     allBerita: allBeritaReducer,
     newBerita: newBeritaReducer,

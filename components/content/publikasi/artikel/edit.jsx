@@ -4,16 +4,19 @@ import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from "next/router";
+import { TagsInput } from "react-tag-input-component";
+import Swal from "sweetalert2";
 
-
-import { newArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
-import { NEW_ARTIKEL_RESET } from '../../../../redux/types/publikasi/artikel.type'
+import { updateArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { NEW_ARTIKEL_RESET, UPDATE_ARTIKEL_RESET } from '../../../../redux/types/publikasi/artikel.type'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
 const EditArtikel = () => {
     const editorRef = useRef()
     const dispatch = useDispatch()
+    const router = useRouter();
 
     const importSwitch = () => import('bootstrap-switch-button-react')
     const [editorLoaded, setEditorLoaded] = useState(false)
@@ -22,7 +25,9 @@ const EditArtikel = () => {
         ssr: false
     })
 
-    const { artikel, error, success } = useSelector(state => state.detailArtikel)
+    // const { artikel, error, success } = useSelector(state => state.detailArtikel)
+    const { artikel } = useSelector(state => state.detailArtikel)
+    const { error, success, loading } = useSelector(state => state.updatedArtikel)
 
     useEffect(() => {
 
@@ -34,17 +39,22 @@ const EditArtikel = () => {
 
         setEditorLoaded(true)
         if (success) {
-            setJudulArtikel('')
-            setIsiArtikel('')
-            setGambar('')
-            setGambarPreview('/assets/media/default.jpg')
-            setKategoriId('')
-            setTag('')
+            // setJudulArtikel('')
+            // setIsiArtikel('')
+            // setGambar('')
+            // setGambarPreview('/assets/media/default.jpg')
+            // setKategoriId('')
+            // setTag('')
+
+            router.push({
+                pathname: `/publikasi/artikel`,
+                query: { success: true }
+            })
         }
 
     }, [dispatch, error, success]);
 
-
+    const [id, setId] = useState(artikel.id)
     const [judul_artikel, setJudulArtikel] = useState(artikel.judul_artikel)
     const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel);
     const [gambar, setGambar] = useState(artikel.gambar)
@@ -53,6 +63,7 @@ const EditArtikel = () => {
     const [users_id, setUserId] = useState(artikel.users_id)
     const [tag, setTag] = useState(artikel.tag)
     const [publish, setPublish] = useState(artikel.publish === 1 ? true : false)
+    const [_method, setMethod] = useState("put")
 
     const onChangeGambar = (e) => {
         if (e.target.name === 'gambar') {
@@ -75,7 +86,8 @@ const EditArtikel = () => {
 
         if (success) {
             dispatch({
-                type: NEW_ARTIKEL_RESET
+                // type: NEW_ARTIKEL_RESET
+                type: UPDATE_ARTIKEL_RESET 
             })
         }
 
@@ -86,15 +98,64 @@ const EditArtikel = () => {
             kategori_id,
             users_id,
             tag,
-            publish
+            publish,
+            id,
+            _method
         }
 
-        dispatch(newArtikel(data))
-        console.log(data)
+        dispatch(updateArtikel(data))
+        // console.log(data)
     }
 
     const onNewReset = () => {
-        dispatch({ type: NEW_ARTIKEL_RESET })
+        dispatch({ 
+            // type: NEW_ARTIKEL_RESET
+            type: UPDATE_ARTIKEL_RESET 
+        })
+    }
+
+    const onSetPublish = (e) => {
+        Swal.fire({
+            title: 'Ubah status publikasi?',
+            text: "Status publikasi akan berubah",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya !",
+            cancelButtonText: "Batal",
+          })
+          
+          .then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                'Berhasil',
+                'Status publikasi telah diubah',
+                'success'
+              )
+                
+              console.log (e)
+              setPublish(e)
+
+            } else {
+                Swal.fire(
+                    'Batal',
+                    'Status publikasi telah batal diubah',
+                    'info'
+                  )
+
+                console.log (!e)
+                setPublish(!e)
+            }
+          })
+          
+        // Swal.fire (
+        //     'Berhasil',
+        //     'Status publikasi telah diubah',
+        //     'success'
+        // )
+
+        // setPublish(e)
     }
 
     return (
@@ -126,11 +187,11 @@ const EditArtikel = () => {
                 }
 
                 <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-                    {/* {
+                    {
                         loading ?
                             <LoadingPage loading={loading} />
                             : ''
-                    } */}
+                    }
                     <div className="card card-custom card-stretch gutter-b">
                         <div className="card-header border-0">
                             <h3 className="card-title font-weight-bolder text-dark">Update Artikel</h3>
@@ -149,6 +210,7 @@ const EditArtikel = () => {
                                     <div className="col-sm-10">
                                         <div className="ckeditor">
                                             {editorLoaded ? <CKEditor
+                                                
                                                 editor={ClassicEditor}
                                                 data={isi_artikel}
                                                 onReady={editor => {
@@ -160,6 +222,12 @@ const EditArtikel = () => {
                                                     setIsiArtikel(data);
                                                     console.log({ event, editor, data })
                                                 }}
+                                                // config={{
+                                                //     ckfinder: {
+                                                //     // Upload the images to the server using the CKFinder QuickUpload command.
+                                                //     // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
+                                                //     uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
+                                                //   }}}
                                             /> : <p>Tunggu Sebentar</p>}
                                         </div>
                                     </div>
@@ -200,7 +268,14 @@ const EditArtikel = () => {
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
                                     <div className="col-sm-10">
-                                        <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} />
+                                        <TagsInput
+                                            value={tag}
+                                            onChange={setTag}
+                                            name="fruits"
+                                            placeHolder="Isi Tag disini"
+                                        // onBlur={() => simpleValidator.current.showMessageFor('tag')}
+                                        />
+                                        {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                     </div>
                                 </div>
 
@@ -215,7 +290,9 @@ const EditArtikel = () => {
                                             offstyle='danger'
                                             size='sm'
                                             width={30}
-                                            onChange={(checked) => setPublish(checked)}
+                                            onChange={(checked) => onSetPublish(checked)}
+                                            // onClick={(checked) => onSetPublish(checked)}
+                                            // onChange={(checked) => setPublish(checked)}
                                         />
                                     </div>
                                 </div>
