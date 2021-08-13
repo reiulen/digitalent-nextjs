@@ -261,7 +261,7 @@ const ListSubstansi = () => {
                               <td className="align-middle">
                                 <ButtonAction
                                   icon="setting.svg"
-                                  link="/subvit/substansi/report"
+                                  link={`/subvit/substansi/report?id=${subtance.id}`}
                                 />
                                 <ButtonAction
                                   icon="write.svg"

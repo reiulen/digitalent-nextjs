@@ -37,7 +37,8 @@ import {
     allSubtanceQuestionBanksReducer,
     newSubtanceQuestionBanksReducer,
     deleteSubtanceQuestionBanksReducer,
-    updateSubtanceQuestionBanksPublishReducer
+    updateSubtanceQuestionBanksPublishReducer,
+    allReportSubtanceQuestionBanksReducer,
 } from './subvit/subtance.reducers'
 import {
     allSubtanceQuestionTypeReducer,
@@ -94,6 +95,7 @@ const reducer = combineReducers({
     newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
     deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
     updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
+    allReportSubtanceQuestionBanks: allReportSubtanceQuestionBanksReducer,
 
     allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
     newSubtanceQuestionType: newSubtanceQuestionTypeReducer,
