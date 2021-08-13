@@ -183,7 +183,7 @@ const DetailSubstansi = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {subtance && subtance.length === 0
+                      {/* {subtance && subtance.length === 0
                         ? ""
                         : subtance &&
                           subtance.map((subtance) => {
@@ -212,7 +212,7 @@ const DetailSubstansi = () => {
                                 </td>
                               </tr>
                             );
-                          })}
+                          })} */}
                     </tbody>
                   </table>
                 ) : (

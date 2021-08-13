@@ -132,7 +132,7 @@ const ListSubstansi = () => {
       {success ?
         <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
           <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-          <div className="alert-text">Berhasil Menambah Data</div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
           <div className="alert-close">
             <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
               <span aria-hidden="true"><i className="ki ki-close"></i></span>
@@ -265,11 +265,11 @@ const ListSubstansi = () => {
                                 />
                                 <ButtonAction
                                   icon="write.svg"
-                                  link="/subvit/substansi/1"
+                                  link={`/subvit/substansi/edit?id=${subtance.id}`}
                                 />
                                 <ButtonAction
                                   icon="detail.svg"
-                                  link="/subvit/substansi/edit/step-1"
+                                  link="/subvit/substansi/1"
                                 />
                                 <button
                                   onClick={() => handleDelete(subtance.id)}
