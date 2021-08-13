@@ -37,14 +37,18 @@ import { allVideoReducer, newVideoReducer } from "./publikasi/video.reducers";
 import {
     allSubtanceQuestionBanksReducer,
     newSubtanceQuestionBanksReducer,
+    detailSubtanceQuestionBanksReducer,
+    updateSubtanceQuestionReducer,
     deleteSubtanceQuestionBanksReducer,
-    updateSubtanceQuestionBanksPublishReducer
+    updateSubtanceQuestionBanksPublishReducer,
+    allReportSubtanceQuestionBanksReducer,
 } from './subvit/subtance.reducers'
 import {
     allSubtanceQuestionTypeReducer,
     newSubtanceQuestionTypeReducer,
     detailSubtanceQuestionTypeReducer,
     deleteSubtanceQuestionTypeReducer,
+    updateSubtanceQuestionTypeReducer,
 } from './subvit/subtance-question-type.reducers'
 import {
     allSubtanceQuestionDetailReducer,
@@ -94,12 +98,16 @@ const reducer = combineReducers({
     allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
     newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
     deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
+    detailSubtanceQuestionBanks: detailSubtanceQuestionBanksReducer,
+    updateSubtanceQuestion: updateSubtanceQuestionReducer,
     updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
+    allReportSubtanceQuestionBanks: allReportSubtanceQuestionBanksReducer,
 
     allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
     newSubtanceQuestionType: newSubtanceQuestionTypeReducer,
     detailSubtanceQuestionType: detailSubtanceQuestionTypeReducer,
     deleteSubtanceQuestionType: deleteSubtanceQuestionTypeReducer,
+    updateSubtanceQuestionType: updateSubtanceQuestionTypeReducer,
 
     allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
     newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,

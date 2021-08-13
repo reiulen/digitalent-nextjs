@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react'
 
-import Link from 'next/link'
-import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import Pagination from 'react-js-pagination';
-import { css } from '@emotion/react'
-import BeatLoader from 'react-spinners/BeatLoader'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
-import ButtonAction from '../../../ButtonAction'
 import CardPage from '../../../CardPage'
+import LoadingTable from '../../../LoadingTable';
 
 import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
 import { getAllSubtanceQuestionBanks, clearErrors } from '/redux/actions/subvit/subtance.actions'
 
 const ListSubstansi = () => {
@@ -20,20 +17,48 @@ const ListSubstansi = () => {
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, subtance, perPage, total, } = useSelector(state => state.allSubtanceQuestionBanks)
+    const { loading, error, subtance } = useSelector(state => state.allReportSubtanceQuestionBanks)
 
-    let { page = 1 } = router.query
+    const [search, setSearch] = useState('')
+    const [limit, setLimit] = useState(null)
+
+    let { page = 1, id } = router.query
     page = Number(page)
 
     useEffect(() => {
 
-        dispatch(getAllSubtanceQuestionBanks())
-
     }, [dispatch])
 
-    const override = css`
-        margin: 0 auto;
-    `;
+    const handlePagination = (pageNumber) => {
+        if (limit != null) {
+            router.push(`${router.pathname}?id=${id}&page=${pageNumber}&limit=${limit}`)
+        } else if (search != '' && limit != null) {
+            router.push(`${router.pathname}?id=${id}&page=${pageNumber}&limit=${limit}&keyword=${search}`)
+        } else if (search != '') {
+            router.push(`${router.pathname}?id=${id}&page=${pageNumber}&keyword=${search}`)
+        } else {
+            router.push(`${router.pathname}?id=${id}&page=${pageNumber}`)
+        }
+    }
+
+    const handleSearch = () => {
+        if (limit != null) {
+            router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}&limit=${limit}`)
+        } else {
+            router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}`)
+        }
+    }
+
+    const handleLimit = (val) => {
+        setLimit(val)
+    }
+
+    const handleExportReport = async () => {
+        console.log('berhasil')
+        await axios.get(`http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`).then((res) => {
+            window.location.href = res.data.data
+        })
+    }
 
     return (
         <PageWrapper>
@@ -68,8 +93,8 @@ const ListSubstansi = () => {
                             <h3 className="card-title font-weight-bolder text-dark">Report Test Substansi - Sudah Mengerjakan</h3>
                             <p className="text-muted">FGA - Cloud Computing</p>
                         </div>
-                        <div className="col-lg-2 col-xl-2">                            
-                            <button className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
+                        <div className="col-lg-2 col-xl-2">
+                            <button className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block " type='button' onClick={handleExportReport}>
                                 Export .CSV
                             </button>
                         </div>
@@ -84,7 +109,7 @@ const ListSubstansi = () => {
                             <div className="row align-items-center">
                                 <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
-                                        <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" />
+                                        <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" autoComplete='off' onChange={e => setSearch(e.target.value)} />
                                         <span>
                                             <i className="flaticon2-search-1 text-muted"></i>
                                         </span>
@@ -92,7 +117,7 @@ const ListSubstansi = () => {
                                 </div>
 
                                 <div className="col-lg-2 col-xl-2">
-                                    <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                                    <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block" onClick={handleSearch}>
                                         Cari
                                     </button>
                                 </div>
@@ -104,7 +129,7 @@ const ListSubstansi = () => {
                                         <select className="form-control">
                                             <option>Semua</option>
                                         </select>
-                                    <p className="text-muted mt-1">Filter by Pelatihan</p>
+                                        <p className="text-muted mt-1">Filter by Pelatihan</p>
                                     </div>
                                 </div>
 
@@ -113,7 +138,7 @@ const ListSubstansi = () => {
                                         <select className="form-control">
                                             <option>Semua</option>
                                         </select>
-                                    <p className="text-muted mt-1">Filter by Status</p>
+                                        <p className="text-muted mt-1">Filter by Status</p>
                                     </div>
                                 </div>
 
@@ -122,7 +147,7 @@ const ListSubstansi = () => {
                                         <select className="form-control">
                                             <option>Semua</option>
                                         </select>
-                                    <p className="text-muted mt-1">Filter by Nilai</p>
+                                        <p className="text-muted mt-1">Filter by Nilai</p>
                                     </div>
                                 </div>
                             </div>
@@ -131,9 +156,7 @@ const ListSubstansi = () => {
                         <div className="table-page mt-5">
                             <div className="table-responsive">
 
-                                <div className="loading text-center justify-content-center">
-                                    <BeatLoader color='#3699FF' loading={loading} css={override} size={10} />
-                                </div>
+                                <LoadingTable loading={loading} />
 
                                 {loading === false ?
                                     <table className='table table-separate table-head-custom table-checkable'>
@@ -149,95 +172,55 @@ const ListSubstansi = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {/* {
-                                                subtance && subtance.length === 0 ?
+                                            {
+                                                subtance && subtance.reports.length === 0 ?
                                                     '' :
-                                                    subtance && subtance.map((subtance) => {
-                                                        return <tr key={subtance.id}>
-
-                                                            <td className='align-middle text-center'>{subtance.no}</td>
-                                                            <td className='align-middle'>{subtance.academy}</td>
-                                                            <td className='align-middle'>{subtance.theme}</td>
-                                                            <td className='align-middle'>200 Soal</td>
-                                                            <td className='align-middle'>{subtance.start_at}</td>
-                                                            <td className='align-middle'>{subtance.category}</td>
-                                                            <td className='align-middle'><span className="badge badge-success">Publish</span></td>
-                                                            <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
-                                                                <ButtonAction icon='write.svg' />
-                                                                <ButtonAction icon='detail.svg' />
-                                                                <ButtonAction icon='trash.svg' />
+                                                    subtance && subtance.reports.map((row, i) => {
+                                                        return <tr key={row.id}>
+                                                            <td className='align-middle text-center'>
+                                                                <p className="badge badge-secondary h6">{i + 1 * (page * 5 || limit) - 4}</p>
                                                             </td>
+                                                            <td className='align-middle'>
+                                                                <div>
+                                                                    <p className="my-0 h6">{row.name}</p>
+                                                                    <p className="my-0">{row.email}</p>
+                                                                    <p className="my-0">{row.no_telp}</p>
+                                                                </div>
+                                                            </td>
+                                                            <td className='align-middle'><p className="h6">{row.pelatihan}</p></td>
+                                                            <td className='align-middle'><p className="h6">{row.nilai}</p></td>
+                                                            <td className='align-middle'>
+                                                                <div>
+                                                                    <p className="my-0 h6">{row.total_workmanship_date}</p>
+                                                                    <p className="my-0">{row.total_workmanship_time}</p>
+                                                                </div>
+                                                            </td>
+                                                            <td className='align-middle'>
+                                                                <div>
+                                                                    <p className="my-0">Benar: {row.jawaban_benar} Jawaban</p>
+                                                                    <p className="my-0">Salah: {row.jawaban_salah} Jawaban</p>
+                                                                    <p className="my-0">Jumlah: {row.jumlah_soal} Jawaban</p>
+                                                                </div>
+                                                            </td>
+                                                            <td className='align-middle'><p className="badge badge-success">{row.status}</p></td>
                                                         </tr>
-
                                                     })
-                                            } */}
-                                            <tr>
-                                                <td className='align-middle text-center'><p className="badge badge-secondary h6">1</p></td>
-                                                <td className='align-middle'>
-                                                    <div>
-                                                        <p className="my-0 h6">Dimas Rifai Lombu</p>
-                                                        <p className="my-0">dimas@mail.com</p>
-                                                        <p className="my-0">202309182982998</p>
-                                                    </div>
-                                                </td>
-                                                <td className='align-middle'><p className="h6">Cloud Computing</p></td>
-                                                <td className='align-middle'><p className="h6">60.00</p></td>
-                                                <td className='align-middle'>
-                                                    <div>
-                                                        <p className="my-0 h6">05/28/2021</p>
-                                                        <p className="my-0">36:23</p>
-                                                    </div>
-                                                </td>
-                                                <td className='align-middle'>
-                                                    <div>
-                                                        <p className="my-0">Benar: 20 Jawaban</p>
-                                                        <p className="my-0">Salah: 20 Jawaban</p>
-                                                        <p className="my-0">Jumlah: 40 Jawaban</p>
-                                                    </div>
-                                                </td>
-                                                <td className='align-middle'><p className="badge badge-success">Diterima</p></td>
-                                            </tr>
-                                            <tr>
-                                                <td className='align-middle text-center'><p className="badge badge-secondary h6">2</p></td>
-                                                <td className='align-middle'>
-                                                    <div>
-                                                        <p className="my-0 h6">Dimas Rifai Lombu</p>
-                                                        <p className="my-0">dimas@mail.com</p>
-                                                        <p className="my-0">202309182982998</p>
-                                                    </div>
-                                                </td>
-                                                <td className='align-middle'><p className="h6">Cloud Computing</p></td>
-                                                <td className='align-middle'><p className="h6">60.00</p></td>
-                                                <td className='align-middle'>
-                                                    <div>
-                                                        <p className="my-0 h6">05/28/2021</p>
-                                                        <p className="my-0">36:23</p>
-                                                    </div>
-                                                </td>
-                                                <td className='align-middle'>
-                                                    <div>
-                                                        <p className="my-0">Benar: 20 Jawaban</p>
-                                                        <p className="my-0">Salah: 20 Jawaban</p>
-                                                        <p className="my-0">Jumlah: 40 Jawaban</p>
-                                                    </div>
-                                                </td>
-                                                <td className='align-middle'><p className="badge badge-danger">Ditolak</p></td>
-                                            </tr>
+                                            }
+
                                         </tbody>
                                     </table> : ''
                                 }
                             </div>
 
                             <div className="row">
-                                {perPage < total &&
+                                {subtance && subtance.perPage < subtance.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={subtance.perPage}
+                                            totalItemsCount={subtance.total}
                                             pageRangeDisplayed={3}
-                                            // onChange={handlePagination}
+                                            onChange={handlePagination}
                                             nextPageText={'>'}
                                             prevPageText={'<'}
                                             firstPageText={'<<'}
@@ -247,20 +230,30 @@ const ListSubstansi = () => {
                                         />
                                     </div>
                                 }
-                                {total > 5 ?
+                                {subtance && subtance.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
-                                                <select className="form-control" id="exampleFormControlSelect2" style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}>
-                                                    <option>5</option>
-                                                    <option>10</option>
-                                                    <option>30</option>
-                                                    <option>40</option>
-                                                    <option>50</option>
+                                                <select
+                                                    className="form-control"
+                                                    id="exampleFormControlSelect2"
+                                                    style={{
+                                                        width: "65px",
+                                                        background: "#F3F6F9",
+                                                        borderColor: "#F3F6F9",
+                                                        color: "#9E9E9E",
+                                                    }}
+                                                    onChange={e => handleLimit(e.target.value)}
+                                                    onBlur={e => handleLimit(e.target.value)}
+                                                >
+                                                    <option value='5'>5</option>
+                                                    <option value='10'>10</option>
+                                                    <option value='15'>15</option>
+                                                    <option value='20'>20</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data 120</p>
+                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {subtance.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''

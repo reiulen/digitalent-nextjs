@@ -11,10 +11,23 @@ import {
     DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,
     DELETE_SUBTANCE_QUESTION_BANKS_FAIL,
 
+    DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST,
+    DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
+
+    UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    UPDATE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    UPDATE_SUBTANCE_QUESTION_BANKS_RESET,
+    UPDATE_SUBTANCE_QUESTION_BANKS_FAIL,
+
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST,
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_SUCCESS,
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET,
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_FAIL,
+
+    REPORT_SUBTANCE_QUESTION_BANKS_REQUEST,
+    REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    REPORT_SUBTANCE_QUESTION_BANKS_FAIL,
 
     CLEAR_ERRORS,
 } from '../../types/subvit/subtance.type'
@@ -85,6 +98,49 @@ export const newSubtanceQuestionBanks = (subtanceData) => async (dispatch) => {
     }
 }
 
+export const getDetailSubtanceQuestionBanks = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST })
+
+        let link = process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/detail/${id}`
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data.data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const updatewSubtanceQuestionBanks = (id, substanceQuestionData) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST
+        })
+
+        const { data } = await axios.post(process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`, substanceQuestionData)
+
+        dispatch({
+            type: UPDATE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data.status
+        })
+    } catch (error) {
+        dispatch({
+            type: UPDATE_SUBTANCE_QUESTION_BANKS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
 export const deleteSubtanceQuestionBanks = (id) => async (dispatch) => {
     try {
 
@@ -93,7 +149,7 @@ export const deleteSubtanceQuestionBanks = (id) => async (dispatch) => {
         const { data } = await axios.delete(process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`)
 
         dispatch({
-            type: DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            type: DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
             payload: data.success
         })
 
@@ -131,6 +187,38 @@ export const updateSubtanceQuestionBanksPublish = (subtanceData, id) => async (d
         dispatch({
             type: UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_FAIL,
             payload: error.response.data.message
+        })
+    }
+}
+
+export const allReportSubtanceQuestionBanks = (id, page = 1, keyword = '', limit = null) => async (dispatch) => {
+    try {
+
+        dispatch({ type: REPORT_SUBTANCE_QUESTION_BANKS_REQUEST })
+
+        let link = process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/report/${id}?page=${page}`
+        if (keyword) link = link.concat(`&keyword=${keyword}`)
+        if (limit) link = link.concat(`&limit=${limit}`)
+
+        // const config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+        //         'Access-Control-Allow-Origin': '*',
+        //         'apikey': process.env.END_POINT_KEY_AUTH
+        //     }
+        // }
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: REPORT_SUBTANCE_QUESTION_BANKS_FAIL,
+            payload: error.message
         })
     }
 }

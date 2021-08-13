@@ -1,5 +1,8 @@
 import Layout from "/components/templates/layout.component";
 import Report from "/components/content/subvit/substansi/report";
+import { allReportSubtanceQuestionBanks } from '../../../../redux/actions/subvit/subtance.actions'
+import { wrapper } from '../../../../redux/store'
+
 
 export default function ReportPage() {
     return (
@@ -12,3 +15,7 @@ export default function ReportPage() {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+    await store.dispatch(allReportSubtanceQuestionBanks(query.id, query.page, query.keyword, query.limit))
+})

@@ -1,6 +1,9 @@
 import EditSubstansiStep1 from "../../../../components/content/subvit/substansi/edit/step-1";
 import Layout from "../../../../components/templates/layout.component";
 
+import { getDetailSubtanceQuestionBanks } from '../../../../redux/actions/subvit/subtance.actions'
+import { wrapper } from '../../../../redux/store'
+
 export default function EditSubstansiStep1Page() {
   return (
     <>
@@ -12,3 +15,7 @@ export default function EditSubstansiStep1Page() {
     </>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+  await store.dispatch(getDetailSubtanceQuestionBanks(query.id))
+})
