@@ -18,6 +18,10 @@ import {
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET,
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_FAIL,
 
+    REPORT_SUBTANCE_QUESTION_BANKS_REQUEST,
+    REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    REPORT_SUBTANCE_QUESTION_BANKS_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/subvit/subtance.type'
 
@@ -145,6 +149,35 @@ export const updateSubtanceQuestionBanksPublishReducer = (state = { subtance: {}
         case UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET:
             return {
                 success: false
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const allReportSubtanceQuestionBanksReducer = (state = { subtance: [] }, action) => {
+    switch (action.type) {
+        case REPORT_SUBTANCE_QUESTION_BANKS_REQUEST:
+            return {
+                loading: true
+            }
+
+        case REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS:
+            return {
+                loading: false,
+                subtance: action.payload.data
+            }
+
+        case REPORT_SUBTANCE_QUESTION_BANKS_FAIL:
+            return {
+                loading: false,
+                error: action.payload
             }
 
         case CLEAR_ERRORS:
