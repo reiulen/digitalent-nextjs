@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
+import ReactPlayer from 'react-player';
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
@@ -14,25 +15,84 @@ import ButtonAction from '../../../ButtonAction'
 import LoadingTable from '../../../LoadingTable';
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
+import { deleteVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
+import { DELETE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
 
 const Vidio = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, video } = useSelector(state => state.allVideo)
+    const { loading: allLoading, error, video } = useSelector(state => state.allVideo)
+    const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteVideo);
+
+    const [search, setSearch] = useState('')
+    const [limit, setLimit] = useState(null)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [url_video, setUrlVideo] = useState("")
 
+    let loading = false
     let { page = 1 } = router.query
+    if (allLoading) {
+        loading = allLoading
+    } else if (deleteLoading) {
+        loading = deleteLoading
+    }
     page = Number(page)
 
     useEffect(() => {
+        if (limit) {
+          router.push(`${router.pathname}?page=1&limit=${limit}`)
+        }
+        if (isDeleted) {
+          Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
+            if (result.isConfirmed) {
+              window.location.reload()
+            }
+          });
+          dispatch({
+            type: DELETE_VIDEO_RESET
+          })
+        }
+      }, [limit, isDeleted]);
 
-        dispatch(getAllVideo())
+    const onNewReset = () => {
+    router.replace('/publikasi/video', undefined, { shallow: true })
+    }
 
-    }, [dispatch])
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Apakah anda yakin ?",
+            text: "Data ini tidak bisa dikembalikan !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya !",
+            cancelButtonText: "Batal",
+        }).then((result) => {
+            if (result.isConfirmed) {
+            dispatch(deleteVideo(id));
+            }
+        });
+    };
+
+    const handlePagination = (pageNumber) => {
+        if (limit != null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        } else {
+            router.push(`${router.pathname}?page=${pageNumber}`)
+        }
+    }
+
+    const handleSearch = () => {
+        if (limit != null) {
+          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+        } else {
+          router.push(`${router.pathname}?page=1&keyword=${search}`)
+        }
+      }
 
     return (
         <PageWrapper>
@@ -76,15 +136,27 @@ const Vidio = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-12 col-xl-12">
+                                <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
-                                        <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" />
+                                        <input
+                                        style={{ background: "#F3F6F9", border: "none" }}
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Search..."
+                                        id="kt_datatable_search_query"
+                                        onChange={e => setSearch(e.target.value)}
+                                        />
                                         <span>
-                                            <i className="flaticon2-search-1 text-muted"></i>
+                                        <i className="flaticon2-search-1 text-muted"></i>
                                         </span>
                                     </div>
                                 </div>
+
+                                <div className="col-lg-2 col-xl-2">
+                                    <button type="button" className='btn btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
+                                </div>
                             </div>
+
                             <div className="row align-items-right">
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                                     <DatePicker
@@ -150,33 +222,36 @@ const Vidio = () => {
                                                         return <tr key={row.id}>
                                                             <td className='text-center'>
                                                                 <Image
-                                                                    alt={row.judul_berita}
+                                                                    alt={row.judul_video}
                                                                     unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                                                                    src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'video/' + row.gambar}
+                                                                    src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'publikasi/images' + row.gambar}
                                                                     width={80}
                                                                     height={50}
                                                                 />
                                                             </td>
                                                             <td className='align-middle'>{row.judul_video}</td>
                                                             <td className='align-middle'>{row.judul_video}</td>
-                                                            <td className='align-middle'>{row.created_at}</td>
-                                                            <td className='align-middle'>{row.users_id}</td>
+                                                            <td className='align-middle'>{new Date (row.created_at).toLocaleDateString("fr-CA")}</td>
+                                                            <td className='align-middle'>{row.dibuat}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
-                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                    <span className="label label-inline label-light-success font-weight-bold">
                                                                         Publish
                                                                     </span>
                                                                     :
-                                                                    <span class="label label-inline label-light-warning font-weight-bold">
-                                                                        Unpublish
+                                                                    <span className="label label-inline label-light-warning font-weight-bold">
+                                                                        Belum diPublish
                                                                     </span>
                                                                 }
 
                                                             </td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
-                                                                <ButtonAction icon='write.svg' />
+                                                                {/* <ButtonAction icon='setting.svg'/> */}
+                                                                <button onClick={() => setUrlVideo(row.url_video)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }} data-target="#exampleModalCenter" data-toggle="modal">
+                                                                    <Image alt='button-action' src={`/assets/icon/setting.svg`} width={18} height={18} />
+                                                                </button>
+                                                                <ButtonAction icon='write.svg' link={`/publikasi/video/${row.id}`}/>
                                                                 <button onClick={() => handleDelete(row.id)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
                                                                     <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
                                                                 </button>
@@ -189,15 +264,19 @@ const Vidio = () => {
                                 }
                             </div>
 
+                            {
+                                console.log (video)
+                            }
+
                             <div className="row">
                                 {video && video.perPage < video.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={perPage}
-                                            totalItemsCount={total}
+                                            itemsCountPerPage={video.perPage}
+                                            totalItemsCount={video.total}
                                             pageRangeDisplayed={3}
-                                            // onChange={handlePagination}
+                                            onChange={handlePagination}
                                             nextPageText={'>'}
                                             prevPageText={'<'}
                                             firstPageText={'<<'}
@@ -226,6 +305,26 @@ const Vidio = () => {
                                     </div> : ''
                                 }
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            {/* Modal */}
+            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLongTitle">Video Preview</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body d-flex justify-content-center" style={{ height: '400px' }}>
+                            <ReactPlayer url={url_video} controls width="700px"/>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
