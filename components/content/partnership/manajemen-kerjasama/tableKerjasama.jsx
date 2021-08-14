@@ -13,6 +13,7 @@ import ButtonAction from "../../../ButtonAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const Table = () => {
+  
   return (
     <PageWrapper>
       <div className="col-lg-10 col-md-10">
