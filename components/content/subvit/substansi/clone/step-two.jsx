@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
+import Swal from "sweetalert2";
 
 import {
   getAllSubtanceQuestionDetail,
@@ -23,15 +24,19 @@ const StepTwo = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, success: successData, subtance_question_detail } = useSelector((state) => state.allSubtanceQuestionDetail)
   let { page = 1, id } = router.query;
+  const { loading, error, success: successData, subtance_question_detail } = useSelector((state) => state.allSubtanceQuestionDetail)
   page = Number(page);
 
   const [search, setSearch] = useState('')
+  const [limit, setLimit] = useState(null)
+  const [checkedDelete, setCheckedDelete] = useState([])
 
   useEffect(() => {
-    dispatch(getAllSubtanceQuestionDetail(id))
-  }, [dispatch, id]);
+    if (limit) {
+      router.push(`${router.pathname}?id=${id}&page=1&limit=${limit}`)
+    }
+  }, [limit]);
 
   const saveDraft = () => {
     router.push({
@@ -39,28 +44,105 @@ const StepTwo = () => {
       query: { id }
     });
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
 
   };
 
-
   const handleSearch = () => {
     if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+      router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}&limit=${limit}`)
     } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`)
+      router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}`)
     }
   }
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`)
-    dispatch(getAllSubtanceQuestionDetail(id, pageNumber))
   }
 
   const handleLimit = (val) => {
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`)
-    dispatch(getAllSubtanceQuestionDetail(id, 1, val))
+  }
+
+  const handleCheckboxDelete = (e, items) => {
+    if (e.target.checked) {
+      let arr = checkedDelete
+      if (checkedDelete.indexOf(items.id) === -1) {
+        arr.push(items.id)
+      }
+      setCheckedDelete(arr)
+    } else {
+      let arr = checkedDelete
+      const index = checkedDelete.indexOf(items.id)
+      if (index > -1) {
+        arr.splice(index, 1)
+      }
+      setCheckedDelete(arr)
+    }
+    if (checkedDelete.length >= 1) {
+      document.getElementById('btn-delete-all').classList.remove('d-none')
+    } else {
+      document.getElementById('btn-delete-all').classList.add('d-none')
+    }
+  }
+
+  const handleCheckboxDeleteAll = (e) => {
+    if (e.target.checked) {
+      let arr = checkedDelete
+      subtance_question_detail.list_questions.forEach(row => {
+        if (checkedDelete.indexOf(row.id) === -1) {
+          arr.push(row.id)
+          setCheckedDelete(arr)
+          checkedDelete.forEach((items, i) => {
+            const input = document.getElementsByClassName('input_delete')
+            input[i].checked = true
+          })
+        }
+      })
+    } else {
+      subtance_question_detail.list_questions.forEach((row, i) => {
+        let arr = checkedDelete.splice(checkedDelete.indexOf(row.id), checkedDelete.length)
+        setCheckedDelete(arr)
+        const input = document.getElementsByClassName('input_delete')
+        input[i].checked = false
+      })
+    }
+    if (checkedDelete.length >= 1) {
+      document.getElementById('btn-delete-all').classList.remove('d-none')
+    } else {
+      document.getElementById('btn-delete-all').classList.add('d-none')
+    }
+  }
+
+  const handleDeleteAll = () => {
+    console.log(checkedDelete)
+  }
+
+  const handleModal = () => {
+    Swal.fire({
+      title: 'Silahkan Pilih Metode Entry',
+      icon: 'info',
+      showDenyButton: true,
+      showCloseButton: true,
+      confirmButtonText: `Entry`,
+      denyButtonText: `Import`,
+      confirmButtonColor: '#3085d6',
+      denyButtonColor: '#d33',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push({
+          pathname: `/subvit/substansi/tambah-step-2-entry`,
+          query: { id }
+        })
+      } else if (result.isDenied) {
+        router.push({
+          pathname: `/subvit/substansi/tambah-step-2-import`,
+          query: { id }
+        })
+      }
+    })
   }
 
   return (
@@ -118,7 +200,11 @@ const StepTwo = () => {
                 </div>
 
                 <div className="col-lg-2 col-xl-2 ml-auto">
-                  <button className='btn btn-light-info btn-block' onClick={handleSearch}><i className="flaticon2-notepad"></i>Tambah Soal</button>
+                  <button className='btn btn-light-info btn-block' onClick={handleModal}><i className="flaticon2-notepad"></i>Tambah Soal</button>
+                </div>
+
+                <div id='btn-delete-all' className="col-lg-2 col-xl-2 d-none">
+                  <button className='btn btn-light-danger btn-block' onClick={handleDeleteAll}><i className="flaticon2-notepad"></i>Hapus Semua</button>
                 </div>
 
               </div>
@@ -126,78 +212,80 @@ const StepTwo = () => {
             <div className="table-page mt-5">
               <div className="table-responsive">
 
-                <LoadingTable loading={loading} />
-
-                {loading === false ? (
-                  <table className="table table-separate table-head-custom table-checkable">
-                    <thead style={{ background: "#F3F6F9" }}>
-                      <tr>
-                        <th className="text-center align-middle">
-                          <input type="checkbox" aria-label="Checkbox for following text input" />
-                        </th>
-                        <th >No</th>
-                        <th>ID Soal</th>
-                        <th>Soal</th>
-                        <th>Kategori</th>
-                        <th>Bobot</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {subtance_question_detail && subtance_question_detail.list_questions && subtance_question_detail.list_questions.length === 0 ? (
-                        <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
-                        </td>
-                      ) : (
-                        subtance_question_detail &&
-                        subtance_question_detail.list_questions &&
-                        subtance_question_detail.list_questions.map((question, i) => {
-                          return (
-                            <tr key={question.id}>
-                              <td className="align-middle text-center">
-                                <input type="checkbox" aria-label="Checkbox for following text input" />
-                              </td>
-                              <td className="align-middle">
-                                <span className="badge badge-secondary text-muted">
-                                  {i + 1 * (page * 5 || limit) - 4}
+                <table className="table table-separate table-head-custom table-checkable">
+                  <thead style={{ background: "#F3F6F9" }}>
+                    <tr>
+                      <th className="text-center align-middle">
+                        <input type="checkbox" aria-label="Checkbox for following text input" onClick={e => handleCheckboxDeleteAll(e)} />
+                      </th>
+                      <th >No</th>
+                      <th>ID Soal</th>
+                      <th>Soal</th>
+                      <th>Kategori</th>
+                      <th>Bobot</th>
+                      <th>Status</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {subtance_question_detail && subtance_question_detail.list_questions && subtance_question_detail.list_questions.length === 0 ? (
+                      <td className="align-middle text-center" colSpan={8}>
+                        Data Masih Kosong
+                      </td>
+                    ) : (
+                      subtance_question_detail &&
+                      subtance_question_detail.list_questions &&
+                      subtance_question_detail.list_questions.map((question, i) => {
+                        return (
+                          <tr key={question.id}>
+                            <td className="align-middle text-center">
+                              <input
+                                className='input_delete'
+                                type="checkbox"
+                                aria-label="Checkbox for following text input"
+                                value={question.id}
+                                checked={checkedDelete.find((items) => items.id === question.id)}
+                                onChange={e => handleCheckboxDelete(e, question)}
+                              />
+                            </td>
+                            <td className="align-middle">
+                              <span className="badge badge-secondary text-muted">
+                                {i + 1 * (page * 5 || limit) - 4}
+                              </span>
+                            </td>
+                            <td className="align-middle">
+                              {question.subtance_question_bank_id}
+                            </td>
+                            <td className="align-middle">
+                              {question.question}
+                            </td>
+                            <td className="align-middle">
+                              {question.type.name}
+                            </td>
+                            <td className="align-middle">
+                              {question.type.value} poin
+                            </td>
+                            <td className="align-middle">
+                              {question.status === true ? (
+                                <span className="label label-inline label-light-success font-weight-bold">
+                                  Publish
                                 </span>
-                              </td>
-                              <td className="align-middle">
-                                {question.subtance_question_bank_id}
-                              </td>
-                              <td className="align-middle">
-                                {question.question}
-                              </td>
-                              <td className="align-middle">
-                                {question.type.name}
-                              </td>
-                              <td className="align-middle">
-                                {question.type.value} poin
-                              </td>
-                              <td className="align-middle">
-                                {question.status === true ? (
-                                  <span class="label label-inline label-light-success font-weight-bold">
-                                    Publish
-                                  </span>
-                                ) : (
-                                  <span class="label label-inline label-light-warning font-weight-bold">
-                                    Draft
-                                  </span>
-                                )}
-                              </td>
-                              <td className="align-middle">
-                                <ButtonAction icon="write.svg" />
-                              </td>
-                            </tr>
-                          );
-                        })
-                      )}
-                    </tbody>
-                  </table>
-                ) : (
-                  ""
-                )}
+                              ) : (
+                                <span className="label label-inline label-light-warning font-weight-bold">
+                                  Draft
+                                </span>
+                              )}
+                            </td>
+                            <td className="align-middle">
+                              <ButtonAction icon="write.svg" />
+                            </td>
+                          </tr>
+                        );
+                      })
+                    )}
+                  </tbody>
+                </table>
+
               </div>
 
               <div className="row">
