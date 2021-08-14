@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 import Pagination from "react-js-pagination";
 import DatePicker from "react-datepicker";
@@ -9,12 +10,140 @@ import DatePicker from "react-datepicker";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
+import LoadingTable from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
 
+import {
+  deleteTandaTangan,
+  clearErrors,
+} from "../../../../redux/actions/partnership/tandaTangan.actions";
+
+import { DELETE_TANDA_TANGAN_RESET } from "../../../../redux/types/partnership/tandaTangan.type";
+
 const Table = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const {
+    loading: allLoading,
+    error,
+    tandaTangan,
+  } = useSelector((state) => state.allTandaTangan);
+
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    isDeleted,
+  } = useSelector((state) => state.deleteTandaTangan);
+  // const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
+  // const [startDate, setStartDate] = useState(null);
+  // const [endDate, setEndDate] = useState(null);
+
+  let loading = false;
+  // let { page = 1, keyword, success } = router.query;
+  // if (allLoading) {
+  //   loading = allLoading;
+  // } else if (deleteLoading) {
+  //   loading = deleteLoading;
+  // }
+  // page = Number(page);
+
+  useEffect(() => {
+    // if (limit) {
+    //   router.push(`${router.pathname}?page=1&limit=${limit}`);
+    // }
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        }
+      );
+      dispatch({
+        type: DELETE_TANDA_TANGAN_RESET,
+      });
+    }
+  }, [limit, isDeleted]);
+
+  // const onNewReset = () => {
+  //   router.replace("/partnership/tanda-tangan", undefined, { shallow: true });
+  // };
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteTandaTangan(id));
+      }
+    });
+  };
+
+  // const handlePagination = (pageNumber) => {
+  //   if (limit != null) {
+  //     router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
+  //   } else {
+  //     router.push(`${router.pathname}?page=${pageNumber}`);
+  //   }
+  // };
+
+  // const handleSearch = () => {
+  //   if (limit != null) {
+  //     router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
+  //   } else {
+  //     router.push(`${router.pathname}?page=1&keyword=${search}`);
+  //   }
+  // };
+
+  // const handleSearchDate = () => {
+  //   router.push(
+  //     `${router.pathname}?page=1&startdate=${moment(startDate).format(
+  //       "YYYY-MM-DD"
+  //     )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+  //   );
+  // };
+
+  // const handleLimit = (val) => {
+  //   setLimit(val);
+  // };
+
   return (
     <PageWrapper>
+      {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -63,31 +192,60 @@ const Table = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          1
-                        </button>
-                      </td>
-                      <td className="text-center align-middle">Lord Dendy</td>
-                      <td className="text-center align-middle">
-                        Web Developer
-                      </td>
-                      <td className="text-center align-middle">
-                        <select name="" id="" className="form-control">
-                          <option value="1">Aktif</option>
-                          <option value="2">No Aktif</option>
-                        </select>
-                      </td>
-                      <td className="text-center align-middle">
-                        <ButtonAction icon="write.svg" />
-                        <ButtonAction icon="setting.svg" />
-                        <ButtonAction icon="trash.svg" />
-                      </td>
-                    </tr>
+                    {tandaTangan &&
+                      tandaTangan.list_signatures.map((data, id) => {
+                        return (
+                          <>
+                            <tr>
+                              <td className="text-center align-middle">
+                                <button
+                                  className="btn"
+                                  style={{
+                                    background: "#F3F6F9",
+                                    borderRadius: "6px",
+                                  }}
+                                >
+                                  {id + 1}
+                                </button>
+                              </td>
+                              <td className="text-center align-middle">
+                                {data.name}
+                              </td>
+                              <td className="text-center align-middle">
+                                {data.position}
+                              </td>
+                              <td className="text-center align-middle">
+                                <select name="" id="" className="form-control">
+                                  <option value="1">Aktif</option>
+                                  <option value="2">No Aktif</option>
+                                </select>
+                              </td>
+                              <td className="text-center align-middle">
+                                <ButtonAction
+                                  icon="write.svg"
+                                  link="tanda-tangan/edit"
+                                />
+                                {/* <ButtonAction icon="setting.svg" /> */}
+                                <button
+                                  onClick={() => handleDelete(data.id)}
+                                  className="btn mr-1"
+                                  style={{
+                                    background: "#F3F6F9",
+                                    borderRadius: "6px",
+                                  }}
+                                >
+                                  <Image
+                                    alt="button-action"
+                                    src={`/assets/icon/trash.svg`}
+                                    width={18}
+                                    height={18}
+                                  />
+                                </button>
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>

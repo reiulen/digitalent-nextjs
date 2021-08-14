@@ -16,7 +16,7 @@ const Table = () => {
 
   const { loading, error, mitra } = useSelector((state) => state.allMitra);
 
-  useEffect(() => {}, [mitra]);
+  // useEffect(() => {}, [mitra]);
 
   return (
     <PageWrapper>

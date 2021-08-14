@@ -55,6 +55,11 @@ import {
 
 // Partnership
 import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
+import {
+  allTandaTanganReducer,
+  newTandaTanganReducer,
+  deleteTandaTanganReducer,
+} from "./partnership/tandaTangan.reducers";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -107,6 +112,9 @@ const reducer = combineReducers({
   // PARTNERSHIP
   allMitra: allMitraReducer,
   newMitra: newMitraReducer,
+  allTandaTangan: allTandaTanganReducer,
+  newTandaTangan: newTandaTanganReducer,
+  deleteTandaTangan: deleteTandaTanganReducer,
 });
 
 export default reducer;

@@ -18,7 +18,7 @@ import {
 } from "../../../../redux/actions/partnership/tandaTangan.actions";
 import { NEW_TANDA_TANGAN_RESET } from "../../../../redux/types/partnership/tandaTangan.type";
 
-const TambahTandaTangan = () => {
+const EditTandaTangan = () => {
   const importSwitch = () => import("bootstrap-switch-button-react");
 
   const signCanvas = useRef({});
@@ -283,4 +283,4 @@ const TambahTandaTangan = () => {
   );
 };
 
-export default TambahTandaTangan;
+export default EditTandaTangan;
