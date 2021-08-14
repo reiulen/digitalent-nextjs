@@ -1,7 +1,7 @@
 import Layout from "/components/templates/layout.component";
-import StepTwo from "/components/content/subvit/substansi/clone/step-two";
+import StepTree from "/components/content/subvit/substansi/clone/step-tree";
 
-import { getAllSubtanceQuestionDetail } from '../../../../redux/actions/subvit/subtance-question-detail.action'
+import { getDetailSubtanceQuestionBanks } from '../../../../redux/actions/subvit/subtance.actions'
 import { wrapper } from '../../../../redux/store'
 
 export default function CloneSoalSubtansi() {
@@ -9,7 +9,7 @@ export default function CloneSoalSubtansi() {
         <>
             <div className="d-flex flex-column flex-root">
                 <Layout title='Clone Bank Soal Tes Subtansi'>
-                    <StepTwo />
+                    <StepTree />
                 </Layout>
             </div>
         </>
@@ -17,5 +17,5 @@ export default function CloneSoalSubtansi() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-    await store.dispatch(getAllSubtanceQuestionDetail(query.id))
+    await store.dispatch(getDetailSubtanceQuestionBanks(query.id))
 })
