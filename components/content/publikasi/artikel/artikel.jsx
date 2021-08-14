@@ -373,7 +373,6 @@ const Artikel = () => {
                   ""
                 )}
               </div>
-
               <div className="row">
                 {artikel && artikel.perPage < artikel.total && (
                   <div className="table-pagination">

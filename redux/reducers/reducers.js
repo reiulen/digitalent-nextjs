@@ -30,8 +30,17 @@ import {
     newGaleriReducer,
     deleteGaleriReducer,
 } from "./publikasi/galeri.reducers";
-import { allFaqReducer, newFaqReducer } from "./publikasi/faq.reducers";
-import { allVideoReducer, newVideoReducer } from "./publikasi/video.reducers";
+import { 
+    allFaqReducer, 
+    newFaqReducer 
+} from "./publikasi/faq.reducers";
+import { 
+    allVideoReducer, 
+    newVideoReducer,
+    deleteVideoReducer,
+    detailVideoReducer,
+    updateVideoReducer 
+} from "./publikasi/video.reducers";
 
 // Subvit
 import {
@@ -90,6 +99,9 @@ const reducer = combineReducers({
 
     allVideo: allVideoReducer,
     newVideo: newVideoReducer,
+    deleteVideo: deleteVideoReducer,
+    detailVideo: detailVideoReducer,
+    updatedVideo: updateVideoReducer,
 
     allKategori: allKategoriReducer,
     newKategori: newKategoriReducer,

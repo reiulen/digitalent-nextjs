@@ -3,7 +3,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
+import { TagsInput } from "react-tag-input-component";
 
 import { newVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { NEW_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
@@ -14,8 +16,10 @@ import LoadingPage from '../../../LoadingPage';
 const TambahVidio = () => {
     const editorRef = useRef()
     const dispatch = useDispatch()
+    const router = useRouter();
 
     const importSwitch = () => import('bootstrap-switch-button-react')
+    const [editorLoaded, setEditorLoaded] = useState(false)
 
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
@@ -41,6 +45,14 @@ const TambahVidio = () => {
             // dispatch({
             //     type: NEW_ARTIKEL_RESET
             // })
+        }
+
+        setEditorLoaded(true)
+        if (success) {
+            router.push({
+                pathname: `/publikasi/video`,
+                query: { success: true }
+            })
         }
 
     }, [dispatch, error, success]);
@@ -199,7 +211,14 @@ const TambahVidio = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} />
+                                    <TagsInput
+                                        value={tag}
+                                        onChange={setTag}
+                                        name="fruits"
+                                        placeHolder="Isi Tag disini"
+                                    // onBlur={() => simpleValidator.current.showMessageFor('tag')}
+                                    />
+                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                 </div>
                             </div>
 
