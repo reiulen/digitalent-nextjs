@@ -9,7 +9,7 @@ import {
   newSurveyQuestionBanks,
   clearErrors,
 } from "../../../../../redux/actions/subvit/survey-question.actions";
-import { NEW_SURVEY_QUESTION_BANKS_RESET } from "../../../../../redux/types/subvit/survey-question";
+import { NEW_SURVEY_QUESTION_BANKS_RESET } from "../../../../../redux/types/subvit/survey-question.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";

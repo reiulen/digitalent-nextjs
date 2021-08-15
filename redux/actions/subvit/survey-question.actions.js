@@ -151,7 +151,7 @@ export const deleteSurveyQuestionBanks = (id) => async (dispatch) => {
         const { data } = await axios.delete(process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`)
 
         dispatch({
-            type: DETAIL_SURVEY_QUESTION_BANKS_SUCCESS,
+            type: DELETE_SURVEY_QUESTION_BANKS_SUCCESS,
             payload: data.success
         })
 
