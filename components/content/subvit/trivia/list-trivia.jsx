@@ -222,9 +222,9 @@ const ListTrivia = () => {
                                 />
                                 <ButtonAction
                                   icon="write.svg"
-                                  link="/subvit/trivia/1"
+                                  link="/subvit/survey/edit/step-1"
                                 />
-                                <ButtonAction icon="detail.svg" link='/subvit/survey/edit/step-1' />
+                                <ButtonAction icon="detail.svg" link={`/subvit/trivia/${row.id}`} />
                                 <button
                                   onClick={() => handleDelete(row.id)}
                                   className="btn mr-1"
