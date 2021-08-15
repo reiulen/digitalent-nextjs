@@ -26,7 +26,7 @@ const ListSurvey = () => {
   const { loading, error, survey } = useSelector((state) => state.allSurveyQuestionBanks);
   const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteSurveyQuestionBanks);
 
-  let { page = 1 } = router.query;
+  let { page = 1, success } = router.query;
   page = Number(page);
 
   const [search, setSearch] = useState('')
@@ -89,6 +89,10 @@ const ListSurvey = () => {
     })
   }
 
+  const onNewReset = () => {
+    router.replace('/subvit/survey', undefined, { shallow: true })
+  }
+
   return (
     <PageWrapper>
       {error ? (
@@ -116,6 +120,19 @@ const ListSurvey = () => {
       ) : (
         ""
       )}
+
+      {success ?
+        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
+          <div className="alert-close">
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
+              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            </button>
+          </div>
+        </div>
+        : ''
+      }
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
