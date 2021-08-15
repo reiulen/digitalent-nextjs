@@ -30,16 +30,16 @@ import {
     newGaleriReducer,
     deleteGaleriReducer,
 } from "./publikasi/galeri.reducers";
-import { 
-    allFaqReducer, 
-    newFaqReducer 
+import {
+    allFaqReducer,
+    newFaqReducer
 } from "./publikasi/faq.reducers";
-import { 
-    allVideoReducer, 
+import {
+    allVideoReducer,
     newVideoReducer,
     deleteVideoReducer,
     detailVideoReducer,
-    updateVideoReducer 
+    updateVideoReducer
 } from "./publikasi/video.reducers";
 
 // Subvit
@@ -67,6 +67,16 @@ import {
     importFileSubtanceQuestionDetailReducer,
     importImagesSubtanceQuestionDetailReducer,
 } from "./subvit/subtance-question-detail.reducers";
+
+import {
+    allSurveyQuestionBanksReducer,
+    newSurveyQuestionBanksReducer,
+    detailSurveyQuestionBanksReducer,
+    updateSurveyQuestionReducer,
+    deleteSurveyQuestionBanksReducer,
+    updateSurveyQuestionBanksPublishReducer,
+    allReportSurveyQuestionBanksReducer,
+} from './subvit/survey-question.reducers'
 
 // Partnership
 import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
@@ -128,6 +138,14 @@ const reducer = combineReducers({
     deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
     importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
     importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
+
+    allSurveyQuestionBanks: allSurveyQuestionBanksReducer,
+    newSurveyQuestionBanks: newSurveyQuestionBanksReducer,
+    deleteSurveyQuestionBanks: deleteSurveyQuestionBanksReducer,
+    detailSurveyQuestionBanks: detailSurveyQuestionBanksReducer,
+    updateSurveyQuestion: updateSurveyQuestionReducer,
+    updateSurveyQuestionBanksPublish: updateSurveyQuestionBanksPublishReducer,
+    allReportSurveyQuestionBanks: allReportSurveyQuestionBanksReducer,
 
     // PARTNERSHIP
     allMitra: allMitraReducer,

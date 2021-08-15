@@ -5,10 +5,9 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
+import LoadingTable from "../../../LoadingTable";
 import ButtonAction from "../../../ButtonAction";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -21,20 +20,40 @@ const ListSurvey = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, subtance, perPage, total } = useSelector(
-    (state) => state.allSubtanceQuestionBanks
-  );
+  const { loading, error, survey } = useSelector((state) => state.allSurveyQuestionBanks);
 
   let { page = 1 } = router.query;
   page = Number(page);
 
-  useEffect(() => {
-    dispatch(getAllSubtanceQuestionBanks());
-  }, [dispatch]);
+  const [search, setSearch] = useState('')
+  const [limit, setLimit] = useState(null)
 
-  const override = css`
-    margin: 0 auto;
-  `;
+  useEffect(() => {
+  }, []);
+
+  const handlePagination = (pageNumber) => {
+    if (limit != null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    } else if (search != '' && limit != null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${search}`)
+    } else if (search != '') {
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+    } else {
+      router.push(`${router.pathname}?page=${pageNumber}`)
+    }
+  }
+
+  const handleSearch = () => {
+    if (limit != null) {
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    } else {
+      router.push(`${router.pathname}?page=1&keyword=${search}`)
+    }
+  }
+
+  const handleLimit = (val) => {
+    setLimit(val)
+  }
 
   return (
     <PageWrapper>
@@ -84,15 +103,20 @@ const ListSurvey = () => {
                       className="form-control"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
+                      autoComplete="off"
+                      onChange={e => setSearch(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
                   </div>
                 </div>
+                <div className="col-lg-1 col-xl-1">
+                  <button className='btn btn-sm btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
+                </div>
 
                 <div className="col-lg-2 col-xl-2 ml-auto">
-                  <Link href="/subvit/survey/tambah/step-1">
+                  <Link href="/subvit/survey/tambah">
                     <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
                       <i className="flaticon2-notepad"></i>
                       Tambah Soal
@@ -104,14 +128,7 @@ const ListSurvey = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <div className="loading text-center justify-content-center">
-                  <BeatLoader
-                    color="#3699FF"
-                    loading={loading}
-                    css={override}
-                    size={10}
-                  />
-                </div>
+                <LoadingTable loading={loading} />
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -128,27 +145,32 @@ const ListSurvey = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {subtance && subtance.length === 0
-                        ? ""
-                        : subtance &&
-                        subtance.map((subtance) => {
+                      {survey && survey.question_survey.length === 0
+                        ?
+                        (
+                          <td className="align-middle text-center" colSpan={8}>
+                            Data Masih Kosong
+                          </td>
+                        )
+                        : survey &&
+                        survey.question_survey.map((row) => {
                           return (
-                            <tr key={subtance.id}>
+                            <tr key={row.id}>
                               <td className="align-middle text-center">
-                                {subtance.no}
+                                {row.no}
                               </td>
                               <td className="align-middle">
-                                {subtance.academy}
+                                {row.academy}
                               </td>
                               <td className="align-middle">
-                                {subtance.theme}
+                                {row.theme}
                               </td>
                               <td className="align-middle">200 Soal</td>
                               <td className="align-middle">
-                                {subtance.start_at}
+                                {row.start_at}
                               </td>
                               <td className="align-middle">
-                                {subtance.category}
+                                {row.category}
                               </td>
                               <td className="align-middle">
                                 <span className="badge badge-success">
@@ -178,12 +200,12 @@ const ListSurvey = () => {
               </div>
 
               <div className="row">
-                {perPage < total && (
+                {survey && survey.perPage < survey.total && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={perPage}
-                      totalItemsCount={total}
+                      itemsCountPerPage={survey.perPage}
+                      totalItemsCount={survey.total}
                       pageRangeDisplayed={3}
                       // onChange={handlePagination}
                       nextPageText={">"}
@@ -195,7 +217,7 @@ const ListSurvey = () => {
                     />
                   </div>
                 )}
-                {total > 5 ? (
+                {survey && survey.total > 5 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -221,7 +243,7 @@ const ListSurvey = () => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data 120
+                          Total Data {survey.total}
                         </p>
                       </div>
                     </div>
