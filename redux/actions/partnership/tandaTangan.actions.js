@@ -1,14 +1,22 @@
 import {
+  // all tanda tangan
   TANDA_TANGAN_REQUEST,
   TANDA_TANGAN_SUCCESS,
   TANDA_TANGAN_FAIL,
+
+  // new tanda tangan
   NEW_TANDA_TANGAN_REQUEST,
   NEW_TANDA_TANGAN_SUCCESS,
   NEW_TANDA_TANGAN_FAIL,
-  CLEAR_ERRORS,
+
+  // delete tanda tangan
   DELETE_TANDA_TANGAN_REQUEST,
   DELETE_TANDA_TANGAN_SUCCESS,
   DELETE_TANDA_TANGAN_FAIL,
+  CLEAR_ERRORS,
+  UPDATE_TANDA_TANGAN_REQUEST,
+  UPDATE_TANDA_TANGAN_SUCCESS,
+  UPDATE_TANDA_TANGAN_FAIL,
 } from "../../types/partnership/tandaTangan.type";
 
 import axios from "axios";
@@ -102,4 +110,27 @@ export const clearErrors = () => async (dispatch) => {
   dispatch({
     type: CLEAR_ERRORS,
   });
+};
+
+export const updateTandaTangan = (id, tandaTangan) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_TANDA_TANGAN_REQUEST,
+    });
+
+    const { data } = await axios.put(
+      process.env.END_POINT_API_PARTNERSHIP + `/api/signatures/${id}`,
+      tandaTangan
+    );
+
+    dispatch({
+      type: UPDATE_TANDA_TANGAN_SUCCESS,
+      payload: data.status,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_TANDA_TANGAN_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

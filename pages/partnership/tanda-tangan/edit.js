@@ -12,3 +12,9 @@ export default function TambahPage() {
     </>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async () => {
+    await store.dispatch(getAllTandaTangan());
+  }
+);

@@ -6,6 +6,7 @@ import {
   newArtikelReducer,
   deleteArtikelReducer,
   detailArtikelReducer,
+  updateArtikelReducer,
 } from "./publikasi/artikel.reducers";
 import {
   allBeritaReducer,
@@ -30,20 +31,30 @@ import {
   deleteGaleriReducer,
 } from "./publikasi/galeri.reducers";
 import { allFaqReducer, newFaqReducer } from "./publikasi/faq.reducers";
-import { allVideoReducer, newVideoReducer } from "./publikasi/video.reducers";
+import {
+  allVideoReducer,
+  newVideoReducer,
+  deleteVideoReducer,
+  detailVideoReducer,
+  updateVideoReducer,
+} from "./publikasi/video.reducers";
 
 // Subvit
 import {
   allSubtanceQuestionBanksReducer,
   newSubtanceQuestionBanksReducer,
+  detailSubtanceQuestionBanksReducer,
+  updateSubtanceQuestionReducer,
   deleteSubtanceQuestionBanksReducer,
   updateSubtanceQuestionBanksPublishReducer,
+  allReportSubtanceQuestionBanksReducer,
 } from "./subvit/subtance.reducers";
 import {
   allSubtanceQuestionTypeReducer,
   newSubtanceQuestionTypeReducer,
   detailSubtanceQuestionTypeReducer,
   deleteSubtanceQuestionTypeReducer,
+  updateSubtanceQuestionTypeReducer,
 } from "./subvit/subtance-question-type.reducers";
 import {
   allSubtanceQuestionDetailReducer,
@@ -59,6 +70,7 @@ import {
   allTandaTanganReducer,
   newTandaTanganReducer,
   deleteTandaTanganReducer,
+  updateTandaTanganReducer,
 } from "./partnership/tandaTangan.reducers";
 
 const reducer = combineReducers({
@@ -115,6 +127,7 @@ const reducer = combineReducers({
   allTandaTangan: allTandaTanganReducer,
   newTandaTangan: newTandaTanganReducer,
   deleteTandaTangan: deleteTandaTanganReducer,
+  updateTandaTangan: updateTandaTanganReducer,
 });
 
 export default reducer;

@@ -128,3 +128,39 @@ export const deleteTandaTanganReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const updateTandaTanganReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_TANDA_TANGAN_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case UPDATE_TANDA_TANGAN_SUCCESS:
+      return {
+        loading: false,
+        isUpdated: action.payload,
+      };
+
+    case UPDATE_TANDA_TANGAN_RESET:
+      return {
+        loading: false,
+        isUpdated: false,
+      };
+
+    case UPDATE_TANDA_TANGAN_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};

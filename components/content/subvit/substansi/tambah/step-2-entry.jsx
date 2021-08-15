@@ -43,7 +43,7 @@ const StepTwo = () => {
 
   useEffect(() => {
 
-    dispatch(getAllSubtanceQuestionBanksType())
+    // dispatch(getAllSubtanceQuestionBanksType())
 
     if (success) {
       if (typeSave === 'lanjut') {
@@ -329,15 +329,13 @@ const StepTwo = () => {
                     className="form-control"
                   >
                     <option selected disabled value=''>-- Tipe Soal --</option>
-                    {!subtance_question_type || (subtance_question_type && subtance_question_type.length === 0) ? (
-                      <option value="">Data kosong</option>
-                    ) : (
-                      subtance_question_type && subtance_question_type && subtance_question_type.map((row) => {
+                    {
+                      subtance_question_type.list_types.map((row) => {
                         return (
                           <option key={row.id} value={row.id}>{row.name}</option>
                         )
                       })
-                    )}
+                    }
                   </select>
                   <span className="text-muted">Silahkan Pilih Tipe Soal</span>
                 </div>

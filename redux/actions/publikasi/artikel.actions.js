@@ -13,6 +13,10 @@ import {
   DETAIL_ARTIKEL_REQUEST,
   DETAIL_ARTIKEL_SUCCESS,
   DETAIL_ARTIKEL_FAIL,
+  UPDATE_ARTIKEL_REQUEST,
+  UPDATE_ARTIKEL_SUCCESS,
+  UPDATE_ARTIKEL_RESET,
+  UPDATE_ARTIKEL_FAIL,
   CLEAR_ERRORS,
 } from "../../types/publikasi/artikel.type";
 
@@ -97,6 +101,27 @@ export const newArtikel = (artikelData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_ARTIKEL_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updateArtikel = (artikelData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_ARTIKEL_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_PUBLIKASI + `api/artikel/${artikelData.id}`;
+
+    const { data } = await axios.post(link, artikelData);
+
+    dispatch({
+      type: UPDATE_ARTIKEL_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_ARTIKEL_FAIL,
       payload: error.response.data.message,
     });
   }

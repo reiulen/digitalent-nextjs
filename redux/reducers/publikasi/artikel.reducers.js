@@ -17,6 +17,11 @@ import {
     DETAIL_ARTIKEL_SUCCESS,
     DETAIL_ARTIKEL_FAIL,
 
+    UPDATE_ARTIKEL_REQUEST,
+    UPDATE_ARTIKEL_SUCCESS,
+    UPDATE_ARTIKEL_RESET,
+    UPDATE_ARTIKEL_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/artikel.type'
 
@@ -136,6 +141,45 @@ export const deleteArtikelReducer = (state = {}, action) => {
                 ...state,
                 error: null
             }
+
+        default:
+            return state
+    }
+}
+
+export const updateArtikelReducer = (state = {}, action) => {
+    switch (action.type) {
+        case UPDATE_ARTIKEL_REQUEST:
+            return {
+                loading: true
+            }
+        
+        case UPDATE_ARTIKEL_SUCCESS:
+            return {
+                loading: false,
+                isUpdated: action.payload,
+                success: true
+            }
+
+        case UPDATE_ARTIKEL_RESET:
+            return {
+                loading: false,
+                isUpdated: false,
+                success: false
+            }
+
+        case UPDATE_ARTIKEL_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
 
         default:
             return state
