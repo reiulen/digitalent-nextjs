@@ -255,7 +255,7 @@ const DetailTrivia = () => {
                                                     </td>
                                                 )
                                                 :
-                                                trivia_question_detail.list_questions.map((question, i) => {
+                                                trivia_question_detail && trivia_question_detail.list_questions.map((question, i) => {
                                                     return (
                                                         <tr key={question.id}>
                                                             <td className="align-middle text-center">
