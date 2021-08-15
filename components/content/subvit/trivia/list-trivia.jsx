@@ -218,11 +218,11 @@ const ListTrivia = () => {
                               <td className="align-middle">
                                 <ButtonAction
                                   icon="setting.svg"
-                                  link="/subvit/survey/report/1"
+                                  link={`/subvit/trivia/report?id=${row.id}`}
                                 />
                                 <ButtonAction
                                   icon="write.svg"
-                                  link="/subvit/survey/1"
+                                  link="/subvit/trivia/1"
                                 />
                                 <ButtonAction icon="detail.svg" link='/subvit/survey/edit/step-1' />
                                 <button
