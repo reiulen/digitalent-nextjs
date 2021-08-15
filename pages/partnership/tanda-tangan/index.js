@@ -17,7 +17,10 @@ export default function TandaTanganPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async () => {
-    await store.dispatch(getAllTandaTangan());
-  }
+  (store) =>
+    async ({ query }) => {
+      await store.dispatch(
+        getAllTandaTangan(query.page, query.keyword, query.limit)
+      );
+    }
 );

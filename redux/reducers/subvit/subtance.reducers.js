@@ -31,6 +31,11 @@ import {
     REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS,
     REPORT_SUBTANCE_QUESTION_BANKS_FAIL,
 
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/subvit/subtance.type'
 
@@ -253,6 +258,41 @@ export const allReportSubtanceQuestionBanksReducer = (state = { subtance: [] }, 
             return {
                 loading: false,
                 error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const newCloneSubtanceQuestionBanksReducer = (state = { subtance: {} }, action) => {
+    switch (action.type) {
+        case NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST:
+            return {
+                loading: true
+            }
+
+        case NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS:
+            return {
+                loading: false,
+                success: action.payload.message,
+                subtance: action.payload.data
+            }
+
+        case NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET:
+            return {
+                success: false
             }
 
         case CLEAR_ERRORS:

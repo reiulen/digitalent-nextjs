@@ -16,6 +16,17 @@ import {
   DELETE_TANDA_TANGAN_FAIL,
   DELETE_TANDA_TANGAN_RESET,
 
+  // detail tanda tangan
+  DETAIL_TANDA_TANGAN_REQUEST,
+  DETAIL_TANDA_TANGAN_SUCCESS,
+  DETAIL_TANDA_TANGAN_FAIL,
+
+  // update status tanda tangan
+  UPDATE_STATUS_TANDA_TANGAN_REQUEST,
+  UPDATE_STATUS_TANDA_TANGAN_SUCCESS,
+  UPDATE_STATUS_TANDA_TANGAN_FAIL,
+  UPDATE_STATUS_TANDA_TANGAN_RESET,
+
   // update tanda tangan
   UPDATE_TANDA_TANGAN_REQUEST,
   UPDATE_TANDA_TANGAN_SUCCESS,
@@ -129,6 +140,31 @@ export const deleteTandaTanganReducer = (state = {}, action) => {
   }
 };
 
+export const detailTandaTanganReducer = (
+  state = { detailTandaTangan: {} },
+  action
+) => {
+  switch (action.type) {
+    case DETAIL_TANDA_TANGAN_SUCCESS:
+      return {
+        detailTandaTangan: action.payload,
+      };
+
+    case DETAIL_TANDA_TANGAN_FAIL:
+      return {
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
 export const updateTandaTanganReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_TANDA_TANGAN_REQUEST:
@@ -149,6 +185,42 @@ export const updateTandaTanganReducer = (state = {}, action) => {
       };
 
     case UPDATE_TANDA_TANGAN_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateStatusTandaTanganReducer = (state = {}, action) => {
+  switch (action.type) {
+    case UPDATE_STATUS_TANDA_TANGAN_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case UPDATE_STATUS_TANDA_TANGAN_SUCCESS:
+      return {
+        loading: false,
+        isUpdated: action.payload,
+      };
+
+    case UPDATE_STATUS_TANDA_TANGAN_RESET:
+      return {
+        loading: false,
+        isUpdated: false,
+      };
+
+    case UPDATE_STATUS_TANDA_TANGAN_FAIL:
       return {
         loading: false,
         error: action.payload,

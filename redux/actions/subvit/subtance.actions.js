@@ -29,6 +29,11 @@ import {
     REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS,
     REPORT_SUBTANCE_QUESTION_BANKS_FAIL,
 
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/subvit/subtance.type'
 
@@ -222,6 +227,37 @@ export const allReportSubtanceQuestionBanks = (id, page = 1, keyword = '', limit
         })
     }
 }
+
+export const newCloneSubtanceQuestionBanks = (subtanceData) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST
+        })
+
+        // const config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+        //         'Access-Control-Allow-Origin': '*',
+        //         'apikey': process.env.END_POINT_KEY_AUTH
+        //     }
+        // }
+
+        const { data } = await axios.post(process.env.END_POINT_API_SUBVIT + 'api/subtance-question-banks/clone', subtanceData)
+
+        dispatch({
+            type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
 
 // Clear Error
 export const clearErrors = () => async (dispatch) => {

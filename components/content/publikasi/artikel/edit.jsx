@@ -133,8 +133,7 @@ const EditArtikel = () => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    })
-    .then((result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire("Berhasil", "Status publikasi telah diubah", "success");
 

@@ -48,6 +48,7 @@ import {
   deleteSubtanceQuestionBanksReducer,
   updateSubtanceQuestionBanksPublishReducer,
   allReportSubtanceQuestionBanksReducer,
+  newCloneSubtanceQuestionBanksReducer,
 } from "./subvit/subtance.reducers";
 import {
   allSubtanceQuestionTypeReducer,
@@ -64,13 +65,25 @@ import {
   importImagesSubtanceQuestionDetailReducer,
 } from "./subvit/subtance-question-detail.reducers";
 
+import {
+  allSurveyQuestionBanksReducer,
+  newSurveyQuestionBanksReducer,
+  detailSurveyQuestionBanksReducer,
+  updateSurveyQuestionReducer,
+  deleteSurveyQuestionBanksReducer,
+  updateSurveyQuestionBanksPublishReducer,
+  allReportSurveyQuestionBanksReducer,
+} from "./subvit/survey-question.reducers";
+
 // Partnership
 import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
   deleteTandaTanganReducer,
+  detailTandaTanganReducer,
   updateTandaTanganReducer,
+  updateStatusTandaTanganReducer,
 } from "./partnership/tandaTangan.reducers";
 
 const reducer = combineReducers({
@@ -124,10 +137,13 @@ const reducer = combineReducers({
   // PARTNERSHIP
   allMitra: allMitraReducer,
   newMitra: newMitraReducer,
+
   allTandaTangan: allTandaTanganReducer,
   newTandaTangan: newTandaTanganReducer,
   deleteTandaTangan: deleteTandaTanganReducer,
   updateTandaTangan: updateTandaTanganReducer,
+  detailTandaTangan: detailTandaTanganReducer,
+  updateStatusTandaTangan: updateStatusTandaTanganReducer,
 });
 
 export default reducer;

@@ -1,21 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 import SignaturePad from "react-signature-pad-wrapper";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
 
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
-
-import LoadingPage from "../../../LoadingPage";
 
 import {
   updateTandaTangan,
   clearErrors,
 } from "../../../../redux/actions/partnership/tandaTangan.actions";
-import { NEW_TANDA_TANGAN_RESET } from "../../../../redux/types/partnership/tandaTangan.type";
+import { UPDATE_TANDA_TANGAN_RESET } from "../../../../redux/types/partnership/tandaTangan.type";
+import PageWrapper from "../../../wrapper/page.wrapper";
+import LoadingPage from "../../../LoadingPage";
 
 const EditTandaTangan = () => {
   const signCanvas = useRef({});
@@ -28,93 +28,59 @@ const EditTandaTangan = () => {
   const editorRef = useRef();
   const router = useRouter();
 
-  const importSwitch = () => import("bootstrap-switch-button-react");
-  const [editorLoaded, setEditorLoaded] = useState(false);
-  // const { CKEditor, ClassicEditor, Base64UploadAdapter } =
-  //   editorRef.current || {};
   // const SwitchButton = dynamic(importSwitch, {
   //   ssr: false,
   // });
 
-  const { tandaTangan } = useSelector((state) => state.allTandaTangan);
-  const { error, success, loading } = useSelector(
+  const { detailTandaTangan } = useSelector((state) => state.detailTandaTangan);
+  const { error, isUpdated, loading } = useSelector(
     (state) => state.updateTandaTangan
   );
 
-  const [nama, setNama] = useState(tandaTangan);
-  // const [jabatan, setJabatan] = useState(tandaTangan.position);
-  // const [signature, setSignature] = useState(tandaTangan.signature_image);
-
   useEffect(() => {
-    // editorRef.current = {
-    //   CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
-    //   ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-    //   // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
-    // };
-
     // setEditorLoaded(true);
-    if (success) {
-      // setJudulArtikel('')
-      // setIsiArtikel('')
-      // setGambar('')
-      // setGambarPreview('/assets/media/default.jpg')
-      // setKategoriId('')
-      // setTag('')
+    if (isUpdated) {
+      setName("");
+      setPosition("");
+      setSignature("");
 
       router.push({
         pathname: `/partnership/tanda-tangan`,
         query: { success: true },
       });
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, isUpdated]);
 
-  // const [id, setId] = useState(artikel.id);
-  // const [judul_artikel, setJudulArtikel] = useState(artikel.judul_artikel);
-  // const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel);
-  // const [gambar, setGambar] = useState(artikel.gambar);
-  // const [gambarPreview, setGambarPreview] = useState(
-  //   "/assets/media/default.jpg"
-  // ); //belum
-  // const [kategori_id, setKategoriId] = useState(1); //belum
-  // const [users_id, setUserId] = useState(artikel.users_id);
-  // const [tag, setTag] = useState(artikel.tag);
-  // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
-  // const [_method, setMethod] = useState("put");
+  // get detail state
+  const [name, setName] = useState(detailTandaTangan.name);
+  const [position, setPosition] = useState(detailTandaTangan.position);
+  const [signature, setSignature] = useState(null);
 
-  // const onChangeGambar = (e) => {
-  //   if (e.target.name === "gambar") {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       if (reader.readyState === 2) {
-  //         setGambar(reader.result);
-  //         setGambarPreview(reader.result);
-  //       }
-  //     };
-  //     reader.readAsDataURL(e.target.files[0]);
-  //   }
-  // };
+  const dataTandaTangan = () => {
+    const data = signCanvas.current.toDataURL();
+    setSignature(data);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (error) {
-      dispatch(clearErrors());
-    }
-
-    if (success) {
+    if (isUpdated) {
       dispatch({
         // type: NEW_ARTIKEL_RESET
         type: UPDATE_TANDA_TANGAN_RESET,
       });
     }
 
-    const data = {
-      name: nama,
-      position: jabatan,
-      signature_image: signature,
-    };
+    if (error) {
+      dispatch(clearErrors());
+    }
 
-    dispatch(updateTandaTangan(data));
-    // console.log(data)
+    const data = {
+      name: "tes",
+      position,
+      signature_image: signature,
+      status: "aktif",
+    };
+    dispatch(updateTandaTangan(detailTandaTangan.id, data));
   };
 
   const onNewReset = () => {
@@ -124,38 +90,6 @@ const EditTandaTangan = () => {
     });
   };
 
-  // const onSetPublish = (e) => {
-  //   Swal.fire({
-  //     title: "Ubah status publikasi?",
-  //     text: "Status publikasi akan berubah",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Ya !",
-  //     cancelButtonText: "Batal",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       Swal.fire("Berhasil", "Status publikasi telah diubah", "success");
-
-  //       console.log(e);
-  //       setPublish(e);
-  //     } else {
-  //       Swal.fire("Batal", "Status publikasi telah batal diubah", "info");
-
-  //       console.log(!e);
-  //       setPublish(!e);
-  //     }
-  //   });
-
-  // Swal.fire (
-  //     'Berhasil',
-  //     'Status publikasi telah diubah',
-  //     'success'
-  // )
-
-  // setPublish(e)
-  // };
   return (
     <PageWrapper>
       {error ? (
@@ -170,8 +104,6 @@ const EditTandaTangan = () => {
           <div className="alert-close">
             <button
               type="button"
-              value={nama}
-              onChange={setNama}
               className="close"
               data-dismiss="alert"
               aria-label="Close"
@@ -185,9 +117,35 @@ const EditTandaTangan = () => {
       ) : (
         ""
       )}
+      {/* {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">{success}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )} */}
 
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        {loading ? <LoadingPage loading={loading} /> : ""}
+        {/* {loading ? <LoadingPage loading={loading} /> : ""} */}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
@@ -204,13 +162,12 @@ const EditTandaTangan = () => {
                   Nama
                 </label>
                 <div className="col-sm-10">
-                  {console.log(nama)}
                   <input
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nama"
-                    // value={nama}
-                    onChange={(e) => setNama(e.target.value)}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     // onBlur={() =>
                     //   simpleValidator.current.showMessageFor("nama")
                     // }
@@ -232,7 +189,8 @@ const EditTandaTangan = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Jabatan"
-                    onChange={(e) => setJabatan(e.target.value)}
+                    value={position}
+                    onChange={(e) => setPosition(e.target.value)}
                     // onBlur={() =>
                     //   simpleValidator.current.showMessageFor("jabatan")
                     // }
@@ -253,6 +211,9 @@ const EditTandaTangan = () => {
                   className="col-sm-2 col-form-label"
                 >
                   Buat Tanda Tangan
+                  <div>
+                    <Image src={`/${signature}`} width={300} height={200} />
+                  </div>
                 </label>
                 <div className="col-sm-10">
                   <div
@@ -288,7 +249,7 @@ const EditTandaTangan = () => {
                         backgroundColor: "#C9F7F5",
                         color: "#1BC5BD",
                       }}
-                      // onClick={() => dataTandaTangan()}
+                      onClick={() => dataTandaTangan()}
                     >
                       Buat Tanda Tangan Baru
                     </a>
@@ -325,6 +286,30 @@ const EditTandaTangan = () => {
                     offlabel=" "
                     offstyle="danger"
                     size="sm"
+                      onChange={(checked) => onSetPublish(checked)}
+                      onChange={(checked) => onSetPublish(checked)}
+                  />
+                </div>
+              </div> */}
+              {/* <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Publish ?
+                </label>
+                <div className="col-sm-1">
+                  <SwitchButton
+                    checked={publish}
+                    onlabel=" "
+                    onstyle="primary"
+                    offlabel=" "
+                    offstyle="danger"
+                    size="sm"
+                    width={30}
+                    onChange={(checked) => onSetPublish(checked)}
+                    // onClick={(checked) => onSetPublish(checked)}
+                    // onChange={(checked) => setPublish(checked)}
                   />
                 </div>
               </div> */}
