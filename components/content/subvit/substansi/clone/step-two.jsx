@@ -45,11 +45,6 @@ const StepTwo = () => {
     });
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-
-  };
-
   const handleSearch = () => {
     if (limit != null) {
       router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}&limit=${limit}`)

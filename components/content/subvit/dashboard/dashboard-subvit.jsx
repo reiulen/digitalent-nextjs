@@ -1,5 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
+
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardDashboardMini from '../../../CardDashboardMini'
 
@@ -42,9 +44,9 @@ const DashbardSubvit = () => {
                     </div>
                     <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
                         <div className="row mx-auto">
-                            <CardDashboardMini background='bg-primary' icon='book-white.svg' color='text-white' title='Tes Subtansi' />
-                            <CardDashboardMini background='bg-white' icon='blok4-secondary.svg' color='text-muted' title='Survey' />
-                            <CardDashboardMini background='bg-white' icon='movie-secondary.svg' color='text-muted' title='Trivia' />
+                            <CardDashboardMini link='/subvit/substansi' background='bg-primary' icon='book-white.svg' color='text-white' title='Tes Subtansi' />
+                            <CardDashboardMini link='/subvit/survey' background='bg-white' icon='blok4-secondary.svg' color='text-muted' title='Survey' />
+                            <CardDashboardMini link='/subvit/trivia' background='bg-white' icon='movie-secondary.svg' color='text-muted' title='Trivia' />
                         </div>
 
                         <div className="card card-custom pb-0" style={{ background: '#0BB783', backgroundImage: "url('/assets/media/human1.svg')", backgroundRepeat: 'no-repeat', backgroundPosition: 'right bottom', backgroundSize: '150px' }}>
@@ -53,7 +55,9 @@ const DashbardSubvit = () => {
                                     <div className="card-body">
                                         <p className='text-white' style={{ lineHeigh: '30px', fontWeight: '600', fontSize: '20px', letterSpacing: '-0.02em' }}>Tambah Tes <br /> Substansi klik <br /> Tombol dibawah</p>
 
-                                        <a className='btn btn-warning' style={{ marginTop: '30px' }}>Tambah Test Substansi</a>
+                                        <Link href='/subvit/substansi/tambah-step-1'>
+                                            <a className='btn btn-warning' style={{ marginTop: '30px' }}>Tambah Test Substansi</a>
+                                        </Link>
                                     </div>
                                 </div>
                             </div>
@@ -67,7 +71,9 @@ const DashbardSubvit = () => {
                                         <div className="card-body">
                                             <p style={{ lineHeigh: '30px', fontWeight: '600', fontSize: '20px', letterSpacing: '-0.02em', color: '#1BC5BD' }}>Tambah Survey ? <br /> Klik Tombol <br /> dibawah</p>
 
-                                            <a className='btn btn-success' style={{ marginTop: '100px' }}>Tambah Survey</a>
+                                            <Link href='/subvit/survey/tambah'>
+                                                <a className='btn btn-success' style={{ marginTop: '100px' }}>Tambah Survey</a>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>
