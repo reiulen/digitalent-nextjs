@@ -13,6 +13,7 @@ import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 import LoadingTable from '../../../LoadingTable';
+import ButtonNewTab from "../../../ButtonNewTab";
 
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllBerita, deleteBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
@@ -60,6 +61,30 @@ const Berita = () => {
         })
     }
 
+    const handlePagination = (pageNumber) => {
+        if (limit != null) {
+          router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        } else {
+          router.push(`${router.pathname}?page=${pageNumber}`)
+        }
+      }
+
+    const handleSearch = () => {
+        if (limit != null) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${search}`)
+        }
+    }
+
+    const handleSearchDate = () => {
+    router.push(`${router.pathname}?page=1&startdate=${moment(startDate).format('YYYY-MM-DD')}&enddate=${moment(endDate).format('YYYY-MM-DD')}`)
+    }
+
+    const handleLimit = (val) => {
+    setLimit(val)
+    }
+
     return (
         <PageWrapper>
             {error ?
@@ -102,13 +127,23 @@ const Berita = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-12 col-xl-12">
+                                <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
-                                        <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" />
+                                        <input
+                                        style={{ background: "#F3F6F9", border: "none" }}
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Search..."
+                                        id="kt_datatable_search_query"
+                                        onChange={e => setSearch(e.target.value)}
+                                        />
                                         <span>
-                                            <i className="flaticon2-search-1 text-muted"></i>
+                                        <i className="flaticon2-search-1 text-muted"></i>
                                         </span>
                                     </div>
+                                </div>
+                                <div className="col-lg-2 col-xl-2">
+                                    <button type="button" className='btn btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
                                 </div>
                             </div>
                             <div className="row align-items-right">
@@ -144,10 +179,17 @@ const Berita = () => {
                                     </small>
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block">Cari</a>
+                                <button
+                                    type='button'
+                                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
+                                    onClick={handleSearchDate}
+                                >
+                                    Cari
+                                </button>
                                 </div>
                             </div>
                         </div>
+                        
 
                         <div className="table-page mt-5">
                             <div className="table-responsive">
@@ -158,6 +200,7 @@ const Berita = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
+                                                <th className="text-center">No</th>
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
@@ -172,8 +215,13 @@ const Berita = () => {
                                             {
                                                 !berita || berita && berita.berita.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    berita && berita.berita.map((row) => {
+                                                    berita && berita.berita.map((row, i) => {
                                                         return <tr key={row.id}>
+                                                            <td className="align-middle text-center">
+                                                                <span className="badge badge-secondary text-muted">
+                                                                {i + 1 * (page * 5 || limit) - 4}
+                                                                </span>
+                                                            </td>
                                                             <td className='text-center'>
                                                                 <Image
                                                                     alt={row.judul_berita}
@@ -186,7 +234,7 @@ const Berita = () => {
                                                             <td className='align-middle'>{row.jenis_kategori}</td>
                                                             <td className='align-middle'>{row.judul_berita}</td>
                                                             <td className='align-middle'>{new Date(row.created_at).toLocaleDateString("fr-CA")}</td>
-                                                            <td className='align-middle'>{row.users_id}</td>
+                                                            <td className='align-middle'>{row.dibuat}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
                                                                     <span class="label label-inline label-light-success font-weight-bold">
@@ -201,7 +249,7 @@ const Berita = () => {
                                                             </td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
+                                                                <ButtonNewTab icon='setting.svg' link={`/publikasi/berita/preview/${row.id}`} />
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/berita/${row.id}`}/>
                                                                 <button 
                                                                     onClick={() => handleDelete(row.id)} 
@@ -235,7 +283,7 @@ const Berita = () => {
                                             itemsCountPerPage={berita.perPage}
                                             totalItemsCount={berita.total}
                                             pageRangeDisplayed={3}
-                                            // onChange={handlePagination}
+                                            onChange={handlePagination}
                                             nextPageText={'>'}
                                             prevPageText={'<'}
                                             firstPageText={'<<'}
@@ -249,7 +297,18 @@ const Berita = () => {
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
-                                                <select className="form-control" id="exampleFormControlSelect2" style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}>
+                                                <select 
+                                                    className="form-control" 
+                                                    id="exampleFormControlSelect2" 
+                                                    style={{ 
+                                                        width: '65px', 
+                                                        background: '#F3F6F9', 
+                                                        borderColor: '#F3F6F9', 
+                                                        color: '#9E9E9E' 
+                                                    }}
+                                                    onChange={e => handleLimit(e.target.value)}
+                                                    onBlur={e => handleLimit(e.target.value)}
+                                                    >
                                                     <option>5</option>
                                                     <option>10</option>
                                                     <option>30</option>
@@ -258,7 +317,7 @@ const Berita = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data 120</p>
+                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>{berita.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''
