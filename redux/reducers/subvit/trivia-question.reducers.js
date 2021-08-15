@@ -1,53 +1,53 @@
 import {
-    SURVEY_QUESTION_BANKS_REQUEST,
-    SURVEY_QUESTION_BANKS_SUCCESS,
-    SURVEY_QUESTION_BANKS_FAIL,
+    TRIVIA_QUESTION_BANKS_REQUEST,
+    TRIVIA_QUESTION_BANKS_SUCCESS,
+    TRIVIA_QUESTION_BANKS_FAIL,
 
-    NEW_SURVEY_QUESTION_BANKS_REQUEST,
-    NEW_SURVEY_QUESTION_BANKS_SUCCESS,
-    NEW_SURVEY_QUESTION_BANKS_RESET,
-    NEW_SURVEY_QUESTION_BANKS_FAIL,
+    NEW_TRIVIA_QUESTION_BANKS_REQUEST,
+    NEW_TRIVIA_QUESTION_BANKS_SUCCESS,
+    NEW_TRIVIA_QUESTION_BANKS_RESET,
+    NEW_TRIVIA_QUESTION_BANKS_FAIL,
 
-    UPDATE_SURVEY_QUESTION_BANKS_REQUEST,
-    UPDATE_SURVEY_QUESTION_BANKS_SUCCESS,
-    UPDATE_SURVEY_QUESTION_BANKS_RESET,
-    UPDATE_SURVEY_QUESTION_BANKS_FAIL,
+    UPDATE_TRIVIA_QUESTION_BANKS_REQUEST,
+    UPDATE_TRIVIA_QUESTION_BANKS_SUCCESS,
+    UPDATE_TRIVIA_QUESTION_BANKS_RESET,
+    UPDATE_TRIVIA_QUESTION_BANKS_FAIL,
 
-    DELETE_SURVEY_QUESTION_BANKS_REQUEST,
-    DELETE_SURVEY_QUESTION_BANKS_SUCCESS,
-    DELETE_SURVEY_QUESTION_BANKS_RESET,
-    DELETE_SURVEY_QUESTION_BANKS_FAIL,
+    DELETE_TRIVIA_QUESTION_BANKS_REQUEST,
+    DELETE_TRIVIA_QUESTION_BANKS_SUCCESS,
+    DELETE_TRIVIA_QUESTION_BANKS_RESET,
+    DELETE_TRIVIA_QUESTION_BANKS_FAIL,
 
-    DETAIL_SURVEY_QUESTION_BANKS_REQUEST,
-    DETAIL_SURVEY_QUESTION_BANKS_SUCCESS,
-    DETAIL_SURVEY_QUESTION_BANKS_FAIL,
+    DETAIL_TRIVIA_QUESTION_BANKS_REQUEST,
+    DETAIL_TRIVIA_QUESTION_BANKS_SUCCESS,
+    DETAIL_TRIVIA_QUESTION_BANKS_FAIL,
 
-    UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST,
-    UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_SUCCESS,
-    UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET,
-    UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_FAIL,
+    UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_REQUEST,
+    UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_SUCCESS,
+    UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
+    UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_FAIL,
 
-    REPORT_SURVEY_QUESTION_BANKS_REQUEST,
-    REPORT_SURVEY_QUESTION_BANKS_SUCCESS,
-    REPORT_SURVEY_QUESTION_BANKS_FAIL,
+    REPORT_TRIVIA_QUESTION_BANKS_REQUEST,
+    REPORT_TRIVIA_QUESTION_BANKS_SUCCESS,
+    REPORT_TRIVIA_QUESTION_BANKS_FAIL,
 
     CLEAR_ERRORS,
-} from '../../types/subvit/survey-question.type'
+} from '../../types/subvit/trivia-question.type'
 
-export const allSurveyQuestionBanksReducer = (state = { survey: [] }, action) => {
+export const allTriviaQuestionBanksReducer = (state = { trivia: [] }, action) => {
     switch (action.type) {
-        case SURVEY_QUESTION_BANKS_REQUEST:
+        case TRIVIA_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
-        case SURVEY_QUESTION_BANKS_SUCCESS:
+        case TRIVIA_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
-                survey: action.payload.data
+                trivia: action.payload.data
             }
 
-        case SURVEY_QUESTION_BANKS_FAIL:
+        case TRIVIA_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -63,27 +63,27 @@ export const allSurveyQuestionBanksReducer = (state = { survey: [] }, action) =>
     }
 }
 
-export const newSurveyQuestionBanksReducer = (state = { survey: {} }, action) => {
+export const newTriviaQuestionBanksReducer = (state = { trivia: {} }, action) => {
     switch (action.type) {
-        case NEW_SURVEY_QUESTION_BANKS_REQUEST:
+        case NEW_TRIVIA_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
-        case NEW_SURVEY_QUESTION_BANKS_SUCCESS:
+        case NEW_TRIVIA_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
                 success: action.payload.message,
-                survey: action.payload.data
+                trivia: action.payload.data
             }
 
-        case NEW_SURVEY_QUESTION_BANKS_FAIL:
+        case NEW_TRIVIA_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload
             }
 
-        case NEW_SURVEY_QUESTION_BANKS_RESET:
+        case NEW_TRIVIA_QUESTION_BANKS_RESET:
             return {
                 success: false
             }
@@ -98,20 +98,20 @@ export const newSurveyQuestionBanksReducer = (state = { survey: {} }, action) =>
     }
 }
 
-export const detailSurveyQuestionBanksReducer = (state = { survey: {} }, action) => {
+export const detailTriviaQuestionBanksReducer = (state = { trivia: {} }, action) => {
     switch (action.type) {
-        case DETAIL_SURVEY_QUESTION_BANKS_REQUEST:
+        case DETAIL_TRIVIA_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
-        case DETAIL_SURVEY_QUESTION_BANKS_SUCCESS:
+        case DETAIL_TRIVIA_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
-                survey: action.payload
+                trivia: action.payload
             }
 
-        case DETAIL_SURVEY_QUESTION_BANKS_FAIL:
+        case DETAIL_TRIVIA_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -128,26 +128,26 @@ export const detailSurveyQuestionBanksReducer = (state = { survey: {} }, action)
     }
 }
 
-export const updateSurveyQuestionReducer = (state = {}, action) => {
+export const updateTriviaQuestionReducer = (state = {}, action) => {
     switch (action.type) {
-        case UPDATE_SURVEY_QUESTION_BANKS_REQUEST:
+        case UPDATE_TRIVIA_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
-        case UPDATE_SURVEY_QUESTION_BANKS_SUCCESS:
+        case UPDATE_TRIVIA_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
                 isUpdated: action.payload
             }
 
-        case UPDATE_SURVEY_QUESTION_BANKS_RESET:
+        case UPDATE_TRIVIA_QUESTION_BANKS_RESET:
             return {
                 loading: false,
                 isUpdated: false
             }
 
-        case UPDATE_SURVEY_QUESTION_BANKS_FAIL:
+        case UPDATE_TRIVIA_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -164,26 +164,26 @@ export const updateSurveyQuestionReducer = (state = {}, action) => {
     }
 }
 
-export const deleteSurveyQuestionBanksReducer = (state = {}, action) => {
+export const deleteTriviaQuestionBanksReducer = (state = {}, action) => {
     switch (action.type) {
-        case DELETE_SURVEY_QUESTION_BANKS_REQUEST:
+        case DELETE_TRIVIA_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
-        case DELETE_SURVEY_QUESTION_BANKS_SUCCESS:
+        case DELETE_TRIVIA_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
                 isDeleted: action.payload
             }
 
-        case DELETE_SURVEY_QUESTION_BANKS_RESET:
+        case DELETE_TRIVIA_QUESTION_BANKS_RESET:
             return {
                 loading: false,
                 isDeleted: false
             }
 
-        case DELETE_SURVEY_QUESTION_BANKS_FAIL:
+        case DELETE_TRIVIA_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -201,27 +201,27 @@ export const deleteSurveyQuestionBanksReducer = (state = {}, action) => {
 }
 
 // ======================================================================================================================
-export const updateSurveyQuestionBanksPublishReducer = (state = { survey: {} }, action) => {
+export const updateTriviaQuestionBanksPublishReducer = (state = { trivia: {} }, action) => {
     switch (action.type) {
-        case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST:
+        case UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_REQUEST:
             return {
                 loading: true
             }
 
-        case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_SUCCESS:
+        case UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_SUCCESS:
             return {
                 loading: false,
                 success: action.payload.message,
-                survey: action.payload.data
+                trivia: action.payload.data
             }
 
-        case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_FAIL:
+        case UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_FAIL:
             return {
                 loading: false,
                 error: action.payload
             }
 
-        case UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET:
+        case UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET:
             return {
                 success: false
             }
@@ -236,20 +236,20 @@ export const updateSurveyQuestionBanksPublishReducer = (state = { survey: {} }, 
     }
 }
 
-export const allReportSurveyQuestionBanksReducer = (state = { survey: [] }, action) => {
+export const allReportTriviaQuestionBanksReducer = (state = { trivia: [] }, action) => {
     switch (action.type) {
-        case REPORT_SURVEY_QUESTION_BANKS_REQUEST:
+        case REPORT_TRIVIA_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
-        case REPORT_SURVEY_QUESTION_BANKS_SUCCESS:
+        case REPORT_TRIVIA_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
-                survey: action.payload.data
+                trivia: action.payload.data
             }
 
-        case REPORT_SURVEY_QUESTION_BANKS_FAIL:
+        case REPORT_TRIVIA_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload

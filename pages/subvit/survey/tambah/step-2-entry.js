@@ -1,5 +1,5 @@
 import Layout from "../../../../components/templates/layout.component";
-import StepTwo from "../../../../components/content/subvit/survey/tambah/step-2";
+import StepTwo from "../../../../components/content/subvit/survey/tambah/step-2-entry";
 
 export default function TambahBankSoalTesSurveyStep2() {
   return (
@@ -12,3 +12,4 @@ export default function TambahBankSoalTesSurveyStep2() {
     </>
   );
 }
+
