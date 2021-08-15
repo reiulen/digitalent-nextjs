@@ -122,7 +122,7 @@ export const getDetailSurveyQuestionBanks = (id) => async (dispatch) => {
     }
 }
 
-export const updatewSurveyQuestionBanks = (id, substanceQuestionData) => async (dispatch) => {
+export const updateSurveyQuestionBanks = (id, substanceQuestionData) => async (dispatch) => {
     try {
 
         dispatch({
@@ -133,7 +133,7 @@ export const updatewSurveyQuestionBanks = (id, substanceQuestionData) => async (
 
         dispatch({
             type: UPDATE_SURVEY_QUESTION_BANKS_SUCCESS,
-            payload: data.status
+            payload: data.success
         })
     } catch (error) {
         dispatch({
