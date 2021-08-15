@@ -1,6 +1,9 @@
 import ListTrivia from "/components/content/subvit/trivia/list-trivia";
 import Layout from "/components/templates/layout.component";
 
+import { getAllTriviaQuestionBanks } from '../../../redux/actions/subvit/trivia-question.actions'
+import { wrapper } from '../../../redux/store'
+
 export default function Trivia() {
   return (
     <>
@@ -12,3 +15,7 @@ export default function Trivia() {
     </>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+  await store.dispatch(getAllTriviaQuestionBanks(query.page, query.keyword, query.limit))
+})

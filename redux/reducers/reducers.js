@@ -40,6 +40,7 @@ import {
 } from "./publikasi/video.reducers";
 
 // Subvit
+// ============== substansi ===============
 import {
   allSubtanceQuestionBanksReducer,
   newSubtanceQuestionBanksReducer,
@@ -64,7 +65,9 @@ import {
   importFileSubtanceQuestionDetailReducer,
   importImagesSubtanceQuestionDetailReducer,
 } from "./subvit/subtance-question-detail.reducers";
+// ============== substansi ===============
 
+// ============== survey ===============
 import {
   allSurveyQuestionBanksReducer,
   newSurveyQuestionBanksReducer,
@@ -74,6 +77,33 @@ import {
   updateSurveyQuestionBanksPublishReducer,
   allReportSurveyQuestionBanksReducer,
 } from "./subvit/survey-question.reducers";
+import {
+  allSurveyQuestionDetailReducer,
+  newSurveyQuestionDetailReducer,
+  deleteSurveyQuestionDetailReducer,
+  importFileSurveyQuestionDetailReducer,
+  importImagesSurveyQuestionDetailReducer,
+} from "./subvit/survey-question-detail.reducers";
+// ============== survey ===============
+
+// ============== trivia ===============
+import {
+  allTriviaQuestionBanksReducer,
+  newTriviaQuestionBanksReducer,
+  detailTriviaQuestionBanksReducer,
+  updateTriviaQuestionReducer,
+  deleteTriviaQuestionBanksReducer,
+  updateTriviaQuestionBanksPublishReducer,
+  allReportTriviaQuestionBanksReducer,
+} from "./subvit/trivia-question.reducers";
+import {
+  allTriviaQuestionDetailReducer,
+  newTriviaQuestionDetailReducer,
+  deleteTriviaQuestionDetailReducer,
+  importFileTriviaQuestionDetailReducer,
+  importImagesTriviaQuestionDetailReducer,
+} from "./subvit/trivia-question-detail.reducers";
+// ============== trivia ===============
 
 // Partnership
 import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
@@ -92,6 +122,7 @@ const reducer = combineReducers({
   newArtikel: newArtikelReducer,
   deleteArtikel: deleteArtikelReducer,
   detailArtikel: detailArtikelReducer,
+  updatedArtikel: updateArtikelReducer,
 
   allBerita: allBeritaReducer,
   newBerita: newBeritaReducer,
@@ -112,27 +143,69 @@ const reducer = combineReducers({
 
   allVideo: allVideoReducer,
   newVideo: newVideoReducer,
+  deleteVideo: deleteVideoReducer,
+  detailVideo: detailVideoReducer,
+  updatedVideo: updateVideoReducer,
 
   allKategori: allKategoriReducer,
   newKategori: newKategoriReducer,
   deleteKategori: deleteKategoriReducer,
 
   // Subvit
+  // =============== substansi ==================
   allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
   newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
   deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
+  detailSubtanceQuestionBanks: detailSubtanceQuestionBanksReducer,
+  updateSubtanceQuestion: updateSubtanceQuestionReducer,
   updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
+  allReportSubtanceQuestionBanks: allReportSubtanceQuestionBanksReducer,
+  newCloneSubtanceQuestionBanks: newCloneSubtanceQuestionBanksReducer,
 
   allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
   newSubtanceQuestionType: newSubtanceQuestionTypeReducer,
   detailSubtanceQuestionType: detailSubtanceQuestionTypeReducer,
   deleteSubtanceQuestionType: deleteSubtanceQuestionTypeReducer,
+  updateSubtanceQuestionType: updateSubtanceQuestionTypeReducer,
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
   importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
   importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
+  // =============== end substansi ==================
+
+  // =============== survey ==================
+  allSurveyQuestionBanks: allSurveyQuestionBanksReducer,
+  newSurveyQuestionBanks: newSurveyQuestionBanksReducer,
+  deleteSurveyQuestionBanks: deleteSurveyQuestionBanksReducer,
+  detailSurveyQuestionBanks: detailSurveyQuestionBanksReducer,
+  updateSurveyQuestion: updateSurveyQuestionReducer,
+  updateSurveyQuestionBanksPublish: updateSurveyQuestionBanksPublishReducer,
+  allReportSurveyQuestionBanks: allReportSurveyQuestionBanksReducer,
+
+  allSurveyQuestionDetail: allSurveyQuestionDetailReducer,
+  newSurveyQuestionDetail: newSurveyQuestionDetailReducer,
+  deleteSurveyQuestionDetail: deleteSurveyQuestionDetailReducer,
+  importFileSurveyQuestionDetail: importFileSurveyQuestionDetailReducer,
+  importImagesSurveyQuestionDetail: importImagesSurveyQuestionDetailReducer,
+  // =============== end substansi ==================
+
+  // =============== trivia ==================
+  allTriviaQuestionBanks: allTriviaQuestionBanksReducer,
+  newTriviaQuestionBanks: newTriviaQuestionBanksReducer,
+  deleteTriviaQuestionBanks: deleteTriviaQuestionBanksReducer,
+  detailTriviaQuestionBanks: detailTriviaQuestionBanksReducer,
+  updateTriviaQuestion: updateTriviaQuestionReducer,
+  updateTriviaQuestionBanksPublish: updateTriviaQuestionBanksPublishReducer,
+  allReportTriviaQuestionBanks: allReportTriviaQuestionBanksReducer,
+
+  allTriviaQuestionDetail: allTriviaQuestionDetailReducer,
+  newTriviaQuestionDetail: newTriviaQuestionDetailReducer,
+  deleteTriviaQuestionDetail: deleteTriviaQuestionDetailReducer,
+  importFileTriviaQuestionDetail: importFileTriviaQuestionDetailReducer,
+  importImagesTriviaQuestionDetail: importImagesTriviaQuestionDetailReducer,
+  // =============== end trivia ==================
 
   // PARTNERSHIP
   allMitra: allMitraReducer,

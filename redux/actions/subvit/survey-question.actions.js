@@ -32,7 +32,7 @@ import {
     REPORT_SURVEY_QUESTION_BANKS_FAIL,
 
     CLEAR_ERRORS,
-} from '../../types/subvit/survey-question'
+} from '../../types/subvit/survey-question.type'
 
 import axios from 'axios'
 
@@ -122,7 +122,7 @@ export const getDetailSurveyQuestionBanks = (id) => async (dispatch) => {
     }
 }
 
-export const updatewSurveyQuestionBanks = (id, substanceQuestionData) => async (dispatch) => {
+export const updateSurveyQuestionBanks = (id, substanceQuestionData) => async (dispatch) => {
     try {
 
         dispatch({
@@ -133,7 +133,7 @@ export const updatewSurveyQuestionBanks = (id, substanceQuestionData) => async (
 
         dispatch({
             type: UPDATE_SURVEY_QUESTION_BANKS_SUCCESS,
-            payload: data.status
+            payload: data.success
         })
     } catch (error) {
         dispatch({
@@ -151,7 +151,7 @@ export const deleteSurveyQuestionBanks = (id) => async (dispatch) => {
         const { data } = await axios.delete(process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`)
 
         dispatch({
-            type: DETAIL_SURVEY_QUESTION_BANKS_SUCCESS,
+            type: DELETE_SURVEY_QUESTION_BANKS_SUCCESS,
             payload: data.success
         })
 
