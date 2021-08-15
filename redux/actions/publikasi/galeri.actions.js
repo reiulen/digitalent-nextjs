@@ -20,10 +20,14 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllGaleri = () => async (dispatch) => {
+export const getAllGaleri = (page = 1, keyword = '', limit = 5) => async (dispatch) => {
     try {
 
         dispatch({ type: GALERI_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery?page=${page}`
+        if (keyword) link = link.concat(`&keyword=${keyword}`)
+        if (limit) link = link.concat(`&limit=${limit}`)
 
         // const config = {
         //     headers: {
@@ -33,7 +37,8 @@ export const getAllGaleri = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/galeri')
+        // const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/galeri')
+        const { data } = await axios.get(link)
 
         dispatch({
             type: GALERI_SUCCESS,
