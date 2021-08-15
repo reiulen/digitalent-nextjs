@@ -85,7 +85,9 @@ const DashbardSubvit = () => {
                                             <h2 className='text-white' style={{ fontWeight: 'bold', fontSize: '24px', lineHeight: '36px' }}>Tambah TRIVIA</h2>
                                             <p style={{ lineHeigh: '22px', fontWeight: '500', fontSize: '15px', color: '#EEE5FF' }}>Klik tombol dibawah <br /> ini untuk tambah <br /> TRIVIA</p>
 
-                                            <a className='btn btn-success' style={{ marginTop: '50px' }}>Tambah TRIVIA</a>
+                                            <Link href='/subvit/trivia/tambah'>
+                                                <a className='btn btn-success' style={{ marginTop: '50px' }}>Tambah TRIVIA</a>
+                                            </Link>
                                         </div>
                                     </div>
                                 </div>

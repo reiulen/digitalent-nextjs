@@ -151,8 +151,8 @@ export const deleteTriviaQuestionBanks = (id) => async (dispatch) => {
         const { data } = await axios.delete(process.env.END_POINT_API_SUBVIT + `api/trivia-question-banks/${id}`)
 
         dispatch({
-            type: DETAIL_TRIVIA_QUESTION_BANKS_SUCCESS,
-            payload: data.success
+            type: DELETE_TRIVIA_QUESTION_BANKS_SUCCESS,
+            payload: data.status
         })
 
     } catch (error) {

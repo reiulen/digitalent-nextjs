@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-
+import Swal from "sweetalert2";
 import Pagination from "react-js-pagination";
+import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
 
-import { useDispatch, useSelector } from "react-redux";
 import {
   deleteTriviaQuestionBanks,
   clearErrors,
@@ -46,7 +46,7 @@ const ListTrivia = () => {
         type: DELETE_TRIVIA_QUESTION_BANKS_RESET
       })
     }
-  }, [limit, isDeleted]);
+  }, [dispatch, limit, isDeleted]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
