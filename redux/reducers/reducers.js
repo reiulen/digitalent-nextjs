@@ -80,6 +80,13 @@ import {
     updateSurveyQuestionBanksPublishReducer,
     allReportSurveyQuestionBanksReducer,
 } from './subvit/survey-question.reducers'
+import {
+    allSurveyQuestionDetailReducer,
+    newSurveyQuestionDetailReducer,
+    deleteSurveyQuestionDetailReducer,
+    importFileSurveyQuestionDetailReducer,
+    importImagesSurveyQuestionDetailReducer,
+} from "./subvit/survey-question-detail.reducers";
 // ============== survey ===============
 
 // ============== trivia ===============
@@ -172,6 +179,12 @@ const reducer = combineReducers({
     updateSurveyQuestion: updateSurveyQuestionReducer,
     updateSurveyQuestionBanksPublish: updateSurveyQuestionBanksPublishReducer,
     allReportSurveyQuestionBanks: allReportSurveyQuestionBanksReducer,
+
+    allSurveyQuestionDetail: allSurveyQuestionDetailReducer,
+    newSurveyQuestionDetail: newSurveyQuestionDetailReducer,
+    deleteSurveyQuestionDetail: deleteSurveyQuestionDetailReducer,
+    importFileSurveyQuestionDetail: importFileSurveyQuestionDetailReducer,
+    importImagesSurveyQuestionDetail: importImagesSurveyQuestionDetailReducer,
     // =============== end substansi ==================
 
     // =============== trivia ==================

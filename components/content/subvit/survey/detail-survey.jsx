@@ -5,25 +5,23 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-    deleteTriviaQuestionDetail,
+    deleteSurveyQuestionDetail,
     clearErrors
-} from '../../../../redux/actions/subvit/trivia-question-detail.action'
+} from '../../../../redux/actions/subvit/survey-question-detail.action'
 
 const DetailSurvey = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { trivia_question_detail } = useSelector((state) => state.allTriviaQuestionDetail)
-    const { error, isDeleted } = useSelector((state) => state.deleteTriviaQuestionDetail)
-    const { trivia } = useSelector((state) => state.detailTriviaQuestionBanks)
+    const { survey_question_detail } = useSelector((state) => state.allSurveyQuestionDetail)
+    const { error, isDeleted } = useSelector((state) => state.deleteSurveyQuestionDetail)
+    const { survey } = useSelector((state) => state.detailSurveyQuestionBanks)
 
     let { page = 1, id } = router.query;
     page = Number(page);
@@ -60,7 +58,7 @@ const DetailSurvey = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteTriviaQuestionDetail(id));
+                dispatch(deleteSurveyQuestionDetail(id));
             }
         });
     };
@@ -97,7 +95,7 @@ const DetailSurvey = () => {
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header">
                         <h3 className="card-title font-weight-bolder text-dark">
-                            Substansi FGA - Cloud Computing
+                            Survey FGA - Cloud Computing
                         </h3>
                         <div className="card-toolbar">
                             <Link href="/subvit/substansi/edit/step-1">
@@ -161,7 +159,7 @@ const DetailSurvey = () => {
                             {/* <label htmlFor=""></label> */}
                         </div>
                         <div className="card-toolbar">
-                            <Link href="/subvit/substansi/tambah/step-1">
+                            <Link href="/subvit/survey/tambah">
                                 <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block ">
                                     Tambah Soal
                                 </a>
@@ -246,8 +244,8 @@ const DetailSurvey = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            trivia_question_detail && trivia_question_detail.list_questions &&
-                                                trivia_question_detail.list_questions.length === 0
+                                            survey_question_detail && survey_question_detail.list_questions &&
+                                                survey_question_detail.list_questions.length === 0
                                                 ?
                                                 (
                                                     <td className="align-middle text-center" colSpan={8}>
@@ -255,7 +253,7 @@ const DetailSurvey = () => {
                                                     </td>
                                                 )
                                                 :
-                                                trivia_question_detail && trivia_question_detail.list_questions.map((question, i) => {
+                                                survey_question_detail && survey_question_detail.list_questions.map((question, i) => {
                                                     return (
                                                         <tr key={question.id}>
                                                             <td className="align-middle text-center">
@@ -313,12 +311,12 @@ const DetailSurvey = () => {
                             </div>
 
                             <div className="row">
-                                {trivia_question_detail && trivia_question_detail.perPage < trivia_question_detail.total && (
+                                {survey_question_detail && survey_question_detail.perPage < survey_question_detail.total && (
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={trivia_question_detail.perPage}
-                                            totalItemsCount={trivia_question_detail.total}
+                                            itemsCountPerPage={survey_question_detail.perPage}
+                                            totalItemsCount={survey_question_detail.total}
                                             pageRangeDisplayed={3}
                                             onChange={handlePagination}
                                             nextPageText={">"}
@@ -330,7 +328,7 @@ const DetailSurvey = () => {
                                         />
                                     </div>
                                 )}
-                                {trivia_question_detail && trivia_question_detail.total > 5 ? (
+                                {survey_question_detail && survey_question_detail.total > 5 ? (
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
@@ -358,7 +356,7 @@ const DetailSurvey = () => {
                                                     className="align-middle mt-3"
                                                     style={{ color: "#B5B5C3" }}
                                                 >
-                                                    Total Data {trivia_question_detail.total}
+                                                    Total Data {survey_question_detail.total}
                                                 </p>
                                             </div>
                                         </div>
