@@ -153,11 +153,13 @@ const ListSurvey = () => {
                           </td>
                         )
                         : survey &&
-                        survey.question_survey.map((row) => {
+                        survey.question_survey.map((row, i) => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                {row.no}
+                                <span className="badge badge-secondary text-muted">
+                                  {i + 1 * (page * 5 || limit) - 4}
+                                </span>
                               </td>
                               <td className="align-middle">
                                 {row.academy}

@@ -43,6 +43,7 @@ import {
 } from "./publikasi/video.reducers";
 
 // Subvit
+// ============== substansi ===============
 import {
     allSubtanceQuestionBanksReducer,
     newSubtanceQuestionBanksReducer,
@@ -67,7 +68,9 @@ import {
     importFileSubtanceQuestionDetailReducer,
     importImagesSubtanceQuestionDetailReducer,
 } from "./subvit/subtance-question-detail.reducers";
+// ============== substansi ===============
 
+// ============== survey ===============
 import {
     allSurveyQuestionBanksReducer,
     newSurveyQuestionBanksReducer,
@@ -77,6 +80,26 @@ import {
     updateSurveyQuestionBanksPublishReducer,
     allReportSurveyQuestionBanksReducer,
 } from './subvit/survey-question.reducers'
+// ============== survey ===============
+
+// ============== trivia ===============
+import {
+    allTriviaQuestionBanksReducer,
+    newTriviaQuestionBanksReducer,
+    detailTriviaQuestionBanksReducer,
+    updateTriviaQuestionReducer,
+    deleteTriviaQuestionBanksReducer,
+    updateTriviaQuestionBanksPublishReducer,
+    allReportTriviaQuestionBanksReducer,
+} from './subvit/trivia-question.reducers'
+import {
+    allTriviaQuestionDetailReducer,
+    newTriviaQuestionDetailReducer,
+    deleteTriviaQuestionDetailReducer,
+    importFileTriviaQuestionDetailReducer,
+    importImagesTriviaQuestionDetailReducer,
+} from "./subvit/trivia-question-detail.reducers";
+// ============== trivia ===============
 
 // Partnership
 import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
@@ -118,6 +141,7 @@ const reducer = combineReducers({
     deleteKategori: deleteKategoriReducer,
 
     // Subvit
+    // =============== substansi ================== 
     allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
     newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
     deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
@@ -138,7 +162,9 @@ const reducer = combineReducers({
     deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
     importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
     importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
+    // =============== end substansi ==================
 
+    // =============== survey ==================
     allSurveyQuestionBanks: allSurveyQuestionBanksReducer,
     newSurveyQuestionBanks: newSurveyQuestionBanksReducer,
     deleteSurveyQuestionBanks: deleteSurveyQuestionBanksReducer,
@@ -146,6 +172,24 @@ const reducer = combineReducers({
     updateSurveyQuestion: updateSurveyQuestionReducer,
     updateSurveyQuestionBanksPublish: updateSurveyQuestionBanksPublishReducer,
     allReportSurveyQuestionBanks: allReportSurveyQuestionBanksReducer,
+    // =============== end substansi ==================
+
+    // =============== trivia ==================
+    allTriviaQuestionBanks: allTriviaQuestionBanksReducer,
+    newTriviaQuestionBanks: newTriviaQuestionBanksReducer,
+    deleteTriviaQuestionBanks: deleteTriviaQuestionBanksReducer,
+    detailTriviaQuestionBanks: detailTriviaQuestionBanksReducer,
+    updateTriviaQuestion: updateTriviaQuestionReducer,
+    updateTriviaQuestionBanksPublish: updateTriviaQuestionBanksPublishReducer,
+    allReportTriviaQuestionBanks: allReportTriviaQuestionBanksReducer,
+
+    allTriviaQuestionDetail: allTriviaQuestionDetailReducer,
+    newTriviaQuestionDetail: newTriviaQuestionDetailReducer,
+    deleteTriviaQuestionDetail: deleteTriviaQuestionDetailReducer,
+    importFileTriviaQuestionDetail: importFileTriviaQuestionDetailReducer,
+    importImagesTriviaQuestionDetail: importImagesTriviaQuestionDetailReducer,
+    // =============== end trivia ==================
+
 
     // PARTNERSHIP
     allMitra: allMitraReducer,
