@@ -1,6 +1,9 @@
 import Layout from "../../../components/templates/layout.component";
 import TandaTangan from "../../../components/content/partnership/tanda-tangan/tableTandaTangan";
 
+import { getAllTandaTangan } from "../../../redux/actions/partnership/tandaTangan.actions";
+import { wrapper } from "../../../redux/store";
+
 export default function TandaTanganPage() {
   return (
     <>
@@ -12,3 +15,12 @@ export default function TandaTanganPage() {
     </>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query }) => {
+      await store.dispatch(
+        getAllTandaTangan(query.page, query.keyword, query.limit)
+      );
+    }
+);

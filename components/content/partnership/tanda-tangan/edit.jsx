@@ -1,26 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 import SignaturePad from "react-signature-pad-wrapper";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import Image from "next/image";
 
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 
+import {
+  updateTandaTangan,
+  clearErrors,
+} from "../../../../redux/actions/partnership/tandaTangan.actions";
+import { UPDATE_TANDA_TANGAN_RESET } from "../../../../redux/types/partnership/tandaTangan.type";
+import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-import {
-  newTandaTangan,
-  clearErrors,
-  getAllTandaTangan,
-} from "../../../../redux/actions/partnership/tandaTangan.actions";
-import { NEW_TANDA_TANGAN_RESET } from "../../../../redux/types/partnership/tandaTangan.type";
-
-const TambahTandaTangan = () => {
-  const importSwitch = () => import("bootstrap-switch-button-react");
-
+const EditTandaTangan = () => {
   const signCanvas = useRef({});
   const dispatch = useDispatch();
 
@@ -28,65 +25,71 @@ const TambahTandaTangan = () => {
     signCanvas.current.clear();
   };
 
-  const { loading, error, success } = useSelector(
-    (state) => state.newTandaTangan
+  const editorRef = useRef();
+  const router = useRouter();
+
+  // const SwitchButton = dynamic(importSwitch, {
+  //   ssr: false,
+  // });
+
+  const { detailTandaTangan } = useSelector((state) => state.detailTandaTangan);
+  const { error, isUpdated, loading } = useSelector(
+    (state) => state.updateTandaTangan
   );
 
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
-
-  const [nama, setNama] = useState("");
-  const [jabatan, setJabatan] = useState("");
-  const [tandaTangan, setTandaTangan] = useState("");
-
-  const dataTandaTangan = () => {
-    const data = signCanvas.current.toDataURL();
-    setTandaTangan(data);
-  };
-
-  const router = useRouter();
-  const Swal = require("sweetalert2");
-
   useEffect(() => {
-    if (success) {
+    // setEditorLoaded(true);
+    if (isUpdated) {
+      setName("");
+      setPosition("");
+      setSignature("");
+
       router.push({
         pathname: `/partnership/tanda-tangan`,
         query: { success: true },
       });
     }
-  }, [dispatch, error, success, simpleValidator]);
+  }, [dispatch, error, isUpdated]);
+
+  // get detail state
+  const [name, setName] = useState(detailTandaTangan.name);
+  const [position, setPosition] = useState(detailTandaTangan.position);
+  const [signature, setSignature] = useState(null);
+
+  const dataTandaTangan = () => {
+    const data = signCanvas.current.toDataURL();
+    setSignature(data);
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (simpleValidator.current.allValid()) {
-      if (error) {
-        dispatch(clearErrors());
-      }
-
-      if (success) {
-        dispatch({
-          type: NEW_TANDA_TANGAN_RESET,
-        });
-      }
-      const data = {
-        name: nama,
-        position: jabatan,
-        signature_image: tandaTangan,
-        status: "aktif",
-      };
-
-      dispatch(newTandaTangan(data));
-
-      console.log(data);
-    } else {
-      simpleValidator.current.showMessages();
-      // forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
+    if (isUpdated) {
+      dispatch({
+        // type: NEW_ARTIKEL_RESET
+        type: UPDATE_TANDA_TANGAN_RESET,
       });
     }
+
+    if (error) {
+      dispatch(clearErrors());
+    }
+
+    const data = {
+      name: "tes",
+      position,
+      signature_image: signature,
+      status: "aktif",
+    };
+    dispatch(updateTandaTangan(detailTandaTangan.id, data));
   };
+
+  const onNewReset = () => {
+    dispatch({
+      // type: NEW_ARTIKEL_RESET
+      type: UPDATE_TANDA_TANGAN_RESET,
+    });
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -114,13 +117,39 @@ const TambahTandaTangan = () => {
       ) : (
         ""
       )}
+      {/* {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">{success}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )} */}
 
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        {loading ? <LoadingPage loading={loading} /> : ""}
+        {/* {loading ? <LoadingPage loading={loading} /> : ""} */}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Tambah Tanda Tangan Digital
+              Edit Tanda Tangan Digital
             </h3>
           </div>
           <div className="card-body">
@@ -137,15 +166,15 @@ const TambahTandaTangan = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nama"
-                    value={nama}
-                    onChange={(e) => setNama(e.target.value)}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("nama")
-                    }
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    // onBlur={() =>
+                    //   simpleValidator.current.showMessageFor("nama")
+                    // }
                   />
-                  {simpleValidator.current.message("nama", nama, "required", {
+                  {/* {simpleValidator.current.message("nama", nama, "required", {
                     className: "text-danger",
-                  })}
+                  })} */}
                 </div>
               </div>
               <div className="form-group row">
@@ -160,19 +189,20 @@ const TambahTandaTangan = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Jabatan"
-                    onChange={(e) => setJabatan(e.target.value)}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("jabatan")
-                    }
+                    value={position}
+                    onChange={(e) => setPosition(e.target.value)}
+                    // onBlur={() =>
+                    //   simpleValidator.current.showMessageFor("jabatan")
+                    // }
                   />
-                  {simpleValidator.current.message(
+                  {/* {simpleValidator.current.message(
                     "jabatan",
                     jabatan,
                     "required",
                     {
                       className: "text-danger",
                     }
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="form-group row">
@@ -181,6 +211,9 @@ const TambahTandaTangan = () => {
                   className="col-sm-2 col-form-label"
                 >
                   Buat Tanda Tangan
+                  <div>
+                    <Image src={`/${signature}`} width={300} height={200} />
+                  </div>
                 </label>
                 <div className="col-sm-10">
                   <div
@@ -197,16 +230,16 @@ const TambahTandaTangan = () => {
                         maxWidth: 3,
                         penColor: "rgb(66, 133, 244)",
                       }}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("tandaTangan")
-                      }
+                      // onBlur={() =>
+                      //   simpleValidator.current.showMessageFor("tandaTangan")
+                      // }
                     />
-                    {simpleValidator.current.message(
+                    {/* {simpleValidator.current.message(
                       "tandaTangan",
                       tandaTangan,
                       "required",
                       { className: "text-danger" }
-                    )}
+                    )} */}
                   </div>
                   <div className="col-sm-10 mt-5">
                     {/* <Link href="/publikasi/artikel"> */}
@@ -218,7 +251,7 @@ const TambahTandaTangan = () => {
                       }}
                       onClick={() => dataTandaTangan()}
                     >
-                      Buat Tanda Tangan
+                      Buat Tanda Tangan Baru
                     </a>
                     {/* </Link> */}
                     <button
@@ -253,6 +286,30 @@ const TambahTandaTangan = () => {
                     offlabel=" "
                     offstyle="danger"
                     size="sm"
+                      onChange={(checked) => onSetPublish(checked)}
+                      onChange={(checked) => onSetPublish(checked)}
+                  />
+                </div>
+              </div> */}
+              {/* <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Publish ?
+                </label>
+                <div className="col-sm-1">
+                  <SwitchButton
+                    checked={publish}
+                    onlabel=" "
+                    onstyle="primary"
+                    offlabel=" "
+                    offstyle="danger"
+                    size="sm"
+                    width={30}
+                    onChange={(checked) => onSetPublish(checked)}
+                    // onClick={(checked) => onSetPublish(checked)}
+                    // onChange={(checked) => setPublish(checked)}
                   />
                 </div>
               </div> */}
@@ -283,4 +340,4 @@ const TambahTandaTangan = () => {
   );
 };
 
-export default TambahTandaTangan;
+export default EditTandaTangan;

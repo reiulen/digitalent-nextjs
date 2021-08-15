@@ -13,6 +13,10 @@ import ButtonAction from "../../../ButtonAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const Table = () => {
+  const exportCSV = {
+    width: "77%",
+    marginLeft: "2rem",
+  };
   return (
     <PageWrapper>
       <div className="col-lg-10 col-md-10">
@@ -51,7 +55,7 @@ const Table = () => {
               Manajemen Kerjasama
             </h3>
             <div className="card-toolbar">
-              <Link href="/partnership/manajemen-kerjasama/tambah">
+              <Link href="/partnership/user/submit-kerjasama">
                 <a className="btn btn-primary px-6 font-weight-bold btn-block ">
                   Tambah Kerjasama Baru
                 </a>
@@ -62,7 +66,7 @@ const Table = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-12 col-xl-12">
+                <div className="col-lg-10 col-xl-10">
                   <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
@@ -75,6 +79,14 @@ const Table = () => {
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
                   </div>
+                </div>
+                <div className="col-lg-2 col-xl-2">
+                  <button
+                    type="button"
+                    className="btn btn-light-primary btn-block"
+                  >
+                    Cari
+                  </button>
                 </div>
               </div>
 
@@ -91,32 +103,20 @@ const Table = () => {
                     <option value="2">Kategori 2</option>
                   </select>
                 </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                  <select name="" id="" className="form-control">
-                    <option value="1">Status</option>
-                    <option value="2">Aktif</option>
-                  </select>
-                </div>
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
+
+                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 p-0 mx-2 py-1">
                   <a
                     href="#"
                     className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
                   >
-                    Filter
-                  </a>
-                </div>
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
-                  <a
-                    href="#"
-                    className="btn btn-sm btn-light-danger px-6 font-weight-bold btn-block"
-                  >
-                    Reset
+                    Cari
                   </a>
                 </div>
                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
                   <a
                     href="#"
                     className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
+                    style={exportCSV}
                   >
                     Export .csv
                   </a>

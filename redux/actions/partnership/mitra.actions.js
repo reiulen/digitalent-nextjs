@@ -59,8 +59,7 @@ export const newMitra = (mitraData, id) => async (dispatch) => {
     // }
 
     const { data } = await axios.post(
-      process.env
-        .END_POINT_API_PARTNERSHIP`/api/cooperation/proposal/submit-document/${id}`,
+      process.env.END_POINT_API_PARTNERSHIP`/api/partner`,
       mitraData
     );
 

@@ -12,9 +12,11 @@ import ButtonAction from "../../../ButtonAction";
 const Table = () => {
   const dispatch = useDispatch();
 
+  // api problem??
+
   const { loading, error, mitra } = useSelector((state) => state.allMitra);
 
-  useEffect(() => {}, [mitra]);
+  // useEffect(() => {}, [mitra]);
 
   return (
     <PageWrapper>
