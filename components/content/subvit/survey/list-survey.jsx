@@ -196,10 +196,10 @@ const ListSurvey = () => {
                                 </span>
                               </td>
                               <td className="align-middle">
-                                {row.academy}
+                                {row.academy_id}
                               </td>
                               <td className="align-middle">
-                                {row.theme}
+                                {row.theme_id}
                               </td>
                               <td className="align-middle">{row.question_to_share} Soal</td>
                               <td className="align-middle">
@@ -216,13 +216,13 @@ const ListSurvey = () => {
                               <td className="align-middle">
                                 <ButtonAction
                                   icon="setting.svg"
-                                  link="/subvit/survey/report/1"
+                                  link={`/subvit/survey/report?id=${row.id}`}
                                 />
                                 <ButtonAction
                                   icon="write.svg"
-                                  link="/subvit/survey/1"
+                                  link={`/subvit/survey/edit?id=${row.id}`}
                                 />
-                                <ButtonAction icon="detail.svg" link='/subvit/survey/edit/step-1' />
+                                <ButtonAction icon="detail.svg" link={`/subvit/survey/${row.id}`} />
                                 <button
                                   onClick={() => handleDelete(row.id)}
                                   className="btn mr-1"
