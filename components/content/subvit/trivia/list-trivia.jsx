@@ -26,7 +26,7 @@ const ListTrivia = () => {
   const { loading, error, trivia } = useSelector((state) => state.allTriviaQuestionBanks)
   const { loading: loadingDelete, error: errorDelete, isDeleted } = useSelector((state) => state.deleteTriviaQuestionBanks)
 
-  let { page = 1 } = router.query;
+  let { page = 1, success } = router.query;
   page = Number(page);
 
   const [search, setSearch] = useState('')
@@ -89,6 +89,10 @@ const ListTrivia = () => {
     })
   }
 
+  const onNewReset = () => {
+    router.replace('/subvit/trivia', undefined, { shallow: true })
+  }
+
   return (
     <PageWrapper>
       {error ? (
@@ -116,6 +120,19 @@ const ListTrivia = () => {
       ) : (
         ""
       )}
+
+      {success ?
+        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
+          <div className="alert-close">
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
+              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            </button>
+          </div>
+        </div>
+        : ''
+      }
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -197,7 +214,7 @@ const ListTrivia = () => {
                               <td className="align-middle">
                                 {row.academy_id}
                               </td>
-                              <td className="align-middle">
+                              <td className="align-middle">question
                                 {row.theme_id}
                               </td>
                               <td className="align-middle">{row.bank_soal} Soal</td>
@@ -222,7 +239,7 @@ const ListTrivia = () => {
                                 />
                                 <ButtonAction
                                   icon="write.svg"
-                                  link="/subvit/survey/edit/step-1"
+                                  link={`/subvit/trivia/edit?id=${row.id}`}
                                 />
                                 <ButtonAction icon="detail.svg" link={`/subvit/trivia/${row.id}`} />
                                 <button

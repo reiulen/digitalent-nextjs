@@ -32,7 +32,7 @@ import {
     REPORT_SURVEY_QUESTION_BANKS_FAIL,
 
     CLEAR_ERRORS,
-} from '../../types/subvit/survey-question'
+} from '../../types/subvit/survey-question.type'
 
 import axios from 'axios'
 

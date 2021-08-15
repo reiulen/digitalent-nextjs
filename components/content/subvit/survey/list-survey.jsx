@@ -145,7 +145,7 @@ const ListSurvey = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {survey && survey.question_survey.length === 0
+                      {survey && survey.list_survey.length === 0
                         ?
                         (
                           <td className="align-middle text-center" colSpan={8}>
@@ -153,7 +153,7 @@ const ListSurvey = () => {
                           </td>
                         )
                         : survey &&
-                        survey.question_survey.map((row, i) => {
+                        survey.list_survey.map((row, i) => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
@@ -167,7 +167,7 @@ const ListSurvey = () => {
                               <td className="align-middle">
                                 {row.theme}
                               </td>
-                              <td className="align-middle">200 Soal</td>
+                              <td className="align-middle">{row.question_to_share} Soal</td>
                               <td className="align-middle">
                                 {row.start_at}
                               </td>
