@@ -20,7 +20,7 @@ import {
     IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_FAIL,
 
     CLEAR_ERRORS
-} from '../../types/subvit/trivia-question-detail'
+} from '../../types/subvit/trivia-question-detail.type'
 
 import axios from 'axios'
 
