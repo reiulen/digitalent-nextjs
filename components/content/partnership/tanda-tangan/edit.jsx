@@ -31,9 +31,10 @@ const EditTandaTangan = () => {
   // const SwitchButton = dynamic(importSwitch, {
   //   ssr: false,
   // });
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   const { detailTandaTangan } = useSelector((state) => state.detailTandaTangan);
-  const { error, isUpdated, loading } = useSelector(
+  const { error, isUpdated, success } = useSelector(
     (state) => state.updateTandaTangan
   );
 
@@ -63,24 +64,29 @@ const EditTandaTangan = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (isUpdated) {
-      dispatch({
-        // type: NEW_ARTIKEL_RESET
-        type: UPDATE_TANDA_TANGAN_RESET,
-      });
-    }
+    if (simpleValidator.current.allValid()) {
+      if (error) {
+        dispatch(clearErrors());
+      }
+      if (isUpdated) {
+        dispatch({
+          // type: NEW_ARTIKEL_RESET
+          type: UPDATE_TANDA_TANGAN_RESET,
+        });
+      }
 
-    if (error) {
-      dispatch(clearErrors());
-    }
+      if (error) {
+        dispatch(clearErrors());
+      }
 
-    const data = {
-      name: "tes",
-      position,
-      signature_image: signature,
-      status: "aktif",
-    };
-    dispatch(updateTandaTangan(detailTandaTangan.id, data));
+      const data = {
+        name: "tes",
+        position,
+        signature_image: signature,
+        status: "aktif",
+      };
+      dispatch(updateTandaTangan(detailTandaTangan.id, data));
+    }
   };
 
   const onNewReset = () => {
@@ -117,7 +123,7 @@ const EditTandaTangan = () => {
       ) : (
         ""
       )}
-      {/* {success ? (
+      {success ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
@@ -142,7 +148,7 @@ const EditTandaTangan = () => {
         </div>
       ) : (
         ""
-      )} */}
+      )}
 
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         {/* {loading ? <LoadingPage loading={loading} /> : ""} */}
@@ -168,13 +174,18 @@ const EditTandaTangan = () => {
                     placeholder="Masukkan Nama"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    // onBlur={() =>
-                    //   simpleValidator.current.showMessageFor("nama")
-                    // }
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("name")
+                    }
                   />
-                  {/* {simpleValidator.current.message("nama", nama, "required", {
-                    className: "text-danger",
-                  })} */}
+                  {simpleValidator.current.message(
+                    "name",
+                    name,
+                    "required|max:50",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
               <div className="form-group row">
@@ -191,18 +202,18 @@ const EditTandaTangan = () => {
                     placeholder="Masukkan Jabatan"
                     value={position}
                     onChange={(e) => setPosition(e.target.value)}
-                    // onBlur={() =>
-                    //   simpleValidator.current.showMessageFor("jabatan")
-                    // }
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("position")
+                    }
                   />
-                  {/* {simpleValidator.current.message(
-                    "jabatan",
-                    jabatan,
-                    "required",
+                  {simpleValidator.current.message(
+                    "position",
+                    position,
+                    "required|max:50",
                     {
                       className: "text-danger",
                     }
-                  )} */}
+                  )}
                 </div>
               </div>
               <div className="form-group row">

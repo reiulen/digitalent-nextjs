@@ -115,7 +115,7 @@ import {
   deleteTandaTanganReducer,
   detailTandaTanganReducer,
   updateTandaTanganReducer,
-  updateStatusTandaTanganReducer,
+  // updateStatusTandaTanganReducer,
 } from "./partnership/tandaTangan.reducers";
 
 const reducer = combineReducers({
@@ -220,7 +220,7 @@ const reducer = combineReducers({
   deleteTandaTangan: deleteTandaTanganReducer,
   updateTandaTangan: updateTandaTanganReducer,
   detailTandaTangan: detailTandaTanganReducer,
-  updateStatusTandaTangan: updateStatusTandaTanganReducer,
+  // updateStatusTandaTangan: updateStatusTandaTanganReducer,
 });
 
 export default reducer;
