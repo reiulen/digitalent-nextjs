@@ -6,9 +6,11 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   newMitra,
-  // clearErrors,
+  clearErrors,
 } from "../../../../redux/actions/partnership/mitra.actions";
 import LoadingPage from "../../../LoadingPage";
+
+import { NEW_MITRA_RESET } from "../../../../redux/types/partnership/mitra.type";
 
 import Swal from "sweetalert2";
 
@@ -18,44 +20,22 @@ const TambahMitra = () => {
   const dispatch = useDispatch();
 
   const { loading, error, success } = useSelector((state) => state.newMitra);
-  // const submit = (e) => {
-  //   e.preventDefault();
-  //   Swal.fire({
-  //     title: "Apakah anda yakin ?",
-  //     // text: "Data ini tidak bisa dikembalikan !",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     cancelButtonText: "Batal",
-  //     confirmButtonText: "Ya !",
-  //     dismissOnDestroy: false,
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       router.push("/partnership/manajemen-mitra");
-  //     }
-  //   });
-  // };
 
-  const onChangeLogo = (e) => {
-    if (e.target.name === "gambar") {
+  // start convert to base64
+  const onChangeGambar = (e) => {
+    if (e.target.name === "logo") {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
           setLogo(reader.result);
-          // setGambarPreview(reader.result);
         }
       };
       reader.readAsDataURL(e.target.files[0]);
     }
-    if (success) {
-      dispatch({
-        type: NEW_MITRA_RESET,
-      });
-    }
   };
+  // end convert to base64
 
-  const [logo, setLogo] = useState(null);
+  const [logo, setLogo] = useState("");
   const [namaLembaga, setNamaLembaga] = useState("");
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
@@ -63,25 +43,46 @@ const TambahMitra = () => {
   const [provinsi, setProvinsi] = useState("");
   const [kotaKabupaten, setKotaKabupaten] = useState("");
   const [kodePos, setKodePos] = useState("");
+  const [namaPic, setNamaPic] = useState("");
   const [noPic, setNoPic] = useState("");
   const [emailPic, setEmailPic] = useState("");
 
+  useEffect(() => {
+    if (success) {
+      router.push({
+        pathname: `/partnership/manajemen-mitra`,
+        query: { success: true },
+      });
+    }
+  }, [dispatch, error, success]);
+
   const onSubmit = (e) => {
     e.preventDefault();
+    if (error) {
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      dispatch({
+        type: NEW_MITRA_RESET,
+      });
+    }
     const data = {
-      logo,
-      namaLembaga,
-      email,
-      website,
-      alamat,
-      provinsi,
-      kotaKabupaten,
-      kodePos,
-      noPic,
-      emailPic,
+      institution_name: "majapahittttt33",
+      email: email,
+      agency_logo: logo,
+      website: website,
+      address: alamat,
+      indonesia_provinces_id: provinsi,
+      indonesia_cities_id: kotaKabupaten,
+      postal_code: kodePos,
+      pic_name: namaPic,
+      pic_contact_number: noPic,
+      pic_email: emailPic,
     };
 
-    dispatch(newMitra(data));
+    dispatch(newMitra(JSON.stringify(data)));
+    // dispatch(newMitra(data));
     console.log(data);
   };
 
@@ -135,10 +136,10 @@ const TambahMitra = () => {
                     <div class="custom-file">
                       <input
                         type="file"
-                        name="gambar"
+                        name="logo"
                         class="custom-file-input"
                         id="inputGroupFile04"
-                        onChange={onChangeLogo}
+                        onChange={onChangeGambar}
                       />
                       <label class="custom-file-label" for="inputGroupFile04">
                         Cari Dokumen
@@ -161,7 +162,6 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Nama Lembaga"
                     onChange={(e) => setNamaLembaga(e.target.value)}
-                    value="lembaga"
                   />
                 </div>
               </div>
@@ -179,7 +179,6 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Email"
                     onChange={(e) => setEmail(e.target.value)}
-                    value="email"
                   />
                 </div>
               </div>
@@ -197,7 +196,6 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Website"
                     onChange={(e) => setWebsite(e.target.value)}
-                    value="website"
                   />
                 </div>
               </div>
@@ -215,7 +213,6 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Alamat"
                     onChange={(e) => setAlamat(e.target.value)}
-                    value="alamat"
                   />
                 </div>
               </div>
@@ -233,7 +230,6 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Provinsi"
                     onChange={(e) => setProvinsi(e.target.value)}
-                    value="provinsi"
                   />
                 </div>
               </div>
@@ -251,7 +247,6 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Kota / Kabupaten"
                     onChange={(e) => setKotaKabupaten(e.target.value)}
-                    value="kota"
                   />
                 </div>
               </div>
@@ -269,7 +264,6 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Kode Pos"
                     onChange={(e) => setKodePos(e.target.value)}
-                    value="kode pos"
                   />
                 </div>
               </div>
@@ -286,8 +280,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nama"
-                    onChange={(e) => setNoPic(e.target.value)}
-                    value="pic"
+                    onChange={(e) => setNamaPic(e.target.value)}
                   />
                 </div>
               </div>
@@ -304,8 +297,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan NO. Kontak"
-                    onChange={(e) => setEmailPic(e.target.value)}
-                    value="no pic"
+                    onChange={(e) => setNoPic(e.target.value)}
                   />
                 </div>
               </div>
@@ -322,7 +314,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Email"
-                    value="pic"
+                    onChange={(e) => setEmailPic(e.target.value)}
                   />
                 </div>
               </div>

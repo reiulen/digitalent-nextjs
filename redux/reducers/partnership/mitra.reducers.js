@@ -12,7 +12,7 @@ import {
   NEW_MITRA_FAIL,
 } from "../../types/partnership/mitra.type";
 
-export const allMitraReducer = (state = { mitra: [] }, action) => {
+export const allMitraReducer = (state = { allMitra: [] }, action) => {
   switch (action.type) {
     case MITRA_REQUEST:
       return {
@@ -22,7 +22,7 @@ export const allMitraReducer = (state = { mitra: [] }, action) => {
     case MITRA_SUCCESS:
       return {
         loading: false,
-        mitra: action.payload.data,
+        allMitra: action.payload.data,
       };
 
     case MITRA_FAIL:
@@ -41,7 +41,7 @@ export const allMitraReducer = (state = { mitra: [] }, action) => {
   }
 };
 
-export const newMitraReducer = (state = { mitra: {} }, action) => {
+export const newMitraReducer = (state = { newMitra: {} }, action) => {
   switch (action.type) {
     case NEW_MITRA_REQUEST:
       return {
@@ -52,7 +52,7 @@ export const newMitraReducer = (state = { mitra: {} }, action) => {
       return {
         loading: false,
         success: action.payload.message,
-        mitra: action.payload.data,
+        newMitra: action.payload.data,
       };
 
     case NEW_MITRA_FAIL:

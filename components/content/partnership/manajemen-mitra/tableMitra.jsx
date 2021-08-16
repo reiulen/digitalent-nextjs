@@ -12,9 +12,7 @@ import ButtonAction from "../../../ButtonAction";
 const Table = () => {
   const dispatch = useDispatch();
 
-  // api problem??
-
-  const { loading, error, mitra } = useSelector((state) => state.allMitra);
+  const { loading, error, allMitra } = useSelector((state) => state.allMitra);
 
   // useEffect(() => {}, [mitra]);
 
@@ -109,7 +107,7 @@ const Table = () => {
                 </div>
               </div>
             </div>
-
+            {/* {console.log(allMitra.list_mitras)} */}
             <div className="table-page mt-5">
               <div className="table-responsive">
                 <table className="table table-separate table-head-custom table-checkable">
@@ -124,49 +122,51 @@ const Table = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {mitra.mitra.map((dataMitra, id) => {
-                      console.log(dataMitra);
-                      return (
-                        <tr>
-                          <td className="text-center align-middle">
-                            <button
-                              className="btn"
-                              style={{
-                                background: "#F3F6F9",
-                                borderRadius: "6px",
-                              }}
-                            >
-                              {id + 1}
-                            </button>
-                          </td>
-                          <td className="align-middle text-center">
-                            <Image
-                              src={`/assets/icon/${dataMitra.agency_logo}`}
-                              width={40}
-                              height={40}
-                              alt="logo"
-                            />
-                          </td>
-                          <td className="align-middle text-center">
-                            {dataMitra.partner}
-                          </td>
-                          <td className="align-middle text-center">
-                            {dataMitra.website}
-                          </td>
-                          <td className="align-middle text-center">
-                            {dataMitra.cooperations}
-                          </td>
-                          <td className="align-middle text-center">
-                            <ButtonAction
-                              icon="detail.svg"
-                              link="/partnership/manajemen-mitra/detail-data-kerjasama"
-                            />
-                            <ButtonAction icon="write.svg" />
-                            <ButtonAction icon="trash.svg" />
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {allMitra &&
+                      allMitra.list_mitras.map((dataMitra, id) => {
+                        return (
+                          <>
+                            <tr>
+                              <td className="text-center align-middle">
+                                <button
+                                  className="btn"
+                                  style={{
+                                    background: "#F3F6F9",
+                                    borderRadius: "6px",
+                                  }}
+                                >
+                                  {id + 1}
+                                </button>
+                              </td>
+                              <td className="align-middle text-center">
+                                <Image
+                                  src={`/assets/icon/${dataMitra.agency_logo}`}
+                                  width={40}
+                                  height={40}
+                                  alt="logo"
+                                />
+                              </td>
+                              <td className="align-middle text-center">
+                                {dataMitra.partner}
+                              </td>
+                              <td className="align-middle text-center">
+                                {dataMitra.website}
+                              </td>
+                              <td className="align-middle text-center">
+                                {dataMitra.cooperations}
+                              </td>
+                              <td className="align-middle text-center">
+                                <ButtonAction
+                                  icon="detail.svg"
+                                  link="/partnership/manajemen-mitra/detail-data-kerjasama"
+                                />
+                                <ButtonAction icon="write.svg" />
+                                <ButtonAction icon="trash.svg" />
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>

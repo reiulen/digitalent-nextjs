@@ -18,7 +18,7 @@ export const getAllMitra = () => async (dispatch) => {
   try {
     dispatch({ type: MITRA_REQUEST });
 
-    let link = process.env.END_POINT_API_PARTNERSHIP + `api/partner?page=1`;
+    let link = process.env.END_POINT_API_PARTNERSHIP + `/api/partners?page=1`;
     // if (keyword) link = link.concat(`&keyword=${keyword}`)
     // if (limit) link = link.concat(`&limit=${limit}`)
 
@@ -44,7 +44,7 @@ export const getAllMitra = () => async (dispatch) => {
   }
 };
 
-export const newMitra = (mitraData, id) => async (dispatch) => {
+export const newMitra = (newMitraData) => async (dispatch) => {
   try {
     dispatch({
       type: NEW_MITRA_REQUEST,
@@ -59,8 +59,8 @@ export const newMitra = (mitraData, id) => async (dispatch) => {
     // }
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PARTNERSHIP`/api/partner`,
-      mitraData
+      process.env.END_POINT_API_PARTNERSHIP + "/api/partners/create",
+      newMitraData
     );
 
     dispatch({

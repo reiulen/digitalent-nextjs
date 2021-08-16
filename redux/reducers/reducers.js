@@ -208,9 +208,12 @@ const reducer = combineReducers({
   // =============== end trivia ==================
 
   // PARTNERSHIP
+
+  // kerjasama mitra
   allMitra: allMitraReducer,
   newMitra: newMitraReducer,
 
+  // tanda tangan
   allTandaTangan: allTandaTanganReducer,
   newTandaTangan: newTandaTanganReducer,
   deleteTandaTangan: deleteTandaTanganReducer,
