@@ -32,7 +32,14 @@ import {
   newGaleriReducer,
   deleteGaleriReducer,
 } from "./publikasi/galeri.reducers";
-import { allFaqReducer, newFaqReducer } from "./publikasi/faq.reducers";
+import {
+  allFaqReducer,
+  newFaqReducer,
+  deleteFaqReducer,
+  detailFaqReducer,
+  updateFaqReducer,
+  updatePinFaqReducer,
+} from "./publikasi/faq.reducers";
 import {
   allVideoReducer,
   newVideoReducer,
@@ -142,6 +149,10 @@ const reducer = combineReducers({
 
   allFaq: allFaqReducer,
   newFaq: newFaqReducer,
+  deleteFaq: deleteFaqReducer,
+  detailFaq: detailFaqReducer,
+  updateFaq: updateFaqReducer,
+  updatePinFaq: updatePinFaqReducer,
 
   allVideo: allVideoReducer,
   newVideo: newVideoReducer,
