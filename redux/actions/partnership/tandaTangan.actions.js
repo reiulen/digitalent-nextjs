@@ -34,15 +34,14 @@ import {
 import axios from "axios";
 
 // get all data
-// (page = 1), (keyword = ""), (limit = 5);
 export const getAllTandaTangan =
-  (page = 1, keyword = "", limit = null) =>
+  (page = 1, keyword = "", limit = 5) =>
   async (dispatch) => {
     try {
       dispatch({ type: TANDA_TANGAN_REQUEST });
 
       let link =
-        process.env.END_POINT_API_PARTNERSHIP + `/api/signatures?=page=${page}`;
+        process.env.END_POINT_API_PARTNERSHIP + `/api/signatures?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
       // let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel`
@@ -148,51 +147,27 @@ export const updateTandaTangan = (id, tandaTangan) => async (dispatch) => {
   }
 };
 
-// export const updateStatusTandaTangan =
-//   (id, statusTandaTangan) => async (dispatch) => {
-//     try {
-//       dispatch({
-//         type: UPDATE_STATUS_TANDA_TANGAN_REQUEST,
-//       });
+// export const updateStatusTandaTangan = (dataStatus, id) => async (dispatch) => {
+//   try {
+//     dispatch({ type: UPDATE_STATUS_TANDA_TANGAN_REQUEST });
 
-//       const { data } = await axios.put(
-//         process.env.END_POINT_API_PARTNERSHIP +
-//           `/api/signatures/update-status/${id}`,
-//         statusTandaTangan
-//       );
+//     const { data } = await axios.put(
+//       process.env.END_POINT_API_PARTNERSHIP +
+//         `/api/signatures/update-status/${id}`,
+//       dataStatus
+//     );
 
-//       dispatch({
-//         type: UPDATE_STATUS_TANDA_TANGAN_SUCCESS,
-//         payload: data.status,
-//       });
-//     } catch (error) {
-//       dispatch({
-//         type: UPDATE_STATUS_TANDA_TANGAN_FAIL,
-//         payload: error.response.data.message,
-//       });
-//     }
-//   };
-export const updateStatusTandaTangan = (dataStatus, id) => async (dispatch) => {
-  try {
-    dispatch({ type: UPDATE_STATUS_TANDA_TANGAN_REQUEST });
-
-    const { data } = await axios.put(
-      process.env.END_POINT_API_PARTNERSHIP +
-        `/api/signatures/update-status/${id}`,
-      dataStatus
-    );
-
-    dispatch({
-      type: UPDATE_STATUS_TANDA_TANGAN_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_STATUS_TANDA_TANGAN_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+//     dispatch({
+//       type: UPDATE_STATUS_TANDA_TANGAN_SUCCESS,
+//       payload: data.status,
+//     });
+//   } catch (error) {
+//     dispatch({
+//       type: UPDATE_STATUS_TANDA_TANGAN_FAIL,
+//       payload: error.response.data.message,
+//     });
+//   }
+// };
 
 export const deleteTandaTangan = (id) => async (dispatch) => {
   try {
