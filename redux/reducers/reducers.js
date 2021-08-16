@@ -24,6 +24,8 @@ import {
   allKategoriReducer,
   newKategoriReducer,
   deleteKategoriReducer,
+  detailKategoriReducer,
+  updateKategoriReducer,
 } from "./publikasi/kategori.reducers";
 import {
   allGaleriReducer,
@@ -40,6 +42,7 @@ import {
 } from "./publikasi/video.reducers";
 
 // Subvit
+// ============== substansi ===============
 import {
   allSubtanceQuestionBanksReducer,
   newSubtanceQuestionBanksReducer,
@@ -48,6 +51,7 @@ import {
   deleteSubtanceQuestionBanksReducer,
   updateSubtanceQuestionBanksPublishReducer,
   allReportSubtanceQuestionBanksReducer,
+  newCloneSubtanceQuestionBanksReducer,
 } from "./subvit/subtance.reducers";
 import {
   allSubtanceQuestionTypeReducer,
@@ -63,11 +67,57 @@ import {
   importFileSubtanceQuestionDetailReducer,
   importImagesSubtanceQuestionDetailReducer,
 } from "./subvit/subtance-question-detail.reducers";
+// ============== substansi ===============
+
+// ============== survey ===============
+import {
+  allSurveyQuestionBanksReducer,
+  newSurveyQuestionBanksReducer,
+  detailSurveyQuestionBanksReducer,
+  updateSurveyQuestionReducer,
+  deleteSurveyQuestionBanksReducer,
+  updateSurveyQuestionBanksPublishReducer,
+  allReportSurveyQuestionBanksReducer,
+} from "./subvit/survey-question.reducers";
+import {
+  allSurveyQuestionDetailReducer,
+  newSurveyQuestionDetailReducer,
+  deleteSurveyQuestionDetailReducer,
+  importFileSurveyQuestionDetailReducer,
+  importImagesSurveyQuestionDetailReducer,
+} from "./subvit/survey-question-detail.reducers";
+// ============== survey ===============
+
+// ============== trivia ===============
+import {
+  allTriviaQuestionBanksReducer,
+  newTriviaQuestionBanksReducer,
+  detailTriviaQuestionBanksReducer,
+  updateTriviaQuestionReducer,
+  deleteTriviaQuestionBanksReducer,
+  updateTriviaQuestionBanksPublishReducer,
+  allReportTriviaQuestionBanksReducer,
+} from "./subvit/trivia-question.reducers";
+import {
+  allTriviaQuestionDetailReducer,
+  newTriviaQuestionDetailReducer,
+  deleteTriviaQuestionDetailReducer,
+  importFileTriviaQuestionDetailReducer,
+  importImagesTriviaQuestionDetailReducer,
+} from "./subvit/trivia-question-detail.reducers";
+// ============== trivia ===============
 
 // Partnership
 import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
-// mk cooporation
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
+import {
+  allTandaTanganReducer,
+  newTandaTanganReducer,
+  deleteTandaTanganReducer,
+  detailTandaTanganReducer,
+  updateTandaTanganReducer,
+  // updateStatusTandaTanganReducer,
+} from "./partnership/tandaTangan.reducers";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -103,8 +153,11 @@ const reducer = combineReducers({
   allKategori: allKategoriReducer,
   newKategori: newKategoriReducer,
   deleteKategori: deleteKategoriReducer,
+  detailKategori: detailKategoriReducer,
+  updateKategori: updateKategoriReducer,
 
   // Subvit
+  // =============== substansi ==================
   allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
   newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
   deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
@@ -112,6 +165,7 @@ const reducer = combineReducers({
   updateSubtanceQuestion: updateSubtanceQuestionReducer,
   updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
   allReportSubtanceQuestionBanks: allReportSubtanceQuestionBanksReducer,
+  newCloneSubtanceQuestionBanks: newCloneSubtanceQuestionBanksReducer,
 
   allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
   newSubtanceQuestionType: newSubtanceQuestionTypeReducer,
@@ -124,10 +178,51 @@ const reducer = combineReducers({
   deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
   importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
   importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
+  // =============== end substansi ==================
+
+  // =============== survey ==================
+  allSurveyQuestionBanks: allSurveyQuestionBanksReducer,
+  newSurveyQuestionBanks: newSurveyQuestionBanksReducer,
+  deleteSurveyQuestionBanks: deleteSurveyQuestionBanksReducer,
+  detailSurveyQuestionBanks: detailSurveyQuestionBanksReducer,
+  updateSurveyQuestion: updateSurveyQuestionReducer,
+  updateSurveyQuestionBanksPublish: updateSurveyQuestionBanksPublishReducer,
+  allReportSurveyQuestionBanks: allReportSurveyQuestionBanksReducer,
+
+  allSurveyQuestionDetail: allSurveyQuestionDetailReducer,
+  newSurveyQuestionDetail: newSurveyQuestionDetailReducer,
+  deleteSurveyQuestionDetail: deleteSurveyQuestionDetailReducer,
+  importFileSurveyQuestionDetail: importFileSurveyQuestionDetailReducer,
+  importImagesSurveyQuestionDetail: importImagesSurveyQuestionDetailReducer,
+  // =============== end substansi ==================
+
+  // =============== trivia ==================
+  allTriviaQuestionBanks: allTriviaQuestionBanksReducer,
+  newTriviaQuestionBanks: newTriviaQuestionBanksReducer,
+  deleteTriviaQuestionBanks: deleteTriviaQuestionBanksReducer,
+  detailTriviaQuestionBanks: detailTriviaQuestionBanksReducer,
+  updateTriviaQuestion: updateTriviaQuestionReducer,
+  updateTriviaQuestionBanksPublish: updateTriviaQuestionBanksPublishReducer,
+  allReportTriviaQuestionBanks: allReportTriviaQuestionBanksReducer,
+
+  allTriviaQuestionDetail: allTriviaQuestionDetailReducer,
+  newTriviaQuestionDetail: newTriviaQuestionDetailReducer,
+  deleteTriviaQuestionDetail: deleteTriviaQuestionDetailReducer,
+  importFileTriviaQuestionDetail: importFileTriviaQuestionDetailReducer,
+  importImagesTriviaQuestionDetail: importImagesTriviaQuestionDetailReducer,
+  // =============== end trivia ==================
 
   // PARTNERSHIP
   allMitra: allMitraReducer,
+  newMitra: newMitraReducer,
   allMKCooporation: allMKCooporationReducer,
+
+  allTandaTangan: allTandaTanganReducer,
+  newTandaTangan: newTandaTanganReducer,
+  deleteTandaTangan: deleteTandaTanganReducer,
+  updateTandaTangan: updateTandaTanganReducer,
+  detailTandaTangan: detailTandaTanganReducer,
+  // updateStatusTandaTangan: updateStatusTandaTanganReducer,
 });
 
 export default reducer;

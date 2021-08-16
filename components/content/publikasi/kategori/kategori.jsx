@@ -1,18 +1,19 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import Swal from 'sweetalert2'
 
 import Pagination from 'react-js-pagination';
-import { css } from '@emotion/react'
-import BeatLoader from 'react-spinners/BeatLoader'
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import ButtonAction from '../../../ButtonAction'
+import LoadingTable from '../../../LoadingTable';
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllKategori, deleteKategori, clearErrors } from '../../../../redux/actions/publikasi/kategori.actions'
+import { deleteKategori, clearErrors } from '../../../../redux/actions/publikasi/kategori.actions'
+import { DELETE_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.type'
 
 const Kategori = () => {
 
@@ -22,18 +23,28 @@ const Kategori = () => {
     const { loading, error, kategori } = useSelector(state => state.allKategori)
     const { error: deleteError, isDeleted } = useSelector(state => state.deleteKategori)
 
-    let { page = 1 } = router.query
+    let { page = 1, success } = router.query
     page = Number(page)
 
+    const [limit, setLimit] = useState(null)
+    const [search, setSearch] = useState('')
+
+
     useEffect(() => {
-
-        dispatch(getAllKategori())
-
-    }, [dispatch])
-
-    const override = css`
-        margin: 0 auto;
-    `;
+        if (limit) {
+            router.push(`${router.pathname}?page=1&limit=${limit}`)
+        }
+        if (isDeleted) {
+            Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload()
+                }
+            });
+            dispatch({
+                type: DELETE_KATEGORI_RESET
+            })
+        }
+    }, [dispatch, limit, isDeleted])
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -48,14 +59,32 @@ const Kategori = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(deleteKategori(id))
-                Swal.fire(
-                    'Berhasil ',
-                    'Data berhasil dihapus.',
-                    'success'
-                )
-                // dispatch(getAllBerita())
             }
         })
+    }
+
+    const onNewReset = () => {
+        router.replace('/publikasi/kategori', undefined, { shallow: true })
+    }
+
+    const handlePagination = (pageNumber) => {
+        if (limit != null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        } else {
+            router.push(`${router.pathname}?page=${pageNumber}`)
+        }
+    }
+
+    const handleSearch = () => {
+        if (limit != null) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${search}`)
+        }
+    }
+
+    const handleLimit = (val) => {
+        setLimit(val)
     }
 
     return (
@@ -66,6 +95,18 @@ const Kategori = () => {
                     <div className="alert-text">{error}</div>
                     <div className="alert-close">
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
+                        </button>
+                    </div>
+                </div>
+                : ''
+            }
+            {success ?
+                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                    <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+                    <div className="alert-text">Berhasil Menyimpan Data</div>
+                    <div className="alert-close">
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
                             <span aria-hidden="true"><i className="ki ki-close"></i></span>
                         </button>
                     </div>
@@ -90,24 +131,52 @@ const Kategori = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-12 col-xl-12">
+                                <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
-                                        <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" />
+                                        <input
+                                            style={{ background: "#F3F6F9", border: "none" }}
+                                            type="text"
+                                            className="form-control"
+                                            placeholder="Search..."
+                                            id="kt_datatable_search_query"
+                                            onChange={(e) => setSearch(e.target.value)}
+                                        />
                                         <span>
                                             <i className="flaticon2-search-1 text-muted"></i>
                                         </span>
                                     </div>
                                 </div>
+                                <div className="col-lg-2 col-xl-2">
+                                    <button
+                                        type="button"
+                                        className="btn btn-light-primary btn-block"
+                                        onClick={handleSearch}
+                                    >
+                                        Cari
+                                    </button>
+                                </div>
                             </div>
                             <div className="row align-items-right">
                                 <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                                    <input type="text" className="form-control form-control-sm form-search-date" />
+                                    <select
+                                        className='form-control form-control-sm form-search-date'
+                                        onChange={e => setSearch(e.target.value)}
+                                        onBlur={e => setSearch(e.target.value)}
+                                    >
+                                        <option value="" selected>-- SEMUA  --</option>
+                                        <option value="Berita">Berita</option>
+                                        <option value="Artikel">Artikel</option>
+                                        <option value="Galeri">Galeri</option>
+                                        <option value="Video">Video</option>
+                                        <option value="Imagetron">Imagetron</option>
+                                        <option value="Faq">Faq</option>
+                                    </select>
                                     <small className="form-text text-muted">
                                         Jenis Kategori
                                     </small>
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block">Filter</a>
+                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block" onClick={handleSearch}>Filter</a>
                                 </div>
                             </div>
                         </div>
@@ -115,30 +184,29 @@ const Kategori = () => {
                         <div className="table-page mt-5">
                             <div className="table-responsive">
 
-                                <div className="loading text-center justify-content-center">
-                                    <BeatLoader color='#3699FF' loading={loading} css={override} size={10} />
-                                </div>
+                                <LoadingTable loading={loading} />
 
                                 {loading === false ?
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
-                                                <th className='text-center'>Kategori</th>
+                                                <th className='text-center'>No</th>
+                                                <th >Kategori</th>
                                                 <th>Judul</th>
-                                                <th>Action</th>
+                                                <th className='text-center'>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {
-                                                !kategori || kategori && kategori.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={3}>Data Masih Kosong</td> :
-                                                    kategori && kategori.map((row) => {
+                                                !kategori || kategori && kategori.kategori.length === 0 ?
+                                                    <td className='align-middle text-center' colSpan={4}>Data Masih Kosong</td> :
+                                                    kategori && kategori.kategori.map((row, i) => {
                                                         return <tr key={row.id}>
-                                                            <td className='align-middle text-center'>{row.nama}</td>
+                                                            <td className='align-middle text-center'>{i + 1 * (page * 5 || limit) - 4}</td>
+                                                            <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.jenis_kategori}</td>
-                                                            <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
-                                                                <ButtonAction icon='write.svg' />
+                                                            <td className='align-middle text-center'>
+                                                                <ButtonAction icon='write.svg' link={`/publikasi/kategori/${row.id}`} />
                                                                 <button onClick={() => handleDelete(row.id)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
                                                                     <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
                                                                 </button>
@@ -160,7 +228,7 @@ const Kategori = () => {
                                             itemsCountPerPage={kategori.perPage}
                                             totalItemsCount={kategori.total}
                                             pageRangeDisplayed={3}
-                                            // onChange={handlePagination}
+                                            onChange={handlePagination}
                                             nextPageText={'>'}
                                             prevPageText={'<'}
                                             firstPageText={'<<'}
@@ -174,16 +242,26 @@ const Kategori = () => {
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
-                                                <select className="form-control" id="exampleFormControlSelect2" style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}>
-                                                    <option>5</option>
-                                                    <option>10</option>
-                                                    <option>30</option>
-                                                    <option>40</option>
-                                                    <option>50</option>
+                                                <select
+                                                    className="form-control"
+                                                    id="exampleFormControlSelect2"
+                                                    style={{
+                                                        width: "65px",
+                                                        background: "#F3F6F9",
+                                                        borderColor: "#F3F6F9",
+                                                        color: "#9E9E9E",
+                                                    }}
+                                                    onChange={e => handleLimit(e.target.value)}
+                                                    onBlur={e => handleLimit(e.target.value)}
+                                                >
+                                                    <option value='5'>5</option>
+                                                    <option value='10'>10</option>
+                                                    <option value='15'>15</option>
+                                                    <option value='20'>20</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data 120</p>
+                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {kategori.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''

@@ -16,7 +16,7 @@ import axios from "axios";
 // func get data from api
 export async function getAllMKCooporation(params) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations`,
+    `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations`,
     {
       params,
     }
@@ -78,7 +78,7 @@ export const getSingleCooporation = (id) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`
       );
       dispatch(successGetSingleCooporation(data));
     } catch (error) {}
@@ -96,7 +96,7 @@ export const deleteCooporation = (id) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`
       );
       dispatch(successDeleteCooporation(data));
     } catch (error) {
@@ -117,7 +117,7 @@ export const changeStatusList = (value, id, index_list) => {
     try {
       let dataSend = { status: value };
       let { data } = await axios.put(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/update-status/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/update-status/${id}`,
         dataSend
       );
       dispatch(successChangeStatusList(data, index_list));

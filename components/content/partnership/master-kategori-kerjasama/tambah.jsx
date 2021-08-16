@@ -60,7 +60,7 @@ const Tambah = () => {
     });
     try {
       let { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/create`,
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/create`,
         formData
       );
       alert("data berhasil ditambah");

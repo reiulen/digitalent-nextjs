@@ -3,45 +3,120 @@ import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 import SignaturePad from "react-signature-pad-wrapper";
-import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+
+import Swal from "sweetalert2";
+import SimpleReactValidator from "simple-react-validator";
+
+import LoadingPage from "../../../LoadingPage";
+
+import {
+  newTandaTangan,
+  clearErrors,
+  getAllTandaTangan,
+} from "../../../../redux/actions/partnership/tandaTangan.actions";
+import { NEW_TANDA_TANGAN_RESET } from "../../../../redux/types/partnership/tandaTangan.type";
 
 const TambahTandaTangan = () => {
   const importSwitch = () => import("bootstrap-switch-button-react");
 
   const signCanvas = useRef({});
+  const dispatch = useDispatch();
+
   const clear = () => {
     signCanvas.current.clear();
   };
 
-  const SwitchButton = dynamic(importSwitch, {
-    ssr: false,
-  });
+  const { loading, error, success } = useSelector(
+    (state) => state.newTandaTangan
+  );
+
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+
+  const [nama, setNama] = useState("");
+  const [jabatan, setJabatan] = useState("");
+  const [tandaTangan, setTandaTangan] = useState("");
+
+  const dataTandaTangan = () => {
+    const data = signCanvas.current.toDataURL();
+    setTandaTangan(data);
+  };
 
   const router = useRouter();
   const Swal = require("sweetalert2");
 
-  const submit = (e) => {
+  useEffect(() => {
+    if (success) {
+      router.push({
+        pathname: `/partnership/tanda-tangan`,
+        query: { success: true },
+      });
+    }
+  }, [dispatch, error, success, simpleValidator]);
+
+  const onSubmit = (e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Apakah anda yakin ?",
-      // text: "Data ini tidak bisa dikembalikan !",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then((result) => {
-      if (result.value) {
-        router.push("/partnership/tanda-tangan");
+    if (simpleValidator.current.allValid()) {
+      if (error) {
+        dispatch(clearErrors());
       }
-    });
+
+      if (success) {
+        dispatch({
+          type: NEW_TANDA_TANGAN_RESET,
+        });
+      }
+      const data = {
+        name: nama,
+        position: jabatan,
+        signature_image: tandaTangan,
+        status: "aktif",
+      };
+
+      dispatch(newTandaTangan(data));
+
+      console.log(data);
+    } else {
+      simpleValidator.current.showMessages();
+      // forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
+    }
   };
   return (
     <PageWrapper>
+      {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
@@ -62,7 +137,20 @@ const TambahTandaTangan = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nama"
+                    value={nama}
+                    onChange={(e) => setNama(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("nama")
+                    }
                   />
+                  {simpleValidator.current.message(
+                    "nama",
+                    nama,
+                    "required|max:50",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
               <div className="form-group row">
@@ -77,7 +165,19 @@ const TambahTandaTangan = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Jabatan"
+                    onChange={(e) => setJabatan(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("jabatan")
+                    }
                   />
+                  {simpleValidator.current.message(
+                    "jabatan",
+                    jabatan,
+                    "required|max:50",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
               <div className="form-group row">
@@ -102,20 +202,30 @@ const TambahTandaTangan = () => {
                         maxWidth: 3,
                         penColor: "rgb(66, 133, 244)",
                       }}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("tandaTangan")
+                      }
                     />
+                    {simpleValidator.current.message(
+                      "tandaTangan",
+                      tandaTangan,
+                      "required",
+                      { className: "text-danger" }
+                    )}
                   </div>
                   <div className="col-sm-10 mt-5">
-                    <Link href="/publikasi/artikel">
-                      <a
-                        className="btn btn-outline-primary mr-2 btn-sm"
-                        style={{
-                          backgroundColor: "#C9F7F5",
-                          color: "#1BC5BD",
-                        }}
-                      >
-                        Buat Tanda Tangan
-                      </a>
-                    </Link>
+                    {/* <Link href="/publikasi/artikel"> */}
+                    <a
+                      className="btn btn-outline-primary mr-2 btn-sm"
+                      style={{
+                        backgroundColor: "#C9F7F5",
+                        color: "#1BC5BD",
+                      }}
+                      onClick={() => dataTandaTangan()}
+                    >
+                      Buat Tanda Tangan
+                    </a>
+                    {/* </Link> */}
                     <button
                       type="button"
                       onClick={clear}
@@ -162,7 +272,7 @@ const TambahTandaTangan = () => {
                     {/* <Link href="/partnership/tanda-tangan"> */}
                     <button
                       className="btn btn-primary btn-sm"
-                      onClick={(e) => submit(e)}
+                      onClick={(e) => onSubmit(e)}
                     >
                       Simpan
                     </button>

@@ -172,7 +172,7 @@ const Edit = () => {
       // console.log("objectsss ss")
       let id = router.query.id;
       let { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`,
         formData
       );
       // console.log("respon data edit",data)
@@ -185,7 +185,7 @@ const Edit = () => {
   const getSingleData = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`
       );
 
       let arr = [], arr_new= [];

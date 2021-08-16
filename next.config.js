@@ -16,7 +16,8 @@ module.exports = {
     END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
     END_POINT_API_IMAGE_SUBVIT: "http://dts-subvit-dev.majapahit.id/storage/",
 
-    END_POINT_API_PARTNERSHIP: "http://dts-partnership-dev.majapahit.id/",
+    // partnership
+    END_POINT_API_PARTNERSHIP: "http://dts-partnership-dev.majapahit.id",
     END_POINT_API_IMAGE_PARTNERSHIP:
       "http://dts-partnership-dev.majapahit.id/storage",
 

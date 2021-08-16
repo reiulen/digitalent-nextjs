@@ -14,7 +14,7 @@ import Swal from "sweetalert2"
 import moment from 'moment'
 
 import PageWrapper from "/components/wrapper/page.wrapper";
-import StepInput from "/components/StepInputClone";
+import StepInputPublish from "/components/StepInputPublish";
 
 const StepTwo = () => {
   const dispatch = useDispatch();
@@ -47,6 +47,8 @@ const StepTwo = () => {
   const [jumlah_soal, setJumlahSoal] = useState(null)
   const [passing_grade, setPassingGrade] = useState(subtance.passing_grade)
   const [status, setStatus] = useState(subtance.status)
+  const [, forceUpdate] = useState();
+
 
   const saveDraft = () => {
     if (simpleValidator.current.allValid()) {
@@ -138,7 +140,7 @@ const StepTwo = () => {
       )}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInputPublish step="2"></StepInputPublish>
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
               Publish Soal Cloning

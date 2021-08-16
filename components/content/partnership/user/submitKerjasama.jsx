@@ -16,7 +16,7 @@ const DetailDokumenKerjasama = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Detail Dokumen Kerjasama
+              Submit Kerjasama
             </h3>
           </div>
 
@@ -188,7 +188,7 @@ const DetailDokumenKerjasama = () => {
                       Kembali
                     </a>
                   </Link>
-                  <Link href="/partnership/manajemen-kerjasama">
+                  <Link href="/partnership/user/review-kerjasama">
                     <a className="btn btn-primary mr-2 btn-sm">Submit</a>
                   </Link>
                 </div>
