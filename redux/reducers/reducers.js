@@ -116,6 +116,7 @@ import {
 
 // Partnership
 import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
+import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
@@ -225,6 +226,7 @@ const reducer = combineReducers({
   // PARTNERSHIP
   allMitra: allMitraReducer,
   newMitra: newMitraReducer,
+  allMKCooporation: allMKCooporationReducer,
 
   allTandaTangan: allTandaTanganReducer,
   newTandaTangan: newTandaTanganReducer,
