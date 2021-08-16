@@ -24,6 +24,8 @@ import {
   allKategoriReducer,
   newKategoriReducer,
   deleteKategoriReducer,
+  detailKategoriReducer,
+  updateKategoriReducer,
 } from "./publikasi/kategori.reducers";
 import {
   allGaleriReducer,
@@ -150,6 +152,8 @@ const reducer = combineReducers({
   allKategori: allKategoriReducer,
   newKategori: newKategoriReducer,
   deleteKategori: deleteKategoriReducer,
+  detailKategori: detailKategoriReducer,
+  updateKategori: updateKategoriReducer,
 
   // Subvit
   // =============== substansi ==================

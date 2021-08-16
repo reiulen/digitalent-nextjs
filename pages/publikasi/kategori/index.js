@@ -1,6 +1,9 @@
 import Layout from "../../../components/templates/layout.component";
 import Kategori from "../../../components/content/publikasi/kategori/kategori";
 
+import { getAllKategori } from '../../../redux/actions/publikasi/kategori.actions'
+import { wrapper } from '../../../redux/store'
+
 export default function KategoriPage() {
     return (
         <>
@@ -12,3 +15,7 @@ export default function KategoriPage() {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+    await store.dispatch(getAllKategori(query.page, query.keyword, query.limit))
+})
