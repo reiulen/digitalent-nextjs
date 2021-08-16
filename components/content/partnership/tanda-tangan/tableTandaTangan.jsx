@@ -50,11 +50,11 @@ const Table = () => {
   }
   page = Number(page);
 
-  const {
-    // loading: allLoading,
-    // error,
-    statusTandaTangan,
-  } = useSelector((state) => state.updateStatusTandaTangan);
+  // const {
+  //   // loading: allLoading,
+  //   // error,
+  //   statusTandaTangan,
+  // } = useSelector((state) => state.updateStatusTandaTangan);
 
   const handleAction = (val, id) => {
     if (error) {
@@ -250,7 +250,7 @@ const Table = () => {
                       <th className="text-center align-middle">No</th>
                       <th className="text-center align-middle">Nama</th>
                       <th className="text-center align-middle">Jabatan</th>
-                      <th className="text-center align-middle">Status</th>
+                      {/* <th className="text-center align-middle">Status</th> */}
                       <th className="text-center align-middle">Action</th>
                     </tr>
                   </thead>
@@ -277,7 +277,7 @@ const Table = () => {
                               <td className="text-center align-middle">
                                 {data.position}
                               </td>
-                              <td className="text-center align-middle">
+                              {/* <td className="text-center align-middle">
                                 <select
                                   name=""
                                   id=""
@@ -292,7 +292,7 @@ const Table = () => {
                                   <option value="aktif">Aktive</option>
                                   <option value="noAktif">No Aktif</option>
                                 </select>
-                              </td>
+                              </td> */}
                               <td className="text-center align-middle">
                                 <ButtonAction
                                   icon="write.svg"
