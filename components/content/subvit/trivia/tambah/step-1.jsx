@@ -37,16 +37,13 @@ const StepOne = () => {
   const [confirm_password, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
 
-  const saveAndContinue = () => {
-    router.push("/subvit/trivia/tambah/step-2");
-  };
-
   const saveDraft = () => {
     router.push("/subvit/trivia");
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    router.push("/subvit/trivia/tambah/step-2");
   };
 
   return (
@@ -213,7 +210,6 @@ const StepOne = () => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    onClick={saveAndContinue}
                     className="btn btn-light-primary btn-sm mr-2"
                   >
                     Simpan & Lanjut
