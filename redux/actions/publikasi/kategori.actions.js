@@ -60,6 +60,36 @@ export const getAllKategori = (page = 1, keyword = "", limit = 5) => async (disp
     }
 }
 
+export const getAllKategoriInput = (kategori) => async (dispatch) => {
+    try {
+
+        dispatch({ type: KATEGORI_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/kategori?keyword=${kategori}`;
+
+        // const config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+        //         'Access-Control-Allow-Origin': '*',
+        //         'apikey': process.env.END_POINT_KEY_AUTH
+        //     }
+        // }
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: KATEGORI_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: KATEGORI_FAIL,
+            payload: error.message
+        })
+    }
+}
+
 export const newKategori = (kategoriData) => async (dispatch) => {
     try {
 
