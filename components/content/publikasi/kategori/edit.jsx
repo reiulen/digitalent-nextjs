@@ -3,41 +3,40 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link'
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
-import SimpleReactValidator from "simple-react-validator"
-import Swal from 'sweetalert2'
+import SimpleReactValidator from "simple-react-validator";
 
-import { newKategori, clearErrors } from '../../../../redux/actions/publikasi/kategori.actions'
-import { NEW_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.type'
+import { updateKategori, clearErrors } from '../../../../redux/actions/publikasi/kategori.actions'
+import { UPDATE_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.type'
+
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahKategori = () => {
+const EditKategori = () => {
 
     const dispatch = useDispatch()
     const router = useRouter();
 
-    const { loading, error, success } = useSelector(state => state.newKategori)
+    const { loading, error, isUpdated } = useSelector(state => state.updateKategori)
+    const { kategori } = useSelector(state => state.detailKategori)
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
     useEffect(() => {
 
-        if (success) {
+        if (isUpdated) {
             dispatch({
-                type: NEW_KATEGORI_RESET,
+                type: UPDATE_KATEGORI_RESET,
             });
             router.push({
                 pathname: `/publikasi/kategori`,
                 query: { success: true },
             });
-            setNamaKategori('')
-            setJenisKategori('')
         }
 
-    }, [dispatch, success]);
+    }, [dispatch, isUpdated]);
 
 
-    const [nama, setNamaKategori] = useState('')
-    const [jenis_kategori, setJenisKategori] = useState('')
+    const [nama, setNamaKategori] = useState(kategori.nama)
+    const [jenis_kategori, setJenisKategori] = useState(kategori.jenis_kategori)
     const [, forceUpdate] = useState();
 
 
@@ -49,9 +48,9 @@ const TambahKategori = () => {
                 dispatch(clearErrors())
             }
 
-            if (success) {
+            if (isUpdated) {
                 dispatch({
-                    type: NEW_KATEGORI_RESET
+                    type: UPDATE_KATEGORI_RESET
                 })
             }
 
@@ -60,9 +59,7 @@ const TambahKategori = () => {
                 jenis_kategori,
             }
 
-            dispatch(newKategori(data))
-            console.log(data)
-
+            dispatch(updateKategori(data, kategori.id))
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
@@ -72,6 +69,8 @@ const TambahKategori = () => {
                 text: "Isi data dengan benar !",
             });
         }
+
+
     }
 
     return (
@@ -93,7 +92,7 @@ const TambahKategori = () => {
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Tambah Kategori</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Edit Katerori</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
@@ -116,12 +115,12 @@ const TambahKategori = () => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Jenis Kategori</label>
                                 <div className="col-sm-10">
                                     <select
+                                        name=""
+                                        id=""
                                         value={jenis_kategori}
                                         className='form-control'
                                         onChange={e => setJenisKategori(e.target.value)}
-                                        onBlur={e => { setJenisKategori(e.target.value); simpleValidator.current.showMessageFor("jenis kategori") }}
-                                    >
-                                        <option value="" disabled selected>-- JENIS KATEGORI --</option>
+                                        onBlur={e => { setJenisKategori(e.target.value); simpleValidator.current.showMessageFor("jenis kategori") }} >
                                         <option value="Berita">Berita</option>
                                         <option value="Artikel">Artikel</option>
                                         <option value="Galeri">Galeri</option>
@@ -151,4 +150,4 @@ const TambahKategori = () => {
     )
 }
 
-export default TambahKategori
+export default EditKategori
