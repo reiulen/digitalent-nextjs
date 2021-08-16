@@ -9,13 +9,14 @@ import {
   SUCCESS_GET_SINGLE_COOPORATION,
   SUCCESS_DELETE_COOPORATION_REQUEST,
   SUCCESS_CHANGE_STATUS_LIST,
+  SET_PAGE,
 } from "../../types/partnership/mk_cooporation.type";
 import axios from "axios";
 
 // func get data from api
 export async function getAllMKCooporation(params) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}api/cooperation`,
+    `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations`,
     {
       params,
     }
@@ -24,16 +25,17 @@ export async function getAllMKCooporation(params) {
 let debouncedFetchProduct = debounce(getAllMKCooporation, 1000);
 
 // func fetch data and validate
-export const fetchAllMKCooporation = () => {
+export const fetchAllMKCooporation = (keyword) => {
   return async (dispatch, getState) => {
     dispatch({ type: MK_COOPORATION_REQUEST });
     let keywordState = getState().allMKCooporation.keyword || "";
     let limitState = getState().allMKCooporation.limit || "";
+    let pageState = getState().allMKCooporation.page || 1;
 
     const params = {
-      keyword: keywordState,
+      keyword: keyword === "clear keyword" ? "" : keywordState,
       limit: limitState,
-      // page: limitState,
+      page: pageState,
     };
 
     try {
@@ -65,6 +67,7 @@ export const searchCooporation = (text) => {
 };
 
 export const limitCooporation = (value) => {
+  console.log("value limit", value);
   return {
     type: LIMIT_CONFIGURATION,
     limitValue: value,
@@ -75,7 +78,7 @@ export const getSingleCooporation = (id) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperation/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`
       );
       dispatch(successGetSingleCooporation(data));
     } catch (error) {}
@@ -93,7 +96,7 @@ export const deleteCooporation = (id) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperation/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`
       );
       dispatch(successDeleteCooporation(data));
     } catch (error) {
@@ -114,7 +117,7 @@ export const changeStatusList = (value, id, index_list) => {
     try {
       let dataSend = { status: value };
       let { data } = await axios.put(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperation/update-status/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/update-status/${id}`,
         dataSend
       );
       dispatch(successChangeStatusList(data, index_list));
@@ -129,6 +132,13 @@ export const successChangeStatusList = (data, index_list) => {
     type: SUCCESS_CHANGE_STATUS_LIST,
     data,
     index_list,
+  };
+};
+export const setPage = (page) => {
+  console.log(page);
+  return {
+    type: SET_PAGE,
+    page,
   };
 };
 

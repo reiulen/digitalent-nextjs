@@ -8,12 +8,12 @@ import { useRouter } from "next/router";
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 
-import { updateArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
-import { NEW_ARTIKEL_RESET, UPDATE_ARTIKEL_RESET } from '../../../../redux/types/publikasi/artikel.type'
+import { updateVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
+import { NEW_ARTIKEL_RESET, UPDATE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditArtikel = () => {
+const EditVideo = () => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -25,44 +25,38 @@ const EditArtikel = () => {
         ssr: false
     })
 
-    // const { artikel, error, success } = useSelector(state => state.detailArtikel)
-    const { artikel } = useSelector(state => state.detailArtikel)
-    const { error, success, loading } = useSelector(state => state.updatedArtikel)
+    const { video } = useSelector(state => state.detailVideo)
+    const { error, success, loading } = useSelector(state => state.updatedVideo)
 
     useEffect(() => {
 
-        editorRef.current = {
-            CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
-            ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
-            // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
-        }
+        // editorRef.current = {
+        //     CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
+        //     ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
+        //     // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
+        // }
 
         setEditorLoaded(true)
         if (success) {
-            // setJudulArtikel('')
-            // setIsiArtikel('')
-            // setGambar('')
-            // setGambarPreview('/assets/media/default.jpg')
-            // setKategoriId('')
-            // setTag('')
 
             router.push({
-                pathname: `/publikasi/artikel`,
+                pathname: `/publikasi/video`,
                 query: { success: true }
             })
         }
 
     }, [dispatch, error, success]);
 
-    const [id, setId] = useState(artikel.id)
-    const [judul_artikel, setJudulArtikel] = useState(artikel.judul_artikel)
-    const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel);
-    const [gambar, setGambar] = useState(artikel.gambar)
+    const [id, setId] = useState(video.id)
+    const [judul_video, setJudulVideo] = useState(video.judul_video)
+    const [isi_video, setIsiVideo] = useState(video.isi_video);
+    const [gambar, setGambar] = useState(video.gambar)
+    const [url_video, setUrlVideo] = useState(video.url_video)
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
     const [kategori_id, setKategoriId] = useState(1) //belum
-    const [users_id, setUserId] = useState(artikel.users_id)
-    const [tag, setTag] = useState(artikel.tag)
-    const [publish, setPublish] = useState(artikel.publish === 1 ? true : false)
+    const [users_id, setUserId] = useState(video.users_id)
+    const [tag, setTag] = useState(video.tag)
+    const [publish, setPublish] = useState(video.publish === 1 ? true : false)
     const [_method, setMethod] = useState("put")
 
     const onChangeGambar = (e) => {
@@ -86,14 +80,14 @@ const EditArtikel = () => {
 
         if (success) {
             dispatch({
-                // type: NEW_ARTIKEL_RESET
-                type: UPDATE_ARTIKEL_RESET 
+                type: UPDATE_VIDEO_RESET 
             })
         }
 
         const data = {
-            judul_artikel,
-            isi_artikel,
+            judul_video,
+            isi_video,
+            url_video,
             gambar,
             kategori_id,
             users_id,
@@ -103,14 +97,13 @@ const EditArtikel = () => {
             _method
         }
 
-        dispatch(updateArtikel(data))
+        dispatch(updateVideo(data))
         // console.log(data)
     }
 
     const onNewReset = () => {
         dispatch({ 
-            // type: NEW_ARTIKEL_RESET
-            type: UPDATE_ARTIKEL_RESET 
+            type: UPDATE_VIDEO_RESET 
         })
     }
 
@@ -194,42 +187,22 @@ const EditArtikel = () => {
                     }
                     <div className="card card-custom card-stretch gutter-b">
                         <div className="card-header border-0">
-                            <h3 className="card-title font-weight-bolder text-dark">Update Artikel</h3>
+                            <h3 className="card-title font-weight-bolder text-dark">Update Video</h3>
                         </div>
                         <div className="card-body">
                             <form onSubmit={onSubmit}>
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
                                     <div className="col-sm-10">
-                                        <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_artikel} onChange={(e) => setJudulArtikel(e.target.value)} />
+                                        <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} />
                                     </div>
                                 </div>
 
                                 <div className="form-group row">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Artikel</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi</label>
                                     <div className="col-sm-10">
-                                        <div className="ckeditor">
-                                            {editorLoaded ? <CKEditor
-                                                
-                                                editor={ClassicEditor}
-                                                data={isi_artikel}
-                                                onReady={editor => {
-                                                    // You can store the "editor" and use when it is needed.
-                                                    console.log('Editor is ready to use!', editor);
-                                                }}
-                                                onChange={(event, editor) => {
-                                                    const data = editor.getData()
-                                                    setIsiArtikel(data);
-                                                    console.log({ event, editor, data })
-                                                }}
-                                                // config={{
-                                                //     ckfinder: {
-                                                //     // Upload the images to the server using the CKFinder QuickUpload command.
-                                                //     // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
-                                                //     uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
-                                                //   }}}
-                                            /> : <p>Tunggu Sebentar</p>}
-                                        </div>
+                                        <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)}/>
+                                        <small className='text-danger'>*Maksimal 160 Karakter</small> 
                                     </div>
                                 </div>
 
@@ -256,6 +229,17 @@ const EditArtikel = () => {
                                 </div>
 
                                 <div className="form-group row">
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Link URL Video:</label>
+                                    <div className="col-sm-10 input-group">
+                                        <div className="input-group-prepend">
+                                            <div className="input-group-text">https://</div>
+                                        </div>
+                                        <input type="text" className="form-control ml-4" placeholder="Example" value={url_video} onChange={(e) => setUrlVideo(e.target.value)}/>
+                                    </div>
+                                    
+                                </div>
+
+                                <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
                                     <div className="col-sm-10">
                                         <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => setKategoriId(e.target.value)} >
@@ -279,6 +263,10 @@ const EditArtikel = () => {
                                     </div>
                                 </div>
 
+                                {
+                                    console.log (video)
+                                }
+
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
                                     <div className="col-sm-1">
@@ -300,7 +288,7 @@ const EditArtikel = () => {
                                 <div className="form-group row">
                                     <div className="col-sm-2"></div>
                                     <div className="col-sm-10">
-                                        <Link href='/publikasi/artikel'>
+                                        <Link href='/publikasi/video'>
                                             <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                         </Link>
                                         <button className='btn btn-primary btn-sm'>Submit</button>
@@ -339,4 +327,4 @@ const EditArtikel = () => {
     )
 }
 
-export default EditArtikel
+export default EditVideo

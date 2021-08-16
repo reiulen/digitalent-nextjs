@@ -24,7 +24,7 @@ import {
 
 import axios from 'axios'
 
-export const getAllSubtanceQuestionDetail = (id, page = 1, limit = 5) => async (dispatch) => {
+export const getAllSubtanceQuestionDetail = (id, page = 1, limit = null) => async (dispatch) => {
     try {
 
         dispatch({ type: SUBTANCE_QUESTION_DETAIL_REQUEST })
@@ -95,7 +95,7 @@ export const deleteSubtanceQuestionDetail = (id) => async (dispatch) => {
 
         dispatch({
             type: DELETE_SUBTANCE_QUESTION_DETAIL_SUCCESS,
-            payload: data.success
+            payload: data
         })
 
     } catch (error) {

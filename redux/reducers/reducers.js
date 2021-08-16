@@ -6,6 +6,7 @@ import {
   newArtikelReducer,
   deleteArtikelReducer,
   detailArtikelReducer,
+  updateArtikelReducer,
 } from "./publikasi/artikel.reducers";
 import {
   allBeritaReducer,
@@ -30,20 +31,30 @@ import {
   deleteGaleriReducer,
 } from "./publikasi/galeri.reducers";
 import { allFaqReducer, newFaqReducer } from "./publikasi/faq.reducers";
-import { allVideoReducer, newVideoReducer } from "./publikasi/video.reducers";
+import {
+  allVideoReducer,
+  newVideoReducer,
+  deleteVideoReducer,
+  detailVideoReducer,
+  updateVideoReducer,
+} from "./publikasi/video.reducers";
 
 // Subvit
 import {
   allSubtanceQuestionBanksReducer,
   newSubtanceQuestionBanksReducer,
+  detailSubtanceQuestionBanksReducer,
+  updateSubtanceQuestionReducer,
   deleteSubtanceQuestionBanksReducer,
   updateSubtanceQuestionBanksPublishReducer,
+  allReportSubtanceQuestionBanksReducer,
 } from "./subvit/subtance.reducers";
 import {
   allSubtanceQuestionTypeReducer,
   newSubtanceQuestionTypeReducer,
   detailSubtanceQuestionTypeReducer,
   deleteSubtanceQuestionTypeReducer,
+  updateSubtanceQuestionTypeReducer,
 } from "./subvit/subtance-question-type.reducers";
 import {
   allSubtanceQuestionDetailReducer,
@@ -64,6 +75,7 @@ const reducer = combineReducers({
   newArtikel: newArtikelReducer,
   deleteArtikel: deleteArtikelReducer,
   detailArtikel: detailArtikelReducer,
+  updatedArtikel: updateArtikelReducer,
 
   allBerita: allBeritaReducer,
   newBerita: newBeritaReducer,
@@ -84,6 +96,9 @@ const reducer = combineReducers({
 
   allVideo: allVideoReducer,
   newVideo: newVideoReducer,
+  deleteVideo: deleteVideoReducer,
+  detailVideo: detailVideoReducer,
+  updatedVideo: updateVideoReducer,
 
   allKategori: allKategoriReducer,
   newKategori: newKategoriReducer,
@@ -93,12 +108,16 @@ const reducer = combineReducers({
   allSubtanceQuestionBanks: allSubtanceQuestionBanksReducer,
   newSubtanceQuestionBanks: newSubtanceQuestionBanksReducer,
   deleteSubtanceQuestionBanks: deleteSubtanceQuestionBanksReducer,
+  detailSubtanceQuestionBanks: detailSubtanceQuestionBanksReducer,
+  updateSubtanceQuestion: updateSubtanceQuestionReducer,
   updateSubtanceQuestionBanksPublish: updateSubtanceQuestionBanksPublishReducer,
+  allReportSubtanceQuestionBanks: allReportSubtanceQuestionBanksReducer,
 
   allSubtanceQuestionType: allSubtanceQuestionTypeReducer,
   newSubtanceQuestionType: newSubtanceQuestionTypeReducer,
   detailSubtanceQuestionType: detailSubtanceQuestionTypeReducer,
   deleteSubtanceQuestionType: deleteSubtanceQuestionTypeReducer,
+  updateSubtanceQuestionType: updateSubtanceQuestionTypeReducer,
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,

@@ -8,6 +8,7 @@ import {
   DELETE_COOPORATION_REQUEST,
   SUCCESS_DELETE_COOPORATION_REQUEST,
   SUCCESS_CHANGE_STATUS_LIST,
+  SET_PAGE,
 } from "../../types/partnership/mk_cooporation.type";
 
 const statuslist = {
@@ -22,9 +23,10 @@ const initialState = {
   mk_cooporation: [],
   mk_single_cooporation: [],
   keyword: "",
-  limit: 1,
   status_delete: "",
   status_list: "",
+  limit: 5,
+  page: 1,
 };
 
 export const allMKCooporationReducer = (state = initialState, action) => {
@@ -49,8 +51,11 @@ export const allMKCooporationReducer = (state = initialState, action) => {
         error: action.payload,
       };
     case SEARCH_COORPORATION:
+      console.log("action.text ??");
+      console.log(action.text);
       return {
         ...state,
+        page: 1,
         keyword: action.text,
       };
 
@@ -58,6 +63,7 @@ export const allMKCooporationReducer = (state = initialState, action) => {
       return {
         ...state,
         limit: action.limitValue,
+        page: 1,
       };
 
     case SUCCESS_GET_SINGLE_COOPORATION:
@@ -70,8 +76,14 @@ export const allMKCooporationReducer = (state = initialState, action) => {
     case SUCCESS_DELETE_COOPORATION_REQUEST:
       return {
         ...state,
-        status_delete: statuslist.success,
-        mk_cooporation: action.data,
+        status_delete: state.status_delete === "" ? statuslist.success : "",
+      };
+    case SET_PAGE:
+      console.log("sdfasf");
+      console.log(action);
+      return {
+        ...state,
+        page: action.page,
       };
 
     case SUCCESS_CHANGE_STATUS_LIST:
