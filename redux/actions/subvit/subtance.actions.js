@@ -15,6 +15,10 @@ import {
     DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
     DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
 
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL,
+
     UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST,
     UPDATE_SUBTANCE_QUESTION_BANKS_SUCCESS,
     UPDATE_SUBTANCE_QUESTION_BANKS_RESET,
@@ -120,6 +124,28 @@ export const getDetailSubtanceQuestionBanks = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const getOneSubtanceQuestionBanks = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST })
+
+        let link = process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data.data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL,
             payload: error.response.data.message
         })
     }
