@@ -2,46 +2,70 @@ import React, { useState, useEffect } from "react";
 
 import Swal from "sweetalert2"
 import { useDispatch, useSelector } from "react-redux";
-
-import { newSubtanceQuestionDetail, clearErrors } from '../../../../../redux/actions/subvit/subtance-question-detail.action'
-import { NEW_SUBTANCE_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/subtance-question-detail.type";
+import { newTriviaQuestionDetail, clearErrors } from '../../../../../redux/actions/subvit/trivia-question-detail.action'
+import { NEW_TRIVIA_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/trivia-question-detail.type";
 import { useRouter } from "next/router";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage"
-import ObjectiveComponent from "./step-2/objective-component";
+
+import PollingComponent from "./step-2/polling-component";
+import CheckboxComponent from "./step-2/checkbox-component";
+import BlankComponent from "./step-2/blank-component";
 
 const StepTwo = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   let { metode, id } = router.query;
-  const { loading, error, success } = useSelector((state) => state.newSubtanceQuestionDetail);
+  const { loading, error, success } = useSelector((state) => state.newTriviaQuestionDetail);
 
-  const [methodAdd, setMethodAdd] = useState('objective')
+  const [methodAdd, setMethodAdd] = useState('polling')
   const [question, setSoal] = useState('')
   const [question_image, setSoalImage] = useState('')
+
+  // polling
   const [answer, setSoalList] = useState([
-    { key: 'A', option: '', image: '', is_right: false },
-    { key: 'B', option: '', image: '', is_right: false },
-    { key: 'C', option: '', image: '', is_right: false },
-    { key: 'D', option: '', image: '', is_right: false }
+    { key: 'A', option: '', image: '' },
+    { key: 'B', option: '', image: '' },
+    { key: 'C', option: '', image: '' },
+    { key: 'D', option: '', image: '' }
   ])
+  //checkbox
+  const [answer_checkbox, setCheckboxList] = useState([
+    { key: 'A', value: '', option: '', image: '', is_right: false },
+    { key: 'B', value: '', option: '', image: '', is_right: false },
+    { key: 'C', value: '', option: '', image: '', is_right: false },
+    { key: 'D', value: '', option: '', image: '', is_right: false }
+  ])
+  const [duration, setDuration] = useState(null)
+  //blank
+  const [answer_blank, setBlanklList] = useState([
+    { key: 'A', value: '', type: '', option: '' },
+    { key: 'B', value: '', type: '', option: '' },
+    { key: 'C', value: '', type: '', option: '' },
+    { key: 'D', value: '', type: '', option: '' }
+  ])
+  const [durationBlank, setDurationBlank] = useState(null)
+
   const [answer_key, setAnswerKey] = useState('')
   const [typeSave, setTypeSave] = useState('lanjut')
 
   useEffect(() => {
 
     if (success) {
+      dispatch({
+        type: NEW_TRIVIA_QUESTION_DETAIL_RESET
+      })
       if (typeSave === 'lanjut') {
         router.push({
-          pathname: `/subvit/substansi/tambah-step-3`,
+          pathname: `/subvit/trivia/tambah/step-3`,
           query: { id }
         })
       } else if (typeSave === 'draft') {
         router.push({
-          pathname: `/subvit/substansi/tambah-step-2`,
+          pathname: `/subvit/trivia/tambah/step-2`,
           query: { metode, id }
         });
       }
@@ -76,16 +100,7 @@ const StepTwo = () => {
 
     if (success) {
       dispatch({
-        type: NEW_SUBTANCE_QUESTION_DETAIL_RESET
-      })
-    }
-
-    if (answer_key === '') {
-      valid = false
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Isi kunci jawaban dengan benar !'
+        type: NEW_TRIVIA_QUESTION_DETAIL_RESET
       })
     }
 
@@ -98,61 +113,125 @@ const StepTwo = () => {
       })
     }
 
-    answer.forEach((row, j) => {
-      if (row.option == '' && row.image == '') {
-        valid = false
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Isi jawaban dengan benar !'
+    switch (methodAdd) {
+      case "polling":
+
+        answer.forEach((row, j) => {
+          if (row.option == '' && row.image == '') {
+            valid = false
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Isi jawaban dengan benar !'
+            })
+          }
         })
-      }
-    })
 
-    const answers = JSON.stringify(answer)
-    if (valid) {
-      const data = {
-        subtance_question_bank_id: id,
-        question,
-        answer: answers,
-        question_image,
-        answer_key,
-      }
+        const answers = JSON.stringify(answer)
+        if (valid) {
+          const data = {
+            trivia_question_bank_id: id,
+            question,
+            answer: answers,
+            question_image,
+            answer_key: null,
+            type: methodAdd
+          }
 
-      console.log(data)
+          dispatch(newTriviaQuestionDetail(data))
+        }
+        break
+      case "checkbox":
 
-      //   dispatch(newSubtanceQuestionDetail(data))
+        if (answer_key === '') {
+          valid = false
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Isi kunci jawaban dengan benar !'
+          })
+        }
+
+        answer_checkbox.forEach((row, j) => {
+          if (row.option == '' && row.image == '') {
+            valid = false
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Isi jawaban dengan benar !'
+            })
+          }
+        })
+
+        const answers_check = JSON.stringify(answer_checkbox)
+        if (valid) {
+          const data = {
+            trivia_question_bank_id: id,
+            question,
+            answer: answers_check,
+            question_image,
+            answer_key,
+            duration,
+            type: methodAdd
+          }
+          dispatch(newTriviaQuestionDetail(data))
+        }
+        break
+      case "fill_in_the_blank":
+        const answers_blank = JSON.stringify(answer_blank)
+        if (valid) {
+          const data = {
+            trivia_question_bank_id: id,
+            question,
+            answer: answers_blank,
+            question_image,
+            answer_key,
+            duration: durationBlank,
+            type: methodAdd,
+            answer_key: null
+          }
+          dispatch(newTriviaQuestionDetail(data))
+        }
+        break
+      default:
+        break;
     }
+
   }
 
   const handleMethodeInput = () => {
     switch (methodAdd) {
-      case "objective":
+      case "polling":
         return (
-          <ObjectiveComponent
+          <PollingComponent
             props_answer={answer => setSoalList(answer)}
-            props_answer_key={key => setAnswerKey(key)}
           />
         )
-      case "choice":
+        break
+      case "checkbox":
         return (
-          <h1>Hello Choice</h1>
+          <CheckboxComponent
+            props_answer={answer => setCheckboxList(answer)}
+            props_answer_key={key => setAnswerKey(key)}
+            props_duration={duration => setDuration(duration)}
+          />
         )
-      case "terbuka":
+        break
+      case "fill_in_the_blank":
         return (
-          <h1>Hello Terbuka</h1>
+          <BlankComponent
+            props_answer={answer => setBlanklList(answer)}
+            props_duration={duration => setDurationBlank(duration)}
+          />
         )
-      case "triger":
-        return (
-          <h1>Hello Triger</h1>
-        )
+        break
       default:
         return (
-          <ObjectiveComponent
+          <PollingComponent
             props_answer={answer => setSoalList(answer)}
-            props_answer_key={key => setAnswerKey(key)}
           />
         )
+        break
     }
   }
 
@@ -226,12 +305,12 @@ const StepTwo = () => {
                       type="radio"
                       name="inlineRadioOptions"
                       id="inlineRadio1"
-                      value="objective"
-                      checked={methodAdd === "objective"}
-                      onChange={() => setMethodAdd("objective")}
+                      value="polling"
+                      checked={methodAdd === "polling"}
+                      onChange={() => setMethodAdd("polling")}
                     />
                     <label class="form-check-label" for="inlineRadio1">
-                      Objective
+                      Polling
                     </label>
                   </div>
                   <div class="form-check form-check-inline">
@@ -240,12 +319,12 @@ const StepTwo = () => {
                       type="radio"
                       name="inlineRadioOptions"
                       id="inlineRadio2"
-                      value="choice"
-                      checked={methodAdd === "choice"}
-                      onChange={() => setMethodAdd("choice")}
+                      value="checkbox"
+                      checked={methodAdd === "checkbox"}
+                      onChange={() => setMethodAdd("checkbox")}
                     />
                     <label class="form-check-label" for="inlineRadio2">
-                      Multiple Choice
+                      Checkbox
                     </label>
                   </div>
                   <div class="form-check form-check-inline">
@@ -254,32 +333,18 @@ const StepTwo = () => {
                       type="radio"
                       name="inlineRadioOptions"
                       id="inlineRadio3"
-                      value="terbuka"
-                      checked={methodAdd === "terbuka"}
-                      onChange={() => setMethodAdd("terbuka")}
+                      value="fill_in_the_blank"
+                      checked={methodAdd === "fill_in_the_blank"}
+                      onChange={() => setMethodAdd("fill_in_the_blank")}
                     />
                     <label class="form-check-label" for="inlineRadio3">
-                      Pertanyaan Terbuka
-                    </label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="inlineRadioOptions"
-                      id="inlineRadio4"
-                      value="triger"
-                      checked={methodAdd === "triger"}
-                      onChange={() => setMethodAdd("triger")}
-                    />
-                    <label class="form-check-label" for="inlineRadio4">
-                      Triggered Question
+                      Fill in the blank
                     </label>
                   </div>
                 </div>
               </div>
               <div className="">
-                <span className="text-muted">Silahkan Pilih Metode Tambah Survey</span>
+                <span className="text-muted">Silahkan Pilih Metode Tambah Trivia</span>
               </div>
 
               {
@@ -287,21 +352,25 @@ const StepTwo = () => {
               }
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 text-right">
-                  <button
-                    className="btn btn-light-primary btn-sm mr-2"
-                    type='submit'
-                  >
-                    Simpan & Lanjut
-                  </button>
-                  <button
-                    className="btn btn-primary btn-sm"
-                    onClick={saveDraft}
-                  >
-                    Simpan Draft
-                  </button>
+                <div className="col-sm-8">
+                  <hr />
+                  <div className="buttoon float-right">
+                    <button
+                      className="btn btn-light-primary btn-sm mr-2"
+                      type='submit'
+                    >
+                      Simpan & Lanjut
+                    </button>
+                    <button
+                      className="btn btn-primary btn-sm"
+                      onClick={saveDraft}
+                    >
+                      Simpan Draft
+                    </button>
+                  </div>
                 </div>
+                <div className="col-sm-2"></div>
+                <div className="col-sm-2"></div>
               </div>
             </form>
           </div>
