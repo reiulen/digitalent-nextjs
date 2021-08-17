@@ -13,6 +13,10 @@ import ButtonAction from "../../../ButtonAction";
 import { useDispatch, useSelector } from "react-redux";
 
 const Table = () => {
+  const exportCSV = {
+    width: "77%",
+    marginLeft: "2rem",
+  };
   return (
     <PageWrapper>
       <div className="col-lg-10 col-md-10">
@@ -62,7 +66,7 @@ const Table = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-12 col-xl-12">
+                <div className="col-lg-10 col-xl-10">
                   <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
@@ -75,6 +79,14 @@ const Table = () => {
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
                   </div>
+                </div>
+                <div className="col-lg-2 col-xl-2">
+                  <button
+                    type="button"
+                    className="btn btn-light-primary btn-block"
+                  >
+                    Cari
+                  </button>
                 </div>
               </div>
 
@@ -117,6 +129,7 @@ const Table = () => {
                   <a
                     href="#"
                     className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
+                    style={exportCSV}
                   >
                     Export .csv
                   </a>
