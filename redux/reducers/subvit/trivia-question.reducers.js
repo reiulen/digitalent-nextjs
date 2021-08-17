@@ -22,6 +22,10 @@ import {
     DETAIL_TRIVIA_QUESTION_BANKS_SUCCESS,
     DETAIL_TRIVIA_QUESTION_BANKS_FAIL,
 
+    DETAIL_ONE_TRIVIA_QUESTION_BANKS_REQUEST,
+    DETAIL_ONE_TRIVIA_QUESTION_BANKS_SUCCESS,
+    DETAIL_ONE_TRIVIA_QUESTION_BANKS_FAIL,
+
     UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_REQUEST,
     UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_SUCCESS,
     UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
@@ -101,17 +105,20 @@ export const newTriviaQuestionBanksReducer = (state = { trivia: {} }, action) =>
 export const detailTriviaQuestionBanksReducer = (state = { trivia: {} }, action) => {
     switch (action.type) {
         case DETAIL_TRIVIA_QUESTION_BANKS_REQUEST:
+        case DETAIL_ONE_TRIVIA_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
         case DETAIL_TRIVIA_QUESTION_BANKS_SUCCESS:
+        case DETAIL_ONE_TRIVIA_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
                 trivia: action.payload
             }
 
         case DETAIL_TRIVIA_QUESTION_BANKS_FAIL:
+        case DETAIL_ONE_TRIVIA_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload

@@ -22,6 +22,10 @@ import {
     DETAIL_TRIVIA_QUESTION_BANKS_SUCCESS,
     DETAIL_TRIVIA_QUESTION_BANKS_FAIL,
 
+    DETAIL_ONE_TRIVIA_QUESTION_BANKS_REQUEST,
+    DETAIL_ONE_TRIVIA_QUESTION_BANKS_SUCCESS,
+    DETAIL_ONE_TRIVIA_QUESTION_BANKS_FAIL,
+
     UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_REQUEST,
     UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_SUCCESS,
     UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
@@ -117,6 +121,28 @@ export const getDetailTriviaQuestionBanks = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: DETAIL_TRIVIA_QUESTION_BANKS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const getOneTriviaQuestionBanks = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DETAIL_ONE_TRIVIA_QUESTION_BANKS_REQUEST })
+
+        let link = process.env.END_POINT_API_SUBVIT + `api/trivia-question-banks/${id}`
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: DETAIL_ONE_TRIVIA_QUESTION_BANKS_SUCCESS,
+            payload: data.data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DETAIL_ONE_TRIVIA_QUESTION_BANKS_FAIL,
             payload: error.response.data.message
         })
     }

@@ -1,6 +1,9 @@
 import Layout from "/components/templates/layout.component";
 import StepTwo from "/components/content/subvit/trivia/tambah/step-2-entry";
 
+import { getOneTriviaQuestionBanks } from '../../../../redux/actions/subvit/trivia-question.actions'
+import { wrapper } from '../../../../redux/store'
+
 export default function TambahBankSoalTesTriviaStep2() {
   return (
     <>
@@ -12,3 +15,7 @@ export default function TambahBankSoalTesTriviaStep2() {
     </>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+  await store.dispatch(getOneTriviaQuestionBanks(query.id))
+})
