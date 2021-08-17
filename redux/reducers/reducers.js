@@ -24,13 +24,24 @@ import {
   allKategoriReducer,
   newKategoriReducer,
   deleteKategoriReducer,
+  detailKategoriReducer,
+  updateKategoriReducer,
 } from "./publikasi/kategori.reducers";
 import {
   allGaleriReducer,
   newGaleriReducer,
+  detailGaleriReducer,
   deleteGaleriReducer,
+  updateGaleriReducer
 } from "./publikasi/galeri.reducers";
-import { allFaqReducer, newFaqReducer } from "./publikasi/faq.reducers";
+import {
+  allFaqReducer,
+  newFaqReducer,
+  deleteFaqReducer,
+  detailFaqReducer,
+  updateFaqReducer,
+  updatePinFaqReducer,
+} from "./publikasi/faq.reducers";
 import {
   allVideoReducer,
   newVideoReducer,
@@ -107,13 +118,14 @@ import {
 
 // Partnership
 import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
+import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
   deleteTandaTanganReducer,
   detailTandaTanganReducer,
   updateTandaTanganReducer,
-  updateStatusTandaTanganReducer,
+  // updateStatusTandaTanganReducer,
 } from "./partnership/tandaTangan.reducers";
 
 const reducer = combineReducers({
@@ -134,12 +146,18 @@ const reducer = combineReducers({
   newImagetron: newImagetronReducer,
   deleteImagetron: deleteImagetronReducer,
 
-  allGaleri: allGaleriReducer,
-  newGaleri: newGaleriReducer,
-  deleteGaleri: deleteGaleriReducer,
+  allGaleriReducer,
+  newGaleriReducer,
+  detailGaleriReducer,
+  deleteGaleriReducer,
+  updateGaleriReducer,
 
   allFaq: allFaqReducer,
   newFaq: newFaqReducer,
+  deleteFaq: deleteFaqReducer,
+  detailFaq: detailFaqReducer,
+  updateFaq: updateFaqReducer,
+  updatePinFaq: updatePinFaqReducer,
 
   allVideo: allVideoReducer,
   newVideo: newVideoReducer,
@@ -150,6 +168,8 @@ const reducer = combineReducers({
   allKategori: allKategoriReducer,
   newKategori: newKategoriReducer,
   deleteKategori: deleteKategoriReducer,
+  detailKategori: detailKategoriReducer,
+  updateKategori: updateKategoriReducer,
 
   // Subvit
   // =============== substansi ==================
@@ -210,13 +230,14 @@ const reducer = combineReducers({
   // PARTNERSHIP
   allMitra: allMitraReducer,
   newMitra: newMitraReducer,
+  allMKCooporation: allMKCooporationReducer,
 
   allTandaTangan: allTandaTanganReducer,
   newTandaTangan: newTandaTanganReducer,
   deleteTandaTangan: deleteTandaTanganReducer,
   updateTandaTangan: updateTandaTanganReducer,
   detailTandaTangan: detailTandaTanganReducer,
-  updateStatusTandaTangan: updateStatusTandaTanganReducer,
+  // updateStatusTandaTangan: updateStatusTandaTanganReducer,
 });
 
 export default reducer;

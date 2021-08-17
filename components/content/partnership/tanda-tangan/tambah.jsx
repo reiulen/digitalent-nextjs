@@ -143,9 +143,14 @@ const TambahTandaTangan = () => {
                       simpleValidator.current.showMessageFor("nama")
                     }
                   />
-                  {simpleValidator.current.message("nama", nama, "required", {
-                    className: "text-danger",
-                  })}
+                  {simpleValidator.current.message(
+                    "nama",
+                    nama,
+                    "required|max:50",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
               <div className="form-group row">
@@ -168,7 +173,7 @@ const TambahTandaTangan = () => {
                   {simpleValidator.current.message(
                     "jabatan",
                     jabatan,
-                    "required",
+                    "required|max:50",
                     {
                       className: "text-danger",
                     }

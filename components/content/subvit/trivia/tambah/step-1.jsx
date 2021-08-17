@@ -15,7 +15,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 
-const StepOne = () => {
+const TambahTriviaStepOne = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -295,4 +295,4 @@ const StepOne = () => {
   );
 };
 
-export default StepOne;
+export default TambahTriviaStepOne;

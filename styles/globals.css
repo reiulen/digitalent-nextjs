@@ -90,8 +90,8 @@ a {
   border: #f3f6f9 !important;
 }
 
-.custom-file-label:after{
-  background: #D6D6E0;
+.custom-file-label:after {
+  background: #d6d6e0;
 }
 
 .bg-accent-info {
@@ -114,3 +114,224 @@ a {
 }
 
 /* --------------------------------pembatas-------------- */
+
+.pageNumbers {
+  list-style: none;
+  display: flex;
+}
+
+.pageNumbers li {
+  padding: 10px;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+.pageNumbers li.active {
+  background-color: white;
+  color: black;
+}
+
+.pageNumbers li button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.pageNumbers li button:hover {
+  background-color: white;
+  color: black;
+}
+.pageNumbers li button:focus {
+  outline: none;
+}
+
+.loadmore {
+  padding: 1rem;
+  background-color: transparent;
+
+  color: white;
+  font-size: 1.2rem;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+/* paginate cs */
+.paginate-cs .page-item:last-child .page-link{
+  width: 41px;
+
+}
+.paginate-cs .page-item:first-child .page-link{
+  width: 41px;
+}
+/* status list */
+.status-list{
+  padding: 10px 30px 10px 10px;
+  border-radius: 8px;
+  color: #1BC5BD;
+  background-color: #C9F7F5;
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('../public/assets/icon/arrow.svg');
+  background-repeat: no-repeat;
+  background-position-x: 86%;
+  background-position-y: center;
+  background-size: 9px;
+}
+.status-list:focus{
+  outline: none;
+  border: none;
+}
+/* toggle */
+.switches {
+  position: relative;
+  display: inline-block;
+  min-width: 110px;
+  min-height: 24px;
+}
+
+.switches input.checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sliders {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border: 1px solid #8F8F8F;
+  display: flex;
+  justify-content: center;
+}
+
+.sliders:before {
+  position: absolute;
+  content: "";
+  min-height: 18px;
+  min-width: 18px;
+  left: 5px;
+  bottom: 1.9px;
+  background-color: #8F8F8F;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input.checkbox:checked+.sliders {
+  background-color: #2196f3;
+  border: 1px solid #2196f3;
+}
+
+input.checkbox:checked+.sliders:before {
+  background-color: #fff;
+  left: 70px;
+  bottom: 2.6px;
+  height: 17px;
+  min-width: 17px;
+
+
+}
+
+input.checkbox:focus+.sliders {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input.checkbox:checked+.sliders:before {
+  -webkit-transform: translateX(18px);
+  -ms-transform: translateX(18px);
+  transform: translateX(18px);
+}
+
+/* Rounded sliderss */
+.sliders.round {
+  border-radius: 34px;
+}
+
+.sliders.round:before {
+  border-radius: 50%;
+}
+
+
+.switches-small {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 16px;
+}
+
+.switches-small input.checkbox-small {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sliders-small {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border: 1px solid #8F8F8F;
+}
+
+.sliders-small:before {
+  position: absolute;
+  content: "";
+  height: 11px;
+  width: 11px;
+  left: 2px;
+  bottom: 1.7px;
+  background-color: #8F8F8F;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input.checkbox-small:checked+.sliders-small {
+  background-color: #2196f3;
+  border: 1px solid #2196f3;
+}
+
+input.checkbox-small:checked+.sliders-small:before {
+  background-color: #fff;
+  left: 4px;
+  bottom: 1.7px;
+  height: 11px;
+  width: 11px;
+
+
+}
+
+input.checkbox-small:focus+.sliders-small {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input.checkbox-small:checked+.sliders-small:before {
+  -webkit-transform: translateX(11px);
+  -ms-transform: translateX(11px);
+  transform: translateX(11px);
+}
+
+/* Rounded sliderss */
+.sliders-small.round {
+  border-radius: 34px;
+}
+
+.sliders-small.round:before {
+  border-radius: 50%;
+}
+/* utilities */
+.cursor-pointer:hover{
+  cursor: pointer;
+}

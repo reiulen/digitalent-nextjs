@@ -13,6 +13,15 @@ import {
     DELETE_GALERI_RESET,
     DELETE_GALERI_FAIL,
 
+    DETAIL_GALERI_REQUEST,
+    DETAIL_GALERI_SUCCESS,
+    DETAIL_GALERI_FAIL,
+
+    UPDATE_GALERI_REQUEST,
+    UPDATE_GALERI_SUCCESS,
+    UPDATE_GALERI_RESET,
+    UPDATE_GALERI_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/galeri.type'
 
@@ -80,6 +89,28 @@ export const newGaleriReducer = (state = { galeri: {} }, action) => {
     }
 }
 
+export const detailGaleriReducer = (state = { galeri: {} }, action) => {
+    switch (action.type) {
+        case DETAIL_GALERI_SUCCESS:
+            return {
+                galeri: action.payload
+            }
+
+        case DETAIL_GALERI_FAIL:
+            return {
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
 export const deleteGaleriReducer = (state = {}, action) => {
     switch (action.type) {
         case DELETE_GALERI_REQUEST:
@@ -110,6 +141,45 @@ export const deleteGaleriReducer = (state = {}, action) => {
                 ...state,
                 error: null
             }
+
+        default:
+            return state
+    }
+}
+
+export const updateGaleriReducer = (state = {}, action) => {
+    switch (action.type) {
+        case UPDATE_GALERI_REQUEST:
+            return {
+                loading: true
+            }
+        
+        case UPDATE_GALERI_SUCCESS:
+            return {
+                loading: false,
+                isUpdated: action.payload,
+                success: true
+            }
+
+        case UPDATE_GALERI_RESET:
+            return {
+                loading: false,
+                isUpdated: false,
+                success: false
+            }
+
+        case UPDATE_GALERI_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
 
         default:
             return state
