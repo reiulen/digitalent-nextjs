@@ -22,6 +22,10 @@ import {
     DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
     DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
 
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL,
+
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST,
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_SUCCESS,
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET,
@@ -106,17 +110,20 @@ export const newSubtanceQuestionBanksReducer = (state = { subtance: {} }, action
 export const detailSubtanceQuestionBanksReducer = (state = { subtance: {} }, action) => {
     switch (action.type) {
         case DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST:
+        case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
         case DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS:
+        case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
                 subtance: action.payload
             }
 
         case DETAIL_SUBTANCE_QUESTION_BANKS_FAIL:
+        case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload

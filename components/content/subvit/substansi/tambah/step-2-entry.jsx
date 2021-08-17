@@ -28,6 +28,7 @@ const StepTwo = () => {
   let { metode, id } = router.query;
   const { loading, error, success } = useSelector((state) => state.newSubtanceQuestionDetail);
   const { loading: allLoading, error: allError, subtance_question_type } = useSelector((state) => state.allSubtanceQuestionType);
+  const { loading: oneLoading, subtance } = useSelector((state) => state.detailSubtanceQuestionBanks)
 
   const [question, setSoal] = useState('')
   const [question_image, setSoalImage] = useState('')
@@ -222,7 +223,7 @@ const StepTwo = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">Soal 1</h3>
+            <h3 className="card-title font-weight-bolder text-dark">Soal {subtance.bank_soal + 1}</h3>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
