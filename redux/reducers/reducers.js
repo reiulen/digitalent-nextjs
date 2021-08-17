@@ -28,9 +28,11 @@ import {
   updateKategoriReducer,
 } from "./publikasi/kategori.reducers";
 import {
-  allGaleriReducer,
-  newGaleriReducer,
-  deleteGaleriReducer,
+    allGaleriReducer,
+    newGaleriReducer,
+    detailGaleriReducer,
+    deleteGaleriReducer,
+    updateGaleriReducer
 } from "./publikasi/galeri.reducers";
 import {
   allFaqReducer,
@@ -144,9 +146,11 @@ const reducer = combineReducers({
   newImagetron: newImagetronReducer,
   deleteImagetron: deleteImagetronReducer,
 
-  allGaleri: allGaleriReducer,
-  newGaleri: newGaleriReducer,
-  deleteGaleri: deleteGaleriReducer,
+  allGaleriReducer,
+    newGaleriReducer,
+    detailGaleriReducer,
+    deleteGaleriReducer,
+    updateGaleriReducer,
 
   allFaq: allFaqReducer,
   newFaq: newFaqReducer,
