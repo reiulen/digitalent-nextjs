@@ -28,7 +28,9 @@ import {
 import {
     allGaleriReducer,
     newGaleriReducer,
+    detailGaleriReducer,
     deleteGaleriReducer,
+    updateGaleriReducer
 } from "./publikasi/galeri.reducers";
 import { 
     allFaqReducer, 
@@ -93,6 +95,8 @@ const reducer = combineReducers({
     allGaleri: allGaleriReducer,
     newGaleri: newGaleriReducer,
     deleteGaleri: deleteGaleriReducer,
+    detailGaleri: detailGaleriReducer,
+    updatedGaleri: updateGaleriReducer,
 
     allFaq: allFaqReducer,
     newFaq: newFaqReducer,
