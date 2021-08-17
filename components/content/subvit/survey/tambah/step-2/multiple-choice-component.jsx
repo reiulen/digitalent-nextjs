@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import Image from "next/image";
 
-const ObjectiveComponent = ({ props_answer }) => {
+const MultipleChoiceComponent = ({ props_answer }) => {
 
     const [answer, setSoalList] = useState([
         { key: 'A', option: '', image: '' },
@@ -103,4 +103,4 @@ const ObjectiveComponent = ({ props_answer }) => {
     )
 }
 
-export default ObjectiveComponent
+export default MultipleChoiceComponent
