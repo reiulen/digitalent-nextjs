@@ -65,6 +65,31 @@ const DetailTrivia = () => {
         });
     };
 
+    const handleModal = () => {
+        Swal.fire({
+            title: 'Silahkan Pilih Metode Entry',
+            icon: 'info',
+            showDenyButton: true,
+            showCloseButton: true,
+            confirmButtonText: `Entry`,
+            denyButtonText: `Import`,
+            confirmButtonColor: '#3085d6',
+            denyButtonColor: '#d33',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                router.push({
+                    pathname: `/subvit/trivia/tambah/step-2-entry`,
+                    query: { id }
+                })
+            } else if (result.isDenied) {
+                router.push({
+                    pathname: `/subvit/trivia/tambah/step-2-import`,
+                    query: { id }
+                })
+            }
+        })
+    }
+
     return (
         <PageWrapper>
             {error ? (
@@ -100,7 +125,7 @@ const DetailTrivia = () => {
                             Substansi FGA - Cloud Computing
                         </h3>
                         <div className="card-toolbar">
-                            <Link href="/subvit/substansi/edit/step-1">
+                            <Link href={`/subvit/trivia/edit?id=${id}`}>
                                 <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
                                     Edit
                                 </a>
@@ -161,11 +186,9 @@ const DetailTrivia = () => {
                             {/* <label htmlFor=""></label> */}
                         </div>
                         <div className="card-toolbar">
-                            <Link href="/subvit/substansi/tambah/step-1">
-                                <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block ">
-                                    Tambah Soal
-                                </a>
-                            </Link>
+                            <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block" onClick={handleModal}>
+                                Tambah Soal
+                            </a>
                         </div>
                     </div>
 
