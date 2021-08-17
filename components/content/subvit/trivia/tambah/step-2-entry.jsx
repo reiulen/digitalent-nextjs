@@ -20,6 +20,7 @@ const StepTwo = () => {
 
   let { metode, id } = router.query;
   const { loading, error, success } = useSelector((state) => state.newTriviaQuestionDetail);
+  const { trivia } = useSelector((state) => state.detailTriviaQuestionBanks)
 
   const [methodAdd, setMethodAdd] = useState('polling')
   const [question, setSoal] = useState('')
@@ -271,7 +272,7 @@ const StepTwo = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">Soal 1</h3>
+            <h3 className="card-title font-weight-bolder text-dark">Soal {trivia.bank_soal + 1}</h3>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
