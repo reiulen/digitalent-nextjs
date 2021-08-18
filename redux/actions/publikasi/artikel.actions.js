@@ -29,11 +29,9 @@ export const getAllArtikel =
     try {
       dispatch({ type: ARTIKEL_REQUEST });
 
-      let link =
-        process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
+      let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
-      // let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel`
 
       // const config = {
       //     headers: {

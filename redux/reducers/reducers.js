@@ -19,6 +19,8 @@ import {
   allImagetronReducer,
   newImagetronReducer,
   deleteImagetronReducer,
+  detailImagetronReducer,
+  updateImagetronReducer,
 } from "./publikasi/imagetron.reducers";
 import {
   allKategoriReducer,
@@ -145,12 +147,14 @@ const reducer = combineReducers({
   allImagetron: allImagetronReducer,
   newImagetron: newImagetronReducer,
   deleteImagetron: deleteImagetronReducer,
+  detailImagetron: detailImagetronReducer,
+  updatedImagetron: updateImagetronReducer,
 
-  allGaleriReducer,
-  newGaleriReducer,
-  detailGaleriReducer,
-  deleteGaleriReducer,
-  updateGaleriReducer,
+  allGaleri: allGaleriReducer,
+  newGaleri: newGaleriReducer,
+  detailGaleri: detailGaleriReducer,
+  deleteGaleri: deleteGaleriReducer,
+  updatedGaleri: updateGaleriReducer,
 
   allFaq: allFaqReducer,
   newFaq: newFaqReducer,

@@ -9,13 +9,13 @@ import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 
-import { newImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
+import { updateImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
-import { NEW_IMAGETRON_RESET } from '../../../../redux/types/publikasi/imagetron.type'
+import { NEW_IMAGETRON_RESET, UPDATE_IMAGETRON_RESET } from '../../../../redux/types/publikasi/imagetron.type'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from "../../../LoadingPage";
 
-const TambahImagetron = () => {
+const EditImagetron = () => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -26,7 +26,15 @@ const TambahImagetron = () => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
-    const { loading, error, success } = useSelector(state => state.newImagetron)
+    const { imagetron } = useSelector((state) => state.detailImagetron);
+    const { 
+        error, 
+        success, 
+        loading 
+    } = useSelector(
+        (state) => state.updatedImagetron
+      );
+
     const {
         loading: allLoading,
         error: allError,
@@ -56,14 +64,15 @@ const TambahImagetron = () => {
 
     }, [dispatch, error, success, simpleValidator]);
 
-
-    const [kategori_id, setKategoriId] = useState('')
-    const [judul, setJudulImagetron] = useState('')
-    const [gambar, setGambar] = useState('')
+    const [id, setId] = useState(imagetron.id);
+    const [kategori_id, setKategoriId] = useState(imagetron.kategori_id)
+    const [judul, setJudulImagetron] = useState(imagetron.judul)
+    const [gambar, setGambar] = useState(imagetron.gambar)
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
-    const [url_link, setUrlRedirect] = useState('')
-    const [publish, setPublish] = useState(false)
+    const [url_link, setUrlRedirect] = useState(imagetron.url_link)
+    const [publish, setPublish] = useState(imagetron.publish)
     const [users_id, setUserId] = useState(1)
+    const [_method, setMethod] = useState("put");
 
     const onChangeGambar = (e) => {
         if (e.target.name === 'gambar') {
@@ -85,16 +94,18 @@ const TambahImagetron = () => {
         }
 
         const data = {
+            id,
             kategori_id,
             judul,
             url_link,
             gambar,
             publish,
-            users_id
+            users_id,
+            _method
         }
 
-        dispatch(newImagetron(data))
-        console.log(data)
+        dispatch(updateImagetron(data))
+        // console.log(data)
     }
 
     const onNewReset = () => {
@@ -130,7 +141,7 @@ const TambahImagetron = () => {
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Tambah Imagetron</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Update Imagetron</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
@@ -277,4 +288,4 @@ const TambahImagetron = () => {
     )
 }
 
-export default TambahImagetron
+export default EditImagetron
