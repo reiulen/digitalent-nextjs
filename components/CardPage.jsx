@@ -1,9 +1,9 @@
 import React from 'react'
 import Image from 'next/image'
 
-const CardPage = ({ background, icon, color, value, titleValue, title }) => {
+const CardPage = ({ background, icon, color, value, titleValue, title,onClick }) => {
     return (
-        <div className={`col ${background} px-6 py-8 rounded-xl mr-7 mb-7`} >
+        <div className={`col ${background} px-6 py-8 rounded-xl mr-7 mb-7`} onClick={onClick}>
             <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
                 <div className="row ml-4">
                     <Image alt='card-page-icon' src={`/assets/icon/${icon}`} width={30} height={30} />
