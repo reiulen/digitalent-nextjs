@@ -18,6 +18,6 @@ export default function DetailSurveyPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, query }) => {
-    await store.dispatch(getAllSurveyQuestionDetail(params.id, query.page, query.limit))
+    await store.dispatch(getAllSurveyQuestionDetail(params.id, query.page, query.limit, query.keyword))
     await store.dispatch(getDetailSurveyQuestionBanks(params.id))
 })
