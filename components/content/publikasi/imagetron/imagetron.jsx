@@ -302,7 +302,7 @@ const Imagetron = () => {
                                             {
                                                 !imagetron || imagetron && imagetron.data.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    imagetron && imagetron.data.map((row) => {
+                                                    imagetron && imagetron.data.imagetron.map((row) => {
                                                         return <tr key={row.id}>
                                                             <td className='text-center'>
                                                             <Image
