@@ -44,18 +44,21 @@ const StepTwo = () => {
 
   useEffect(() => {
 
-    // dispatch(getAllSubtanceQuestionBanksType())
-
     if (success) {
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_DETAIL_RESET
+      })
       if (typeSave === 'lanjut') {
         router.push({
           pathname: `/subvit/substansi/tambah-step-3`,
           query: { id }
         })
+        console.log(typeSave)
       } else if (typeSave === 'draft') {
+        handleResetForm()
         router.push({
-          pathname: `/subvit/substansi/tambah-step-2`,
-          query: { metode, id }
+          pathname: `/subvit/substansi/tambah-step-2-${metode}`,
+          query: { id, metode }
         });
       }
     }
@@ -114,9 +117,84 @@ const StepTwo = () => {
     setSoalList([...answer, { key: newKey, question: '', image: '', is_right: false }])
   }
 
+  const handleResetForm = () => {
+    setSoal('')
+    setSoalImage('')
+    setSoalList([
+      { key: 'A', option: '', image: '', is_right: false },
+      { key: 'B', option: '', image: '', is_right: false },
+      { key: 'C', option: '', image: '', is_right: false },
+      { key: 'D', option: '', image: '', is_right: false }
+    ])
+    setAnswerKey('')
+    setQuestionTypeId('')
+  }
+
   const saveDraft = () => {
     setTypeSave('draft')
-    // router.push("/subvit/substansi");
+    let valid = true
+
+    if (error) {
+      dispatch(clearErrors())
+    }
+
+    if (success) {
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_DETAIL_RESET
+      })
+    }
+
+    if (answer_key === '') {
+      valid = false
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi kunci jawaban dengan benar !'
+      })
+    }
+
+    if (question == '' && question_image == '') {
+      valid = false
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi pertanyaan dengan benar !'
+      })
+    }
+
+    answer.forEach((row, j) => {
+      if (row.option == '' && row.image == '') {
+        valid = false
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Isi jawaban dengan benar !'
+        })
+      }
+    })
+
+    if (question_type_id === '') {
+      valid = false
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi Tipe Soal dengan benar !'
+      })
+    }
+
+    const answers = JSON.stringify(answer)
+    if (valid) {
+      const data = {
+        subtance_question_bank_id: id,
+        question,
+        answer: answers,
+        question_image,
+        question_type_id,
+        answer_key,
+      }
+
+      dispatch(newSubtanceQuestionDetail(data))
+    }
   };
 
   const onSubmit = (e) => {
@@ -354,6 +432,7 @@ const StepTwo = () => {
                   <button
                     className="btn btn-primary btn-sm"
                     onClick={saveDraft}
+                    type='button'
                   >
                     Simpan Draft
                   </button>

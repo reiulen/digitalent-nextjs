@@ -45,7 +45,6 @@ const StepTwo = () => {
   const [endDate, setEndDate] = useState(trivia.end_at);
   const [duration, setDuration] = useState(trivia.duration)
   const [jumlah_soal, setJumlahSoal] = useState(null)
-  const [passing_grade, setPassingGrade] = useState(trivia.passing_grade)
   const [status, setStatus] = useState(trivia.status)
   const [, forceUpdate] = useState();
 
@@ -92,7 +91,6 @@ const StepTwo = () => {
         start_at,
         end_at,
         duration,
-        passing_grade,
         status: true,
         questions_to_share: jumlah_soal,
       }
@@ -149,7 +147,7 @@ const StepTwo = () => {
           <div className="card-body">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-6 col-md-2">
                   <span>Pelaksanaan dari</span>
                   <DatePicker
                     className="form-control"
@@ -170,7 +168,7 @@ const StepTwo = () => {
                   {simpleValidator.current.message('tanggal mulai', startDate, 'required', { className: 'text-danger' })}
                 </div>
 
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-6 col-md-2">
                   <span>Sampai</span>
                   <DatePicker
                     className="form-control"
@@ -245,31 +243,6 @@ const StepTwo = () => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
-                  <span>Passing Grade</span>
-                  <div class="input-group">
-                    <input
-                      type="number"
-                      class="form-control"
-                      aria-describedby="basic-addon2"
-                      value={passing_grade}
-                      onChange={e => setPassingGrade(e.target.value)}
-                      onBlur={() => simpleValidator.current.showMessageFor('passing grade')}
-                    />
-                    <div class="input-group-append">
-                      <span class="input-group-text" id="basic-addon2">
-                        Nilai
-                      </span>
-                    </div>
-                  </div>
-                  <small className="text-muted">
-                    Silahkan Input Passing Grade
-                  </small>
-                  {simpleValidator.current.message('passing grade', passing_grade, 'required', { className: 'text-danger' })}
-                </div>
-              </div>
-
-              <div className="form-group row">
                 <div className="col-sm-12 col-md-8">
                   <span>Status</span>
                   <select
@@ -287,7 +260,7 @@ const StepTwo = () => {
                   <span className="text-muted">
                     Silahkan Pilih Status Publish
                   </span>
-                  {simpleValidator.current.message('status', passing_grade, 'required', { className: 'text-danger' })}
+                  {simpleValidator.current.message('status', status, 'required', { className: 'text-danger' })}
                 </div>
               </div>
 
