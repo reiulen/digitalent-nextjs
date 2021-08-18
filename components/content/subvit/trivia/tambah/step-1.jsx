@@ -34,7 +34,7 @@ const TambahTriviaStepOne = () => {
       if (typeSave === 'lanjut') {
         router.push({
           pathname: `/subvit/trivia/tambah/step-2-${metode}`,
-          query: { id }
+          query: { id, metode }
         })
       } else if (typeSave === 'draft') {
         router.push({
