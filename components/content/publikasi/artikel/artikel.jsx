@@ -34,6 +34,7 @@ const Artikel = () => {
     error,
     artikel,
   } = useSelector((state) => state.allArtikel);
+
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -367,7 +368,7 @@ const Artikel = () => {
                                   </span>
                                 ) : (
                                   <span class="label label-inline label-light-warning font-weight-bold">
-                                    Belum di publish
+                                    Belum dipublish
                                   </span>
                                 )}
                               </td>
