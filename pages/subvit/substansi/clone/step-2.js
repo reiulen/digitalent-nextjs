@@ -17,5 +17,5 @@ export default function CloneSoalSubtansi() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-    await store.dispatch(getAllSubtanceQuestionDetail(query.id))
+    await store.dispatch(getAllSubtanceQuestionDetail(query.id, query.page, query.keyword, query.limit))
 })

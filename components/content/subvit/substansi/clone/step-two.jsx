@@ -12,8 +12,14 @@ import {
   clearErrors
 } from '../../../../../redux/actions/subvit/subtance-question-detail.action'
 import {
+  deleteCloneSubtanceQuestionBanks
+} from '../../../../../redux/actions/subvit/subtance.actions'
+import {
   DELETE_SUBTANCE_QUESTION_DETAIL_RESET
 } from "../../../../../redux/types/subvit/subtance-question-detail.type";
+import {
+  DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET
+} from '../../../../../redux/types/subvit/subtance.type'
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInputClone";
@@ -25,9 +31,16 @@ const StepTwo = () => {
   const router = useRouter();
 
   let { page = 1, id } = router.query;
-  const { loading, error, success: successData, subtance_question_detail } = useSelector((state) => state.allSubtanceQuestionDetail)
+  let error;
+  const { loading: loadingAll, error: errorAll, success: successData, subtance_question_detail } = useSelector((state) => state.allSubtanceQuestionDetail)
+  const { loading, error: errorDelete, isDeleted } = useSelector((state) => state.deleteSubtanceQuestionBanks)
   page = Number(page);
 
+  if (errorAll) {
+    error = errorAll
+  } else if (errorDelete) {
+    error = errorDelete
+  }
   const [search, setSearch] = useState('')
   const [limit, setLimit] = useState(null)
   const [checkedDelete, setCheckedDelete] = useState([])
@@ -36,14 +49,30 @@ const StepTwo = () => {
     if (limit) {
       router.push(`${router.pathname}?id=${id}&page=1&limit=${limit}`)
     }
-  }, [limit]);
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
+        if (result.isConfirmed) {
+          window.location.reload()
+        }
+      });
+      dispatch({
+        type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET
+      })
+    }
+  }, [limit, isDeleted]);
 
   const saveDraft = () => {
+    router.push({
+      pathname: `/subvit/substansi`,
+      query: { success: true },
+    });
+  };
+  const saveLanjut = () => {
     router.push({
       pathname: `/subvit/substansi/clone/step-3`,
       query: { id }
     });
-  };
+  }
 
   const handleSearch = () => {
     if (limit != null) {
@@ -112,7 +141,10 @@ const StepTwo = () => {
   }
 
   const handleDeleteAll = () => {
-    console.log(checkedDelete)
+    const data = {
+      'list_soal': checkedDelete
+    }
+    dispatch(deleteCloneSubtanceQuestionBanks(data))
   }
 
   const handleModal = () => {
@@ -206,80 +238,85 @@ const StepTwo = () => {
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
-
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-center align-middle">
-                        <input type="checkbox" aria-label="Checkbox for following text input" onClick={e => handleCheckboxDeleteAll(e)} />
-                      </th>
-                      <th >No</th>
-                      <th>ID Soal</th>
-                      <th>Soal</th>
-                      <th>Kategori</th>
-                      <th>Bobot</th>
-                      <th>Status</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {subtance_question_detail && subtance_question_detail.list_questions && subtance_question_detail.list_questions.length === 0 ? (
-                      <td className="align-middle text-center" colSpan={8}>
-                        Data Masih Kosong
-                      </td>
-                    ) : (
-                      subtance_question_detail &&
-                      subtance_question_detail.list_questions &&
-                      subtance_question_detail.list_questions.map((question, i) => {
-                        return (
-                          <tr key={question.id}>
-                            <td className="align-middle text-center">
-                              <input
-                                className='input_delete'
-                                type="checkbox"
-                                aria-label="Checkbox for following text input"
-                                value={question.id}
-                                checked={checkedDelete.find((items) => items.id === question.id)}
-                                onChange={e => handleCheckboxDelete(e, question)}
-                              />
-                            </td>
-                            <td className="align-middle">
-                              <span className="badge badge-secondary text-muted">
-                                {i + 1 * (page * 5 || limit) - 4}
-                              </span>
-                            </td>
-                            <td className="align-middle">
-                              {question.subtance_question_bank_id}
-                            </td>
-                            <td className="align-middle">
-                              {question.question}
-                            </td>
-                            <td className="align-middle">
-                              {question.type.name}
-                            </td>
-                            <td className="align-middle">
-                              {question.type.value} poin
-                            </td>
-                            <td className="align-middle">
-                              {question.status === true ? (
-                                <span className="label label-inline label-light-success font-weight-bold">
-                                  Publish
-                                </span>
-                              ) : (
-                                <span className="label label-inline label-light-warning font-weight-bold">
-                                  Draft
-                                </span>
-                              )}
-                            </td>
-                            <td className="align-middle">
-                              <ButtonAction icon="write.svg" />
-                            </td>
-                          </tr>
-                        );
-                      })
-                    )}
-                  </tbody>
-                </table>
+                {
+                  loading === true ? (
+                    <LoadingTable loading={loading} />
+                  ) : (
+                    <table className="table table-separate table-head-custom table-checkable">
+                      <thead style={{ background: "#F3F6F9" }}>
+                        <tr>
+                          <th className="text-center align-middle">
+                            <input type="checkbox" aria-label="Checkbox for following text input" onClick={e => handleCheckboxDeleteAll(e)} />
+                          </th>
+                          <th >No</th>
+                          <th>ID Soal</th>
+                          <th>Soal</th>
+                          <th>Kategori</th>
+                          <th>Bobot</th>
+                          <th>Status</th>
+                          <th>Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {subtance_question_detail && subtance_question_detail.list_questions && subtance_question_detail.list_questions.length === 0 ? (
+                          <td className="align-middle text-center" colSpan={8}>
+                            Data Masih Kosong
+                          </td>
+                        ) : (
+                          subtance_question_detail &&
+                          subtance_question_detail.list_questions &&
+                          subtance_question_detail.list_questions.map((question, i) => {
+                            return (
+                              <tr key={question.id}>
+                                <td className="align-middle text-center">
+                                  <input
+                                    className='input_delete'
+                                    type="checkbox"
+                                    aria-label="Checkbox for following text input"
+                                    value={question.id}
+                                    checked={checkedDelete.find((items) => items.id === question.id)}
+                                    onChange={e => handleCheckboxDelete(e, question)}
+                                  />
+                                </td>
+                                <td className="align-middle">
+                                  <span className="badge badge-secondary text-muted">
+                                    {i + 1 * (page * 5 || limit) - 4}
+                                  </span>
+                                </td>
+                                <td className="align-middle">
+                                  {question.subtance_question_bank_id}
+                                </td>
+                                <td className="align-middle">
+                                  {question.question}
+                                </td>
+                                <td className="align-middle">
+                                  {question.type.name}
+                                </td>
+                                <td className="align-middle">
+                                  {question.type.value} poin
+                                </td>
+                                <td className="align-middle">
+                                  {question.status === true ? (
+                                    <span className="label label-inline label-light-success font-weight-bold">
+                                      Publish
+                                    </span>
+                                  ) : (
+                                    <span className="label label-inline label-light-warning font-weight-bold">
+                                      Draft
+                                    </span>
+                                  )}
+                                </td>
+                                <td className="align-middle">
+                                  <ButtonAction icon="write.svg" />
+                                </td>
+                              </tr>
+                            );
+                          })
+                        )}
+                      </tbody>
+                    </table>
+                  )
+                }
 
               </div>
 
@@ -342,7 +379,8 @@ const StepTwo = () => {
                   <div className="float-right">
                     <button
                       className="btn btn-light-primary btn-sm mr-2"
-                      type='submit'
+                      type='button'
+                      onClick={saveLanjut}
                     >
                       Simpan & Lanjut
                     </button>
