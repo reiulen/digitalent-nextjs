@@ -38,6 +38,11 @@ import {
     NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
     NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
 
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/subvit/subtance.type'
 
@@ -177,16 +182,36 @@ export const deleteSubtanceQuestionBanks = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_SUBTANCE_QUESTION_BANKS_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`)
+        const data = await axios.delete(process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`)
 
         dispatch({
-            type: DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
-            payload: data.success
+            type: DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data.status
         })
 
     } catch (error) {
         dispatch({
             type: DELETE_SUBTANCE_QUESTION_BANKS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const deleteCloneSubtanceQuestionBanks = (dataId) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST })
+
+        const data = await axios.post(process.env.END_POINT_API_SUBVIT + `api/subtance-question-bank-details/multiple-delete`, dataId)
+
+        dispatch({
+            type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data.status
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
             payload: error.response.data.message
         })
     }
