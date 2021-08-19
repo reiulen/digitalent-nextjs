@@ -334,7 +334,7 @@ const EditArtikel = () => {
                           ) : (
                               kategori && kategori.kategori && kategori.kategori.map((row) => {
                                   return (
-                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
+                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategorii}</option>
                                   )
                               })
                           )}

@@ -164,7 +164,7 @@ const TambahImagetron = () => {
                         kategori.kategori.map((row) => {
                           return (
                             <option key={row.id} value={row.id}>
-                              {row.nama_kategori}
+                              {row.jenis_kategori}
                             </option>
                           );
                         })
