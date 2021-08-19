@@ -322,6 +322,7 @@ const Imagetron = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
+                                                <th className="text-center">No</th>
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
@@ -339,9 +340,14 @@ const Imagetron = () => {
                                             {
                                                 !imagetron || imagetron && imagetron.data.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    imagetron && imagetron.data.imagetron.map((row) => {
+                                                    imagetron && imagetron.data.imagetron.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='text-center'>
+                                                            <td className="align-middle text-center">
+                                                                <span className="badge badge-secondary text-muted">
+                                                                {i + 1 * (page * 5 || limit) - 4}
+                                                                </span>
+                                                            </td>
                                                             <Image
                                                                 alt={row.judul}
                                                                 unoptimized={
