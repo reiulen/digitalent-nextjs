@@ -225,7 +225,7 @@ const TambahBerita = () => {
                                 <div className="col-sm-9">
                                     <div className="input-group">
                                         <div className="custom-file">
-                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
+                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} accept="image/*"/>
                                             <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
                                         </div>
                                     </div>
