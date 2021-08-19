@@ -131,10 +131,6 @@ const Artikel = () => {
     setLimit(val);
   };
 
-  const check = (e) => {
-    console.log (e)
-  }
-
   return (
     <PageWrapper>
       {

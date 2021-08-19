@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
-import SimpleReactValidator from "simple-react-validator";
+
 
 import {
   updateArtikel,
@@ -165,13 +165,6 @@ const EditArtikel = () => {
 
   return (
     <>
-    {
-      console.log (artikel)
-    }
-    {
-      console.log (kategori)
-    }
-    
       <PageWrapper>
         {error ? (
           <div
