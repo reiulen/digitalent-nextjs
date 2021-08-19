@@ -20,6 +20,7 @@ const StepTwo = () => {
 
   let { metode, id } = router.query;
   const { loading, error, success } = useSelector((state) => state.newTriviaQuestionDetail);
+  const { trivia } = useSelector((state) => state.detailTriviaQuestionBanks)
 
   const [methodAdd, setMethodAdd] = useState('polling')
   const [question, setSoal] = useState('')
@@ -59,15 +60,18 @@ const StepTwo = () => {
         type: NEW_TRIVIA_QUESTION_DETAIL_RESET
       })
       if (typeSave === 'lanjut') {
+        handleResetForm()
         router.push({
           pathname: `/subvit/trivia/tambah/step-3`,
           query: { id }
         })
       } else if (typeSave === 'draft') {
+        handleResetForm()
         router.push({
-          pathname: `/subvit/trivia/tambah/step-2`,
+          pathname: `/subvit/trivia/tambah/step-2-${metode}`,
           query: { metode, id }
         });
+        window.location.reload()
       }
     }
   }, [dispatch, error, success, typeSave]);
@@ -84,9 +88,138 @@ const StepTwo = () => {
     }
   }
 
+  const handleResetForm = () => {
+    setSoal('')
+    setSoalImage('')
+    setSoalList([
+      { key: 'A', option: '', image: '' },
+      { key: 'B', option: '', image: '' },
+      { key: 'C', option: '', image: '' },
+      { key: 'D', option: '', image: '' }
+    ])
+    setCheckboxList([
+      { key: 'A', value: '', option: '', image: '', is_right: false },
+      { key: 'B', value: '', option: '', image: '', is_right: false },
+      { key: 'C', value: '', option: '', image: '', is_right: false },
+      { key: 'D', value: '', option: '', image: '', is_right: false }
+    ])
+    setDuration('')
+    setBlanklList([
+      { key: 'A', value: '', type: '', option: '' },
+      { key: 'B', value: '', type: '', option: '' },
+      { key: 'C', value: '', type: '', option: '' },
+      { key: 'D', value: '', type: '', option: '' }
+    ])
+    setDurationBlank('')
+    setAnswerKey('')
+  }
+
   const saveDraft = () => {
     setTypeSave('draft')
-    // router.push("/subvit/substansi");
+    let valid = true
+
+    if (error) {
+      dispatch(clearErrors())
+    }
+
+    if (success) {
+      dispatch({
+        type: NEW_TRIVIA_QUESTION_DETAIL_RESET
+      })
+    }
+
+    if (question == '' && question_image == '') {
+      valid = false
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi pertanyaan dengan benar !'
+      })
+    }
+
+    switch (methodAdd) {
+      case "polling":
+
+        answer.forEach((row, j) => {
+          if (row.option == '' && row.image == '') {
+            valid = false
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Isi jawaban dengan benar !'
+            })
+          }
+        })
+
+        const answers = JSON.stringify(answer)
+        if (valid) {
+          const data = {
+            trivia_question_bank_id: id,
+            question,
+            answer: answers,
+            question_image,
+            answer_key: null,
+            type: methodAdd
+          }
+
+          dispatch(newTriviaQuestionDetail(data))
+        }
+        break
+      case "checkbox":
+
+        if (answer_key === '') {
+          valid = false
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Isi kunci jawaban dengan benar !'
+          })
+        }
+
+        answer_checkbox.forEach((row, j) => {
+          if (row.option == '' && row.image == '') {
+            valid = false
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Isi jawaban dengan benar !'
+            })
+          }
+        })
+
+        const answers_check = JSON.stringify(answer_checkbox)
+        if (valid) {
+          const data = {
+            trivia_question_bank_id: id,
+            question,
+            answer: answers_check,
+            question_image,
+            answer_key,
+            duration,
+            type: methodAdd
+          }
+          dispatch(newTriviaQuestionDetail(data))
+        }
+        break
+      case "fill_in_the_blank":
+        const answers_blank = JSON.stringify(answer_blank)
+        if (valid) {
+          const data = {
+            trivia_question_bank_id: id,
+            question,
+            answer: answers_blank,
+            question_image,
+            answer_key,
+            duration: durationBlank,
+            type: methodAdd,
+            answer_key: null
+          }
+          dispatch(newTriviaQuestionDetail(data))
+        }
+        break
+      default:
+        break;
+    }
   };
 
   const onSubmit = (e) => {
@@ -271,7 +404,7 @@ const StepTwo = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">Soal 1</h3>
+            <h3 className="card-title font-weight-bolder text-dark">Soal {trivia.bank_soal + 1}</h3>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
@@ -364,6 +497,7 @@ const StepTwo = () => {
                     <button
                       className="btn btn-primary btn-sm"
                       onClick={saveDraft}
+                      type='button'
                     >
                       Simpan Draft
                     </button>

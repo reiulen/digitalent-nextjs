@@ -44,9 +44,6 @@ const CheckboxComponent = ({ props_answer, props_answer_key, props_duration }) =
             props_answer_key('')
         }
         const list = [...answer]
-        list.forEach((row, j) => {
-            list[j]['is_right'] = false
-        })
         list[i]['is_right'] = value
     }
 

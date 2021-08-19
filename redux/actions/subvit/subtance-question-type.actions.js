@@ -27,7 +27,7 @@ import {
 
 import axios from 'axios'
 
-export const getAllSubtanceQuestionBanksType = (page = 1, keyword = '', limit = null) => async (dispatch) => {
+export const getAllSubtanceQuestionBanksType = (page = 1, keyword = '', limit = 5) => async (dispatch) => {
     try {
 
         dispatch({ type: SUBTANCE_QUESTION_TYPE_REQUEST })

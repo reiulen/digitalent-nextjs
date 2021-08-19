@@ -36,6 +36,9 @@ const DetailSurvey = () => {
         }
     }, [isDeleted]);
 
+    const [search, setSearch] = useState('')
+    const [limit, setLimit] = useState(null)
+
 
     const handlePagination = (pageNumber) => {
         router.push(`${router.pathname}/${id}?page=${pageNumber}`)
@@ -88,6 +91,10 @@ const DetailSurvey = () => {
         })
     }
 
+    const handleSearch = () => {
+        let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`
+        router.push(link)
+    }
 
     return (
         <PageWrapper>
@@ -202,6 +209,8 @@ const DetailSurvey = () => {
                                             className="form-control"
                                             placeholder="Search..."
                                             id="kt_datatable_search_query"
+                                            onChange={e => setSearch(e.target.value)}
+                                            autoComplete="off"
                                         />
                                         <span>
                                             <i className="flaticon2-search-1 text-muted"></i>
@@ -210,44 +219,9 @@ const DetailSurvey = () => {
                                 </div>
 
                                 <div className="col-lg-2 col-xl-2">
-                                    <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                                    <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block " onClick={handleSearch}>
                                         Cari
                                     </button>
-                                </div>
-                            </div>
-
-                            <div className="row align-items-center my-5">
-                                <div className="col-lg-3 col-xl-3 ">
-                                    <div className="form-group mb-0">
-                                        <select className="form-control">
-                                            <option>Semua</option>
-                                        </select>
-                                        <small className="text-muted mt-1 p-0">
-                                            Filter by Pelatihan
-                                        </small>
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-xl-3 ">
-                                    <div className="form-group mb-0">
-                                        <select className="form-control">
-                                            <option>Semua</option>
-                                        </select>
-                                        <small className="text-muted mt-1 p-0">
-                                            Filter by Status
-                                        </small>
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-xl-3 ">
-                                    <div className="form-group mb-0">
-                                        <select className="form-control">
-                                            <option>Semua</option>
-                                        </select>
-                                        <small className="text-muted mt-1 p-0">
-                                            Filter by Nilai
-                                        </small>
-                                    </div>
                                 </div>
                             </div>
                         </div>

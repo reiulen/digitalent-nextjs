@@ -191,11 +191,14 @@ const Kategori = () => {
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
                                                 <th className='text-center'>No</th>
-                                                <th >Kategori</th>
-                                                <th>Judul</th>
+                                                <th >Nama</th>
+                                                <th>Jenis Kategori</th>
                                                 <th className='text-center'>Action</th>
                                             </tr>
                                         </thead>
+                                        {/* {
+                                            console.log (kategori)
+                                        } */}
                                         <tbody>
                                             {
                                                 !kategori || kategori && kategori.kategori.length === 0 ?
