@@ -3,25 +3,46 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
-import { newImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
-import { NEW_IMAGETRON_RESET } from '../../../../redux/types/publikasi/imagetron.type'
+import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
+import { TagsInput } from "react-tag-input-component";
 
+import { newImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+import { NEW_IMAGETRON_RESET } from '../../../../redux/types/publikasi/imagetron.type'
 import PageWrapper from '../../../wrapper/page.wrapper';
+import LoadingPage from "../../../LoadingPage";
 
 const TambahImagetron = () => {
     const editorRef = useRef()
     const dispatch = useDispatch()
+    const router = useRouter();
 
     const importSwitch = () => import('bootstrap-switch-button-react')
 
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
-
+    const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
     const { loading, error, success } = useSelector(state => state.newImagetron)
+    const {
+        loading: allLoading,
+        error: allError,
+        kategori,
+      } = useSelector((state) => state.allKategori);
 
     useEffect(() => {
+
+        dispatch(getAllKategori());
+
+        if (success) {
+            router.push({
+              pathname: `/publikasi/imagetron`,
+              query: { success: true },
+            });
+          }
 
         // if (error) {
         //     dispatch(clearErrors())
@@ -33,7 +54,7 @@ const TambahImagetron = () => {
         //     })
         // }
 
-    }, [dispatch, error, success]);
+    }, [dispatch, error, success, simpleValidator]);
 
 
     const [kategori_id, setKategoriId] = useState('')
@@ -113,15 +134,50 @@ const TambahImagetron = () => {
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
-                            <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
-                                <div className="col-sm-10">
-                                    <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => setKategoriId(e.target.value)} >
-                                        <option value="1">Kategori</option>
-                                        <option value="2">Kategori 2</option>
-                                    </select>
-                                </div>
-                            </div>
+                        <div className="form-group row">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Kategori
+                  </label>
+                  <div className="col-sm-10">
+                    <select
+                      name=""
+                      id=""
+                      className="form-control"
+                      value={kategori_id}
+                      onChange={(e) => setKategoriId(e.target.value)}
+                      onBlur={(e) => {
+                        setKategoriId(e.target.value);
+                        simpleValidator.current.showMessageFor("kategori_id");
+                      }}
+                    >
+                      <option selected disabled value="">
+                        -- Kategori --
+                      </option>
+                      {!kategori || (kategori && kategori.length === 0) ? (
+                        <option value="">Data kosong</option>
+                      ) : (
+                        kategori &&
+                        kategori.kategori &&
+                        kategori.kategori.map((row) => {
+                          return (
+                            <option key={row.id} value={row.id}>
+                              {row.nama_kategori}
+                            </option>
+                          );
+                        })
+                      )}
+                    </select>
+                    {simpleValidator.current.message(
+                      "kategori_id",
+                      kategori_id,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                  </div>
+                </div>
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>

@@ -143,13 +143,13 @@ const StepTwo = () => {
           <StepInputPublish step="2"></StepInputPublish>
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Publish Soal Cloning
+              Publish Soal
             </h3>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-6 col-md-2">
                   <span>Pelaksanaan dari</span>
                   <DatePicker
                     className="form-control"
@@ -170,7 +170,7 @@ const StepTwo = () => {
                   {simpleValidator.current.message('tanggal mulai', startDate, 'required', { className: 'text-danger' })}
                 </div>
 
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-6 col-md-2">
                   <span>Sampai</span>
                   <DatePicker
                     className="form-control"

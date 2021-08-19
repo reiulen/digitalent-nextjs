@@ -24,7 +24,7 @@ import {
 
 import axios from 'axios'
 
-export const getAllSubtanceQuestionDetail = (id, page = 1, limit = null) => async (dispatch) => {
+export const getAllSubtanceQuestionDetail = (id, page = 1, keyword = null, limit = null, status = '', category = '', pelatihan = '') => async (dispatch) => {
     try {
 
         dispatch({ type: SUBTANCE_QUESTION_DETAIL_REQUEST })
@@ -32,6 +32,10 @@ export const getAllSubtanceQuestionDetail = (id, page = 1, limit = null) => asyn
         let link = process.env.END_POINT_API_SUBVIT + `api/subtance-question-bank-details/all/${id}?`
         if (page) link = link.concat(`&page=${page}`)
         if (limit) link = link.concat(`&limit=${limit}`)
+        if (keyword) link = link.concat(`&keyword=${keyword}`)
+        if (status) link = link.concat(`&status=${status}`)
+        if (category) link = link.concat(`&category=${category}`)
+        if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
 
         // const config = {
         //     headers: {

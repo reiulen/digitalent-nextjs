@@ -34,7 +34,11 @@ const TambahTriviaStepOne = () => {
       if (typeSave === 'lanjut') {
         router.push({
           pathname: `/subvit/trivia/tambah/step-2-${metode}`,
+<<<<<<< HEAD
           query: { id }
+=======
+          query: { id, metode }
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
         })
       } else if (typeSave === 'draft') {
         router.push({
@@ -49,7 +53,10 @@ const TambahTriviaStepOne = () => {
   const [academy_id, setAcademyId] = useState("");
   const [theme_id, setThemeId] = useState("");
   const [training_id, setTrainingId] = useState("");
+<<<<<<< HEAD
   const [category, setCategory] = useState("");
+=======
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
   const [metode, setMetode] = useState('entry')
 
   const saveDraft = () => {
@@ -68,7 +75,10 @@ const TambahTriviaStepOne = () => {
         academy_id,
         theme_id,
         training_id,
+<<<<<<< HEAD
         category,
+=======
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
       }
 
       dispatch(newTriviaQuestionBanks(data))
@@ -102,7 +112,10 @@ const TambahTriviaStepOne = () => {
         academy_id,
         theme_id,
         training_id,
+<<<<<<< HEAD
         category,
+=======
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
       }
 
       dispatch(newTriviaQuestionBanks(data))
@@ -238,6 +251,7 @@ const TambahTriviaStepOne = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label "
                 >
+<<<<<<< HEAD
                   Kategori
                 </label>
                 <div className="col-sm-10">
@@ -262,6 +276,8 @@ const TambahTriviaStepOne = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label "
                 >
+=======
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                   Metode
                 </label>
                 <div className="col-sm-10">

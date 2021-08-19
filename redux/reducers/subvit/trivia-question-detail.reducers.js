@@ -48,6 +48,7 @@ export const allTriviaQuestionDetailReducer = (state = { trivia_question_detail:
 
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null
             }
 
@@ -84,6 +85,7 @@ export const newTriviaQuestionDetailReducer = (state = { trivia_question_detail:
 
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null
             }
 
@@ -155,6 +157,7 @@ export const importFileTriviaQuestionDetailReducer = (state = { trivia_question_
 
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null
             }
 
@@ -190,6 +193,7 @@ export const importImagesTriviaQuestionDetailReducer = (state = { trivia_questio
 
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null
             }
 

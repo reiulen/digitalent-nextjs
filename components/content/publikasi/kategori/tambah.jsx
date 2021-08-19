@@ -108,7 +108,11 @@ const TambahKategori = () => {
                                         onChange={(e) => setNamaKategori(e.target.value)}
                                         onBlur={() => simpleValidator.current.showMessageFor("nama kategori")}
                                     />
+<<<<<<< HEAD
                                     {simpleValidator.current.message("nama kategori", nama, "required|max:25|string", { className: "text-danger" })}
+=======
+                                    {/* {simpleValidator.current.message("nama kategori", nama, "required|max:25|string", { className: "text-danger" })} */}
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                                 </div>
                             </div>
 

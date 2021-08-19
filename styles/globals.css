@@ -98,6 +98,11 @@ a {
   background-color: #f4e1f0;
 }
 
+.input-group-text{
+  background: #D6D6E0;
+  color:#80808F;
+}
+
 @media only screen and (max-width: 768px) {
   .ilustrator-dashboard {
     visibility: hidden;

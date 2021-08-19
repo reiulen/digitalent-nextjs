@@ -138,7 +138,11 @@ const EditKategori = () => {
                                     <Link href='/publikasi/kategori'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
+<<<<<<< HEAD
                                     <button className='btn btn-primary btn-sm'>Submit</button>
+=======
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                                 </div>
                             </div>
                         </form>

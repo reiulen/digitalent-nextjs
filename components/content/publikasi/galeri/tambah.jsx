@@ -1,15 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 import Link from 'next/link'
-import Image from 'next/image'
+// import Image from 'next/image'
 import dynamic from "next/dynamic";
 import { useDropzone } from 'react-dropzone';
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
+import SimpleReactValidator from 'simple-react-validator'
+// import Swal from "sweetalert2";
+import { TagsInput } from "react-tag-input-component";
 
-import { newArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
-import { NEW_ARTIKEL_RESET } from '../../../../redux/types/publikasi/artikel.type'
+import { newGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
+import { NEW_GALERI_RESET } from '../../../../redux/types/publikasi/galeri.type'
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 
 import PageWrapper from '../../../wrapper/page.wrapper';
+import LoadingPage from "../../../LoadingPage";
 
 const thumbsContainer = {
     display: 'flex',
@@ -44,14 +50,19 @@ const img = {
 
 const TambahGaleri = () => {
     const dispatch = useDispatch()
+    const router = useRouter();
 
     const importSwitch = () => import('bootstrap-switch-button-react')
 
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
+    const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+    const [, forceUpdate] = useState();
 
-    const { loading, error, success } = useSelector(state => state.newArtikel)
+    const { loading, error, success } = useSelector(state => state.newGaleri)
+    const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
+
     const [files, setFiles] = useState([]);
     const { getRootProps, getInputProps } = useDropzone({
         accept: 'image/*',
@@ -77,26 +88,49 @@ const TambahGaleri = () => {
     ));
 
     useEffect(() => {
+        dispatch(getAllKategori());
 
         files.forEach(file => URL.revokeObjectURL(file.preview));
 
         if (success) {
             dispatch({
-                type: NEW_ARTIKEL_RESET
+                type: NEW_GALERI_RESET
+            })
+        }
+
+        let temps= []
+
+        for (let i = 0; i < files.length; i++) {
+            const reader = new FileReader()
+
+            reader.onload = () => {
+                temps.push (reader.result)
+            }
+
+            reader.readAsDataURL(files[i])
+        }
+
+        setGambar(temps)
+        
+
+        if (success) {
+            router.push({
+                pathname: `/publikasi/galeri`,
+                query: { success: true }
             })
         }
 
     }, [dispatch, error, success, files]);
 
 
-    const [judul_video, setJudulVideo] = useState('')
-    const [isi_vedeo, setIsiVideo] = useState('');
-    const [gambar, setGambar] = useState('')
-    const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
-    const [url_video, setUrlVideo] = useState('')
+    const [judul, setJudulGaleri] = useState('')
+    const [isi_galleri, setIsiGaleri] = useState('');
+    const [gambar, setGambar] = useState([])
+    // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
     const [kategori_id, setKategoriId] = useState('')
-    const [user_id, setUserId] = useState(1)
-    const [tag, setTag] = useState('')
+    // const [kategori_id, setKategoriId] = useState(1)
+    const [users_id, setUserId] = useState(1)
+    const [tag, setTag] = useState([])
     const [publish, setPublish] = useState(false)
 
     const onSubmit = (e) => {
@@ -105,12 +139,24 @@ const TambahGaleri = () => {
             dispatch(clearErrors())
         }
 
+        if (success) {
+            dispatch({
+              type: NEW_GALERI_RESET,
+            });
+          }
+
         const data = {
-            files
+            judul,
+            isi_galleri,
+            gambar,
+            kategori_id,
+            users_id,
+            tag,
+            publish
         }
 
-        // dispatch(newArtikel(data))
-        console.log(data)
+        dispatch(newGaleri(data))
+        // console.log(data)
     }
 
     return (
@@ -128,6 +174,7 @@ const TambahGaleri = () => {
                 : ''
             }
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+                {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Tambah Galeri</h3>
@@ -137,14 +184,14 @@ const TambahGaleri = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} />
+                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} />
                                 </div>
                             </div>
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi Foto</label>
                                 <div className="col-sm-10">
-                                    <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_vedeo}></textarea>
+                                    <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri}></textarea>
                                     <small className='text-danger'>*Maksimal 160 Karakter</small>
                                 </div>
                             </div>
@@ -154,32 +201,78 @@ const TambahGaleri = () => {
                                 <div className="col-sm-10">
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
-                                        <p className='text-center my-auto'>Drag 'n' drop some files here, or click to select files</p>
+                                        <p className='text-center my-auto'>Seret gambar ke sini atau klik untuk memilih.</p>
                                     </div>
                                     <aside style={thumbsContainer}>
                                         {thumbs}
                                     </aside>
                                 </div>
                             </div>
+                            {/* {
+                                console.log (kategori)
+                            } */}
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="col-sm-2 col-form-label"
+                                >
+                                    Kategori
+                                </label>
                                 <div className="col-sm-10">
-                                    <select name="" id="" className='form-control' onChange={e => setKategoriId(e.target.value)}>
-                                        <option value="Kategori">Kategori</option>
+                                    <select
+                                    name=""
+                                    id=""
+                                    className="form-control"
+                                    value={kategori_id}
+                                    onChange={(e) => setKategoriId(e.target.value)}
+                                    onBlur={(e) => {
+                                        setKategoriId(e.target.value);
+                                        simpleValidator.current.showMessageFor("kategori_id");
+                                    }}
+                                    >
+                                    <option selected disabled value="">
+                                        -- Kategori --
+                                    </option>
+                                    {!kategori || (kategori && kategori.length === 0) ? (
+                                        <option value="">Data kosong</option>
+                                    ) : (
+                                        kategori &&
+                                        kategori.kategori &&
+                                        kategori.kategori.map((row) => {
+                                        return (
+                                            <option key={row.id} value={row.id}>
+                                            {row.nama_kategori}
+                                            </option>
+                                        );
+                                        })
+                                    )}
                                     </select>
+                                    {simpleValidator.current.message(
+                                    "kategori_id",
+                                    kategori_id,
+                                    "required",
+                                    { className: "text-danger" }
+                                    )}
                                 </div>
                             </div>
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} />
+                                    <TagsInput
+                                        value={tag}
+                                        onChange={setTag}
+                                        name="fruits"
+                                        placeHolder="Isi Tag disini dan Enter"
+                                    // onBlur={() => simpleValidator.current.showMessageFor('tag')}
+                                    />
+                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                 </div>
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -200,7 +293,7 @@ const TambahGaleri = () => {
                                     <Link href='/publikasi/galeri'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>
