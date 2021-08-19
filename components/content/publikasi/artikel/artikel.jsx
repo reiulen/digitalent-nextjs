@@ -76,8 +76,8 @@ const Artikel = () => {
 
     if (publishValue){
       router.push(`${router.pathname}?publish=${publishValue}`);
-      console.log("check")
-      console.log (publishValue)
+      // console.log("check")
+      // console.log (publishValue)
     }
 
   }, [limit, isDeleted, publishValue]);
