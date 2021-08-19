@@ -29,7 +29,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllBerita = (page = 1, keyword = '', limit = 5) => async (dispatch) => {
+export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null) => async (dispatch) => {
     try {
 
         dispatch({ type: BERITA_REQUEST })
@@ -37,6 +37,7 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5) => async (dispat
         let link = process.env.END_POINT_API_PUBLIKASI + `api/berita?page=${page}`
         if (keyword) link = link.concat(`&keyword=${keyword}`)
         if (limit) link = link.concat(`&limit=${limit}`)
+        if (publish) link = link.concat(`&publish=${publish}`);
 
         // const config = {
         //     headers: {

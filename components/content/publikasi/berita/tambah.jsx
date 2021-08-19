@@ -220,7 +220,7 @@ const TambahBerita = () => {
                                         ) : (
                                             kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                 return (
-                                                    <option key={row.id} value={row.id}>{row.nama}</option>
+                                                    <option key={row.id} value={row.id}>{row.nama_kategori}</option>
                                                 )
                                             })
                                         )}
@@ -237,14 +237,14 @@ const TambahBerita = () => {
                                         value={tag}
                                         onChange={setTag}
                                         name="tag"
-                                        placeHolder="Isi Tag disini"
+                                        placeHolder="Isi Tag disini dan enter."
                                     />
                                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                 </div>
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish </label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -265,7 +265,7 @@ const TambahBerita = () => {
                                     <Link href='/publikasi/berita'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>
