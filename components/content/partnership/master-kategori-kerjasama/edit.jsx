@@ -230,6 +230,7 @@ const Edit = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
+                  required
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Kategori Lembaga"
@@ -288,6 +289,7 @@ const Edit = () => {
                           </label>
                           <div className="col-sm-10">
                             <input
+                            required
                               type="text"
                               name="cooperation_form"
                               className="form-control"
