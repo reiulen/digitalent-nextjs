@@ -16,4 +16,4 @@ const CardPage = ({ background, icon, color, value, titleValue, title, published
 }
 
 
-export default CardPage
+export default CardPage;
