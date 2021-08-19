@@ -210,6 +210,9 @@ const EditBerita = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {
+                                    console.log (kategori)
+                                }
 
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
@@ -221,7 +224,7 @@ const EditBerita = () => {
                                             ) : (
                                                 kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                     return (
-                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
+                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
                                                     )
                                                 })
                                             )}
