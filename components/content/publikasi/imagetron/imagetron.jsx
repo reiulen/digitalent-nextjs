@@ -382,7 +382,7 @@ const Imagetron = () => {
                                                             </td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
+                                                                {/* <ButtonAction icon='setting.svg' /> */}
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/imagetron/${row.id}`}/>
                                                                 <button
                                                                     onClick={() => handleDelete(row.id)}
