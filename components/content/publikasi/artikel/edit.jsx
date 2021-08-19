@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import SimpleReactValidator from 'simple-react-validator'
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { TagsInput } from "react-tag-input-component";
@@ -34,7 +33,6 @@ const EditArtikel = () => {
   const SwitchButton = dynamic(importSwitch, {
     ssr: false,
   });
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
   const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))

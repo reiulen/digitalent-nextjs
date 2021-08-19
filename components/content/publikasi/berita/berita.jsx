@@ -190,8 +190,8 @@ const Berita = () => {
                         background='bg-light-success' 
                         icon='orang-tambah-green.svg' 
                         color='#74BBB7' 
-                        value='64' 
-                        titleValue='K' 
+                        value={berita && berita.total_views != "" ? berita.total_views : 0} 
+                        titleValue='Orang' 
                         title='Total Yang Baca' 
                         publishedVal = ""
                         routePublish = { () => setPublishValue("")}
@@ -202,7 +202,7 @@ const Berita = () => {
                         color='#F65464' 
                         value={berita && berita.unpublish != "" ? berita.unpublish : 0} 
                         titleValue='Berita' 
-                        title='Total Unpublish'
+                        title='Total Belum Publish'
                         publishedVal = "0"
                         routePublish = { () => setPublishValue("0")} 
                         />
@@ -289,8 +289,6 @@ const Berita = () => {
                                 </div>
                             </div>
                         </div>
-                        
-
                         <div className="table-page mt-5">
                             <div className="table-responsive">
 
@@ -304,7 +302,7 @@ const Berita = () => {
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
-                                                <th>Tanggal Membuat</th>
+                                                <th>Tanggal Publish</th>
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
@@ -333,7 +331,17 @@ const Berita = () => {
                                                             </td>
                                                             <td className='align-middle'>{row.jenis_kategori}</td>
                                                             <td className='align-middle'>{row.judul_berita}</td>
-                                                            <td className='align-middle'>{new Date(row.created_at).toLocaleDateString("fr-CA")}</td>
+                                                            <td className='align-middle'>
+                                                                {
+                                                                    row.publish === 1 ? (
+                                                                    row.tanggal_publish
+                                                                    ) : (
+                                                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                                                        Belum dipublish
+                                                                    </span>
+                                                                    )
+                                                                }
+                                                            </td>
                                                             <td className='align-middle'>{row.dibuat}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?

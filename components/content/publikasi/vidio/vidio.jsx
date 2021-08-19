@@ -8,6 +8,8 @@ import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import ReactPlayer from 'react-player';
+import Swal from "sweetalert2";
+import moment from "moment";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
@@ -31,9 +33,10 @@ const Vidio = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [url_video, setUrlVideo] = useState("")
+    const [publishValue, setPublishValue] = useState(null)
 
     let loading = false
-    let { page = 1 } = router.query
+    let { page = 1, keyword, success } = router.query
     if (allLoading) {
         loading = allLoading
     } else if (deleteLoading) {
@@ -45,6 +48,7 @@ const Vidio = () => {
         if (limit) {
           router.push(`${router.pathname}?page=1&limit=${limit}`)
         }
+
         if (isDeleted) {
           Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
             if (result.isConfirmed) {
@@ -55,7 +59,13 @@ const Vidio = () => {
             type: DELETE_VIDEO_RESET
           })
         }
-      }, [limit, isDeleted]);
+
+        if (publishValue){
+            router.push(`${router.pathname}?publish=${publishValue}`);
+            console.log("check")
+            // console.log (publishValue)
+          }
+      }, [limit, isDeleted, publishValue]);
 
     const onNewReset = () => {
     router.replace('/publikasi/video', undefined, { shallow: true })
@@ -88,11 +98,19 @@ const Vidio = () => {
 
     const handleSearch = () => {
         if (limit != null) {
-          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
         } else {
-          router.push(`${router.pathname}?page=1&keyword=${search}`)
+            router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
-      }
+    }
+
+    const handleSearchDate = () => {
+        router.push(
+            `${router.pathname}?page=1&startdate=${moment(startDate).format(
+            "YYYY-MM-DD"
+            )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+        );
+    };
 
     return (
         <PageWrapper>
@@ -109,12 +127,75 @@ const Vidio = () => {
                 : ''
             }
 
+            {success ? (
+                <div
+                    className="alert alert-custom alert-light-success fade show mb-5"
+                    role="alert"
+                >
+                    <div className="alert-icon">
+                        <i className="flaticon2-checkmark"></i>
+                    </div>
+                    <div className="alert-text">Berhasil Menambah Data</div>
+                    <div className="alert-close">
+                        <button
+                        type="button"
+                        className="close"
+                        data-dismiss="alert"
+                        aria-label="Close"
+                        onClick={onNewReset}
+                        >
+                        <span aria-hidden="true">
+                            <i className="ki ki-close"></i>
+                        </span>
+                        </button>
+                    </div>
+                </div>
+                ) : (
+                    ""
+            )}
+
             <div className="col-lg-12 col-md-3">
                 <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Video' title='Total Publish' />
-                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Video' title='Total Author' />
-                    <CardPage background='bg-light-success' icon='orang-tambah-green.svg' color='#74BBB7' value='64' titleValue='K' title='Total Yang Baca' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Video' title='Total Unpublish' />
+                    <CardPage 
+                        background='bg-light-info' 
+                        icon='mail-purple.svg' 
+                        color='#8A50FC' 
+                        value={video && video.publish != "" ? video.publish : 0}
+                        titleValue='Video' 
+                        title='Total Publish' 
+                        publishedVal = "1"
+                        routePublish = { () => setPublishValue("1")}
+                    />
+                    <CardPage 
+                        background='bg-light-warning' 
+                        icon='garis-yellow.svg' 
+                        color='#634100' 
+                        value='64' 
+                        titleValue='Video' 
+                        title='Total Author' 
+                        publishedVal = ""
+                        routePublish = { () => setPublishValue("")}
+                    />
+                    <CardPage 
+                        background='bg-light-success' 
+                        icon='orang-tambah-green.svg' 
+                        color='#74BBB7' 
+                        value={video && video.total_views != "" ? video.total_views : 0}  
+                        titleValue='Orang' 
+                        title='Total Yang Baca' 
+                        publishedVal = ""
+                        routePublish = { () => setPublishValue("")}
+                    />
+                    <CardPage 
+                        background='bg-light-danger' 
+                        icon='kotak-kotak-red.svg' 
+                        color='#F65464' 
+                        value={video && video.publish != "" ? video.unpublish : 0} 
+                        titleValue='Video' 
+                        title='Total Belum Publish'
+                        publishedVal = "0"
+                        routePublish = { () => setPublishValue("0")} 
+                        />
                 </div>
             </div>
 
@@ -190,7 +271,13 @@ const Vidio = () => {
                                     </small>
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block">Cari</a>
+                                    <button
+                                        type="button"
+                                        className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
+                                        onClick={handleSearchDate}
+                                    >
+                                        Cari
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -231,7 +318,17 @@ const Vidio = () => {
                                                             </td>
                                                             <td className='align-middle'>{row.judul_video}</td>
                                                             <td className='align-middle'>{row.judul_video}</td>
-                                                            <td className='align-middle'>{new Date (row.created_at).toLocaleDateString("fr-CA")}</td>
+                                                            <td className='align-middle'>
+                                                                {
+                                                                    row.publish === 1 ? (
+                                                                    row.tanggal_publish
+                                                                    ) : (
+                                                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                                                        Belum dipublish
+                                                                    </span>
+                                                                    )
+                                                                }
+                                                            </td>
                                                             <td className='align-middle'>{row.dibuat}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?

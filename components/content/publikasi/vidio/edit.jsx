@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from "next/router";
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
+import SimpleReactValidator from "simple-react-validator";
 
 import { updateVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { NEW_ARTIKEL_RESET, UPDATE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
+import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
@@ -24,11 +26,14 @@ const EditVideo = () => {
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
-
+    const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
     const { video } = useSelector(state => state.detailVideo)
     const { error, success, loading } = useSelector(state => state.updatedVideo)
+    const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
 
     useEffect(() => {
+
+        dispatch(getAllKategori())
 
         // editorRef.current = {
         //     CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
@@ -53,7 +58,7 @@ const EditVideo = () => {
     const [gambar, setGambar] = useState(video.gambar)
     const [url_video, setUrlVideo] = useState(video.url_video)
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
-    const [kategori_id, setKategoriId] = useState(1) //belum
+    const [kategori_id, setKategoriId] = useState(video.kategori_id) 
     const [users_id, setUserId] = useState(video.users_id)
     const [tag, setTag] = useState(video.tag)
     const [publish, setPublish] = useState(video.publish === 1 ? true : false)
@@ -239,13 +244,30 @@ const EditVideo = () => {
                                     
                                 </div>
 
+                                {
+                                    console.log (kategori)
+                                }
+                                {
+                                    console.log (kategori_id)
+                                }
+
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
                                     <div className="col-sm-10">
-                                        <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => setKategoriId(e.target.value)} >
-                                            <option value="1">Kategori</option>
-                                            <option value="2">Kategori 2</option>
+                                        <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
+                                            <option selected disabled value=''>-- Kategori --</option>
+                                            {!kategori || (kategori && kategori.length === 0) ? (
+                                                <option value="">Data kosong</option>
+                                            ) : (
+                                                kategori && kategori.kategori && kategori.kategori.map((row) => {
+                                                    return (
+                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
+                                                    )
+                                                })
+                                            )}
+
                                         </select>
+                                        {simpleValidator.current.message('kategori_id', kategori_id, 'required', { className: 'text-danger' })}
                                     </div>
                                 </div>
 
@@ -256,7 +278,7 @@ const EditVideo = () => {
                                             value={tag}
                                             onChange={setTag}
                                             name="fruits"
-                                            placeHolder="Isi Tag disini"
+                                            placeHolder="Isi Tag disini dan Enter"
                                         // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                         />
                                         {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
@@ -268,7 +290,7 @@ const EditVideo = () => {
                                 }
 
                                 <div className="form-group row">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                     <div className="col-sm-1">
                                         <SwitchButton
                                             checked={publish}
@@ -291,7 +313,7 @@ const EditVideo = () => {
                                         <Link href='/publikasi/video'>
                                             <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                         </Link>
-                                        <button className='btn btn-primary btn-sm'>Submit</button>
+                                        <button className='btn btn-primary btn-sm'>Simpan</button>
                                     </div>
                                 </div>
                             </form>
