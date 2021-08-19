@@ -242,7 +242,7 @@ const TambahArtikel = () => {
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required",
+                        "required|min:100",
                         { className: "text-danger" }
                       )}
                     </div>
