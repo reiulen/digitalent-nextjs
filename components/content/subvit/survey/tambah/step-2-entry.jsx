@@ -11,6 +11,8 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage"
 import ObjectiveComponent from "./step-2/objective-component";
+import MultipleChoiceComponent from "./step-2/multiple-choice-component";
+import TriggeredQuestionComponent from "./step-2/triggered-question-component";
 
 const StepTwo = () => {
   const dispatch = useDispatch();
@@ -23,12 +25,53 @@ const StepTwo = () => {
   const [question, setSoal] = useState('')
   const [question_image, setSoalImage] = useState('')
   const [answer, setSoalList] = useState([
-    { key: 'A', option: '', image: '', is_right: false },
-    { key: 'B', option: '', image: '', is_right: false },
-    { key: 'C', option: '', image: '', is_right: false },
-    { key: 'D', option: '', image: '', is_right: false }
+    { key: 'A', option: '', image: '' },
+    { key: 'B', option: '', image: '' },
+    { key: 'C', option: '', image: '' },
+    { key: 'D', option: '', image: '' }
   ])
-  const [answer_key, setAnswerKey] = useState('')
+  const [answer_multiple, setSoalMultipleList] = useState([
+    { key: 'A', option: '', image: '' },
+    { key: 'B', option: '', image: '' },
+    { key: 'C', option: '', image: '' },
+    { key: 'D', option: '', image: '' }
+  ])
+  const [answer_triggered, setSoalTriggeredList] = useState([
+    {
+      key: 'A', option: '', image: '', sub: [{
+        question: '', image: '', answer: [
+          {
+            key: 'A', option: '', image: '', sub: [
+              {
+                question: '', image: '', answer: [
+                  {
+                    key: 'A', option: '', image: '', sub: [
+                      {
+                        question: '', image: '', answer: [
+                          {
+                            key: 'A', option: '', image: '', sub: [
+                              {
+                                question: '', image: '', answer: [
+                                  { key: 'A', option: '', image: '' }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }]
+    },
+    { key: 'B', option: '', image: '', sub: [] },
+    { key: 'C', option: '', image: '', sub: [] },
+    { key: 'D', option: '', image: '', sub: [] }
+  ])
   const [typeSave, setTypeSave] = useState('lanjut')
 
   useEffect(() => {
@@ -80,48 +123,100 @@ const StepTwo = () => {
       })
     }
 
-    if (answer_key === '') {
-      valid = false
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Isi kunci jawaban dengan benar !'
-      })
-    }
+    // if (question == '' && question_image == '') {
+    //   valid = false
+    //   Swal.fire({
+    //     icon: 'error',
+    //     title: 'Oops...',
+    //     text: 'Isi pertanyaan dengan benar !'
+    //   })
+    // }
 
-    if (question == '' && question_image == '') {
-      valid = false
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Isi pertanyaan dengan benar !'
-      })
-    }
+    switch (methodAdd) {
+      case "objective":
 
-    answer.forEach((row, j) => {
-      if (row.option == '' && row.image == '') {
-        valid = false
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Isi jawaban dengan benar !'
-        })
-      }
-    })
+        // answer.forEach((row, j) => {
+        //   if (row.option == '' && row.image == '') {
+        //     valid = false
+        //     Swal.fire({
+        //       icon: 'error',
+        //       title: 'Oops...',
+        //       text: 'Isi jawaban dengan benar !'
+        //     })
+        //   }
+        // })
 
-    const answers = JSON.stringify(answer)
-    if (valid) {
-      const data = {
-        subtance_question_bank_id: id,
-        question,
-        answer: answers,
-        question_image,
-        answer_key,
-      }
+        const answers = JSON.stringify(answer)
+        if (valid) {
+          const data = {
+            survey_question_bank_id: id,
+            question,
+            answer: answer,
+            question_image,
+            answer_key: null,
+            type: methodAdd
+          }
 
-      console.log(data)
+          console.log(data)
+          // dispatch(newTriviaQuestionDetail(data))
+        }
+        break
+      case "multiple_choice":
 
-      //   dispatch(newSubtanceQuestionDetail(data))
+        // answer_multiple.forEach((row, j) => {
+        //   if (row.option == '' && row.image == '') {
+        //     valid = false
+        //     Swal.fire({
+        //       icon: 'error',
+        //       title: 'Oops...',
+        //       text: 'Isi jawaban dengan benar !'
+        //     })
+        //   }
+        // })
+
+        // const answers_multiple = JSON.stringify(answer_multiple)
+        if (valid) {
+          const data = {
+            trivia_question_bank_id: id,
+            question,
+            answer: answer_multiple,
+            question_image,
+            answer_key: null,
+            type: methodAdd
+          }
+
+          console.log(data)
+          // dispatch(newTriviaQuestionDetail(data))
+        }
+        break
+      case "pertanyaan_terbuka":
+        if (valid) {
+          const data = {
+            trivia_question_bank_id: id,
+            question,
+            question_image,
+            type: methodAdd,
+          }
+          // dispatch(newTriviaQuestionDetail(data))
+          console.log(data)
+        }
+        break
+      case "triggered_question":
+        if (valid) {
+          const data = {
+            trivia_question_bank_id: id,
+            question,
+            answer: answer_triggered,
+            question_image,
+            answer_key: null,
+            type: methodAdd
+          }
+
+          console.log(data)
+          // dispatch(newTriviaQuestionDetail(data))
+        }
+      default:
+        break;
     }
   }
 
@@ -131,20 +226,21 @@ const StepTwo = () => {
         return (
           <ObjectiveComponent
             props_answer={answer => setSoalList(answer)}
-            props_answer_key={key => setAnswerKey(key)}
           />
         )
-      case "choice":
+      case "multiple_choice":
         return (
-          <h1>Hello Choice</h1>
+          <MultipleChoiceComponent
+            props_answer={answer => setSoalMultipleList(answer)}
+          />
         )
-      case "terbuka":
+      case "pertanyaan_terbuka":
+        return ('')
+      case "triggered_question":
         return (
-          <h1>Hello Terbuka</h1>
-        )
-      case "triger":
-        return (
-          <h1>Hello Triger</h1>
+          <TriggeredQuestionComponent
+            props_answer={answer => setSoalTriggeredList(answer)}
+          />
         )
       default:
         return (
@@ -240,9 +336,9 @@ const StepTwo = () => {
                       type="radio"
                       name="inlineRadioOptions"
                       id="inlineRadio2"
-                      value="choice"
-                      checked={methodAdd === "choice"}
-                      onChange={() => setMethodAdd("choice")}
+                      value="multiple_choice"
+                      checked={methodAdd === "multiple_choice"}
+                      onChange={() => setMethodAdd("multiple_choice")}
                     />
                     <label class="form-check-label" for="inlineRadio2">
                       Multiple Choice
@@ -254,9 +350,9 @@ const StepTwo = () => {
                       type="radio"
                       name="inlineRadioOptions"
                       id="inlineRadio3"
-                      value="terbuka"
-                      checked={methodAdd === "terbuka"}
-                      onChange={() => setMethodAdd("terbuka")}
+                      value="pertanyaan_terbuka"
+                      checked={methodAdd === "pertanyaan_terbuka"}
+                      onChange={() => setMethodAdd("pertanyaan_terbuka")}
                     />
                     <label class="form-check-label" for="inlineRadio3">
                       Pertanyaan Terbuka
@@ -268,9 +364,9 @@ const StepTwo = () => {
                       type="radio"
                       name="inlineRadioOptions"
                       id="inlineRadio4"
-                      value="triger"
-                      checked={methodAdd === "triger"}
-                      onChange={() => setMethodAdd("triger")}
+                      value="triggered_question"
+                      checked={methodAdd === "triggered_question"}
+                      onChange={() => setMethodAdd("triggered_question")}
                     />
                     <label class="form-check-label" for="inlineRadio4">
                       Triggered Question

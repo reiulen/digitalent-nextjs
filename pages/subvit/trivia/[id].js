@@ -18,6 +18,6 @@ export default function DetailTriviaPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, query }) => {
-    await store.dispatch(getAllTriviaQuestionDetail(params.id, query.page, query.limit))
+    await store.dispatch(getAllTriviaQuestionDetail(params.id, query.page, query.keyword, query.limit))
     await store.dispatch(getDetailTriviaQuestionBanks(params.id))
 })

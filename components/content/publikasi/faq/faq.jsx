@@ -86,7 +86,7 @@ const Faq = () => {
     };
 
     const handlePagination = (pageNumber) => {
-        if (limit != null) {
+        if (limit !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`);
@@ -94,7 +94,7 @@ const Faq = () => {
     };
 
     const handleSearch = () => {
-        if (limit != null) {
+        if (limit !== null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}`);
@@ -102,9 +102,16 @@ const Faq = () => {
     };
 
     const handleSearchDate = () => {
-        router.push(
-            `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-        );
+        if (limit !== null) {
+            router.push(
+                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+            );
+        } else {
+            router.push(
+                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+            ); 
+        }
+        
     };
 
     const handleLimit = (val) => {
@@ -155,9 +162,30 @@ const Faq = () => {
 
             <div className="col-lg-12 col-md-12">
                 <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='FAQ' title='Total Publish' />
-                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='FAQ' title='Total Author' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='FAQ' title='Total Unpublish' />
+                    <CardPage 
+                        background='bg-light-info' 
+                        icon='mail-purple.svg' 
+                        color='#8A50FC' 
+                        value='90' 
+                        titleValue='FAQ' 
+                        title='Total Publish' 
+                    />
+                    <CardPage 
+                        background='bg-light-warning' 
+                        icon='garis-yellow.svg' 
+                        color='#634100' 
+                        value='64' 
+                        titleValue='FAQ' 
+                        title='Total Author' 
+                    />
+                    <CardPage 
+                        background='bg-light-danger' 
+                        icon='kotak-kotak-red.svg' 
+                        color='#F65464' 
+                        value='64' 
+                        titleValue='FAQ' 
+                        title='Total Unpublish' 
+                    />
                 </div>
             </div>
 
@@ -269,6 +297,9 @@ const Faq = () => {
                                                     <td className='align-middle text-center' colSpan={9}>Data Masih Kosong</td> :
                                                     faq && faq.faq.map((row, i) => {
                                                         return <tr key={row.id}>
+                                                            {/* {
+                                                                console.log (row)
+                                                            } */}
                                                             <td className='align-middle text-center'>
                                                                 <span className="badge badge-secondary text-muted">
                                                                     {i + 1 * (page * 5 || limit) - 4}
@@ -278,7 +309,7 @@ const Faq = () => {
                                                             <td className='align-middle'>{row.kategori}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (
-                                                                    row.created_at
+                                                                    row.tanggal_publish
                                                                 ) : (
                                                                     <span class="label label-inline label-light-danger font-weight-bold">
                                                                         Belum dipublish
@@ -287,16 +318,22 @@ const Faq = () => {
                                                             </td>
                                                             <td className='align-middle'>{row.dibuat}</td>
                                                             <td className='align-middle'>
-                                                                <SwitchButton
-                                                                    checked={row.pinned === 1 ? true : false}
-                                                                    onlabel=" "
-                                                                    onstyle="primary"
-                                                                    offlabel=" "
-                                                                    offstyle="secondary"
-                                                                    size="sm"
-                                                                    width={30}
-                                                                    onChange={(checked) => onSetPin(checked, row.id)}
-                                                                />
+                                                                {
+                                                                    row.publish === 1 ? 
+                                                                    <SwitchButton
+                                                                        checked={row.pinned === 1 ? true : false}
+                                                                        onlabel=" "
+                                                                        onstyle="primary"
+                                                                        offlabel=" "
+                                                                        offstyle="secondary"
+                                                                        size="sm"
+                                                                        width={30}
+                                                                        onChange={(checked) => onSetPin(checked, row.id)}
+                                                                    />
+                                                                    :
+                                                                    ""
+                                                                }
+                                                                
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (

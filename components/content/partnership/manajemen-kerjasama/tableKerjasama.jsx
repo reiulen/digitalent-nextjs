@@ -83,7 +83,7 @@ const Table = () => {
       {console.log("object html")}
       <div className="col-lg-12 col-md-12">
         <div className="row">
-          <CardPage
+          {/* <CardPage
             background="bg-light-success cursor-pointer"
             icon="user-blue.svg"
             color="#74BBB7"
@@ -91,8 +91,23 @@ const Table = () => {
             titleValue="Kerjasama"
             title="Kerjasama Aktif"
             onClick={() => dispatch(changeValueStatusCard("active"))}
-          />
-          <CardPage
+          /> */}
+
+{/* card 1 */}
+          <div className={`col bg-light-success cursor-pointer px-6 py-8 rounded-xl mr-7 mb-7`} onClick={() => dispatch(changeValueStatusCard("active"))} >
+            <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
+                <div className="row ml-4">
+                    <Image alt='card-page-icon' src={`/assets/icon/user-blue.svg`} width={30} height={30} />
+                    <p className={`font-weight-bold font-size-h2 ml-2 my-auto`} style={{ color: "#74BBB7", opacity: '0.5' }}>{allMK.totalDataActive} Kerjasama</p>
+                </div>
+            </span>
+            <p className='ml-3 mt-2' style={{ color: "#74BBB7", fontSize: '15px', fontWeight: '500', opacity: '0.50' }}>Kerjasama Aktif</p>
+        </div >
+
+        {/* card 2 */}
+
+
+          {/* <CardPage
             background="bg-light-warning cursor-pointer"
             icon="user-orange.svg"
             color="#634100"
@@ -100,8 +115,19 @@ const Table = () => {
             titleValue="Kerjasama"
             title="Pengajuan Kerjasama"
             onClick={() => dispatch(changeValueStatusCard("submission"))}
-          />
-          <CardPage
+          /> */}
+
+          <div className={`col bg-light-warning cursor-pointer px-6 py-8 rounded-xl mr-7 mb-7`} onClick={() => dispatch(changeValueStatusCard("submission"))} >
+            <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
+                <div className="row ml-4">
+                    <Image alt='card-page-icon' src={`/assets/icon/user-orange.svg`} width={30} height={30} />
+                    <p className={`font-weight-bold font-size-h2 ml-2 my-auto`} style={{ color: "#634100", opacity: '0.5' }}>{allMK.totalDataAnother} Pengajuan Kerjasama</p>
+                </div>
+            </span>
+            <p className='ml-3 mt-2' style={{ color: "#74BBB7", fontSize: '15px', fontWeight: '500', opacity: '0.50' }}>Kerjasama Aktif</p>
+        </div >
+        {/* title 3 */}
+          {/* <CardPage
             background="bg-light-danger cursor-pointer"
             icon="info-danger.svg"
             color="#F65464"
@@ -109,7 +135,19 @@ const Table = () => {
             titleValue="Kerjasama"
             title="Kerjasama akan Habis"
             onClick={() => dispatch(changeValueStatusCard("will_expire"))}
-          />
+          /> */}
+
+          <div className={`col bg-light-danger cursor-pointer px-6 py-8 rounded-xl mr-7 mb-7`} onClick={() => dispatch(changeValueStatusCard("will_expire"))} >
+            <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
+                <div className="row ml-4">
+                    <Image alt='card-page-icon' src={`/assets/icon/info-danger.svg`} width={30} height={30} />
+                    <p className={`font-weight-bold font-size-h2 ml-2 my-auto`} style={{ color: "#F65464", opacity: '0.5' }}>{allMK.totalDataNonActive} Kerjasama akan Habis</p>
+                </div>
+            </span>
+            <p className='ml-3 mt-2' style={{ color: "#F65464", fontSize: '15px', fontWeight: '500', opacity: '0.50' }}>Kerjasama akan Habis</p>
+        </div >
+
+
         </div>
       </div>
 

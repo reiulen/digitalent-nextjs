@@ -190,7 +190,6 @@ const ListSurvey = () => {
                         <th>Tema</th>
                         <th>Bank Soal</th>
                         <th>Pelaksaan</th>
-                        <th>Kategori</th>
                         <th>Status</th>
                         <th>Aksi</th>
                       </tr>
@@ -221,9 +220,6 @@ const ListSurvey = () => {
                               <td className="align-middle">{row.question_to_share} Soal</td>
                               <td className="align-middle">
                                 {row.start_at}
-                              </td>
-                              <td className="align-middle">
-                                {row.category}
                               </td>
                               <td className="align-middle">
                                 <span className="badge badge-success">

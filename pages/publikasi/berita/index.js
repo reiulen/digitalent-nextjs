@@ -17,5 +17,5 @@ export default function BeritaPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps (store => async ({ query }) => {
-    await store.dispatch (getAllBerita (query.page, query.keyword, query.limit))
+    await store.dispatch (getAllBerita (query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
 })

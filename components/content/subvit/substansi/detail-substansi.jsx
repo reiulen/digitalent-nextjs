@@ -24,6 +24,7 @@ const DetailSubstansi = () => {
   const { subtance_question_detail } = useSelector((state) => state.allSubtanceQuestionDetail)
   const { error, isDeleted } = useSelector((state) => state.deleteSubtanceQuestionDetail)
   const { subtance } = useSelector((state) => state.detailSubtanceQuestionBanks)
+  const { subtance_question_type } = useSelector((state) => state.allSubtanceQuestionType)
 
   let { page = 1, id } = router.query;
   page = Number(page);
@@ -38,9 +39,19 @@ const DetailSubstansi = () => {
     }
   }, [isDeleted]);
 
+  const [status, setStatus] = useState('')
+  const [kategori, setKategori] = useState(null)
+  const [pelatihan, setPelatihan] = useState(null)
+  const [search, setSearch] = useState('')
+  const [limit, setLimit] = useState(null)
 
   const handlePagination = (pageNumber) => {
-    router.push(`${router.pathname}?id=${id}&page=${pageNumber}`)
+    let link = `${router.pathname}?id=${id}&page=${pageNumber}`
+    if (search) link = link.concat(`&keyword=${search}`)
+    if (status) link = link.concat(`&status=${status}`)
+    if (kategori) link = link.concat(`&categori=${kategori}`)
+    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
+    router.push(link)
   }
 
   const handleLimit = (val) => {
@@ -64,6 +75,44 @@ const DetailSubstansi = () => {
       }
     });
   };
+
+  const handleModal = () => {
+    Swal.fire({
+      title: 'Silahkan Pilih Metode Entry',
+      icon: 'info',
+      showDenyButton: true,
+      showCloseButton: true,
+      confirmButtonText: `Entry`,
+      denyButtonText: `Import`,
+      confirmButtonColor: '#3085d6',
+      denyButtonColor: '#d33',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        router.push({
+          pathname: `/subvit/substansi/tambah-step-2-entry`,
+          query: { id }
+        })
+      } else if (result.isDenied) {
+        router.push({
+          pathname: `/subvit/substansi/tambah-step-2-import`,
+          query: { id }
+        })
+      }
+    })
+  }
+
+  const handleFilter = () => {
+    let link = `${router.pathname}?id=${id}&page=${1}`
+    if (status) link = link.concat(`&status=${status}`)
+    if (kategori) link = link.concat(`&categori=${kategori}`)
+    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
+    router.push(link)
+  }
+
+  const handleSearch = () => {
+    let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`
+    router.push(link)
+  }
 
   return (
     <PageWrapper>
@@ -100,7 +149,7 @@ const DetailSubstansi = () => {
               Substansi FGA - Cloud Computing
             </h3>
             <div className="card-toolbar">
-              <Link href="/subvit/substansi/edit/step-1">
+              <Link href={`/subvit/substansi/edit?id=${id}`}>
                 <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
                   Edit
                 </a>
@@ -161,11 +210,9 @@ const DetailSubstansi = () => {
               {/* <label htmlFor=""></label> */}
             </div>
             <div className="card-toolbar">
-              <Link href="/subvit/substansi/tambah/step-1">
-                <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block ">
-                  Tambah Soal
-                </a>
-              </Link>
+              <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block" onClick={handleModal}>
+                Tambah Soal
+              </a>
             </div>
           </div>
 
@@ -180,6 +227,8 @@ const DetailSubstansi = () => {
                       className="form-control"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
+                      onChange={e => setSearch(e.target.value)}
+                      autoComplete="off"
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
@@ -188,7 +237,7 @@ const DetailSubstansi = () => {
                 </div>
 
                 <div className="col-lg-2 col-xl-2">
-                  <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                  <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block " onClick={handleSearch}>
                     Cari
                   </button>
                 </div>
@@ -208,8 +257,15 @@ const DetailSubstansi = () => {
 
                 <div className="col-lg-3 col-xl-3 ">
                   <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
+                    <select
+                      className="form-control"
+                      onChange={e => setStatus(e.target.value)}
+                      onBlur={e => setStatus(e.target.value)}
+                      value={status}
+                    >
+                      <option value='' selected>Semua</option>
+                      <option value={true}>Publish</option>
+                      <option value={false}>Draft</option>
                     </select>
                     <small className="text-muted mt-1 p-0">
                       Filter by Status
@@ -219,12 +275,37 @@ const DetailSubstansi = () => {
 
                 <div className="col-lg-3 col-xl-3 ">
                   <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
+                    <select
+                      className="form-control"
+                      onChange={e => setKategori(e.target.value)}
+                      onBlur={e => setKategori(e.target.value)}
+                      value={kategori}
+                    >
+                      <option value=''>Semua</option>
+                      {!subtance_question_type || (subtance_question_type && subtance_question_type.list_types.length === 0) ? (
+                        <option value="">Data kosong</option>
+                      ) : (
+                        subtance_question_type &&
+                        subtance_question_type.list_types.map((row) => {
+                          return (
+                            <option key={row.id} value={row.id}>
+                              {row.name}
+                            </option>
+                          );
+                        })
+                      )}
                     </select>
                     <small className="text-muted mt-1 p-0">
-                      Filter by Nilai
+                      Filter by Kategori
                     </small>
+                  </div>
+                </div>
+                <div className="col-lg-3 col-xl-3 ">
+                  <div className="mb-0">
+                    <button className='btn btn-light-primary' onClick={handleFilter}>Filter</button>
+                  </div>
+                  <div className="text-muted mt-5 p-0">
+                    {' '}
                   </div>
                 </div>
               </div>

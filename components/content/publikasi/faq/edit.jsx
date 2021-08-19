@@ -159,7 +159,7 @@ const EditFaq = () => {
                                             kategori.kategori.map((row) => {
                                                 return (
                                                     <option key={row.id} value={row.id}>
-                                                        {row.nama_kategori}
+                                                        {row.jenis_kategori}
                                                     </option>
                                                 );
                                             })
@@ -171,7 +171,7 @@ const EditFaq = () => {
 
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={pinned}
@@ -187,7 +187,7 @@ const EditFaq = () => {
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -208,7 +208,7 @@ const EditFaq = () => {
                                     <Link href='/publikasi/faq'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>

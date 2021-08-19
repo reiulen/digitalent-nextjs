@@ -36,6 +36,9 @@ const DetailSurvey = () => {
         }
     }, [isDeleted]);
 
+    const [search, setSearch] = useState('')
+    const [limit, setLimit] = useState(null)
+
 
     const handlePagination = (pageNumber) => {
         router.push(`${router.pathname}/${id}?page=${pageNumber}`)
@@ -62,6 +65,36 @@ const DetailSurvey = () => {
             }
         });
     };
+
+    const handleModal = () => {
+        Swal.fire({
+            title: 'Silahkan Pilih Metode Entry',
+            icon: 'info',
+            showDenyButton: true,
+            showCloseButton: true,
+            confirmButtonText: `Entry`,
+            denyButtonText: `Import`,
+            confirmButtonColor: '#3085d6',
+            denyButtonColor: '#d33',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                router.push({
+                    pathname: `/subvit/survey/tambah/step-2-entry`,
+                    query: { id }
+                })
+            } else if (result.isDenied) {
+                router.push({
+                    pathname: `/subvit/survey/tambah/step-2-import`,
+                    query: { id }
+                })
+            }
+        })
+    }
+
+    const handleSearch = () => {
+        let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`
+        router.push(link)
+    }
 
     return (
         <PageWrapper>
@@ -98,7 +131,7 @@ const DetailSurvey = () => {
                             Survey FGA - Cloud Computing
                         </h3>
                         <div className="card-toolbar">
-                            <Link href="/subvit/substansi/edit/step-1">
+                            <Link href={`/subvit/survey/edit?id=${id}`}>
                                 <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
                                     Edit
                                 </a>
@@ -159,11 +192,9 @@ const DetailSurvey = () => {
                             {/* <label htmlFor=""></label> */}
                         </div>
                         <div className="card-toolbar">
-                            <Link href="/subvit/survey/tambah">
-                                <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block ">
-                                    Tambah Soal
-                                </a>
-                            </Link>
+                            <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block " onClick={handleModal}>
+                                Tambah Soal
+                            </a>
                         </div>
                     </div>
 
@@ -178,6 +209,8 @@ const DetailSurvey = () => {
                                             className="form-control"
                                             placeholder="Search..."
                                             id="kt_datatable_search_query"
+                                            onChange={e => setSearch(e.target.value)}
+                                            autoComplete="off"
                                         />
                                         <span>
                                             <i className="flaticon2-search-1 text-muted"></i>
@@ -186,44 +219,9 @@ const DetailSurvey = () => {
                                 </div>
 
                                 <div className="col-lg-2 col-xl-2">
-                                    <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                                    <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block " onClick={handleSearch}>
                                         Cari
                                     </button>
-                                </div>
-                            </div>
-
-                            <div className="row align-items-center my-5">
-                                <div className="col-lg-3 col-xl-3 ">
-                                    <div className="form-group mb-0">
-                                        <select className="form-control">
-                                            <option>Semua</option>
-                                        </select>
-                                        <small className="text-muted mt-1 p-0">
-                                            Filter by Pelatihan
-                                        </small>
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-xl-3 ">
-                                    <div className="form-group mb-0">
-                                        <select className="form-control">
-                                            <option>Semua</option>
-                                        </select>
-                                        <small className="text-muted mt-1 p-0">
-                                            Filter by Status
-                                        </small>
-                                    </div>
-                                </div>
-
-                                <div className="col-lg-3 col-xl-3 ">
-                                    <div className="form-group mb-0">
-                                        <select className="form-control">
-                                            <option>Semua</option>
-                                        </select>
-                                        <small className="text-muted mt-1 p-0">
-                                            Filter by Nilai
-                                        </small>
-                                    </div>
                                 </div>
                             </div>
                         </div>
