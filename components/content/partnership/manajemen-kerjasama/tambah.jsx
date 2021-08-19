@@ -9,7 +9,11 @@ import Swal from "sweetalert2";
 import {
   setNameLembaga,
   fetchDataEmail,
-  fetchListSelectCooperation
+  fetchListSelectCooperation,
+  fetchListCooperationSelect,
+  fetchListCooperationSelectById,
+  changeCooperationSelectByID,
+  fetchListSelectMitra
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
 const Tambah = () => {
@@ -19,63 +23,133 @@ const Tambah = () => {
   console.log("allMK",allMK)
   // state form data 1
   const [institution_name, setInstitution_name] = useState("")
+  const changeInstitusi = (value) =>{
+    setInstitution_name(value)
+    dispatch(setNameLembaga(value))
+  }
   const [date, setDate] = useState("")
-  console.log("date eee",date)
   const [title, setTitle] = useState("")
   const [period, setPeriod] = useState("")
   const [periodUnit, setPeriodUnit] = useState("")
+
+  // const [listSelectCooperation, setListSelectCooperation] = useState([])
+  // console.log("listSelectCooperation",listSelectCooperation)
   const [cooperationC_id, setCooperationC_id] = useState("")
-  const [cooperation1, setCooperation1] = useState("")
-  const [cooperation2, setCooperation2] = useState("")
-  const [cooperation3, setCooperation3] = useState("")
+  const changeSetCooperationC_id = (value) =>{
+    setCooperationC_id(value)
+    dispatch(changeCooperationSelectByID(value))
+
+    // let _temp = [];
+    // let add_temp = {..._temp,}
+    // console.log("value",value)
+    // console.log("asdasd",allMK.cooperationActiveSelect.data)
+
+    // console.log(allMK.cooperationActiveSelect.data.filter((items,i)=>{return items.id === 1}))
+    // let dataCooporationActive = allMK.cooperationActiveSelect.data.filter(items=>items.id === value)
+    // setListSelectCooperation(dataCooporationActive)
+
+    // console.log("dataCooporationActive",dataCooporationActive)
+  }
+  // const [cooperation1, setCooperation1] = useState("")
+  // const [cooperation2, setCooperation2] = useState("")
+  // const [cooperation3, setCooperation3] = useState("")
+  const [AllCooperation, setAllCooperation] = useState("")
+  const changeFormCooporation = (index,e) =>{
+
+    // console.log(allMK.singleCooporationSelect.data.option)
+
+    let dataaa = [...allMK.singleCooporationSelect.data.option]
+
+    dataaa[index].cooperation = e.target.value
+    setAllCooperation(dataaa)
+
+
+    // console.log("dataaa[index]",dataaa[index])
+
+
+
+  }
   // const [startDate, setStartDate] = useState(null);
   // const [endDate, setEndDate] = useState(null);
   // end state form data 1
-
+  
   const handleSubmit =(e)=>{
     e.preventDefault();
-    console.log("date",date)
-    console.log("title",title)
-    console.log("period",period)
-    console.log("periodUnit",periodUnit)
-    console.log("cooperationC_id",cooperationC_id)
-    console.log("cooperation1",cooperation1)
-    console.log("cooperation2",cooperation2)
-    console.log("cooperation3",cooperation3)
+    // console.log("date",date)
+    // console.log("title",title)
+    // console.log("period",period)
+    // console.log("periodUnit",periodUnit)
+    // console.log("cooperationC_id",cooperationC_id)
+    // console.log("cooperation1",cooperation1)
+    // console.log("cooperation2",cooperation2)
+    // console.log("cooperation3",cooperation3)
   }
-
+  
 
   const router = useRouter();
   const Swal = require("sweetalert2");
-
+  
   const submit = (e) => {
     e.preventDefault();
-    Swal.fire({
-      title: "Apakah anda yakin ?",
-      // text: "Data ini tidak bisa dikembalikan !",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then((result) => {
-      if (result.value) {
+    // Swal.fire({
+    //   title: "Apakah anda yakin ?",
+    //   // text: "Data ini tidak bisa dikembalikan !",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#3085d6",
+    //   cancelButtonColor: "#d33",
+    //   cancelButtonText: "Batal",
+    //   confirmButtonText: "Ya !",
+    //   dismissOnDestroy: false,
+    // }).then((result) => {
+      if (institution_name === "") {
+      alert('ada data yg belum terisi')
+  } else if (date === "") {
+      alert('ada data yg belum terisi')
+  } else if (title === "") {
+      alert('ada data yg belum terisi')
+  } else if (date === "") {
+      alert('ada data yg belum terisi')
+  } else if (period === "") {
+      alert('ada data yg belum terisi')
+  } else if (periodUnit === "") {
+      alert('ada data yg belum terisi')
+  } else if (cooperationC_id === "") {
+      alert('ada data yg belum terisi')
+  } else if (AllCooperation === "") {
+      alert('ada data yg belum terisi')
+  } else {
+      // return;
+      // if (result.value) {
         // router.push("/partnership/manajemen-kerjasama/submit");
+        console.log("AllCooperationdasdas",AllCooperation)
+    
+        
+    
+        
+    
+    
         router.push({
           pathname: '/partnership/manajemen-kerjasama/submit',
-          query: { date: date,title:title,period:period,periodUnit:periodUnit,cooperationC_id:cooperationC_id,cooperation1:cooperation1,cooperation2:cooperation2,cooperation3:cooperation3 },
+          query: { institution_name:institution_name,date: date,title:title,period:period,periodUnit:periodUnit,cooperationC_id:cooperationC_id,AllCooperation:JSON.stringify(AllCooperation) },
         })
-      }
-    });
+    
+      // }
+  }
+// });
+  
   };
-
+  
   useEffect(() => {
     dispatch(fetchDataEmail())
     dispatch(fetchListSelectCooperation())
-  }, [allMK.institution_name])
-
+    dispatch(fetchListCooperationSelect())
+    dispatch(fetchListCooperationSelectById(cooperationC_id))
+    dispatch(fetchListSelectMitra())
+    // console.log("state all cop",allMK.singleCooporationSelect)
+    
+    // setCooperationALl({})
+  }, [allMK.institution_name,allMK.idCooporationSelect])
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -86,7 +160,7 @@ const Tambah = () => {
             </h3>
           </div>
           <div className="card-body">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={submit}>
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -95,7 +169,16 @@ const Tambah = () => {
                   Nama Lembaga
                 </label>
                 <div className="col-sm-3">
-                  <input type="text" value={allMK.name_lembaga} onChange={(e)=>dispatch(setNameLembaga(e.target.value))} className="form-control" placeholder="Masukan nama lembaga" />
+                  {/* <input type="text" value={allMK.name_lembaga} onChange={(e)=>dispatch(setNameLembaga(e.target.value))} className="form-control" placeholder="Masukan nama lembaga" /> */}
+                  {/* <select className="form-control" onChange={(e)=>dispatch(setNameLembaga(e.target.value))}> */}
+                  <select required className="form-control" onChange={(e)=>changeInstitusi(e.target.value)}>
+                    <option value="">Pilih lembaga</option>
+                    {allMK.stateListMitra.length=== 0?"":allMK.stateListMitra.data.map((items,index)=>{
+                      return(
+                        <option value={items.name}>{items.name}</option>
+                        )
+                    })}
+                  </select>
                 </div>
               </div>
               <div className="form-group row">
@@ -106,7 +189,7 @@ const Tambah = () => {
                   Email
                 </label>
                 <div className="col-sm-6">
-                  <input type="text" value={allMK.email} disabled className="form-control" placeholder="Masukan nama lembaga" />
+                  <input readOnly type="text" value={allMK.email} className="form-control" placeholder="Masukan nama lembaga" />
                 </div>
               </div>
               <div className="form-group row">
@@ -117,7 +200,7 @@ const Tambah = () => {
                   Tanggal
                 </label>
                 <div className="col-sm-3">
-                  <input type="date" onChange={(e)=>setDate(e.target.value)} className="form-control" />
+                  <input required type="date" onChange={(e)=>setDate(e.target.value)} className="form-control" />
                 </div>
               </div>
 
@@ -129,7 +212,7 @@ const Tambah = () => {
                   Judul kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <input
+                  <input required
                     type="text"
                     className="form-control"
                     placeholder="Judul Kerjasama"
@@ -146,9 +229,9 @@ const Tambah = () => {
                   Kategori kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <select onChange={(e)=>setCooperationC_id(e.target.value)} name="" id="" className="form-control">
+                  <select required onChange={(e)=>changeSetCooperationC_id(e.target.value)} name="" id="" className="form-control">
                     <option value="">Pilih Kategory Kerjasama</option>
-                    {allMK.stateListKerjaSama.length === 0 ? "":allMK.stateListKerjaSama.data.map(items =>{
+                    {allMK.cooperationActiveSelect.length === 0 ? "":allMK.cooperationActiveSelect.data.map(items =>{
                       return(
                         <option value={items.id}>{items.cooperation_categories}</option>
                       )
@@ -167,7 +250,7 @@ const Tambah = () => {
                 <div className="col-sm-10">
                   <div className="row align-items-right">
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      <input className="form-control" placeholder="Masukan periode masa periode misal 1 atau 2" type="number" onChange={(e)=>setPeriod(e.target.value)} />
+                      <input required className="form-control" placeholder="Masukan periode masa periode misal 1 atau 2" type="number" onChange={(e)=>setPeriod(e.target.value)} />
                       {/* <DatePicker
                         className="form-control-sm form-control"
                         selected={startDate}
@@ -193,7 +276,7 @@ const Tambah = () => {
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       /> */}
-                      <select className="form-control" onChange={(e)=>setPeriodUnit(e.target.value)}>
+                      <select required className="form-control" onChange={(e)=>setPeriodUnit(e.target.value)}>
                         <option value="">Pilih periode bulan/tahun</option>
                         <option value="bulan">Bulan</option>
                         <option value="tahun">Tahun</option>
@@ -203,17 +286,22 @@ const Tambah = () => {
                 </div>
               </div>
 
+              {/* looping */}
+              {allMK.singleCooporationSelect.length === 0 ?"": allMK.singleCooporationSelect.data.option.map((items,index)=>{
+                return(
+
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Tujuan Kerjasama
+                  {
+                  items.cooperation_form}
                 </label>
                 <div className="col-sm-10">
-                  <textarea
-                  onChange={(e)=>setCooperation1(e.target.value)}
-                    name=""
+                  <textarea required
+                  onChange={(e)=>changeFormCooporation(index,e)}
+                    name="cooperation"
                     id=""
                     cols="30"
                     rows="5"
@@ -222,46 +310,12 @@ const Tambah = () => {
                   ></textarea>
                 </div>
               </div>
+                )
+              })
+              
 
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Ruang Lingkup Kerjasama
-                </label>
-                <div className="col-sm-10">
-                  <textarea
-                  onChange={(e)=>setCooperation2(e.target.value)}
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="5"
-                    className="form-control"
-                    placeholder="Masukan Ruang Lingkup Kerjasama"
-                  ></textarea>
-                </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Target Kerjasama
-                </label>
-                <div className="col-sm-10">
-                  <textarea
-                  onChange={(e)=>setCooperation3(e.target.value)}
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="5"
-                    className="form-control"
-                    placeholder="Masukan Target Kerjasama disini"
-                  ></textarea>
-                </div>
-              </div>
-
+  }
+  {/* end looping */}
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
@@ -275,9 +329,9 @@ const Tambah = () => {
                       Kembali
                     </a> */}
                   <button
-                  // type="submit"
+                  type="submit"
                     className="btn btn-primary btn-sm"
-                    onClick={(e) => submit(e)}
+                    // onClick={(e) => submit(e)}
                   >
                     Lanjut
                   </button>

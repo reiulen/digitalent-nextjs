@@ -31,6 +31,17 @@ import {
   COOPERATION_NONAKTIF_REQUEST,
   COOPERATION_NONAKTIF_SUCCESS,
   COOPERATION_NONAKTIF_FAIL,
+  GET_COOPERTAION_ACTIVE_SELECT,
+  FAIL_COOPERTAION_ACTIVE_SELECT,
+  SUCCESS_COOPERTAION_ACTIVE_SELECT,
+  SET_VALUE_CARD_M,
+  GET_COOPERTAION_ACTIVE_SELECT_BY_ID,
+  SUCCESS_COOPERTAION_ACTIVE_SELECT_BY_ID,
+  FAIL_COOPERTAION_ACTIVE_SELECT_BY_ID,
+  CHANGE_COOPERTAION_ACTIVE_SELECT_BY_ID,
+  SUCCESS_DELETE_COOPERATION_M,
+  SUCCESS_GET_SINGLE_COOPERATION_M,
+  CHANGE_STATUS_LIST_M,
 } from "../../types/partnership/management_cooporation.type";
 import axios from "axios";
 
@@ -56,6 +67,18 @@ export async function getStatus() {
 export async function getCooperation() {
   return await axios.get(
     `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation`
+  );
+}
+// get active select list cooperation
+export async function getCooperationActiveSelect() {
+  return await axios.get(
+    `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation-active`
+  );
+}
+// get active select list cooperation by id
+export async function getCooperationActiveSelectById(id) {
+  return await axios.get(
+    `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation-active-choose/${id}`
   );
 }
 export async function getEmail(params) {
@@ -98,11 +121,11 @@ let debouncedFetchMC = debounce(getMCooporation, 1000);
 let debouncedFetchEmail = debounce(getEmail, 1000);
 
 export const fetchAllMK = (keyword) => {
-  console.log("dispatch");
   return async (dispatch, getState) => {
     dispatch({ type: MANAGEMENT_COOPORATION_REQUEST });
 
     let pageState = getState().allMK.page || 1;
+    let cardState = getState().allMK.card || "";
     let limitState = getState().allMK.limit || 5;
     let statusState = getState().allMK.status || "";
     let categories_cooporationState =
@@ -112,6 +135,7 @@ export const fetchAllMK = (keyword) => {
 
     const params = {
       page: pageState,
+      card: cardState,
       limit: limitState,
       status: statusState,
       categories_cooporation: categories_cooporationState,
@@ -125,30 +149,26 @@ export const fetchAllMK = (keyword) => {
       categories_cooporation: "",
       partner: "",
       keyword: "",
+      card: "",
     };
 
     try {
       const { data } = await debouncedFetchMC(params);
       let dataSortirAll = await debouncedFetchMC(paramss);
-      console.log("dataSortirAll");
-      console.log(dataSortirAll);
       // get total data status aktif
       let resultDataActive = dataSortirAll.data.data.list_cooperations.filter(
         (items) => items.status.name === "aktif"
       );
-      console.log(resultDataActive);
       // get total data status tidak aktif
       let resultDataNonActive =
         dataSortirAll.data.data.list_cooperations.filter(
           (items) => items.status.name === "tidak aktif"
         );
-      console.log(resultDataNonActive);
       // get total data status !-- aktif && tidak aktif
       let resultDataAnother = dataSortirAll.data.data.list_cooperations.filter(
         (items) =>
           items.status.name !== "tidak aktif" && items.status.name !== "aktif"
       );
-      console.log(resultDataAnother);
 
       // handle ketika data berubah
       // if (partnerState === "") {
@@ -265,6 +285,67 @@ export const successFetchListSelectCooperation = (data) => {
     data,
   };
 };
+//
+export const fetchListCooperationSelect = () => {
+  return async (dispatch, getState) => {
+    // dispatch({ type: GET_COOPERTAION_ACTIVE_SELECT });
+    try {
+      const { data } = await getCooperationActiveSelect();
+      console.log("data select active cooperation", data);
+      dispatch(successFetchListCooperationSelect(data));
+    } catch (error) {
+      console.log("eror get list cooperation", error);
+      dispatch(errorFetchListCooperationSelect());
+    }
+  };
+};
+export const successFetchListCooperationSelect = (data) => {
+  console.log("asdasd", data);
+  return {
+    type: SUCCESS_COOPERTAION_ACTIVE_SELECT,
+    data,
+  };
+};
+export const errorFetchListCooperationSelect = () => {
+  return {
+    type: FAIL_COOPERTAION_ACTIVE_SELECT,
+  };
+};
+// by id
+export const fetchListCooperationSelectById = (id) => {
+  return async (dispatch, getState) => {
+    console.log(id);
+    // dispatch({ type: GET_COOPERTAION_ACTIVE_SELECT });
+    try {
+      const { data } = await getCooperationActiveSelectById(id);
+      console.log("data select active cooperation by id", data);
+      dispatch(successFetchListCooperationSelectByID(data));
+    } catch (error) {
+      console.log("eror get list cooperation by id", error);
+      dispatch(errorFetchListCooperationSelectByID());
+    }
+  };
+};
+export const successFetchListCooperationSelectByID = (data) => {
+  console.log("asdasd", data);
+  return {
+    type: SUCCESS_COOPERTAION_ACTIVE_SELECT_BY_ID,
+    data,
+  };
+};
+export const changeCooperationSelectByID = (value) => {
+  console.log("asdasd", value);
+  return {
+    type: CHANGE_COOPERTAION_ACTIVE_SELECT_BY_ID,
+    value,
+  };
+};
+export const errorFetchListCooperationSelectByID = () => {
+  return {
+    type: FAIL_COOPERTAION_ACTIVE_SELECT_BY_ID,
+  };
+};
+//
 export const errorFetchListSelectCooperation = () => {
   return {
     type: LIST_COOPERATION_FAIL,
@@ -328,31 +409,30 @@ export const setPage = (page) => {
   };
 };
 export const changeValueMitra = (value) => {
-  console.log("changeValueMitra");
-  console.log(value);
   return {
     type: SET_VALUE_MITRA_M,
     value,
   };
 };
 export const changeValueStatus = (value) => {
-  console.log("changeValueStatus");
-  console.log(value);
   return {
     type: SET_VALUE_STATUS_M,
     value,
   };
 };
+export const changeValueStatusCard = (value) => {
+  return {
+    type: SET_VALUE_CARD_M,
+    value,
+  };
+};
 export const changeValueKerjaSama = (value) => {
-  console.log("changeValueKerjaSama");
-  console.log(value);
   return {
     type: SET_VALUE_KERJA_SAMA_M,
     value,
   };
 };
 export const limitCooporation = (value) => {
-  console.log("value limit", value);
   return {
     type: LIMIT_CONFIGURATION_M,
     limitValue: value,
@@ -367,8 +447,11 @@ export const fetchDataEmail = (value) => {
         institution_name: institution_nameState,
       };
       let { data } = await debouncedFetchEmail(params);
-      dispatch(successGetEmail(data.data.email));
-      console.log("res data get email", data.data.email);
+      if (data.data.email === null) {
+        return;
+      } else {
+        dispatch(successGetEmail(data.data.email));
+      }
     } catch (error) {
       console.log("error get email", error);
       dispatch(failGetEmail());
@@ -377,7 +460,6 @@ export const fetchDataEmail = (value) => {
 };
 
 export const successGetEmail = (email) => {
-  console.log("email", email);
   return {
     type: SUCCESS_GET_EMAIL,
     email,
@@ -394,7 +476,67 @@ export const setNameLembaga = (value) => {
     value,
   };
 };
+export const deleteCooperation = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      let { data } = await axios.delete(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
+      );
+      dispatch(successDeleteCooperation());
+    } catch (error) {
+      console.log("action delete gagal", error);
+    }
+  };
+};
 
+export const successDeleteCooperation = () => {
+  return {
+    type: SUCCESS_DELETE_COOPERATION_M,
+  };
+};
+
+export const getSingleCooperation = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
+      );
+      console.log("data single", data);
+      dispatch(successGetSingleCooperation(data));
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+  };
+};
+export const successGetSingleCooperation = (data) => {
+  return {
+    type: SUCCESS_GET_SINGLE_COOPERATION_M,
+    data,
+  };
+};
+
+export const changeStatusList = (value, id) => {
+  console.log(value, id);
+  return async (dispatch, getState) => {
+    try {
+      let dataSend = { status: value };
+      let { data } = await axios.put(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/update-status/${id}`,
+        dataSend
+      );
+      console.log("status list data value", data);
+    } catch (error) {
+      console.log("error change status list");
+    }
+  };
+};
+
+export const successChangeStatusList = (value) => {
+  return {
+    type: CHANGE_STATUS_LIST_M,
+    value,
+  };
+};
 // fetch select
 // export const fetchCooperationActive = () =>{
 

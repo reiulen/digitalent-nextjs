@@ -20,6 +20,17 @@ import {
   SET_NAME_LEMBAGA,
   SUCCESS_GET_EMAIL,
   FAIL_GET_EMAIL,
+  GET_COOPERTAION_ACTIVE_SELECT,
+  FAIL_COOPERTAION_ACTIVE_SELECT,
+  SUCCESS_COOPERTAION_ACTIVE_SELECT,
+  SET_VALUE_CARD_M,
+  GET_COOPERTAION_ACTIVE_SELECT_BY_ID,
+  SUCCESS_COOPERTAION_ACTIVE_SELECT_BY_ID,
+  FAIL_COOPERTAION_ACTIVE_SELECT_BY_ID,
+  CHANGE_COOPERTAION_ACTIVE_SELECT_BY_ID,
+  SUCCESS_DELETE_COOPERATION_M,
+  SUCCESS_GET_SINGLE_COOPERATION_M,
+  CHANGE_STATUS_LIST_M,
 } from "../../types/partnership/management_cooporation.type";
 
 const statuslist = {
@@ -42,9 +53,12 @@ const initialState = {
   categories_cooporation: "",
   partner: "",
   keyword: "",
+  card: "",
   stateListMitra: [],
   stateListStatus: [],
   stateListKerjaSama: [],
+  //
+  cooperationActiveSelect: [],
   //
   institution_name: "",
   email: "",
@@ -52,6 +66,11 @@ const initialState = {
   totalDataActive: 0,
   totalDataNonActive: 0,
   totalDataAnother: 0,
+  //
+  idCooporationSelect: "",
+  singleCooporationSelect: [],
+  //
+  cooperationById: [],
 };
 
 export const allMCooporationReducer = (state = initialState, action) => {
@@ -83,6 +102,7 @@ export const allMCooporationReducer = (state = initialState, action) => {
         ...state,
         page: 1,
         keyword: action.text,
+        card: "",
       };
 
     case SET_PAGE_M:
@@ -95,16 +115,24 @@ export const allMCooporationReducer = (state = initialState, action) => {
       return {
         ...state,
         partner: action.value,
+        card: "",
       };
     case SET_VALUE_STATUS_M:
       return {
         ...state,
         status: action.value,
+        card: "",
+      };
+    case SET_VALUE_CARD_M:
+      return {
+        ...state,
+        card: action.value,
       };
     case SET_VALUE_KERJA_SAMA_M:
       return {
         ...state,
         categories_cooporation: action.value,
+        card: "",
       };
 
     case LIMIT_CONFIGURATION_M:
@@ -112,6 +140,7 @@ export const allMCooporationReducer = (state = initialState, action) => {
         ...state,
         limit: action.limitValue,
         page: 1,
+        card: "",
       };
 
     case LIST_MITRA_SUCCESS:
@@ -139,6 +168,37 @@ export const allMCooporationReducer = (state = initialState, action) => {
         ...state,
         email: action.email,
       };
+    case SUCCESS_COOPERTAION_ACTIVE_SELECT:
+      return {
+        ...state,
+        cooperationActiveSelect: action.data,
+      };
+    case CHANGE_COOPERTAION_ACTIVE_SELECT_BY_ID:
+      return {
+        ...state,
+        idCooporationSelect: action.value,
+      };
+    case SUCCESS_COOPERTAION_ACTIVE_SELECT_BY_ID:
+      return {
+        ...state,
+        singleCooporationSelect: action.data,
+      };
+    case SUCCESS_DELETE_COOPERATION_M:
+      return {
+        ...state,
+        status_delete: state.status_delete === "" ? "delete" : "",
+      };
+    case CHANGE_STATUS_LIST_M:
+      return {
+        ...state,
+        status_delete: state.status_delete === "" ? "delete" : "",
+      };
+    case SUCCESS_GET_SINGLE_COOPERATION_M:
+      console.log("data single", action.data);
+      return {
+        ...state,
+        cooperationById: action.data,
+      };
     case FAIL_GET_EMAIL:
       return {
         ...state,
@@ -147,6 +207,11 @@ export const allMCooporationReducer = (state = initialState, action) => {
             ? "-"
             : `Tidak ada email untuk lembaga => ${state.institution_name}`,
       };
+    // case GET_COOPERTAION_ACTIVE_SELECT:
+    //   return {
+    //     ...state,
+    //     email: action.email,
+    //   };
 
     default:
       return state;

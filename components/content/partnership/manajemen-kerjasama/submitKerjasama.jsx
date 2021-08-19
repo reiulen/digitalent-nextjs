@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 // pdf import need
 
@@ -25,33 +26,14 @@ const SubmitKerjasama = () => {
   // Create new plugin instance
   const defaultLayoutPluginInstance = defaultLayoutPlugin();
   const [pdfFile, setPdfFile] = useState(null)
-const [pdfFileError, setPdfFileError] = useState('')
-const [viewPDF, setViewPDF] = useState(null)
+  // console.log("pdfFile",pdfFile)
+  const [pdfFileError, setPdfFileError] = useState('')
+  const [viewPDF, setViewPDF] = useState(null)
+  console.log("viewPDF",viewPDF)
   
   const router = useRouter();
-  const {cooperation1,cooperation2,cooperation3,cooperationC_id,date,period,periodUnit,title} = router.query
-  // onchange pdf
-  const fileType=['application/pdf']
-  const handlePdfFileChange = (e) =>{
-    let selectedFile = e.target.files[0];
-    if(selectedFile){
-      if(selectedFile&&fileType.includes(selectedFile.type)){
-        let reader = new FileReader();
-        reader.readAsDataURL(selectedFile);
-        reader.onloadend = (e) =>{
-          setPdfFile(e.target.result);
-          setPdfFileError('')
-        }
-      }else{
-        setPdfFile(null);
-        setPdfFileError('Please selet valid pdf file')
-      }
-    }else{
-      console.log("select your file")
-    }
-
-  }
   // form data send
+  const {institution_name,date,title,period,periodUnit,cooperationC_id,AllCooperation} = router.query
   const [period_date_start, setPeriod_date_start] = useState("")
   const [period_date_end, setPeriod_date_end] = useState("")
   const [agreement_number_partner, setAgreement_number_partner] = useState("")
@@ -59,6 +41,31 @@ const [viewPDF, setViewPDF] = useState(null)
   const [signing_date, setSigning_date] = useState("")
   const [document, setDocument] = useState("")
   // form data send
+  
+  // onchange pdf
+  const fileType = ['application/pdf']
+  const handlePdfFileChange = (e) => {
+    let selectedFile = e.target.files[0];
+    setDocument(selectedFile)
+    setViewPDF("")
+    if (selectedFile) {
+      if (selectedFile && fileType.includes(selectedFile.type)) {
+        let reader = new FileReader();
+        reader.readAsDataURL(selectedFile);
+        reader.onloadend = (e) => {
+          setPdfFile(e.target.result);
+          setPdfFileError('')
+        }
+      } else {
+        setPdfFile(null);
+        setPdfFileError('Please selet valid pdf file')
+      }
+    } else {
+      console.log("select your file")
+    }
+
+  }
+  
   const Swal = require("sweetalert2");
 
   const submit = (e) => {
@@ -73,20 +80,68 @@ const [viewPDF, setViewPDF] = useState(null)
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then((result) => {
-      if (result.value) {
-        // console.log(object)
-        // router.push(
-        //   "/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
-        // );
+    }).then(async(result) => {
+       if (period_date_start === "") {
+      alert('ada data yg belum terisi')
+  } else if (period_date_end === "") {
+      alert('ada data yg belum terisi')
+  } else if (agreement_number_partner === "") {
+      alert('ada data yg belum terisi')
+  } else if (agreement_number_kemkominfo === "") {
+      alert('ada data yg belum terisi')
+  } else if (signing_date === "") {
+      alert('ada data yg belum terisi')
+  } else if (document === "") {
+      alert('ada data yg belum terisi')
+  } else if (cooperationC_id === "") {
+      alert('ada data yg belum terisi')
+  } else if (AllCooperation === "") {
+      alert('ada data yg belum terisi')
+  } else {
 
-        // pdf submit
-        if(pdfFile!==null){
-          setViewPDF(pdfFile)
-        }else{
-          setViewPDF(null)
-        }
-      }
+    if (result.value) {
+  
+      let formData = new FormData();
+      formData.append("institution_name", institution_name);
+      formData.append("date", date);
+      formData.append("title", title);
+      formData.append("period", period);
+      formData.append("period_unit", periodUnit);
+      formData.append("cooperation_category_id", cooperationC_id);
+      
+      formData.append("period_date_start", period_date_start);
+      formData.append("period_date_end", period_date_end);
+      formData.append("agreement_number_partner", agreement_number_partner);
+      formData.append("agreement_number_kemkominfo", agreement_number_kemkominfo);
+      formData.append("signing_date", signing_date);
+      formData.append("document", document);
+      let parseAllCooperation = JSON.parse(AllCooperation)
+      let dataee =  parseAllCooperation.map((items,i)=>{
+      return items.cooperation_form
+    })
+    dataee.forEach((item, i) => {
+    formData.append(`cooperation_form_content[${i}]`, item);
+  });
+  
+  try {
+    let { data } = await axios.post(
+      `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal`,
+      formData
+    );
+    alert("data berhasil ditambah");
+    // router.push(
+    //       "/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
+    //     );
+    router.push(
+          "/partnership/manajemen-kerjasama"
+        );
+  } catch (error) {
+    alert("gagal menambahkan data tipe file harus pdf")
+  }
+    }
+  }
+
+
     });
   };
   return (
@@ -125,7 +180,7 @@ const [viewPDF, setViewPDF] = useState(null)
                         placeholderText="Dari Tanggal"
                         // minDate={addDays(new Date(), 20)}
                       /> */}
-                      <input type="date" className="form-control" onChange={(e)=>setPeriod_date_start(e.target.value)}/>
+                      <input required type="date" className="form-control" onChange={(e)=>setPeriod_date_start(e.target.value)}/>
                     </div>
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
                       {/* <input
@@ -145,7 +200,7 @@ const [viewPDF, setViewPDF] = useState(null)
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       /> */}
-                      <input type="date" className="form-control" onChange={(e)=>setPeriod_date_end(e.target.value)}/>
+                      <input required type="date" className="form-control" onChange={(e)=>setPeriod_date_end(e.target.value)}/>
                     </div>
                   </div>
                 </div>
@@ -159,7 +214,7 @@ const [viewPDF, setViewPDF] = useState(null)
                   Nomer Perjanjian Lembaga
                 </label>
                 <div className="col-sm-10">
-                  <input
+                  <input required
                   onChange={(e)=>setAgreement_number_partner(e.target.value)}
                     type="text"
                     className="form-control"
@@ -176,7 +231,7 @@ const [viewPDF, setViewPDF] = useState(null)
                   Nomer Perjanjian Kemkominfo
                 </label>
                 <div className="col-sm-10">
-                  <input
+                  <input required
                   onChange={(e)=>setAgreement_number_kemkominfo(e.target.value)}
                     type="text"
                     className="form-control"
@@ -207,7 +262,7 @@ const [viewPDF, setViewPDF] = useState(null)
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Dari Tanggal"
                       /> */}
-                      <input type="date" className="form-control" onChange={(e)=>setSigning_date(e.target.value)}/>
+                      <input required type="date" className="form-control" onChange={(e)=>setSigning_date(e.target.value)}/>
                     </div>
                   </div>
                 </div>
@@ -236,20 +291,35 @@ const [viewPDF, setViewPDF] = useState(null)
                       </label>
                     </div>
                   </div>
+                  {pdfFile?<div className="mt-3">
+
+                    <button className="btn btn-primary btn-sm mr-2" type="button" onClick={() => setViewPDF(pdfFile?pdfFile:null)}>Tampilkan dokumen</button>
+                    <button className="btn bg-light-danger btn-sm" type="button" onClick={() => setViewPDF(null)}>Tutup dokumen</button>
+                    
+                  </div> : ""
+                  }
                 </div>
               </div>
               {pdfFileError&&<div>{pdfFileError}</div>}
 
-              <div className='pdf-container'>
-        {/* show pdf conditionally (if we have one)  */}
-        {viewPDF&&<><Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
-          <Viewer fileUrl={viewPDF}
-            plugins={[defaultLayoutPluginInstance]} />
-      </Worker></>}
+              <div className={`${viewPDF ? "pdf-container":"pdf-container d-none"}`}>
+                {/* show pdf conditionally (if we have one)  */}
+                {/* {viewPDF && <><Worker workerUrl="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.7.570/es5/build/pdf.worker.min.js">
+                  <Viewer fileUrl={viewPDF}
+                    plugins={[defaultLayoutPluginInstance]} />
+                </Worker></>} */}
+                {/* { */}
+                <iframe src={viewPDF} frameBorder="0" scrolling="auto" height={viewPDF ?"500px":""} width="100%" ></iframe>
+                
 
-      {/* if we dont have pdf or viewPDF state is null */}
-      {!viewPDF&&<>No pdf file selected</>}
-      </div>
+                {/* if we dont have pdf or viewPDF state is null */}
+                {!viewPDF && <>No pdf file selected   </>}
+
+                
+
+
+              </div>
+              
 
               <div className="form-group row">
                 <div className="col-sm-2"></div>

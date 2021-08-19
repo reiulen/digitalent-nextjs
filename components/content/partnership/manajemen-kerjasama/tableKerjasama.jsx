@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 import Pagination from "react-js-pagination";
@@ -11,6 +11,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
+import Image from "next/image";
 
 import {
   fetchAllMK,
@@ -22,13 +23,16 @@ import {
   limitCooporation,
   fetchListSelectMitra,
   fetchListSelectCooperation,
-  fetchListSelectStatus
+  fetchListSelectStatus,
+  changeValueStatusCard,
+  deleteCooperation,
+  changeStatusList
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
 const Table = () => {
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK",allMK)
+  console.log("allMK", allMK);
   const exportCSV = {
     width: "77%",
     marginLeft: "2rem",
@@ -36,27 +40,26 @@ const Table = () => {
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
+  console.log("valueStatus", valueStatus);
   const [valueKerjaSama, setValueKerjaSama] = useState("");
-  console.log("valueKerjaSama",valueKerjaSama)
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
   const handleSubmitSearchMany = (event) => {
     event.preventDefault();
-    dispatch(changeValueMitra(valueMitra))
-    dispatch(changeValueStatus(valueStatus))
-    dispatch(changeValueKerjaSama(valueKerjaSama))
+    dispatch(changeValueMitra(valueMitra));
+    dispatch(changeValueStatus(valueStatus));
+    dispatch(changeValueKerjaSama(valueKerjaSama));
   };
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(searchCooporation(valueSearch));
   };
-  
-  console.log("var")
+
+  console.log("var");
   useEffect(() => {
-    console.log("useffect")
+    console.log("useffect");
     dispatch(fetchAllMK());
-        
   }, [
     dispatch,
     allMK.keyword,
@@ -65,14 +68,16 @@ const Table = () => {
     allMK.categories_cooporation,
     allMK.partner,
     allMK.limit,
-  ])
+    allMK.card,
+    allMK.status_delete,
+    allMK.status_list,
+  ]);
 
   useEffect(() => {
-    dispatch(fetchListSelectMitra())
-    dispatch(fetchListSelectCooperation())
-    dispatch(fetchListSelectStatus())
-    
-  }, [])
+    dispatch(fetchListSelectMitra());
+    dispatch(fetchListSelectCooperation());
+    dispatch(fetchListSelectStatus());
+  }, []);
   return (
     <PageWrapper>
       {console.log("object html")}
@@ -85,7 +90,7 @@ const Table = () => {
             value={allMK.totalDataActive}
             titleValue="Kerjasama"
             title="Kerjasama Aktif"
-            onClick={()=>dispatch(changeValueStatus('aktif'))}
+            onClick={() => dispatch(changeValueStatusCard("active"))}
           />
           <CardPage
             background="bg-light-warning cursor-pointer"
@@ -94,6 +99,7 @@ const Table = () => {
             value={allMK.totalDataAnother}
             titleValue="Kerjasama"
             title="Pengajuan Kerjasama"
+            onClick={() => dispatch(changeValueStatusCard("submission"))}
           />
           <CardPage
             background="bg-light-danger cursor-pointer"
@@ -102,7 +108,7 @@ const Table = () => {
             value={allMK.totalDataNonActive}
             titleValue="Kerjasama"
             title="Kerjasama akan Habis"
-            onClick={()=>dispatch(changeValueStatus('tidak aktif'))}
+            onClick={() => dispatch(changeValueStatusCard("will_expire"))}
           />
         </div>
       </div>
@@ -110,9 +116,9 @@ const Table = () => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h1 className="card-title font-weight-bolder text-dark">
               Manajemen Kerjasama
-            </h3>
+            </h1>
             <div className="card-toolbar">
               <Link href="/partnership/manajemen-kerjasama/tambah">
                 <a className="btn btn-primary px-6 font-weight-bold btn-block ">
@@ -148,7 +154,11 @@ const Table = () => {
                     <button
                       type="submit"
                       className="btn bg-light-primary text-primary ml-4"
-                      style={{ width: "120px" }}
+                      style={{
+                        width: "120px",
+                        fontWeight: "600",
+                        fontSize: "14px",
+                      }}
                     >
                       Cari
                     </button>
@@ -156,57 +166,80 @@ const Table = () => {
                 </div>
               </div>
               <form onSubmit={handleSubmitSearchMany}>
-              <div className="row align-items-right">
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                  <select onChange={(e)=>(setValueMitra(e.target.value))} name="" id="" className="form-control">
-                    <option value="">Mitra</option>
-                    {allMK.stateListMitra.length === 0 ? "":allMK.stateListMitra.data.map(items =>{
-                      return(
-                        <option value={items.name}>{items.name}</option>
-                      )
-                    })}
-                  </select>
-                </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                  <select onChange={(e)=>setValueKerjaSama(e.target.value)} name="" id="" className="form-control">
-                    <option value="">Kategory Kerjasama</option>
-                    {allMK.stateListKerjaSama.length === 0 ? "":allMK.stateListKerjaSama.data.map(items =>{
-                      return(
-                        <option value={items.cooperation_categories}>{items.cooperation_categories}</option>
-                      )
-                    })}
-                  </select>
-                </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                  <select onChange={(e)=>(setValueStatus(e.target.value))} name="" id="" className="form-control">
-                    <option value="">Status</option>
-                    {allMK.stateListStatus.length === 0 ? "":allMK.stateListStatus.data.map(items =>{
-                      return(
-                        <option value={items.name}>{items.name}</option>
-                      )
-                    })}
-                  </select>
-                </div>
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
-                  <button
+                <div className="row align-items-right">
+                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                    <select
+                      onChange={(e) => setValueMitra(e.target.value)}
+                      name=""
+                      id=""
+                      className="form-control"
+                    >
+                      <option value="">Mitra</option>
+                      {allMK.stateListMitra.length === 0
+                        ? ""
+                        : allMK.stateListMitra.data.map((items) => {
+                            return (
+                              <option value={items.name}>{items.name}</option>
+                            );
+                          })}
+                    </select>
+                  </div>
+                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                    <select
+                      onChange={(e) => setValueKerjaSama(e.target.value)}
+                      name=""
+                      id=""
+                      className="form-control"
+                    >
+                      <option value="">Kategory Kerjasama</option>
+                      {allMK.stateListKerjaSama.length === 0
+                        ? ""
+                        : allMK.stateListKerjaSama.data.map((items) => {
+                            return (
+                              <option value={items.cooperation_categories}>
+                                {items.cooperation_categories}
+                              </option>
+                            );
+                          })}
+                    </select>
+                  </div>
+                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                    <select
+                      onChange={(e) => setValueStatus(e.target.value)}
+                      name=""
+                      id=""
+                      className="form-control"
+                    >
+                      <option value="">Status</option>
+                      {allMK.stateListStatus.length === 0
+                        ? ""
+                        : allMK.stateListStatus.data.map((items) => {
+                            return (
+                              <option value={items.name}>{items.name}</option>
+                            );
+                          })}
+                    </select>
+                  </div>
+                  <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
+                    <button
                       type="submit"
                       className="btn bg-light-primary text-primary position-relative"
-                      style={{ width: "120px",bottom:"2px" }}
+                      style={{ width: "120px", bottom: "2px" }}
                     >
                       Cari
                     </button>
+                  </div>
+                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
+                    <a
+                      href="#"
+                      className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
+                      style={exportCSV}
+                    >
+                      Export .csv
+                    </a>
+                  </div>
                 </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
-                  <a
-                    href="#"
-                    className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
-                    style={exportCSV}
-                  >
-                    Export .csv
-                  </a>
-                </div>
-              </div>
-            </form>
+              </form>
             </div>
 
             <div className="table-page mt-5">
@@ -215,74 +248,240 @@ const Table = () => {
                   <div className="d-flex justify-content-center py-5 ">
                     <h4>Loading ..</h4>
                   </div>
-                ) :(
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-center">No</th>
-                      <th className="text-center align-middle">Mitra</th>
-                      <th className="text-center align-middle">
-                        Judul Kerjasama
-                      </th>
-                      <th className="text-center align-middle">Periode</th>
-                      <th className="text-center align-middle">
-                        Tanggal Tanda Tangan
-                      </th>
-                      <th className="text-center align-middle">
-                        Tanggal Selesai
-                      </th>
-                      <th className="text-center align-middle">Status</th>
-                      <th className="text-center align-middle">Action</th>
-                    </tr>
-                  </thead>
-                    
-                  <tbody>
-                    {allMK.m_cooporation.data && allMK.m_cooporation.data.list_cooperations.length === 0 ? (
-                  <div className="d-flex justify-content-center py-5 ">
-                    <h4>Data tidak ditemukan</h4>
-                  </div>
-                ) :allMK.m_cooporation.data && allMK.m_cooporation.data.list_cooperations.map((items,index)=>{
-                      return(
+                ) : (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-center">No</th>
+                        <th className="text-center align-middle">Mitra</th>
+                        <th className="text-center align-middle">
+                          Judul Kerjasama
+                        </th>
+                        <th className="text-center align-middle">Periode</th>
+                        <th className="text-center align-middle">
+                          Tanggal Tanda Tangan
+                        </th>
+                        <th className="text-center align-middle">
+                          Tanggal Selesai
+                        </th>
+                        <th className="text-center align-middle">Status</th>
+                        <th className="text-center align-middle">Action</th>
+                      </tr>
+                    </thead>
 
-                    
-                    <tr key={index}>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          {index+1}
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">
-                        {items.partner === null ? "Tidak ada":items.partner.user.name}
-                        </td>
-                      <td className="align-middle text-center">
-                        
-                        {items.title}
-                        <br />
-                        {/* <small style={{ color: "grey" }}>
+                    <tbody>
+                      {allMK.m_cooporation.data &&
+                      allMK.m_cooporation.data.list_cooperations.length ===
+                        0 ? (
+                        <div className="d-flex justify-content-center py-5 ">
+                          <h4>Data tidak ditemukan</h4>
+                        </div>
+                      ) : (
+                        allMK.m_cooporation.data &&
+                        allMK.m_cooporation.data.list_cooperations.map(
+                          (items, index) => {
+                            return (
+                              <tr key={index}>
+                                <td className="text-center align-middle">
+                                  <button
+                                    className="btn"
+                                    style={{
+                                      background: "#F3F6F9",
+                                      borderRadius: "6px",
+                                    }}
+                                  >
+                                    {index + 1}
+                                  </button>
+                                </td>
+                                <td className="align-middle text-center">
+                                  {items.partner === null ? (
+                                    "Tidak ada"
+                                  ) : (
+                                    <p className="p-part-t">
+                                      {items.partner.user.name}
+                                    </p>
+                                  )}
+                                </td>
+                                <td className="d-flex justify-content-center">
+                                  <div className="d-flex align-items-center justify-content-center flex-column">
+                                    <p className="p-part-t">{items.title}</p>
+                                    <p className="p-part-d">
+                                      (
+                                      {
+                                        items.cooperation_category
+                                          .cooperation_categories
+                                      }
+                                      )
+                                    </p>
+                                  </div>
+                                  <br />
+                                  {/* <small style={{ color: "grey" }}>
                           Memodanrum of Understanding (MoU)
                         </small> */}
-                      </td>
-                      <td className="align-middle text-center">{items.period} {items.period_unit} </td>
-                      <td className="align-middle text-center">{items.signing_date}</td>
-                      <td className="align-middle text-center">{items.period_date_end}</td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="2">{items.status.name}</option>
-                        </select>
-                      </td>
-                      <td className="align-middle text-center">
-                        Hapus || Ubah
-                      </td>
-                    </tr>
-                      )
-                    })  }
+                                </td>
+                                <td className="align-middle text-center">
+                                  <p className="p-part-t">
+                                    {items.period} {items.period_unit}
+                                  </p>{" "}
+                                </td>
+                                <td className="align-middle text-center">
+                                  <p className="p-part-t">
+                                    {items.signing_date}
+                                  </p>
+                                </td>
+                                <td className="align-middle text-center">
+                                  <p className="p-part-t">
+                                    {items.period_date_end}
+                                  </p>
+                                </td>
+                                <td className="align-middle text-center">
+                                  {items.status.name === "aktif" ? 
+                                  <select
+                                    name=""
+                                    id=""
+                                    className="form-control"
+                                    key={index}
+                                    onChange={(e)=>dispatch(changeStatusList(e.target.value,items.id))}
+                                  >
+                                    <option value="1">
+                                      {items.status.name}
+                                    </option> 
+                                    <option value="2">
+                                      tidak aktif
+                                    </option> 
+                                  </select>
+                                    : 
+                                    <select
+                                    name=""
+                                    id=""
+                                    className="form-control"
+                                    key={index}
+                                    onChange={(e)=>dispatch(changeStatusList(e.target.value,items.id))}
+                                  >
+                                    <option value="2">
+                                      Tidak aktif
+                                    </option> 
+                                    <option value="1">
+                                      aktif
+                                    </option> 
+                                  </select>}
+                                </td>
+                                <td className="align-middle text-center">
+                                  {items.status.name === "aktif" ? (
+                                    <div>
+                                      <button
+                                        className="btn position-relative btn-delete"
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/manajemen-kerjasama/view/${items.id}`
+                                          )
+                                        }
+                                      >
+                                        <Image
+                                          src={`/assets/icon/detail.JPG`}
+                                          width="18"
+                                          height="16"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+                                      <button
+                                        className="btn ml-3 position-relative btn-delete"
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                      >
+                                        <Image
+                                          width="14"
+                                          height="14"
+                                          src={`/assets/icon/write.svg`}
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Edit
+                                        </div>
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <div>
+                                      <button
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                        className="btn position-relative btn-delete"
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/manajemen-kerjasama/view/${items.id}`
+                                          )
+                                        }
+                                      >
+                                        <Image
+                                          src={`/assets/icon/detail.JPG`}
+                                          width="18"
+                                          height="16"
+                                          className="btn"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+                                      <button
+                                        className="btn ml-3 position-relative btn-delete"
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                      >
+                                        <Image
+                                          width="14"
+                                          height="14"
+                                          src={`/assets/icon/write.svg`}
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Edit
+                                        </div>
+                                      </button>
+                                      <button
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                        className="ml-3 btn position-relative btn-delete"
+                                        onClick={() =>
+                                          dispatch(deleteCooperation(items.id))
+                                        }
+                                      >
+                                        <Image
+                                          width="14"
+                                          height="14"
+                                          src={`/assets/icon/trash.svg`}
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Deleta
+                                        </div>
+                                      </button>
+                                    </div>
+                                  )}
+                                </td>
+                              </tr>
+                            );
+                          }
+                        )
+                      )}
                     </tbody>
-                </table>
-                    )
-                  }
+                  </table>
+                )}
               </div>
               <div className="row">
                 <div className="table-pagination">
@@ -328,7 +527,9 @@ const Table = () => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data {allMK.m_cooporation.data && allMK.m_cooporation.data.total} 
+                        Total Data{" "}
+                        {allMK.m_cooporation.data &&
+                          allMK.m_cooporation.data.total}
                         {/* {process.env.END_POINT_API_PARTNERSHIP} */}
                       </p>
                     </div>
