@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
+import SimpleReactValidator from "simple-react-validator";
 
 import {
   updateArtikel,
@@ -33,6 +34,7 @@ const EditArtikel = () => {
   const SwitchButton = dynamic(importSwitch, {
     ssr: false,
   });
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
   const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
@@ -130,41 +132,48 @@ const EditArtikel = () => {
     });
   };
 
-  const onSetPublish = (e) => {
-    Swal.fire({
-      title: "Ubah status publikasi?",
-      text: "Status publikasi akan berubah",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Ya !",
-      cancelButtonText: "Batal",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        Swal.fire("Berhasil", "Status publikasi telah diubah", "success");
+  // const onSetPublish = (e) => {
+  //   Swal.fire({
+  //     title: "Ubah status publikasi?",
+  //     text: "Status publikasi akan berubah",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Ya !",
+  //     cancelButtonText: "Batal",
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       Swal.fire("Berhasil", "Status publikasi telah diubah", "success");
 
-        console.log(e);
-        setPublish(e);
-      } else {
-        Swal.fire("Batal", "Status publikasi telah batal diubah", "info");
+  //       console.log(e);
+  //       setPublish(e);
+  //     } else {
+  //       Swal.fire("Batal", "Status publikasi telah batal diubah", "info");
 
-        console.log(!e);
-        setPublish(!e);
-      }
-    });
+  //       console.log(!e);
+  //       setPublish(!e);
+  //     }
+  //   });
 
-    // Swal.fire (
-    //     'Berhasil',
-    //     'Status publikasi telah diubah',
-    //     'success'
-    // )
+  //   // Swal.fire (
+  //   //     'Berhasil',
+  //   //     'Status publikasi telah diubah',
+  //   //     'success'
+  //   // )
 
-    // setPublish(e)
-  };
+  //   // setPublish(e)
+  // };
 
   return (
     <>
+    {
+      console.log (artikel)
+    }
+    {
+      console.log (kategori)
+    }
+    
       <PageWrapper>
         {error ? (
           <div
@@ -356,7 +365,7 @@ const EditArtikel = () => {
                       value={tag}
                       onChange={setTag}
                       name="fruits"
-                      placeHolder="Isi Tag disini"
+                      placeHolder="Isi Tag disini dan Enter"
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
@@ -379,9 +388,9 @@ const EditArtikel = () => {
                       offstyle="danger"
                       size="sm"
                       width={30}
-                      onChange={(checked) => onSetPublish(checked)}
+                      // onChange={(checked) => onSetPublish(checked)}
                       // onClick={(checked) => onSetPublish(checked)}
-                      // onChange={(checked) => setPublish(checked)}
+                      onChange={(checked) => setPublish(checked)}
                     />
                   </div>
                 </div>

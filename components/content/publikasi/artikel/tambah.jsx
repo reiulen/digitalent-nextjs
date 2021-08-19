@@ -82,28 +82,28 @@ const TambahArtikel = () => {
     }
   };
 
-  const onSetPublish = (checked) => {
-    if (!checked) {
-      setPublish(false);
-    }
+  // const onSetPublish = (checked) => {
+  //   if (!checked) {
+  //     setPublish(false);
+  //   }
 
-    if (!publish) {
-      Swal.fire({
-        title: "Apakah anda yakin ?",
-        text: "Artikel anda di publish !",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Ya !",
-        cancelButtonText: "Batal",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          setPublish(checked);
-        }
-      });
-    }
-  };
+  //   if (!publish) {
+  //     Swal.fire({
+  //       title: "Apakah anda yakin ?",
+  //       text: "Artikel anda di publish !",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Ya !",
+  //       cancelButtonText: "Batal",
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         setPublish(checked);
+  //       }
+  //     });
+  //   }
+  // };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -144,9 +144,6 @@ const TambahArtikel = () => {
 
   return (
     <>
-    {
-      console.log (kategori)
-    }
       <PageWrapper>
         {error ? (
           <div
@@ -333,7 +330,7 @@ const TambahArtikel = () => {
                         kategori.kategori.map((row) => {
                           return (
                             <option key={row.id} value={row.id}>
-                              {row.nama}
+                              {row.nama_kategori}
                             </option>
                           );
                         })
@@ -360,7 +357,7 @@ const TambahArtikel = () => {
                       value={tag}
                       onChange={setTag}
                       name="fruits"
-                      placeHolder="Isi Tag disini"
+                      placeHolder="Isi Tag disini dan enter."
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
                     {/* {simpleValidator.current.message('tag', tag, 'required', { className: 'text-danger' })} */}
@@ -372,7 +369,7 @@ const TambahArtikel = () => {
                     htmlFor="staticEmail"
                     className="col-sm-2 col-form-label"
                   >
-                    Publish ?
+                    Publish 
                   </label>
                   <div className="col-sm-1">
                     <SwitchButton
@@ -383,7 +380,8 @@ const TambahArtikel = () => {
                       offstyle="danger"
                       size="sm"
                       width={30}
-                      onChange={(checked) => onSetPublish(checked)}
+                      // onChange={(checked) => onSetPublish(checked)}
+                      onChange={(checked) => setPublish(checked)}
                     />
                   </div>
                 </div>
@@ -396,7 +394,7 @@ const TambahArtikel = () => {
                         Kembali
                       </a>
                     </Link>
-                    <button className="btn btn-primary btn-sm">Submit</button>
+                    <button className="btn btn-primary btn-sm">Simpan</button>
                   </div>
                 </div>
               </form>
