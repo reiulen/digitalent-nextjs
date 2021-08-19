@@ -499,4 +499,5 @@ const Artikel = () => {
   );
 };
 
+
 export default Artikel;
