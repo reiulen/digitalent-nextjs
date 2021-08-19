@@ -29,7 +29,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllVideo = (page = 1, keyword = '', limit = 5) => async (dispatch) => {
+export const getAllVideo = (page = 1, keyword = '', limit = 5, publish = null) => async (dispatch) => {
     try {
 
         dispatch({ type: VIDEO_REQUEST })
@@ -37,6 +37,7 @@ export const getAllVideo = (page = 1, keyword = '', limit = 5) => async (dispatc
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video?page=${page}`
         if (keyword) link = link.concat(`&keyword=${keyword}`)
         if (limit) link = link.concat(`&limit=${limit}`)
+        if (publish) link = link.concat(`&publish=${publish}`);
 
         // const config = {
         //     headers: {
