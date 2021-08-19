@@ -7,17 +7,17 @@ import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-    getAllTriviaQuestionDetail,
-    deleteTriviaQuestionDetail,
-    importFileTriviaQuestionDetail,
-    importImagesTriviaQuestionDetail,
+    getAllSurveyQuestionDetail,
+    deleteSurveyQuestionDetail,
+    importFileSurveyQuestionDetail,
+    importImagesSurveyQuestionDetail,
     clearErrors
-} from '../../../../../redux/actions/subvit/trivia-question-detail.action'
+} from '../../../../../redux/actions/subvit/survey-question-detail.action'
 import {
-    IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET,
-    IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_RESET,
-    DELETE_TRIVIA_QUESTION_DETAIL_RESET
-} from "../../../../../redux/types/subvit/trivia-question-detail.type";
+    IMPORT_FILE_SURVEY_QUESTION_DETAIL_RESET,
+    IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_RESET,
+    DELETE_SURVEY_QUESTION_DETAIL_RESET
+} from "../../../../../redux/types/subvit/survey-question-detail.type";
 import { useRouter } from "next/router";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
@@ -30,11 +30,11 @@ const StepTwo = () => {
     const dispatch = useDispatch()
     const router = useRouter();
 
-    const { loading: loadingData, error: errorData, success: successData, trivia_question_detail } = useSelector((state) => state.allTriviaQuestionDetail)
-    const { loading: loadingDelete, error: errorDelete, isDeleted } = useSelector((state) => state.deleteTriviaQuestionDetail)
-    const { loading: loadingFile, error: errorFile, success: successFile } = useSelector((state) => state.importFileTriviaQuestionDetail);
-    const { loading: loadingImages, error: errorImages, success: successImages } = useSelector((state) => state.importImagesTriviaQuestionDetail);
-    let { page = 1, id } = router.query;
+    const { loading: loadingData, error: errorData, success: successData, survey_question_detail } = useSelector((state) => state.allSurveyQuestionDetail)
+    const { loading: loadingDelete, error: errorDelete, isDeleted } = useSelector((state) => state.deleteSurveyQuestionDetail)
+    const { loading: loadingFile, error: errorFile, success: successFile } = useSelector((state) => state.importFileSurveyQuestionDetail);
+    const { loading: loadingImages, error: errorImages, success: successImages } = useSelector((state) => state.importImagesSurveyQuestionDetail);
+    let { page = 1, id, metode } = router.query;
     page = Number(page);
 
     let error;
@@ -64,20 +64,20 @@ const StepTwo = () => {
 
     useEffect(() => {
 
-        dispatch(getAllTriviaQuestionDetail(id))
+        dispatch(getAllSurveyQuestionDetail(id))
         // if (error) {
         //     dispatch(clearErrors())
         // }
         if (successFile) {
-            dispatch(getAllTriviaQuestionDetail(id))
+            dispatch(getAllSurveyQuestionDetail(id))
         }
 
         if (successImages) {
-            dispatch(getAllTriviaQuestionDetail(id))
+            dispatch(getAllSurveyQuestionDetail(id))
         }
 
         if (isDeleted) {
-            dispatch(getAllTriviaQuestionDetail(id))
+            dispatch(getAllSurveyQuestionDetail(id))
         }
 
     }, [dispatch, id, successFile, successImages, isDeleted]);
@@ -104,14 +104,14 @@ const StepTwo = () => {
 
         if (valid) {
             dispatch({
-                type: IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET
+                type: IMPORT_FILE_SURVEY_QUESTION_DETAIL_RESET
             })
             dispatch({
-                type: IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_RESET
+                type: IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_RESET
             })
             router.push({
-                pathname: `/subvit/trivia/tambah/step-2-import`,
-                query: { id }
+                pathname: `/subvit/survey/tambah/step-2-import`,
+                query: { id, metode }
             })
         }
     };
@@ -139,7 +139,7 @@ const StepTwo = () => {
 
         if (valid) {
             router.push({
-                pathname: `/subvit/trivia/tambah/step-3`,
+                pathname: `/subvit/survey/tambah/step-3`,
                 query: { id }
             })
         }
@@ -147,7 +147,7 @@ const StepTwo = () => {
 
     const handleImportFile = async () => {
         const data = new FormData()
-        data.append('trivia_question_bank_id', id)
+        data.append('survey_question_bank_id', id)
         data.append('question_file', question_file, question_file.name)
 
         Swal.fire({
@@ -161,7 +161,7 @@ const StepTwo = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(importFileTriviaQuestionDetail(data))
+                dispatch(importFileSurveyQuestionDetail(data))
             }
         });
 
@@ -169,20 +169,20 @@ const StepTwo = () => {
 
     const handleImportImage = async () => {
         const data = new FormData()
-        data.append('trivia_question_bank_id', id)
+        data.append('survey_question_bank_id', id)
         data.append('image_file', image_file, image_file.name)
 
-        dispatch(importImagesTriviaQuestionDetail(data))
+        dispatch(importImagesSurveyQuestionDetail(data))
     }
 
     const handlePagination = (pageNumber) => {
         router.push(`${router.pathname}?id=${id}&page=${pageNumber}`)
-        dispatch(getAllTriviaQuestionDetail(id, pageNumber))
+        dispatch(getAllSurveyQuestionDetail(id, pageNumber))
     }
 
     const handleLimit = (val) => {
         router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`)
-        dispatch(getAllTriviaQuestionDetail(id, 1, val))
+        dispatch(getAllSurveyQuestionDetail(id, 1, val))
     }
 
     const handleDelete = (id) => {
@@ -198,20 +198,20 @@ const StepTwo = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteTriviaQuestionDetail(id));
+                dispatch(deleteSurveyQuestionDetail(id));
             }
         });
     };
 
     const handleDownloadTemplate = async () => {
-        await axios.get('http://dts-subvit-dev.majapahit.id/api/trivia-question-bank-details/template').then((res) => {
+        await axios.get('http://dts-subvit-dev.majapahit.id/api/survey-question-bank-details/template').then((res) => {
             window.location.href = res.data.data
         })
     }
 
     const handleResetDelete = () => {
         dispatch({
-            type: DELETE_TRIVIA_QUESTION_DETAIL_RESET
+            type: DELETE_SURVEY_QUESTION_DETAIL_RESET
         })
     }
 
@@ -343,14 +343,14 @@ const StepTwo = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {trivia_question_detail && trivia_question_detail.list_questions && trivia_question_detail.list_questions.length === 0 ? (
+                                            {survey_question_detail && survey_question_detail.list_questions && survey_question_detail.list_questions.length === 0 ? (
                                                 <td className="align-middle text-center" colSpan={6}>
                                                     Data Masih Kosong
                                                 </td>
                                             ) : (
-                                                trivia_question_detail &&
-                                                trivia_question_detail.list_questions &&
-                                                trivia_question_detail.list_questions.map((question, i) => {
+                                                survey_question_detail &&
+                                                survey_question_detail.list_questions &&
+                                                survey_question_detail.list_questions.map((question, i) => {
                                                     return (
                                                         <tr key={question.id}>
                                                             <td className="align-middle text-center">
@@ -406,11 +406,11 @@ const StepTwo = () => {
 
                             <div className="row">
                                 <div className="table-pagination">
-                                    {trivia_question_detail &&
+                                    {survey_question_detail &&
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={trivia_question_detail.perPage}
-                                            totalItemsCount={trivia_question_detail.total}
+                                            itemsCountPerPage={survey_question_detail.perPage}
+                                            totalItemsCount={survey_question_detail.total}
                                             pageRangeDisplayed={3}
                                             onChange={handlePagination}
                                             nextPageText={">"}
@@ -424,7 +424,7 @@ const StepTwo = () => {
                                 </div>
 
                                 <div className="table-total ml-auto">
-                                    {trivia_question_detail && trivia_question_detail.list_questions &&
+                                    {survey_question_detail && survey_question_detail.list_questions &&
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
                                                 <select
@@ -451,7 +451,7 @@ const StepTwo = () => {
                                                     className="align-middle mt-3"
                                                     style={{ color: "#B5B5C3" }}
                                                 >
-                                                    Total Data {trivia_question_detail.total}
+                                                    Total Data {survey_question_detail.total}
                                                 </p>
                                             </div>
                                         </div>
