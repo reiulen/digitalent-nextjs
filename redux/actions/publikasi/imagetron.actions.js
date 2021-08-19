@@ -30,7 +30,7 @@ import axios from 'axios'
 
 // get all data
 // page = 1, keyword = "", limit = 5
-export const getAllImagetron = (page = 1, keyword = "", limit = 5) => async (dispatch) => {
+export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null) => async (dispatch) => {
     try {
 
         dispatch({ type: IMAGETRON_REQUEST })
@@ -39,6 +39,9 @@ export const getAllImagetron = (page = 1, keyword = "", limit = 5) => async (dis
         // let link = process.env.END_POINT_API_PUBLIKASI + `api/imagetron`;
         if (keyword) link = link.concat(`&keyword=${keyword}`);
         if (limit) link = link.concat(`&limit=${limit}`);
+        if (publish) link = link.concat(`&publish=${publish}`);
+        if (startdate) link = link.concat(`&startdate=${startdate}`);
+        if (enddate) link = link.concat(`&enddate=${enddate}`);
 
         // const config = {
         //     headers: {

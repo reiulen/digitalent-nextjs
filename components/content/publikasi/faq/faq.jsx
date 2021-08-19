@@ -276,6 +276,9 @@ const Faq = () => {
                                                     <td className='align-middle text-center' colSpan={9}>Data Masih Kosong</td> :
                                                     faq && faq.faq.map((row, i) => {
                                                         return <tr key={row.id}>
+                                                            {
+                                                                console.log (row)
+                                                            }
                                                             <td className='align-middle text-center'>
                                                                 <span className="badge badge-secondary text-muted">
                                                                     {i + 1 * (page * 5 || limit) - 4}
@@ -285,7 +288,7 @@ const Faq = () => {
                                                             <td className='align-middle'>{row.kategori}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (
-                                                                    row.created_at
+                                                                    row.tanggal_publish
                                                                 ) : (
                                                                     <span class="label label-inline label-light-danger font-weight-bold">
                                                                         Belum dipublish

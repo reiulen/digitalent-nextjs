@@ -36,6 +36,7 @@ const EditArtikel = () => {
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
   const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+  const [, forceUpdate] = useState();
   const { artikel } = useSelector((state) => state.detailArtikel);
   const { error, success, loading } = useSelector(
     (state) => state.updatedArtikel
@@ -96,31 +97,42 @@ const EditArtikel = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (error) {
-      dispatch(clearErrors());
-    }
-
-    if (success) {
-      dispatch({
-        // type: NEW_ARTIKEL_RESET
-        type: UPDATE_ARTIKEL_RESET,
+    if (simpleValidator.current.allValid()) {
+      if (error) {
+        dispatch(clearErrors());
+      }
+  
+      if (success) {
+        dispatch({
+          // type: NEW_ARTIKEL_RESET
+          type: UPDATE_ARTIKEL_RESET,
+        });
+      }
+  
+      const data = {
+        judul_artikel,
+        isi_artikel,
+        gambar,
+        kategori_id,
+        users_id,
+        tag,
+        publish,
+        id,
+        _method,
+      };
+  
+      dispatch(updateArtikel(data));
+      // console.log(data)
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
       });
     }
-
-    const data = {
-      judul_artikel,
-      isi_artikel,
-      gambar,
-      kategori_id,
-      users_id,
-      tag,
-      publish,
-      id,
-      _method,
-    };
-
-    dispatch(updateArtikel(data));
-    // console.log(data)
+    
   };
 
   const onNewReset = () => {
@@ -268,6 +280,11 @@ const EditArtikel = () => {
                             setIsiArtikel(data);
                             console.log({ event, editor, data });
                           }}
+                          onBlur={() =>
+                            simpleValidator.current.showMessageFor(
+                              "isi_artikel"
+                            )
+                          }
                           // config={{
                           //     ckfinder: {
                           //     // Upload the images to the server using the CKFinder QuickUpload command.
@@ -277,6 +294,12 @@ const EditArtikel = () => {
                         />
                       ) : (
                         <p>Tunggu Sebentar</p>
+                      )}
+                      {simpleValidator.current.message(
+                        "isi_artikel",
+                        isi_artikel,
+                        "required|min:100",
+                        { className: "text-danger" }
                       )}
                     </div>
                   </div>
@@ -334,7 +357,7 @@ const EditArtikel = () => {
                           ) : (
                               kategori && kategori.kategori && kategori.kategori.map((row) => {
                                   return (
-                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategorii}</option>
+                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
                                   )
                               })
                           )}
