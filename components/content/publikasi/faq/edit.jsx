@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator"
 import Swal from 'sweetalert2'
 
-import { newFaq, clearErrors } from '../../../../redux/actions/publikasi/faq.actions'
-import { NEW_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
+import { updateFaq, clearErrors } from '../../../../redux/actions/publikasi/faq.actions'
+import { UPDATE_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahFaq = () => {
+const EditFaq = () => {
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -23,7 +23,8 @@ const TambahFaq = () => {
         ssr: false
     })
 
-    const { loading, error, success } = useSelector(state => state.newFaq)
+    const { loading, error, isUpdated } = useSelector(state => state.updateFaq)
+    const { faq } = useSelector(state => state.detailFaq)
     const { kategori } = useSelector(state => state.allKategori)
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -33,9 +34,9 @@ const TambahFaq = () => {
         //     dispatch(clearErrors())
         // }
 
-        if (success) {
+        if (isUpdated) {
             dispatch({
-                type: NEW_FAQ_RESET
+                type: UPDATE_FAQ_RESET
             })
             router.push({
                 pathname: `/publikasi/faq`,
@@ -43,15 +44,15 @@ const TambahFaq = () => {
             });
         }
 
-    }, [dispatch, error, success]);
+    }, [dispatch, error, isUpdated]);
 
 
-    const [judul, setJudulPertanyaan] = useState('')
-    const [jawaban, setJawaban] = useState('');
-    const [kategori_id, setKategoriId] = useState('')
+    const [judul, setJudulPertanyaan] = useState(faq.judul)
+    const [jawaban, setJawaban] = useState(faq.jawaban);
+    const [kategori_id, setKategoriId] = useState(faq.kategori_id)
     const [users_id, setUsersId] = useState(1)
-    const [pinned, setPinnedFaq] = useState(false)
-    const [publish, setPublish] = useState(false)
+    const [pinned, setPinnedFaq] = useState(faq.pinned === 1 ? true : false)
+    const [publish, setPublish] = useState(faq.publish === 1 ? true : false)
     const [, forceUpdate] = useState();
 
     const onSubmit = (e) => {
@@ -68,10 +69,11 @@ const TambahFaq = () => {
                 jawaban,
                 users_id,
                 publish,
-                pinned
+                pinned,
+                _method: 'put',
             }
 
-            dispatch(newFaq(data))
+            dispatch(updateFaq(data, faq.id))
 
         } else {
             simpleValidator.current.showMessages();
@@ -103,7 +105,7 @@ const TambahFaq = () => {
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Tambah FAQ</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Edit FAQ</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
@@ -217,4 +219,4 @@ const TambahFaq = () => {
     )
 }
 
-export default TambahFaq
+export default EditFaq

@@ -24,13 +24,22 @@ import {
   allKategoriReducer,
   newKategoriReducer,
   deleteKategoriReducer,
+  detailKategoriReducer,
+  updateKategoriReducer,
 } from "./publikasi/kategori.reducers";
 import {
   allGaleriReducer,
   newGaleriReducer,
   deleteGaleriReducer,
 } from "./publikasi/galeri.reducers";
-import { allFaqReducer, newFaqReducer } from "./publikasi/faq.reducers";
+import {
+  allFaqReducer,
+  newFaqReducer,
+  deleteFaqReducer,
+  detailFaqReducer,
+  updateFaqReducer,
+  updatePinFaqReducer,
+} from "./publikasi/faq.reducers";
 import {
   allVideoReducer,
   newVideoReducer,
@@ -106,7 +115,21 @@ import {
 // ============== trivia ===============
 
 // Partnership
-import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
+import {
+  allMitraReducer,
+  newMitraReducer,
+  detailMitraReducer,
+  updateMitraReducer,
+  deleteMitraReducer,
+
+  // card
+  totalMitraCardReducer,
+  totalActiveMitraCardReducer,
+} from "./partnership/mitra.reducers";
+
+//
+import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
+
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
@@ -115,6 +138,9 @@ import {
   updateTandaTanganReducer,
   // updateStatusTandaTanganReducer,
 } from "./partnership/tandaTangan.reducers";
+
+// utils
+import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -140,6 +166,10 @@ const reducer = combineReducers({
 
   allFaq: allFaqReducer,
   newFaq: newFaqReducer,
+  deleteFaq: deleteFaqReducer,
+  detailFaq: detailFaqReducer,
+  updateFaq: updateFaqReducer,
+  updatePinFaq: updatePinFaqReducer,
 
   allVideo: allVideoReducer,
   newVideo: newVideoReducer,
@@ -150,6 +180,8 @@ const reducer = combineReducers({
   allKategori: allKategoriReducer,
   newKategori: newKategoriReducer,
   deleteKategori: deleteKategoriReducer,
+  detailKategori: detailKategoriReducer,
+  updateKategori: updateKategoriReducer,
 
   // Subvit
   // =============== substansi ==================
@@ -212,6 +244,13 @@ const reducer = combineReducers({
   // kerjasama mitra
   allMitra: allMitraReducer,
   newMitra: newMitraReducer,
+  detailMitra: detailMitraReducer,
+  deleteMitra: deleteMitraReducer,
+  updateMitra: updateMitraReducer,
+  totalMitraCardGlobal: totalMitraCardReducer,
+  totalActiveMitraCard: totalActiveMitraCardReducer,
+
+  allMKCooporation: allMKCooporationReducer,
 
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,
@@ -220,6 +259,9 @@ const reducer = combineReducers({
   updateTandaTangan: updateTandaTanganReducer,
   detailTandaTangan: detailTandaTanganReducer,
   // updateStatusTandaTangan: updateStatusTandaTanganReducer,
+
+  allProvinsi: allProvinsiReducer,
+  allKota: allKotaReducer,
 });
 
 export default reducer;

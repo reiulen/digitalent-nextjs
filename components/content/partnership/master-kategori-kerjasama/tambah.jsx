@@ -4,12 +4,70 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import dynamic from "next/dynamic";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import Image from "next/image";
 
 const Tambah = () => {
+  const dispatch = useDispatch();
+  let history = useHistory();
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
     ssr: false,
   });
+
+  const [valueCreateCooporations, setValueCreateCooporations] = useState([
+    "",
+  ]);
+
+  console.log(valueCreateCooporations)
+
+  const [categoryCooporation, setCategoryCooporation] = useState("");
+  const [status, setStatus] = useState("");
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...valueCreateCooporations];
+    list[index] = value;
+    setValueCreateCooporations(list);
+  };
+
+  const handleDelete =(i)=>{
+    let filterResult = valueCreateCooporations.filter((items,index)=>index!==i)
+    setValueCreateCooporations(filterResult)
+  }
+
+  const handleChangeStatus = (e) => {
+    setStatus(e.target.checked);
+  };
+
+  const handleAddInput = () => {
+    setValueCreateCooporations([...valueCreateCooporations, ""]);
+  };
+
+  const handleSubmit = async (e) => {
+    event.preventDefault();
+
+    let statusPro = status ? "aktif" : "tidak aktif";
+
+    let formData = new FormData();
+    formData.append("cooperation_categories", categoryCooporation);
+    formData.append("status", statusPro);
+
+    valueCreateCooporations.forEach((item, i) => {
+      formData.append(`cooperation_form[${i}]`, item);
+    });
+    try {
+      let { data } = await axios.post(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/create`,
+        formData
+      );
+      alert("data berhasil ditambah");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const router = useRouter();
   const Swal = require("sweetalert2");
@@ -41,8 +99,8 @@ const Tambah = () => {
               Tambah Master Kategori Kerjasama
             </h3>
           </div>
-          <div className="card-body">
-            <form>
+          <form onSubmit={handleSubmit}>
+            <div className="card-body">
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -51,53 +109,64 @@ const Tambah = () => {
                   Kategori Kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <input type="text" className="form-control" />
+                  <input
+                    placeholder="Masukkan Kategori Lembaga"
+                    type="text"
+                    name="category_cooperation"
+                    className="form-control"
+                    onChange={(e) => setCategoryCooporation(e.target.value)}
+                  />
                 </div>
               </div>
 
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Form Kerjasama
-                </label>
-                <div className="col-sm-10">
-                  <input type="text" className="form-control" />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                ></label>
-                <div className="col-sm-10">
-                  <input type="text" className="form-control" />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                ></label>
-                <div className="col-sm-10">
-                  <input type="text" className="form-control" />
-                  <div className="mt-5">
-                    <Link href="/publikasi/artikel">
-                      <a
-                        className="btn btn-outline-primary btn-sm"
-                        style={{
-                          backgroundColor: "#40A9FF",
-                          color: "#FFFFFF",
-                        }}
-                      >
-                        Tambah Form Kerjasama
-                      </a>
-                    </Link>
+              {/*  */}
+              {valueCreateCooporations.map((valueCreateCooporation, index) => {
+                return (
+                  <div className="form-group row" key={index}>
+                    {/* {console.log(valueCreateCooporation,index)} */}
+                    <label
+                      htmlFor="staticEmail"
+                      className="col-sm-2 col-form-label"
+                    >
+                      {index === 0 ? "Form Kerjasama" : ""}
+                    </label>
+                    <div className="col-sm-10 position-relative">
+                      <input
+                      placeholder={index===0?"Tujuan kerja sama" :"Opsional"}
+                        name={`cooperation${index}`}
+                        type="text"
+                        onChange={(e) => handleChange(e, index)}
+                        className="form-control"
+                        value={valueCreateCooporation}
+                        name="valueCreateCooporation"
+                      />
+                      {index===0 ?"":
+                      <button type="button" onClick={()=>handleDelete(index)} className="btn position-absolute" style={{top:"0",right:"10px"}}>
+                      <Image src={`/assets/icon/trash.svg`} width={18} height={18} alt="btn-delete"/>
+                      </button>
+                      }
+                    </div>
                   </div>
-                </div>
+                );
+              })}
+
+              {/*  */}
+              <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                ></label>
+
+                <p
+                  className="btn btn-outline-primary btn-sm ml-4"
+                  style={{
+                    backgroundColor: "#40A9FF",
+                    color: "#FFFFFF",
+                  }}
+                  onClick={() => handleAddInput()}
+                >
+                  Tambah Form Kerjasama
+                </p>
               </div>
 
               <div className="form-group row">
@@ -108,14 +177,34 @@ const Tambah = () => {
                   Status
                 </label>
                 <div className="col-sm-1">
-                  <SwitchButton
+                  {/* <SwitchButton
                     checked={false}
                     onlabel=" "
                     onstyle="primary"
                     offlabel=" "
                     offstyle="danger"
                     size="sm"
-                  />
+                  /> */}
+                  {/* <input
+                  type="checkbox"
+                  checked={status}
+                  onChange={(e) => handleChangeStatus(e)}
+                /> */}
+                  <label className="switches">
+                    <input
+                      className="checkbox"
+                      checked={status}
+                      type="checkbox"
+                      onChange={(e) => handleChangeStatus(e)}
+                    />
+                    <span
+                      className={`sliders round ${
+                        status ? "text-white" : "pl-2"
+                      }`}
+                    >
+                      {status ? "Aktif" : "Tidak aktif"}
+                    </span>
+                  </label>
                 </div>
               </div>
 
@@ -127,19 +216,14 @@ const Tambah = () => {
                         Kembali
                       </a>
                     </Link>
-                    {/* <Link href="/partnership/master-kategori-kerjasama"> */}
-                    <button
-                      className="btn btn-primary btn-sm"
-                      onClick={(e) => submit(e)}
-                    >
+                    <button type="submit" className="btn btn-primary btn-sm">
                       Simpan
                     </button>
-                    {/* </Link> */}
                   </div>
                 </div>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </PageWrapper>
