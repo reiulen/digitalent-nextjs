@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 
-const CardPage = ({ background, icon, color, value, titleValue, title, publishedVal, routePublish}) => {
-
+const CardPage = ({ background, icon, color, value, titleValue, title, publishedVal, routePublish }) => {
     return (
         <div className={`col ${background} px-6 py-8 rounded-xl mr-7 mb-7`} onClick={(publishedVal) => routePublish (publishedVal)} style={publishedVal !== "" ? {cursor: "pointer"}: {cursor: "default"}}>
             <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
