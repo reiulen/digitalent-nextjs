@@ -29,7 +29,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllGaleri = (page = 1, keyword = '', limit = 5) => async (dispatch) => {
+export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null) => async (dispatch) => {
     try {
 
         dispatch({ type: GALERI_REQUEST })
@@ -37,6 +37,7 @@ export const getAllGaleri = (page = 1, keyword = '', limit = 5) => async (dispat
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery?page=${page}`
         if (keyword) link = link.concat(`&keyword=${keyword}`)
         if (limit) link = link.concat(`&limit=${limit}`)
+        if (publish) link = link.concat(`&publish=${publish}`);
 
         // const config = {
         //     headers: {
@@ -118,9 +119,9 @@ export const newGaleri = (galeriData) => async (dispatch) => {
 
 export const updateGaleri= (galeriData) => async (dispatch) => {
     try {
-        dispatch({ type: UPDATE_Gall_REQUEST })
+        dispatch({ type: UPDATE_GALERI_REQUEST })
 
-        let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${galeriData.id_gallery}`
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${galeriData.id}`
 
         const { data } = await axios.post (link, galeriData)
 
