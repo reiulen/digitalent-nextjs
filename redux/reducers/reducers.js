@@ -34,7 +34,7 @@ import {
   newGaleriReducer,
   detailGaleriReducer,
   deleteGaleriReducer,
-  updateGaleriReducer
+  updateGaleriReducer,
 } from "./publikasi/galeri.reducers";
 import {
   allFaqReducer,
@@ -119,9 +119,20 @@ import {
 // ============== trivia ===============
 
 // Partnership
-import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
+import {
+  allMitraReducer,
+  newMitraReducer,
+  detailMitraReducer,
+  updateMitraReducer,
+  deleteMitraReducer,
+
+  // card
+  totalMitraCardReducer,
+} from "./partnership/mitra.reducers";
+
+//
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
-import { allMCooporationReducer } from "./partnership/managementCooporation.reducer";
+// import { allMCooporationReducer } from "./partnership/mk_cooporation.reducers";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
@@ -130,6 +141,9 @@ import {
   updateTandaTanganReducer,
   // updateStatusTandaTanganReducer,
 } from "./partnership/tandaTangan.reducers";
+
+// utils
+import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -233,17 +247,28 @@ const reducer = combineReducers({
   // =============== end trivia ==================
 
   // PARTNERSHIP
+
+  // kerjasama mitra
   allMitra: allMitraReducer,
   newMitra: newMitraReducer,
-  allMKCooporation: allMKCooporationReducer,
-  allMK: allMCooporationReducer,
+  detailMitra: detailMitraReducer,
+  deleteMitra: deleteMitraReducer,
+  updateMitra: updateMitraReducer,
+  totalMitraCardGlobal: totalMitraCardReducer,
 
+  allMKCooporation: allMKCooporationReducer,
+  // allMK: allMCooporationReducer,
+
+  // tanda tangan
   allTandaTangan: allTandaTanganReducer,
   newTandaTangan: newTandaTanganReducer,
   deleteTandaTangan: deleteTandaTanganReducer,
   updateTandaTangan: updateTandaTanganReducer,
   detailTandaTangan: detailTandaTanganReducer,
   // updateStatusTandaTangan: updateStatusTandaTanganReducer,
+
+  allProvinsi: allProvinsiReducer,
+  allKota: allKotaReducer,
 });
 
 export default reducer;

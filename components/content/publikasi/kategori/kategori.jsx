@@ -191,8 +191,13 @@ const Kategori = () => {
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
                                                 <th className='text-center'>No</th>
+<<<<<<< HEAD
+                                                <th >Kategori</th>
+                                                <th>Judul</th>
+=======
                                                 <th >Nama</th>
                                                 <th>Jenis Kategori</th>
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                                                 <th className='text-center'>Action</th>
                                             </tr>
                                         </thead>

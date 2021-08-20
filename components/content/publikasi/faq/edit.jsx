@@ -171,7 +171,11 @@ const EditFaq = () => {
 
 
                             <div className="form-group row">
+<<<<<<< HEAD
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ ?</label>
+=======
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ</label>
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={pinned}
@@ -187,7 +191,11 @@ const EditFaq = () => {
                             </div>
 
                             <div className="form-group row">
+<<<<<<< HEAD
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+=======
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -208,7 +216,11 @@ const EditFaq = () => {
                                     <Link href='/publikasi/faq'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
+<<<<<<< HEAD
+                                    <button className='btn btn-primary btn-sm'>Submit</button>
+=======
                                     <button className='btn btn-primary btn-sm'>Simpan</button>
+>>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                                 </div>
                             </div>
                         </form>

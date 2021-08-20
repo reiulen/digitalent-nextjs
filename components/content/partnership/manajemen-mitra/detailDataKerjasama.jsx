@@ -107,6 +107,7 @@ const DetailDataKerjasama = () => {
                         Tanggal Selesai
                       </th>
                       <th className="text-center align-middle">Status</th>
+                      <th className="text-center align-middle">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -136,8 +137,18 @@ const DetailDataKerjasama = () => {
                             aktif
                           </option>
                           <option value="Kategori">non aktif</option>
-                          <option value="Kategori">pengajuan - revisi</option>
+                          {/* <option value="Kategori">pengajuan - revisi</option> */}
                         </select>
+                      </td>
+                      <td className="align-middle text-center">
+                        <ButtonAction
+                          icon="detail.svg"
+                          link="/partnership/manajemen-mitra/detail-data-kerjasama"
+                        />
+                        <ButtonAction
+                          icon="write.svg"
+                          link={`/partnership/manajemen-mitra/`}
+                        />
                       </td>
                     </tr>
                   </tbody>
