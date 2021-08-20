@@ -28,13 +28,6 @@ const Table = () => {
     (state) => state.totalMitraCardGlobal
   );
 
-  const { activeMitraCardRes } = useSelector(
-    (state) => state.totalActiveMitraCard
-  );
-
-  const tes = () => {
-    console.log(activeMitraCardRes);
-  };
   const {
     loading: allLoading,
     error,
@@ -66,6 +59,9 @@ const Table = () => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  const [allStatus, setAllStatus] = useState(null);
+  const [statusActive, setStatusActive] = useState(null);
+  const [statusNonActive, setStatusNonActive] = useState(null);
 
   let { page = 1, keyword, success } = router.query;
   // if (allLoading) {
@@ -79,12 +75,9 @@ const Table = () => {
     setLimit(val);
   };
 
-  const onNewReset = () => {
-    router.replace("/partnership/tanda-tangan", undefined, { shallow: true });
-  };
-
   useEffect(() => {
-    tes();
+    console.log(totalMitraCardRes);
+
     if (limit) {
       router.push(`${router.pathname}?page=1&limit=${limit}`);
     }
@@ -100,7 +93,23 @@ const Table = () => {
         type: DELETE_MITRA_RESET,
       });
     }
-  }, [limit, isDeleted]);
+
+    if (allStatus) {
+      router.push(
+        `${router.pathname}?page=1&keyword=${search}&limit=${limit}&card=all`
+      );
+    }
+    if (statusActive) {
+      router.push(
+        `${router.pathname}?page=1&keyword=${search}&limit=${limit}&card=active`
+      );
+    }
+    if (statusNonActive) {
+      router.push(
+        `${router.pathname}?page=1&keyword=${search}&limit=${limit}&card=non-active`
+      );
+    }
+  }, [limit, isDeleted, statusActive, allStatus, statusNonActive]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
@@ -118,18 +127,15 @@ const Table = () => {
     }
   };
 
-  const handleFilterStatus = () => {
-    router.push(
-      `${router.pathname}?page=1&startdate=${moment(startDate).format(
-        "YYYY-MM-DD"
-      )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-    );
-    // if (limit != null) {
-    //   router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
-    // } else {
-    //   router.push(`${router.pathname}?page=1&keyword=${search}`);
-    // }
-  };
+  // const handleTotalMitra = (card) => {
+  //   if (limit != null) {
+  //     router.push(
+  //       `${router.pathname}?page=1&keyword=${search}&limit=${limit}&card=${card}`
+  //     );
+  //   } else {
+  //     router.push(`${router.pathname}?page=1&keyword=${search}`);
+  //   }
+  // };
   return (
     <PageWrapper>
       <div className="col-lg-10 col-md-10">
@@ -141,6 +147,8 @@ const Table = () => {
             value="120"
             titleValue="Mitra"
             title="Total Mitra"
+            publishedVal="all"
+            routePublish={() => setAllStatus("all")}
           />
           <CardPage
             background="bg-light-warning"
@@ -149,6 +157,8 @@ const Table = () => {
             value="100"
             titleValue="Mitra"
             title="Mitra Yang Aktif"
+            publishedVal="active"
+            routePublish={() => setStatusActive("active")}
           />
           <CardPage
             background="bg-light-danger"
@@ -157,10 +167,11 @@ const Table = () => {
             value="12"
             titleValue="Mitra"
             title="Mitra Yang Tidak Aktif"
+            publishedVal="non-active"
+            routePublish={() => setStatusNonActive("non-active")}
           />
         </div>
       </div>
-
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">

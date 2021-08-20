@@ -229,35 +229,3 @@ export const totalMitraCardReducer = (
       return state;
   }
 };
-
-export const totalActiveMitraCardReducer = (
-  state = { activeMitraCardRes: [] },
-  action
-) => {
-  switch (action.type) {
-    case CARD_ACTIVE_MITRA_REQUEST:
-      return {
-        loading: true,
-      };
-
-    case CARD_ACTIVE_MITRA_SUCCESS:
-      return {
-        loading: false,
-        activeMitraCardRes: action.payload.data,
-      };
-
-    case CARD_ACTIVE_MITRA_FAIL:
-      return {
-        loading: false,
-        error: action.payload,
-      };
-
-    case CLEAR_ERRORS:
-      return {
-        error: null,
-      };
-
-    default:
-      return state;
-  }
-};

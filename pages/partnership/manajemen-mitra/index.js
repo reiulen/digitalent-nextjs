@@ -22,7 +22,9 @@ export default function MitraPage() {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query }) => {
-      await store.dispatch(getAllMitra(query.page, query.keyword, query.limit));
+      await store.dispatch(
+        getAllMitra(query.page, query.keyword, query.limit, query.card)
+      );
       await store.dispatch(getTotalMitra());
     }
 );

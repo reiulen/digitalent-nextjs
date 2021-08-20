@@ -45,7 +45,7 @@ const Artikel = () => {
   const [limit, setLimit] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [publishValue, setPublishValue] = useState(null)
+  const [publishValue, setPublishValue] = useState(null);
 
   let loading = false;
   let { page = 1, keyword, success } = router.query;
@@ -74,12 +74,11 @@ const Artikel = () => {
       });
     }
 
-    if (publishValue){
+    if (publishValue) {
       router.push(`${router.pathname}?publish=${publishValue}`);
       // console.log("check")
       // console.log (publishValue)
     }
-
   }, [limit, isDeleted, publishValue]);
 
   const onNewReset = () => {
@@ -133,9 +132,7 @@ const Artikel = () => {
 
   return (
     <PageWrapper>
-      {
-        console.log (artikel)
-      }
+      {console.log(artikel)}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -190,7 +187,6 @@ const Artikel = () => {
 
       <div className="col-lg-12 col-md-12">
         <div className="row">
-          
           <CardPage
             background="bg-light-info"
             icon="mail-purple.svg"
@@ -198,10 +194,10 @@ const Artikel = () => {
             value={artikel && artikel.publish != "" ? artikel.publish : 0}
             titleValue="Artikel"
             title="Total Publish"
-            publishedVal = "1"
-            routePublish = { () => setPublishValue("1")}
+            publishedVal="1"
+            routePublish={() => setPublishValue("1")}
           />
-        
+
           <CardPage
             background="bg-light-warning"
             icon="garis-yellow.svg"
@@ -209,8 +205,8 @@ const Artikel = () => {
             value="64"
             titleValue="Artikel"
             title="Total Author"
-            publishedVal = ""
-            routePublish = { () => setPublishValue("")}
+            publishedVal=""
+            routePublish={() => setPublishValue("")}
           />
           <CardPage
             background="bg-light-success"
@@ -219,8 +215,8 @@ const Artikel = () => {
             value="64"
             titleValue="K"
             title="Total Yang Baca"
-            publishedVal = ""
-            routePublish = { () => setPublishValue("")}
+            publishedVal=""
+            routePublish={() => setPublishValue("")}
           />
           <CardPage
             background="bg-light-danger"
@@ -229,8 +225,8 @@ const Artikel = () => {
             value={artikel && artikel.unpublish != "" ? artikel.unpublish : 0}
             titleValue="Artikel"
             title="Total Belum Publish"
-            publishedVal = "0"
-            routePublish = { () => setPublishValue("0")}
+            publishedVal="0"
+            routePublish={() => setPublishValue("0")}
           />
         </div>
       </div>

@@ -31,11 +31,6 @@ import {
   CARD_TOTAL_MITRA_SUCCESS,
   CARD_TOTAL_MITRA_FAIL,
 
-  // .....
-  CARD_ACTIVE_MITRA_REQUEST,
-  CARD_ACTIVE_MITRA_SUCCESS,
-  CARD_ACTIVE_MITRA_FAIL,
-
   // ------
   CLEAR_ERRORS,
 } from "../../types/partnership/mitra.type";
@@ -43,7 +38,7 @@ import {
 import axios from "axios";
 
 export const getAllMitra =
-  (page = 1, keyword = "", limit = 5) =>
+  (page = 1, keyword = "", limit = 5, card = null) =>
   async (dispatch) => {
     try {
       dispatch({ type: MITRA_REQUEST });
@@ -52,6 +47,7 @@ export const getAllMitra =
         process.env.END_POINT_API_PARTNERSHIP + `/api/partners?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
+      if (card) link = link.concat(`&card=${card}`);
 
       // const config = {
       //     headers: {
@@ -179,7 +175,7 @@ export const getTotalMitra = () => async (dispatch) => {
 
     let link =
       process.env.END_POINT_API_PARTNERSHIP +
-      `/api/partners/?card=non-active&page=1&limit=1&card=all`;
+      `/api/partners/?card=non-active&page=1&limit=1&card=non-active`;
 
     const { data } = await axios.get(link);
 
@@ -190,28 +186,6 @@ export const getTotalMitra = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CARD_TOTAL_MITRA_FAIL,
-      payload: error.message,
-    });
-  }
-};
-
-export const getActiveMitra = () => async (dispatch) => {
-  try {
-    dispatch({ type: CARD_ACTIVE_MITRA_REQUEST });
-
-    let link =
-      process.env.END_POINT_API_PARTNERSHIP +
-      `/api/partners/?card=non-active&page=1&limit=1&card=active`;
-
-    const { data } = await axios.get(link);
-
-    dispatch({
-      type: CARD_ACTIVE_MITRA_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: CARD_ACTIVE_MITRA_FAIL,
       payload: error.message,
     });
   }

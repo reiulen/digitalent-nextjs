@@ -128,7 +128,6 @@ import {
 
   // card
   totalMitraCardReducer,
-  totalActiveMitraCardReducer,
 } from "./partnership/mitra.reducers";
 
 //
@@ -256,7 +255,6 @@ const reducer = combineReducers({
   deleteMitra: deleteMitraReducer,
   updateMitra: updateMitraReducer,
   totalMitraCardGlobal: totalMitraCardReducer,
-  totalActiveMitraCard: totalActiveMitraCardReducer,
 
   allMKCooporation: allMKCooporationReducer,
 
