@@ -86,11 +86,7 @@ const Faq = () => {
     };
 
     const handlePagination = (pageNumber) => {
-<<<<<<< HEAD
-        if (limit != null) {
-=======
         if (limit !== null) {
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`);
@@ -98,11 +94,7 @@ const Faq = () => {
     };
 
     const handleSearch = () => {
-<<<<<<< HEAD
-        if (limit != null) {
-=======
         if (limit !== null) {
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}`);
@@ -110,11 +102,6 @@ const Faq = () => {
     };
 
     const handleSearchDate = () => {
-<<<<<<< HEAD
-        router.push(
-            `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-        );
-=======
         if (limit !== null) {
             router.push(
                 `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
@@ -125,7 +112,6 @@ const Faq = () => {
             ); 
         }
         
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
     };
 
     const handleLimit = (val) => {
@@ -302,7 +288,7 @@ const Faq = () => {
                                                 <th>Pin FAQ</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
