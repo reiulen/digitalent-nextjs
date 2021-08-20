@@ -288,6 +288,7 @@ const Galeri = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
+                                                <th className="text-center">No</th>
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
@@ -305,8 +306,13 @@ const Galeri = () => {
                                             {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    galeri && galeri.gallery.map((row) => {
+                                                    galeri && galeri.gallery.map((row, i) => {
                                                         return <tr key={row.id}>
+                                                            <td className="align-middle text-center">
+                                                                <span className="badge badge-secondary text-muted">
+                                                                {i + 1 * (page * 5 || limit) - 4}
+                                                                </span>
+                                                            </td>
                                                             <td className='text-center'>
                                                                 <Image alt='name_image' 
                                                                 unoptimized={

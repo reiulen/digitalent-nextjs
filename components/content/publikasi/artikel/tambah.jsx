@@ -242,7 +242,7 @@ const TambahArtikel = () => {
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required",
+                        "required|min:100",
                         { className: "text-danger" }
                       )}
                     </div>
@@ -299,6 +299,7 @@ const TambahArtikel = () => {
                     )}
                   </div>
                 </div>
+                
 
                 <div className="form-group row">
                   <label
@@ -330,7 +331,7 @@ const TambahArtikel = () => {
                         kategori.kategori.map((row) => {
                           return (
                             <option key={row.id} value={row.id}>
-                              {row.nama_kategori}
+                              {row.jenis_kategori}
                             </option>
                           );
                         })

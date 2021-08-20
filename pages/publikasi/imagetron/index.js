@@ -17,5 +17,5 @@ export default function ImagetronPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-    await store.dispatch(getAllImagetron(query.page, query.keyword, query.limit))
+    await store.dispatch(getAllImagetron(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
 })

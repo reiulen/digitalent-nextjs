@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from "next/dynamic";
 import SimpleReactValidator from 'simple-react-validator'
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from "next/router";
 import { TagsInput } from 'react-tag-input-component';
@@ -27,6 +28,7 @@ const EditBerita = () => {
     })
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+    const [, forceUpdate] = useState();
     const { berita } = useSelector(state => state.detailBerita)
     const { loading, error, success } = useSelector(state => state.updatedBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -84,31 +86,34 @@ const EditBerita = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (error) {
-            dispatch(clearErrors())
+        if (simpleValidator.current.allValid()){
+            if (error) {
+                dispatch(clearErrors())
+            }
+    
+            if (success) {
+                dispatch({
+                    // type: NEW_BERITA_RESET
+                    type: UPDATE_BERITA_RESET
+                })
+            }
+    
+            const data = {
+                judul_berita,
+                isi_berita,
+                gambar,
+                kategori_id,
+                users_id,
+                tag,
+                publish,
+                id,
+                _method
+            }
+    
+            dispatch(updateBerita(data))
+            // console.log(data)
         }
-
-        // if (success) {
-        //     dispatch({
-        //         // type: NEW_BERITA_RESET
-        //         type: UPDATE_BERITA_RESET
-        //     })
-        // }
-
-        const data = {
-            judul_berita,
-            isi_berita,
-            gambar,
-            kategori_id,
-            users_id,
-            tag,
-            publish,
-            id,
-            _method
-        }
-
-        dispatch(updateBerita(data))
-        // console.log(data)
+        
     }
 
     const onNewReset = () => {
@@ -184,7 +189,18 @@ const EditBerita = () => {
                                                     setIsiBerita(data);
                                                     console.log({ event, editor, data })
                                                 }}
+                                                onBlur={() =>
+                                                    simpleValidator.current.showMessageFor(
+                                                        "isi_berita"
+                                                    )
+                                                }
                                             /> : <p>Tunggu Sebentar</p>}
+                                            {simpleValidator.current.message(
+                                                "isi_berita",
+                                                isi_berita,
+                                                "required|min:100",
+                                                { className: "text-danger" }
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -210,6 +226,9 @@ const EditBerita = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {
+                                    console.log (kategori)
+                                }
 
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
@@ -221,7 +240,7 @@ const EditBerita = () => {
                                             ) : (
                                                 kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                     return (
-                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
+                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
                                                     )
                                                 })
                                             )}

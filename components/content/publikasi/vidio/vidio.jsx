@@ -291,6 +291,7 @@ const Vidio = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
+                                                <th className="text-center">No</th>
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
@@ -301,17 +302,25 @@ const Vidio = () => {
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
+                                        {
+                                            console.log (video)
+                                        }
                                         <tbody>
                                             {
                                                 !video || video && video.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    video && video.video.map((row) => {
+                                                    video && video.video.map((row, i) => {
                                                         return <tr key={row.id}>
+                                                            <td className="align-middle text-center">
+                                                                <span className="badge badge-secondary text-muted">
+                                                                {i + 1 * (page * 5 || limit) - 4}
+                                                                </span>
+                                                            </td>
                                                             <td className='text-center'>
                                                                 <Image
                                                                     alt={row.judul_video}
                                                                     unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                                                                    src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'publikasi/images' + row.gambar}
+                                                                    src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'publikasi/images/' + row.gambar}
                                                                     width={80}
                                                                     height={50}
                                                                 />

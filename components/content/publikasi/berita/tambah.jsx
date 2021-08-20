@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from 'simple-react-validator'
 import { TagsInput } from 'react-tag-input-component';
-
+import Swal from "sweetalert2";
 import { newBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import { NEW_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
@@ -27,6 +27,7 @@ const TambahBerita = () => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+    const [, forceUpdate] = useState();
     const { loading, error, success } = useSelector(state => state.newBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
 
@@ -94,28 +95,38 @@ const TambahBerita = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-
-        if (error) {
-            dispatch(clearErrors())
+        if (simpleValidator.current.allValid()) {
+            if (error) {
+                dispatch(clearErrors())
+            }
+            if (success) {
+                dispatch({
+                    type: NEW_BERITA_RESET
+                })
+            }
+    
+            const data = {
+                kategori_id,
+                users_id,
+                judul_berita,
+                isi_berita,
+                gambar,
+                publish,
+                tag
+            }
+    
+            dispatch(newBerita(data))
+            console.log(data)
+        } else {
+            simpleValidator.current.showMessages();
+            forceUpdate(1);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
+            });
         }
-        if (success) {
-            dispatch({
-                type: NEW_BERITA_RESET
-            })
-        }
-
-        const data = {
-            kategori_id,
-            users_id,
-            judul_berita,
-            isi_berita,
-            gambar,
-            publish,
-            tag
-        }
-
-        dispatch(newBerita(data))
-        console.log(data)
+        
     }
 
     const onNewReset = () => {
@@ -183,7 +194,18 @@ const TambahBerita = () => {
                                                 setIsiBerita(data);
                                                 // console.log({ event, editor, data })
                                             }}
+                                            onBlur={() =>
+                                                simpleValidator.current.showMessageFor(
+                                                    "isi_berita"
+                                                )
+                                            }
                                         /> : <p>Tunggu Sebentar</p>}
+                                        {simpleValidator.current.message(
+                                            "isi_berita",
+                                            isi_berita,
+                                            "required|min:100",
+                                            { className: "text-danger" }
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -220,7 +242,7 @@ const TambahBerita = () => {
                                         ) : (
                                             kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                 return (
-                                                    <option key={row.id} value={row.id}>{row.nama_kategori}</option>
+                                                    <option key={row.id} value={row.id}>{row.jenis_kategori}</option>
                                                 )
                                             })
                                         )}

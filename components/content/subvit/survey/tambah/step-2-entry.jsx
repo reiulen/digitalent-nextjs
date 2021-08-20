@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2"
 import { useDispatch, useSelector } from "react-redux";
 
-import { newSubtanceQuestionDetail, clearErrors } from '../../../../../redux/actions/subvit/subtance-question-detail.action'
-import { NEW_SUBTANCE_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/subtance-question-detail.type";
+import { newSurveyQuestionDetail, clearErrors } from '../../../../../redux/actions/subvit/survey-question-detail.action'
+import { NEW_SURVEY_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/survey-question-detail.type";
 import { useRouter } from "next/router";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
@@ -19,7 +19,7 @@ const StepTwo = () => {
   const router = useRouter();
 
   let { metode, id } = router.query;
-  const { loading, error, success } = useSelector((state) => state.newSubtanceQuestionDetail);
+  const { loading, error, success } = useSelector((state) => state.newSurveyQuestionDetail);
 
   const [methodAdd, setMethodAdd] = useState('objective')
   const [question, setSoal] = useState('')
@@ -38,53 +38,37 @@ const StepTwo = () => {
   ])
   const [answer_triggered, setSoalTriggeredList] = useState([
     {
-      key: 'A', option: '', image: '', sub: [{
-        question: '', image: '', answer: [
-          {
-            key: 'A', option: '', image: '', sub: [
-              {
-                question: '', image: '', answer: [
-                  {
-                    key: 'A', option: '', image: '', sub: [
-                      {
-                        question: '', image: '', answer: [
-                          {
-                            key: 'A', option: '', image: '', sub: [
-                              {
-                                question: '', image: '', answer: [
-                                  { key: 'A', option: '', image: '' }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }]
+      key: 'A', option: '', image: '', type: 'choose', is_next: true, sub: [
+        {
+          key: 1, question: '', image: '', is_next: false, answer: [
+            { key: 'A', option: '', image: '', type: 'choose' },
+            { key: 'B', option: '', image: '', type: 'choose' },
+            { key: 'C', option: '', image: '', type: 'choose' }
+          ]
+        }
+      ]
     },
-    { key: 'B', option: '', image: '', sub: [] },
-    { key: 'C', option: '', image: '', sub: [] },
-    { key: 'D', option: '', image: '', sub: [] }
+    { key: 'B', option: '', image: '', type: 'choose', is_next: false, sub: [] },
+    { key: 'C', option: '', image: '', type: 'choose', is_next: false, sub: [] }
   ])
   const [typeSave, setTypeSave] = useState('lanjut')
 
   useEffect(() => {
 
     if (success) {
+      dispatch({
+        type: NEW_SURVEY_QUESTION_DETAIL_RESET
+      })
       if (typeSave === 'lanjut') {
+        handleResetForm()
         router.push({
-          pathname: `/subvit/substansi/tambah-step-3`,
+          pathname: `/subvit/survey/tambah/step-3`,
           query: { id }
         })
       } else if (typeSave === 'draft') {
+        handleResetForm()
         router.push({
-          pathname: `/subvit/substansi/tambah-step-2`,
+          pathname: `/subvit/survey/tambah/step-2-${metode}`,
           query: { metode, id }
         });
       }
@@ -105,7 +89,123 @@ const StepTwo = () => {
 
   const saveDraft = () => {
     setTypeSave('draft')
-    // router.push("/subvit/substansi");
+    let valid = true
+
+    if (error) {
+      dispatch(clearErrors())
+    }
+
+    if (success) {
+      dispatch({
+        type: NEW_SURVEY_QUESTION_DETAIL_RESET
+      })
+    }
+
+    if (question == '' && question_image == '') {
+      valid = false
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi pertanyaan dengan benar !'
+      })
+    }
+
+    switch (methodAdd) {
+      case "objective":
+
+        answer.forEach((row, j) => {
+          if (row.option == '' && row.image == '') {
+            valid = false
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Isi jawaban dengan benar !'
+            })
+          }
+        })
+
+        const answers = JSON.stringify(answer)
+        if (valid) {
+          const data = {
+            survey_question_bank_id: id,
+            question,
+            answer: answers,
+            question_image,
+            answer_key: null,
+            survey_question_type: methodAdd
+          }
+
+          dispatch(newSurveyQuestionDetail(data))
+        }
+        break
+      case "multiple_choice":
+
+        answer_multiple.forEach((row, j) => {
+          if (row.option == '' && row.image == '') {
+            valid = false
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Isi jawaban dengan benar !'
+            })
+          }
+        })
+
+        const answers_multiple = JSON.stringify(answer_multiple)
+        if (valid) {
+          const data = {
+            survey_question_bank_id: id,
+            question,
+            answer: answers_multiple,
+            question_image,
+            answer_key: null,
+            survey_question_type: methodAdd
+          }
+
+          dispatch(newSurveyQuestionDetail(data))
+        }
+        break
+      case "pertanyaan_terbuka":
+        if (valid) {
+          const data = {
+            survey_question_bank_id: id,
+            question,
+            question_image,
+            survey_question_type: methodAdd,
+          }
+          dispatch(newSurveyQuestionDetail(data))
+        }
+        break
+      case "triggered_question":
+        answer_triggered.forEach((row, j) => {
+          if (row.option == '' && row.image == '') {
+            valid = false
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Isi jawaban dengan benar !'
+            })
+          }
+        })
+
+        const answers_triggered = JSON.stringify(answer_triggered)
+        if (valid) {
+          const data = {
+            survey_question_bank_id: id,
+            question,
+            answer: answers_triggered,
+            question_image,
+            answer_key: null,
+            survey_question_type: methodAdd
+          }
+
+          // console.log(data)
+
+          dispatch(newSurveyQuestionDetail(data))
+        }
+      default:
+        break;
+    }
   };
 
   const onSubmit = (e) => {
@@ -119,101 +219,109 @@ const StepTwo = () => {
 
     if (success) {
       dispatch({
-        type: NEW_SUBTANCE_QUESTION_DETAIL_RESET
+        type: NEW_SURVEY_QUESTION_DETAIL_RESET
       })
     }
 
-    // if (question == '' && question_image == '') {
-    //   valid = false
-    //   Swal.fire({
-    //     icon: 'error',
-    //     title: 'Oops...',
-    //     text: 'Isi pertanyaan dengan benar !'
-    //   })
-    // }
+    if (question == '' && question_image == '') {
+      valid = false
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi pertanyaan dengan benar !'
+      })
+    }
 
     switch (methodAdd) {
       case "objective":
 
-        // answer.forEach((row, j) => {
-        //   if (row.option == '' && row.image == '') {
-        //     valid = false
-        //     Swal.fire({
-        //       icon: 'error',
-        //       title: 'Oops...',
-        //       text: 'Isi jawaban dengan benar !'
-        //     })
-        //   }
-        // })
+        answer.forEach((row, j) => {
+          if (row.option == '' && row.image == '') {
+            valid = false
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Isi jawaban dengan benar !'
+            })
+          }
+        })
 
         const answers = JSON.stringify(answer)
         if (valid) {
           const data = {
             survey_question_bank_id: id,
             question,
-            answer: answer,
+            answer: answers,
             question_image,
             answer_key: null,
-            type: methodAdd
+            survey_question_type: methodAdd
           }
 
-          console.log(data)
-          // dispatch(newTriviaQuestionDetail(data))
+          dispatch(newSurveyQuestionDetail(data))
         }
         break
       case "multiple_choice":
 
-        // answer_multiple.forEach((row, j) => {
-        //   if (row.option == '' && row.image == '') {
-        //     valid = false
-        //     Swal.fire({
-        //       icon: 'error',
-        //       title: 'Oops...',
-        //       text: 'Isi jawaban dengan benar !'
-        //     })
-        //   }
-        // })
+        answer_multiple.forEach((row, j) => {
+          if (row.option == '' && row.image == '') {
+            valid = false
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Isi jawaban dengan benar !'
+            })
+          }
+        })
 
-        // const answers_multiple = JSON.stringify(answer_multiple)
+        const answers_multiple = JSON.stringify(answer_multiple)
         if (valid) {
           const data = {
-            trivia_question_bank_id: id,
+            survey_question_bank_id: id,
             question,
-            answer: answer_multiple,
+            answer: answers_multiple,
             question_image,
             answer_key: null,
-            type: methodAdd
+            survey_question_type: methodAdd
           }
 
-          console.log(data)
-          // dispatch(newTriviaQuestionDetail(data))
+          dispatch(newSurveyQuestionDetail(data))
         }
         break
       case "pertanyaan_terbuka":
         if (valid) {
           const data = {
-            trivia_question_bank_id: id,
+            survey_question_bank_id: id,
             question,
             question_image,
-            type: methodAdd,
+            survey_question_type: methodAdd,
           }
-          // dispatch(newTriviaQuestionDetail(data))
-          console.log(data)
+          dispatch(newSurveyQuestionDetail(data))
         }
         break
       case "triggered_question":
+        answer_triggered.forEach((row, j) => {
+          if (row.option == '' && row.image == '') {
+            valid = false
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Isi jawaban dengan benar !'
+            })
+          }
+        })
+
+        const answers_triggered = JSON.stringify(answer_triggered)
         if (valid) {
           const data = {
-            trivia_question_bank_id: id,
+            survey_question_bank_id: id,
             question,
-            answer: answer_triggered,
+            answer: answers_triggered,
             question_image,
             answer_key: null,
-            type: methodAdd
+            survey_question_type: methodAdd
           }
 
-          console.log(data)
-          // dispatch(newTriviaQuestionDetail(data))
+          dispatch(newSurveyQuestionDetail(data))
         }
       default:
         break;
@@ -250,6 +358,39 @@ const StepTwo = () => {
           />
         )
     }
+  }
+
+  const handleResetForm = () => {
+    setMethodAdd('objective')
+    setSoal('')
+    setSoalImage('')
+    setSoalList([
+      { key: 'A', option: '', image: '' },
+      { key: 'B', option: '', image: '' },
+      { key: 'C', option: '', image: '' },
+      { key: 'D', option: '', image: '' }
+    ])
+    setSoalMultipleList([
+      { key: 'A', option: '', image: '' },
+      { key: 'B', option: '', image: '' },
+      { key: 'C', option: '', image: '' },
+      { key: 'D', option: '', image: '' }
+    ])
+    setSoalTriggeredList([
+      {
+        key: 'A', option: '', image: '', type: 'choose', is_next: true, sub: [
+          {
+            key: 1, question: '', image: '', is_next: false, answer: [
+              { key: 'A', option: '', image: '', type: 'choose' },
+              { key: 'B', option: '', image: '', type: 'choose' },
+              { key: 'C', option: '', image: '', type: 'choose' }
+            ]
+          }
+        ]
+      },
+      { key: 'B', option: '', image: '', type: 'choose', is_next: false, sub: [] },
+      { key: 'C', option: '', image: '', type: 'choose', is_next: false, sub: [] }
+    ])
   }
 
   return (
@@ -394,6 +535,7 @@ const StepTwo = () => {
                   <button
                     className="btn btn-primary btn-sm"
                     onClick={saveDraft}
+                    type='button'
                   >
                     Simpan Draft
                   </button>

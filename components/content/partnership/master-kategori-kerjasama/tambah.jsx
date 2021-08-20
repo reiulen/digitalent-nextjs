@@ -110,6 +110,7 @@ const Tambah = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
+                  required
                     placeholder="Masukkan Kategori Lembaga"
                     type="text"
                     name="category_cooperation"
@@ -132,6 +133,7 @@ const Tambah = () => {
                     </label>
                     <div className="col-sm-10 position-relative">
                       <input
+                      required
                       placeholder={index===0?"Tujuan kerja sama" :"Opsional"}
                         name={`cooperation${index}`}
                         type="text"
@@ -192,6 +194,7 @@ const Tambah = () => {
                 /> */}
                   <label className="switches">
                     <input
+                    required
                       className="checkbox"
                       checked={status}
                       type="checkbox"

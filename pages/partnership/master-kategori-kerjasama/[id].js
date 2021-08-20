@@ -5,7 +5,7 @@ export default function TambahPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Publikasi">
+        <Layout title="Dashboard Partnership">
           <Edit />
         </Layout>
       </div>

@@ -47,6 +47,7 @@ const Imagetron = () => {
     const [limit, setLimit] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [publishValue, setPublishValue] = useState(null)
 
     let loading = false;
     let { page = 1, keyword, success } = router.query;
@@ -79,7 +80,13 @@ const Imagetron = () => {
             type: DELETE_IMAGETRON_RESET,
             });
         }
-    }, [limit, isDeleted]);
+
+        if (publishValue){
+            router.push(`${router.pathname}?publish=${publishValue}`);
+            // console.log("check")
+            // console.log (publishValue)
+        }
+    }, [limit, isDeleted, publishValue]);
 
     // const override = css`
     //     margin: 0 auto;
@@ -177,12 +184,42 @@ const Imagetron = () => {
 
             <div className="col-lg-12 col-md-12">
                 <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Imagetron' title='Total Publish' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Imagetron' title='Total Unpublish' />
-                    <CardPage background='bg-light-success' icon='orang-tambah-green.svg' color='#74BBB7' value='64' titleValue='K' title='Total Konten Author' />
+                    <CardPage 
+                        background='bg-light-info' 
+                        icon='mail-purple.svg' 
+                        color='#8A50FC' 
+                        value={imagetron.data && imagetron.data.publish != "" ? imagetron.data.publish : 0} 
+                        titleValue='Imagetron' 
+                        title='Total Publish' 
+                        publishedVal = "1"
+                        routePublish = { () => setPublishValue("1")}
+                    />
+                    <CardPage 
+                        background='bg-light-success' 
+                        icon='orang-tambah-green.svg' 
+                        color='#74BBB7' 
+                        value='64' 
+                        titleValue='K' 
+                        title='Total Konten Author' 
+                        publishedVal = ""
+                        routePublish = { () => setPublishValue("")}
+                    />
+                    <CardPage 
+                        background='bg-light-danger' 
+                        icon='kotak-kotak-red.svg' 
+                        color='#F65464' 
+                        value={imagetron.data && imagetron.data.unpublish != "" ? imagetron.data.unpublish : 0} 
+                        titleValue='Imagetron' 
+                        title='Total Unpublish' 
+                        publishedVal = "0"
+                        routePublish = { () => setPublishValue("0")}
+                    />
                 </div>
             </div>
-
+            
+            {
+                console.log (imagetron)
+            }
 
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
@@ -285,6 +322,7 @@ const Imagetron = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
+                                                <th className="text-center">No</th>
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
@@ -302,9 +340,14 @@ const Imagetron = () => {
                                             {
                                                 !imagetron || imagetron && imagetron.data.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    imagetron && imagetron.data.imagetron.map((row) => {
+                                                    imagetron && imagetron.data.imagetron.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='text-center'>
+                                                            <td className="align-middle text-center">
+                                                                <span className="badge badge-secondary text-muted">
+                                                                {i + 1 * (page * 5 || limit) - 4}
+                                                                </span>
+                                                            </td>
                                                             <Image
                                                                 alt={row.judul}
                                                                 unoptimized={
@@ -345,7 +388,7 @@ const Imagetron = () => {
                                                             </td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
+                                                                {/* <ButtonAction icon='setting.svg' /> */}
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/imagetron/${row.id}`}/>
                                                                 <button
                                                                     onClick={() => handleDelete(row.id)}
