@@ -340,7 +340,8 @@ const [NamePDF, setNamePDF] = useState(null);
                         // onClick={() => setViewPDF(pdfFile ? pdfFile : null)}
                         onClick={() => showDocument()}
                       >
-                        Tampilkan dokumen
+                        {viewPDF?"Tutup Dokument":"Tampilkan dokumen"}
+                        
                       </button>
                       {/* <button
                         className="btn bg-light-danger btn-sm"
