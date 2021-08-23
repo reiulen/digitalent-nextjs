@@ -53,9 +53,14 @@ const EditTandaTangan = () => {
     }
   }, [dispatch, error, isUpdated]);
 
-  // get detail state
+  // const storageAPI = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
+
   const [name, setName] = useState(detailTandaTangan.name);
   const [position, setPosition] = useState(detailTandaTangan.position);
+  const [imageSignature, setImageSignature] = useState(
+    detailTandaTangan.signature_image
+  );
+  console.log(imageSignature);
   const [signature, setSignature] = useState("");
 
   const dataTandaTangan = () => {
@@ -239,7 +244,15 @@ const EditTandaTangan = () => {
                 >
                   Buat Tanda Tangan
                   <div>
-                    <Image src={`/${signature}`} width={300} height={200} />
+                    <Image
+                      src={
+                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        "partnership/images/signatures/" +
+                        detailTandaTangan.signature_image
+                      }
+                      width={300}
+                      height={200}
+                    />
                   </div>
                 </label>
                 <div className="col-sm-10">

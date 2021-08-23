@@ -29,8 +29,8 @@ const TambahKategori = () => {
                 pathname: `/publikasi/kategori`,
                 query: { success: true },
             });
-            setNamaKategori('')
-            setJenisKategori('')
+            // setNamaKategori('')
+            // setJenisKategori('')
         }
 
     }, [dispatch, success]);
@@ -61,7 +61,7 @@ const TambahKategori = () => {
             }
 
             dispatch(newKategori(data))
-            console.log(data)
+            // console.log(data)
 
         } else {
             simpleValidator.current.showMessages();
@@ -108,11 +108,12 @@ const TambahKategori = () => {
                                         onChange={(e) => setNamaKategori(e.target.value)}
                                         onBlur={() => simpleValidator.current.showMessageFor("nama kategori")}
                                     />
-<<<<<<< HEAD
-                                    {simpleValidator.current.message("nama kategori", nama, "required|max:25|string", { className: "text-danger" })}
-=======
-                                    {/* {simpleValidator.current.message("nama kategori", nama, "required|max:25|string", { className: "text-danger" })} */}
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
+                                    { 
+                                        success ? 
+                                            null
+                                        :
+                                            simpleValidator.current.message("nama kategori", nama, "required|max:25|string", { className: "text-danger" })
+                                    }
                                 </div>
                             </div>
 
@@ -133,7 +134,12 @@ const TambahKategori = () => {
                                         <option value="Imagetron">Imagetron</option>
                                         <option value="Faq">Faq</option>
                                     </select>
-                                    {simpleValidator.current.message("jenis kategori", jenis_kategori, "required", { className: "text-danger" })}
+                                    {
+                                        success ?
+                                            null
+                                        :
+                                            simpleValidator.current.message("jenis kategori", jenis_kategori, "required", { className: "text-danger" })
+                                    }
                                 </div>
                             </div>
 
@@ -143,7 +149,7 @@ const TambahKategori = () => {
                                     <Link href='/publikasi/kategori'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>
