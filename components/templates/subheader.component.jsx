@@ -4,6 +4,10 @@ import Link from 'next/link'
 
 const convertBreadcrumb = string => {
     return string
+        .replace(/-/g, ' ')
+        .replace(/oe/g, 'ö')
+        .replace(/ae/g, 'ä')
+        .replace(/ue/g, 'ü')
         .charAt(0)
         .toUpperCase() + string.slice(1);
 };
