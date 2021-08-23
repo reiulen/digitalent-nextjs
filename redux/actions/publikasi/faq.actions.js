@@ -136,14 +136,14 @@ export const getDetailFaq = (id) => async (dispatch) => {
     }
 };
 
-export const updateFaq = (faq, id) => async (dispatch) => {
+export const updateFaq = (faqData, id) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_FAQ_REQUEST });
 
         let link =
             process.env.END_POINT_API_PUBLIKASI + `api/faq/${id}`;
 
-        const { data } = await axios.post(link, faq);
+        const { data } = await axios.post(link, faqData);
 
         dispatch({
             type: UPDATE_FAQ_SUCCESS,
