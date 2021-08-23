@@ -22,6 +22,10 @@ import {
     DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
     DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
 
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL,
+
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST,
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_SUCCESS,
     UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET,
@@ -35,6 +39,11 @@ import {
     NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
     NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
     NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
 
     CLEAR_ERRORS,
 } from '../../types/subvit/subtance.type'
@@ -106,17 +115,20 @@ export const newSubtanceQuestionBanksReducer = (state = { subtance: {} }, action
 export const detailSubtanceQuestionBanksReducer = (state = { subtance: {} }, action) => {
     switch (action.type) {
         case DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST:
+        case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
         case DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS:
+        case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
                 subtance: action.payload
             }
 
         case DETAIL_SUBTANCE_QUESTION_BANKS_FAIL:
+        case DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -172,23 +184,27 @@ export const updateSubtanceQuestionReducer = (state = {}, action) => {
 export const deleteSubtanceQuestionBanksReducer = (state = {}, action) => {
     switch (action.type) {
         case DELETE_SUBTANCE_QUESTION_BANKS_REQUEST:
+        case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
         case DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS:
+        case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
                 isDeleted: action.payload
             }
 
         case DELETE_SUBTANCE_QUESTION_BANKS_RESET:
+        case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET:
             return {
                 loading: false,
                 isDeleted: false
             }
 
         case DELETE_SUBTANCE_QUESTION_BANKS_FAIL:
+        case DELETE_CLONE_SUBTANCE_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload

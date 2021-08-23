@@ -5,11 +5,13 @@ import Image from 'next/image'
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
+import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 
 import { newVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { NEW_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
-
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
@@ -24,11 +26,17 @@ const TambahVidio = () => {
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
+    const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
     const { loading, error, success } = useSelector(state => state.newVideo)
+    const {
+        loading: allLoading,
+        error: allError,
+        kategori,
+      } = useSelector((state) => state.allKategori);
 
     useEffect(() => {
-
+        dispatch(getAllKategori());
         // if (error) {
         //     dispatch(clearErrors())
         // }
@@ -199,12 +207,47 @@ const TambahVidio = () => {
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="col-sm-2 col-form-label"
+                                >
+                                    Kategori
+                                </label>
                                 <div className="col-sm-10">
-                                    <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => setKategoriId(e.target.value)} >
-                                        <option value="1">Kategori</option>
-                                        <option value="2">Kategori 2</option>
+                                    <select
+                                    name=""
+                                    id=""
+                                    className="form-control"
+                                    value={kategori_id}
+                                    onChange={(e) => setKategoriId(e.target.value)}
+                                    onBlur={(e) => {
+                                        setKategoriId(e.target.value);
+                                        simpleValidator.current.showMessageFor("kategori_id");
+                                    }}
+                                    >
+                                    <option selected disabled value="">
+                                        -- Kategori --
+                                    </option>
+                                    {!kategori || (kategori && kategori.length === 0) ? (
+                                        <option value="">Data kosong</option>
+                                    ) : (
+                                        kategori &&
+                                        kategori.kategori &&
+                                        kategori.kategori.map((row) => {
+                                        return (
+                                            <option key={row.id} value={row.id}>
+                                            {row.jenis_kategori}
+                                            </option>
+                                        );
+                                        })
+                                    )}
                                     </select>
+                                    {simpleValidator.current.message(
+                                    "kategori_id",
+                                    kategori_id,
+                                    "required",
+                                    { className: "text-danger" }
+                                    )}
                                 </div>
                             </div>
 
@@ -215,7 +258,7 @@ const TambahVidio = () => {
                                         value={tag}
                                         onChange={setTag}
                                         name="fruits"
-                                        placeHolder="Isi Tag disini"
+                                        placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
                                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
@@ -223,7 +266,7 @@ const TambahVidio = () => {
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -244,7 +287,7 @@ const TambahVidio = () => {
                                     <Link href='/publikasi/video'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>

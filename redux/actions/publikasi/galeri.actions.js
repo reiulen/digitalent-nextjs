@@ -13,6 +13,15 @@ import {
     DELETE_GALERI_RESET,
     DELETE_GALERI_FAIL,
 
+    DETAIL_GALERI_REQUEST,
+    DETAIL_GALERI_SUCCESS,
+    DETAIL_GALERI_FAIL,
+
+    UPDATE_GALERI_REQUEST,
+    UPDATE_GALERI_SUCCESS,
+    UPDATE_GALERI_RESET,
+    UPDATE_GALERI_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/galeri.type'
 
@@ -20,10 +29,15 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllGaleri = () => async (dispatch) => {
+export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null) => async (dispatch) => {
     try {
 
         dispatch({ type: GALERI_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery?page=${page}`
+        if (keyword) link = link.concat(`&keyword=${keyword}`)
+        if (limit) link = link.concat(`&limit=${limit}`)
+        if (publish) link = link.concat(`&publish=${publish}`);
 
         // const config = {
         //     headers: {
@@ -33,7 +47,8 @@ export const getAllGaleri = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/galeri')
+        // const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/galeri')
+        const { data } = await axios.get(link)
 
         dispatch({
             type: GALERI_SUCCESS,
@@ -44,6 +59,26 @@ export const getAllGaleri = () => async (dispatch) => {
         dispatch({
             type: GALERI_FAIL,
             payload: error.message
+        })
+    }
+}
+
+export const getDetailGaleri = (id) => async (dispatch) => {
+    try {
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${id}`
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: DETAIL_GALERI_SUCCESS,
+            payload: data.data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DETAIL_GALERI_FAIL,
+            payload: error.response.data.message
         })
     }
 }
@@ -63,16 +98,41 @@ export const newGaleri = (galeriData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/galeri', galeriData)
+        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/gallery', galeriData)
 
         dispatch({
             type: NEW_GALERI_SUCCESS,
             payload: data
         })
 
+        console.log (data)
+
     } catch (error) {
         dispatch({
             type: NEW_GALERI_FAIL,
+            payload: error.response.data.message
+        })
+
+        console.log (error)
+    }
+}
+
+export const updateGaleri= (galeriData) => async (dispatch) => {
+    try {
+        dispatch({ type: UPDATE_GALERI_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${galeriData.id}`
+
+        const { data } = await axios.post (link, galeriData)
+
+        dispatch ({
+            type: UPDATE_GALERI_SUCCESS,
+            payload: data
+        })
+        
+    } catch (error) {
+        dispatch ({
+            type: UPDATE_GALERI_FAIL,
             payload: error.response.data.message
         })
     }
@@ -83,11 +143,11 @@ export const deleteGaleri = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_GALERI_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `publikasi/api/galeri/${id}`)
+        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `api/gallery/${id}`)
 
         dispatch({
             type: DELETE_GALERI_SUCCESS,
-            payload: data.success
+            payload: data.status
         })
 
     } catch (error) {

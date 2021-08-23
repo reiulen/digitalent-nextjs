@@ -24,7 +24,7 @@ import {
 
 import axios from 'axios'
 
-export const getAllTriviaQuestionDetail = (id, page = 1, limit = null) => async (dispatch) => {
+export const getAllTriviaQuestionDetail = (id, page = 1, keyword = '', limit = null) => async (dispatch) => {
     try {
 
         dispatch({ type: TRIVIA_QUESTION_DETAIL_REQUEST })
@@ -32,6 +32,7 @@ export const getAllTriviaQuestionDetail = (id, page = 1, limit = null) => async 
         let link = process.env.END_POINT_API_SUBVIT + `api/trivia-question-bank-details/all/${id}?`
         if (page) link = link.concat(`&page=${page}`)
         if (limit) link = link.concat(`&limit=${limit}`)
+        if (keyword) link = link.concat(`&keyword=${keyword}`)
 
         // const config = {
         //     headers: {

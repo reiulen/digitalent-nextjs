@@ -83,7 +83,7 @@ export const newTandaTangan = (tandaTanganData) => async (dispatch) => {
     // }
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PARTNERSHIP + "/api/signatures",
+      process.env.END_POINT_API_PARTNERSHIP + "/api/signatures/create",
       tandaTanganData
     );
 

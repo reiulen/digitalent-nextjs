@@ -9,6 +9,15 @@ import { useRouter } from "next/router";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
+import {
+  deleteMitra,
+  clearErrors,
+} from "../../../../redux/actions/partnership/mitra.actions";
+
+import {
+  DELETE_MITRA_RESET,
+  CLEAR_ERRORS,
+} from "../../../../redux/types/partnership/mitra.type";
 
 const Table = () => {
   const dispatch = useDispatch();
@@ -57,9 +66,6 @@ const Table = () => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
-  // const [allStatus, setAllStatus] = useState(null);
-  // const [statusActive, setStatusActive] = useState(null);
-  // const [statusNonActive, setStatusNonActive] = useState(null);
   const [totalMitra, setTotalMitra] = useState(totalMitraCardRes.total);
   const [activeMitra, setActiveMitra] = useState(activeMitraCardRes.total);
   const [nonActiveMitra, setNonActiveMitra] = useState(
@@ -104,13 +110,7 @@ const Table = () => {
         type: DELETE_MITRA_RESET,
       });
     }
-  }, [
-    limit,
-    isDeleted,
-    // statusActive,
-    // allStatus,
-    // statusNonActive,
-  ]);
+  }, [limit, isDeleted]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
@@ -121,18 +121,11 @@ const Table = () => {
   };
 
   const handleSearch = () => {
-    // setStatusNonActive(null);
     if (limit != null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
       router.push(`${router.pathname}?page=1&keyword=${search}`);
     }
-  };
-
-  const onNewReset = () => {
-    router.replace("/partnership/manajemen-mitra", undefined, {
-      shallow: true,
-    });
   };
 
   return (
@@ -225,7 +218,6 @@ const Table = () => {
           />
         </div>
       </div>
-
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -244,7 +236,7 @@ const Table = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-12 col-xl-12">
+                <div className="col-lg-10 col-xl-10">
                   <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
@@ -252,37 +244,21 @@ const Table = () => {
                       className="form-control"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
                   </div>
                 </div>
-              </div>
-
-              <div className="row align-items-right">
-                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                  <select name="" id="" className="form-control">
-                    <option value="1">Semua Status</option>
-                    <option value="2">Microsoft</option>
-                  </select>
-                </div>
-
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
-                  <a
-                    href="#"
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
+                <div className="col-lg-2 col-xl-2">
+                  <button
+                    type="button"
+                    className="btn btn-light-primary btn-block"
+                    onClick={handleSearch}
                   >
-                    Filter
-                  </a>
-                </div>
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
-                  <a
-                    href="#"
-                    className="btn btn-sm btn-light-danger px-6 font-weight-bold btn-block"
-                  >
-                    Reset
-                  </a>
+                    Cari
+                  </button>
                 </div>
               </div>
             </div>
@@ -300,8 +276,9 @@ const Table = () => {
                     </tr>
                   </thead>
                   <tbody>
+                    {/* {allMitra && console.log(allMitra)} */}
                     {allMitra &&
-                      allMitra.list_mitras.map((dataMitra, id) => {
+                      allMitra.list_mitras.map((dataMitra, i) => {
                         return (
                           <>
                             <tr>
@@ -313,7 +290,7 @@ const Table = () => {
                                     borderRadius: "6px",
                                   }}
                                 >
-                                  {id + 1}
+                                  {i + 1 * (page * 5 || limit) - 4}
                                 </button>
                               </td>
                               <td className="align-middle text-center">
@@ -338,8 +315,25 @@ const Table = () => {
                                   icon="detail.svg"
                                   link="/partnership/manajemen-mitra/detail-data-kerjasama"
                                 />
-                                <ButtonAction icon="write.svg" />
-                                <ButtonAction icon="trash.svg" />
+                                <ButtonAction
+                                  icon="write.svg"
+                                  link={`/partnership/manajemen-mitra/${dataMitra.id}`}
+                                />
+                                <button
+                                  onClick={() => handleDelete(dataMitra.id)}
+                                  className="btn mr-1"
+                                  style={{
+                                    background: "#F3F6F9",
+                                    borderRadius: "6px",
+                                  }}
+                                >
+                                  <Image
+                                    alt="button-action"
+                                    src={`/assets/icon/trash.svg`}
+                                    width={18}
+                                    height={18}
+                                  />
+                                </button>
                               </td>
                             </tr>
                           </>
@@ -350,50 +344,58 @@ const Table = () => {
               </div>
 
               <div className="row">
-                <div className="table-pagination">
-                  <Pagination
-                    activePage={5}
-                    itemsCountPerPage={2}
-                    totalItemsCount={5}
-                    pageRangeDisplayed={3}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-                <div className="table-total ml-auto">
-                  <div className="row">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                      >
-                        <option>5</option>
-                        <option>10</option>
-                        <option>30</option>
-                        <option>40</option>
-                        <option>50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data 120
-                      </p>
+                {allMitra && allMitra.perPage < allMitra.total && (
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={allMitra.perPage}
+                      totalItemsCount={allMitra.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {allMitra && allMitra.total > 5 ? (
+                  <div className="table-total ml-auto">
+                    <div className="row">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect2"
+                          style={{
+                            width: "65px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3" }}
+                        >
+                          Total Data {allMitra.total}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

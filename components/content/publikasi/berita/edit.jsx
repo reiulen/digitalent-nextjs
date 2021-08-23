@@ -3,12 +3,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from "next/dynamic";
+import SimpleReactValidator from 'simple-react-validator'
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from "next/router";
 import { TagsInput } from 'react-tag-input-component';
 
 import { updateBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 import { NEW_BERITA_RESET, UPDATE_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
+import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
@@ -24,9 +27,15 @@ const EditBerita = () => {
         ssr: false
     })
 
+    const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+    const [, forceUpdate] = useState();
     const { berita } = useSelector(state => state.detailBerita)
-    const { error, success, loading } = useSelector(state => state.updatedBerita)
+    const { loading, error, success } = useSelector(state => state.updatedBerita)
+    const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
+
     useEffect(() => {
+
+        dispatch(getAllKategori())
 
         editorRef.current = {
             CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
@@ -55,8 +64,8 @@ const EditBerita = () => {
     const [judul_berita, setJudulBerita] = useState(berita.judul_berita)
     const [isi_berita, setIsiBerita] = useState(berita.isi_berita);
     const [gambar, setGambar] = useState(berita.gambar)
-    const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
-    const [kategori_id, setKategoriId] = useState(1) //belum
+    const [gambarPreview, setGambarPreview] = useState("/assets/media/default.jpg") 
+    const [kategori_id, setKategoriId] = useState(berita.kategori_id)
     const [users_id, setUserId] = useState(berita.users_id)
     const [tag, setTag] = useState(berita.tag)
     const [publish, setPublish] = useState(berita.publish === 1 ? true : false)
@@ -77,31 +86,34 @@ const EditBerita = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (error) {
-            dispatch(clearErrors())
+        if (simpleValidator.current.allValid()){
+            if (error) {
+                dispatch(clearErrors())
+            }
+    
+            if (success) {
+                dispatch({
+                    // type: NEW_BERITA_RESET
+                    type: UPDATE_BERITA_RESET
+                })
+            }
+    
+            const data = {
+                judul_berita,
+                isi_berita,
+                gambar,
+                kategori_id,
+                users_id,
+                tag,
+                publish,
+                id,
+                _method
+            }
+    
+            dispatch(updateBerita(data))
+            // console.log(data)
         }
-
-        // if (success) {
-        //     dispatch({
-        //         // type: NEW_BERITA_RESET
-        //         type: UPDATE_BERITA_RESET
-        //     })
-        // }
-
-        const data = {
-            judul_berita,
-            isi_berita,
-            gambar,
-            kategori_id,
-            users_id,
-            tag,
-            publish,
-            id,
-            _method
-        }
-
-        dispatch(updateBerita(data))
-        // console.log(data)
+        
     }
 
     const onNewReset = () => {
@@ -113,6 +125,9 @@ const EditBerita = () => {
 
     return (
         <>
+        {
+            console.log (berita)
+        }
             <PageWrapper>
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -174,7 +189,18 @@ const EditBerita = () => {
                                                     setIsiBerita(data);
                                                     console.log({ event, editor, data })
                                                 }}
+                                                onBlur={() =>
+                                                    simpleValidator.current.showMessageFor(
+                                                        "isi_berita"
+                                                    )
+                                                }
                                             /> : <p>Tunggu Sebentar</p>}
+                                            {simpleValidator.current.message(
+                                                "isi_berita",
+                                                isi_berita,
+                                                "required|min:100",
+                                                { className: "text-danger" }
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -194,20 +220,33 @@ const EditBerita = () => {
                                     <div className="col-sm-9">
                                         <div className="input-group">
                                             <div className="custom-file">
-                                                <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
+                                                <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} accept="image/*"/>
                                                 <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                {
+                                    console.log (kategori)
+                                }
 
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
                                     <div className="col-sm-10">
-                                        <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => setKategoriId(e.target.value)} >
-                                            <option value="1">Kategori</option>
-                                            <option value="2">Kategori 2</option>
+                                        <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
+                                            <option selected disabled value=''>-- Kategori --</option>
+                                            {!kategori || (kategori && kategori.length === 0) ? (
+                                                <option value="">Data kosong</option>
+                                            ) : (
+                                                kategori && kategori.kategori && kategori.kategori.map((row) => {
+                                                    return (
+                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
+                                                    )
+                                                })
+                                            )}
+
                                         </select>
+                                        {simpleValidator.current.message('kategori_id', kategori_id, 'required', { className: 'text-danger' })}
                                     </div>
                                 </div>
 
@@ -225,7 +264,7 @@ const EditBerita = () => {
                                 </div>
 
                                 <div className="form-group row">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                     <div className="col-sm-1">
                                         <SwitchButton
                                             checked={publish}
@@ -246,7 +285,7 @@ const EditBerita = () => {
                                         <Link href='/publikasi/berita'>
                                             <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                         </Link>
-                                        <button className='btn btn-primary btn-sm'>Submit</button>
+                                        <button className='btn btn-primary btn-sm'>Simpan</button>
                                     </div>
                                 </div>
                             </form>

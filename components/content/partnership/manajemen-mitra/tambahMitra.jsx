@@ -4,28 +4,45 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 import SimpleReactValidator from "simple-react-validator";
 
 >>>>>>> Stashed changes
+=======
+import axios from "axios";
+
+>>>>>>> 12ebf0cd6a0a21db04a551250ea7cb8e10e9ee9d
 import {
   newMitra,
   clearErrors,
 } from "../../../../redux/actions/partnership/mitra.actions";
+
+import { getAllKota } from "../../../../redux/actions/utils/utils.actions";
+
 import LoadingPage from "../../../LoadingPage";
 
 import { NEW_MITRA_RESET } from "../../../../redux/types/partnership/mitra.type";
 
-import Swal from "sweetalert2";
-
 const TambahMitra = () => {
   const router = useRouter();
-  const Swal = require("sweetalert2");
   const dispatch = useDispatch();
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   const { loading, error, success } = useSelector((state) => state.newMitra);
+
+  const {
+    loading: allLoadingProvinsi,
+    error: errorProvinsi,
+    allProvinsi,
+  } = useSelector((state) => state.allProvinsi);
+
+  const {
+    loading: allLoadingKota,
+    error: errorKota,
+    allKota: allKotaRes,
+  } = useSelector((state) => state.allKota);
 
   // start convert to base64
   const onChangeGambar = (e) => {
@@ -46,8 +63,8 @@ const TambahMitra = () => {
   const [email, setEmail] = useState("");
   const [website, setWebsite] = useState("");
   const [alamat, setAlamat] = useState("");
-  const [provinsi, setProvinsi] = useState("");
-  const [kotaKabupaten, setKotaKabupaten] = useState("");
+  const [provinsi, setProvinsi] = useState(null);
+  const [kotaKabupaten, setKotaKabupaten] = useState(null);
   const [kodePos, setKodePos] = useState("");
   const [namaPic, setNamaPic] = useState("");
   const [noPic, setNoPic] = useState("");
@@ -60,7 +77,10 @@ const TambahMitra = () => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, success]);
+    if (provinsi) {
+      dispatch(getAllKota(provinsi));
+    }
+  }, [dispatch, error, success, provinsi]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -104,7 +124,7 @@ const TambahMitra = () => {
     }
 <<<<<<< Updated upstream
     const data = {
-      institution_name: "majapahittttt33",
+      institution_name: namaLembaga,
       email: email,
       agency_logo: logo,
       website: website,
@@ -117,8 +137,8 @@ const TambahMitra = () => {
       pic_email: emailPic,
     };
 
-    dispatch(newMitra(JSON.stringify(data)));
-    // dispatch(newMitra(data));
+    // dispatch(newMitra(JSON.stringify(data)));
+    dispatch(newMitra(data));
     console.log(data);
 =======
 >>>>>>> Stashed changes
@@ -331,6 +351,7 @@ const TambahMitra = () => {
                 >
                   Provinsi
                 </label>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
                 <div className="col-sm-10">
                   <input
@@ -349,6 +370,13 @@ const TambahMitra = () => {
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("provinsi")
                     }
+=======
+                <div className="col-10">
+                  <select
+                    onChange={(e) => setProvinsi(e.target.value)}
+                    onBlur={(e) => setProvinsi(e.target.value)}
+                    className="form-control"
+>>>>>>> 12ebf0cd6a0a21db04a551250ea7cb8e10e9ee9d
                   >
                     {allProvinsi && console.log(allProvinsi)}
                     {!allProvinsi ||
@@ -365,6 +393,7 @@ const TambahMitra = () => {
                       })
                     )}
                   </select>
+<<<<<<< HEAD
                   {simpleValidator.current.message(
                     "provinsi",
                     provinsi,
@@ -374,6 +403,8 @@ const TambahMitra = () => {
                     }
                   )}
 >>>>>>> Stashed changes
+=======
+>>>>>>> 12ebf0cd6a0a21db04a551250ea7cb8e10e9ee9d
                 </div>
               </div>
 
@@ -385,6 +416,7 @@ const TambahMitra = () => {
                   Kota / Kabupaten
                 </label>
                 <div className="col-sm-10">
+<<<<<<< HEAD
 <<<<<<< Updated upstream
                   <input
 =======
@@ -395,6 +427,12 @@ const TambahMitra = () => {
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("kotaKabupaten")
                     }
+=======
+                  <select
+                    className="form-control"
+                    onChange={(e) => setKotaKabupaten(e.target.value)}
+                    onBlur={(e) => setKotaKabupaten(e.target.value)}
+>>>>>>> 12ebf0cd6a0a21db04a551250ea7cb8e10e9ee9d
                   >
                     {!allKotaRes || (allKotaRes && allKotaRes.length === 0) ? (
                       <option value="">Data kosong</option>
@@ -409,6 +447,7 @@ const TambahMitra = () => {
                       })
                     )}
                   </select>
+<<<<<<< HEAD
                   {simpleValidator.current.message(
                     "kotaKabupaten",
                     kotaKabupaten,
@@ -419,11 +458,14 @@ const TambahMitra = () => {
                   )}
                   {/* <input
 >>>>>>> Stashed changes
+=======
+                  {/* <input
+>>>>>>> 12ebf0cd6a0a21db04a551250ea7cb8e10e9ee9d
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Kota / Kabupaten"
                     onChange={(e) => setKotaKabupaten(e.target.value)}
-                  />
+                  /> */}
                 </div>
               </div>
 

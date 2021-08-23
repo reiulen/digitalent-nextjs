@@ -208,6 +208,7 @@ const ListTipeSoal = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
+                        <th>ID</th>
                         <th>Tipe Soal</th>
                         <th>Bobot Nilai</th>
                         <th>Status</th>
@@ -218,14 +219,15 @@ const ListTipeSoal = () => {
                       {subtance_question_type && subtance_question_type.list_types.length === 0
                         ? ""
                         : subtance_question_type &&
-                        subtance_question_type.list_types.map((row) => {
+                        subtance_question_type.list_types.map((row, i) => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary">
-                                  {row.no}
+                                <span className="badge badge-secondary text-muted">
+                                  {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
+                              <td className="align-middle">{row.id}</td>
                               <td className="align-middle">{row.name}</td>
                               <td className="align-middle">{row.value}</td>
                               <td className="align-middle">

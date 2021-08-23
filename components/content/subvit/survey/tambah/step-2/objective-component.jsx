@@ -1,28 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-import Link from "next/link";
-import dynamic from "next/dynamic";
 import Image from "next/image";
-import Swal from "sweetalert2"
-import { useDispatch, useSelector } from "react-redux";
 
-import { useRouter } from "next/router";
-
-const ObjectiveComponent = ({ props_answer, props_answer_key }) => {
-
-    const importSwitch = () => import("bootstrap-switch-button-react");
-    const SwitchButton = dynamic(importSwitch, {
-        ssr: false,
-    });
+const ObjectiveComponent = ({ props_answer }) => {
 
     const [answer, setSoalList] = useState([
-        { key: 'A', option: '', image: '', is_right: false },
-        { key: 'B', option: '', image: '', is_right: false },
-        { key: 'C', option: '', image: '', is_right: false },
-        { key: 'D', option: '', image: '', is_right: false }
+        { key: 'A', option: '', image: '' },
+        { key: 'B', option: '', image: '' },
+        { key: 'C', option: '', image: '' },
+        { key: 'D', option: '', image: '' }
     ])
-    const [answer_key, setAnswerKey] = useState('')
-    const [question_type_id, setQuestionTypeId] = useState('')
 
     const handleInputChange = (e, index) => {
         const { name, value } = e.target;
@@ -39,20 +26,6 @@ const ObjectiveComponent = ({ props_answer, props_answer_key }) => {
         }
         setSoalList(list)
         props_answer(list)
-    }
-
-    const handleAnswer = (value, i) => {
-        setAnswerKey(answer[i].key)
-        props_answer_key(answer[i].key)
-        if (value === false) {
-            setAnswerKey('')
-            props_answer_key('')
-        }
-        const list = [...answer]
-        list.forEach((row, j) => {
-            list[j]['is_right'] = false
-        })
-        list[i]['is_right'] = value
     }
 
     const handleRemoveClick = (index) => {
@@ -81,7 +54,6 @@ const ObjectiveComponent = ({ props_answer, props_answer_key }) => {
                     <p>Input Gambar (Opsional)</p>
                 </div>
                 <div className="col-4">
-                    <p>Kunci Jawaban Yang Benar</p>
                 </div>
 
                 {answer.map((x, i) => {
@@ -113,22 +85,7 @@ const ObjectiveComponent = ({ props_answer, props_answer_key }) => {
                                     : ''
                                 }
                             </div>
-                            <div className="col-sm-12 col-md-4">
-                                <SwitchButton
-                                    checked={x.is_right}
-                                    onlabel=" "
-                                    onstyle="primary"
-                                    offlabel=" "
-                                    offstyle="danger"
-                                    size="sm"
-                                    width={20}
-                                    height={10}
-                                    onChange={(checked) => handleAnswer(checked, i)}
-                                />
-                                <span className="text-muted">
-                                    Silahkan pilih kunci jawaban yang benar
-                                </span>
-                            </div>
+                            <div className="col-md-4 col-sm-12"></div>
                         </>
                     )
                 })}

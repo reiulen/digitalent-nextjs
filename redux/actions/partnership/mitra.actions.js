@@ -45,35 +45,39 @@ import {
 
 import axios from "axios";
 
-export const getAllMitra = () => async (dispatch) => {
-  try {
-    dispatch({ type: MITRA_REQUEST });
+export const getAllMitra =
+  (page = 1, keyword = "", limit = 5, card = null) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: MITRA_REQUEST });
 
-    let link = process.env.END_POINT_API_PARTNERSHIP + `/api/partners?page=1`;
-    // if (keyword) link = link.concat(`&keyword=${keyword}`)
-    // if (limit) link = link.concat(`&limit=${limit}`)
+      let link =
+        process.env.END_POINT_API_PARTNERSHIP + `/api/partners?page=${page}`;
+      if (keyword) link = link.concat(`&keyword=${keyword}`);
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (card) link = link.concat(`&card=${card}`);
 
-    // const config = {
-    //     headers: {
-    //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-    //         'Access-Control-Allow-Origin': '*',
-    //         'apikey': process.env.END_POINT_KEY_AUTH
-    //     }
-    // }
+      // const config = {
+      //     headers: {
+      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+      //         'Access-Control-Allow-Origin': '*',
+      //         'apikey': process.env.END_POINT_KEY_AUTH
+      //     }
+      // }
 
-    const { data } = await axios.get(link);
+      const { data } = await axios.get(link);
 
-    dispatch({
-      type: MITRA_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: MITRA_FAIL,
-      payload: error.message,
-    });
-  }
-};
+      dispatch({
+        type: MITRA_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: MITRA_FAIL,
+        payload: error.message,
+      });
+    }
+  };
 
 export const newMitra = (newMitraData) => async (dispatch) => {
   try {
@@ -101,6 +105,24 @@ export const newMitra = (newMitraData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: NEW_MITRA_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getDetailMitra = (id) => async (dispatch) => {
+  try {
+    let link = process.env.END_POINT_API_PARTNERSHIP + `/api/partners/${id}`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: DETAIL_MITRA_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DETAIL_MITRA_FAIL,
       payload: error.response.data.message,
     });
   }

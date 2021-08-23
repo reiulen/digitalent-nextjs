@@ -113,7 +113,7 @@ const StepOne = () => {
           <StepInputPublish step="1"></StepInputPublish>
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Edit Test Trivia
+              Publish Soal
             </h3>
           </div>
           <div className="card-body">

@@ -24,7 +24,7 @@ import {
 
 import axios from 'axios'
 
-export const getAllSurveyQuestionDetail = (id, page = 1, limit = null) => async (dispatch) => {
+export const getAllSurveyQuestionDetail = (id, page = 1, limit = null, keyword = '') => async (dispatch) => {
     try {
 
         dispatch({ type: SURVEY_QUESTION_DETAIL_REQUEST })
