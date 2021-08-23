@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 
 import { newFaq, clearErrors } from '../../../../redux/actions/publikasi/faq.actions'
 import { NEW_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
+import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
@@ -28,7 +29,7 @@ const TambahFaq = () => {
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
     useEffect(() => {
-
+        dispatch(getAllKategori())
         // if (error) {
         //     dispatch(clearErrors())
         // }
@@ -44,7 +45,6 @@ const TambahFaq = () => {
         }
 
     }, [dispatch, error, success]);
-
 
     const [judul, setJudulPertanyaan] = useState('')
     const [jawaban, setJawaban] = useState('');

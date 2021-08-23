@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 
 import { updateFaq, clearErrors } from '../../../../redux/actions/publikasi/faq.actions'
 import { UPDATE_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
+import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
@@ -25,11 +26,11 @@ const EditFaq = () => {
 
     const { loading, error, isUpdated } = useSelector(state => state.updateFaq)
     const { faq } = useSelector(state => state.detailFaq)
-    const { kategori } = useSelector(state => state.allKategori)
+    const { loading: allLoading, error: allError, kategori } = useSelector(state => state.allKategori)
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
     useEffect(() => {
-
+        dispatch(getAllKategori())
         // if (error) {
         //     dispatch(clearErrors())
         // }
@@ -88,6 +89,9 @@ const EditFaq = () => {
 
     return (
         <PageWrapper>
+            {
+                console.log (faq)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -140,7 +144,6 @@ const EditFaq = () => {
                                 </div>
                             </div>
 
-
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
                                 <div className="col-sm-10">
@@ -171,11 +174,7 @@ const EditFaq = () => {
 
 
                             <div className="form-group row">
-<<<<<<< HEAD
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ ?</label>
-=======
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ</label>
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={pinned}
@@ -191,11 +190,7 @@ const EditFaq = () => {
                             </div>
 
                             <div className="form-group row">
-<<<<<<< HEAD
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
-=======
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -216,11 +211,7 @@ const EditFaq = () => {
                                     <Link href='/publikasi/faq'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-<<<<<<< HEAD
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
-=======
                                     <button className='btn btn-primary btn-sm'>Simpan</button>
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                                 </div>
                             </div>
                         </form>
