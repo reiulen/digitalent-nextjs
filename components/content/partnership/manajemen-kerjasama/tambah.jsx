@@ -15,6 +15,7 @@ import {
   changeCooperationSelectByID,
   fetchListSelectMitra
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
+import moment from 'moment'
 
 const Tambah = () => {
   const dispatch = useDispatch()
@@ -31,58 +32,19 @@ const Tambah = () => {
   const [title, setTitle] = useState("")
   const [period, setPeriod] = useState("")
   const [periodUnit, setPeriodUnit] = useState("")
-
-  // const [listSelectCooperation, setListSelectCooperation] = useState([])
-  // console.log("listSelectCooperation",listSelectCooperation)
   const [cooperationC_id, setCooperationC_id] = useState("")
   const changeSetCooperationC_id = (value) =>{
     setCooperationC_id(value)
     dispatch(changeCooperationSelectByID(value))
-
-    // let _temp = [];
-    // let add_temp = {..._temp,}
-    // console.log("value",value)
-    // console.log("asdasd",allMK.cooperationActiveSelect.data)
-
-    // console.log(allMK.cooperationActiveSelect.data.filter((items,i)=>{return items.id === 1}))
-    // let dataCooporationActive = allMK.cooperationActiveSelect.data.filter(items=>items.id === value)
-    // setListSelectCooperation(dataCooporationActive)
-
-    // console.log("dataCooporationActive",dataCooporationActive)
   }
-  // const [cooperation1, setCooperation1] = useState("")
-  // const [cooperation2, setCooperation2] = useState("")
-  // const [cooperation3, setCooperation3] = useState("")
   const [AllCooperation, setAllCooperation] = useState("")
   const changeFormCooporation = (index,e) =>{
-
-    // console.log(allMK.singleCooporationSelect.data.option)
-
     let dataaa = [...allMK.singleCooporationSelect.data.option]
-
     dataaa[index].cooperation = e.target.value
     setAllCooperation(dataaa)
-
-
-    // console.log("dataaa[index]",dataaa[index])
-
-
-
   }
-  // const [startDate, setStartDate] = useState(null);
-  // const [endDate, setEndDate] = useState(null);
-  // end state form data 1
-  
   const handleSubmit =(e)=>{
     e.preventDefault();
-    // console.log("date",date)
-    // console.log("title",title)
-    // console.log("period",period)
-    // console.log("periodUnit",periodUnit)
-    // console.log("cooperationC_id",cooperationC_id)
-    // console.log("cooperation1",cooperation1)
-    // console.log("cooperation2",cooperation2)
-    // console.log("cooperation3",cooperation3)
   }
   
 
@@ -119,36 +81,21 @@ const Tambah = () => {
   } else if (AllCooperation === "") {
       alert('ada data yg belum terisi')
   } else {
-      // return;
-      // if (result.value) {
-        // router.push("/partnership/manajemen-kerjasama/submit");
-        console.log("AllCooperationdasdas",AllCooperation)
-    
-        
-    
-        
-    
-    
-        router.push({
+    router.push({
           pathname: '/partnership/manajemen-kerjasama/submit',
           query: { institution_name:institution_name,date: date,title:title,period:period,periodUnit:periodUnit,cooperationC_id:cooperationC_id,AllCooperation:JSON.stringify(AllCooperation) },
         })
-    
-      // }
   }
-// });
   
   };
-  
+  console.log("date",date)
   useEffect(() => {
     dispatch(fetchDataEmail())
     dispatch(fetchListSelectCooperation())
     dispatch(fetchListCooperationSelect())
     dispatch(fetchListCooperationSelectById(cooperationC_id))
     dispatch(fetchListSelectMitra())
-    // console.log("state all cop",allMK.singleCooporationSelect)
-    
-    // setCooperationALl({})
+    setDate(moment(new Date()).format("YYYY-MM-DD"))
   }, [allMK.institution_name,allMK.idCooporationSelect])
   return (
     <PageWrapper>
@@ -169,8 +116,6 @@ const Tambah = () => {
                   Nama Lembaga
                 </label>
                 <div className="col-sm-3">
-                  {/* <input type="text" value={allMK.name_lembaga} onChange={(e)=>dispatch(setNameLembaga(e.target.value))} className="form-control" placeholder="Masukan nama lembaga" /> */}
-                  {/* <select className="form-control" onChange={(e)=>dispatch(setNameLembaga(e.target.value))}> */}
                   <select required className="form-control" onChange={(e)=>changeInstitusi(e.target.value)}>
                     <option value="">Pilih lembaga</option>
                     {allMK.stateListMitra.length=== 0?"":allMK.stateListMitra.data.map((items,index)=>{
@@ -200,7 +145,7 @@ const Tambah = () => {
                   Tanggal
                 </label>
                 <div className="col-sm-3">
-                  <input required type="date" onChange={(e)=>setDate(e.target.value)} className="form-control" />
+                  <input required readOnly value={date} type="text" className="form-control" />
                 </div>
               </div>
 
@@ -312,9 +257,7 @@ const Tambah = () => {
               </div>
                 )
               })
-              
-
-  }
+              }
   {/* end looping */}
               <div className="form-group row">
                 <div className="col-sm-2"></div>

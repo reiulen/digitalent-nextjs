@@ -132,7 +132,7 @@ import {
 
 //
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
-// import { allMCooporationReducer } from "./partnership/mk_cooporation.reducers";
+import { allMCooporationReducer } from "./partnership/managementCooporation.reducer";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
@@ -257,7 +257,7 @@ const reducer = combineReducers({
   totalMitraCardGlobal: totalMitraCardReducer,
 
   allMKCooporation: allMKCooporationReducer,
-  // allMK: allMCooporationReducer,
+  allMK: allMCooporationReducer,
 
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,
