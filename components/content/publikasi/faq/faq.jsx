@@ -143,7 +143,7 @@ const Faq = () => {
             )
             setStartDate (null)
             setEndDate (null)
-            
+
         } else {
             if (limit !== null && search === null) {
                 router.push(
@@ -485,5 +485,6 @@ const Faq = () => {
         </PageWrapper>
     )
 }
+
 
 export default Faq
