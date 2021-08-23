@@ -117,6 +117,12 @@ const EditDokumentKerjasama = () => {
     formData.append("period", period);
     formData.append("period_unit", periodUnit);
 
+    if(documentLocal === ""){
+      console.log("object")
+    }else{
+      formData.append("document", documentLocal);
+    }
+
     formData.append("period_date_start", periodDateStart);
     formData.append("period_date_end", periodDateEnd);
     formData.append("agreement_number_partner", aggrementNumber);
