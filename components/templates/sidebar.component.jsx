@@ -641,7 +641,7 @@ const Sidebar = () => {
                 </div>
               </li>
 
-              <li
+              {/* <li
                 className={`menu-item menu-item-submenu ${menuItem8}`}
                 onClick={onSetMenuItem8}
                 aria-haspopup="true"
@@ -693,7 +693,7 @@ const Sidebar = () => {
                     </li>
                   </ul>
                 </div>
-              </li>
+              </li> */}
             </ul>
             {/* <!--end::Menu Nav--> */}
           </div>

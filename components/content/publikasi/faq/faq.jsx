@@ -36,13 +36,20 @@ const Faq = () => {
     const [limit, setLimit] = useState(null)
     const [search, setSearch] = useState('')
 
+    const [publishValue, setPublishValue] = useState(null);
+
     let { page = 1, success } = router.query
     page = Number(page)
 
     useEffect(() => {
-        if (limit) {
+        if (limit !== null && search === "") {
             router.push(`${router.pathname}?page=1&limit=${limit}`)
+
+        } else if (limit !== null && search !== ""){
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
         }
+
+
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
                 if (result.isConfirmed) {
@@ -53,7 +60,11 @@ const Faq = () => {
                 type: DELETE_FAQ_RESET
             })
         }
-    }, [dispatch, limit, isDeleted])
+
+        if (publishValue) {
+            router.push(`${router.pathname}?publish=${publishValue}`);
+          }
+    }, [dispatch, limit, isDeleted, publishValue])
 
     const onSetPin = (checked, id) => {
         const data = {
@@ -86,32 +97,68 @@ const Faq = () => {
     };
 
     const handlePagination = (pageNumber) => {
-        if (limit !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
+        if (limit !== null  && search === "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+
+        } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
         } else {
-            router.push(`${router.pathname}?page=${pageNumber}`);
+            router.push(`${router.pathname}?page=${pageNumber}`)
         }
-    };
+    }
+
 
     const handleSearch = () => {
-        if (limit !== null) {
-            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
+        if (limit != null && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+
+        } else if (limit !== null && startDate !== null && endDate !== null ) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
         } else {
-            router.push(`${router.pathname}?page=1&keyword=${search}`);
+            router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
+
     };
 
     const handleSearchDate = () => {
-        if (limit !== null) {
-            router.push(
-                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
-            );
+        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+            
         } else {
-            router.push(
-                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-            ); 
+            if (limit !== null && search === null) {
+                router.push(
+                    `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                );
+
+            } else if (limit !== null && search !== null) {
+                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+            
+            } else {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+                ); 
+            }
         }
-        
     };
 
     const handleLimit = (val) => {
@@ -166,9 +213,11 @@ const Faq = () => {
                         background='bg-light-info' 
                         icon='mail-purple.svg' 
                         color='#8A50FC' 
-                        value='90' 
+                        value={faq && faq.publish != "" ? faq.publish : 0} 
                         titleValue='FAQ' 
-                        title='Total Publish' 
+                        title='Total Publish'
+                        publishedVal="1"
+                        routePublish={() => setPublishValue("1")} 
                     />
                     <CardPage 
                         background='bg-light-warning' 
@@ -176,15 +225,19 @@ const Faq = () => {
                         color='#634100' 
                         value='64' 
                         titleValue='FAQ' 
-                        title='Total Author' 
+                        title='Total Author'
+                        publishedVal=""
+                        routePublish={() => setPublishValue("")} 
                     />
                     <CardPage 
                         background='bg-light-danger' 
                         icon='kotak-kotak-red.svg' 
                         color='#F65464' 
-                        value='64' 
+                        value={faq && faq.publish != "" ? faq.unpublish : 0}  
                         titleValue='FAQ' 
                         title='Total Unpublish' 
+                        publishedVal="0"
+                        routePublish={() => setPublishValue("0")}
                     />
                 </div>
             </div>
@@ -193,7 +246,7 @@ const Faq = () => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen FAQ</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Manajemen FAQ</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/faq/tambah'>
                                 <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
@@ -288,7 +341,7 @@ const Faq = () => {
                                                 <th>Pin FAQ</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -300,9 +353,14 @@ const Faq = () => {
                                                             {/* {
                                                                 console.log (row)
                                                             } */}
-                                                            <td className='align-middle text-center'>
+                                                            {/* <td className='align-middle text-center'>
                                                                 <span className="badge badge-secondary text-muted">
                                                                     {i + 1 * (page * 5 || limit) - 4}
+                                                                </span>
+                                                            </td> */}
+                                                            <td className='align-middle text-center'>
+                                                                <span className="badge badge-secondary text-muted">
+                                                                    {i + 1 * (page * limit) - (limit - 1)}
                                                                 </span>
                                                             </td>
                                                             <td className='align-middle'>{row.judul}</td>

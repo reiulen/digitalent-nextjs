@@ -334,6 +334,7 @@ const EditArtikel = () => {
                           name="gambar"
                           className="custom-file-input"
                           id="inputGroupFile04"
+                          accept="image/*"
                           onChange={onChangeGambar}
                         />
                         <label

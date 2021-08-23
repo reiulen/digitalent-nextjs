@@ -279,6 +279,7 @@ const TambahArtikel = () => {
                           className="custom-file-input"
                           id="inputGroupFile04"
                           onChange={onChangeGambar}
+                          accept="image/*"
                           onBlur={() =>
                             simpleValidator.current.showMessageFor("gambar")
                           }

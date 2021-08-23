@@ -31,9 +31,13 @@ const Kategori = () => {
 
 
     useEffect(() => {
-        if (limit) {
+        if (limit !== null && search === "") {
             router.push(`${router.pathname}?page=1&limit=${limit}`)
+
+        } else if (limit !== null && search !== ""){
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
         }
+
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
                 if (result.isConfirmed) {
@@ -68,8 +72,15 @@ const Kategori = () => {
     }
 
     const handlePagination = (pageNumber) => {
-        if (limit != null) {
+        if (limit !== null  && search === "") {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        
+        } else if (limit !== null && search !== "" ) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+
+        } else if (limit === null && search !== "" ) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+        
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
         }
@@ -78,6 +89,10 @@ const Kategori = () => {
     const handleSearch = () => {
         if (limit != null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+
+        // } else if (limit !== null && keyword !== null ) {
+        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
@@ -117,7 +132,7 @@ const Kategori = () => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen Kategori</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Manajemen Kategori</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/kategori/tambah'>
                                 <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
@@ -193,7 +208,7 @@ const Kategori = () => {
                                                 <th className='text-center'>No</th>
                                                 <th >Nama</th>
                                                 <th>Jenis Kategori</th>
-                                                <th className='text-center'>Action</th>
+                                                <th className='text-center'>Aksi</th>
                                             </tr>
                                         </thead>
                                         {/* {
@@ -205,7 +220,8 @@ const Kategori = () => {
                                                     <td className='align-middle text-center' colSpan={4}>Data Masih Kosong</td> :
                                                     kategori && kategori.kategori.map((row, i) => {
                                                         return <tr key={row.id}>
-                                                            <td className='align-middle text-center'>{i + 1 * (page * 5 || limit) - 4}</td>
+                                                            {/* <td className='align-middle text-center'>{i + 1 * (page * 5 || limit) - 4}</td> */}
+                                                            <td className='align-middle text-center'>{i + 1 * (page * limit) - (limit - 1)}</td>
                                                             <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.jenis_kategori}</td>
                                                             <td className='align-middle text-center'>
@@ -222,6 +238,9 @@ const Kategori = () => {
                                     </table> : ''
                                 }
                             </div>
+                            {
+                                console.log (kategori)
+                            }
 
                             <div className="row">
                                 {kategori && kategori.perPage < kategori.total &&
@@ -257,10 +276,10 @@ const Kategori = () => {
                                                     onChange={e => handleLimit(e.target.value)}
                                                     onBlur={e => handleLimit(e.target.value)}
                                                 >
-                                                    <option value='5'>5</option>
-                                                    <option value='10'>10</option>
-                                                    <option value='15'>15</option>
-                                                    <option value='20'>20</option>
+                                                    <option value='5' selected={limit == "5" ? true: false}>5</option>
+                                                    <option value='10' selected={limit == "10" ? true: false}>10</option>
+                                                    <option value='15' selected={limit === "15" ? true: false}>15</option>
+                                                    <option value='20' selected={limit === "20" ? true: false}>20</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">

@@ -1,8 +1,11 @@
 import Layout from "../../../components/templates/layout.component";
 import Table from "../../../components/content/partnership/manajemen-mitra/tableMitra";
 
-import { getAllMitra } from '../../../redux/actions/partnership/mitra.actions'
-import { wrapper } from '../../../redux/store'
+import {
+  getAllMitra,
+  getTotalMitra,
+} from "../../../redux/actions/partnership/mitra.actions";
+import { wrapper } from "../../../redux/store";
 
 export default function MitraPage() {
   return (
@@ -16,7 +19,12 @@ export default function MitraPage() {
   );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-  await store.dispatch(getAllMitra())
-})
-
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query }) => {
+      await store.dispatch(
+        getAllMitra(query.page, query.keyword, query.limit, query.card)
+      );
+      await store.dispatch(getTotalMitra());
+    }
+);

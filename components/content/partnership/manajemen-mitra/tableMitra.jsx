@@ -8,16 +8,134 @@ import Image from "next/image";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
+import {
+  deleteMitra,
+  clearErrors,
+} from "../../../../redux/actions/partnership/mitra.actions";
+
+import { useRouter } from "next/router";
+
+import {
+  DELETE_MITRA_RESET,
+  CLEAR_ERRORS,
+} from "../../../../redux/types/partnership/mitra.type";
 
 const Table = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
-  // api problem??
+  const { totalMitraCardRes } = useSelector(
+    (state) => state.totalMitraCardGlobal
+  );
 
-  const { loading, error, mitra } = useSelector((state) => state.allMitra);
+  const {
+    loading: allLoading,
+    error,
+    allMitra,
+  } = useSelector((state) => state.allMitra);
 
-  // useEffect(() => {}, [mitra]);
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    isDeleted,
+  } = useSelector((state) => state.deleteMitra);
 
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Ya !",
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteMitra(id));
+      }
+    });
+  };
+
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
+  const [allStatus, setAllStatus] = useState(null);
+  const [statusActive, setStatusActive] = useState(null);
+  const [statusNonActive, setStatusNonActive] = useState(null);
+
+  let { page = 1, keyword, success } = router.query;
+  // if (allLoading) {
+  //   loading = allLoading;
+  // } else if (deleteLoading) {
+  //   loading = deleteLoading;
+  // }
+
+  page = Number(page);
+  const handleLimit = (val) => {
+    setLimit(val);
+  };
+
+  useEffect(() => {
+    console.log(totalMitraCardRes);
+
+    if (limit) {
+      router.push(`${router.pathname}?page=1&limit=${limit}`);
+    }
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        }
+      );
+      dispatch({
+        type: DELETE_MITRA_RESET,
+      });
+    }
+
+    if (allStatus) {
+      router.push(
+        `${router.pathname}?page=1&keyword=${search}&limit=${limit}&card=all`
+      );
+    }
+    if (statusActive) {
+      router.push(
+        `${router.pathname}?page=1&keyword=${search}&limit=${limit}&card=active`
+      );
+    }
+    if (statusNonActive) {
+      router.push(
+        `${router.pathname}?page=1&keyword=${search}&limit=${limit}&card=non-active`
+      );
+    }
+  }, [limit, isDeleted, statusActive, allStatus, statusNonActive]);
+
+  const handlePagination = (pageNumber) => {
+    if (limit != null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
+    } else {
+      router.push(`${router.pathname}?page=${pageNumber}`);
+    }
+  };
+
+  const handleSearch = () => {
+    if (limit != null) {
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
+    } else {
+      router.push(`${router.pathname}?page=1&keyword=${search}`);
+    }
+  };
+
+  // const handleTotalMitra = (card) => {
+  //   if (limit != null) {
+  //     router.push(
+  //       `${router.pathname}?page=1&keyword=${search}&limit=${limit}&card=${card}`
+  //     );
+  //   } else {
+  //     router.push(`${router.pathname}?page=1&keyword=${search}`);
+  //   }
+  // };
   return (
     <PageWrapper>
       <div className="col-lg-10 col-md-10">
@@ -29,6 +147,8 @@ const Table = () => {
             value="120"
             titleValue="Mitra"
             title="Total Mitra"
+            publishedVal="all"
+            routePublish={() => setAllStatus("all")}
           />
           <CardPage
             background="bg-light-warning"
@@ -37,6 +157,8 @@ const Table = () => {
             value="100"
             titleValue="Mitra"
             title="Mitra Yang Aktif"
+            publishedVal="active"
+            routePublish={() => setStatusActive("active")}
           />
           <CardPage
             background="bg-light-danger"
@@ -45,10 +167,11 @@ const Table = () => {
             value="12"
             titleValue="Mitra"
             title="Mitra Yang Tidak Aktif"
+            publishedVal="non-active"
+            routePublish={() => setStatusNonActive("non-active")}
           />
         </div>
       </div>
-
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -67,7 +190,7 @@ const Table = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-12 col-xl-12">
+                <div className="col-lg-10 col-xl-10">
                   <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
@@ -75,19 +198,30 @@ const Table = () => {
                       className="form-control"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
                   </div>
                 </div>
+                <div className="col-lg-2 col-xl-2">
+                  <button
+                    type="button"
+                    className="btn btn-light-primary btn-block"
+                    onClick={handleSearch}
+                  >
+                    Cari
+                  </button>
+                </div>
               </div>
 
-              <div className="row align-items-right">
+              {/* <div className="row align-items-right">
                 <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
                   <select name="" id="" className="form-control">
                     <option value="1">Semua Status</option>
-                    <option value="2">Microsoft</option>
+                    <option value="2">Aktif</option>
+                    // <option value="2">Tidak Aktif</option>
                   </select>
                 </div>
 
@@ -96,20 +230,12 @@ const Table = () => {
                     href="#"
                     className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
                   >
-                    Filter
+                    Cari
                   </a>
                 </div>
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
-                  <a
-                    href="#"
-                    className="btn btn-sm btn-light-danger px-6 font-weight-bold btn-block"
-                  >
-                    Reset
-                  </a>
-                </div>
-              </div>
+              </div> */}
             </div>
-
+            {/* {console.log(allMitra.list_mitras)} */}
             <div className="table-page mt-5">
               <div className="table-responsive">
                 <table className="table table-separate table-head-custom table-checkable">
@@ -124,98 +250,126 @@ const Table = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {mitra.mitra.map((dataMitra, id) => {
-                      console.log(dataMitra);
-                      return (
-                        <tr>
-                          <td className="text-center align-middle">
-                            <button
-                              className="btn"
-                              style={{
-                                background: "#F3F6F9",
-                                borderRadius: "6px",
-                              }}
-                            >
-                              {id + 1}
-                            </button>
-                          </td>
-                          <td className="align-middle text-center">
-                            <Image
-                              src={`/assets/icon/${dataMitra.agency_logo}`}
-                              width={40}
-                              height={40}
-                              alt="logo"
-                            />
-                          </td>
-                          <td className="align-middle text-center">
-                            {dataMitra.partner}
-                          </td>
-                          <td className="align-middle text-center">
-                            {dataMitra.website}
-                          </td>
-                          <td className="align-middle text-center">
-                            {dataMitra.cooperations}
-                          </td>
-                          <td className="align-middle text-center">
-                            <ButtonAction
-                              icon="detail.svg"
-                              link="/partnership/manajemen-mitra/detail-data-kerjasama"
-                            />
-                            <ButtonAction icon="write.svg" />
-                            <ButtonAction icon="trash.svg" />
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {/* {allMitra && console.log(allMitra)} */}
+                    {allMitra &&
+                      allMitra.list_mitras.map((dataMitra, i) => {
+                        return (
+                          <>
+                            <tr>
+                              <td className="text-center align-middle">
+                                <button
+                                  className="btn"
+                                  style={{
+                                    background: "#F3F6F9",
+                                    borderRadius: "6px",
+                                  }}
+                                >
+                                  {i + 1 * (page * 5 || limit) - 4}
+                                </button>
+                              </td>
+                              <td className="align-middle text-center">
+                                <Image
+                                  src={`/assets/icon/${dataMitra.agency_logo}`}
+                                  width={40}
+                                  height={40}
+                                  alt="logo"
+                                />
+                              </td>
+                              <td className="align-middle text-center">
+                                {dataMitra.partner}
+                              </td>
+                              <td className="align-middle text-center">
+                                {dataMitra.website}
+                              </td>
+                              <td className="align-middle text-center">
+                                {dataMitra.cooperations}
+                              </td>
+                              <td className="align-middle text-center">
+                                <ButtonAction
+                                  icon="detail.svg"
+                                  link="/partnership/manajemen-mitra/detail-data-kerjasama"
+                                />
+                                <ButtonAction
+                                  icon="write.svg"
+                                  link={`/partnership/manajemen-mitra/${dataMitra.id}`}
+                                />
+                                <button
+                                  onClick={() => handleDelete(dataMitra.id)}
+                                  className="btn mr-1"
+                                  style={{
+                                    background: "#F3F6F9",
+                                    borderRadius: "6px",
+                                  }}
+                                >
+                                  <Image
+                                    alt="button-action"
+                                    src={`/assets/icon/trash.svg`}
+                                    width={18}
+                                    height={18}
+                                  />
+                                </button>
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })}
                   </tbody>
                 </table>
               </div>
 
               <div className="row">
-                <div className="table-pagination">
-                  <Pagination
-                    activePage={5}
-                    itemsCountPerPage={2}
-                    totalItemsCount={5}
-                    pageRangeDisplayed={3}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-                <div className="table-total ml-auto">
-                  <div className="row">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                      >
-                        <option>5</option>
-                        <option>10</option>
-                        <option>30</option>
-                        <option>40</option>
-                        <option>50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data 120
-                      </p>
+                {allMitra && allMitra.perPage < allMitra.total && (
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={allMitra.perPage}
+                      totalItemsCount={allMitra.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {allMitra && allMitra.total > 5 ? (
+                  <div className="table-total ml-auto">
+                    <div className="row">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect2"
+                          style={{
+                            width: "65px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3" }}
+                        >
+                          Total Data {allMitra.total}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>

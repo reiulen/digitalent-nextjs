@@ -208,6 +208,7 @@ const ListTipeSoal = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
+                        <th>ID</th>
                         <th>Tipe Soal</th>
                         <th>Bobot Nilai</th>
                         <th>Status</th>
@@ -226,6 +227,7 @@ const ListTipeSoal = () => {
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
+                              <td className="align-middle">{row.id}</td>
                               <td className="align-middle">{row.name}</td>
                               <td className="align-middle">{row.value}</td>
                               <td className="align-middle">

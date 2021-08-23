@@ -28,7 +28,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllKategori = (page = 1, keyword = "", limit = 5) => async (dispatch) => {
+export const getAllKategori = (page = 1, keyword = "", limit = 5, startdate = '', enddate = '') => async (dispatch) => {
     try {
 
         dispatch({ type: KATEGORI_REQUEST })
@@ -36,6 +36,8 @@ export const getAllKategori = (page = 1, keyword = "", limit = 5) => async (disp
         let link = process.env.END_POINT_API_PUBLIKASI + `api/kategori?page=${page}`;
         if (keyword) link = link.concat(`&keyword=${keyword}`);
         if (limit) link = link.concat(`&limit=${limit}`);
+        if (startdate) link = link.concat(`&startdate=${startdate}`)
+        if (enddate) link = link.concat(`&enddate=${enddate}`)
 
         // const config = {
         //     headers: {
