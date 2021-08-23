@@ -23,6 +23,7 @@ const EditTandaTangan = () => {
 
   const clear = () => {
     signCanvas.current.clear();
+    setSignature("");
   };
 
   const editorRef = useRef();
@@ -55,12 +56,27 @@ const EditTandaTangan = () => {
   // get detail state
   const [name, setName] = useState(detailTandaTangan.name);
   const [position, setPosition] = useState(detailTandaTangan.position);
-  const [signature, setSignature] = useState(null);
+  const [signature, setSignature] = useState("");
 
   const dataTandaTangan = () => {
     const data = signCanvas.current.toDataURL();
-    setSignature(data);
+    if (!signature) {
+      Swal.fire({
+        icon: "success",
+        title: "Tanda Tangan Berhasil di Buat",
+        // text: "Berhasil",
+      });
+      setSignature(data);
+    }
+    if (signature) {
+      Swal.fire({
+        icon: "error",
+        title: "Tanda Tangan Sudah dibuat",
+        // text: "Berhasil",
+      });
+    }
   };
+  console.log(signature);
 
   const onSubmit = (e) => {
     e.preventDefault();

@@ -106,7 +106,22 @@ import {
 // ============== trivia ===============
 
 // Partnership
-import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
+import {
+  allMitraReducer,
+  newMitraReducer,
+  detailMitraReducer,
+  updateMitraReducer,
+  deleteMitraReducer,
+
+  // card
+  totalMitraCardReducer,
+  activeMitraCardReducer,
+  nonActiveMitraCardReducer,
+} from "./partnership/mitra.reducers";
+
+//
+// import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
+// import { allMCooporationReducer } from "./partnership/mk_cooporation.reducers";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
@@ -212,6 +227,15 @@ const reducer = combineReducers({
   // kerjasama mitra
   allMitra: allMitraReducer,
   newMitra: newMitraReducer,
+  detailMitra: detailMitraReducer,
+  deleteMitra: deleteMitraReducer,
+  updateMitra: updateMitraReducer,
+  totalMitraCardGlobal: totalMitraCardReducer,
+  activeMitraCardGlobal: activeMitraCardReducer,
+  nonActiveMitraCardGlobal: nonActiveMitraCardReducer,
+
+  // allMKCooporation: allMKCooporationReducer,
+  // allMK: allMCooporationReducer,
 
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,
