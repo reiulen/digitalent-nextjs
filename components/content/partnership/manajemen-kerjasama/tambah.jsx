@@ -16,6 +16,8 @@ import {
   fetchListSelectMitra
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 import moment from 'moment'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Tambah = () => {
   const dispatch = useDispatch()
@@ -28,11 +30,21 @@ const Tambah = () => {
     setInstitution_name(value)
     dispatch(setNameLembaga(value))
   }
+  const [error, setError] = useState({
+    institution_name:"",
+    date:'',
+    title: '',
+    period: '',
+    periodUnit: '',
+    cooperationC_id: '',
+    AllCooperation:'',
+})
   const [date, setDate] = useState("")
   const [title, setTitle] = useState("")
   const [period, setPeriod] = useState("")
   const [periodUnit, setPeriodUnit] = useState("")
   const [cooperationC_id, setCooperationC_id] = useState("")
+  console.log("cooperationC_id",cooperationC_id)
   const changeSetCooperationC_id = (value) =>{
     setCooperationC_id(value)
     dispatch(changeCooperationSelectByID(value))
@@ -43,9 +55,6 @@ const Tambah = () => {
     dataaa[index].cooperation = e.target.value
     setAllCooperation(dataaa)
   }
-  const handleSubmit =(e)=>{
-    e.preventDefault();
-  }
   
 
   const router = useRouter();
@@ -53,42 +62,76 @@ const Tambah = () => {
   
   const submit = (e) => {
     e.preventDefault();
-    // Swal.fire({
-    //   title: "Apakah anda yakin ?",
-    //   // text: "Data ini tidak bisa dikembalikan !",
-    //   icon: "warning",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   cancelButtonText: "Batal",
-    //   confirmButtonText: "Ya !",
-    //   dismissOnDestroy: false,
-    // }).then((result) => {
-      if (institution_name === "") {
-      alert('ada data yg belum terisi')
+    
+  if (institution_name === "") {
+    setError({...error,institution_name:"Harus pilih nama lembaga"})
+    notify("Harus pilih nama lembaga")
   } else if (date === "") {
-      alert('ada data yg belum terisi')
+    setError({...error,date:"Filed tanggal tidak boleh kosong"})
+    notify("Filed tanggal tidak boleh kosong")
   } else if (title === "") {
-      alert('ada data yg belum terisi')
-  } else if (date === "") {
-      alert('ada data yg belum terisi')
-  } else if (period === "") {
-      alert('ada data yg belum terisi')
-  } else if (periodUnit === "") {
-      alert('ada data yg belum terisi')
+    setError({...error,title:"Filed judul kerjasama tidak boleh kosong"})
+    notify("Filed judul kerjasama tidak boleh kosong")
   } else if (cooperationC_id === "") {
-      alert('ada data yg belum terisi')
-  } else if (AllCooperation === "") {
-      alert('ada data yg belum terisi')
+    setError({...error,cooperationC_id:"Filed kategori kerjasama tidak boleh kosong"})
+    notify("Filed kategori kerjasama tidak boleh kosong")
+  }else if (period === "") {
+    setError({...error,period:"Filed periode tidak boleh kosong"})
+    notify("Filed periode tidak boleh kosong")
+  } else if (periodUnit === "") {
+    setError({...error,periodUnit:"Filed period unit tidak boleh kosong"})
+    notify("Filed period unit tidak boleh kosong")
+  }  else if (AllCooperation === "") {
+    setError({...error,AllCooperation:"Filed kerjasama form tidak boleh kosong"})
+    notify("Filed kerjasama form tidak boleh kosong")
   } else {
-    router.push({
-          pathname: '/partnership/manajemen-kerjasama/submit',
-          query: { institution_name:institution_name,date: date,title:title,period:period,periodUnit:periodUnit,cooperationC_id:cooperationC_id,AllCooperation:JSON.stringify(AllCooperation) },
-        })
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then((result) => {
+    if(result.value){
+
+      router.push({
+        pathname: '/partnership/manajemen-kerjasama/submit',
+        query: { institution_name:institution_name,date: date,title:title,period:period,periodUnit:periodUnit,cooperationC_id:cooperationC_id,AllCooperation:JSON.stringify(AllCooperation) },
+      })
+    }
+  })
   }
   
   };
-  console.log("date",date)
+  // onChange validate period setPeriod(e.target.value)
+  const onChangePeriod = (e) =>{
+    const regex = new RegExp(/[^0-9]/, 'g');
+    const val = e.target.value;
+    if (val.match(regex)) {
+      // alert("Masukan angka");
+      setError({...error,period:"Masukan angka"})
+      notify("Masukan angka")
+      setPeriod("")
+    }else{
+      setPeriod(e.target.value)
+    }
+  }
+
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   useEffect(() => {
     dispatch(fetchDataEmail())
     dispatch(fetchListSelectCooperation())
@@ -100,6 +143,17 @@ const Tambah = () => {
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
@@ -116,7 +170,7 @@ const Tambah = () => {
                   Nama Lembaga
                 </label>
                 <div className="col-sm-3">
-                  <select required className="form-control" onChange={(e)=>changeInstitusi(e.target.value)}>
+                  <select onFocus={()=>setError({...error,institution_name:""})} className="form-control" onChange={(e)=>changeInstitusi(e.target.value)}>
                     <option value="">Pilih lembaga</option>
                     {allMK.stateListMitra.length=== 0?"":allMK.stateListMitra.data.map((items,index)=>{
                       return(
@@ -124,6 +178,7 @@ const Tambah = () => {
                         )
                     })}
                   </select>
+                  {error.institution_name ? <p className="error-text">{error.institution_name}</p>:"" }
                 </div>
               </div>
               <div className="form-group row">
@@ -145,7 +200,8 @@ const Tambah = () => {
                   Tanggal
                 </label>
                 <div className="col-sm-3">
-                  <input required readOnly value={date} type="text" className="form-control" />
+                  <input  readOnly value={date} type="text" className="form-control" />
+              {error.date ? <p className="error-text">{error.date}</p>:"" }
                 </div>
               </div>
 
@@ -157,12 +213,14 @@ const Tambah = () => {
                   Judul kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <input required
+                  <input 
+                  onFocus={()=>setError({...error,title:""})}
                     type="text"
                     className="form-control"
                     placeholder="Judul Kerjasama"
                     onChange={(e)=>setTitle(e.target.value)}
                   />
+                  {error.title ? <p className="error-text">{error.title}</p>:"" }
                 </div>
               </div>
 
@@ -174,14 +232,15 @@ const Tambah = () => {
                   Kategori kerjasama
                 </label>
                 <div className="col-sm-10">
-                  <select required onChange={(e)=>changeSetCooperationC_id(e.target.value)} name="" id="" className="form-control">
+                  <select onFocus={()=>setError({...error,cooperationC_id:""})}  onChange={(e)=>changeSetCooperationC_id(e.target.value)} name="" id="" className="form-control">
                     <option value="">Pilih Kategory Kerjasama</option>
                     {allMK.cooperationActiveSelect.length === 0 ? "":allMK.cooperationActiveSelect.data.map(items =>{
                       return(
                         <option value={items.id}>{items.cooperation_categories}</option>
-                      )
-                    })}
+                        )
+                      })}
                   </select>
+                  {error.cooperationC_id ? <p className="error-text">{error.cooperationC_id}</p>:"" }
                 </div>
               </div>
 
@@ -189,13 +248,16 @@ const Tambah = () => {
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
-                >
+                  >
                   Periode
                 </label>
                 <div className="col-sm-10">
                   <div className="row align-items-right">
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      <input required className="form-control" placeholder="Masukan periode masa periode misal 1 atau 2" type="number" onChange={(e)=>setPeriod(e.target.value)} />
+                      <input
+                      onFocus={()=>setError({...error,period:""})}
+                      value={period} className="form-control" placeholder="Masukan periode masa periode misal 1 atau 2" type="text" onChange={(e)=>onChangePeriod(e) } />
+                      {error.period ? <p className="error-text">{error.period}</p>:"" }
                       {/* <DatePicker
                         className="form-control-sm form-control"
                         selected={startDate}
@@ -221,11 +283,12 @@ const Tambah = () => {
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       /> */}
-                      <select required className="form-control" onChange={(e)=>setPeriodUnit(e.target.value)}>
+                      <select onFocus={()=>setError({...error,periodUnit:""})}  className="form-control" onChange={(e)=>setPeriodUnit(e.target.value)}>
                         <option value="">Pilih periode bulan/tahun</option>
                         <option value="bulan">Bulan</option>
                         <option value="tahun">Tahun</option>
                       </select>
+                      {error.periodUnit ? <p className="error-text">{error.periodUnit}</p>:"" }
                     </div>
                   </div>
                 </div>
@@ -234,17 +297,18 @@ const Tambah = () => {
               {/* looping */}
               {allMK.singleCooporationSelect.length === 0 ?"": allMK.singleCooporationSelect.data.option.map((items,index)=>{
                 return(
-
-              <div className="form-group row">
+                  
+                  <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
-                >
+                  >
                   {
-                  items.cooperation_form}
+                    items.cooperation_form}
                 </label>
                 <div className="col-sm-10">
-                  <textarea required
+                  <textarea 
+                  onFocus={()=>setError({...error,AllCooperation:""})}
                   onChange={(e)=>changeFormCooporation(index,e)}
                     name="cooperation"
                     id=""
@@ -252,7 +316,8 @@ const Tambah = () => {
                     rows="5"
                     className="form-control"
                     placeholder="Masukan Tujuan Kerjasama"
-                  ></textarea>
+                    ></textarea>
+                    {error.AllCooperation ? <p className="error-text">{error.AllCooperation}</p>:"" }
                 </div>
               </div>
                 )

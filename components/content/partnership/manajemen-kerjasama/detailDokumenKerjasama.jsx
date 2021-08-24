@@ -13,6 +13,7 @@ import { getSingleCooperation } from "../../../../redux/actions/partnership/mana
 const DetailDokumenKerjasama = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  let { success } = router.query
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const allMK = useSelector(state => state.allMK)
@@ -35,12 +36,40 @@ const DetailDokumenKerjasama = () => {
 
   }
 
+
   useEffect(() => {
     getSingleValue(router.query.id)
     dispatch(getSingleCooperation(router.query.id));
   }, [router.query.id]);
   return (
     <PageWrapper>
+
+      {success ? (
+                <div
+                    className="alert alert-custom alert-light-success fade show mb-5"
+                    role="alert"
+                >
+                    <div className="alert-icon">
+                        <i className="flaticon2-checkmark"></i>
+                    </div>
+                    <div className="alert-text">Berhasil Menyimpan Data</div>
+                    <div className="alert-close">
+                        <button
+                            type="button"
+                            className="close"
+                            data-dismiss="alert"
+                            aria-label="Close"
+                            // onClick={onNewReset}
+                        >
+                            <span aria-hidden="true">
+                                <i className="ki ki-close"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                ""
+            )}
 
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
