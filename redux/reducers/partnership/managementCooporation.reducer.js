@@ -33,6 +33,7 @@ import {
   CHANGE_STATUS_LIST_M,
   CANCEL_CHANGE_CATEGORY,
   CANCEL_CHANGE_EMAIL,
+  RELOAD_TABLE,
 } from "../../types/partnership/management_cooporation.type";
 
 const statuslist = {
@@ -202,6 +203,11 @@ export const allMCooporationReducer = (state = initialState, action) => {
         status_delete: state.status_delete === "" ? "delete" : "",
       };
     case CHANGE_STATUS_LIST_M:
+      return {
+        ...state,
+        status_delete: state.status_delete === "" ? "delete" : "",
+      };
+    case RELOAD_TABLE:
       return {
         ...state,
         status_delete: state.status_delete === "" ? "delete" : "",

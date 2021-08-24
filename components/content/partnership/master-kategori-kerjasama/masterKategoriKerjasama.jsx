@@ -131,12 +131,12 @@ const Table = () => {
                                       {index + 1}
                                     </button>
                                   </td>
-                                  <td className="align-baseline">
+                                  <td className="align-middle">
                                     {
                                       cooperation_categorie.cooperation_categories
                                     }
                                   </td>
-                                  <td className="align-baseline">
+                                  <td className="align-middle position-relative">
                                     {allMKCooporation.mk_cooporation.length ===
                                     0 ? (
                                       ""
@@ -153,15 +153,14 @@ const Table = () => {
                                         // }
                                         name=""
                                         id=""
-                                        className="status-list cursor-pointer"
+                                        className="status-div cursor-pointer left-center-absolute"
                                         // disabled
-                                        
-                                      >{
-                                            allMKCooporation.mk_cooporation.data
-                                              .list_cooperation_categories[
-                                              index
-                                            ].status
-                                          }
+                                      >
+                                        {
+                                          allMKCooporation.mk_cooporation.data
+                                            .list_cooperation_categories[index]
+                                            .status === 0 ?"Tidak aktif":"Aktif"
+                                        }
                                         {/* <option
                                           value={
                                             allMKCooporation.mk_cooporation.data
@@ -214,7 +213,9 @@ const Table = () => {
                                         width={18}
                                         height={18}
                                       />
-                                      <div className="text-hover-show-hapus">Ubah</div>
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
                                     </button>
                                     <button
                                       onClick={() =>
@@ -235,7 +236,9 @@ const Table = () => {
                                         width={18}
                                         height={18}
                                       />
-                                      <div className="text-hover-show-edit">Hapus</div>
+                                      <div className="text-hover-show-edit">
+                                        Hapus
+                                      </div>
                                     </button>
                                   </td>
                                 </tr>

@@ -640,17 +640,17 @@ const EditDokumentKerjasama = () => {
                   </button>
 
                   {changeDokumen && !viewPDF ? (
-                    <div class="input-group mt-3">
-                      <div class="custom-file">
+                    <div className="input-group mt-3">
+                      <div className="custom-file">
                         <input
                           type="file"
                           name="gambar"
-                          class="custom-file-input cursor-pointer"
+                          className="custom-file-input cursor-pointer"
                           id="inputGroupFile04"
                           required
                           onChange={handlePdfFileChange}
                         />
-                        <label class="custom-file-label" for="inputGroupFile04">
+                        <label className="custom-file-label" for="inputGroupFile04">
                           {NamePDF ? NamePDF : "Tambah dokumen baru"}
                         </label>
                       </div>

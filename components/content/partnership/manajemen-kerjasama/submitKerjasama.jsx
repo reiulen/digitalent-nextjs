@@ -6,6 +6,7 @@ import { addDays } from "date-fns";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import axios from "axios";
+import IconCalender from '../../../assets/icon/Calender'
 
 // pdf import need
 
@@ -18,6 +19,10 @@ import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 // Worker
 import { Worker } from "@react-pdf-viewer/core"; // install this library
+import moment from 'moment'
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SubmitKerjasama = () => {
   const [startDate, setStartDate] = useState(null);
@@ -28,7 +33,13 @@ const SubmitKerjasama = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfFileError, setPdfFileError] = useState("");
   const [viewPDF, setViewPDF] = useState(null);
-  console.log("viewPDF", viewPDF);
+  const [error, setError] = useState({
+    period_date_start:"",
+    agreement_number_partner:'',
+    agreement_number_kemkominfo:'',
+    signing_date: '',
+    document: '',
+})
 
   const router = useRouter();
   // form data send
@@ -48,7 +59,6 @@ const SubmitKerjasama = () => {
     useState("");
   const [signing_date, setSigning_date] = useState("");
   const [document, setDocument] = useState("");
-  console.log("document",document)
   // form data send
 
 const [NamePDF, setNamePDF] = useState(null);
@@ -78,13 +88,28 @@ const [NamePDF, setNamePDF] = useState(null);
     }
   };
 
-  const Swal = require("sweetalert2");
 
   const submit = (e) => {
     e.preventDefault();
-    Swal.fire({
+    
+      if (period_date_start === "") {
+        setError({...error,period_date_start:"Harus isi tanggal priode kerjasama"})
+    notify("Harus isi tanggal priode kerjasama")
+      }  else if (agreement_number_partner === "") {
+        setError({...error,agreement_number_partner:"Harus isi nomer perjanjian lembaga"})
+    notify("Harus isi nomer perjanjian lembaga")
+      } else if (agreement_number_kemkominfo === "") {
+        setError({...error,agreement_number_kemkominfo:"Harus isi nomer perjanjian kemkominfo"})
+    notify("Harus isi nomer perjanjian kemkominfo")
+      } else if (signing_date === "") {
+        setError({...error,signing_date:"Harus isi tanggal penandantangan"})
+    notify("Harus isi tanggal penandantangan")
+      } else if (document === "") {
+        setError({...error,document:"Harus unggah file"})
+    notify("Harus unggah file")
+      } else {
+        Swal.fire({
       title: "Apakah anda yakin ?",
-      // text: "Data ini tidak bisa dikembalikan !",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -93,23 +118,6 @@ const [NamePDF, setNamePDF] = useState(null);
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
     }).then(async (result) => {
-      if (period_date_start === "") {
-        alert("ada data yg belum terisi");
-      } else if (period_date_end === "") {
-        alert("ada data yg belum terisi");
-      } else if (agreement_number_partner === "") {
-        alert("ada data yg belum terisi");
-      } else if (agreement_number_kemkominfo === "") {
-        alert("ada data yg belum terisi");
-      } else if (signing_date === "") {
-        alert("ada data yg belum terisi");
-      } else if (document === "") {
-        alert("ada data yg belum terisi");
-      } else if (cooperationC_id === "") {
-        alert("ada data yg belum terisi");
-      } else if (AllCooperation === "") {
-        alert("ada data yg belum terisi");
-      } else {
         if (result.value) {
           let formData = new FormData();
           formData.append("institution_name", institution_name);
@@ -120,7 +128,7 @@ const [NamePDF, setNamePDF] = useState(null);
           formData.append("cooperation_category_id", cooperationC_id);
 
           formData.append("period_date_start", period_date_start);
-          formData.append("period_date_end", period_date_end);
+          formData.append("period_date_end", newDate);
           formData.append("agreement_number_partner", agreement_number_partner);
           formData.append(
             "agreement_number_kemkominfo",
@@ -130,8 +138,9 @@ const [NamePDF, setNamePDF] = useState(null);
           formData.append("document", document);
           let parseAllCooperation = JSON.parse(AllCooperation);
           let dataee = parseAllCooperation.map((items, i) => {
-            return items.cooperation_form;
+            return items.cooperation;
           });
+          console.log("dataee",dataee)
           dataee.forEach((item, i) => {
             formData.append(`cooperation_form_content[${i}]`, item);
           });
@@ -141,17 +150,30 @@ const [NamePDF, setNamePDF] = useState(null);
               `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal`,
               formData
             );
-            alert("data berhasil ditambah");
+            
+            // console.log("data sadfasdf",data.data.id)
+            router.push(
+                                            {
+                                              pathname:`/partnership/manajemen-kerjasama/view/${data.data.id}`,
+                                              query:{success:true}
+                                            }
+                                          )
+            // alert("data berhasil ditambah");
+
             // router.push(
             //       "/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
             //     );
-            router.push("/partnership/manajemen-kerjasama");
+            // router.push({
+            //   pathname:`/partnership/manajemen-kerjasama/detail-dokumen-kerjasama`,
+            //   query: { success: true },
+            // })
+            // router.push("/partnership/manajemen-kerjasama");
           } catch (error) {
             alert("gagal menambahkan data tipe file harus pdf");
           }
         }
+      });
       }
-    });
   };
 
 
@@ -163,9 +185,70 @@ const [NamePDF, setNamePDF] = useState(null);
       }
     
   };
+
+  const [newDate, setNewDate] = useState('')
+
+  const [periodValue, setPeriodValue] = useState('')
+  const [periodUnitValue, setPeriodUnitValue] = useState('')
+
+  const checkPeriod = (dateNow) =>{
+    // let periodValue = value.period
+    // let periodUnitValue = value.periodUnit
+    // console.log("periodUnitValue",periodUnitValue)
+    // clg
+
+    if(periodUnitValue === "bulan"){
+      let futureMonth = moment(dateNow).add(parseInt(periodValue), 'M').format('YYYY-MM-DD');
+      console.log("BULAN SEKARANG",moment().format('YYYY-MM-DD'))
+      console.log("BULAN UPDATE",futureMonth)
+      setNewDate(futureMonth)
+    }
+    // jika tahun
+    else{
+      let futureYear = moment(dateNow).add(parseInt(periodValue), 'y').format('YYYY-MM-DD');
+      console.log("TAHUN SEKARANG",moment().format('YYYY-MM-DD'))
+      console.log("TAHUN UPDATE",futureYear)
+      setNewDate(futureYear)
+    }
+  }
+
+  const onChangePeriodeDateStart = (date) =>{
+    setPeriod_date_start(moment(date).format('YYYY-MM-DD'))
+    checkPeriod(moment(date).format('YYYY-MM-DD'))
+  }
+
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  useEffect(() => {
+    // checkPeriod(router.query)
+    console.log("router.query.period",router.query.period)
+    console.log("router.query.period",router.query.periodUnit)
+    setPeriodValue(router.query.period)
+    setPeriodUnitValue(router.query.periodUnit)
+  }, [router.query])
+  
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
@@ -183,53 +266,61 @@ const [NamePDF, setNamePDF] = useState(null);
                 </label>
                 <div className="col-sm-10">
                   <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                    <div className="col-lg-3 col-xl-3">
                       {/* <input
                         type="date"
                         className="form-control form-control-sm"
                       /> */}
-                      {/* <DatePicker
-                        className="form-search-date form-control-sm form-control"
+                      <div className="d-flex align-items-center position-relative datepicker-w">
+                      <DatePicker
+                      onFocus={()=>setError({...error,period_date_start:""})}
+                        className="form-search-date form-control-sm form-control cursor-pointer"
                         selected={startDate}
-                        onChange={(date) => setStartDate(date)}
+                        
+                        onChange={(date) => onChangePeriodeDateStart(date)}
                         selectsStart
+                        value={period_date_start}
                         startDate={startDate}
                         endDate={endDate}
-                        dateFormat="dd/MM/yyyy"
+                        dateFormat="YYYY-MM-DD"
                         placeholderText="Dari Tanggal"
-                        // minDate={addDays(new Date(), 20)}
-                      /> */}
-                      <input
-                        required
-                        type="date"
-                        className="form-control"
-                        onChange={(e) => setPeriod_date_start(e.target.value)}
+                        minDate={moment().toDate()}
                       />
+                      <IconCalender className="right-center-absolute" style={{right:"10px"}} />
+                      </div>
+                    {error.period_date_start ? <p className="error-text">{error.period_date_start}</p>:"" }
                     </div>
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                    <div className="col-lg-3 col-xl-3">
                       {/* <input
                         type="date"
                         // class = form-search-date
                         className="form-control form-control-sm"
                       /> */}
-                      {/* <DatePicker
-                        className="form-search-date form-control-sm form-control"
+                      <div className="d-flex align-items-center position-relative datepicker-w">
+                      <DatePicker
+                        className="form-search-date form-control-sm form-control cursor-pointer"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
+                        readOnly
                         selectsEnd
+                        value={newDate}
                         startDate={startDate}
                         endDate={endDate}
-                        minDate={startDate}
+                        // minDate={startDate}
+                        minDate={moment().toDate()}
                         maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
-                      /> */}
-                      <input
+                      />
+                      <IconCalender className="right-center-absolute" style={{right:"10px"}} />
+                      </div>
+                      
+                      {/* <input
                         required
                         type="date"
                         className="form-control"
                         onChange={(e) => setPeriod_date_end(e.target.value)}
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -244,7 +335,7 @@ const [NamePDF, setNamePDF] = useState(null);
                 </label>
                 <div className="col-sm-10">
                   <input
-                    required
+                  onFocus={()=>setError({...error,agreement_number_partner:""})}
                     onChange={(e) =>
                       setAgreement_number_partner(e.target.value)
                     }
@@ -252,6 +343,7 @@ const [NamePDF, setNamePDF] = useState(null);
                     className="form-control"
                     placeholder="Masukkan Nomor Perjanjian Lembaga"
                   />
+                  {error.agreement_number_partner ? <p className="error-text">{error.agreement_number_partner}</p>:"" }
                 </div>
               </div>
 
@@ -264,7 +356,7 @@ const [NamePDF, setNamePDF] = useState(null);
                 </label>
                 <div className="col-sm-10">
                   <input
-                    required
+                  onFocus={()=>setError({...error,agreement_number_kemkominfo:""})}
                     onChange={(e) =>
                       setAgreement_number_kemkominfo(e.target.value)
                     }
@@ -272,6 +364,8 @@ const [NamePDF, setNamePDF] = useState(null);
                     className="form-control"
                     placeholder="Masukkan Nomor Perjanjian Kemkominfo"
                   />
+                  {error.agreement_number_kemkominfo ? <p className="error-text">{error.agreement_number_kemkominfo}</p>:"" }
+                  
                 </div>
               </div>
 
@@ -284,25 +378,32 @@ const [NamePDF, setNamePDF] = useState(null);
                 </label>
                 <div className="col-sm-10">
                   <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      {/* <DatePicker
-                        className="form-search-date form-control-sm form-control"
+                    <div className="col-lg-3 col-xl-3">
+                      <div className="d-flex align-items-center position-relative datepicker-w">
+                      <DatePicker
+                        className="form-search-date form-control-sm form-control cursor-pointer"
                         selected={endDate}
-                        onChange={(date) => setEndDate(date)}
+onFocus={()=>setError({...error,signing_date:""})}
+                        onChange={(date) => setSigning_date(moment(date).format('YYYY-MM-DD'))}
+                        value={signing_date}
                         selectsEnd
                         startDate={startDate}
                         endDate={endDate}
-                        minDate={startDate}
+                        // minDate={startDate}
+                        minDate={moment().toDate()}
                         maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
-                        placeholderText="Dari Tanggal"
-                      /> */}
-                      <input
-                        required
+                        placeholderText="Sampai Tanggal"
+                      />
+                      <IconCalender className="right-center-absolute" style={{right:"10px"}} />
+                      </div>
+
+                      {/* <input
                         type="date"
                         className="form-control"
                         onChange={(e) => setSigning_date(e.target.value)}
-                      />
+                      /> */}
+                      {error.signing_date ? <p className="error-text">{error.signing_date}</p>:"" }
                     </div>
                   </div>
                 </div>
@@ -319,11 +420,12 @@ const [NamePDF, setNamePDF] = useState(null);
                   <div class="input-group">
                     <div class="custom-file">
                       <input
+                      onFocus={()=>setError({...error,document:""})}
                         type="file"
                         name="gambar"
                         class="custom-file-input cursor-pointer"
                         id="inputGroupFile04"
-                        required
+                        
                         onChange={handlePdfFileChange}
                       />
                       <label class="custom-file-label" for="inputGroupFile04">
@@ -354,6 +456,7 @@ const [NamePDF, setNamePDF] = useState(null);
                   ) : (
                     ""
                   )}
+                  {error.document ? <p className="error-text">{error.document}</p>:"" }
                 </div>
               </div>
               {pdfFileError && <div>{pdfFileError}</div>}
