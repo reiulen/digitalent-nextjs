@@ -19,7 +19,8 @@ import {
   fetchDataEmail,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 import { Children } from "react";
-// import { PDFReader } from 'react-read-pdf';
+
+import Swal from "sweetalert2";
 
 const EditDokumentKerjasama = () => {
   const dispatch = useDispatch();
@@ -109,69 +110,84 @@ const EditDokumentKerjasama = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let formData = new FormData();
-    const method = "PUT";
-    formData.append("_method", method);
-    formData.append("title", title);
-    formData.append("date", date);
-    formData.append("period", period);
-    formData.append("period_unit", periodUnit);
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        let formData = new FormData();
+        const method = "PUT";
+        formData.append("_method", method);
+        formData.append("title", title);
+        formData.append("date", date);
+        formData.append("period", period);
+        formData.append("period_unit", periodUnit);
 
-    if(documentLocal === ""){
-      console.log("object")
-    }else{
-      formData.append("document", documentLocal);
-    }
+        if (documentLocal === "") {
+          console.log("object");
+        } else {
+          formData.append("document", documentLocal);
+        }
 
-    formData.append("period_date_start", periodDateStart);
-    formData.append("period_date_end", periodDateEnd);
-    formData.append("agreement_number_partner", aggrementNumber);
-    formData.append("agreement_number_kemkominfo", aggrementNumberInfo);
-    formData.append("signing_date", signinDate);
+        formData.append("period_date_start", periodDateStart);
+        formData.append("period_date_end", periodDateEnd);
+        formData.append("agreement_number_partner", aggrementNumber);
+        formData.append("agreement_number_kemkominfo", aggrementNumberInfo);
+        formData.append("signing_date", signinDate);
 
-    // console.log(
-    //   "documentLocal",
-    //   `http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${document}`
-    // );
+        // console.log(
+        //   "documentLocal",
+        //   `http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${document}`
+        // );
 
-    if (AllCooperation === "") {
-      // start data default
-      formData.append("cooperation_category_id", cooperationID.id);
-      let dataee = cooperationID.data_content.map((items, i) => {
-        return items.cooperation_form;
-      });
-      dataee.forEach((item, i) => {
-        formData.append(`cooperation_form_content[${i}]`, item);
-      });
-      // end data default
-    } else {
-      // start jika tidak default
-      formData.append("cooperation_category_id", cooperationC_id);
-      let ez = AllCooperation.map((items, i) => {
-        return items.cooperation_form;
-      });
-      ez.forEach((item, i) => {
-        formData.append(`cooperation_form_content[${i}]`, item);
-      });
-      // end jika tidak default
-    }
+        if (AllCooperation === "") {
+          // start data default
+          formData.append("cooperation_category_id", cooperationID.id);
+          let dataee = cooperationID.data_content.map((items, i) => {
+            return items.cooperation_form;
+          });
+          dataee.forEach((item, i) => {
+            formData.append(`cooperation_form_content[${i}]`, item);
+          });
+          // end data default
+        } else {
+          // start jika tidak default
+          formData.append("cooperation_category_id", cooperationC_id);
+          let ez = AllCooperation.map((items, i) => {
+            return items.cooperation_form;
+          });
+          ez.forEach((item, i) => {
+            formData.append(`cooperation_form_content[${i}]`, item);
+          });
+          // end jika tidak default
+        }
 
-    // clg
+        // clg
 
-    try {
-      let { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${router.query.id}`,
-        formData
-      );
-      alert("data berhasil ditambah");
-      // router.push(
-      //       "/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
-      //     );
-      // router.push("/partnership/manajemen-kerjasama");
-      console.log("data", data);
-    } catch (error) {
-      alert("gagal menambahkan data tipe file harus pdf");
-    }
+        try {
+          let { data } = await axios.post(
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${router.query.id}`,
+            formData
+          );
+          // router.push(
+          //       "/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
+          //     );
+          // router.push("/partnership/manajemen-kerjasama");
+          Swal.fire(
+  'Berhasil update data!',
+  'success'
+)
+        } catch (error) {
+          alert("gagal menambahkan data tipe file harus pdf");
+        }
+      }
+    });
   };
 
   // state onchange form data
@@ -650,7 +666,10 @@ const EditDokumentKerjasama = () => {
                           required
                           onChange={handlePdfFileChange}
                         />
-                        <label className="custom-file-label" for="inputGroupFile04">
+                        <label
+                          className="custom-file-label"
+                          for="inputGroupFile04"
+                        >
                           {NamePDF ? NamePDF : "Tambah dokumen baru"}
                         </label>
                       </div>
