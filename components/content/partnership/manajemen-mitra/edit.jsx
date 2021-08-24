@@ -43,13 +43,9 @@ const TambahMitra = () => {
   const [website, setWebsite] = useState(detailMitraRes.website);
   const [alamat, setAlamat] = useState(detailMitraRes.alamat);
   const [provinsi, setProvinsi] = useState(33);
-  // const [provinsi, setProvinsi] = useState(
-  //   detailMitraRes.indonesia_provinces_id
-  // );
+
   const [kotaKabupaten, setKotaKabupaten] = useState(3317);
-  // const [kotaKabupaten, setKotaKabupaten] = useState(
-  //   detailMitraRes.indonesia_cities_id
-  // );
+
   const [kodePos, setKodePos] = useState(detailMitraRes.postal_code);
   const [namaPic, setNamaPic] = useState(detailMitraRes.pic_name);
   const [noPic, setNoPic] = useState(detailMitraRes.pic_contact_number);
@@ -74,6 +70,8 @@ const TambahMitra = () => {
   // end convert to base64
 
   useEffect(() => {
+    console.log(detailMitraRes);
+
     if (provinsi) {
       dispatch(getAllKota(provinsi));
     }

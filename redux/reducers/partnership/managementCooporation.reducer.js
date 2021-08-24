@@ -31,6 +31,8 @@ import {
   SUCCESS_DELETE_COOPERATION_M,
   SUCCESS_GET_SINGLE_COOPERATION_M,
   CHANGE_STATUS_LIST_M,
+  CANCEL_CHANGE_CATEGORY,
+  CANCEL_CHANGE_EMAIL,
 } from "../../types/partnership/management_cooporation.type";
 
 const statuslist = {
@@ -182,6 +184,17 @@ export const allMCooporationReducer = (state = initialState, action) => {
       return {
         ...state,
         singleCooporationSelect: action.data,
+      };
+    case CANCEL_CHANGE_CATEGORY:
+      return {
+        ...state,
+        stateListKerjaSama: [],
+      };
+    case CANCEL_CHANGE_EMAIL:
+      return {
+        ...state,
+        institution_name: "",
+        stateListMitra: [],
       };
     case SUCCESS_DELETE_COOPERATION_M:
       return {

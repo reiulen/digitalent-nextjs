@@ -153,7 +153,7 @@ const ListTipeSoal = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              List Tipe Soal Test Substansi
+              List Tipe Soal Tes Substansi
             </h3>
             <div className="card-toolbar"></div>
           </div>
