@@ -19,11 +19,29 @@ const DetailDokumenKerjasama = () => {
   console.log("allMK page detail",allMK)
 
 
+  const [pdfFIle, setPdfFIle] = useState("");
+  const [showPdf, setShowPdf] = useState(false)
+
+  const getSingleValue = async (id) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
+      );
+      setPdfFIle(data.data.document_file)
+      console.log("getSingleValue", data);
+    } catch (error) {
+      console.log("action getSingleValue gagal", error);
+    }
+
+  }
+
   useEffect(() => {
+    getSingleValue(router.query.id)
     dispatch(getSingleCooperation(router.query.id));
   }, [router.query.id]);
   return (
     <PageWrapper>
+
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -42,7 +60,7 @@ const DetailDokumenKerjasama = () => {
                   Tanggal
                 </label>
                 <div className="col-sm-3">
-                  <input type="date" className="form-control"  />
+                  <input readOnly value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.submission_date} type="date" className="form-control"  />
                 </div>
               </div>
 
@@ -80,7 +98,7 @@ const DetailDokumenKerjasama = () => {
                     // onChange={(e) => setKategoriId(e.target.value)}
                   >
                     <option value="Kategori" selected>
-                    {allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.cooperation_category}
+                    {allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.cooperation_category.name}
                       
                     </option>
                   </select>
@@ -283,21 +301,23 @@ const DetailDokumenKerjasama = () => {
                   className="col-sm-2 col-form-label"
                 >
                   Dokumen Kerjasama
-                  
-
-
                 </label>
                 <div className="col-sm-10">
                   <div className="row align-items-right">
                     <div className="col-sm-10">
-                      <button className="btn btn-primary btn-sm">
-                        Lihat Dokumen
+                      <button type="button" onClick={()=>setShowPdf(showPdf?false:true)} className="btn btn-primary btn-sm">
+                        {showPdf ? "Tutup dokument" : "Lihat Dokumen"}
                       </button>
                     </div>
                   </div>
                 </div>
               </div>
 
+              {showPdf ? 
+
+<iframe className="mb-4 border" src={`http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${pdfFIle}`} frameBorder="0" scrolling="auto" height={"500px"} width="100%" ></iframe>
+
+:""}
               {/* <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -318,25 +338,20 @@ const DetailDokumenKerjasama = () => {
 
               {/* start loop */}
 
-              {allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.data_content.map((items,i)=>{
+              {allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.cooperation_category.data_content.map((items,i)=>{
                 return(
                   
-              
-
-              
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  {/* Tujuan Kerjasama
-                   */}
-                   {allMK.cooperationById.data.data_content[i].cooperation_form}
+                   {items.cooperation_form}
                 </label>
                 <div className="col-sm-10">
                   <textarea
                   readOnly
-                  value={items.cooperation_form_content}
+                  value={items.form_content}
                     name=""
                     id=""
                     cols="30"

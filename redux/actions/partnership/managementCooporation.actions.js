@@ -42,8 +42,11 @@ import {
   SUCCESS_DELETE_COOPERATION_M,
   SUCCESS_GET_SINGLE_COOPERATION_M,
   CHANGE_STATUS_LIST_M,
+  CANCEL_CHANGE_CATEGORY,
+  CANCEL_CHANGE_EMAIL,
 } from "../../types/partnership/management_cooporation.type";
 import axios from "axios";
+import router from "next/router";
 
 // fetch data all Coopoeration
 export async function getMCooporation(params) {
@@ -117,8 +120,8 @@ export async function getCooperationNonaktif(params) {
   );
 }
 
-let debouncedFetchMC = debounce(getMCooporation, 1000);
-let debouncedFetchEmail = debounce(getEmail, 1000);
+let debouncedFetchMC = debounce(getMCooporation, 0);
+let debouncedFetchEmail = debounce(getEmail, 0);
 
 export const fetchAllMK = (keyword) => {
   return async (dispatch, getState) => {
@@ -537,7 +540,46 @@ export const successChangeStatusList = (value) => {
     value,
   };
 };
+export const cancelChangeCategory = () => {
+  return {
+    type: CANCEL_CHANGE_CATEGORY,
+  };
+};
+export const cancelChangeNamaLembaga = () => {
+  return {
+    type: CANCEL_CHANGE_EMAIL,
+  };
+};
+export const exportFileCSV = () => {
+  return async (dispatch, getState) => {
+    let statusState = getState().allMK.status || "";
+    let categories_cooporationState =
+      getState().allMK.categories_cooporation || "";
+    let partnerState = getState().allMK.partner || "";
+
+    const paramssz = {
+      status: statusState,
+      categories_cooporation: categories_cooporationState,
+      partner: partnerState,
+    };
+    try {
+      let urlExport = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/excel/export`,
+        {
+          paramssz,
+        }
+      );
+      router.push(
+        urlExport.config.url +
+          `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`
+      );
+
+      // console.log("data", data);
+    } catch (error) {
+      console.log("object", error);
+    }
+  };
+};
 // fetch select
 // export const fetchCooperationActive = () =>{
-
 // }

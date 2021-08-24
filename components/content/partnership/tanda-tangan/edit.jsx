@@ -117,6 +117,14 @@ const EditTandaTangan = () => {
     });
   };
 
+  const imgSignature = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
+  const myLoader = ({ src }) => {
+    return `${imgSignature}/partnership/images/signatures/${imageSignature}`;
+  };
+
+  console.log(
+    `${imgSignature}/partnership/images/signatures/${imageSignature}`
+  );
   return (
     <PageWrapper>
       {error ? (
@@ -245,14 +253,20 @@ const EditTandaTangan = () => {
                   Buat Tanda Tangan
                   <div>
                     <Image
+                      loader={myLoader}
+                      src={`${imgSignature}/partnership/images/signatures/${imageSignature}`}
+                      width={500}
+                      height={500}
+                    />
+                    {/* <Image
                       src={
                         process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                         "partnership/images/signatures/" +
                         detailTandaTangan.signature_image
                       }
                       width={300}
-                      height={200}
-                    />
+                      height={200} */}
+                    {/* /> */}
                   </div>
                 </label>
                 <div className="col-sm-10">

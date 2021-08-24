@@ -138,7 +138,7 @@ import {
 
 //
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
-// import { allMCooporationReducer } from "./partnership/mk_cooporation.reducers";
+import { allMCooporationReducer } from "./partnership/managementCooporation.reducer";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
@@ -266,8 +266,8 @@ const reducer = combineReducers({
 
   // allMKCooporation: allMKCooporationReducer,
 
-  // allMKCooporation: allMKCooporationReducer,
-  // allMK: allMCooporationReducer,
+  allMKCooporation: allMKCooporationReducer,
+  allMK: allMCooporationReducer,
 
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,

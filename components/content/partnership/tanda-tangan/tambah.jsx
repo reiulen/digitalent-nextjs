@@ -23,6 +23,8 @@ const TambahTandaTangan = () => {
 
   const signCanvas = useRef({});
   const dispatch = useDispatch();
+  const router = useRouter();
+  const Swal = require("sweetalert2");
 
   const clear = () => {
     signCanvas.current.clear();
@@ -61,12 +63,7 @@ const TambahTandaTangan = () => {
         // text: "Berhasil",
       });
     }
-    // setTandaTangan(data);
   };
-  console.log(tandaTangan);
-
-  const router = useRouter();
-  const Swal = require("sweetalert2");
 
   useEffect(() => {
     if (success) {
@@ -93,10 +90,11 @@ const TambahTandaTangan = () => {
         name: nama,
         position: jabatan,
         signature_image: tandaTangan,
-        status: "aktif",
+        // status: "aktif",
       };
-
+      console.log(data);
       dispatch(newTandaTangan(data));
+      // dispatch(newTandaTangan(JSON.stringify(data)));
     } else {
       simpleValidator.current.showMessages();
       // forceUpdate(1);
