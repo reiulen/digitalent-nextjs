@@ -128,7 +128,13 @@ import {
 
   // card
   totalMitraCardReducer,
+  activeMitraCardReducer,
+  nonActiveMitraCardReducer,
 } from "./partnership/mitra.reducers";
+
+//
+// import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
+// } from "./partnership/mitra.reducers";
 
 //
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
@@ -255,6 +261,10 @@ const reducer = combineReducers({
   deleteMitra: deleteMitraReducer,
   updateMitra: updateMitraReducer,
   totalMitraCardGlobal: totalMitraCardReducer,
+  activeMitraCardGlobal: activeMitraCardReducer,
+  nonActiveMitraCardGlobal: nonActiveMitraCardReducer,
+
+  // allMKCooporation: allMKCooporationReducer,
 
   allMKCooporation: allMKCooporationReducer,
   allMK: allMCooporationReducer,

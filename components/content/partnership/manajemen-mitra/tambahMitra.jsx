@@ -4,8 +4,16 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+import SimpleReactValidator from "simple-react-validator";
+
+>>>>>>> Stashed changes
+=======
 import axios from "axios";
 
+>>>>>>> 12ebf0cd6a0a21db04a551250ea7cb8e10e9ee9d
 import {
   newMitra,
   clearErrors,
@@ -20,6 +28,7 @@ import { NEW_MITRA_RESET } from "../../../../redux/types/partnership/mitra.type"
 const TambahMitra = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   const { loading, error, success } = useSelector((state) => state.newMitra);
 
@@ -75,15 +84,45 @@ const TambahMitra = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (error) {
-      dispatch(clearErrors());
-    }
 
-    if (success) {
-      dispatch({
-        type: NEW_MITRA_RESET,
+    if (simpleValidator.current.allValid()) {
+      if (error) {
+        dispatch(clearErrors());
+      }
+
+      if (success) {
+        dispatch({
+          type: NEW_TANDA_TANGAN_RESET,
+        });
+      }
+
+      const data = {
+        institution_name: namaLembaga,
+        email: email,
+        agency_logo: logo,
+        website: website,
+        address: alamat,
+        indonesia_provinces_id: provinsi,
+        indonesia_cities_id: kotaKabupaten,
+        postal_code: kodePos,
+        pic_name: namaPic,
+        pic_contact_number: noPic,
+        pic_email: emailPic,
+      };
+
+      dispatch(newMitra(data));
+
+      console.log(data);
+    } else {
+      simpleValidator.current.showMessages();
+      // forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
       });
     }
+<<<<<<< Updated upstream
     const data = {
       institution_name: namaLembaga,
       email: email,
@@ -101,7 +140,27 @@ const TambahMitra = () => {
     // dispatch(newMitra(JSON.stringify(data)));
     dispatch(newMitra(data));
     console.log(data);
+=======
+>>>>>>> Stashed changes
   };
+
+  // const data = {
+  //   institution_name: namaLembaga,
+  //   email: email,
+  //   agency_logo: logo,
+  //   website: website,
+  //   address: alamat,
+  //   indonesia_provinces_id: provinsi,
+  //   indonesia_cities_id: kotaKabupaten,
+  //   postal_code: kodePos,
+  //   pic_name: namaPic,
+  //   pic_contact_number: noPic,
+  //   pic_email: emailPic,
+  // };
+
+  // dispatch(newMitra(data));
+  // console.log(data);
+  // };
 
   return (
     <PageWrapper>
@@ -146,7 +205,8 @@ const TambahMitra = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
-                  Gambar Logo
+                  Gambar Logo <br />
+                  (Format PDF)
                 </label>
                 <div className="col-sm-3">
                   <div class="input-group">
@@ -157,12 +217,18 @@ const TambahMitra = () => {
                         class="custom-file-input"
                         id="inputGroupFile04"
                         onChange={onChangeGambar}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("logo")
+                        }
                       />
                       <label class="custom-file-label" for="inputGroupFile04">
                         Cari Dokumen
                       </label>
                     </div>
                   </div>
+                  {simpleValidator.current.message("logo", logo, "required", {
+                    className: "text-danger",
+                  })}
                 </div>
               </div>
 
@@ -179,7 +245,18 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Nama Lembaga"
                     onChange={(e) => setNamaLembaga(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("namaLembaga")
+                    }
                   />
+                  {simpleValidator.current.message(
+                    "namaLembaga",
+                    namaLembaga,
+                    "required|max:50",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
 
@@ -196,7 +273,18 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Email"
                     onChange={(e) => setEmail(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("Email")
+                    }
                   />
+                  {simpleValidator.current.message(
+                    "Email",
+                    email,
+                    "required|max:70",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
 
@@ -213,7 +301,18 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Website"
                     onChange={(e) => setWebsite(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("website")
+                    }
                   />
+                  {simpleValidator.current.message(
+                    "website",
+                    website,
+                    "required|max:50",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
 
@@ -230,7 +329,18 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Alamat"
                     onChange={(e) => setAlamat(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("alamat")
+                    }
                   />
+                  {simpleValidator.current.message(
+                    "alamat",
+                    alamat,
+                    "required|max:255",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
 
@@ -241,11 +351,32 @@ const TambahMitra = () => {
                 >
                   Provinsi
                 </label>
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+                <div className="col-sm-10">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Masukkan Provinsi"
+                    onChange={(e) => setProvinsi(e.target.value)}
+                  />
+=======
+                <div className="col-10">
+                  <select
+                    required
+                    onChange={(e) => setProvinsi(e.target.value)}
+                    onBlur={(e) => setProvinsi(e.target.value)}
+                    className="form-control"
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("provinsi")
+                    }
+=======
                 <div className="col-10">
                   <select
                     onChange={(e) => setProvinsi(e.target.value)}
                     onBlur={(e) => setProvinsi(e.target.value)}
                     className="form-control"
+>>>>>>> 12ebf0cd6a0a21db04a551250ea7cb8e10e9ee9d
                   >
                     {allProvinsi && console.log(allProvinsi)}
                     {!allProvinsi ||
@@ -262,6 +393,18 @@ const TambahMitra = () => {
                       })
                     )}
                   </select>
+<<<<<<< HEAD
+                  {simpleValidator.current.message(
+                    "provinsi",
+                    provinsi,
+                    "required|max:50",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
+>>>>>>> Stashed changes
+=======
+>>>>>>> 12ebf0cd6a0a21db04a551250ea7cb8e10e9ee9d
                 </div>
               </div>
 
@@ -273,10 +416,23 @@ const TambahMitra = () => {
                   Kota / Kabupaten
                 </label>
                 <div className="col-sm-10">
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+                  <input
+=======
+                  <select
+                    required
+                    className="form-control"
+                    onChange={(e) => setKotaKabupaten(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("kotaKabupaten")
+                    }
+=======
                   <select
                     className="form-control"
                     onChange={(e) => setKotaKabupaten(e.target.value)}
                     onBlur={(e) => setKotaKabupaten(e.target.value)}
+>>>>>>> 12ebf0cd6a0a21db04a551250ea7cb8e10e9ee9d
                   >
                     {!allKotaRes || (allKotaRes && allKotaRes.length === 0) ? (
                       <option value="">Data kosong</option>
@@ -291,7 +447,20 @@ const TambahMitra = () => {
                       })
                     )}
                   </select>
+<<<<<<< HEAD
+                  {simpleValidator.current.message(
+                    "kotaKabupaten",
+                    kotaKabupaten,
+                    "required|max:50",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                   {/* <input
+>>>>>>> Stashed changes
+=======
+                  {/* <input
+>>>>>>> 12ebf0cd6a0a21db04a551250ea7cb8e10e9ee9d
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Kota / Kabupaten"
@@ -313,7 +482,18 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Kode Pos"
                     onChange={(e) => setKodePos(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("kodePos")
+                    }
                   />
+                  {simpleValidator.current.message(
+                    "kodePos",
+                    kodePos,
+                    "required|max:10",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
 
@@ -330,7 +510,18 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Nama"
                     onChange={(e) => setNamaPic(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("namaPic")
+                    }
                   />
+                  {simpleValidator.current.message(
+                    "namaPic",
+                    namaPic,
+                    "required|max:50",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
 
@@ -347,7 +538,18 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan NO. Kontak"
                     onChange={(e) => setNoPic(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("noPic")
+                    }
                   />
+                  {simpleValidator.current.message(
+                    "noPic",
+                    noPic,
+                    "required|max:50",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
 
@@ -364,7 +566,18 @@ const TambahMitra = () => {
                     className="form-control"
                     placeholder="Masukkan Email"
                     onChange={(e) => setEmailPic(e.target.value)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("emailPic")
+                    }
                   />
+                  {simpleValidator.current.message(
+                    "emailPic",
+                    emailPic,
+                    "required|max:100",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
               </div>
 
