@@ -86,7 +86,6 @@ const Edit = () => {
     ssr: false,
   });
 
-  const Swal = require("sweetalert2");
 
   const submit = (e) => {
     e.preventDefault();
@@ -102,6 +101,10 @@ const Edit = () => {
       dismissOnDestroy: false,
     }).then((result) => {
       if (result.value) {
+        Swal.fire(
+  'Berhasil update data!',
+  'Sukses'
+)
         router.push("/partnership/master-kategori-kerjasama");
       }
     });
@@ -176,7 +179,10 @@ const Edit = () => {
         formData
       );
       // console.log("respon data edit",data)
-      alert("data berhasil diedit");
+      Swal.fire(
+  'Berhasil update data!',
+  'Sukses'
+)
     } catch (error) {
       console.log(error.response);
     }

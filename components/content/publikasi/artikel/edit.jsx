@@ -73,9 +73,10 @@ const EditArtikel = () => {
   const [judul_artikel, setJudulArtikel] = useState(artikel.judul_artikel);
   const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel);
   const [gambar, setGambar] = useState(artikel.gambar);
-  const [gambarPreview, setGambarPreview] = useState(
-    "/assets/media/default.jpg"
-  ); //belum
+  // const [gambarPreview, setGambarPreview] = useState(
+  //   "/assets/media/default.jpg"
+  // ); //belum
+  const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI +"publikasi/images/"+ artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
@@ -83,6 +84,8 @@ const EditArtikel = () => {
   const [_method, setMethod] = useState("put");
 
   const onChangeGambar = (e) => {
+    // console.log (e.target.files[0])
+
     if (e.target.name === "gambar") {
       const reader = new FileReader();
       reader.onload = () => {
@@ -142,42 +145,10 @@ const EditArtikel = () => {
     });
   };
 
-  // const onSetPublish = (e) => {
-  //   Swal.fire({
-  //     title: "Ubah status publikasi?",
-  //     text: "Status publikasi akan berubah",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Ya !",
-  //     cancelButtonText: "Batal",
-  //   }).then((result) => {
-  //     if (result.isConfirmed) {
-  //       Swal.fire("Berhasil", "Status publikasi telah diubah", "success");
-
-  //       console.log(e);
-  //       setPublish(e);
-  //     } else {
-  //       Swal.fire("Batal", "Status publikasi telah batal diubah", "info");
-
-  //       console.log(!e);
-  //       setPublish(!e);
-  //     }
-  //   });
-
-  //   // Swal.fire (
-  //   //     'Berhasil',
-  //   //     'Status publikasi telah diubah',
-  //   //     'success'
-  //   // )
-
-  //   // setPublish(e)
-  // };
-
   return (
     <>
       <PageWrapper>
+        {console.log (artikel.gambar)}
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -285,12 +256,17 @@ const EditArtikel = () => {
                               "isi_artikel"
                             )
                           }
-                          // config={{
-                          //     ckfinder: {
-                          //     // Upload the images to the server using the CKFinder QuickUpload command.
-                          //     // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
-                          //     uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
-                          //   }}}
+                          // config={
+                          //   {
+                          //     //   ckfinder: {
+                          //     //   // Upload the images to the server using the CKFinder QuickUpload command.
+                          //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
+                          //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
+                          //     // }
+                          //     allowedContent: true
+                              
+                          //   }
+                          // }
                         />
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -341,7 +317,7 @@ const EditArtikel = () => {
                           className="custom-file-label"
                           htmlFor="inputGroupFile04"
                         >
-                          Choose file
+                          Pilih gambar
                         </label>
                       </div>
                     </div>
@@ -403,8 +379,6 @@ const EditArtikel = () => {
                       offstyle="danger"
                       size="sm"
                       width={30}
-                      // onChange={(checked) => onSetPublish(checked)}
-                      // onClick={(checked) => onSetPublish(checked)}
                       onChange={(checked) => setPublish(checked)}
                     />
                   </div>

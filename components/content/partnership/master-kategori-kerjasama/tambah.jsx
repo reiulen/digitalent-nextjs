@@ -47,9 +47,9 @@ const Tambah = () => {
   };
 
   const handleSubmit = async (e) => {
-    event.preventDefault();
+    e.preventDefault();
 
-    let statusPro = status ? "aktif" : "tidak aktif";
+    let statusPro = status ? 1 : 0;
 
     let formData = new FormData();
     formData.append("cooperation_categories", categoryCooporation);
@@ -63,7 +63,10 @@ const Tambah = () => {
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/create`,
         formData
       );
-      alert("data berhasil ditambah");
+      Swal.fire(
+  'Berhasil tambah data!',
+  'Sukses'
+)
     } catch (error) {
       console.log(error);
     }

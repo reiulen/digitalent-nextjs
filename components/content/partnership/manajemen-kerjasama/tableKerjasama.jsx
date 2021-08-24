@@ -7,12 +7,17 @@ import { useDispatch, useSelector } from "react-redux";
 import Pagination from "react-js-pagination";
 import DatePicker from "react-datepicker";
 
+import Swal from "sweetalert2";
+
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
 import Image from "next/image";
 import { CSVLink } from "react-csv";
+
+import IconCalender from '../../../assets/icon/Calender'
+import IconArrow from '../../../assets/icon/Arrow'
 
 import {
   fetchAllMK,
@@ -28,8 +33,11 @@ import {
   changeValueStatusCard,
   deleteCooperation,
   changeStatusList,
-  exportFileCSV
+  exportFileCSV,
+  reloadTable
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
+
+
 
 const Table = () => {
 
@@ -70,6 +78,25 @@ const Table = () => {
     dispatch(searchCooporation(valueSearch));
   };
 
+  const changeListStatus = (value,id) =>{
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        dispatch(changeStatusList(value,id))
+      }else{
+        dispatch(reloadTable())
+      }
+    })
+  }
+
   console.log("var");
   useEffect(() => {
     console.log("useffect");
@@ -98,15 +125,6 @@ const Table = () => {
       {console.log("object html")}
       <div className="col-lg-12 col-md-12">
         <div className="row">
-          {/* <CardPage
-            background="bg-light-success cursor-pointer"
-            icon="user-blue.svg"
-            color="#74BBB7"
-            value={allMK.totalDataActive}
-            titleValue="Kerjasama"
-            title="Kerjasama Aktif"
-            onClick={() => dispatch(changeValueStatusCard("active"))}
-          /> */}
 
 {/* card 1 */}
           <div className={`col bg-light-success cursor-pointer px-6 py-8 rounded-xl mr-7 mb-7`} onClick={() => dispatch(changeValueStatusCard("active"))} >
@@ -121,17 +139,6 @@ const Table = () => {
 
         {/* card 2 */}
 
-
-          {/* <CardPage
-            background="bg-light-warning cursor-pointer"
-            icon="user-orange.svg"
-            color="#634100"
-            value={allMK.totalDataAnother}
-            titleValue="Kerjasama"
-            title="Pengajuan Kerjasama"
-            onClick={() => dispatch(changeValueStatusCard("submission"))}
-          /> */}
-
           <div className={`col bg-light-warning cursor-pointer px-6 py-8 rounded-xl mr-7 mb-7`} onClick={() => dispatch(changeValueStatusCard("submission"))} >
             <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
                 <div className="row ml-4">
@@ -141,16 +148,7 @@ const Table = () => {
             </span>
             <p className='ml-3 mt-2' style={{ color: "#74BBB7", fontSize: '15px', fontWeight: '500', opacity: '0.50' }}>Kerjasama Aktif</p>
         </div >
-        {/* title 3 */}
-          {/* <CardPage
-            background="bg-light-danger cursor-pointer"
-            icon="info-danger.svg"
-            color="#F65464"
-            value={allMK.totalDataNonActive}
-            titleValue="Kerjasama"
-            title="Kerjasama akan Habis"
-            onClick={() => dispatch(changeValueStatusCard("will_expire"))}
-          /> */}
+        {/* card 3 */}
 
           <div className={`col bg-light-danger cursor-pointer px-6 py-8 rounded-xl mr-7 mb-7`} onClick={() => dispatch(changeValueStatusCard("will_expire"))} >
             <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
@@ -221,11 +219,12 @@ const Table = () => {
               <form onSubmit={handleSubmitSearchMany}>
                 <div className="row align-items-right">
                   <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                    <div className="position-relative d-flex align-items-center cursor-pointer">
                     <select
                       onChange={(e) => setValueMitra(e.target.value)}
                       name=""
                       id=""
-                      className="form-control"
+                      className="form-control remove-icon-default cursor-pointer dropdown-lists"
                     >
                       <option value="">Mitra</option>
                       {allMK.stateListMitra.length === 0
@@ -236,13 +235,16 @@ const Table = () => {
                             );
                           })}
                     </select>
+                    <IconCalender className="right-center-absolute" style={{right:"10px"}}/>
+                    </div>
                   </div>
                   <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                    <div className="position-relative d-flex align-items-center cursor-pointer">
                     <select
                       onChange={(e) => setValueKerjaSama(e.target.value)}
                       name=""
                       id=""
-                      className="form-control"
+                      className="form-control remove-icon-default cursor-pointer dropdown-lists"
                     >
                       <option value="">Kategory Kerjasama</option>
                       {allMK.stateListKerjaSama.length === 0
@@ -255,13 +257,16 @@ const Table = () => {
                             );
                           })}
                     </select>
+                    <IconCalender className="right-center-absolute" style={{right:"10px"}}/>
+                    </div>
                   </div>
                   <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                    <div className="position-relative d-flex align-items-center cursor-pointer">
                     <select
                       onChange={(e) => setValueStatus(e.target.value)}
                       name=""
                       id=""
-                      className="form-control"
+                      className="form-control remove-icon-default cursor-pointer dropdown-lists"
                     >
                       <option value="">Status</option>
                       {allMK.stateListStatus.length === 0
@@ -272,6 +277,8 @@ const Table = () => {
                             );
                           })}
                     </select>
+                    <IconCalender className="right-center-absolute" style={{right:"10px"}}/>
+                    </div>
                   </div>
                   <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
                     <button
@@ -389,13 +396,14 @@ const Table = () => {
                                   </p>
                                 </td>
                                 <td className="align-middle text-center">
-                                  {items.status.name === "aktif" ? 
+                                  {items.status.name === "aktif" ?
+                                  <div className="position-relative"> 
                                   <select
                                     name=""
                                     id=""
-                                    className="form-control"
+                                    className="form-control remove-icon-default dropdown-arrows"
                                     key={index}
-                                    onChange={(e)=>dispatch(changeStatusList(e.target.value,items.id))}
+                                    onChange={(e)=> changeListStatus(e.target.value,items.id)}
                                   >
                                     <option value="1">
                                       {items.status.name}
@@ -404,13 +412,16 @@ const Table = () => {
                                       tidak aktif
                                     </option> 
                                   </select>
+                                  <IconArrow className="right-center-absolute" style={{right:"10px"}} width="7" height="7"/>
+                                  </div>
                                     : 
+                                    <div className="position-relative">
                                     <select
                                     name=""
                                     id=""
-                                    className="form-control"
+                                    className="form-control remove-icon-default dropdown-arrows"
                                     key={index}
-                                    onChange={(e)=>dispatch(changeStatusList(e.target.value,items.id))}
+                                    onChange={(e)=> changeListStatus(e.target.value,items.id)}
                                   >
                                     <option value="2">
                                       Tidak aktif
@@ -418,7 +429,9 @@ const Table = () => {
                                     <option value="1">
                                       aktif
                                     </option> 
-                                  </select>}
+                                  </select>
+                                  <IconArrow className="right-center-absolute" style={{right:"10px"}} width="7" height="7"/>
+                                  </div>}
                                 </td>
                                 <td className="align-middle text-center">
                                   {items.status.name === "aktif" ? (

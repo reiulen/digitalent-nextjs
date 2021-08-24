@@ -44,6 +44,7 @@ import {
   CHANGE_STATUS_LIST_M,
   CANCEL_CHANGE_CATEGORY,
   CANCEL_CHANGE_EMAIL,
+  RELOAD_TABLE
 } from "../../types/partnership/management_cooporation.type";
 import axios from "axios";
 import router from "next/router";
@@ -528,6 +529,7 @@ export const changeStatusList = (value, id) => {
         dataSend
       );
       console.log("status list data value", data);
+      dispatch(successChangeStatusList(value));
     } catch (error) {
       console.log("error change status list");
     }
@@ -538,6 +540,11 @@ export const successChangeStatusList = (value) => {
   return {
     type: CHANGE_STATUS_LIST_M,
     value,
+  };
+};
+export const reloadTable = () => {
+  return {
+    type: RELOAD_TABLE,
   };
 };
 export const cancelChangeCategory = () => {
