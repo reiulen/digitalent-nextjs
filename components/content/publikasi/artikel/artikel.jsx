@@ -103,27 +103,67 @@ const Artikel = () => {
   };
 
   const handlePagination = (pageNumber) => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
+    if (limit !== null  && search === "" && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    
+    } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+
+    } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+
+    } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+    } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+    } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
     } else {
-      router.push(`${router.pathname}?page=${pageNumber}`);
+        router.push(`${router.pathname}?page=${pageNumber}`)
     }
-  };
+}
 
   const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
+    if (limit != null && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+
+    } else if (limit !== null && startDate !== null && endDate !== null ) {
+        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
     } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`);
+        router.push(`${router.pathname}?page=1&keyword=${search}`)
     }
-  };
+
+};
 
   const handleSearchDate = () => {
-    router.push(
-      `${router.pathname}?page=1&startdate=${moment(startDate).format(
-        "YYYY-MM-DD"
-      )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-    );
+    if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+        Swal.fire(
+            'Oops !',
+            'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+            'error'
+        )
+        setStartDate (null)
+        setEndDate (null)
+
+    } else {
+        if (limit !== null && search === null) {
+            router.push(
+                `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+            );
+
+        } else if (limit !== null && search !== null) {
+          `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+
+        } else {
+            router.push(
+                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+            ); 
+        }
+    }
   };
 
   const handleLimit = (val) => {
@@ -329,7 +369,7 @@ const Artikel = () => {
                         <th>Dibuat</th>
                         <th>Status</th>
                         <th>Role</th>
-                        <th>Action</th>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -343,17 +383,28 @@ const Artikel = () => {
                         artikel.artikel.map((artikel, i) => {
                           return (
                             <tr key={artikel.id}>
-                              <td className="align-middle text-center">
+                              {/* <td className="align-middle text-center">
                                 <span className="badge badge-secondary text-muted">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
+                              </td> */}
+                              <td className='align-middle text-center'>
+                                  <span className="badge badge-secondary text-muted">
+                                      {i + 1 * (page * limit) - (limit - 1)}
+                                  </span>
                               </td>
+
                               <td>
                                 <Image
                                   alt={artikel.judul_artikel}
                                   unoptimized={
                                     process.env.ENVIRONMENT !== "PRODUCTION"
                                   }
+                                  // loader={() => process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                  //   "publikasi/images/" +
+                                  //   artikel.gambar + `?w=80&q=75`
+                                  // }
+                                  // src={artikel.gambar}
                                   src={
                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                     "publikasi/images/" +
@@ -402,6 +453,7 @@ const Artikel = () => {
                                 <ButtonNewTab
                                   icon="setting.svg"
                                   link={`/publikasi/artikel/preview/${artikel.id}`}
+                                  title="Preview Artikel"
                                 />
                                 <ButtonAction
                                   icon="write.svg"
