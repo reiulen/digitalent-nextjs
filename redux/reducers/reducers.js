@@ -130,11 +130,17 @@ import {
 
   // card
   totalMitraCardReducer,
+  activeMitraCardReducer,
+  nonActiveMitraCardReducer,
 } from "./partnership/mitra.reducers";
 
 //
+// import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
+// } from "./partnership/mitra.reducers";
+
+//
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
-// import { allMCooporationReducer } from "./partnership/mk_cooporation.reducers";
+import { allMCooporationReducer } from "./partnership/managementCooporation.reducer";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
@@ -259,9 +265,13 @@ const reducer = combineReducers({
   deleteMitra: deleteMitraReducer,
   updateMitra: updateMitraReducer,
   totalMitraCardGlobal: totalMitraCardReducer,
+  activeMitraCardGlobal: activeMitraCardReducer,
+  nonActiveMitraCardGlobal: nonActiveMitraCardReducer,
+
+  // allMKCooporation: allMKCooporationReducer,
 
   allMKCooporation: allMKCooporationReducer,
-  // allMK: allMCooporationReducer,
+  allMK: allMCooporationReducer,
 
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,

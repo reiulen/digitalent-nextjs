@@ -23,6 +23,7 @@ const EditTandaTangan = () => {
 
   const clear = () => {
     signCanvas.current.clear();
+    setSignature("");
   };
 
   const editorRef = useRef();
@@ -52,15 +53,35 @@ const EditTandaTangan = () => {
     }
   }, [dispatch, error, isUpdated]);
 
-  // get detail state
+  // const storageAPI = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
+
   const [name, setName] = useState(detailTandaTangan.name);
   const [position, setPosition] = useState(detailTandaTangan.position);
-  const [signature, setSignature] = useState(null);
+  const [imageSignature, setImageSignature] = useState(
+    detailTandaTangan.signature_image
+  );
+  console.log(imageSignature);
+  const [signature, setSignature] = useState("");
 
   const dataTandaTangan = () => {
     const data = signCanvas.current.toDataURL();
-    setSignature(data);
+    if (!signature) {
+      Swal.fire({
+        icon: "success",
+        title: "Tanda Tangan Berhasil di Buat",
+        // text: "Berhasil",
+      });
+      setSignature(data);
+    }
+    if (signature) {
+      Swal.fire({
+        icon: "error",
+        title: "Tanda Tangan Sudah dibuat",
+        // text: "Berhasil",
+      });
+    }
   };
+  console.log(signature);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -96,6 +117,14 @@ const EditTandaTangan = () => {
     });
   };
 
+  const imgSignature = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
+  const myLoader = ({ src }) => {
+    return `${imgSignature}/partnership/images/signatures/${imageSignature}`;
+  };
+
+  console.log(
+    `${imgSignature}/partnership/images/signatures/${imageSignature}`
+  );
   return (
     <PageWrapper>
       {error ? (
@@ -223,7 +252,21 @@ const EditTandaTangan = () => {
                 >
                   Buat Tanda Tangan
                   <div>
-                    <Image src={`/${signature}`} width={300} height={200} />
+                    <Image
+                      loader={myLoader}
+                      src={`${imgSignature}/partnership/images/signatures/${imageSignature}`}
+                      width={500}
+                      height={500}
+                    />
+                    {/* <Image
+                      src={
+                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        "partnership/images/signatures/" +
+                        detailTandaTangan.signature_image
+                      }
+                      width={300}
+                      height={200} */}
+                    {/* /> */}
                   </div>
                 </label>
                 <div className="col-sm-10">

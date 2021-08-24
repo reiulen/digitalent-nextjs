@@ -30,6 +30,14 @@ import {
   CARD_TOTAL_MITRA_REQUEST,
   CARD_TOTAL_MITRA_SUCCESS,
   CARD_TOTAL_MITRA_FAIL,
+  // ...
+  CARD_ACTIVE_MITRA_REQUEST,
+  CARD_ACTIVE_MITRA_SUCCESS,
+  CARD_ACTIVE_MITRA_FAIL,
+  // ...
+  CARD_NON_ACTIVE_MITRA_REQUEST,
+  CARD_NON_ACTIVE_MITRA_SUCCESS,
+  CARD_NON_ACTIVE_MITRA_FAIL,
 
   // ------
   CLEAR_ERRORS,
@@ -169,13 +177,14 @@ export const deleteMitra = (id) => async (dispatch) => {
   }
 };
 
+//dashboard card
 export const getTotalMitra = () => async (dispatch) => {
   try {
     dispatch({ type: CARD_TOTAL_MITRA_REQUEST });
 
     let link =
       process.env.END_POINT_API_PARTNERSHIP +
-      `/api/partners/?card=non-active&page=1&limit=1&card=non-active`;
+      `/api/partners/?card=non-active&page=1&limit=1&card=all`;
 
     const { data } = await axios.get(link);
 
@@ -186,6 +195,50 @@ export const getTotalMitra = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CARD_TOTAL_MITRA_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const getActiveMitra = () => async (dispatch) => {
+  try {
+    dispatch({ type: CARD_ACTIVE_MITRA_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_PARTNERSHIP +
+      `/api/partners/?card=non-active&page=1&limit=1&card=active`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: CARD_ACTIVE_MITRA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CARD_ACTIVE_MITRA_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const getNonActiveMitra = () => async (dispatch) => {
+  try {
+    dispatch({ type: CARD_NON_ACTIVE_MITRA_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_PARTNERSHIP +
+      `/api/partners/?card=non-active&page=1&limit=1&card=non-active`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: CARD_NON_ACTIVE_MITRA_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CARD_NON_ACTIVE_MITRA_FAIL,
       payload: error.message,
     });
   }

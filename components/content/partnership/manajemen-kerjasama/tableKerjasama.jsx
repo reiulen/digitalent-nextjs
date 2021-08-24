@@ -12,6 +12,7 @@ import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
 import Image from "next/image";
+import { CSVLink } from "react-csv";
 
 import {
   fetchAllMK,
@@ -26,10 +27,23 @@ import {
   fetchListSelectStatus,
   changeValueStatusCard,
   deleteCooperation,
-  changeStatusList
+  changeStatusList,
+  exportFileCSV
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
 const Table = () => {
+
+//   const data = [
+//   { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
+//   { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
+//   { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
+// ];
+// const csvReport = {
+//   fileName:'Repost.csv',
+//   data:data,
+// }
+
+
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
   console.log("allMK", allMK);
@@ -72,6 +86,7 @@ const Table = () => {
     allMK.status_delete,
     allMK.status_list,
   ]);
+
 
   useEffect(() => {
     dispatch(fetchListSelectMitra());
@@ -268,13 +283,14 @@ const Table = () => {
                     </button>
                   </div>
                   <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
-                    <a
-                      href="#"
+                    <button
+                    type="button"
+                    onClick={()=>dispatch(exportFileCSV())}
                       className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
                       style={exportCSV}
                     >
                       Export .csv
-                    </a>
+                    </button>
                   </div>
                 </div>
               </form>
@@ -436,6 +452,11 @@ const Table = () => {
                                           borderRadius: "6px",
                                           padding: "8px 10px 3px 10px",
                                         }}
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/manajemen-kerjasama/edit/${items.id}`
+                                          )
+                                        }
                                       >
                                         <Image
                                           width="14"
@@ -479,6 +500,11 @@ const Table = () => {
                                           borderRadius: "6px",
                                           padding: "8px 10px 3px 10px",
                                         }}
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/manajemen-kerjasama/edit/${items.id}`
+                                          )
+                                        }
                                       >
                                         <Image
                                           width="14"
@@ -506,7 +532,7 @@ const Table = () => {
                                           src={`/assets/icon/trash.svg`}
                                         />
                                         <div className="text-hover-show-hapus">
-                                          Deleta
+                                          Hapus
                                         </div>
                                       </button>
                                     </div>
