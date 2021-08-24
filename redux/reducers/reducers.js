@@ -75,6 +75,8 @@ import {
   allSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetailReducer,
+  detailSubtanceQuestionDetailReducer,
+  updateSubtanceQuestionDetailReducer,
   importFileSubtanceQuestionDetailReducer,
   importImagesSubtanceQuestionDetailReducer,
 } from "./subvit/subtance-question-detail.reducers";
@@ -209,6 +211,7 @@ const reducer = combineReducers({
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
+  updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
   importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
   importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
@@ -226,6 +229,7 @@ const reducer = combineReducers({
   allSurveyQuestionDetail: allSurveyQuestionDetailReducer,
   newSurveyQuestionDetail: newSurveyQuestionDetailReducer,
   deleteSurveyQuestionDetail: deleteSurveyQuestionDetailReducer,
+  detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   importFileSurveyQuestionDetail: importFileSurveyQuestionDetailReducer,
   importImagesSurveyQuestionDetail: importImagesSurveyQuestionDetailReducer,
   // =============== end substansi ==================

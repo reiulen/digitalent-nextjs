@@ -14,6 +14,15 @@ import {
     DELETE_SUBTANCE_QUESTION_DETAIL_RESET,
     DELETE_SUBTANCE_QUESTION_DETAIL_FAIL,
 
+    UPDATE_SUBTANCE_QUESTION_DETAIL_REQUEST,
+    UPDATE_SUBTANCE_QUESTION_DETAIL_SUCCESS,
+    UPDATE_SUBTANCE_QUESTION_DETAIL_RESET,
+    UPDATE_SUBTANCE_QUESTION_DETAIL_FAIL,
+
+    DETAIL_SUBTANCE_QUESTION_DETAIL_REQUEST,
+    DETAIL_SUBTANCE_QUESTION_DETAIL_SUCCESS,
+    DETAIL_SUBTANCE_QUESTION_DETAIL_FAIL,
+
     IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_REQUEST,
     IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_SUCCESS,
     IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_RESET,
@@ -48,6 +57,7 @@ export const allSubtanceQuestionDetailReducer = (state = { subtance_question_det
 
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null
             }
 
@@ -84,6 +94,44 @@ export const newSubtanceQuestionDetailReducer = (state = { subtance_question_det
 
         case CLEAR_ERRORS:
             return {
+                ...state,
+                error: null
+            }
+
+
+        default:
+            return state
+    }
+}
+
+export const updateSubtanceQuestionDetailReducer = (state = { subtance_question_detail: {} }, action) => {
+    switch (action.type) {
+        case UPDATE_SUBTANCE_QUESTION_DETAIL_REQUEST:
+            return {
+                loading: true
+            }
+
+        case UPDATE_SUBTANCE_QUESTION_DETAIL_SUCCESS:
+            return {
+                loading: false,
+                success: action.payload.message,
+                subtance_question_detail: action.payload.data
+            }
+
+        case UPDATE_SUBTANCE_QUESTION_DETAIL_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case UPDATE_SUBTANCE_QUESTION_DETAIL_RESET:
+            return {
+                success: false
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
                 error: null
             }
 
@@ -128,6 +176,36 @@ export const deleteSubtanceQuestionDetailReducer = (state = {}, action) => {
     }
 }
 
+export const detailSubtanceQuestionDetailReducer = (state = { subtance_question_detail: {} }, action) => {
+    switch (action.type) {
+        case DETAIL_SUBTANCE_QUESTION_DETAIL_REQUEST:
+            return {
+                loading: true
+            }
+
+        case DETAIL_SUBTANCE_QUESTION_DETAIL_SUCCESS:
+            return {
+                loading: false,
+                subtance_question_detail: action.payload.data
+            }
+
+        case DETAIL_SUBTANCE_QUESTION_DETAIL_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
 export const importFileSubtanceQuestionDetailReducer = (state = { subtance_question_file: {} }, action) => {
     switch (action.type) {
         case IMPORT_FILE_SUBTANCE_QUESTION_DETAIL_REQUEST:
@@ -155,6 +233,7 @@ export const importFileSubtanceQuestionDetailReducer = (state = { subtance_quest
 
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null
             }
 
@@ -190,6 +269,7 @@ export const importImagesSubtanceQuestionDetailReducer = (state = { subtance_que
 
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null
             }
 
