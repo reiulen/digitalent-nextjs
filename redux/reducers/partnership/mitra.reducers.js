@@ -31,9 +31,14 @@ import {
   CARD_TOTAL_MITRA_REQUEST,
   CARD_TOTAL_MITRA_SUCCESS,
   CARD_TOTAL_MITRA_FAIL,
+  // ...
   CARD_ACTIVE_MITRA_REQUEST,
   CARD_ACTIVE_MITRA_SUCCESS,
   CARD_ACTIVE_MITRA_FAIL,
+  // ...
+  CARD_NON_ACTIVE_MITRA_REQUEST,
+  CARD_NON_ACTIVE_MITRA_SUCCESS,
+  CARD_NON_ACTIVE_MITRA_FAIL,
 
   // ---
   CLEAR_ERRORS,
@@ -215,6 +220,70 @@ export const totalMitraCardReducer = (
       };
 
     case CARD_TOTAL_MITRA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const activeMitraCardReducer = (
+  state = { activeMitraCardRes: [] },
+  action
+) => {
+  switch (action.type) {
+    case CARD_ACTIVE_MITRA_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case CARD_ACTIVE_MITRA_SUCCESS:
+      return {
+        loading: false,
+        activeMitraCardRes: action.payload.data,
+      };
+
+    case CARD_ACTIVE_MITRA_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const nonActiveMitraCardReducer = (
+  state = { nonActiveMitraCardRes: [] },
+  action
+) => {
+  switch (action.type) {
+    case CARD_NON_ACTIVE_MITRA_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case CARD_NON_ACTIVE_MITRA_SUCCESS:
+      return {
+        loading: false,
+        nonActiveMitraCardRes: action.payload.data,
+      };
+
+    case CARD_NON_ACTIVE_MITRA_FAIL:
       return {
         loading: false,
         error: action.payload,

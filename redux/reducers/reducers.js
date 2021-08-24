@@ -75,6 +75,8 @@ import {
   allSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetailReducer,
+  detailSubtanceQuestionDetailReducer,
+  updateSubtanceQuestionDetailReducer,
   importFileSubtanceQuestionDetailReducer,
   importImagesSubtanceQuestionDetailReducer,
 } from "./subvit/subtance-question-detail.reducers";
@@ -128,7 +130,13 @@ import {
 
   // card
   totalMitraCardReducer,
+  activeMitraCardReducer,
+  nonActiveMitraCardReducer,
 } from "./partnership/mitra.reducers";
+
+//
+// import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
+// } from "./partnership/mitra.reducers";
 
 //
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
@@ -209,6 +217,7 @@ const reducer = combineReducers({
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
+  updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
   importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
   importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
@@ -226,6 +235,7 @@ const reducer = combineReducers({
   allSurveyQuestionDetail: allSurveyQuestionDetailReducer,
   newSurveyQuestionDetail: newSurveyQuestionDetailReducer,
   deleteSurveyQuestionDetail: deleteSurveyQuestionDetailReducer,
+  detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   importFileSurveyQuestionDetail: importFileSurveyQuestionDetailReducer,
   importImagesSurveyQuestionDetail: importImagesSurveyQuestionDetailReducer,
   // =============== end substansi ==================
@@ -255,6 +265,10 @@ const reducer = combineReducers({
   deleteMitra: deleteMitraReducer,
   updateMitra: updateMitraReducer,
   totalMitraCardGlobal: totalMitraCardReducer,
+  activeMitraCardGlobal: activeMitraCardReducer,
+  nonActiveMitraCardGlobal: nonActiveMitraCardReducer,
+
+  // allMKCooporation: allMKCooporationReducer,
 
   allMKCooporation: allMKCooporationReducer,
   allMK: allMCooporationReducer,

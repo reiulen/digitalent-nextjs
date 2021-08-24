@@ -4,6 +4,8 @@ import Table from "../../../components/content/partnership/manajemen-mitra/table
 import {
   getAllMitra,
   getTotalMitra,
+  getActiveMitra,
+  getNonActiveMitra,
 } from "../../../redux/actions/partnership/mitra.actions";
 import { wrapper } from "../../../redux/store";
 
@@ -26,5 +28,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getAllMitra(query.page, query.keyword, query.limit, query.card)
       );
       await store.dispatch(getTotalMitra());
+      await store.dispatch(getActiveMitra());
+      await store.dispatch(getNonActiveMitra());
     }
 );
