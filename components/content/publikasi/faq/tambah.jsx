@@ -49,7 +49,7 @@ const TambahFaq = () => {
     const [judul, setJudulPertanyaan] = useState('')
     const [jawaban, setJawaban] = useState('');
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUsersId] = useState(1)
+    const [users_id, setUsersId] = useState(3)
     const [pinned, setPinnedFaq] = useState(false)
     const [publish, setPublish] = useState(false)
     const [, forceUpdate] = useState();

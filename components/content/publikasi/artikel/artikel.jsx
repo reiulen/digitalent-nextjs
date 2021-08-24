@@ -453,7 +453,7 @@ const Artikel = () => {
                                 <ButtonNewTab
                                   icon="setting.svg"
                                   link={`/publikasi/artikel/preview/${artikel.id}`}
-                                  title="Preview Artikel"
+                                  // title="Preview Artikel"
                                 />
                                 <ButtonAction
                                   icon="write.svg"

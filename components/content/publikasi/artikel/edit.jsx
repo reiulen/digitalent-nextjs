@@ -76,7 +76,7 @@ const EditArtikel = () => {
   // const [gambarPreview, setGambarPreview] = useState(
   //   "/assets/media/default.jpg"
   // ); //belum
-  const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI +"publikasi/images/"+ artikel.gambar);
+  const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
