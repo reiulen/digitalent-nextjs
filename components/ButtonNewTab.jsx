@@ -1,16 +1,25 @@
 import React from 'react';
+import Head from 'next/head'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
-const ButtonNewTab = ({ icon, link = '/' }) => {
+const ButtonNewTab = ({ icon, link = '/', title }) => {
     return (
-        <Link href={link}>
-            <a target="_blank">
-                <button className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
-                    <Image alt='button-action' src={`/assets/icon/${icon}`} width={18} height={18} />
-                </button>
-            </a>
-        </Link>
+        <>
+            <Head>
+                <title>{title}</title>
+            </Head>
+
+            <Link href={link}>
+                <a target="_blank">
+                    <button className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
+                        <Image alt='button-action' src={`/assets/icon/${icon}`} width={18} height={18} />
+                    </button>
+                </a>
+            </Link>
+        </>
+        
     )
 }
 
