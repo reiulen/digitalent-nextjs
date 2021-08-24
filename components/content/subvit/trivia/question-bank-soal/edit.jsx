@@ -12,7 +12,9 @@ import { clearErrors, updateTriviaQuestionDetail } from '../../../../../redux/ac
 import { UPDATE_TRIVIA_QUESTION_DETAIL_RESET } from '../../../../../redux/types/subvit/trivia-question-detail.type'
 
 import PageWrapper from '../../../../wrapper/page.wrapper'
-import LoadingPage from '../../../../LoadingPage';
+import LoadingPage from '../../../../LoadingPage'
+import PollingComponent from './edit-soal/polling-component';
+import CheckboxComponent from './edit-soal/checkbox-component';
 
 const EditSoalTrivia = () => {
 
@@ -27,13 +29,14 @@ const EditSoalTrivia = () => {
     const { loading, error, success } = useSelector((state) => state.updateTriviaQuestionDetail)
     let { id } = router.query
 
+    const [methodAdd, setMethodAdd] = useState(trivia_question_detail.type)
+
     const [question, setQuestion] = useState(trivia_question_detail.question)
     const [question_image, setQuestionImage] = useState(trivia_question_detail.question_image)
 
     const [answer, setAnswer] = useState(JSON.parse(trivia_question_detail.answer))
 
     const [answer_key, setAnswerKey] = useState(trivia_question_detail.answer_key)
-    const [question_type, setQuestionType] = useState(trivia_question_detail.type.id)
     const [status, setStatus] = useState(trivia_question_detail.status)
 
     useEffect(() => {
@@ -60,47 +63,6 @@ const EditSoalTrivia = () => {
         }
     }
 
-    const handleRemoveClick = (index) => {
-        const list = [...answer]
-        list.splice(index, 1)
-        setAnswer(list)
-    }
-
-    const handleAddClick = () => {
-        const lastobj = answer[answer.length - 1]
-        const keyindex = lastobj.key.charCodeAt(0)
-        const newKey = String.fromCharCode(keyindex + 1)
-        setAnswer([...answer, { key: newKey, question: '', image: '', is_right: false }])
-    }
-
-    const handleInputChange = (e, index) => {
-        const { name, value } = e.target;
-        const list = [...answer];
-        list[index][name] = value;
-        if (name === 'image') {
-            const reader = new FileReader()
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    list[index]['image'] = reader.result
-                }
-            }
-            reader.readAsDataURL(e.target.files[0])
-        }
-        setAnswer(list);
-    }
-
-    const handleAnswer = (value, i) => {
-        setAnswerKey(answer[i].key)
-        if (value === false) {
-            setAnswerKey('')
-        }
-        const list = [...answer]
-        list.forEach((row, j) => {
-            list[j]['is_right'] = false
-        })
-        list[i]['is_right'] = value
-    }
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -114,15 +76,6 @@ const EditSoalTrivia = () => {
         if (success) {
             dispatch({
                 type: UPDATE_TRIVIA_QUESTION_DETAIL_RESET
-            })
-        }
-
-        if (answer_key === '') {
-            valid = false
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi kunci jawaban dengan benar !'
             })
         }
 
@@ -146,28 +99,69 @@ const EditSoalTrivia = () => {
             }
         })
 
-        if (question_type === '') {
+        if (answer_key === '') {
             valid = false
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Isi Tipe Soal dengan benar !'
+                text: 'Isi kunci jawaban dengan benar !'
             })
         }
 
-        if (valid) {
-            var answers = JSON.stringify(answer)
-            const data = {
-                subtance_question_bank_id: subtance_question_detail.subtance_question_bank_id,
-                question,
-                question_image,
-                answer: answers,
-                status,
-                answer_key,
-                question_type_id: question_type
-            }
-            console.log(data)
-            dispatch(updateTriviaQuestionDetail(id, data))
+        switch (methodAdd) {
+            case "polling":
+                console.log(answer)
+                break
+            case "checkbox":
+
+                break
+            case "fill_in_the_blank":
+
+                break
+            default:
+                break;
+        }
+
+    }
+
+    const handleMethodeInput = () => {
+        switch (methodAdd) {
+            case "polling":
+                return (
+                    <PollingComponent
+                        propsAnswer={answer}
+                        propsStatus={status}
+                        sendPropsAnswer={answers => setAnswer(answers)}
+                        sendPropsStatus={status => setStatus(status)}
+                    />
+                )
+                break
+            case "checkbox":
+                return (
+                    <CheckboxComponent
+                        propsAnswer={answer}
+                        propsStatus={status}
+                        sendPropsAnswer={answers => setAnswer(answers)}
+                        sendPropsStatus={status => setStatus(status)}
+                    />
+                )
+                break
+            case "fill_in_the_blank":
+                // return (
+                //     <BlankComponent
+                //         props_answer={answer => setBlanklList(answer)}
+                //         props_duration={duration => setDurationBlank(duration)}
+                //     />
+                // )
+                break
+            default:
+                return (
+                    <PollingComponent
+                        propsAnswer={answer => setAnswer(answer)}
+                        propsStatus={status => setStatus(status)}
+                    />
+                )
+                break
         }
     }
 
@@ -229,92 +223,73 @@ const EditSoalTrivia = () => {
                                         </label>
                                     </div>
                                 </div>
-                                <div className="col-md-2"></div>
-                            </div>
-
-                            <div className="answer mt-5">
-                                {
-                                    answer.map((row, i) => {
-                                        return (
-                                            <>
-                                                <div className="title row">
-                                                    <div className="col-md-2 p-0 pl-3">
-                                                        <Image src='/assets/media/Gambar.svg' alt='logo' width={148} height={90} />
-                                                    </div>
-                                                    <div className="col-md-8 pt-2">
-                                                        <input
-                                                            type="text"
-                                                            name="option"
-                                                            className='form-control'
-                                                            placeholder={`Jawaban ` + row.key}
-                                                            value={row.option}
-                                                            onChange={e => handleInputChange(e, i)}
-                                                            autoComplete='off'
-                                                        />
-                                                        <div class="custom-file mt-2">
-                                                            <span>Gambar Pertanyaan (Opsional)</span>
-                                                            <input type="file" class="custom-file-input" name='question_image' />
-                                                            <label class="custom-file-label" for="customFile">
-                                                                Choose file
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-md-2 d-flex justify-content-start my-auto">
-                                                        <button className="btn pt-0 mr-3" type='button' onClick={() => handleRemoveClick(i)}>
-                                                            <Image
-                                                                alt="button-action"
-                                                                src="/assets/icon/trash-red.svg"
-                                                                width={20}
-                                                                height={30}
-                                                            />
-                                                        </button>
-                                                        <SwitchButton
-                                                            checked={row.is_right}
-                                                            onlabel=" "
-                                                            onstyle="primary"
-                                                            offlabel=" "
-                                                            offstyle="danger"
-                                                            size="sm"
-                                                            width={20}
-                                                            height={10}
-                                                            onChange={(checked) => handleAnswer(checked, i)}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </>
-                                        )
-                                    })
-                                }
-                            </div>
-
-                            {answer.length < 6 ?
-                                <div className="button-add my-4">
-                                    <button
-                                        type='button'
-                                        className="btn btn-sm btn-light-success font-weight-bold"
-                                        onClick={() => handleAddClick()}>
-                                        Tambah Jawaban
+                                <div className="col-md-2 d-flex my-auto">
+                                    <button className="btn pt-0 mr-3" style={{ marginTop: '45px' }} type='button' >
+                                        <Image
+                                            alt="button-action"
+                                            src="/assets/icon/trash-red.svg"
+                                            width={20}
+                                            height={30}
+                                        />
                                     </button>
-                                </div> : ''
-                            }
-
-                            <div className="form-group row">
-                                <div className="col-sm-12 col-md-5">
-                                    <span>Status</span>
-                                    <select
-                                        name="training_id"
-                                        className="form-control"
-                                        onChange={(e) => setStatus(e.target.value)}
-                                        onBlur={e => setStatus(e.target.value)}
-                                        value={status}
-                                    >
-                                        <option selected disabled value=''>-- Status --</option>
-                                        <option value={true}>Publish</option>
-                                        <option value={false}>Draft</option>
-                                    </select>
-                                    <span className="text-muted">Silahkan Pilih Status</span>
                                 </div>
                             </div>
+
+                            <div>Jenis Pertanyaan</div>
+                            <div className="form-group row mt-4 ml-1 mb-3">
+                                <div className="col-sm-12 col-md-8">
+                                    <div class="form-check form-check-inline">
+                                        <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="inlineRadioOptions"
+                                            id="inlineRadio1"
+                                            value="polling"
+                                            checked={methodAdd === "polling"}
+                                            onChange={() => setMethodAdd("polling")}
+                                        />
+                                        <label class="form-check-label" for="inlineRadio1">
+                                            Polling
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="inlineRadioOptions"
+                                            id="inlineRadio2"
+                                            value="checkbox"
+                                            checked={methodAdd === "checkbox"}
+                                            onChange={() => setMethodAdd("checkbox")}
+                                        />
+                                        <label class="form-check-label" for="inlineRadio2">
+                                            Checkbox
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input
+                                            class="form-check-input"
+                                            type="radio"
+                                            name="inlineRadioOptions"
+                                            id="inlineRadio3"
+                                            value="fill_in_the_blank"
+                                            checked={methodAdd === "fill_in_the_blank"}
+                                            onChange={() => setMethodAdd("fill_in_the_blank")}
+                                        />
+                                        <label class="form-check-label" for="inlineRadio3">
+                                            Fill in the blank
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="">
+                                <span className="text-muted">Silahkan Pilih Metode Tambah Trivia</span>
+                            </div>
+
+                            {
+                                handleMethodeInput()
+                            }
+
                             <div className="col-md-10 pb-0 mb-0">
                                 <hr />
                             </div>
