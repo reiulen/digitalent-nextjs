@@ -123,9 +123,24 @@ const EditArtikel = () => {
         id,
         _method,
       };
-  
-      dispatch(updateArtikel(data));
-      // console.log(data)
+      
+      Swal.fire({
+        title: "Apakah anda yakin ?",
+        text: "Data ini akan diedit !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya !",
+        cancelButtonText: "Batal",
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            dispatch(updateArtikel(data));
+            // console.log(data)
+          }
+      });
+      
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -148,7 +163,7 @@ const EditArtikel = () => {
   return (
     <>
       <PageWrapper>
-        {console.log (artikel.gambar)}
+        {console.log (artikel)}
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -295,6 +310,7 @@ const EditArtikel = () => {
                       data-target="#exampleModalCenter"
                     >
                       <Image
+                        loader={() => gambarPreview}
                         src={gambarPreview}
                         alt="image"
                         width={60}
@@ -334,7 +350,7 @@ const EditArtikel = () => {
                           ) : (
                               kategori && kategori.kategori && kategori.kategori.map((row) => {
                                   return (
-                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
+                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
                                   )
                               })
                           )}

@@ -30,6 +30,7 @@ const Preview = () => {
     const [created_at, setCreatedAt] = useState(new Date (artikel.created_at).toLocaleDateString("en-IN"))
     const [nama, setNamaKategori] = useState(artikel.nama)  
     const [gambar, setGambar] = useState(artikel.gambar)
+    const [user, setUser] = useState(artikel.dibuat)
     // const [isi_artikel, setIsiArtikel] = useState( () => decodeHTML(artikel.isi_artikel))
     const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel)
     const [tags, setTags] = useState(artikel.tag)
@@ -75,12 +76,16 @@ const Preview = () => {
                                     />
                                 </div>
 
+                                {/* {
+                                    console.log (artikel)
+                                } */}
+
                                 <div className="row">
                                     <div style={{ background: "#F3F6F9"}} 
                                         className="mr-5 px-3 py-1 rounded">
                                         <i className="flaticon2-user"></i>
                                         <span className="ml-1">
-                                            User
+                                            User {user}
                                         </span>
                                     </div>
 

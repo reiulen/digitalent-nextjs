@@ -106,6 +106,7 @@ const TambahArtikel = () => {
   // };
 
   const onSubmit = (e) => {
+
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       if (error) {
@@ -128,9 +129,24 @@ const TambahArtikel = () => {
         publish,
       };
 
-      dispatch(newArtikel(data));
+      Swal.fire({
+        title: "Apakah anda yakin ?",
+        text: "Data ini akan ditambahkan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya !",
+        cancelButtonText: "Batal",
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            dispatch(newArtikel(data));
 
-      console.log(data);
+            console.log(data);
+          }
+      });
+
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -334,7 +350,7 @@ const TambahArtikel = () => {
                         kategori.kategori.map((row) => {
                           return (
                             <option key={row.id} value={row.id}>
-                              {row.jenis_kategori}
+                              {row.nama_kategori}
                             </option>
                           );
                         })
