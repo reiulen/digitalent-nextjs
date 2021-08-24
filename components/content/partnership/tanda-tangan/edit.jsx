@@ -60,7 +60,6 @@ const EditTandaTangan = () => {
   const [imageSignature, setImageSignature] = useState(
     detailTandaTangan.signature_image
   );
-  console.log(imageSignature);
   const [signature, setSignature] = useState("");
 
   const dataTandaTangan = () => {
@@ -81,7 +80,6 @@ const EditTandaTangan = () => {
       });
     }
   };
-  console.log(signature);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -101,7 +99,7 @@ const EditTandaTangan = () => {
       }
 
       const data = {
-        name: "tes",
+        name: name,
         position,
         signature_image: signature,
         status: "aktif",
@@ -122,9 +120,6 @@ const EditTandaTangan = () => {
     return `${imgSignature}/partnership/images/signatures/${imageSignature}`;
   };
 
-  console.log(
-    `${imgSignature}/partnership/images/signatures/${imageSignature}`
-  );
   return (
     <PageWrapper>
       {error ? (
