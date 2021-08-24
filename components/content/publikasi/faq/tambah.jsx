@@ -9,6 +9,7 @@ import Swal from 'sweetalert2'
 
 import { newFaq, clearErrors } from '../../../../redux/actions/publikasi/faq.actions'
 import { NEW_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
+import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
@@ -28,7 +29,7 @@ const TambahFaq = () => {
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
     useEffect(() => {
-
+        dispatch(getAllKategori())
         // if (error) {
         //     dispatch(clearErrors())
         // }
@@ -44,7 +45,6 @@ const TambahFaq = () => {
         }
 
     }, [dispatch, error, success]);
-
 
     const [judul, setJudulPertanyaan] = useState('')
     const [jawaban, setJawaban] = useState('');
@@ -157,7 +157,7 @@ const TambahFaq = () => {
                                             kategori.kategori.map((row) => {
                                                 return (
                                                     <option key={row.id} value={row.id}>
-                                                        {row.nama_kategori}
+                                                        {row.jenis_kategori}
                                                     </option>
                                                 );
                                             })
@@ -169,7 +169,7 @@ const TambahFaq = () => {
 
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={pinned}
@@ -185,7 +185,7 @@ const TambahFaq = () => {
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -206,7 +206,7 @@ const TambahFaq = () => {
                                     <Link href='/publikasi/faq'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>

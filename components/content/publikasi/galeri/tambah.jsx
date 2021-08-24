@@ -12,8 +12,10 @@ import { TagsInput } from "react-tag-input-component";
 
 import { newGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
 import { NEW_GALERI_RESET } from '../../../../redux/types/publikasi/galeri.type'
+import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 
 import PageWrapper from '../../../wrapper/page.wrapper';
+import LoadingPage from "../../../LoadingPage";
 
 const thumbsContainer = {
     display: 'flex',
@@ -86,6 +88,7 @@ const TambahGaleri = () => {
     ));
 
     useEffect(() => {
+        dispatch(getAllKategori());
 
         files.forEach(file => URL.revokeObjectURL(file.preview));
 
@@ -124,8 +127,8 @@ const TambahGaleri = () => {
     const [isi_galleri, setIsiGaleri] = useState('');
     const [gambar, setGambar] = useState([])
     // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
-    // const [kategori_id, setKategoriId] = useState('')
-    const [kategori_id, setKategoriId] = useState(1)
+    const [kategori_id, setKategoriId] = useState('')
+    // const [kategori_id, setKategoriId] = useState(1)
     const [users_id, setUserId] = useState(1)
     const [tag, setTag] = useState([])
     const [publish, setPublish] = useState(false)
@@ -135,6 +138,12 @@ const TambahGaleri = () => {
         if (error) {
             dispatch(clearErrors())
         }
+
+        if (success) {
+            dispatch({
+              type: NEW_GALERI_RESET,
+            });
+          }
 
         const data = {
             judul,
@@ -147,7 +156,7 @@ const TambahGaleri = () => {
         }
 
         dispatch(newGaleri(data))
-        console.log(data)
+        // console.log(data)
     }
 
     return (
@@ -165,6 +174,7 @@ const TambahGaleri = () => {
                 : ''
             }
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+                {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Tambah Galeri</h3>
@@ -198,24 +208,52 @@ const TambahGaleri = () => {
                                     </aside>
                                 </div>
                             </div>
+                            {/* {
+                                console.log (kategori)
+                            } */}
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="col-sm-2 col-form-label"
+                                >
+                                    Kategori
+                                </label>
                                 <div className="col-sm-10">
-                                    <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
-                                        <option selected disabled value=''>-- Kategori --</option>
-                                        {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
-                                        ) : (
-                                            kategori && kategori.kategori && kategori.kategori.map((row) => {
-                                                return (
-                                                    <option key={row.id} value={row.id}>{row.nama}</option>
-                                                )
-                                            })
-                                        )}
-
+                                    <select
+                                    name=""
+                                    id=""
+                                    className="form-control"
+                                    value={kategori_id}
+                                    onChange={(e) => setKategoriId(e.target.value)}
+                                    onBlur={(e) => {
+                                        setKategoriId(e.target.value);
+                                        simpleValidator.current.showMessageFor("kategori_id");
+                                    }}
+                                    >
+                                    <option selected disabled value="">
+                                        -- Kategori --
+                                    </option>
+                                    {!kategori || (kategori && kategori.length === 0) ? (
+                                        <option value="">Data kosong</option>
+                                    ) : (
+                                        kategori &&
+                                        kategori.kategori &&
+                                        kategori.kategori.map((row) => {
+                                        return (
+                                            <option key={row.id} value={row.id}>
+                                            {row.jenis_kategori}
+                                            </option>
+                                        );
+                                        })
+                                    )}
                                     </select>
-                                    {simpleValidator.current.message('kategori_id', kategori_id, 'required', { className: 'text-danger' })}
+                                    {simpleValidator.current.message(
+                                    "kategori_id",
+                                    kategori_id,
+                                    "required",
+                                    { className: "text-danger" }
+                                    )}
                                 </div>
                             </div>
 
@@ -226,7 +264,7 @@ const TambahGaleri = () => {
                                         value={tag}
                                         onChange={setTag}
                                         name="fruits"
-                                        placeHolder="Isi Tag disini"
+                                        placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
                                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
@@ -234,7 +272,7 @@ const TambahGaleri = () => {
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -255,7 +293,7 @@ const TambahGaleri = () => {
                                     <Link href='/publikasi/galeri'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>

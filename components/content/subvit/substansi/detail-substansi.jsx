@@ -360,7 +360,7 @@ const DetailSubstansi = () => {
                               )}
                             </td>
                             <td className="align-middle">
-                              <ButtonAction icon="write.svg" link={`edit-soal-substansi?id=${question.id}`} />
+                              <ButtonAction icon="write.svg" link={`edit-soal-substansi?id=${question.subtance_question_bank_id}`} />
                               <button
                                 onClick={() => handleDelete(question.id)}
                                 className="btn mr-1"

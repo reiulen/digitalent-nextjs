@@ -8,6 +8,7 @@ import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import Swal from 'sweetalert2'
+import moment from "moment";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
@@ -16,27 +17,70 @@ import LoadingTable from '../../../LoadingTable';
 import ButtonNewTab from "../../../ButtonNewTab";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllBerita, deleteBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
+import { deleteBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
+
+import { DELETE_BERITA_RESET } from "../../../../redux/types/publikasi/berita.type";
 
 const Berita = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, berita } = useSelector(state => state.allBerita)
-    // const { error: deleteError, isDeleted } = useSelector(state => state.deleteBerita)
+    const { 
+        loading: allLoading,
+        error, 
+        berita 
+    } = useSelector(state => state.allBerita)
+    const { 
+        loading: deleteLoading, 
+        error: deleteError, 
+        isDeleted 
+    } = useSelector(state => state.deleteBerita)
+
+    const [search, setSearch] = useState("");
+    const [limit, setLimit] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [publishValue, setPublishValue] = useState(null)
 
-
-    let { page = 1 } = router.query
-    page = Number(page)
+    let loading = false;
+    let { page = 1, keyword, success } = router.query;
+    if (allLoading) {
+        loading = allLoading;
+    } else if (deleteLoading) {
+        loading = deleteLoading;
+    }
+    page = Number(page);
 
     useEffect(() => {
+        if (limit) {
+        router.push(`${router.pathname}?page=1&limit=${limit}`);
+        }
 
-        dispatch(getAllBerita())
+        if (isDeleted) {
+        Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+            (result) => {
+            if (result.isConfirmed) {
+                window.location.reload();
+            }
+            }
+        );
+        dispatch({
+            type: DELETE_BERITA_RESET,
+            });
+        }
 
-    }, [dispatch])
+        if (publishValue){
+            router.push(`${router.pathname}?publish=${publishValue}`);
+            // console.log("check")
+            // console.log (publishValue)
+        }
+      
+    }, [limit, isDeleted, publishValue]);
+
+    const onNewReset = () => {
+        router.replace("/publikasi/berita", undefined, { shallow: true });
+    };
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -51,12 +95,6 @@ const Berita = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(deleteBerita(id))
-                // Swal.fire(
-                //     'Berhasil ',
-                //     'Data berhasil dihapus.',
-                //     'success'
-                // )
-                // dispatch(getAllBerita())
             }
         })
     }
@@ -99,13 +137,75 @@ const Berita = () => {
                 </div>
                 : ''
             }
+            {success ? (
+                <div
+                    className="alert alert-custom alert-light-success fade show mb-5"
+                    role="alert"
+                >
+                    <div className="alert-icon">
+                        <i className="flaticon2-checkmark"></i>
+                    </div>
+                    <div className="alert-text">Berhasil Menambah Data</div>
+                    <div className="alert-close">
+                        <button
+                            type="button"
+                            className="close"
+                            data-dismiss="alert"
+                            aria-label="Close"
+                            onClick={onNewReset}
+                            >
+                            <span aria-hidden="true">
+                                <i className="ki ki-close"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                ""
+            )}
 
             <div className="col-lg-12 col-md-12">
                 <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Berita' title='Total Publish' />
-                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Berita' title='Total Author' />
-                    <CardPage background='bg-light-success' icon='orang-tambah-green.svg' color='#74BBB7' value='64' titleValue='K' title='Total Yang Baca' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Berita' title='Total Unpublish' />
+                    <CardPage 
+                        background='bg-light-info' 
+                        icon='mail-purple.svg' 
+                        color='#8A50FC' 
+                        value={berita && berita.publish != "" ? berita.publish : 0}
+                        titleValue='Berita' 
+                        title='Total Publish'
+                        publishedVal = "1"
+                        routePublish = { () => setPublishValue("1")}
+                        />
+                    <CardPage 
+                        background='bg-light-warning' 
+                        icon='garis-yellow.svg' 
+                        color='#634100' 
+                        value='64' 
+                        titleValue='Berita' 
+                        title='Total Author'
+                        publishedVal = ""
+                        routePublish = { () => setPublishValue("")} 
+                        />
+                    <CardPage 
+                        background='bg-light-success' 
+                        icon='orang-tambah-green.svg' 
+                        color='#74BBB7' 
+                        value={berita && berita.total_views != "" ? berita.total_views : 0} 
+                        titleValue='Orang' 
+                        title='Total Yang Baca' 
+                        publishedVal = ""
+                        routePublish = { () => setPublishValue("")}
+                        />
+                    <CardPage 
+                        background='bg-light-danger' 
+                        icon='kotak-kotak-red.svg' 
+                        color='#F65464' 
+                        value={berita && berita.unpublish != "" ? berita.unpublish : 0} 
+                        titleValue='Berita' 
+                        title='Total Belum Publish'
+                        publishedVal = "0"
+                        routePublish = { () => setPublishValue("0")} 
+                        />
                 </div>
             </div>
 
@@ -113,7 +213,7 @@ const Berita = () => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen Berita</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Manajemen Berita</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/berita/tambah'>
                                 <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
@@ -189,8 +289,6 @@ const Berita = () => {
                                 </div>
                             </div>
                         </div>
-                        
-
                         <div className="table-page mt-5">
                             <div className="table-responsive">
 
@@ -204,7 +302,7 @@ const Berita = () => {
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
-                                                <th>Tanggal Membuat</th>
+                                                <th>Tanggal Publish</th>
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
@@ -233,7 +331,17 @@ const Berita = () => {
                                                             </td>
                                                             <td className='align-middle'>{row.jenis_kategori}</td>
                                                             <td className='align-middle'>{row.judul_berita}</td>
-                                                            <td className='align-middle'>{new Date(row.created_at).toLocaleDateString("fr-CA")}</td>
+                                                            <td className='align-middle'>
+                                                                {
+                                                                    row.publish === 1 ? (
+                                                                    row.tanggal_publish
+                                                                    ) : (
+                                                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                                                        Belum dipublish
+                                                                    </span>
+                                                                    )
+                                                                }
+                                                            </td>
                                                             <td className='align-middle'>{row.dibuat}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?

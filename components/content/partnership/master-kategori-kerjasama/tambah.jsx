@@ -47,9 +47,9 @@ const Tambah = () => {
   };
 
   const handleSubmit = async (e) => {
-    event.preventDefault();
+    e.preventDefault();
 
-    let statusPro = status ? "aktif" : "tidak aktif";
+    let statusPro = status ? 1 : 0;
 
     let formData = new FormData();
     formData.append("cooperation_categories", categoryCooporation);
@@ -63,7 +63,10 @@ const Tambah = () => {
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/create`,
         formData
       );
-      alert("data berhasil ditambah");
+      Swal.fire(
+  'Berhasil tambah data!',
+  'Sukses'
+)
     } catch (error) {
       console.log(error);
     }
@@ -110,6 +113,7 @@ const Tambah = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
+                  required
                     placeholder="Masukkan Kategori Lembaga"
                     type="text"
                     name="category_cooperation"
@@ -132,6 +136,7 @@ const Tambah = () => {
                     </label>
                     <div className="col-sm-10 position-relative">
                       <input
+                      required
                       placeholder={index===0?"Tujuan kerja sama" :"Opsional"}
                         name={`cooperation${index}`}
                         type="text"
@@ -192,6 +197,7 @@ const Tambah = () => {
                 /> */}
                   <label className="switches">
                     <input
+                    required
                       className="checkbox"
                       checked={status}
                       type="checkbox"

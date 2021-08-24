@@ -131,31 +131,37 @@ const Table = () => {
                                       {index + 1}
                                     </button>
                                   </td>
-                                  <td className="align-baseline">
+                                  <td className="align-middle">
                                     {
                                       cooperation_categorie.cooperation_categories
                                     }
                                   </td>
-                                  <td className="align-baseline">
+                                  <td className="align-middle position-relative">
                                     {allMKCooporation.mk_cooporation.length ===
                                     0 ? (
                                       ""
                                     ) : (
-                                      <select
-                                        onChange={(e) =>
-                                          dispatch(
-                                            changeStatusList(
-                                              e.target.value,
-                                              cooperation_categorie.id,
-                                              index
-                                            )
-                                          )
-                                        }
+                                      <div
+                                        // onChange={(e) =>
+                                        //   dispatch(
+                                        //     changeStatusList(
+                                        //       e.target.value,
+                                        //       cooperation_categorie.id,
+                                        //       index
+                                        //     )
+                                        //   )
+                                        // }
                                         name=""
                                         id=""
-                                        className="status-list cursor-pointer"
+                                        className="status-div cursor-pointer left-center-absolute"
+                                        // disabled
                                       >
-                                        <option
+                                        {
+                                          allMKCooporation.mk_cooporation.data
+                                            .list_cooperation_categories[index]
+                                            .status === 0 ?"Tidak aktif":"Aktif"
+                                        }
+                                        {/* <option
                                           value={
                                             allMKCooporation.mk_cooporation.data
                                               .list_cooperation_categories[
@@ -185,8 +191,8 @@ const Table = () => {
                                             .status === "aktif"
                                             ? "tidak aktif"
                                             : "aktif"}
-                                        </option>
-                                      </select>
+                                        </option> */}
+                                      </div>
                                     )}
                                   </td>
                                   <td className="text-center align-middle">
@@ -196,7 +202,7 @@ const Table = () => {
                                           `/partnership/master-kategori-kerjasama/${cooperation_categorie.id}`
                                         )
                                       }
-                                      className="btn mr-1 bg-light"
+                                      className="btn mr-1 bg-light position-relative btn-delete"
                                       style={{
                                         borderRadius: "6px",
                                       }}
@@ -207,6 +213,9 @@ const Table = () => {
                                         width={18}
                                         height={18}
                                       />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
                                     </button>
                                     <button
                                       onClick={() =>
@@ -216,7 +225,7 @@ const Table = () => {
                                           )
                                         )
                                       }
-                                      className="btn mr-1 bg-light"
+                                      className="btn mr-1 bg-light position-relative btn-edit"
                                       style={{
                                         borderRadius: "6px",
                                       }}
@@ -227,6 +236,9 @@ const Table = () => {
                                         width={18}
                                         height={18}
                                       />
+                                      <div className="text-hover-show-edit">
+                                        Hapus
+                                      </div>
                                     </button>
                                   </td>
                                 </tr>

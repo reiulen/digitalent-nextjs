@@ -23,9 +23,17 @@ const TambahTandaTangan = () => {
 
   const signCanvas = useRef({});
   const dispatch = useDispatch();
+  const router = useRouter();
+  const Swal = require("sweetalert2");
 
   const clear = () => {
     signCanvas.current.clear();
+    setTandaTangan("");
+    Swal.fire({
+      icon: "success",
+      title: "Tanda Tangan Berhasil di Reset",
+      // text: "Berhasil",
+    });
   };
 
   const { loading, error, success } = useSelector(
@@ -40,11 +48,22 @@ const TambahTandaTangan = () => {
 
   const dataTandaTangan = () => {
     const data = signCanvas.current.toDataURL();
-    setTandaTangan(data);
+    if (!tandaTangan) {
+      Swal.fire({
+        icon: "success",
+        title: "Tanda Tangan Berhasil di Buat",
+        // text: "Berhasil",
+      });
+      setTandaTangan(data);
+    }
+    if (tandaTangan) {
+      Swal.fire({
+        icon: "error",
+        title: "Tanda Tangan Sudah dibuat",
+        // text: "Berhasil",
+      });
+    }
   };
-
-  const router = useRouter();
-  const Swal = require("sweetalert2");
 
   useEffect(() => {
     if (success) {
@@ -71,12 +90,11 @@ const TambahTandaTangan = () => {
         name: nama,
         position: jabatan,
         signature_image: tandaTangan,
-        status: "aktif",
+        // status: "aktif",
       };
-
-      dispatch(newTandaTangan(data));
-
       console.log(data);
+      dispatch(newTandaTangan(data));
+      // dispatch(newTandaTangan(JSON.stringify(data)));
     } else {
       simpleValidator.current.showMessages();
       // forceUpdate(1);
@@ -87,6 +105,11 @@ const TambahTandaTangan = () => {
       });
     }
   };
+
+  const onNewReset = () => {
+    router.replace("/publikasi/artikel", undefined, { shallow: true });
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -104,6 +127,33 @@ const TambahTandaTangan = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">Berhasil Menambah Data</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>

@@ -155,7 +155,7 @@ const StepThree = () => {
           <div className="card-body">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-6 col-md-2">
                   <span>Pelaksanaan dari</span>
                   <DatePicker
                     className="form-control"
@@ -175,7 +175,7 @@ const StepThree = () => {
                   {simpleValidator.current.message('tanggal mulai', startDate, 'required', { className: 'text-danger' })}
                 </div>
 
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-6 col-md-2">
                   <span>Sampai</span>
                   <DatePicker
                     className="form-control"

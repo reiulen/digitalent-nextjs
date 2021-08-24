@@ -17,5 +17,5 @@ export default function FaqPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-    await store.dispatch(getAllFaq(query.page, query.keyword, query.limit, query.startdate, query.enddate))
+    await store.dispatch(getAllFaq(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
 })

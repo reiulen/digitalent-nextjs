@@ -34,7 +34,7 @@ const TambahSurveyStepOne = () => {
       if (typeSave === 'lanjut') {
         router.push({
           pathname: `/subvit/survey/tambah/step-2-${metode}`,
-          query: { id }
+          query: { id, metode }
         })
       } else if (typeSave === 'draft') {
         router.push({
@@ -49,7 +49,6 @@ const TambahSurveyStepOne = () => {
   const [academy_id, setAcademyId] = useState("");
   const [theme_id, setThemeId] = useState("");
   const [training_id, setTrainingId] = useState("");
-  const [category, setCategory] = useState("");
   const [metode, setMetode] = useState('entry')
 
   const saveDraft = () => {
@@ -68,7 +67,6 @@ const TambahSurveyStepOne = () => {
         academy_id,
         theme_id,
         training_id,
-        category,
       }
 
       dispatch(newSurveyQuestionBanks(data))
@@ -102,7 +100,6 @@ const TambahSurveyStepOne = () => {
         academy_id,
         theme_id,
         training_id,
-        category,
       }
 
       dispatch(newSurveyQuestionBanks(data))
@@ -230,30 +227,6 @@ const TambahSurveyStepOne = () => {
                     <option value="1"> Adobe UI/UX Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Pelatihan</span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
-                >
-                  Kategori
-                </label>
-                <div className="col-sm-10">
-                  <select
-                    name="category"
-                    id=""
-                    onChange={(e) => setCategory(e.target.value)}
-                    onBlur={e => { setCategory(e.target.value); simpleValidator.current.showMessageFor('category') }}
-                    className="form-control"
-                  >
-                    <option selected disabled> -Pilih Kategori-</option>
-                    <option value="test_subtansi"> Tes Substansi </option>
-                    <option value="mid_test"> Mid Tes </option>
-                  </select>
-                  <span className="text-muted">Silahkan Pilih Kategori</span>
-                  {simpleValidator.current.message('category', category, 'required', { className: 'text-danger' })}
                 </div>
               </div>
 

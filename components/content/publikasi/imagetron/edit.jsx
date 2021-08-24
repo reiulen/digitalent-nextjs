@@ -175,7 +175,7 @@ const EditImagetron = () => {
                         kategori.kategori.map((row) => {
                           return (
                             <option key={row.id} value={row.id}>
-                              {row.nama_kategori}
+                              {row.jenis_kategori}
                             </option>
                           );
                         })
@@ -212,7 +212,7 @@ const EditImagetron = () => {
                                 <div className="col-sm-9">
                                     <div className="input-group">
                                         <div className="custom-file">
-                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
+                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} accept="image/*"/>
                                             <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
                                         </div>
                                     </div>
@@ -232,7 +232,7 @@ const EditImagetron = () => {
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -253,7 +253,7 @@ const EditImagetron = () => {
                                     <Link href='/publikasi/imagetron'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>

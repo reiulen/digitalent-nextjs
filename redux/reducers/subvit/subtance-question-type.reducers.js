@@ -46,6 +46,7 @@ export const allSubtanceQuestionTypeReducer = (state = { subtance_question_type:
 
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null
             }
 
@@ -81,6 +82,7 @@ export const newSubtanceQuestionTypeReducer = (state = { subtance_question_type:
 
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null
             }
 
@@ -111,6 +113,7 @@ export const detailSubtanceQuestionTypeReducer = (state = { subtance_question_ty
 
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null
             }
 

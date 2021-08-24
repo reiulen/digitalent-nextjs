@@ -32,6 +32,7 @@ const TambahImagetron = () => {
         error: allError,
         kategori,
       } = useSelector((state) => state.allKategori);
+    const [, forceUpdate] = useState();
 
     useEffect(() => {
 
@@ -80,21 +81,32 @@ const TambahImagetron = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (error) {
-            dispatch(clearErrors())
+        if (simpleValidator.current.allValid()){
+            if (error) {
+                dispatch(clearErrors())
+            }
+    
+            const data = {
+                kategori_id,
+                judul,
+                url_link,
+                gambar,
+                publish,
+                users_id
+            }
+    
+            dispatch(newImagetron(data))
+            console.log(data)
+        } else {
+            simpleValidator.current.showMessages();
+            forceUpdate(1);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Isi data dengan benar !",
+            });
         }
-
-        const data = {
-            kategori_id,
-            judul,
-            url_link,
-            gambar,
-            publish,
-            users_id
-        }
-
-        dispatch(newImagetron(data))
-        console.log(data)
+        
     }
 
     const onNewReset = () => {
@@ -164,7 +176,7 @@ const TambahImagetron = () => {
                         kategori.kategori.map((row) => {
                           return (
                             <option key={row.id} value={row.id}>
-                              {row.nama_kategori}
+                              {row.jenis_kategori}
                             </option>
                           );
                         })
@@ -182,7 +194,20 @@ const TambahImagetron = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul} onChange={(e) => setJudulImagetron(e.target.value)} />
+                                    <input 
+                                        type="text" 
+                                        className="form-control" 
+                                        placeholder="Isi Judul disini" 
+                                        value={judul} 
+                                        onChange={(e) => setJudulImagetron(e.target.value)} 
+                                        onBlur={() => simpleValidator.current.showMessageFor("judul")
+                                    }/>
+                                    {simpleValidator.current.message(
+                                        "judul",
+                                        judul,
+                                        "required",
+                                        { className: "text-danger" }
+                                    )}
                                 </div>
                             </div>
 
@@ -201,7 +226,13 @@ const TambahImagetron = () => {
                                 <div className="col-sm-9">
                                     <div className="input-group">
                                         <div className="custom-file">
-                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
+                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} onBlur={() => simpleValidator.current.showMessageFor("gambar")} accept="image/*"/>
+                                            {simpleValidator.current.message(
+                                                "gambar",
+                                                gambar,
+                                                "required",
+                                                { className: "text-danger" }
+                                            )}
                                             <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
                                         </div>
                                     </div>
@@ -215,13 +246,19 @@ const TambahImagetron = () => {
                                         <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
                                         </div>
-                                        <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="Isi Link Disini" />
+                                        <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="Isi Link Disini" onBlur={() => simpleValidator.current.showMessageFor("url_link")}/>
+                                        {simpleValidator.current.message(
+                                            "url_link",
+                                            url_link,
+                                            "required",
+                                            { className: "text-danger" }
+                                        )}
                                     </div>
                                 </div>
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -242,7 +279,7 @@ const TambahImagetron = () => {
                                     <Link href='/publikasi/imagetron'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>

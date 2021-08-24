@@ -45,6 +45,7 @@ const Artikel = () => {
   const [limit, setLimit] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [publishValue, setPublishValue] = useState(null);
 
   let loading = false;
   let { page = 1, keyword, success } = router.query;
@@ -59,6 +60,7 @@ const Artikel = () => {
     if (limit) {
       router.push(`${router.pathname}?page=1&limit=${limit}`);
     }
+
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
@@ -71,7 +73,13 @@ const Artikel = () => {
         type: DELETE_ARTIKEL_RESET,
       });
     }
-  }, [limit, isDeleted]);
+
+    if (publishValue) {
+      router.push(`${router.pathname}?publish=${publishValue}`);
+      // console.log("check")
+      // console.log (publishValue)
+    }
+  }, [limit, isDeleted, publishValue]);
 
   const onNewReset = () => {
     router.replace("/publikasi/artikel", undefined, { shallow: true });
@@ -95,27 +103,67 @@ const Artikel = () => {
   };
 
   const handlePagination = (pageNumber) => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
+    if (limit !== null  && search === "" && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    
+    } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+
+    } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+
+    } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+    } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+    } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
     } else {
-      router.push(`${router.pathname}?page=${pageNumber}`);
+        router.push(`${router.pathname}?page=${pageNumber}`)
     }
-  };
+}
 
   const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
+    if (limit != null && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+
+    } else if (limit !== null && startDate !== null && endDate !== null ) {
+        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
     } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`);
+        router.push(`${router.pathname}?page=1&keyword=${search}`)
     }
-  };
+
+};
 
   const handleSearchDate = () => {
-    router.push(
-      `${router.pathname}?page=1&startdate=${moment(startDate).format(
-        "YYYY-MM-DD"
-      )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-    );
+    if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+        Swal.fire(
+            'Oops !',
+            'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+            'error'
+        )
+        setStartDate (null)
+        setEndDate (null)
+
+    } else {
+        if (limit !== null && search === null) {
+            router.push(
+                `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+            );
+
+        } else if (limit !== null && search !== null) {
+          `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+
+        } else {
+            router.push(
+                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+            ); 
+        }
+    }
   };
 
   const handleLimit = (val) => {
@@ -124,6 +172,7 @@ const Artikel = () => {
 
   return (
     <PageWrapper>
+      {console.log(artikel)}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -185,7 +234,10 @@ const Artikel = () => {
             value={artikel && artikel.publish != "" ? artikel.publish : 0}
             titleValue="Artikel"
             title="Total Publish"
+            publishedVal="1"
+            routePublish={() => setPublishValue("1")}
           />
+
           <CardPage
             background="bg-light-warning"
             icon="garis-yellow.svg"
@@ -193,6 +245,8 @@ const Artikel = () => {
             value="64"
             titleValue="Artikel"
             title="Total Author"
+            publishedVal=""
+            routePublish={() => setPublishValue("")}
           />
           <CardPage
             background="bg-light-success"
@@ -201,6 +255,8 @@ const Artikel = () => {
             value="64"
             titleValue="K"
             title="Total Yang Baca"
+            publishedVal=""
+            routePublish={() => setPublishValue("")}
           />
           <CardPage
             background="bg-light-danger"
@@ -209,6 +265,8 @@ const Artikel = () => {
             value={artikel && artikel.unpublish != "" ? artikel.unpublish : 0}
             titleValue="Artikel"
             title="Total Belum Publish"
+            publishedVal="0"
+            routePublish={() => setPublishValue("0")}
           />
         </div>
       </div>
@@ -217,7 +275,7 @@ const Artikel = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Managemen Artikel
+              Manajemen Artikel
             </h3>
             <div className="card-toolbar">
               <Link href="/publikasi/artikel/tambah">
@@ -311,7 +369,7 @@ const Artikel = () => {
                         <th>Dibuat</th>
                         <th>Status</th>
                         <th>Role</th>
-                        <th>Action</th>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -325,17 +383,28 @@ const Artikel = () => {
                         artikel.artikel.map((artikel, i) => {
                           return (
                             <tr key={artikel.id}>
-                              <td className="align-middle text-center">
+                              {/* <td className="align-middle text-center">
                                 <span className="badge badge-secondary text-muted">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
+                              </td> */}
+                              <td className='align-middle text-center'>
+                                  <span className="badge badge-secondary text-muted">
+                                      {i + 1 * (page * limit) - (limit - 1)}
+                                  </span>
                               </td>
+
                               <td>
                                 <Image
                                   alt={artikel.judul_artikel}
                                   unoptimized={
                                     process.env.ENVIRONMENT !== "PRODUCTION"
                                   }
+                                  // loader={() => process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                  //   "publikasi/images/" +
+                                  //   artikel.gambar + `?w=80&q=75`
+                                  // }
+                                  // src={artikel.gambar}
                                   src={
                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                     "publikasi/images/" +
@@ -384,6 +453,7 @@ const Artikel = () => {
                                 <ButtonNewTab
                                   icon="setting.svg"
                                   link={`/publikasi/artikel/preview/${artikel.id}`}
+                                  title="Preview Artikel"
                                 />
                                 <ButtonAction
                                   icon="write.svg"
@@ -476,5 +546,6 @@ const Artikel = () => {
     </PageWrapper>
   );
 };
+
 
 export default Artikel;

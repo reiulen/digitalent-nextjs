@@ -198,7 +198,7 @@ const StepTwo = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteSubtanceQuestionDetail(id));
+                dispatch(deleteTriviaQuestionDetail(id));
             }
         });
     };

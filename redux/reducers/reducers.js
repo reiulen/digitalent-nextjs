@@ -34,7 +34,7 @@ import {
   newGaleriReducer,
   detailGaleriReducer,
   deleteGaleriReducer,
-  updateGaleriReducer
+  updateGaleriReducer,
 } from "./publikasi/galeri.reducers";
 import {
   allFaqReducer,
@@ -75,6 +75,8 @@ import {
   allSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetailReducer,
+  detailSubtanceQuestionDetailReducer,
+  updateSubtanceQuestionDetailReducer,
   importFileSubtanceQuestionDetailReducer,
   importImagesSubtanceQuestionDetailReducer,
 } from "./subvit/subtance-question-detail.reducers";
@@ -121,8 +123,26 @@ import {
 // ============== trivia ===============
 
 // Partnership
-import { allMitraReducer, newMitraReducer } from "./partnership/mitra.reducers";
+import {
+  allMitraReducer,
+  newMitraReducer,
+  detailMitraReducer,
+  updateMitraReducer,
+  deleteMitraReducer,
+
+  // card
+  totalMitraCardReducer,
+  activeMitraCardReducer,
+  nonActiveMitraCardReducer,
+} from "./partnership/mitra.reducers";
+
+//
+// import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
+// } from "./partnership/mitra.reducers";
+
+//
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
+import { allMCooporationReducer } from "./partnership/managementCooporation.reducer";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
@@ -131,6 +151,9 @@ import {
   updateTandaTanganReducer,
   // updateStatusTandaTanganReducer,
 } from "./partnership/tandaTangan.reducers";
+
+// utils
+import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -196,6 +219,7 @@ const reducer = combineReducers({
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
+  updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
   importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,
   importImagesSubtanceQuestionDetail: importImagesSubtanceQuestionDetailReducer,
@@ -213,6 +237,7 @@ const reducer = combineReducers({
   allSurveyQuestionDetail: allSurveyQuestionDetailReducer,
   newSurveyQuestionDetail: newSurveyQuestionDetailReducer,
   deleteSurveyQuestionDetail: deleteSurveyQuestionDetailReducer,
+  detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   importFileSurveyQuestionDetail: importFileSurveyQuestionDetailReducer,
   importImagesSurveyQuestionDetail: importImagesSurveyQuestionDetailReducer,
   // =============== end substansi ==================
@@ -236,16 +261,32 @@ const reducer = combineReducers({
   // =============== end trivia ==================
 
   // PARTNERSHIP
+
+  // kerjasama mitra
   allMitra: allMitraReducer,
   newMitra: newMitraReducer,
-  allMKCooporation: allMKCooporationReducer,
+  detailMitra: detailMitraReducer,
+  deleteMitra: deleteMitraReducer,
+  updateMitra: updateMitraReducer,
+  totalMitraCardGlobal: totalMitraCardReducer,
+  activeMitraCardGlobal: activeMitraCardReducer,
+  nonActiveMitraCardGlobal: nonActiveMitraCardReducer,
 
+  // allMKCooporation: allMKCooporationReducer,
+
+  allMKCooporation: allMKCooporationReducer,
+  allMK: allMCooporationReducer,
+
+  // tanda tangan
   allTandaTangan: allTandaTanganReducer,
   newTandaTangan: newTandaTanganReducer,
   deleteTandaTangan: deleteTandaTanganReducer,
   updateTandaTangan: updateTandaTanganReducer,
   detailTandaTangan: detailTandaTanganReducer,
   // updateStatusTandaTangan: updateStatusTandaTanganReducer,
+
+  allProvinsi: allProvinsiReducer,
+  allKota: allKotaReducer,
 });
 
 export default reducer;

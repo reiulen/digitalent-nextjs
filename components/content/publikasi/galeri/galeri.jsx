@@ -9,12 +9,14 @@ import { css } from '@emotion/react'
 import BeatLoader from 'react-spinners/BeatLoader'
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
+import Swal from "sweetalert2";
+import moment from "moment";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 import LoadingTable from "../../../LoadingTable";
-import ButtonNewTab from "../../../ButtonNewTab";
+// import ButtonNewTab from "../../../ButtonNewTab";
 
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
@@ -36,6 +38,7 @@ const Galeri = () => {
     const [limit, setLimit] = useState(null)
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [publishValue, setPublishValue] = useState(null)
 
     let loading = false
 
@@ -51,6 +54,7 @@ const Galeri = () => {
         if (limit) {
           router.push(`${router.pathname}?page=1&limit=${limit}`)
         }
+
         if (isDeleted) {
           Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
             if (result.isConfirmed) {
@@ -61,7 +65,13 @@ const Galeri = () => {
             type: DELETE_GALERI_RESET
           })
         }
-      }, [limit, isDeleted]);
+
+        if (publishValue){
+            router.push(`${router.pathname}?publish=${publishValue}`);
+            console.log("check")
+            console.log (publishValue)
+          }
+      }, [limit, isDeleted, publishValue]);
 
     // const override = css`
     //     margin: 0 auto;
@@ -114,6 +124,9 @@ const Galeri = () => {
 
     return (
         <PageWrapper>
+            {
+                console.log (galeri)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -142,10 +155,46 @@ const Galeri = () => {
 
             <div className="col-lg-12 col-md-12">
                 <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Galeri' title='Total Publish' />
-                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Galeri' title='Total Author' />
-                    <CardPage background='bg-light-success' icon='orang-tambah-green.svg' color='#74BBB7' value='64' titleValue='K' title='Total Yang Baca' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Galeri' title='Total Unpublish' />
+                    <CardPage 
+                        background='bg-light-info' 
+                        icon='mail-purple.svg' 
+                        color='#8A50FC' 
+                        value={galeri && galeri.publish != "" ? galeri.publish : 0} 
+                        titleValue='Galeri' 
+                        title='Total Publish'
+                        publishedVal = "1"
+                        routePublish = { () => setPublishValue("1")} 
+                    />
+                    <CardPage 
+                        background='bg-light-warning' 
+                        icon='garis-yellow.svg' 
+                        color='#634100' 
+                        value='64' 
+                        titleValue='Galeri' 
+                        title='Total Author' 
+                        publishedVal = ""
+                        routePublish = { () => setPublishValue("")}
+                    />
+                    <CardPage 
+                        background='bg-light-success' 
+                        icon='orang-tambah-green.svg' 
+                        color='#74BBB7' 
+                        value='64' 
+                        titleValue='K' 
+                        title='Total Yang Baca' 
+                        publishedVal = ""
+                        routePublish = { () => setPublishValue("")}
+                    />
+                    <CardPage 
+                        background='bg-light-danger' 
+                        icon='kotak-kotak-red.svg' 
+                        color='#F65464' 
+                        value={galeri && galeri.unpublish != "" ? galeri.unpublish : 0} 
+                        titleValue='Galeri' 
+                        title='Total Unpublish' 
+                        publishedVal = "0"
+                        routePublish = { () => setPublishValue("0")}
+                    />
                 </div>
             </div>
 
@@ -153,7 +202,7 @@ const Galeri = () => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen Galeri</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Manajemen Galeri</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/galeri/tambah'>
                                 <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
@@ -239,10 +288,11 @@ const Galeri = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
+                                                <th className="text-center">No</th>
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
-                                                <th>Tanggal Membuat</th>
+                                                <th>Tanggal Publish</th>
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
@@ -256,8 +306,13 @@ const Galeri = () => {
                                             {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    galeri && galeri.gallery.map((row) => {
+                                                    galeri && galeri.gallery.map((row, i) => {
                                                         return <tr key={row.id}>
+                                                            <td className="align-middle text-center">
+                                                                <span className="badge badge-secondary text-muted">
+                                                                {i + 1 * (page * 5 || limit) - 4}
+                                                                </span>
+                                                            </td>
                                                             <td className='text-center'>
                                                                 <Image alt='name_image' 
                                                                 unoptimized={
@@ -272,7 +327,15 @@ const Galeri = () => {
                                                             </td>
                                                             <td className='align-middle'>{row.kategori_id}</td>
                                                             <td className='align-middle'>{row.judul}</td>
-                                                            <td className='align-middle'>{new Date (row.created_at).toLocaleDateString("fr-CA")}</td>
+                                                            <td className='align-middle'>{
+                                                                row.status === 1 ? (
+                                                                    row.tanggal_publish
+                                                                  ) : (
+                                                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                                                      Belum dipublish
+                                                                    </span>
+                                                                  )
+                                                            }</td>
                                                             <td className='align-middle'>{row.role_name}</td>
                                                             <td className='align-middle'>
                                                                 { row.status  === 1 ? (
@@ -355,8 +418,9 @@ const Galeri = () => {
                     </div>
                 </div>
             </div>
-
-            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            
+            {/* Modal */}
+            {/* <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -370,7 +434,7 @@ const Galeri = () => {
                                 src={
                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                     "publikasi/images/" +
-                                    row.gambar
+                                    galeri.gambar
                                 } 
                                 alt='image'
                                 layout='fill'
@@ -382,7 +446,7 @@ const Galeri = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </PageWrapper>
     )
 }
