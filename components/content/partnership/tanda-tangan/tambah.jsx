@@ -14,7 +14,6 @@ import LoadingPage from "../../../LoadingPage";
 import {
   newTandaTangan,
   clearErrors,
-  getAllTandaTangan,
 } from "../../../../redux/actions/partnership/tandaTangan.actions";
 import { NEW_TANDA_TANGAN_RESET } from "../../../../redux/types/partnership/tandaTangan.type";
 
@@ -107,7 +106,7 @@ const TambahTandaTangan = () => {
   };
 
   const onNewReset = () => {
-    router.replace("/publikasi/artikel", undefined, { shallow: true });
+    router.replace("/partnership/tanda-tangan", undefined, { shallow: true });
   };
 
   return (
