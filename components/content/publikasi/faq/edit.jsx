@@ -162,7 +162,7 @@ const EditFaq = () => {
                                             kategori.kategori.map((row) => {
                                                 return (
                                                     <option key={row.id} value={row.id}>
-                                                        {row.jenis_kategori}
+                                                        {row.nama_kategori}
                                                     </option>
                                                 );
                                             })
