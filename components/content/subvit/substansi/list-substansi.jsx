@@ -52,15 +52,10 @@ const ListSubstansi = () => {
   }, [dispatch, limit, isDeleted]);
 
   const handlePagination = (pageNumber) => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-    } else if (search != '' && limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${search}`)
-    } else if (search != '') {
-      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
-    } else {
-      router.push(`${router.pathname}?page=${pageNumber}`)
-    }
+    let link = `${router.pathname}?page=${pageNumber}`
+    if (limit) link = link.concat(`&limit=${limit}`)
+    if (search) link = link.concat(`&keyword=${search}`)
+    router.push(link)
   }
 
   const handleSearch = () => {
@@ -146,7 +141,7 @@ const ListSubstansi = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              List Test Substansi
+              List Tes Substansi
             </h3>
             <div className="card-toolbar">{/* for add */}</div>
           </div>
@@ -231,7 +226,7 @@ const ListSubstansi = () => {
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
                                 <span className="badge badge-secondary text-muted">
-                                  {i + 1 * (page * 5 || limit) - 4}
+                                  {i + 1 * (page * limit || page * 5) - 4}
                                 </span>
                               </td>
                               <td className="align-middle">
