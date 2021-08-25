@@ -15,6 +15,7 @@ import PageWrapper from '../../../../wrapper/page.wrapper'
 import LoadingPage from '../../../../LoadingPage'
 import PollingComponent from './edit-soal/polling-component';
 import CheckboxComponent from './edit-soal/checkbox-component';
+import BlankComponent from './edit-soal/blank-component';
 
 const EditSoalTrivia = () => {
 
@@ -36,7 +37,8 @@ const EditSoalTrivia = () => {
 
     const [answer, setAnswer] = useState(JSON.parse(trivia_question_detail.answer))
 
-    const [answer_key, setAnswerKey] = useState(trivia_question_detail.answer_key)
+    const [duration, setDuration] = useState(trivia_question_detail.duration)
+    const [answerKey, setAnswerKey] = useState(trivia_question_detail.answer_key)
     const [status, setStatus] = useState(trivia_question_detail.status)
 
     useEffect(() => {
@@ -99,21 +101,12 @@ const EditSoalTrivia = () => {
             }
         })
 
-        if (answer_key === '') {
-            valid = false
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi kunci jawaban dengan benar !'
-            })
-        }
-
         switch (methodAdd) {
             case "polling":
                 console.log(answer)
                 break
             case "checkbox":
-
+                console.log(answer)
                 break
             case "fill_in_the_blank":
 
@@ -141,18 +134,26 @@ const EditSoalTrivia = () => {
                     <CheckboxComponent
                         propsAnswer={answer}
                         propsStatus={status}
+                        propsDuration={duration}
+                        propsAnswerKey={answerKey}
                         sendPropsAnswer={answers => setAnswer(answers)}
                         sendPropsStatus={status => setStatus(status)}
+                        sendPropsDuration={duration => setDuration(duration)}
+                        sendPropsAnswerKey={answerKey => setAnswerKey(answerKey)}
                     />
                 )
                 break
             case "fill_in_the_blank":
-                // return (
-                //     <BlankComponent
-                //         props_answer={answer => setBlanklList(answer)}
-                //         props_duration={duration => setDurationBlank(duration)}
-                //     />
-                // )
+                return (
+                    <BlankComponent
+                        propsAnswer={answer}
+                        propsStatus={status}
+                        propsDuration={duration}
+                        sendPropsAnswer={answers => setAnswer(answers)}
+                        sendPropsStatus={status => setStatus(status)}
+                        sendPropsDuration={duration => setDuration(duration)}
+                    />
+                )
                 break
             default:
                 return (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import dynamic from "next/dynamic";
 import Image from 'next/image'
 
-const CheckboxComponent = ({ propsAnswer, propsStatus, sendPropsAnswer, sendPropsStatus }) => {
+const CheckboxComponent = ({ propsAnswer, propsStatus, propsDuration, propsAnswerKey, sendPropsAnswer, sendPropsStatus, sendPropsDuration, setPropsAnswerKey }) => {
 
     const importSwitch = () => import("bootstrap-switch-button-react");
     const SwitchButton = dynamic(importSwitch, {
@@ -10,7 +10,9 @@ const CheckboxComponent = ({ propsAnswer, propsStatus, sendPropsAnswer, sendProp
     });
 
     const [answer, setAnswer] = useState(propsAnswer)
+    const [answerKey, setAnswerKey] = useState(propsAnswerKey)
     const [status, setStatus] = useState(propsStatus)
+    const [duration, setDuration] = useState(propsDuration)
 
     const handleRemoveClick = (index) => {
         const list = [...answer]
@@ -45,14 +47,7 @@ const CheckboxComponent = ({ propsAnswer, propsStatus, sendPropsAnswer, sendProp
     }
 
     const handleAnswer = (value, i) => {
-        setAnswerKey(answer[i].key)
-        if (value === false) {
-            setAnswerKey('')
-        }
         const list = [...answer]
-        list.forEach((row, j) => {
-            list[j]['is_right'] = false
-        })
         list[i]['is_right'] = value
     }
 
@@ -93,8 +88,12 @@ const CheckboxComponent = ({ propsAnswer, propsStatus, sendPropsAnswer, sendProp
                                             </label>
                                         </div>
                                     </div>
-                                    <div className="col-md-2 d-flex justify-content-start my-auto">
-                                        <button className="btn pt-0 mr-3" type='button' onClick={() => handleRemoveClick(i)}>
+                                    <div className="col-md-3 d-flex justify-content-start my-auto">
+                                        <div className='col-md-4 mb-5 pr-0'>
+                                            <span className="text-muted">Nilai</span>
+                                            <input type="number" min={0} className="form-control" name='value' value={row.value} onChange={e => handleInputChange(e, i)} autoComplete='off' />
+                                        </div>
+                                        <button className="btn pt-5" type='button' onClick={() => handleRemoveClick(i)}>
                                             <Image
                                                 alt="button-action"
                                                 src="/assets/icon/trash-red.svg"
@@ -102,17 +101,19 @@ const CheckboxComponent = ({ propsAnswer, propsStatus, sendPropsAnswer, sendProp
                                                 height={30}
                                             />
                                         </button>
-                                        <SwitchButton
-                                            checked={row.is_right}
-                                            onlabel=" "
-                                            onstyle="primary"
-                                            offlabel=" "
-                                            offstyle="danger"
-                                            size="sm"
-                                            width={20}
-                                            height={10}
-                                            onChange={(checked) => handleAnswer(checked, i)}
-                                        />
+                                        <div className="" style={{ marginTop: '23px' }}>
+                                            <SwitchButton
+                                                checked={row.is_right}
+                                                onlabel=" "
+                                                onstyle="primary"
+                                                offlabel=" "
+                                                offstyle="danger"
+                                                size="sm"
+                                                width={10}
+                                                height={10}
+                                                onChange={(checked) => handleAnswer(checked, i)}
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </>
@@ -133,7 +134,18 @@ const CheckboxComponent = ({ propsAnswer, propsStatus, sendPropsAnswer, sendProp
             }
 
             <div className="form-group row">
-                <div className="col-sm-12 col-md-5">
+                <div className="col-sm-12 col-md-4">
+                    <span>Durasi (Detik)</span>
+                    <input
+                        type="number"
+                        min={0}
+                        value={duration}
+                        onChange={(e) => { setDuration(e.target.value); sendPropsDuration(e.target.value) }}
+                        className='form-control'
+                    />
+                    <span className="text-muted">Silahkan Isi Durasi</span>
+                </div>
+                <div className="col-sm-12 col-md-4">
                     <span>Status</span>
                     <select
                         name="training_id"
