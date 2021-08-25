@@ -42,7 +42,7 @@ const Tambah = () => {
   const [date, setDate] = useState("")
   const [title, setTitle] = useState("")
   const [period, setPeriod] = useState("")
-  const [periodUnit, setPeriodUnit] = useState("")
+  const [periodUnit, setPeriodUnit] = useState("tahun")
   const [cooperationC_id, setCooperationC_id] = useState("")
   console.log("cooperationC_id",cooperationC_id)
   const changeSetCooperationC_id = (value) =>{
@@ -283,12 +283,16 @@ const Tambah = () => {
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       /> */}
-                      <select onFocus={()=>setError({...error,periodUnit:""})}  className="form-control" onChange={(e)=>setPeriodUnit(e.target.value)}>
+
+                      {/* <select onFocus={()=>setError({...error,periodUnit:""})}  className="form-control" onChange={(e)=>setPeriodUnit(e.target.value)}>
                         <option value="">Pilih periode bulan/tahun</option>
                         <option value="bulan">Bulan</option>
                         <option value="tahun">Tahun</option>
-                      </select>
-                      {error.periodUnit ? <p className="error-text">{error.periodUnit}</p>:"" }
+                      </select> */}
+                      <div className="form-control">
+                          Tahun
+                      </div>
+                      {/* {error.periodUnit ? <p className="error-text">{error.periodUnit}</p>:"" } */}
                     </div>
                   </div>
                 </div>
