@@ -115,6 +115,8 @@ import {
   allTriviaQuestionDetailReducer,
   newTriviaQuestionDetailReducer,
   deleteTriviaQuestionDetailReducer,
+  detailTriviaQuestionDetailReducer,
+  updateTriviaQuestionDetailReducer,
   importFileTriviaQuestionDetailReducer,
   importImagesTriviaQuestionDetailReducer,
 } from "./subvit/trivia-question-detail.reducers";
@@ -252,6 +254,8 @@ const reducer = combineReducers({
   allTriviaQuestionDetail: allTriviaQuestionDetailReducer,
   newTriviaQuestionDetail: newTriviaQuestionDetailReducer,
   deleteTriviaQuestionDetail: deleteTriviaQuestionDetailReducer,
+  detailTriviaQuestionDetail: detailTriviaQuestionDetailReducer,
+  updateTriviaQuestionDetail: updateTriviaQuestionDetailReducer,
   importFileTriviaQuestionDetail: importFileTriviaQuestionDetailReducer,
   importImagesTriviaQuestionDetail: importImagesTriviaQuestionDetailReducer,
   // =============== end trivia ==================

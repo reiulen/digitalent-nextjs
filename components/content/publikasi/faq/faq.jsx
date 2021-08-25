@@ -242,7 +242,9 @@ const Faq = () => {
                 </div>
             </div>
 
-
+            {
+                console.log (faq)
+            }
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">

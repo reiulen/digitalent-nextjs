@@ -33,7 +33,7 @@ const ListSubstansi = () => {
   page = Number(page);
 
   const [search, setSearch] = useState('')
-  const [limit, setLimit] = useState(null)
+  const [limit, setLimit] = useState(5)
 
   useEffect(() => {
     if (limit) {
@@ -226,7 +226,7 @@ const ListSubstansi = () => {
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
                                 <span className="badge badge-secondary text-muted">
-                                  {i + 1 * (page * limit || page * 5) - 4}
+                                  {i + 1 * (page * limit) - (limit - 1)}
                                 </span>
                               </td>
                               <td className="align-middle">

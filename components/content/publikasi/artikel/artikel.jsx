@@ -415,7 +415,8 @@ const Artikel = () => {
                                 />
                               </td>
                               <td className="align-middle">
-                                {artikel.jenis_kategori}
+                                {/* {artikel.jenis_kategori} */}
+                                {artikel.nama}
                               </td>
                               <td className="align-middle">
                                 {artikel.judul_artikel}
@@ -441,7 +442,7 @@ const Artikel = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">Admin Publikasi</td>
+                              <td className="align-middle">Super Admin</td>
                               <td className="align-middle">
                                 {/* conflict nih cuy */}
                                 {/* <ButtonAction icon="setting.svg" />
@@ -453,7 +454,7 @@ const Artikel = () => {
                                 <ButtonNewTab
                                   icon="setting.svg"
                                   link={`/publikasi/artikel/preview/${artikel.id}`}
-                                  title="Preview Artikel"
+                                  // title="Preview Artikel"
                                 />
                                 <ButtonAction
                                   icon="write.svg"

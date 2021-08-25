@@ -64,6 +64,7 @@ const TambahArtikel = () => {
   const [gambarPreview, setGambarPreview] = useState(
     "/assets/media/default.jpg"
   );
+  const [gambarName, setGambarName] = useState (null)
   const [kategori_id, setKategoriId] = useState("");
   const [users_id, setUserId] = useState(3);
   const [tag, setTag] = useState([]);
@@ -78,7 +79,8 @@ const TambahArtikel = () => {
           setGambarPreview(reader.result);
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(e.target.files[0])
+      setGambarName(e.target.files[0].name)
     }
   };
 
@@ -106,6 +108,7 @@ const TambahArtikel = () => {
   // };
 
   const onSubmit = (e) => {
+
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       if (error) {
@@ -128,9 +131,30 @@ const TambahArtikel = () => {
         publish,
       };
 
-      dispatch(newArtikel(data));
+      Swal.fire({
+        title: "Apakah anda yakin ?",
+        text: "Data ini akan ditambahkan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya !",
+        cancelButtonText: "Batal",
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            // if (success) {
+            //   dispatch({
+            //     type: NEW_ARTIKEL_RESET,
+            //   });
+            // }
 
-      console.log(data);
+            dispatch(newArtikel(data));
+
+            console.log(data);
+          }
+      });
+
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -298,12 +322,15 @@ const TambahArtikel = () => {
                       "required",
                       { className: "text-danger" }
                     )}
-                    {/* <small className="text-info">Format gambar .png</small> */}
+                    {
+                      gambarName !== null ?
+                        <small>{gambarName}</small>
+                      :
+                        null
+                    }
                   </div>
                   
                 </div>
-                
-
                 <div className="form-group row">
                   <label
                     htmlFor="staticEmail"
@@ -333,9 +360,12 @@ const TambahArtikel = () => {
                         kategori.kategori &&
                         kategori.kategori.map((row) => {
                           return (
-                            <option key={row.id} value={row.id}>
-                              {row.jenis_kategori}
-                            </option>
+                            row.jenis_kategori == "Artikel" ?
+                              <option key={row.id} value={row.id}>
+                                {row.nama_kategori}
+                              </option>
+                            :
+                              null
                           );
                         })
                       )}
@@ -456,5 +486,6 @@ const TambahArtikel = () => {
     </>
   );
 };
+
 
 export default TambahArtikel;

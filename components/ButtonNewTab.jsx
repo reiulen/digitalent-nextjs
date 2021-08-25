@@ -4,12 +4,12 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 
-const ButtonNewTab = ({ icon, link = '/', title }) => {
+const ButtonNewTab = ({ icon, link = '/' }) => {
     return (
         <>
-            <Head>
+            {/* <Head>
                 <title>{title}</title>
-            </Head>
+            </Head> */}
 
             <Link href={link}>
                 <a target="_blank">
