@@ -18,6 +18,7 @@ import Image from "next/image";
 const Table = () => {
   let dispatch = useDispatch();
   const router = useRouter();
+  let { success } = router.query;
   const [valueSearch, setValueSearch] = useState("");
   const allMKCooporation = useSelector((state) => state.allMKCooporation);
   const handleChangeValueSearch = (value) => {
@@ -28,7 +29,9 @@ const Table = () => {
     dispatch(searchCooporation(valueSearch));
   };
 
-  const cooperationDelete = (id) =>{
+  const [successDelete, setSuccessDelete] = useState(false);
+
+  const cooperationDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
       icon: "warning",
@@ -40,10 +43,11 @@ const Table = () => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteCooporation(id))
+        dispatch(deleteCooporation(id));
+        setSuccessDelete(true);
       }
-    })
-  }
+    });
+  };
   useEffect(() => {
     dispatch(fetchAllMKCooporation());
   }, [
@@ -55,7 +59,11 @@ const Table = () => {
     allMKCooporation.status_list,
   ]);
 
-  
+  const onNewReset = () => {
+    setSuccessDelete(false);
+    router.replace(`/partnership/master-kategori-kerjasama`);
+  };
+
   useEffect(() => {
     let searchValue = document.getElementById(
       "kt_datatable_search_query"
@@ -67,6 +75,38 @@ const Table = () => {
 
   return (
     <PageWrapper>
+      {console.log("successDelete", successDelete)}
+      {success || successDelete ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: success ? "#C9F7F5" : "#f7c9c9" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{color:success?"#1BC5BD":"#c51b1b"}}></i>
+          </div>
+          <div className="alert-text" style={{color:success?"#1BC5BD":"#c51b1b"}}>
+            {successDelete
+              ? "Berhasil menghapus data Data"
+              : "Berhasil menyimpan Data"}
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -147,8 +187,11 @@ const Table = () => {
                                         borderRadius: "6px",
                                       }}
                                     >
-
-                                      {allMKCooporation.page ===  1 ? index+1 : ((allMKCooporation.page - 1) * allMKCooporation.limit) +  (index + 1)}
+                                      {allMKCooporation.page === 1
+                                        ? index + 1
+                                        : (allMKCooporation.page - 1) *
+                                            allMKCooporation.limit +
+                                          (index + 1)}
                                       {/* {index + 1} */}
                                     </button>
                                   </td>
@@ -177,11 +220,11 @@ const Table = () => {
                                         className="status-div cursor-pointer left-center-absolute"
                                         // disabled
                                       >
-                                        {
-                                          allMKCooporation.mk_cooporation.data
-                                            .list_cooperation_categories[index]
-                                            .status === 0 ?"Tidak aktif":"Aktif"
-                                        }
+                                        {allMKCooporation.mk_cooporation.data
+                                          .list_cooperation_categories[index]
+                                          .status === 0
+                                          ? "Tidak aktif"
+                                          : "Aktif"}
                                         {/* <option
                                           value={
                                             allMKCooporation.mk_cooporation.data
@@ -239,11 +282,11 @@ const Table = () => {
                                       </div>
                                     </button>
                                     <button
-                                     
                                       onClick={() =>
-                                          cooperationDelete(cooperation_categorie.id)
-                                          
-                                        }
+                                        cooperationDelete(
+                                          cooperation_categorie.id
+                                        )
+                                      }
                                       className="btn mr-1 bg-light position-relative btn-edit"
                                       style={{
                                         borderRadius: "6px",
