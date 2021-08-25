@@ -51,7 +51,7 @@ const EditSoalTrivia = () => {
                 query: { success: true },
             });
         }
-    }, [dispatch, success])
+    }, [dispatch, success, router])
 
     const handleSoalImage = (e) => {
         if (e.target.name === 'question_image') {
@@ -211,15 +211,15 @@ const EditSoalTrivia = () => {
                                         onChange={e => setQuestion(e.target.value)}
                                         placeholder="Contoh Soal"
                                     />
-                                    <div class="custom-file mt-2">
+                                    <div className="custom-file mt-2">
                                         <span>Gambar Pertanyaan (Opsional)</span>
                                         <input
                                             type="file"
-                                            class="custom-file-input"
+                                            className="custom-file-input"
                                             name='question_image'
                                             onChange={e => handleSoalImage(e)}
                                         />
-                                        <label class="custom-file-label" for="customFile">
+                                        <label className="custom-file-label" htmlFor="customFile">
                                             Choose file
                                         </label>
                                     </div>
@@ -239,9 +239,9 @@ const EditSoalTrivia = () => {
                             <div>Jenis Pertanyaan</div>
                             <div className="form-group row mt-4 ml-1 mb-3">
                                 <div className="col-sm-12 col-md-8">
-                                    <div class="form-check form-check-inline">
+                                    <div className="form-check form-check-inline">
                                         <input
-                                            class="form-check-input"
+                                            className="form-check-input"
                                             type="radio"
                                             name="inlineRadioOptions"
                                             id="inlineRadio1"
@@ -249,13 +249,13 @@ const EditSoalTrivia = () => {
                                             checked={methodAdd === "polling"}
                                             onChange={() => setMethodAdd("polling")}
                                         />
-                                        <label class="form-check-label" for="inlineRadio1">
+                                        <label className="form-check-label" htmlFor="inlineRadio1">
                                             Polling
                                         </label>
                                     </div>
-                                    <div class="form-check form-check-inline">
+                                    <div className="form-check form-check-inline">
                                         <input
-                                            class="form-check-input"
+                                            className="form-check-input"
                                             type="radio"
                                             name="inlineRadioOptions"
                                             id="inlineRadio2"
@@ -263,13 +263,13 @@ const EditSoalTrivia = () => {
                                             checked={methodAdd === "checkbox"}
                                             onChange={() => setMethodAdd("checkbox")}
                                         />
-                                        <label class="form-check-label" for="inlineRadio2">
+                                        <label className="form-check-label" htmlFor="inlineRadio2">
                                             Checkbox
                                         </label>
                                     </div>
-                                    <div class="form-check form-check-inline">
+                                    <div className="form-check form-check-inline">
                                         <input
-                                            class="form-check-input"
+                                            className="form-check-input"
                                             type="radio"
                                             name="inlineRadioOptions"
                                             id="inlineRadio3"
@@ -277,7 +277,7 @@ const EditSoalTrivia = () => {
                                             checked={methodAdd === "fill_in_the_blank"}
                                             onChange={() => setMethodAdd("fill_in_the_blank")}
                                         />
-                                        <label class="form-check-label" for="inlineRadio3">
+                                        <label className="form-check-label" htmlFor="inlineRadio3">
                                             Fill in the blank
                                         </label>
                                     </div>

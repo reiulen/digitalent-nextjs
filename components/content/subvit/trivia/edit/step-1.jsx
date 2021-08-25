@@ -47,7 +47,7 @@ const StepOne = () => {
         });
       }
     }
-  }, [dispatch, error, isUpdated]);
+  }, [dispatch, error, isUpdated, id, router, typeSave]);
 
   // const saveAndContinue = () => {
   //   router.push("/subvit/substansi/edit/step-2");

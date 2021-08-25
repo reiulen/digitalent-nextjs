@@ -31,7 +31,7 @@ const DashbardSubvit = () => {
                                                         position: 'absolute', right: '10px',
                                                         top: '-50px'
                                                     }}>
-                                                    <Image src='/assets/media/ilustrator-1.svg' width={300} height={200} />
+                                                    <Image src='/assets/media/ilustrator-1.svg' width={300} height={200} alt='ilustrator-1' />
                                                 </div>
                                             </div>
                                         </div>

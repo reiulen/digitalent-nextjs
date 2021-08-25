@@ -35,7 +35,7 @@ const TambahTipeSoal = () => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, success, router]);
 
   const [name, setName] = useState('')
   const [value, setValue] = useState(null)

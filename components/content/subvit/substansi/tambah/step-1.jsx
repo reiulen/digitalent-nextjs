@@ -44,7 +44,7 @@ const StepOne = () => {
       }
     }
 
-  }, [dispatch, error, success, typeSave]);
+  }, [dispatch, error, success, typeSave, metode, subtance.id, router]);
 
   const [academy_id, setAcademyId] = useState("");
   const [theme_id, setThemeId] = useState("");

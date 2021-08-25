@@ -64,9 +64,9 @@ const PollingComponent = ({ props_answer }) => {
                                 <span className="text-muted">Silahkan Pilihan {x.key}</span>
                             </div>
                             <div className="col-sm-12 col-md-4">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name='image' onChange={e => handleInputChange(e, i)} />
-                                    <label class="custom-file-label" for="customFile">
+                                <div className="custom-file">
+                                    <input type="file" className="custom-file-input" name='image' onChange={e => handleInputChange(e, i)} />
+                                    <label className="custom-file-label" htmlFor="customFile">
                                         Choose file
                                     </label>
                                 </div>

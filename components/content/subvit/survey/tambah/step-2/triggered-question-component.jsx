@@ -197,7 +197,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
 
                 {answer.map((x, i) => {
                     return (
-                        <div className='col-12'>
+                        <div className='col-12' key={i}>
                             <div className="row">
                                 {x.type === 'choose' ? (
                                     <>
@@ -206,9 +206,9 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                             <span className="text-muted">Silahkan Pilihan {x.key}</span>
                                         </div>
                                         <div className="col-sm-12 col-md-3">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" name='image' onChange={e => handleInputChange(e, null, null, i)} />
-                                                <label class="custom-file-label" for="customFile">
+                                            <div className="custom-file">
+                                                <input type="file" className="custom-file-input" name='image' onChange={e => handleInputChange(e, null, null, i)} />
+                                                <label className="custom-file-label" htmlFor="customFile">
                                                     Choose file
                                                 </label>
                                             </div>
@@ -263,9 +263,9 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                                     <span className="text-muted">Silahkan Isi Pertanyaan</span>
                                                 </div>
                                                 <div className="col-sm-12 col-md-3">
-                                                    <div class="custom-file">
-                                                        <input type="file" class="custom-file-input" name='image' onChange={e => handleInputChange(e, null, i, j)} />
-                                                        <label class="custom-file-label" for="customFile">
+                                                    <div className="custom-file">
+                                                        <input type="file" className="custom-file-input" name='image' onChange={e => handleInputChange(e, null, i, j)} />
+                                                        <label className="custom-file-label" htmlFor="customFile">
                                                             Choose file
                                                         </label>
                                                     </div>
@@ -313,9 +313,9 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                                                                     <span className="text-muted">Silahkan Pilihan {sub_answer.key}</span>
                                                                                 </div>
                                                                                 <div className="col-sm-12 col-md-3">
-                                                                                    <div class="custom-file">
-                                                                                        <input type="file" class="custom-file-input" name='image' onChange={e => handleInputChange(e, i, j, k)} />
-                                                                                        <label class="custom-file-label" for="customFile">
+                                                                                    <div className="custom-file">
+                                                                                        <input type="file" className="custom-file-input" name='image' onChange={e => handleInputChange(e, i, j, k)} />
+                                                                                        <label className="custom-file-label" htmlFor="customFile">
                                                                                             Choose file
                                                                                         </label>
                                                                                     </div>

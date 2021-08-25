@@ -64,29 +64,29 @@ const EditSoalSurvey = () => {
                         </div>
 
                         <div className="answer mt-5">
-                            <div class="input-group mb-2 mr-sm-2">
-                                <div class="input-group-prepend p-0">
-                                    <div class="input-group-text p-0">
+                            <div className="input-group mb-2 mr-sm-2">
+                                <div className="input-group-prepend p-0">
+                                    <div className="input-group-text p-0">
                                         <Image src='/assets/logo/logo-2.svg' alt='logo-2' width={100} height={45} />
                                     </div>
                                 </div>
-                                <input style={{ height: '50px' }} type="text" class="form-control" value='VGA' />
+                                <input style={{ height: '50px' }} type="text" className="form-control" value='VGA' />
                             </div>
-                            <div class="input-group mb-2 mr-sm-2">
-                                <div class="input-group-prepend p-0">
-                                    <div class="input-group-text p-0">
+                            <div className="input-group mb-2 mr-sm-2">
+                                <div className="input-group-prepend p-0">
+                                    <div className="input-group-text p-0">
                                         <Image src='/assets/logo/logo-2.svg' alt='logo-2' width={100} height={45} />
                                     </div>
                                 </div>
-                                <input style={{ height: '50px' }} type="text" class="form-control" value='Digital Marketing' />
+                                <input style={{ height: '50px' }} type="text" className="form-control" value='Digital Marketing' />
                             </div>
-                            <div class="input-group mb-2 mr-sm-2">
-                                <div class="input-group-prepend p-0">
-                                    <div class="input-group-text p-0">
+                            <div className="input-group mb-2 mr-sm-2">
+                                <div className="input-group-prepend p-0">
+                                    <div className="input-group-text p-0">
                                         <Image src='/assets/logo/logo-2.svg' alt='logo-2' width={100} height={45} />
                                     </div>
                                 </div>
-                                <input style={{ height: '50px' }} type="text" class="form-control" value='UI / UX' />
+                                <input style={{ height: '50px' }} type="text" className="form-control" value='UI / UX' />
                             </div>
                         </div>
                     </div>

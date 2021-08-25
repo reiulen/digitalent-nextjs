@@ -38,7 +38,7 @@ const EditTipeSoal = () => {
       });
     }
 
-  }, [dispatch, isUpdated]);
+  }, [dispatch, isUpdated, router]);
 
   const [name, setName] = useState(subtance_question_type.name)
   const [value, setValue] = useState(subtance_question_type.value)
