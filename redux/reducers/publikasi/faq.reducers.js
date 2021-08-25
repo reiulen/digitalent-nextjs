@@ -3,6 +3,10 @@ import {
     FAQ_SUCCESS,
     FAQ_FAIL,
 
+    PAGINATION_FAQ_REQUEST,
+    PAGINATION_FAQ_SUCCESS,
+    PAGINATION_FAQ_FAIL,
+
     NEW_FAQ_REQUEST,
     NEW_FAQ_SUCCESS,
     NEW_FAQ_RESET,
@@ -44,6 +48,35 @@ export const allFaqReducer = (state = { faq: [] }, action) => {
             }
 
         case FAQ_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const paginationFaqReducer = (state = { paginateFaq: [] }, action) => {
+    switch (action.type) {
+        case PAGINATION_FAQ_REQUEST:
+            return {
+                loading: true
+            }
+
+        case PAGINATION_FAQ_SUCCESS:
+            return {
+                loading: false,
+                faq: action.payload.data
+            }
+
+        case PAGINATION_FAQ_FAIL:
             return {
                 loading: false,
                 error: action.payload

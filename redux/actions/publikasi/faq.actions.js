@@ -3,6 +3,10 @@ import {
     FAQ_SUCCESS,
     FAQ_FAIL,
 
+    PAGINATION_FAQ_REQUEST,
+    PAGINATION_FAQ_SUCCESS,
+    PAGINATION_FAQ_FAIL,
+
     NEW_FAQ_REQUEST,
     NEW_FAQ_SUCCESS,
     NEW_FAQ_RESET,
@@ -32,17 +36,17 @@ import {
 import axios from 'axios'
 
 // get all data
-export const getAllFaq = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null) => async (dispatch) => {
+export const getAllFaq = () => async (dispatch) => {
     try {
 
         dispatch({ type: FAQ_REQUEST })
 
-        let link = process.env.END_POINT_API_PUBLIKASI + `api/faq?page=${page}`;
-        if (keyword) link = link.concat(`&keyword=${keyword}`);
-        if (limit) link = link.concat(`&limit=${limit}`);
-        if (publish) link = link.concat(`&publish=${publish}`);
-        if (startdate) link = link.concat(`&startdate=${startdate}`)
-        if (enddate) link = link.concat(`&enddate=${enddate}`)
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/faq`;
+        // if (keyword) link = link.concat(`&keyword=${keyword}`);
+        // if (limit) link = link.concat(`&limit=${limit}`);
+        // if (publish) link = link.concat(`&publish=${publish}`);
+        // if (startdate) link = link.concat(`&startdate=${startdate}`)
+        // if (enddate) link = link.concat(`&enddate=${enddate}`)
 
         // const config = {
         //     headers: {
@@ -62,6 +66,41 @@ export const getAllFaq = (page = 1, keyword = "", limit = 5, publish = null, sta
     } catch (error) {
         dispatch({
             type: FAQ_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null) => async (dispatch) => {
+    try {
+
+        dispatch({ type: PAGINATION_FAQ_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/faq?page=${page}`;
+        if (keyword) link = link.concat(`&keyword=${keyword}`);
+        if (limit) link = link.concat(`&limit=${limit}`);
+        if (publish) link = link.concat(`&publish=${publish}`);
+        if (startdate) link = link.concat(`&startdate=${startdate}`)
+        if (enddate) link = link.concat(`&enddate=${enddate}`)
+
+        // const config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+        //         'Access-Control-Allow-Origin': '*',
+        //         'apikey': process.env.END_POINT_KEY_AUTH
+        //     }
+        // }
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: PAGINATION_FAQ_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PAGINATION_FAQ_FAIL,
             payload: error.message
         })
     }

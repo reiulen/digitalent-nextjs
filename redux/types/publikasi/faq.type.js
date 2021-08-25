@@ -2,6 +2,10 @@ export const FAQ_REQUEST = 'FAQ_REQUEST'
 export const FAQ_SUCCESS = 'FAQ_SUCCESS'
 export const FAQ_FAIL = 'FAQ_FAIL'
 
+export const PAGINATION_FAQ_REQUEST = 'FAQ_REQUEST'
+export const PAGINATION_FAQ_SUCCESS = 'FAQ_SUCCESS'
+export const PAGINATION_FAQ_FAIL = 'FAQ_FAIL'
+
 export const NEW_FAQ_REQUEST = 'NEW_FAQ_REQUEST'
 export const NEW_FAQ_SUCCESS = 'NEW_FAQ_SUCCESS'
 export const NEW_FAQ_RESET = 'NEW_FAQ_RESET'

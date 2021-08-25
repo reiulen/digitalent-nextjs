@@ -416,7 +416,7 @@ const Artikel = () => {
                               </td>
                               <td className="align-middle">
                                 {/* {artikel.jenis_kategori} */}
-                                {artikel.nama}
+                                {artikel.nama_kategori}
                               </td>
                               <td className="align-middle">
                                 {artikel.judul_artikel}
