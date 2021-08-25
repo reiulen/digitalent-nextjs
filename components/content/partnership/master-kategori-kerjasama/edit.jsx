@@ -123,9 +123,14 @@ const Edit = () => {
   //   }
 
   // }, [router.query.id])
+const [status, setStatus] = useState("");
+  const handleChangeStatus = (e) => {
+    console.log("e.target.checked",e.target.checked)
+    setStatus(e.target.checked);
+  };
 
   const handleSubmit = async (e) => {
-    event.preventDefault();
+    e.preventDefault();
     console.log("object")
     
     let formData = new FormData();
@@ -139,28 +144,34 @@ const Edit = () => {
     for (let i = 0; i < stateDataSingle.length; i++) {
       // console.log(stateDataSingle[i].isTipe)
       // console.log(stateDataSingleOld[i].isTipe)
+      let statusPro = status ? 1 : 0;
+      let method = 'PUT';
       if(stateDataSingle[i].isTipe === stateDataSingleOld[i].isTipe){
         
     
         // console.log(cooperation_form)
         // arr_old.push(cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingleOld[i].cooperation_form)
         // arr_new.push(cooperation_form['cooperation_form' +[i]  ] = stateDataSingle[i].name)
-
+        formData.append('_method',method);
         formData.append(`cooperation_form_old[${i}]`, stateDataSingleOld[i].cooperation_form);
         formData.append(`cooperation_form[${i}]`, stateDataSingle[i].name);
-
+        formData.append('status',statusPro);
+        
+        
         // console.log("cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingleOld[i].cooperation_form >>")
         // console.log(cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingleOld[i].cooperation_form)
       }else{
+        formData.append('_method',method);
         
         // let cooperation_form = {} 
         // arr_old.push(cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingle[i].name)
         // arr_new.push(cooperation_form['cooperation_form' + [i]  ] = stateDataSingle[i].name)
         formData.append(`cooperation_form_old[${i}]`, stateDataSingle[i].name);
         formData.append(`cooperation_form[${i}]`, stateDataSingle[i].name);
-
+        formData.append('status',statusPro);
+        
       }
-
+      
    }
 
     // valueCreateCooporations.forEach((item, i) => {
@@ -207,6 +218,7 @@ const Edit = () => {
       setStateDataSingle(arr_new);
       setStateDataSingleOld(arr);
       setCategoryCooporation(data.data.cooperation_categories);
+      setStatus(data.data.status);
     } catch (error) {
       console.log(error);
     }
@@ -226,7 +238,7 @@ const Edit = () => {
           </div>
           <div className="card-body">
             {/* {allMKCooporation.mk_single_cooporation && allMKCooporation.mk_single_cooporation.data.cooperation_categories } */}
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -348,6 +360,40 @@ const Edit = () => {
                 </p>
               </div>
 
+              <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Status
+                </label>
+                <div className="col-sm-1">
+                  {/* <input
+                    required
+                      className="checkbox"
+                      checked={status}
+                      type="checkbox"
+                      onChange={(e) => handleChangeStatus(e)}
+                    /> */}
+                  <label className="switches">
+                    <input
+                    required
+                      className="checkbox"
+                      checked={status}
+                      type="checkbox"
+                      onChange={(e) => handleChangeStatus(e)}
+                    />
+                    <span
+                      className={`sliders round ${
+                        status  ? "text-white" : "pl-2"
+                      }`}
+                    >
+                      {status ? "Aktif" : "Tidak aktif"}
+                    </span>
+                  </label>
+                </div>
+              </div>
+
               {/* <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -382,7 +428,7 @@ const Edit = () => {
                     >
                       Simpan
                     </button> */}
-                    <button type="submit" className="btn btn-primary btn-sm">
+                    <button type="button" className="btn btn-primary btn-sm" onClick={(e)=>handleSubmit(e)}>
                       Simpan
                     </button>
                     {/* </Link> */}
