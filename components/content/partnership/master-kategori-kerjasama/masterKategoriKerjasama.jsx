@@ -27,6 +27,23 @@ const Table = () => {
     event.preventDefault();
     dispatch(searchCooporation(valueSearch));
   };
+
+  const cooperationDelete = (id) =>{
+    Swal.fire({
+      title: "Apakah anda yakin ingin menghapus data ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        dispatch(deleteCooporation(id))
+      }
+    })
+  }
   useEffect(() => {
     dispatch(fetchAllMKCooporation());
   }, [
@@ -37,6 +54,8 @@ const Table = () => {
     allMKCooporation.status_delete,
     allMKCooporation.status_list,
   ]);
+
+  
   useEffect(() => {
     let searchValue = document.getElementById(
       "kt_datatable_search_query"
@@ -128,7 +147,9 @@ const Table = () => {
                                         borderRadius: "6px",
                                       }}
                                     >
-                                      {index + 1}
+
+                                      {allMKCooporation.page ===  1 ? index+1 : ((allMKCooporation.page - 1) * allMKCooporation.limit) +  (index + 1)}
+                                      {/* {index + 1} */}
                                     </button>
                                   </td>
                                   <td className="align-middle">
@@ -218,13 +239,11 @@ const Table = () => {
                                       </div>
                                     </button>
                                     <button
+                                     
                                       onClick={() =>
-                                        dispatch(
-                                          deleteCooporation(
-                                            cooperation_categorie.id
-                                          )
-                                        )
-                                      }
+                                          cooperationDelete(cooperation_categorie.id)
+                                          
+                                        }
                                       className="btn mr-1 bg-light position-relative btn-edit"
                                       style={{
                                         borderRadius: "6px",

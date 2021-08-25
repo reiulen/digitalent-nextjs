@@ -28,7 +28,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllKategori = (page = 1, keyword = "", limit = 5, startdate = '', enddate = '') => async (dispatch) => {
+export const getAllKategori = (page = 1, keyword = "", limit = null, startdate = '', enddate = '') => async (dispatch) => {
     try {
 
         dispatch({ type: KATEGORI_REQUEST })

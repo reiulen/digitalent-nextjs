@@ -137,12 +137,11 @@ import {
 } from "./partnership/mitra.reducers";
 
 //
-// import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
-// } from "./partnership/mitra.reducers";
 
-//
+// category management kerjasama
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
-import { allMCooporationReducer } from "./partnership/managementCooporation.reducer";
+// management kerjasama
+import { allMCooporationReducerMK } from "./partnership/managementCooporation.reducer";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
@@ -272,10 +271,10 @@ const reducer = combineReducers({
   activeMitraCardGlobal: activeMitraCardReducer,
   nonActiveMitraCardGlobal: nonActiveMitraCardReducer,
 
-  // allMKCooporation: allMKCooporationReducer,
-
+  // category management kerjasama
   allMKCooporation: allMKCooporationReducer,
-  allMK: allMCooporationReducer,
+  // management kerjasama
+  allMK: allMCooporationReducerMK,
 
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,

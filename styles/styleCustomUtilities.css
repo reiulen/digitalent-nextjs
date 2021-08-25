@@ -257,6 +257,10 @@ font-weight: 600;
 margin-bottom: 0;
 margin-top: 1rem;
 }
+/*  */
+.react-datepicker-popper{
+  z-index: 2 !important;
+}
 
 
 

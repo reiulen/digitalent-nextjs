@@ -18,13 +18,14 @@ import {
   setNameLembaga,
   fetchDataEmail,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
-import { Children } from "react";
+
 
 import Swal from "sweetalert2";
 
 const EditDokumentKerjasama = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  
   const allMK = useSelector((state) => state.allMK);
   console.log("allMK", allMK);
   //
@@ -40,7 +41,7 @@ const EditDokumentKerjasama = () => {
   const [cooperationID, setCooperationID] = useState("");
   const [cooperationC_id, setCooperationC_id] = useState("");
   const [period, setPeriod] = useState("");
-  const [periodUnit, setPeriodUnit] = useState("");
+  const [periodUnit, setPeriodUnit] = useState("tahun");
   console.log("periodUnit", periodUnit);
   const [periodDateStart, setPeriodDateStart] = useState("");
   const [periodDateEnd, setPeriodDateEnd] = useState("");
@@ -108,8 +109,11 @@ const EditDokumentKerjasama = () => {
   };
   // console.log("viewPDF",viewPDF)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  
+
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    console.log("edit")
     Swal.fire({
       title: "Apakah anda yakin ?",
       icon: "warning",
@@ -141,16 +145,12 @@ const EditDokumentKerjasama = () => {
         formData.append("agreement_number_kemkominfo", aggrementNumberInfo);
         formData.append("signing_date", signinDate);
 
-        // console.log(
-        //   "documentLocal",
-        //   `http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${document}`
-        // );
-
+      
         if (AllCooperation === "") {
           // start data default
           formData.append("cooperation_category_id", cooperationID.id);
           let dataee = cooperationID.data_content.map((items, i) => {
-            return items.cooperation_form;
+            return items.form_content;
           });
           dataee.forEach((item, i) => {
             formData.append(`cooperation_form_content[${i}]`, item);
@@ -160,7 +160,7 @@ const EditDokumentKerjasama = () => {
           // start jika tidak default
           formData.append("cooperation_category_id", cooperationC_id);
           let ez = AllCooperation.map((items, i) => {
-            return items.cooperation_form;
+            return items.cooperation;
           });
           ez.forEach((item, i) => {
             formData.append(`cooperation_form_content[${i}]`, item);
@@ -168,17 +168,12 @@ const EditDokumentKerjasama = () => {
           // end jika tidak default
         }
 
-        // clg
 
         try {
           let { data } = await axios.post(
             `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${router.query.id}`,
             formData
           );
-          // router.push(
-          //       "/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
-          //     );
-          // router.push("/partnership/manajemen-kerjasama");
           Swal.fire(
   'Berhasil update data!',
   'success'
@@ -190,7 +185,6 @@ const EditDokumentKerjasama = () => {
     });
   };
 
-  // state onchange form data
 
   const changeSetCooperationC_id = (value) => {
     setCooperationC_id(value);
@@ -202,6 +196,7 @@ const EditDokumentKerjasama = () => {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
       );
+      console.log("data",data)
       setIsntitusiName(data.data.institution_name);
       setTitle(data.data.title);
       setDate(data.data.submission_date);
@@ -215,39 +210,40 @@ const EditDokumentKerjasama = () => {
       setSigninDate(data.data.signing_date);
       setDocument(data.data.document_file);
       setEmail(data.data.email);
+      
 
-      downloadFilePdf(data.data.document_file);
-      // getEmail()
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
   };
 
-  // const getEmail = () =>{
-
-  // }
 
   const [AllCooperation, setAllCooperation] = useState("");
   console.log(AllCooperation, "AllCooperation");
   const changeFormCooporation = (index, e) => {
     let dataaa = [...allMK.singleCooporationSelect.data.option];
     dataaa[index].cooperation = e.target.value;
+    console.log("dataaa",dataaa)
     setAllCooperation(dataaa);
   };
 
   // onchange textarea default cooperationID
   const changeDataContentDefault = (event, i) => {
+    // console.log("object")
     let dataCoopertaion = { ...cooperationID };
     dataCoopertaion.data_content[i].form_content = event.target.value;
+    console.log("dataCoopertaion",dataCoopertaion)
     setCooperationID(dataCoopertaion);
   };
+  console.log("cooperationID",cooperationID)
 
   const changeInstitusi = (value) => {
     setIsntitusiName(value);
     dispatch(setNameLembaga(value));
   };
 
-  const downloadFilePdf = () => {};
+  // const downloadFilePdf = () => {};
+  
   useEffect(() => {
     setDataSingle(router.query.id);
     dispatch(cancelChangeCategory());
@@ -270,7 +266,7 @@ const EditDokumentKerjasama = () => {
           </div>
 
           <div className="card-body">
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -280,6 +276,7 @@ const EditDokumentKerjasama = () => {
                 </label>
                 <div className="col-sm-3">
                   <input
+                  readOnly
                     type="date"
                     required
                     value={date}
@@ -393,7 +390,7 @@ const EditDokumentKerjasama = () => {
                       />
                     </div>
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      {periodUnit === "bulan" ? (
+                      {/* {periodUnit === "bulan" ? (
                         <select
                           className="form-control"
                           onChange={(e) => setPeriodUnit(e.target.value)}
@@ -409,7 +406,10 @@ const EditDokumentKerjasama = () => {
                           <option value="tahun">Tahun</option>
                           <option value="bulan">Bulan</option>
                         </select>
-                      )}
+                      )} */}
+                      <div className="form-control">
+                          Tahun
+                      </div>
                       {/* <input
                       required
                         type="text"
@@ -465,8 +465,21 @@ const EditDokumentKerjasama = () => {
                   </div>
                 </div>
               </div>
+               <div className="form-group row">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Nama Lembaga
+                  </label>
+                  <div className="col-sm-10">
+                    <div aria-readonly disabled className="form-control">
+                      {isntitusiName}
+                    </div>
+                  </div>
+                </div>
 
-              {allMK.stateListMitra.length === 0 ? (
+              {/* {allMK.stateListMitra.length === 0 ? (
                 <div className="form-group row">
                   <label
                     htmlFor="staticEmail"
@@ -475,12 +488,6 @@ const EditDokumentKerjasama = () => {
                     Nama Lembaga
                   </label>
                   <div className="col-sm-7">
-                    {/* <input
-                  required
-                    type="text"
-                    value={isntitusiName}
-                    className="form-control"
-                  /> */}
                     <select aria-readonly disabled className="form-control">
                       <option value={isntitusiName}>{isntitusiName}</option>
                     </select>
@@ -502,12 +509,6 @@ const EditDokumentKerjasama = () => {
                     Nama Lembaga
                   </label>
                   <div className="col-sm-7">
-                    {/* <input
-                  required
-                    type="text"
-                    value={isntitusiName}
-                    className="form-control"
-                  /> */}
                     <select
                       required
                       className="form-control"
@@ -531,9 +532,21 @@ const EditDokumentKerjasama = () => {
                     Batal Ubah
                   </button>
                 </div>
-              )}
+              )} */}
 
-              {allMK.email === "-" ? (
+              <div className="form-group row">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Email
+                  </label>
+                  <div className="col-sm-10">
+                    <p className="form-control">{email}</p>
+                  </div>
+                </div>
+
+              {/* {allMK.email === "-" ? (
                 <div className="form-group row">
                   <label
                     htmlFor="staticEmail"
@@ -557,7 +570,7 @@ const EditDokumentKerjasama = () => {
                     <p className="form-control">{allMK.email}</p>
                   </div>
                 </div>
-              )}
+              )} */}
 
               <div className="form-group row">
                 <label
@@ -739,7 +752,7 @@ const EditDokumentKerjasama = () => {
                             onChange={(e) => changeDataContentDefault(e, i)}
                             value={items.form_content}
                             name=""
-                            id=""
+                            id={i}
                             cols="30"
                             rows="5"
                             className="form-control"
@@ -775,7 +788,7 @@ const EditDokumentKerjasama = () => {
                               required
                               onChange={(e) => changeFormCooporation(index, e)}
                               name="cooperation"
-                              id=""
+                              id={index+1}
                               cols="30"
                               rows="5"
                               className="form-control"
@@ -799,9 +812,9 @@ const EditDokumentKerjasama = () => {
                     </a>
                   </Link>
                   <button
-                    type="submit"
+                    type="button"
                     className="btn btn-primary btn-sm"
-                    // onClick={(e) => submit(e)}
+                    onClick={() => handleSubmit()}
                   >
                     Ubah
                   </button>

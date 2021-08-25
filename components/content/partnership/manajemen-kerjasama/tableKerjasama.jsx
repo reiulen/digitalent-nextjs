@@ -54,7 +54,6 @@ const Table = () => {
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK", allMK);
   const exportCSV = {
     width: "77%",
     marginLeft: "2rem",
@@ -80,7 +79,7 @@ const Table = () => {
 
   const changeListStatus = (value,id) =>{
     Swal.fire({
-      title: "Apakah anda yakin ?",
+      title: "Apakah anda yakin ingin merubah status ?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -91,6 +90,25 @@ const Table = () => {
     }).then(async (result) => {
       if (result.value) {
         dispatch(changeStatusList(value,id))
+      }else{
+        dispatch(reloadTable())
+      }
+    })
+  }
+
+  const cooperationDelete = (id) =>{
+    Swal.fire({
+      title: "Apakah anda yakin ingin menghapus data ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        dispatch(deleteCooperation(id))
       }else{
         dispatch(reloadTable())
       }
@@ -114,11 +132,11 @@ const Table = () => {
     allMK.status_list,
   ]);
 
-
   useEffect(() => {
     dispatch(fetchListSelectMitra());
     dispatch(fetchListSelectCooperation());
     dispatch(fetchListSelectStatus());
+ 
   }, []);
   return (
     <PageWrapper>
@@ -142,22 +160,24 @@ const Table = () => {
           <div className={`col bg-light-warning cursor-pointer px-6 py-8 rounded-xl mr-7 mb-7`} onClick={() => dispatch(changeValueStatusCard("submission"))} >
             <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
                 <div className="row ml-4">
-                    <Image alt='card-page-icon' src={`/assets/icon/user-orange.svg`} width={30} height={30} />
+                    <Image alt='card-page-icon position-relative' src={`/assets/icon/user-orange.svg`} width={30} height={30} />
                     <p className={`font-weight-bold font-size-h2 ml-2 my-auto`} style={{ color: "#634100", opacity: '0.5' }}>{allMK.totalDataAnother} Pengajuan Kerjasama</p>
                 </div>
             </span>
-            <p className='ml-3 mt-2' style={{ color: "#74BBB7", fontSize: '15px', fontWeight: '500', opacity: '0.50' }}>Kerjasama Aktif</p>
+            <p className='ml-3 mt-2' style={{ color: "#C8A561", fontSize: '15px', fontWeight: '500', opacity: '0.50' }}>Pengajuan Kerjasama</p>
         </div >
         {/* card 3 */}
 
           <div className={`col bg-light-danger cursor-pointer px-6 py-8 rounded-xl mr-7 mb-7`} onClick={() => dispatch(changeValueStatusCard("will_expire"))} >
             <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
                 <div className="row ml-4">
-                    <Image alt='card-page-icon' src={`/assets/icon/info-danger.svg`} width={30} height={30} />
+                  <div className="position-relative" style={{top:"8px"}}>
+                    <Image alt='card-page-icon' src={`/assets/icon/info-danger.svg`} width={35} height={35} />
+                    </div>
                     <p className={`font-weight-bold font-size-h2 ml-2 my-auto`} style={{ color: "#F65464", opacity: '0.5' }}>{allMK.totalDataNonActive} Kerjasama akan Habis</p>
                 </div>
             </span>
-            <p className='ml-3 mt-2' style={{ color: "#F65464", fontSize: '15px', fontWeight: '500', opacity: '0.50' }}>Kerjasama akan Habis</p>
+            <p className='ml-3 mt-2 position-relative' style={{ color: "#F65464",bottom:"8px", fontSize: '15px', fontWeight: '500', opacity: '0.50' }}>Kerjasama akan Habis</p>
         </div >
 
 
@@ -238,7 +258,7 @@ const Table = () => {
                     <IconCalender className="right-center-absolute" style={{right:"10px"}}/>
                     </div>
                   </div>
-                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                  <div className="col-lg-2 col-xl-3 mt-5 mt-lg-5">
                     <div className="position-relative d-flex align-items-center cursor-pointer">
                     <select
                       onChange={(e) => setValueKerjaSama(e.target.value)}
@@ -289,11 +309,11 @@ const Table = () => {
                       Cari
                     </button>
                   </div>
-                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
+                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto position-relative">
                     <button
                     type="button"
                     onClick={()=>dispatch(exportFileCSV())}
-                      className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
+                      className="btn btn-sm btn-primary px-6 font-weight-bold btn-block center-absolute"
                       style={exportCSV}
                     >
                       Export .csv
@@ -351,7 +371,10 @@ const Table = () => {
                                       borderRadius: "6px",
                                     }}
                                   >
-                                    {index + 1}
+                                    {allMK.page ===  1 ? index+1 : ((allMK.page - 1) * allMK.limit) +  (index + 1)}
+                                    
+                                    {/* {index+1} */}
+
                                   </button>
                                 </td>
                                 <td className="align-middle text-center">
@@ -369,9 +392,8 @@ const Table = () => {
                                     <p className="p-part-d">
                                       (
                                       {
-                                        items.cooperation_category
-                                           === null ? "tidak adak kategory" : items.cooperation_category
-                                          .cooperation_categories
+                                        items.cooperation_category ===null ? "tidak ada kategori kerjasama":
+                                          items.cooperation_category.cooperation_categories
                                       }
                                       )
                                     </p>
@@ -537,7 +559,8 @@ const Table = () => {
                                         }}
                                         className="ml-3 btn position-relative btn-delete"
                                         onClick={() =>
-                                          dispatch(deleteCooperation(items.id))
+                                          cooperationDelete(items.id)
+                                          
                                         }
                                       >
                                         <Image
