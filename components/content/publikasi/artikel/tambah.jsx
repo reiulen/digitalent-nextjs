@@ -64,6 +64,7 @@ const TambahArtikel = () => {
   const [gambarPreview, setGambarPreview] = useState(
     "/assets/media/default.jpg"
   );
+  const [gambarName, setGambarName] = useState (null)
   const [kategori_id, setKategoriId] = useState("");
   const [users_id, setUserId] = useState(3);
   const [tag, setTag] = useState([]);
@@ -78,7 +79,8 @@ const TambahArtikel = () => {
           setGambarPreview(reader.result);
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(e.target.files[0])
+      setGambarName(e.target.files[0].name)
     }
   };
 
@@ -320,14 +322,15 @@ const TambahArtikel = () => {
                       "required",
                       { className: "text-danger" }
                     )}
-                    {/* <small className="text-info">Format gambar .png</small> */}
+                    {
+                      gambarName !== null ?
+                        <small>{gambarName}</small>
+                      :
+                        null
+                    }
                   </div>
                   
                 </div>
-                {
-                  console.log (kategori)
-                }
-
                 <div className="form-group row">
                   <label
                     htmlFor="staticEmail"

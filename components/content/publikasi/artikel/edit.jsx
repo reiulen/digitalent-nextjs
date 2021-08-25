@@ -77,6 +77,7 @@ const EditArtikel = () => {
   //   "/assets/media/default.jpg"
   // ); //belum
   const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel.gambar);
+  const [gambarName, setGambarName] = useState (artikel.gambar)
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
@@ -95,6 +96,7 @@ const EditArtikel = () => {
         }
       };
       reader.readAsDataURL(e.target.files[0]);
+      setGambarName(e.target.files[0].name)
     }
   };
 
@@ -123,6 +125,8 @@ const EditArtikel = () => {
         id,
         _method,
       };
+
+      // dispatch(updateArtikel(data));
       
       Swal.fire({
         title: "Apakah anda yakin ?",
@@ -347,6 +351,7 @@ const EditArtikel = () => {
                         </label>
                       </div>
                     </div>
+                    <small>{gambarName}</small>
                   </div>
                 </div>
 
