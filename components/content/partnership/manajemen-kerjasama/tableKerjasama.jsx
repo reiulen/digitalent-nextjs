@@ -370,6 +370,7 @@ const Table = () => {
                                       (
                                       {
                                         items.cooperation_category
+                                           === null ? "tidak adak kategory" : items.cooperation_category
                                           .cooperation_categories
                                       }
                                       )

@@ -123,9 +123,13 @@ const Edit = () => {
   //   }
 
   // }, [router.query.id])
+const [status, setStatus] = useState("");
+  const handleChangeStatus = (e) => {
+    setStatus(e.target.checked);
+  };
 
   const handleSubmit = async (e) => {
-    event.preventDefault();
+    e.preventDefault();
     console.log("object")
     
     let formData = new FormData();
@@ -139,28 +143,34 @@ const Edit = () => {
     for (let i = 0; i < stateDataSingle.length; i++) {
       // console.log(stateDataSingle[i].isTipe)
       // console.log(stateDataSingleOld[i].isTipe)
+      let statusPro = status ? 1 : 0;
+      let method = 'PUT';
       if(stateDataSingle[i].isTipe === stateDataSingleOld[i].isTipe){
         
     
         // console.log(cooperation_form)
         // arr_old.push(cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingleOld[i].cooperation_form)
         // arr_new.push(cooperation_form['cooperation_form' +[i]  ] = stateDataSingle[i].name)
-
+        formData.append('_method',method);
         formData.append(`cooperation_form_old[${i}]`, stateDataSingleOld[i].cooperation_form);
         formData.append(`cooperation_form[${i}]`, stateDataSingle[i].name);
-
+        formData.append('status',statusPro);
+        
+        
         // console.log("cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingleOld[i].cooperation_form >>")
         // console.log(cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingleOld[i].cooperation_form)
       }else{
+        formData.append('_method',method);
         
         // let cooperation_form = {} 
         // arr_old.push(cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingle[i].name)
         // arr_new.push(cooperation_form['cooperation_form' + [i]  ] = stateDataSingle[i].name)
         formData.append(`cooperation_form_old[${i}]`, stateDataSingle[i].name);
         formData.append(`cooperation_form[${i}]`, stateDataSingle[i].name);
-
+        formData.append('status',statusPro);
+        
       }
-
+      
    }
 
     // valueCreateCooporations.forEach((item, i) => {
@@ -346,6 +356,33 @@ const Edit = () => {
                 >
                   Tambah Form Kerjasama
                 </p>
+              </div>
+
+              <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Status
+                </label>
+                <div className="col-sm-1">
+                  <label className="switches">
+                    <input
+                    required
+                      className="checkbox"
+                      checked={status}
+                      type="checkbox"
+                      onChange={(e) => handleChangeStatus(e)}
+                    />
+                    <span
+                      className={`sliders round ${
+                        status ? "text-white" : "pl-2"
+                      }`}
+                    >
+                      {status ? "Aktif" : "Tidak aktif"}
+                    </span>
+                  </label>
+                </div>
               </div>
 
               {/* <div className="form-group row">

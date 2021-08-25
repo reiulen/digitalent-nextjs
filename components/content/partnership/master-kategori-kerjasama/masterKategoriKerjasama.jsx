@@ -115,7 +115,7 @@ const Table = () => {
                     </thead>
                     <tbody>
                       {allMKCooporation.mk_cooporation.data === undefined
-                        ? ""
+                        ? "Data list kategori tidak ada"
                         : allMKCooporation.mk_cooporation.data.list_cooperation_categories.map(
                             (cooperation_categorie, index) => {
                               return (
