@@ -6,133 +6,31 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-import {
-  newMitra,
-  clearErrors,
-} from "../../../../redux/actions/partnership/mitra.actions";
+// import {
+//   newMitra,
+//   clearErrors,
+// } from "../../../../redux/actions/partnership/mitra.actions";
 
-import { getAllKota } from "../../../../redux/actions/utils/utils.actions";
+// import { getAllKota } from "../../../../redux/actions/utils/utils.actions";
 
-import LoadingPage from "../../../LoadingPage";
+// import LoadingPage from "../../../LoadingPage";
 
-import { NEW_MITRA_RESET } from "../../../../redux/types/partnership/mitra.type";
+// import { NEW_MITRA_RESET } from "../../../../redux/types/partnership/mitra.type";
 
 const TambahMitra = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const { loading, error, success } = useSelector((state) => state.newMitra);
-
-  const {
-    loading: allLoadingProvinsi,
-    error: errorProvinsi,
-    allProvinsi,
-  } = useSelector((state) => state.allProvinsi);
-
-  const {
-    loading: allLoadingKota,
-    error: errorKota,
-    allKota: allKotaRes,
-  } = useSelector((state) => state.allKota);
-
-  // start convert to base64
-  const onChangeGambar = (e) => {
-    if (e.target.name === "logo") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setLogo(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
-  // end convert to base64
-
-  const [logo, setLogo] = useState("");
-  const [namaLembaga, setNamaLembaga] = useState("");
-  const [email, setEmail] = useState("");
-  const [website, setWebsite] = useState("");
-  const [alamat, setAlamat] = useState("");
-  const [provinsi, setProvinsi] = useState(null);
-  const [kotaKabupaten, setKotaKabupaten] = useState(null);
-  const [kodePos, setKodePos] = useState("");
-  const [namaPic, setNamaPic] = useState("");
-  const [noPic, setNoPic] = useState("");
-  const [emailPic, setEmailPic] = useState("");
 
   useEffect(() => {
-    if (success) {
-      router.push({
-        pathname: `/partnership/manajemen-mitra`,
-        query: { success: true },
-      });
-    }
-    if (provinsi) {
-      dispatch(getAllKota(provinsi));
-    }
-  }, [dispatch, error, success, provinsi]);
+  }, []);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (error) {
-      dispatch(clearErrors());
-    }
-
-    if (success) {
-      dispatch({
-        type: NEW_MITRA_RESET,
-      });
-    }
-    const data = {
-      institution_name: namaLembaga,
-      email: email,
-      agency_logo: logo,
-      website: website,
-      address: alamat,
-      indonesia_provinces_id: provinsi,
-      indonesia_cities_id: kotaKabupaten,
-      postal_code: kodePos,
-      pic_name: namaPic,
-      pic_contact_number: noPic,
-      pic_email: emailPic,
-    };
-
-    // dispatch(newMitra(JSON.stringify(data)));
-    dispatch(newMitra(data));
-    console.log(data);
-  };
 
   return (
     <PageWrapper>
-      {error ? (
-        <div
-          className="alert alert-custom alert-light-danger fade show mb-5"
-          role="alert"
-        >
-          <div className="alert-icon">
-            <i className="flaticon-warning"></i>
-          </div>
-          <div className="alert-text">{error}</div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
 
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        {loading ? <LoadingPage loading={loading} /> : ""}
+        {/* {loading ? <LoadingPage loading={loading} /> : ""} */}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
@@ -156,7 +54,7 @@ const TambahMitra = () => {
                         name="logo"
                         class="custom-file-input"
                         id="inputGroupFile04"
-                        onChange={onChangeGambar}
+                        // onChange={onChangeGambar}
                       />
                       <label class="custom-file-label" for="inputGroupFile04">
                         Cari Dokumen
@@ -178,7 +76,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nama Lembaga"
-                    onChange={(e) => setNamaLembaga(e.target.value)}
+                    // onChange={(e) => setNamaLembaga(e.target.value)}
                   />
                 </div>
               </div>
@@ -195,7 +93,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Email"
-                    onChange={(e) => setEmail(e.target.value)}
+                    // onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
               </div>
@@ -212,7 +110,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Website"
-                    onChange={(e) => setWebsite(e.target.value)}
+                    // onChange={(e) => setWebsite(e.target.value)}
                   />
                 </div>
               </div>
@@ -229,7 +127,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Alamat"
-                    onChange={(e) => setAlamat(e.target.value)}
+                    // onChange={(e) => setAlamat(e.target.value)}
                   />
                 </div>
               </div>
@@ -243,24 +141,15 @@ const TambahMitra = () => {
                 </label>
                 <div className="col-10">
                   <select
-                    onChange={(e) => setProvinsi(e.target.value)}
-                    onBlur={(e) => setProvinsi(e.target.value)}
+                    // onChange={(e) => setProvinsi(e.target.value)}
+                    // onBlur={(e) => setProvinsi(e.target.value)}
                     className="form-control"
                   >
-                    {allProvinsi && console.log(allProvinsi)}
-                    {!allProvinsi ||
-                    (allProvinsi && allProvinsi.length === 0) ? (
                       <option value="">Data kosong</option>
-                    ) : (
-                      allProvinsi &&
-                      allProvinsi.map((row) => {
-                        return (
-                          <option key={row.id} value={row.id}>
-                            {row.name}
+                          <option>
+                            {/* {row.name} */}ss
                           </option>
-                        );
-                      })
-                    )}
+                       
                   </select>
                 </div>
               </div>
@@ -275,21 +164,14 @@ const TambahMitra = () => {
                 <div className="col-sm-10">
                   <select
                     className="form-control"
-                    onChange={(e) => setKotaKabupaten(e.target.value)}
-                    onBlur={(e) => setKotaKabupaten(e.target.value)}
+                    // onChange={(e) => setKotaKabupaten(e.target.value)}
+                    // onBlur={(e) => setKotaKabupaten(e.target.value)}
                   >
-                    {!allKotaRes || (allKotaRes && allKotaRes.length === 0) ? (
-                      <option value="">Data kosong</option>
-                    ) : (
-                      allKotaRes &&
-                      allKotaRes.map((row) => {
-                        return (
-                          <option key={row.id} value={row.id}>
-                            {row.name}
+                    
+                          <option>
+                            {/* {row.name} */}asd
                           </option>
-                        );
-                      })
-                    )}
+                        
                   </select>
                   {/* <input
                     type="text"
@@ -312,7 +194,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Kode Pos"
-                    onChange={(e) => setKodePos(e.target.value)}
+                    // onChange={(e) => setKodePos(e.target.value)}
                   />
                 </div>
               </div>
@@ -329,7 +211,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nama"
-                    onChange={(e) => setNamaPic(e.target.value)}
+                    // onChange={(e) => setNamaPic(e.target.value)}
                   />
                 </div>
               </div>
@@ -346,7 +228,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan NO. Kontak"
-                    onChange={(e) => setNoPic(e.target.value)}
+                    // onChange={(e) => setNoPic(e.target.value)}
                   />
                 </div>
               </div>
@@ -363,7 +245,7 @@ const TambahMitra = () => {
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Email"
-                    onChange={(e) => setEmailPic(e.target.value)}
+                    // onChange={(e) => setEmailPic(e.target.value)}
                   />
                 </div>
               </div>
@@ -379,7 +261,7 @@ const TambahMitra = () => {
                     {/* <Link href="/partnership/manajemen-mitra"> */}
                     <button
                       className="btn btn-primary btn-sm"
-                      onClick={(e) => onSubmit(e)}
+                      // onClick={(e) => onSubmit(e)}
                     >
                       Simpan
                     </button>

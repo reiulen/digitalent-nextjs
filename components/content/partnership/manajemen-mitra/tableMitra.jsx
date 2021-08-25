@@ -10,212 +10,73 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 import {
-  deleteMitra,
-  clearErrors,
+  fetchMitra,
+  searchByKey,
+  deleteMitra
 } from "../../../../redux/actions/partnership/mitra.actions";
 
-import {
-  DELETE_MITRA_RESET,
-  CLEAR_ERRORS,
-} from "../../../../redux/types/partnership/mitra.type";
+import Swal from "sweetalert2";
 
 const Table = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { totalMitraCardRes } = useSelector(
-    (state) => state.totalMitraCardGlobal
-  );
+  const allMitra = useSelector(state => state.allMitra)
+  console.log("state allMitra",allMitra)
 
-  const { activeMitraCardRes } = useSelector(
-    (state) => state.activeMitraCardGlobal
-  );
+  const [keyWord, setKeyWord] = useState("")
 
-  const { nonActiveMitraCardRes } = useSelector(
-    (state) => state.nonActiveMitraCardGlobal
-  );
-
-  const {
-    loading: allLoading,
-    error,
-    allMitra,
-  } = useSelector((state) => state.allMitra);
-
-  const {
-    loading: deleteLoading,
-    error: deleteError,
-    isDeleted,
-  } = useSelector((state) => state.deleteMitra);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(searchByKey(keyWord))
+  };
 
   const handleDelete = (id) => {
+
     Swal.fire({
-      title: "Apakah anda yakin ?",
-      text: "Data ini tidak bisa dikembalikan !",
+      title: "Apakah anda yakin ingin menghapus data mitra ?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        dispatch(deleteMitra(id));
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        dispatch(deleteMitra(id))
+      }else{
+        dispatch(reloadTable())
       }
-    });
-  };
+    })
 
-  const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(null);
-  const [totalMitra, setTotalMitra] = useState(totalMitraCardRes.total);
-  const [activeMitra, setActiveMitra] = useState(activeMitraCardRes.total);
-  const [nonActiveMitra, setNonActiveMitra] = useState(
-    nonActiveMitraCardRes.total
-  );
 
-  let { page = 1, keyword, success } = router.query;
-  // if (allLoading) {
-  //   loading = allLoading;
-  // } else if (deleteLoading) {
-  //   loading = deleteLoading;
-  // }
 
-  page = Number(page);
-  const handleLimit = (val) => {
-    setLimit(val);
-  };
+  }
 
-  const handleFilterCard = (status) => {
-    if (status) {
-      router.push(
-        `${router.pathname}?page=1&keyword=${search}&limit=${limit}&card=${status}`
-      );
-    } else {
-      // router.push(`${router.pathname}?page=1&keyword=${search}`);
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
-    }
-  };
   useEffect(() => {
-    if (limit) {
-      router.push(`${router.pathname}?page=1&limit=${limit}`);
-    }
-    if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
-          if (result.isConfirmed) {
-            window.location.reload();
-          }
-        }
-      );
-      dispatch({
-        type: DELETE_MITRA_RESET,
-      });
-    }
-  }, [limit, isDeleted]);
-
-  const handlePagination = (pageNumber) => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
-    } else {
-      router.push(`${router.pathname}?page=${pageNumber}`);
-    }
-  };
-
-  const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
-    } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`);
-    }
-  };
+    dispatch(fetchMitra())
+  }, [allMitra.keyword,allMitra.status_reload])
 
   return (
     <PageWrapper>
-      {error ? (
-        <div
-          className="alert alert-custom alert-light-danger fade show mb-5"
-          role="alert"
-        >
-          <div className="alert-icon">
-            <i className="flaticon-warning"></i>
-          </div>
-          <div className="alert-text">{error}</div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-      {success ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark"></i>
-          </div>
-          <div className="alert-text">Berhasil Menambah Data</div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={onNewReset}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-      <div className="col-lg-10 col-md-10">
+      
+      <div className="col-lg-12 col-md-12">
         <div className="row">
-          <CardPage
-            background="bg-light-success"
-            icon="user-blue.svg"
-            color="#74BBB7"
-            value={totalMitra}
-            titleValue="Mitra"
-            title="Total Mitra"
-            publishedVal="all"
-            routePublish={() => handleFilterCard("all")}
-            // routePublish={() => setAllStatus("all")}
-          />
-          <CardPage
-            background="bg-light-warning"
-            icon="user-orange.svg"
-            color="#634100"
-            value={activeMitra}
-            titleValue="Mitra"
-            title="Mitra Yang Aktif"
-            publishedVal="active"
-            routePublish={() => handleFilterCard("active")}
-            // routePublish={() => setStatusActive("active")}
-          />
-          <CardPage
-            background="bg-light-danger"
-            icon="info-danger.svg"
-            color="#F65464"
-            value={nonActiveMitra}
-            titleValue="Mitra"
-            title="Mitra Yang Tidak Aktif"
-            publishedVal="non-active"
-            routePublish={() => handleFilterCard("non-active")}
-            // routePublish={() => setStatusNonActive("non-active")}
-          />
+          <div className={`col bg-light-success cursor-pointer px-6 py-8 rounded-xl mb-7`} 
+          // onClick={() => dispatch(changeValueStatusCard("active"))} 
+          >
+            <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
+                <div className="row ml-4">
+                    <Image alt='card-page-icon' src={`/assets/icon/user-blue.svg`} width={30} height={30} />
+                    <p className={`font-weight-bold font-size-h2 ml-2 my-auto`} style={{ color: "#74BBB7", opacity: '0.5' }}>
+                      {/* {allMK.totalDataActive}  */}
+                      {allMitra.totalDataMitra} Mitra</p>
+                </div>
+            </span>
+            <p className='ml-3 mt-2' style={{ color: "#74BBB7", fontSize: '15px', fontWeight: '500', opacity: '0.50' }}>Total Mitra</p>
+        </div >
+          
         </div>
       </div>
       <div className="col-lg-12 order-1 px-0">
@@ -234,9 +95,11 @@ const Table = () => {
           </div>
 
           <div className="card-body pt-0">
+            <form onSubmit={handleSubmit}>
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-10 col-xl-10">
+                  
                   <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
@@ -244,7 +107,7 @@ const Table = () => {
                       className="form-control"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(e) => setKeyWord(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
@@ -253,15 +116,15 @@ const Table = () => {
                 </div>
                 <div className="col-lg-2 col-xl-2">
                   <button
-                    type="button"
+                    type="submit"
                     className="btn btn-light-primary btn-block"
-                    onClick={handleSearch}
                   >
                     Cari
                   </button>
                 </div>
               </div>
             </div>
+            </form>
             <div className="table-page mt-5">
               <div className="table-responsive">
                 <table className="table table-separate table-head-custom table-checkable">
@@ -276,12 +139,10 @@ const Table = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {/* {allMitra && console.log(allMitra)} */}
-                    {allMitra &&
-                      allMitra.list_mitras.map((dataMitra, i) => {
-                        return (
-                          <>
-                            <tr>
+                    {allMitra.status === "success" ?
+                    allMitra.mitraAll.data.list_mitras.length === 0 ? "Tidak ada data" :allMitra.mitraAll.data.list_mitras.map((item,index)=>{
+                      return(
+                            <tr key={index}>
                               <td className="text-center align-middle">
                                 <button
                                   className="btn"
@@ -290,25 +151,25 @@ const Table = () => {
                                     borderRadius: "6px",
                                   }}
                                 >
-                                  {i + 1 * (page * 5 || limit) - 4}
+                                  {allMitra.page ===  1 ? index+1 : ((allMitra.page - 1) * allMitra.limit) +  (index + 1)}
                                 </button>
                               </td>
                               <td className="align-middle text-center">
-                                <Image
-                                  src={`/assets/icon/${dataMitra.agency_logo}`}
+                                {/* <Image
+                                  src={`/assets/icon/${item.agency_logo}`}
                                   width={40}
                                   height={40}
                                   alt="logo"
-                                />
+                                /> */}
                               </td>
                               <td className="align-middle text-center">
-                                {dataMitra.user.name}
+                                {item.user.name}
                               </td>
                               <td className="align-middle text-center">
-                                {dataMitra.website}
+                                {item.website}
                               </td>
                               <td className="align-middle text-center">
-                                {dataMitra.cooperations_count} Kerjasama
+                                {item.cooperations_count} Kerjasama
                               </td>
                               <td className="align-middle text-center">
                                 <ButtonAction
@@ -317,10 +178,10 @@ const Table = () => {
                                 />
                                 <ButtonAction
                                   icon="write.svg"
-                                  link={`/partnership/manajemen-mitra/${dataMitra.id}`}
+                                  // link={`/partnership/manajemen-mitra/${dataMitra.id}`}
                                 />
                                 <button
-                                  onClick={() => handleDelete(dataMitra.id)}
+                                  onClick={() => handleDelete(item.id)}
                                   className="btn mr-1"
                                   style={{
                                     background: "#F3F6F9",
@@ -336,17 +197,18 @@ const Table = () => {
                                 </button>
                               </td>
                             </tr>
-                          </>
-                        );
-                      })}
+                            )
+                    })
+                            :"loading"}
+                     
                   </tbody>
                 </table>
               </div>
 
               <div className="row">
-                {allMitra && allMitra.perPage < allMitra.total && (
+                {/* {allMitra && allMitra.perPage < allMitra.total && ( */}
                   <div className="table-pagination">
-                    <Pagination
+                    {/* <Pagination
                       activePage={page}
                       itemsCountPerPage={allMitra.perPage}
                       totalItemsCount={allMitra.total}
@@ -358,10 +220,10 @@ const Table = () => {
                       lastPageText={">>"}
                       itemClass="page-item"
                       linkClass="page-link"
-                    />
+                    /> */}
                   </div>
-                )}
-                {allMitra && allMitra.total > 5 ? (
+                {/* )} */}
+                {/* {allMitra && allMitra.total > 5 ? ( */}
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -374,8 +236,8 @@ const Table = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={(e) => handleLimit(e.target.value)}
-                          onBlur={(e) => handleLimit(e.target.value)}
+                          // onChange={(e) => handleLimit(e.target.value)}
+                          // onBlur={(e) => handleLimit(e.target.value)}
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>
@@ -388,14 +250,14 @@ const Table = () => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {allMitra.total}
+                          Total Data 
                         </p>
                       </div>
                     </div>
                   </div>
-                ) : (
+                {/* ) : (
                   ""
-                )}
+                )} */}
               </div>
             </div>
           </div>

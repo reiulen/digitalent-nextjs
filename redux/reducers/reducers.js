@@ -123,18 +123,7 @@ import {
 // ============== trivia ===============
 
 // Partnership
-import {
-  allMitraReducer,
-  newMitraReducer,
-  detailMitraReducer,
-  updateMitraReducer,
-  deleteMitraReducer,
-
-  // card
-  totalMitraCardReducer,
-  activeMitraCardReducer,
-  nonActiveMitraCardReducer,
-} from "./partnership/mitra.reducers";
+import { allMitraReducer } from "./partnership/mitra.reducers";
 
 //
 
@@ -263,13 +252,6 @@ const reducer = combineReducers({
 
   // kerjasama mitra
   allMitra: allMitraReducer,
-  newMitra: newMitraReducer,
-  detailMitra: detailMitraReducer,
-  deleteMitra: deleteMitraReducer,
-  updateMitra: updateMitraReducer,
-  totalMitraCardGlobal: totalMitraCardReducer,
-  activeMitraCardGlobal: activeMitraCardReducer,
-  nonActiveMitraCardGlobal: nonActiveMitraCardReducer,
 
   // category management kerjasama
   allMKCooporation: allMKCooporationReducer,
