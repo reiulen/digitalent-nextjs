@@ -125,6 +125,7 @@ const Edit = () => {
   // }, [router.query.id])
 const [status, setStatus] = useState("");
   const handleChangeStatus = (e) => {
+    console.log("e.target.checked",e.target.checked)
     setStatus(e.target.checked);
   };
 
@@ -217,6 +218,7 @@ const [status, setStatus] = useState("");
       setStateDataSingle(arr_new);
       setStateDataSingleOld(arr);
       setCategoryCooporation(data.data.cooperation_categories);
+      setStatus(data.data.status);
     } catch (error) {
       console.log(error);
     }
@@ -236,7 +238,7 @@ const [status, setStatus] = useState("");
           </div>
           <div className="card-body">
             {/* {allMKCooporation.mk_single_cooporation && allMKCooporation.mk_single_cooporation.data.cooperation_categories } */}
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -366,6 +368,13 @@ const [status, setStatus] = useState("");
                   Status
                 </label>
                 <div className="col-sm-1">
+                  {/* <input
+                    required
+                      className="checkbox"
+                      checked={status}
+                      type="checkbox"
+                      onChange={(e) => handleChangeStatus(e)}
+                    /> */}
                   <label className="switches">
                     <input
                     required
@@ -376,7 +385,7 @@ const [status, setStatus] = useState("");
                     />
                     <span
                       className={`sliders round ${
-                        status ? "text-white" : "pl-2"
+                        status  ? "text-white" : "pl-2"
                       }`}
                     >
                       {status ? "Aktif" : "Tidak aktif"}
@@ -419,7 +428,7 @@ const [status, setStatus] = useState("");
                     >
                       Simpan
                     </button> */}
-                    <button type="submit" className="btn btn-primary btn-sm">
+                    <button type="button" className="btn btn-primary btn-sm" onClick={(e)=>handleSubmit(e)}>
                       Simpan
                     </button>
                     {/* </Link> */}
