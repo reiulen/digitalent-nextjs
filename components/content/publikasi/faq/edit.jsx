@@ -51,7 +51,7 @@ const EditFaq = () => {
     const [judul, setJudulPertanyaan] = useState(faq.judul)
     const [jawaban, setJawaban] = useState(faq.jawaban);
     const [kategori_id, setKategoriId] = useState(faq.kategori_id)
-    const [users_id, setUsersId] = useState(1)
+    const [users_id, setUsersId] = useState(3)
     const [pinned, setPinnedFaq] = useState(faq.pinned === 1 ? true : false)
     const [publish, setPublish] = useState(faq.publish === 1 ? true : false)
     const [, forceUpdate] = useState();
@@ -162,7 +162,7 @@ const EditFaq = () => {
                                             kategori.kategori.map((row) => {
                                                 return (
                                                     <option key={row.id} value={row.id}>
-                                                        {row.jenis_kategori}
+                                                        {row.nama_kategori}
                                                     </option>
                                                 );
                                             })
