@@ -47,7 +47,7 @@ const Tambah = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     let statusPro = status ? 1 : 0;
 
@@ -63,10 +63,15 @@ const Tambah = () => {
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/create`,
         formData
       );
-      Swal.fire(
-  'Berhasil tambah data!',
-  'Sukses'
-)
+
+      router.push(
+                                            {
+                                              pathname:`/partnership/master-kategori-kerjasama`,
+                                              query:{success:true}
+                                            }
+                                          )
+
+
     } catch (error) {
       console.log(error);
     }
@@ -102,7 +107,7 @@ const Tambah = () => {
               Tambah Master Kategori Kerjasama
             </h3>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="card-body">
               <div className="form-group row">
                 <label
@@ -222,7 +227,7 @@ const Tambah = () => {
                         Kembali
                       </a>
                     </Link>
-                    <button type="submit" className="btn btn-primary btn-sm">
+                    <button type="button" className="btn btn-primary btn-sm" onClick={(e)=> handleSubmit(e)}>
                       Simpan
                     </button>
                   </div>
