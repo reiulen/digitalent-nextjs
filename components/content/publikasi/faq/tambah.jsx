@@ -137,7 +137,9 @@ const TambahFaq = () => {
                                     {simpleValidator.current.message("jawaban", jawaban, "required", { className: "text-danger" })}
                                 </div>
                             </div>
-
+                            {
+                                console.log (kategori)
+                            }
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
@@ -156,9 +158,12 @@ const TambahFaq = () => {
                                             kategori.kategori &&
                                             kategori.kategori.map((row) => {
                                                 return (
-                                                    <option key={row.id} value={row.id}>
-                                                        {row.nama_kategori}
-                                                    </option>
+                                                    row.jenis_kategori === "Faq" ?
+                                                        <option key={row.id} value={row.id}>
+                                                            {row.nama_kategori}
+                                                        </option>
+                                                    :
+                                                        null
                                                 );
                                             })
                                         )}

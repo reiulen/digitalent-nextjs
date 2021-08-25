@@ -26,7 +26,7 @@ const Kategori = () => {
     let { page = 1, success } = router.query
     page = Number(page)
 
-    const [limit, setLimit] = useState(null)
+    const [limit, setLimit] = useState(5)
     const [search, setSearch] = useState('')
 
 
