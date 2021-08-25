@@ -92,6 +92,9 @@ const EditFaq = () => {
             {
                 console.log (faq)
             }
+            {
+                console.log (kategori)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -161,9 +164,12 @@ const EditFaq = () => {
                                             kategori.kategori &&
                                             kategori.kategori.map((row) => {
                                                 return (
-                                                    <option key={row.id} value={row.id}>
-                                                        {row.nama_kategori}
-                                                    </option>
+                                                    row.jenis_kategori == "Faq" ?
+                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                                            {row.nama_kategori}
+                                                        </option>
+                                                    :
+                                                        null
                                                 );
                                             })
                                         )}

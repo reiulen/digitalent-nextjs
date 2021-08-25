@@ -325,6 +325,9 @@ const Faq = () => {
                                 </div>
                             </div>
                         </div>
+                        {/* {
+                            console.log (faq)
+                        } */}
 
                         <div className="table-page mt-5">
                             <div className="table-responsive">
