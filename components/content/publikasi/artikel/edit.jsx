@@ -76,7 +76,8 @@ const EditArtikel = () => {
   // const [gambarPreview, setGambarPreview] = useState(
   //   "/assets/media/default.jpg"
   // ); //belum
-  const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI +"publikasi/images/"+ artikel.gambar);
+  const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel.gambar);
+  const [gambarName, setGambarName] = useState (artikel.gambar)
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
@@ -95,6 +96,7 @@ const EditArtikel = () => {
         }
       };
       reader.readAsDataURL(e.target.files[0]);
+      setGambarName(e.target.files[0].name)
     }
   };
 
@@ -123,9 +125,33 @@ const EditArtikel = () => {
         id,
         _method,
       };
-  
-      dispatch(updateArtikel(data));
-      // console.log(data)
+
+      // dispatch(updateArtikel(data));
+      
+      Swal.fire({
+        title: "Apakah anda yakin ?",
+        text: "Data ini akan diedit !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya !",
+        cancelButtonText: "Batal",
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            // if (success) {
+            //   dispatch({
+            //     // type: NEW_ARTIKEL_RESET
+            //     type: UPDATE_ARTIKEL_RESET,
+            //   });
+            // }
+
+            dispatch(updateArtikel(data));
+            // console.log(data)
+          }
+      });
+      
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -148,7 +174,10 @@ const EditArtikel = () => {
   return (
     <>
       <PageWrapper>
-        {console.log (artikel.gambar)}
+        {console.log (artikel)}
+        {
+          console.log (kategori)
+        }
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -295,6 +324,7 @@ const EditArtikel = () => {
                       data-target="#exampleModalCenter"
                     >
                       <Image
+                        loader={() => gambarPreview}
                         src={gambarPreview}
                         alt="image"
                         width={60}
@@ -321,6 +351,7 @@ const EditArtikel = () => {
                         </label>
                       </div>
                     </div>
+                    <small>{gambarName}</small>
                   </div>
                 </div>
 
@@ -334,7 +365,13 @@ const EditArtikel = () => {
                           ) : (
                               kategori && kategori.kategori && kategori.kategori.map((row) => {
                                   return (
-                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
+                                    row.jenis_kategori == "Artikel" ?
+                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                        {row.nama_kategori}
+                                      </option>
+                                    :
+                                      null
+                                      // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
                                   )
                               })
                           )}
