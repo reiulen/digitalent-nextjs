@@ -14,6 +14,15 @@ import {
     DELETE_TRIVIA_QUESTION_DETAIL_RESET,
     DELETE_TRIVIA_QUESTION_DETAIL_FAIL,
 
+    DETAIL_TRIVIA_QUESTION_DETAIL_REQUEST,
+    DETAIL_TRIVIA_QUESTION_DETAIL_SUCCESS,
+    DETAIL_TRIVIA_QUESTION_DETAIL_FAIL,
+
+    UPDATE_TRIVIA_QUESTION_DETAIL_REQUEST,
+    UPDATE_TRIVIA_QUESTION_DETAIL_SUCCESS,
+    UPDATE_TRIVIA_QUESTION_DETAIL_RESET,
+    UPDATE_TRIVIA_QUESTION_DETAIL_FAIL,
+
     IMPORT_FILE_TRIVIA_QUESTION_DETAIL_REQUEST,
     IMPORT_FILE_TRIVIA_QUESTION_DETAIL_SUCCESS,
     IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET,
@@ -117,6 +126,72 @@ export const deleteTriviaQuestionDetailReducer = (state = {}, action) => {
             return {
                 loading: false,
                 error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const detailTriviaQuestionDetailReducer = (state = { trivia_question_detail: {} }, action) => {
+    switch (action.type) {
+        case DETAIL_TRIVIA_QUESTION_DETAIL_REQUEST:
+            return {
+                loading: true
+            }
+
+        case DETAIL_TRIVIA_QUESTION_DETAIL_SUCCESS:
+            return {
+                loading: false,
+                trivia_question_detail: action.payload.data
+            }
+
+        case DETAIL_TRIVIA_QUESTION_DETAIL_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const updateTriviaQuestionDetailReducer = (state = { trivia_question_detail: {} }, action) => {
+    switch (action.type) {
+        case UPDATE_TRIVIA_QUESTION_DETAIL_REQUEST:
+            return {
+                loading: true
+            }
+
+        case UPDATE_TRIVIA_QUESTION_DETAIL_SUCCESS:
+            return {
+                loading: false,
+                success: action.payload.message,
+                trivia_question_detail: action.payload.data
+            }
+
+        case UPDATE_TRIVIA_QUESTION_DETAIL_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case UPDATE_TRIVIA_QUESTION_DETAIL_RESET:
+            return {
+                success: false
             }
 
         case CLEAR_ERRORS:
