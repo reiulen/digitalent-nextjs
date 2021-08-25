@@ -46,7 +46,7 @@ const ListTrivia = () => {
         type: DELETE_TRIVIA_QUESTION_BANKS_RESET
       })
     }
-  }, [dispatch, limit, isDeleted]);
+  }, [dispatch, limit, isDeleted, router]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
@@ -223,11 +223,11 @@ const ListTrivia = () => {
                               </td>
                               <td className="align-middle">
                                 {row.status === true ? (
-                                  <span class="label label-inline label-light-success font-weight-bold">
+                                  <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
                                 ) : (
-                                  <span class="label label-inline label-light-warning font-weight-bold">
+                                  <span className="label label-inline label-light-warning font-weight-bold">
                                     Draft
                                   </span>
                                 )}

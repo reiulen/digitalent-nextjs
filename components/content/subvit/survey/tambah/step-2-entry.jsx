@@ -73,7 +73,7 @@ const StepTwo = () => {
         });
       }
     }
-  }, [dispatch, error, success, typeSave]);
+  }, [dispatch, error, success, typeSave, id, metode, router]);
 
   const handleSoalImage = (e) => {
     if (e.target.name === 'question_image') {
@@ -443,10 +443,10 @@ const StepTwo = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 col-md-8">
-                  <div class="custom-file">
+                  <div className="custom-file">
                     <span>Gambar Pertanyaan (Opsional)</span>
-                    <input type="file" class="custom-file-input" name='question_image' onChange={e => handleSoalImage(e)} />
-                    <label class="custom-file-label" for="customFile">
+                    <input type="file" className="custom-file-input" name='question_image' onChange={e => handleSoalImage(e)} />
+                    <label className="custom-file-label" htmlFor="customFile">
                       Choose file
                     </label>
                   </div>
@@ -457,9 +457,9 @@ const StepTwo = () => {
               <div>Jenis Pertanyaan</div>
               <div className="form-group row mt-4 ml-1 mb-3">
                 <div className="col-sm-12 col-md-8">
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
                       id="inlineRadio1"
@@ -467,13 +467,13 @@ const StepTwo = () => {
                       checked={methodAdd === "objective"}
                       onChange={() => setMethodAdd("objective")}
                     />
-                    <label class="form-check-label" for="inlineRadio1">
+                    <label className="form-check-label" htmlFor="inlineRadio1">
                       Objective
                     </label>
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
                       id="inlineRadio2"
@@ -481,13 +481,13 @@ const StepTwo = () => {
                       checked={methodAdd === "multiple_choice"}
                       onChange={() => setMethodAdd("multiple_choice")}
                     />
-                    <label class="form-check-label" for="inlineRadio2">
+                    <label className="form-check-label" htmlFor="inlineRadio2">
                       Multiple Choice
                     </label>
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
                       id="inlineRadio3"
@@ -495,13 +495,13 @@ const StepTwo = () => {
                       checked={methodAdd === "pertanyaan_terbuka"}
                       onChange={() => setMethodAdd("pertanyaan_terbuka")}
                     />
-                    <label class="form-check-label" for="inlineRadio3">
+                    <label className="form-check-label" htmlFor="inlineRadio3">
                       Pertanyaan Terbuka
                     </label>
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div className="form-check form-check-inline">
                     <input
-                      class="form-check-input"
+                      className="form-check-input"
                       type="radio"
                       name="inlineRadioOptions"
                       id="inlineRadio4"
@@ -509,7 +509,7 @@ const StepTwo = () => {
                       checked={methodAdd === "triggered_question"}
                       onChange={() => setMethodAdd("triggered_question")}
                     />
-                    <label class="form-check-label" for="inlineRadio4">
+                    <label className="form-check-label" htmlFor="inlineRadio4">
                       Triggered Question
                     </label>
                   </div>

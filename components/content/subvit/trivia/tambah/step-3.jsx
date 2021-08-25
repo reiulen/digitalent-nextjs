@@ -39,7 +39,7 @@ const StepThree = () => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, success, router]);
 
   const [, forceUpdate] = useState();
 
@@ -199,18 +199,18 @@ const StepThree = () => {
               <div className="form-group row">
                 <div className="col-sm-6 col-md-3">
                   <span>Jumlah Soal</span>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
                       type="number"
-                      class="form-control"
+                      className="form-control"
                       aria-describedby="basic-addon2"
                       value={jumlah_soal}
                       onChange={e => setJumlahSoal(e.target.value)}
                       onBlur={() => simpleValidator.current.showMessageFor('jumlah soal')}
                       min={1}
                     />
-                    <div class="input-group-append">
-                      <span class="input-group-text" id="basic-addon2">
+                    <div className="input-group-append">
+                      <span className="input-group-text" id="basic-addon2">
                         Soal
                       </span>
                     </div>
@@ -225,18 +225,18 @@ const StepThree = () => {
               <div className="form-group row">
                 <div className="col-sm-6 col-md-3">
                   <span>Durasi Test</span>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
                       type="number"
-                      class="form-control"
+                      className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
                       onChange={e => setDuration(e.target.value)}
                       onBlur={() => simpleValidator.current.showMessageFor('durasi')}
                       min={1}
                     />
-                    <div class="input-group-append bg-sedondary">
-                      <span class="input-group-text" id="basic-addon2">
+                    <div className="input-group-append bg-sedondary">
+                      <span className="input-group-text" id="basic-addon2">
                         Menit
                       </span>
                     </div>

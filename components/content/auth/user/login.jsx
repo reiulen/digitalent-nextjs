@@ -40,16 +40,16 @@ const LoginAdmin = () => {
               style={{ marginTop: "30px" }}
             >
               <form>
-                <div class="form-group">
+                <div className="form-group">
                   <label className="form-auth-label">Email</label>
-                  <input type="email" class="form-control form-control-auth" />
+                  <input type="email" className="form-control form-control-auth" />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <label className="form-auth-label">Password</label>
                   <a className="float-right text-primary">Lupa Password ?</a>
                   <input
                     type="password"
-                    class="form-control form-control-auth"
+                    className="form-control form-control-auth"
                   />
                 </div>
 
@@ -61,7 +61,7 @@ const LoginAdmin = () => {
                 </div>
 
                 <Link href="/publikasi/">
-                  <a class="btn btn-primary mt-3">Masuk</a>
+                  <a className="btn btn-primary mt-3">Masuk</a>
                 </Link>
               </form>
             </div>

@@ -54,7 +54,7 @@ const ListTipeSoal = () => {
         type: DELETE_SUBTANCE_QUESTION_TYPE_RESET
       })
     }
-  }, [dispatch, limit, isDeleted]);
+  }, [dispatch, limit, isDeleted, router]);
 
   const onNewReset = () => {
     router.replace('/subvit/substansi/tipe-soal', undefined, { shallow: true })
@@ -232,11 +232,11 @@ const ListTipeSoal = () => {
                               <td className="align-middle">{row.value}</td>
                               <td className="align-middle">
                                 {row.status === true ? (
-                                  <span class="label label-inline label-light-success font-weight-bold">
+                                  <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
                                 ) : (
-                                  <span class="label label-inline label-light-warning font-weight-bold">
+                                  <span className="label label-inline label-light-warning font-weight-bold">
                                     Draft
                                   </span>
                                 )}

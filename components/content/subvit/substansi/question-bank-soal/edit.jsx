@@ -47,7 +47,7 @@ const EditSoalSubstansi = () => {
                 query: { success: true },
             });
         }
-    }, [dispatch, success])
+    }, [dispatch, success, router])
 
     const handleSoalImage = (e) => {
         if (e.target.name === 'question_image') {
@@ -217,15 +217,15 @@ const EditSoalSubstansi = () => {
                                         onChange={e => setQuestion(e.target.value)}
                                         placeholder="Contoh Soal"
                                     />
-                                    <div class="custom-file mt-2">
+                                    <div className="custom-file mt-2">
                                         <span>Gambar Pertanyaan (Opsional)</span>
                                         <input
                                             type="file"
-                                            class="custom-file-input"
+                                            className="custom-file-input"
                                             name='question_image'
                                             onChange={e => handleSoalImage(e)}
                                         />
-                                        <label class="custom-file-label" for="customFile">
+                                        <label className="custom-file-label" htmlFor="customFile">
                                             Choose file
                                         </label>
                                     </div>
@@ -252,10 +252,10 @@ const EditSoalSubstansi = () => {
                                                             onChange={e => handleInputChange(e, i)}
                                                             autoComplete='off'
                                                         />
-                                                        <div class="custom-file mt-2">
+                                                        <div className="custom-file mt-2">
                                                             <span>Gambar Pertanyaan (Opsional)</span>
-                                                            <input type="file" class="custom-file-input" name='question_image' />
-                                                            <label class="custom-file-label" for="customFile">
+                                                            <input type="file" className="custom-file-input" name='question_image' />
+                                                            <label className="custom-file-label" htmlFor="customFile">
                                                                 Choose file
                                                             </label>
                                                         </div>

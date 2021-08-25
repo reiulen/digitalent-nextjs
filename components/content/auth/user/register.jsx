@@ -33,39 +33,39 @@ const RegisterAdmin = () => {
               style={{ marginTop: "30px" }}
             >
               <form>
-                <div class="form-group">
+                <div className="form-group">
                   <input
                     type="text"
-                    class="form-control form-control-auth"
+                    className="form-control form-control-auth"
                     placeholder="Nama Lembaga"
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <input
                     type="email"
-                    class="form-control form-control-auth"
+                    className="form-control form-control-auth"
                     placeholder="Email"
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <input
                     type="password"
-                    class="form-control form-control-auth"
+                    className="form-control form-control-auth"
                     placeholder="Kata Sandi"
                   />
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <input
                     type="password"
-                    class="form-control form-control-auth"
+                    className="form-control form-control-auth"
                     placeholder="Konfirmasi Kata Sandi"
                   />
                 </div>
 
                 <Link href="/">
-                  <a class="btn btn-outline-primary mt-3 mr-2">Kembali</a>
+                  <a className="btn btn-outline-primary mt-3 mr-2">Kembali</a>
                 </Link>
-                <button type="button" class="btn btn-primary mt-3">
+                <button type="button" className="btn btn-primary mt-3">
                   Buat Akun
                 </button>
               </form>
