@@ -136,6 +136,13 @@ const EditArtikel = () => {
       })
         .then((result) => {
           if (result.isConfirmed) {
+            // if (success) {
+            //   dispatch({
+            //     // type: NEW_ARTIKEL_RESET
+            //     type: UPDATE_ARTIKEL_RESET,
+            //   });
+            // }
+
             dispatch(updateArtikel(data));
             // console.log(data)
           }
@@ -164,6 +171,9 @@ const EditArtikel = () => {
     <>
       <PageWrapper>
         {console.log (artikel)}
+        {
+          console.log (kategori)
+        }
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -350,7 +360,13 @@ const EditArtikel = () => {
                           ) : (
                               kategori && kategori.kategori && kategori.kategori.map((row) => {
                                   return (
-                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
+                                    row.jenis_kategori == "Artikel" ?
+                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                        {row.nama_kategori}
+                                      </option>
+                                    :
+                                      null
+                                      // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
                                   )
                               })
                           )}

@@ -415,8 +415,8 @@ const Artikel = () => {
                                 />
                               </td>
                               <td className="align-middle">
-                                {artikel.jenis_kategori}
-                                {/* {artikel.nama_kategori} */}
+                                {/* {artikel.jenis_kategori} */}
+                                {artikel.nama}
                               </td>
                               <td className="align-middle">
                                 {artikel.judul_artikel}
@@ -442,7 +442,7 @@ const Artikel = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">Admin Publikasi</td>
+                              <td className="align-middle">Super Admin</td>
                               <td className="align-middle">
                                 {/* conflict nih cuy */}
                                 {/* <ButtonAction icon="setting.svg" />

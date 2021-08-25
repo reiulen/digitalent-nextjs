@@ -141,6 +141,12 @@ const TambahArtikel = () => {
       })
         .then((result) => {
           if (result.isConfirmed) {
+            // if (success) {
+            //   dispatch({
+            //     type: NEW_ARTIKEL_RESET,
+            //   });
+            // }
+
             dispatch(newArtikel(data));
 
             console.log(data);
@@ -318,7 +324,9 @@ const TambahArtikel = () => {
                   </div>
                   
                 </div>
-                
+                {
+                  console.log (kategori)
+                }
 
                 <div className="form-group row">
                   <label
@@ -349,9 +357,12 @@ const TambahArtikel = () => {
                         kategori.kategori &&
                         kategori.kategori.map((row) => {
                           return (
-                            <option key={row.id} value={row.id}>
-                              {row.nama_kategori}
-                            </option>
+                            row.jenis_kategori == "Artikel" ?
+                              <option key={row.id} value={row.id}>
+                                {row.nama_kategori}
+                              </option>
+                            :
+                              null
                           );
                         })
                       )}
