@@ -430,8 +430,11 @@ const Faq = () => {
                                     </table> : ''
                                 }
                             </div>
+                            {
+                                console.log (faq)
+                            }
 
-                            <div className="row">
+                            {/* <div className="row">
                                 {faq && faq.perPage < faq.total &&
                                     <div className="table-pagination">
                                         <Pagination
@@ -477,6 +480,50 @@ const Faq = () => {
                                         </div>
                                     </div> : ''
                                 }
+                            </div> */}
+                            <div className="row">
+                                <div className="table-pagination">
+                                    <Pagination
+                                        activePage={page}
+                                        itemsCountPerPage={faq.perPage}
+                                        totalItemsCount={faq.total}
+                                        pageRangeDisplayed={3}
+                                        onChange={handlePagination}
+                                        nextPageText={'>'}
+                                        prevPageText={'<'}
+                                        firstPageText={'<<'}
+                                        lastPageText={'>>'}
+                                        itemClass='page-item'
+                                        linkClass='page-link'
+                                    />
+                                </div>
+
+                                <div className="table-total ml-auto">
+                                    <div className="row">
+                                        <div className="col-4 mr-0 p-0">
+                                            <select
+                                                className="form-control"
+                                                id="exampleFormControlSelect2"
+                                                style={{
+                                                    width: "65px",
+                                                    background: "#F3F6F9",
+                                                    borderColor: "#F3F6F9",
+                                                    color: "#9E9E9E",
+                                                }}
+                                                onChange={e => handleLimit(e.target.value)}
+                                                onBlur={e => handleLimit(e.target.value)}
+                                            >
+                                                <option value='5'>5</option>
+                                                <option value='10'>10</option>
+                                                <option value='15'>15</option>
+                                                <option value='20'>20</option>
+                                            </select>
+                                        </div>
+                                        <div className="col-8 my-auto">
+                                            <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {faq.total}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

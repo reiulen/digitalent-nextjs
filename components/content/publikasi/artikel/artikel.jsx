@@ -352,6 +352,9 @@ const Artikel = () => {
                 </div>
               </div>
             </div>
+            {/* {
+              console.log (artikel)
+            } */}
 
             <div className="table-page mt-5">
               <div className="table-responsive">
@@ -373,14 +376,14 @@ const Artikel = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {!artikel || (artikel && artikel.artikel.length === 0) ? (
+                      {!artikel || (artikel && artikel.length === 0) ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Masih Kosong
                         </td>
                       ) : (
                         artikel &&
-                        artikel.artikel &&
-                        artikel.artikel.map((artikel, i) => {
+                        // artikel.artikel &&
+                        artikel.map((artikel, i) => {
                           return (
                             <tr key={artikel.id}>
                               {/* <td className="align-middle text-center">
