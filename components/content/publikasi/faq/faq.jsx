@@ -15,7 +15,7 @@ import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteFaq, updatePinFaq } from '../../../../redux/actions/publikasi/faq.actions'
+import { deleteFaq, updatePinFaq, getAllFaqPagination } from '../../../../redux/actions/publikasi/faq.actions'
 import { DELETE_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 
 const Faq = () => {
@@ -28,6 +28,7 @@ const Faq = () => {
     const router = useRouter()
 
     const { loading, error, faq } = useSelector(state => state.allFaq)
+    const { paginateFaq } = useSelector(state => state.paginationFaq)
     const { error: deleteError, isDeleted } = useSelector(state => state.deleteFaq)
 
     const [startDate, setStartDate] = useState(null);
@@ -42,6 +43,8 @@ const Faq = () => {
     page = Number(page)
 
     useEffect(() => {
+        // dispatch (getAllFaqPagination())
+
         if (limit !== null && search === "") {
             router.push(`${router.pathname}?page=1&limit=${limit}`)
 
@@ -242,9 +245,6 @@ const Faq = () => {
                 </div>
             </div>
 
-            {
-                console.log (faq)
-            }
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
@@ -325,9 +325,6 @@ const Faq = () => {
                                 </div>
                             </div>
                         </div>
-                        {/* {
-                            console.log (faq)
-                        } */}
 
                         <div className="table-page mt-5">
                             <div className="table-responsive">
@@ -355,9 +352,6 @@ const Faq = () => {
                                                     <td className='align-middle text-center' colSpan={9}>Data Masih Kosong</td> :
                                                     faq && faq.faq.map((row, i) => {
                                                         return <tr key={row.id}>
-                                                            {/* {
-                                                                console.log (row)
-                                                            } */}
                                                             {/* <td className='align-middle text-center'>
                                                                 <span className="badge badge-secondary text-muted">
                                                                     {i + 1 * (page * 5 || limit) - 4}
@@ -435,6 +429,18 @@ const Faq = () => {
                                     </table> : ''
                                 }
                             </div>
+
+                            {/* {
+                                console.log (faq)
+                            }
+
+                            {
+                                console.log ("test")
+                            }
+
+                            {
+                                console.log (paginateFaq)
+                            }    */}
 
                             <div className="row">
                                 {faq && faq.perPage < faq.total &&
