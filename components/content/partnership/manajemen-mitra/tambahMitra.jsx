@@ -5,6 +5,10 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import Swal from "sweetalert2";
+import {
+  getProvinces
+} from "../../../../redux/actions/partnership/mitra.actions";
 
 // import {
 //   newMitra,
@@ -20,9 +24,45 @@ import axios from "axios";
 const TambahMitra = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [institution_name, setInstitution_name] = useState("")
+  const [email, setEmail] = useState("")
+  const [agency_logo, setAgency_logo] = useState("")
+  const [wesite, setWesite] = useState("")
+  const [address, setAddress] = useState("")
+  const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("")
+  const [indonesia_cities_id, setIndonesia_cities_id] = useState("")
+  const [postal_code, setPostal_code] = useState("")
+  const [pic_name, setPic_name] = useState("")
+  const [pic_contact_number, setPic_contact_number] = useState("")
+  const [pic_email, setPic_email] = useState("")
+  // pertama kali load provinces set kesini
+  const [allProvinces, setAllProvinces] = useState([])
+
+  const [error, setError] = useState({
+    institution_name:"",
+    email:'',
+    agency_logo: '',
+    wesite: '',
+    address: '',
+    indonesia_provinces_id: '',
+    indonesia_cities_id:'',
+    postal_code:'',
+    pic_name:'',
+    pic_contact_number:'',
+    pic_email:'',
+})
+
+const onSubmit = (e) => {
+  e.preventDefault()
+  // if()
+
+
+}
+
 
 
   useEffect(() => {
+    dispatch(getProvinces())
   }, []);
 
 
@@ -72,12 +112,15 @@ const TambahMitra = () => {
                   Nama Lembaga
                 </label>
                 <div className="col-sm-10">
+                  
                   <input
+                  onFocus={()=>setError({...error,institution_name:""})}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nama Lembaga"
-                    // onChange={(e) => setNamaLembaga(e.target.value)}
+                    onChange={(e) => setInstitution_name(e.target.value)}
                   />
+                  {error.institution_name ? <p className="error-text">{error.institution_name}</p>:"" }
                 </div>
               </div>
 
@@ -90,11 +133,13 @@ const TambahMitra = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
+                  onFocus={()=>setError({...error,email:""})}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Email"
-                    // onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
+                  {error.email ? <p className="error-text">{error.email}</p>:"" }
                 </div>
               </div>
 
@@ -106,12 +151,16 @@ const TambahMitra = () => {
                   Website
                 </label>
                 <div className="col-sm-10">
+                  
+                  
                   <input
+                  onFocus={()=>setError({...error,wesite:""})}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Website"
-                    // onChange={(e) => setWebsite(e.target.value)}
+                    onChange={(e) => setWesite(e.target.value)}
                   />
+                  {error.wesite ? <p className="error-text">{error.wesite}</p>:"" }
                 </div>
               </div>
 
@@ -123,12 +172,15 @@ const TambahMitra = () => {
                   Alamat
                 </label>
                 <div className="col-sm-10">
+                  
                   <input
+                  onFocus={()=>setError({...error,address:""})}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Alamat"
-                    // onChange={(e) => setAlamat(e.target.value)}
+                    onChange={(e) => setAddress(e.target.value)}
                   />
+                  {error.address ? <p className="error-text">{error.address}</p>:"" }
                 </div>
               </div>
 
@@ -191,11 +243,13 @@ const TambahMitra = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
+                  onFocus={()=>setError({...error,postal_code:""})}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Kode Pos"
-                    // onChange={(e) => setKodePos(e.target.value)}
+                    onChange={(e) => setPostal_code(e.target.value)}
                   />
+                  {error.postal_code ? <p className="error-text">{error.postal_code}</p>:"" }
                 </div>
               </div>
 
@@ -208,11 +262,13 @@ const TambahMitra = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
+                  onFocus={()=>setError({...error,pic_name:""})}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nama"
-                    // onChange={(e) => setNamaPic(e.target.value)}
+                    onChange={(e) => setPic_name(e.target.value)}
                   />
+                  {error.pic_name ? <p className="error-text">{error.pic_name}</p>:"" }
                 </div>
               </div>
 
@@ -225,11 +281,13 @@ const TambahMitra = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
+                  onFocus={()=>setError({...error,pic_contact_number:""})}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan NO. Kontak"
-                    // onChange={(e) => setNoPic(e.target.value)}
+                    onChange={(e) => pic_contact_number(e.target.value)}
                   />
+                  {error.pic_contact_number ? <p className="error-text">{error.pic_contact_number}</p>:"" }
                 </div>
               </div>
 
@@ -242,11 +300,13 @@ const TambahMitra = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
+                  onFocus={()=>setError({...error,pic_email:""})}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Email"
-                    // onChange={(e) => setEmailPic(e.target.value)}
+                    onChange={(e) => setPic_email(e.target.value)}
                   />
+                  {error.pic_email ? <p className="error-text">{error.pic_email}</p>:"" }
                 </div>
               </div>
 
@@ -261,7 +321,7 @@ const TambahMitra = () => {
                     {/* <Link href="/partnership/manajemen-mitra"> */}
                     <button
                       className="btn btn-primary btn-sm"
-                      // onClick={(e) => onSubmit(e)}
+                      onClick={(e) => onSubmit(e)}
                     >
                       Simpan
                     </button>

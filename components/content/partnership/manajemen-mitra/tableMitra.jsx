@@ -31,6 +31,7 @@ const Table = () => {
     dispatch(searchByKey(keyWord))
   };
 
+  const [successDelete, setSuccessDelete] = useState(false);
   const handleDelete = (id) => {
 
     Swal.fire({
@@ -45,21 +46,54 @@ const Table = () => {
     }).then(async (result) => {
       if (result.value) {
         dispatch(deleteMitra(id))
-      }else{
-        dispatch(reloadTable())
+        setSuccessDelete(true);
       }
     })
-
-
-
   }
-
+  const onNewReset = () => {
+    setSuccessDelete(false);
+    // router.replace(`/partnership/master-kategori-kerjasama`);
+  };
+  // dipake ketika selesai tambah data mitra
+const [success, setSuccess] = useState(false)
   useEffect(() => {
     dispatch(fetchMitra())
   }, [allMitra.keyword,allMitra.status_reload])
 
   return (
     <PageWrapper>
+
+      {success || successDelete ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: success ? "#C9F7F5" : "#f7c9c9" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{color:success?"#1BC5BD":"#c51b1b"}}></i>
+          </div>
+          <div className="alert-text" style={{color:success?"#1BC5BD":"#c51b1b"}}>
+            {successDelete
+              ? "Berhasil menghapus data Data"
+              : "Berhasil menyimpan Data"}
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       
       <div className="col-lg-12 col-md-12">
         <div className="row">

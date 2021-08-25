@@ -3,3 +3,4 @@ export const MITRA_SUCCESS = "MITRA_SUCCESS";
 export const MITRA_FAIL = "MITRA_FAIL";
 export const SEARCH_BY_KEY = "SEARCH_BY_KEY";
 export const SUCESS_DELETE_MITRA = "SUCESS_DELETE_MITRA";
+export const SUCESS_PROVINCE = "SUCESS_PROVINCE";

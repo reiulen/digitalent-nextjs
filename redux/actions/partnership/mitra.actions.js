@@ -6,6 +6,7 @@ import {
   MITRA_FAIL,
   SEARCH_BY_KEY,
   SUCESS_DELETE_MITRA,
+  SUCESS_PROVINCE,
 } from "../../types/partnership/mitra.type";
 
 export async function getAllMitra(params) {
@@ -70,6 +71,19 @@ export const deleteMitra = (id) => {
       dispatch({ type: SUCESS_DELETE_MITRA });
     } catch (error) {
       console.log("gagal delete mitra", error);
+    }
+  };
+};
+export const getProvinces = () => {
+  return async (dispatch, getState) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
+      );
+      console.log("respon data provinsi", data);
+      dispatch({ type: SUCESS_PROVINCE });
+    } catch (error) {
+      console.log("gagal get province", error);
     }
   };
 };

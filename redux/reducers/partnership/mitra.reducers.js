@@ -4,6 +4,7 @@ import {
   MITRA_FAIL,
   SEARCH_BY_KEY,
   SUCESS_DELETE_MITRA,
+  SUCESS_PROVINCE,
 } from "../../types/partnership/mitra.type";
 
 const statuslist = {
@@ -25,6 +26,8 @@ const initialState = {
   limit: 5,
   page: 1,
   card: "",
+  //
+  provinces: [],
 };
 
 export const allMitraReducer = (state = initialState, action) => {
@@ -61,6 +64,12 @@ export const allMitraReducer = (state = initialState, action) => {
       return {
         ...state,
         status_reload: state.status_reload === "" ? "reload" : "",
+      };
+
+    case SUCESS_PROVINCE:
+      return {
+        ...state,
+        provinces: action.data,
       };
 
     default:
