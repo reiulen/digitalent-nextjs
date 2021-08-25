@@ -38,6 +38,7 @@ import {
 } from "./publikasi/galeri.reducers";
 import {
   allFaqReducer,
+  paginationFaqReducer,
   newFaqReducer,
   deleteFaqReducer,
   detailFaqReducer,
@@ -171,6 +172,7 @@ const reducer = combineReducers({
 
   allFaq: allFaqReducer,
   newFaq: newFaqReducer,
+  paginationFaq: paginationFaqReducer,
   deleteFaq: deleteFaqReducer,
   detailFaq: detailFaqReducer,
   updateFaq: updateFaqReducer,
