@@ -327,7 +327,7 @@ const Tambah = () => {
                 )
               })
               }
-  {/* end looping */}
+  {/* end loopingg */}
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
