@@ -487,4 +487,5 @@ const TambahArtikel = () => {
   );
 };
 
+
 export default TambahArtikel;
