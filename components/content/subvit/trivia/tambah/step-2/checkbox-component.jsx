@@ -91,9 +91,9 @@ const CheckboxComponent = ({ props_answer, props_answer_key, props_duration }) =
                                 <span className="text-muted">Silahkan Pilihan {x.key}</span>
                             </div>
                             <div className="col-sm-12 col-md-3">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name='image' onChange={e => handleInputChange(e, i)} />
-                                    <label class="custom-file-label" for="customFile">
+                                <div className="custom-file">
+                                    <input type="file" className="custom-file-input" name='image' onChange={e => handleInputChange(e, i)} />
+                                    <label className="custom-file-label" htmlFor="customFile">
                                         Choose file
                                     </label>
                                 </div>
@@ -145,17 +145,17 @@ const CheckboxComponent = ({ props_answer, props_answer_key, props_duration }) =
             <div className="form-group row">
                 <div className="col-sm-6 col-md-3">
                     <p>Durasi Soal</p>
-                    <div class="input-group">
+                    <div className="input-group">
                         <input
                             type="number"
-                            class="form-control"
+                            className="form-control"
                             aria-describedby="basic-addon2"
                             value={duration}
                             onChange={(e) => { setDuration(e.target.value); props_duration(e.target.value) }}
                             min={1}
                         />
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2">
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">
                                 Detik
                             </span>
                         </div>

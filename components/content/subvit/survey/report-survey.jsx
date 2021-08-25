@@ -29,7 +29,7 @@ const ReportSurvey = () => {
     if (limit) {
       router.push(`${router.pathname}?id=${id}&page=1&limit=${limit}`)
     }
-  }, [dispatch, limit]);
+  }, [dispatch, limit, router, id]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {

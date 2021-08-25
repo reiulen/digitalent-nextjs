@@ -62,7 +62,7 @@ const StepTwo = () => {
         });
       }
     }
-  }, [dispatch, error, success, typeSave]);
+  }, [dispatch, error, success, typeSave, id, metode, router]);
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -315,10 +315,10 @@ const StepTwo = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 col-md-8">
-                  <div class="custom-file">
+                  <div className="custom-file">
                     <span>Gambar Pertanyaan (Opsional)</span>
-                    <input type="file" class="custom-file-input" name='question_image' onChange={e => handleSoalImage(e)} />
-                    <label class="custom-file-label" for="customFile">
+                    <input type="file" className="custom-file-input" name='question_image' onChange={e => handleSoalImage(e)} />
+                    <label className="custom-file-label" htmlFor="customFile">
                       Choose file
                     </label>
                   </div>
@@ -345,9 +345,9 @@ const StepTwo = () => {
                         <span className="text-muted">Silahkan Pilihan {x.key}</span>
                       </div>
                       <div className="col-sm-12 col-md-3">
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" name='image' onChange={e => handleInputChange(e, i)} />
-                          <label class="custom-file-label" for="customFile">
+                        <div className="custom-file">
+                          <input type="file" className="custom-file-input" name='image' onChange={e => handleInputChange(e, i)} />
+                          <label className="custom-file-label" htmlFor="customFile">
                             Choose file
                           </label>
                         </div>

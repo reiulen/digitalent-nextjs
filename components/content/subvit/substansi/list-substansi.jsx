@@ -49,7 +49,7 @@ const ListSubstansi = () => {
         type: DELETE_SUBTANCE_QUESTION_BANKS_RESET
       })
     }
-  }, [dispatch, limit, isDeleted]);
+  }, [dispatch, limit, isDeleted, router]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`
@@ -90,11 +90,6 @@ const ListSubstansi = () => {
       }
     });
   };
-
-  let count = subtance.total
-  if (search || limit && limit != 5) {
-    count = subtance.totalFiltered
-  }
 
   return (
     <PageWrapper>
@@ -244,11 +239,11 @@ const ListSubstansi = () => {
                               </td>
                               <td className="align-middle">
                                 {subtance.status === true ? (
-                                  <span class="label label-inline label-light-success font-weight-bold">
+                                  <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
                                 ) : (
-                                  <span class="label label-inline label-light-warning font-weight-bold">
+                                  <span className="label label-inline label-light-warning font-weight-bold">
                                     Draft
                                   </span>
                                 )}

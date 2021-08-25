@@ -21,7 +21,7 @@ const StepInputPublish = ({ step }) => {
                     <div className="my-5 mx-3">
                         <h1 className={`badge badge-secondary h1 ${stepNumber1}`}>1</h1>
                     </div>
-                    <div class="my-5">
+                    <div className="my-5">
                         <h5>Buat Soal</h5>
                         <p>Masukan Informasi Soal</p>
                     </div>
@@ -31,7 +31,7 @@ const StepInputPublish = ({ step }) => {
                         <div className="my-5 mx-3">
                             <h1 className={`badge badge-secondary h1 ${stepNumber2}`}>2</h1>
                         </div>
-                        <div class="my-5">
+                        <div className="my-5">
                             <h5>Bank Soal</h5>
                             <p>Masukan Soal</p>
                         </div>

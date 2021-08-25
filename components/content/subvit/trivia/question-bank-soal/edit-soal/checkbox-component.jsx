@@ -80,10 +80,10 @@ const CheckboxComponent = ({ propsAnswer, propsStatus, propsDuration, propsAnswe
                                             onChange={e => handleInputChange(e, i)}
                                             autoComplete='off'
                                         />
-                                        <div class="custom-file mt-2">
+                                        <div className="custom-file mt-2">
                                             <span>Gambar Pertanyaan (Opsional)</span>
-                                            <input type="file" class="custom-file-input" name='question_image' />
-                                            <label class="custom-file-label" for="customFile">
+                                            <input type="file" className="custom-file-input" name='question_image' />
+                                            <label className="custom-file-label" htmlFor="customFile">
                                                 Choose file
                                             </label>
                                         </div>
