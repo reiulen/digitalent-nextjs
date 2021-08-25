@@ -44,7 +44,7 @@ import {
   CHANGE_STATUS_LIST_M,
   CANCEL_CHANGE_CATEGORY,
   CANCEL_CHANGE_EMAIL,
-  RELOAD_TABLE
+  RELOAD_TABLE,
 } from "../../types/partnership/management_cooporation.type";
 import axios from "axios";
 import router from "next/router";
@@ -159,6 +159,7 @@ export const fetchAllMK = (keyword) => {
     try {
       const { data } = await debouncedFetchMC(params);
       let dataSortirAll = await debouncedFetchMC(paramss);
+      let totalData = dataSortirAll.data.data.list_cooperations.length;
       // get total data status aktif
       let resultDataActive = dataSortirAll.data.data.list_cooperations.filter(
         (items) => items.status.name === "aktif"
@@ -238,7 +239,8 @@ export const fetchAllMK = (keyword) => {
           data,
           resultDataActive,
           resultDataNonActive,
-          resultDataAnother
+          resultDataAnother,
+          totalData
         )
       );
     } catch (error) {
@@ -383,7 +385,8 @@ export const successFetchAllMK = (
   data,
   resultDataActive,
   resultDataNonActive,
-  resultDataAnother
+  resultDataAnother,
+  totalData
 ) => {
   return {
     type: MANAGEMENT_COOPORATION_SUCCESS,
@@ -391,6 +394,7 @@ export const successFetchAllMK = (
     resultDataActive,
     resultDataNonActive,
     resultDataAnother,
+    totalData,
   };
 };
 export const errorfetchAllMK = () => {

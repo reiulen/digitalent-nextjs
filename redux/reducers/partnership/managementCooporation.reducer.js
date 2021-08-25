@@ -74,9 +74,10 @@ const initialState = {
   singleCooporationSelect: [],
   //
   cooperationById: [],
+  totalData: 0,
 };
 
-export const allMCooporationReducer = (state = initialState, action) => {
+export const allMCooporationReducerMK = (state = initialState, action) => {
   switch (action.type) {
     case MANAGEMENT_COOPORATION_REQUEST:
       return {
@@ -92,6 +93,7 @@ export const allMCooporationReducer = (state = initialState, action) => {
         totalDataActive: action.resultDataActive.length,
         totalDataNonActive: action.resultDataNonActive.length,
         totalDataAnother: action.resultDataAnother.length,
+        totalData: action.totalData,
       };
 
     case MANAGEMENT_COOPORATION_FAIL:
