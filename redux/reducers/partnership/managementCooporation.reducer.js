@@ -77,7 +77,7 @@ const initialState = {
   totalData: 0,
 };
 
-export const allMCooporationReducer = (state = initialState, action) => {
+export const allMCooporationReducerMK = (state = initialState, action) => {
   switch (action.type) {
     case MANAGEMENT_COOPORATION_REQUEST:
       return {
