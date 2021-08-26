@@ -350,17 +350,17 @@ const DetailSubstansi = () => {
                             </td>
                             <td className="align-middle">
                               {question.status === true ? (
-                                <span class="label label-inline label-light-success font-weight-bold">
+                                <span className="label label-inline label-light-success font-weight-bold">
                                   Publish
                                 </span>
                               ) : (
-                                <span class="label label-inline label-light-warning font-weight-bold">
+                                <span className="label label-inline label-light-warning font-weight-bold">
                                   Draft
                                 </span>
                               )}
                             </td>
                             <td className="align-middle">
-                              <ButtonAction icon="write.svg" link={`edit-soal-substansi?id=${question.subtance_question_bank_id}`} />
+                              <ButtonAction icon="write.svg" link={`edit-soal-substansi?id=${question.id}`} />
                               <button
                                 onClick={() => handleDelete(question.id)}
                                 className="btn mr-1"

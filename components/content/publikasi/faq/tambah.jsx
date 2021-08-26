@@ -49,7 +49,7 @@ const TambahFaq = () => {
     const [judul, setJudulPertanyaan] = useState('')
     const [jawaban, setJawaban] = useState('');
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUsersId] = useState(1)
+    const [users_id, setUsersId] = useState(3)
     const [pinned, setPinnedFaq] = useState(false)
     const [publish, setPublish] = useState(false)
     const [, forceUpdate] = useState();
@@ -137,7 +137,9 @@ const TambahFaq = () => {
                                     {simpleValidator.current.message("jawaban", jawaban, "required", { className: "text-danger" })}
                                 </div>
                             </div>
-
+                            {
+                                console.log (kategori)
+                            }
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
@@ -156,9 +158,12 @@ const TambahFaq = () => {
                                             kategori.kategori &&
                                             kategori.kategori.map((row) => {
                                                 return (
-                                                    <option key={row.id} value={row.id}>
-                                                        {row.jenis_kategori}
-                                                    </option>
+                                                    row.jenis_kategori === "Faq" ?
+                                                        <option key={row.id} value={row.id}>
+                                                            {row.nama_kategori}
+                                                        </option>
+                                                    :
+                                                        null
                                                 );
                                             })
                                         )}

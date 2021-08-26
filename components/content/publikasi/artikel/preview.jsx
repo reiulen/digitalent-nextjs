@@ -30,6 +30,7 @@ const Preview = () => {
     const [created_at, setCreatedAt] = useState(new Date (artikel.created_at).toLocaleDateString("en-IN"))
     const [nama, setNamaKategori] = useState(artikel.nama)  
     const [gambar, setGambar] = useState(artikel.gambar)
+    const [user, setUser] = useState(artikel.dibuat)
     // const [isi_artikel, setIsiArtikel] = useState( () => decodeHTML(artikel.isi_artikel))
     const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel)
     const [tags, setTags] = useState(artikel.tag)
@@ -48,7 +49,12 @@ const Preview = () => {
     // }
 
     return (
-        <>
+        <>  
+            <div className="text-center mt-5">
+                <h1 className="mt-5">
+                    {judul_artikel}
+                </h1>
+            </div>
             <Image
                 src={Backdrop} 
                 alt="backdrop"
@@ -60,31 +66,35 @@ const Preview = () => {
                     <div className="card card-custom card-stretch gutter-b">
 
                         <div className="card-body pt-0">
-                                <div className="text-center mt-5">
+                                {/* <div className="text-center mt-5">
                                     <h3>
                                         {judul_artikel}
                                     </h3>
-                                </div>
+                                </div> */}
 
                                 <div className="d-flex justify-content-center my-3">
-                                    <img 
+                                    <Image 
                                         // src={gambar} 
                                         src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + gambar}
                                         alt="gambar-artikel"
-                                        style={{
-                                                height:"50vh", 
-                                                // width:"100%", 
-                                                objectFit: "cover"
-                                            }} 
+                                        objectFit="cover"
+                                        height= "50vh"
+                                        width= "100vh"
+                                        // layout="fill"
+                                        // style={{height:"50vh", width: "100%"}} 
                                     />
                                 </div>
+
+                                {/* {
+                                    console.log (artikel)
+                                } */}
 
                                 <div className="row">
                                     <div style={{ background: "#F3F6F9"}} 
                                         className="mr-5 px-3 py-1 rounded">
                                         <i className="flaticon2-user"></i>
                                         <span className="ml-1">
-                                            User
+                                            User {user}
                                         </span>
                                     </div>
 

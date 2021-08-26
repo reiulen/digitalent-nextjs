@@ -15,7 +15,7 @@ import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteFaq, updatePinFaq } from '../../../../redux/actions/publikasi/faq.actions'
+import { deleteFaq, updatePinFaq, getAllFaqPagination } from '../../../../redux/actions/publikasi/faq.actions'
 import { DELETE_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 
 const Faq = () => {
@@ -28,6 +28,7 @@ const Faq = () => {
     const router = useRouter()
 
     const { loading, error, faq } = useSelector(state => state.allFaq)
+    const { paginateFaq } = useSelector(state => state.paginationFaq)
     const { error: deleteError, isDeleted } = useSelector(state => state.deleteFaq)
 
     const [startDate, setStartDate] = useState(null);
@@ -42,6 +43,8 @@ const Faq = () => {
     page = Number(page)
 
     useEffect(() => {
+        // dispatch (getAllFaqPagination())
+
         if (limit !== null && search === "") {
             router.push(`${router.pathname}?page=1&limit=${limit}`)
 
@@ -242,7 +245,6 @@ const Faq = () => {
                 </div>
             </div>
 
-
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
@@ -350,18 +352,23 @@ const Faq = () => {
                                                     <td className='align-middle text-center' colSpan={9}>Data Masih Kosong</td> :
                                                     faq && faq.faq.map((row, i) => {
                                                         return <tr key={row.id}>
-                                                            {/* {
-                                                                console.log (row)
-                                                            } */}
                                                             {/* <td className='align-middle text-center'>
                                                                 <span className="badge badge-secondary text-muted">
                                                                     {i + 1 * (page * 5 || limit) - 4}
                                                                 </span>
                                                             </td> */}
                                                             <td className='align-middle text-center'>
-                                                                <span className="badge badge-secondary text-muted">
-                                                                    {i + 1 * (page * limit) - (limit - 1)}
-                                                                </span>
+                                                                {
+                                                                    limit === null ?
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                                                    </span>
+                                                                    :
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * limit) - (limit - 1)}
+                                                                    </span>
+                                                                }
+                                                                
                                                             </td>
                                                             <td className='align-middle'>{row.judul}</td>
                                                             <td className='align-middle'>{row.kategori}</td>
@@ -369,7 +376,7 @@ const Faq = () => {
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
                                                                 ) : (
-                                                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                                                    <span className="label label-inline label-light-danger font-weight-bold">
                                                                         Belum dipublish
                                                                     </span>
                                                                 )}
@@ -389,22 +396,25 @@ const Faq = () => {
                                                                         onChange={(checked) => onSetPin(checked, row.id)}
                                                                     />
                                                                     :
-                                                                    ""
+                                                                    <div className="text-center"> --- </div>
                                                                 }
                                                                 
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (
-                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                    <span className="label label-inline label-light-success font-weight-bold">
                                                                         Publish
                                                                     </span>
                                                                 ) : (
-                                                                    <span class="label label-inline label-light-warning font-weight-bold">
+                                                                    <span className="label label-inline label-light-warning font-weight-bold">
                                                                         Belum dipublish
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>{row.role}</td>
+                                                            <td className='align-middle'>
+                                                                {/* {row.role} */}
+                                                                Super Admin
+                                                            </td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/faq/${row.id}`} />
                                                                 <button
@@ -434,7 +444,19 @@ const Faq = () => {
                                 console.log (faq)
                             }
 
-                            {/* <div className="row">
+                            {/* {
+                                console.log (faq)
+                            }
+
+                            {
+                                console.log ("test")
+                            }
+
+                            {
+                                console.log (paginateFaq)
+                            }    */}
+
+                            <div className="row">
                                 {faq && faq.perPage < faq.total &&
                                     <div className="table-pagination">
                                         <Pagination
@@ -452,7 +474,7 @@ const Faq = () => {
                                         />
                                     </div>
                                 }
-                                {faq && faq.total > 5 ?
+                                {/* {faq && faq.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
@@ -479,25 +501,7 @@ const Faq = () => {
                                             </div>
                                         </div>
                                     </div> : ''
-                                }
-                            </div> */}
-                            <div className="row">
-                                <div className="table-pagination">
-                                    <Pagination
-                                        activePage={page}
-                                        itemsCountPerPage={faq.perPage}
-                                        totalItemsCount={faq.total}
-                                        pageRangeDisplayed={3}
-                                        onChange={handlePagination}
-                                        nextPageText={'>'}
-                                        prevPageText={'<'}
-                                        firstPageText={'<<'}
-                                        lastPageText={'>>'}
-                                        itemClass='page-item'
-                                        linkClass='page-link'
-                                    />
-                                </div>
-
+                                } */}
                                 <div className="table-total ml-auto">
                                     <div className="row">
                                         <div className="col-4 mr-0 p-0">

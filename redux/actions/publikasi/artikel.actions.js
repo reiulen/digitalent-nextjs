@@ -51,6 +51,7 @@ export const getAllArtikel =
         type: ARTIKEL_SUCCESS,
         payload: data,
       });
+
     } catch (error) {
       dispatch({
         type: ARTIKEL_FAIL,
@@ -121,6 +122,7 @@ export const updateArtikel = (artikelData) => async (dispatch) => {
       type: UPDATE_ARTIKEL_SUCCESS,
       payload: data,
     });
+    
   } catch (error) {
     dispatch({
       type: UPDATE_ARTIKEL_FAIL,

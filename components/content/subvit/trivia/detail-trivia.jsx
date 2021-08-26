@@ -267,7 +267,7 @@ const DetailTrivia = () => {
                                                                 </span>
                                                             </td>
                                                             <td className="align-middle">
-                                                                {question.subtance_question_bank_id}
+                                                                {question.id}
                                                             </td>
                                                             <td className="align-middle">
                                                                 {question.question}
@@ -280,17 +280,17 @@ const DetailTrivia = () => {
                                                             </td>
                                                             <td className="align-middle">
                                                                 {question.status === true ? (
-                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                    <span className="label label-inline label-light-success font-weight-bold">
                                                                         Publish
                                                                     </span>
                                                                 ) : (
-                                                                    <span class="label label-inline label-light-warning font-weight-bold">
+                                                                    <span className="label label-inline label-light-warning font-weight-bold">
                                                                         Draft
                                                                     </span>
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">
-                                                                <ButtonAction icon="write.svg" />
+                                                                <ButtonAction icon="write.svg" link={`edit-soal-trivia?id=${question.id}`} />
                                                                 <button
                                                                     onClick={() => handleDelete(question.id)}
                                                                     className="btn mr-1"

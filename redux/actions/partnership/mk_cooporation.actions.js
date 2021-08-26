@@ -22,7 +22,7 @@ export async function getAllMKCooporation(params) {
     }
   );
 }
-let debouncedFetchProduct = debounce(getAllMKCooporation, 1000);
+let debouncedFetchProduct = debounce(getAllMKCooporation, 0);
 
 // func fetch data and validate
 export const fetchAllMKCooporation = (keyword) => {

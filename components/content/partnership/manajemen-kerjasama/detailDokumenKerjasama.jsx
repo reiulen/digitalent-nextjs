@@ -40,7 +40,9 @@ const DetailDokumenKerjasama = () => {
   useEffect(() => {
     getSingleValue(router.query.id)
     dispatch(getSingleCooperation(router.query.id));
+    
   }, [router.query.id]);
+
   return (
     <PageWrapper>
 

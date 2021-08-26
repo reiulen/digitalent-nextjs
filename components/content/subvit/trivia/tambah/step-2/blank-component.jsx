@@ -116,17 +116,17 @@ const BlankComponent = ({ props_answer, props_duration }) => {
             <div className="form-group row">
                 <div className="col-sm-6 col-md-3">
                     <p>Durasi Soal</p>
-                    <div class="input-group">
+                    <div className="input-group">
                         <input
                             type="number"
-                            class="form-control"
+                            className="form-control"
                             aria-describedby="basic-addon2"
                             value={duration}
                             onChange={(e) => { setDuration(e.target.value); props_duration(e.target.value) }}
                             min={1}
                         />
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2">
+                        <div className="input-group-append">
+                            <span className="input-group-text" id="basic-addon2">
                                 Detik
                             </span>
                         </div>

@@ -51,7 +51,7 @@ const EditFaq = () => {
     const [judul, setJudulPertanyaan] = useState(faq.judul)
     const [jawaban, setJawaban] = useState(faq.jawaban);
     const [kategori_id, setKategoriId] = useState(faq.kategori_id)
-    const [users_id, setUsersId] = useState(1)
+    const [users_id, setUsersId] = useState(3)
     const [pinned, setPinnedFaq] = useState(faq.pinned === 1 ? true : false)
     const [publish, setPublish] = useState(faq.publish === 1 ? true : false)
     const [, forceUpdate] = useState();
@@ -91,6 +91,9 @@ const EditFaq = () => {
         <PageWrapper>
             {
                 console.log (faq)
+            }
+            {
+                console.log (kategori)
             }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -161,9 +164,12 @@ const EditFaq = () => {
                                             kategori.kategori &&
                                             kategori.kategori.map((row) => {
                                                 return (
-                                                    <option key={row.id} value={row.id}>
-                                                        {row.jenis_kategori}
-                                                    </option>
+                                                    row.jenis_kategori == "Faq" ?
+                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                                            {row.nama_kategori}
+                                                        </option>
+                                                    :
+                                                        null
                                                 );
                                             })
                                         )}

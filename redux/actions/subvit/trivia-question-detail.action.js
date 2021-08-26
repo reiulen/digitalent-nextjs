@@ -11,6 +11,15 @@ import {
     DELETE_TRIVIA_QUESTION_DETAIL_SUCCESS,
     DELETE_TRIVIA_QUESTION_DETAIL_FAIL,
 
+    DETAIL_TRIVIA_QUESTION_DETAIL_REQUEST,
+    DETAIL_TRIVIA_QUESTION_DETAIL_SUCCESS,
+    DETAIL_TRIVIA_QUESTION_DETAIL_FAIL,
+
+    UPDATE_TRIVIA_QUESTION_DETAIL_REQUEST,
+    UPDATE_TRIVIA_QUESTION_DETAIL_SUCCESS,
+    UPDATE_TRIVIA_QUESTION_DETAIL_RESET,
+    UPDATE_TRIVIA_QUESTION_DETAIL_FAIL,
+
     IMPORT_FILE_TRIVIA_QUESTION_DETAIL_REQUEST,
     IMPORT_FILE_TRIVIA_QUESTION_DETAIL_SUCCESS,
     IMPORT_FILE_TRIVIA_QUESTION_DETAIL_FAIL,
@@ -107,6 +116,45 @@ export const deleteTriviaQuestionDetail = (id) => async (dispatch) => {
     }
 }
 
+export const detailTriviaQuestionDetail = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DETAIL_TRIVIA_QUESTION_DETAIL_REQUEST })
+
+        const { data } = await axios.get(process.env.END_POINT_API_SUBVIT + `api/trivia-question-bank-details/${id}`)
+
+        dispatch({
+            type: DETAIL_TRIVIA_QUESTION_DETAIL_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DETAIL_TRIVIA_QUESTION_DETAIL_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const updateTriviaQuestionDetail = (id, dataBankSoal) => async (dispatch) => {
+    try {
+
+        dispatch({ type: UPDATE_TRIVIA_QUESTION_DETAIL_REQUEST })
+
+        const { data } = await axios.put(process.env.END_POINT_API_SUBVIT + `api/trivia-question-bank-details/${id}`, dataBankSoal)
+
+        dispatch({
+            type: UPDATE_TRIVIA_QUESTION_DETAIL_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: UPDATE_TRIVIA_QUESTION_DETAIL_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
 
 export const importFileTriviaQuestionDetail = (triviaDetailFile) => async (dispatch) => {
     try {

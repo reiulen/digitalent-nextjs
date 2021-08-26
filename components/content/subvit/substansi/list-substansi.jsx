@@ -33,7 +33,7 @@ const ListSubstansi = () => {
   page = Number(page);
 
   const [search, setSearch] = useState('')
-  const [limit, setLimit] = useState(null)
+  const [limit, setLimit] = useState(5)
 
   useEffect(() => {
     if (limit) {
@@ -49,7 +49,7 @@ const ListSubstansi = () => {
         type: DELETE_SUBTANCE_QUESTION_BANKS_RESET
       })
     }
-  }, [dispatch, limit, isDeleted]);
+  }, [dispatch, limit, isDeleted, router]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`
@@ -90,11 +90,6 @@ const ListSubstansi = () => {
       }
     });
   };
-
-  let count = subtance.total
-  if (search || limit && limit != 5) {
-    count = subtance.totalFiltered
-  }
 
   return (
     <PageWrapper>
@@ -226,7 +221,7 @@ const ListSubstansi = () => {
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
                                 <span className="badge badge-secondary text-muted">
-                                  {i + 1 * (page * limit || page * 5) - 4}
+                                  {i + 1 * (page * limit) - (limit - 1)}
                                 </span>
                               </td>
                               <td className="align-middle">
@@ -244,11 +239,11 @@ const ListSubstansi = () => {
                               </td>
                               <td className="align-middle">
                                 {subtance.status === true ? (
-                                  <span class="label label-inline label-light-success font-weight-bold">
+                                  <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
                                 ) : (
-                                  <span class="label label-inline label-light-warning font-weight-bold">
+                                  <span className="label label-inline label-light-warning font-weight-bold">
                                     Draft
                                   </span>
                                 )}

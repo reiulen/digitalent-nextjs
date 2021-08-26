@@ -34,11 +34,7 @@ const TambahTriviaStepOne = () => {
       if (typeSave === 'lanjut') {
         router.push({
           pathname: `/subvit/trivia/tambah/step-2-${metode}`,
-<<<<<<< HEAD
-          query: { id }
-=======
           query: { id, metode }
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
         })
       } else if (typeSave === 'draft') {
         router.push({
@@ -48,15 +44,11 @@ const TambahTriviaStepOne = () => {
       }
     }
 
-  }, [dispatch, error, success, typeSave]);
+  }, [dispatch, error, success, typeSave, router, metode, trivia.id]);
 
   const [academy_id, setAcademyId] = useState("");
   const [theme_id, setThemeId] = useState("");
   const [training_id, setTrainingId] = useState("");
-<<<<<<< HEAD
-  const [category, setCategory] = useState("");
-=======
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
   const [metode, setMetode] = useState('entry')
 
   const saveDraft = () => {
@@ -75,10 +67,6 @@ const TambahTriviaStepOne = () => {
         academy_id,
         theme_id,
         training_id,
-<<<<<<< HEAD
-        category,
-=======
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
       }
 
       dispatch(newTriviaQuestionBanks(data))
@@ -112,10 +100,6 @@ const TambahTriviaStepOne = () => {
         academy_id,
         theme_id,
         training_id,
-<<<<<<< HEAD
-        category,
-=======
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
       }
 
       dispatch(newTriviaQuestionBanks(data))
@@ -251,33 +235,6 @@ const TambahTriviaStepOne = () => {
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label "
                 >
-<<<<<<< HEAD
-                  Kategori
-                </label>
-                <div className="col-sm-10">
-                  <select
-                    name="category"
-                    id=""
-                    onChange={(e) => setCategory(e.target.value)}
-                    onBlur={e => { setCategory(e.target.value); simpleValidator.current.showMessageFor('category') }}
-                    className="form-control"
-                  >
-                    <option selected disabled> -Pilih Kategori-</option>
-                    <option value="test_subtansi"> Tes Substansi </option>
-                    <option value="mid_test"> Mid Tes </option>
-                  </select>
-                  <span className="text-muted">Silahkan Pilih Kategori</span>
-                  {simpleValidator.current.message('category', category, 'required', { className: 'text-danger' })}
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
-                >
-=======
->>>>>>> 8f98c0c98aed522953f188098266e73c67e33da0
                   Metode
                 </label>
                 <div className="col-sm-10">
@@ -334,7 +291,7 @@ const TambahTriviaStepOne = () => {
           </div>
         </div>
       </div>
-    </PageWrapper>
+    </PageWrapper >
   );
 };
 

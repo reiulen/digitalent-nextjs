@@ -59,7 +59,7 @@ const StepTwo = () => {
         type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET
       })
     }
-  }, [limit, isDeleted]);
+  }, [limit, isDeleted, dispatch, id, router]);
 
   const saveDraft = () => {
     router.push({

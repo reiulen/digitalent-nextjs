@@ -42,16 +42,12 @@ const EditTandaTangan = () => {
   useEffect(() => {
     // setEditorLoaded(true);
     if (isUpdated) {
-      setName("");
-      setPosition("");
-      setSignature("");
-
       router.push({
         pathname: `/partnership/tanda-tangan`,
         query: { success: true },
       });
     }
-  }, [dispatch, error, isUpdated]);
+  }, [dispatch, error, isUpdated, simpleValidator]);
 
   // const storageAPI = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
 
@@ -89,7 +85,6 @@ const EditTandaTangan = () => {
       }
       if (isUpdated) {
         dispatch({
-          // type: NEW_ARTIKEL_RESET
           type: UPDATE_TANDA_TANGAN_RESET,
         });
       }
@@ -102,7 +97,6 @@ const EditTandaTangan = () => {
         name: name,
         position,
         signature_image: signature,
-        status: "aktif",
       };
       dispatch(updateTandaTangan(detailTandaTangan.id, data));
     }

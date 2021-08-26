@@ -46,7 +46,7 @@ const ListSurvey = () => {
         type: DELETE_SURVEY_QUESTION_BANKS_RESET
       })
     }
-  }, [limit, isDeleted]);
+  }, [limit, isDeleted, dispatch, router]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {

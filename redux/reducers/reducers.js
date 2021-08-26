@@ -24,6 +24,7 @@ import {
 } from "./publikasi/imagetron.reducers";
 import {
   allKategoriReducer,
+  paginationKategoriReducer,
   newKategoriReducer,
   deleteKategoriReducer,
   detailKategoriReducer,
@@ -38,6 +39,7 @@ import {
 } from "./publikasi/galeri.reducers";
 import {
   allFaqReducer,
+  paginationFaqReducer,
   newFaqReducer,
   deleteFaqReducer,
   detailFaqReducer,
@@ -115,6 +117,8 @@ import {
   allTriviaQuestionDetailReducer,
   newTriviaQuestionDetailReducer,
   deleteTriviaQuestionDetailReducer,
+  detailTriviaQuestionDetailReducer,
+  updateTriviaQuestionDetailReducer,
   importFileTriviaQuestionDetailReducer,
   importImagesTriviaQuestionDetailReducer,
 } from "./subvit/trivia-question-detail.reducers";
@@ -135,12 +139,11 @@ import {
 } from "./partnership/mitra.reducers";
 
 //
-// import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
-// } from "./partnership/mitra.reducers";
 
-//
+// category management kerjasama
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
-import { allMCooporationReducer } from "./partnership/managementCooporation.reducer";
+// management kerjasama
+import { allMCooporationReducerMK } from "./partnership/managementCooporation.reducer";
 import {
   allTandaTanganReducer,
   newTandaTanganReducer,
@@ -181,6 +184,7 @@ const reducer = combineReducers({
 
   allFaq: allFaqReducer,
   newFaq: newFaqReducer,
+  paginationFaq: paginationFaqReducer,
   deleteFaq: deleteFaqReducer,
   detailFaq: detailFaqReducer,
   updateFaq: updateFaqReducer,
@@ -193,6 +197,7 @@ const reducer = combineReducers({
   updatedVideo: updateVideoReducer,
 
   allKategori: allKategoriReducer,
+  paginationKategori: paginationKategoriReducer,
   newKategori: newKategoriReducer,
   deleteKategori: deleteKategoriReducer,
   detailKategori: detailKategoriReducer,
@@ -252,6 +257,8 @@ const reducer = combineReducers({
   allTriviaQuestionDetail: allTriviaQuestionDetailReducer,
   newTriviaQuestionDetail: newTriviaQuestionDetailReducer,
   deleteTriviaQuestionDetail: deleteTriviaQuestionDetailReducer,
+  detailTriviaQuestionDetail: detailTriviaQuestionDetailReducer,
+  updateTriviaQuestionDetail: updateTriviaQuestionDetailReducer,
   importFileTriviaQuestionDetail: importFileTriviaQuestionDetailReducer,
   importImagesTriviaQuestionDetail: importImagesTriviaQuestionDetailReducer,
   // =============== end trivia ==================
@@ -268,10 +275,10 @@ const reducer = combineReducers({
   activeMitraCardGlobal: activeMitraCardReducer,
   nonActiveMitraCardGlobal: nonActiveMitraCardReducer,
 
-  // allMKCooporation: allMKCooporationReducer,
-
+  // category management kerjasama
   allMKCooporation: allMKCooporationReducer,
-  allMK: allMCooporationReducer,
+  // management kerjasama
+  allMK: allMCooporationReducerMK,
 
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,
