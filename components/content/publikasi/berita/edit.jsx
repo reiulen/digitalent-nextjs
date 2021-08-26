@@ -64,7 +64,9 @@ const EditBerita = () => {
     const [judul_berita, setJudulBerita] = useState(berita.judul_berita)
     const [isi_berita, setIsiBerita] = useState(berita.isi_berita);
     const [gambar, setGambar] = useState(berita.gambar)
-    const [gambarPreview, setGambarPreview] = useState("/assets/media/default.jpg") 
+    // const [gambarPreview, setGambarPreview] = useState("/assets/media/default.jpg") 
+    const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
+    const [gambarName, setGambarName] = useState (berita.gambar)
     const [kategori_id, setKategoriId] = useState(berita.kategori_id)
     const [users_id, setUserId] = useState(berita.users_id)
     const [tag, setTag] = useState(berita.tag)
@@ -81,6 +83,7 @@ const EditBerita = () => {
                 }
             }
             reader.readAsDataURL(e.target.files[0])
+            setGambarName(e.target.files[0].name)
         }
     }
 
@@ -221,14 +224,13 @@ const EditBerita = () => {
                                         <div className="input-group">
                                             <div className="custom-file">
                                                 <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} accept="image/*"/>
-                                                <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
+                                                <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih file</label>
                                             </div>
                                         </div>
+                                        <small>{gambarName}</small>
                                     </div>
                                 </div>
-                                {
-                                    console.log (kategori)
-                                }
+                                
 
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
@@ -240,7 +242,13 @@ const EditBerita = () => {
                                             ) : (
                                                 kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                     return (
-                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
+                                                        row.jenis_kategori == "Berita" ?
+                                                            <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                                                {row.nama_kategori}
+                                                            </option>
+                                                            :
+                                                            null
+                                                        // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
                                                     )
                                                 })
                                             )}

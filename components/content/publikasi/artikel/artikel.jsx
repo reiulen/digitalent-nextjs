@@ -124,7 +124,7 @@ const Artikel = () => {
     } else {
         router.push(`${router.pathname}?page=${pageNumber}`)
     }
-}
+  }
 
   const handleSearch = () => {
     if (limit != null && startDate === null && endDate === null) {
@@ -352,6 +352,9 @@ const Artikel = () => {
                 </div>
               </div>
             </div>
+            {/* {
+              console.log (artikel)
+            } */}
 
             <div className="table-page mt-5">
               <div className="table-responsive">
@@ -373,14 +376,14 @@ const Artikel = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {!artikel || (artikel && artikel.artikel.length === 0) ? (
+                      {!artikel || (artikel && artikel.length === 0) ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Masih Kosong
                         </td>
                       ) : (
                         artikel &&
-                        artikel.artikel &&
-                        artikel.artikel.map((artikel, i) => {
+                        // artikel.artikel &&
+                        artikel.map((artikel, i) => {
                           return (
                             <tr key={artikel.id}>
                               {/* <td className="align-middle text-center">
@@ -388,10 +391,19 @@ const Artikel = () => {
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td> */}
+                        
                               <td className='align-middle text-center'>
-                                  <span className="badge badge-secondary text-muted">
-                                      {i + 1 * (page * limit) - (limit - 1)}
-                                  </span>
+                                  {
+                                    limit === null ?
+                                      <span className="badge badge-secondary text-muted">
+                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                      </span>
+                                    :
+                                      <span className="badge badge-secondary text-muted">
+                                        {i + 1 * (page * limit) - (limit - 1)}
+                                      </span>
+                                  }
+                                  
                               </td>
 
                               <td>
@@ -425,19 +437,22 @@ const Artikel = () => {
                                 {artikel.publish === 1 ? (
                                   artikel.tanggal_publish
                                 ) : (
-                                  <span class="label label-inline label-light-danger font-weight-bold">
+                                  <span className="label label-inline label-light-danger font-weight-bold">
                                     Belum dipublish
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">{artikel.dibuat}</td>
+                              <td className="align-middle">
+                                {/* {artikel.dibuat} */}
+                                Super Admin
+                              </td>
                               <td className="align-middle">
                                 {artikel.publish === 1 ? (
-                                  <span class="label label-inline label-light-success font-weight-bold">
+                                  <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
                                 ) : (
-                                  <span class="label label-inline label-light-warning font-weight-bold">
+                                  <span className="label label-inline label-light-warning font-weight-bold">
                                     Belum dipublish
                                   </span>
                                 )}
@@ -504,7 +519,7 @@ const Artikel = () => {
                     />
                   </div>
                 )}
-                {artikel && artikel.total > 5 ? (
+                {artikel  ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -539,6 +554,7 @@ const Artikel = () => {
                 ) : (
                   ""
                 )}
+                
               </div>
             </div>
           </div>

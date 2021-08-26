@@ -358,9 +358,17 @@ const Faq = () => {
                                                                 </span>
                                                             </td> */}
                                                             <td className='align-middle text-center'>
-                                                                <span className="badge badge-secondary text-muted">
-                                                                    {i + 1 * (page * limit) - (limit - 1)}
-                                                                </span>
+                                                                {
+                                                                    limit === null ?
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                                                    </span>
+                                                                    :
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * limit) - (limit - 1)}
+                                                                    </span>
+                                                                }
+                                                                
                                                             </td>
                                                             <td className='align-middle'>{row.judul}</td>
                                                             <td className='align-middle'>{row.kategori}</td>
@@ -368,12 +376,15 @@ const Faq = () => {
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
                                                                 ) : (
-                                                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                                                    <span className="label label-inline label-light-danger font-weight-bold">
                                                                         Belum dipublish
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            <td className='align-middle'>
+                                                                {/* {row.dibuat} */}
+                                                                Super Admin
+                                                            </td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? 
@@ -388,22 +399,25 @@ const Faq = () => {
                                                                         onChange={(checked) => onSetPin(checked, row.id)}
                                                                     />
                                                                     :
-                                                                    ""
+                                                                    <div className="text-center ml-1"> - </div>
                                                                 }
                                                                 
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (
-                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                    <span className="label label-inline label-light-success font-weight-bold">
                                                                         Publish
                                                                     </span>
                                                                 ) : (
-                                                                    <span class="label label-inline label-light-warning font-weight-bold">
+                                                                    <span className="label label-inline label-light-warning font-weight-bold">
                                                                         Belum dipublish
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>{row.role}</td>
+                                                            <td className='align-middle'>
+                                                                {/* {row.role} */}
+                                                                Super Admin
+                                                            </td>
                                                             <td className='align-middle'>
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/faq/${row.id}`} />
                                                                 <button
@@ -430,18 +444,6 @@ const Faq = () => {
                                 }
                             </div>
 
-                            {/* {
-                                console.log (faq)
-                            }
-
-                            {
-                                console.log ("test")
-                            }
-
-                            {
-                                console.log (paginateFaq)
-                            }    */}
-
                             <div className="row">
                                 {faq && faq.perPage < faq.total &&
                                     <div className="table-pagination">
@@ -460,7 +462,7 @@ const Faq = () => {
                                         />
                                     </div>
                                 }
-                                {faq && faq.total > 5 ?
+                                {/* {faq && faq.total > 5 ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
@@ -487,7 +489,33 @@ const Faq = () => {
                                             </div>
                                         </div>
                                     </div> : ''
-                                }
+                                } */}
+                                <div className="table-total ml-auto">
+                                    <div className="row">
+                                        <div className="col-4 mr-0 p-0">
+                                            <select
+                                                className="form-control"
+                                                id="exampleFormControlSelect2"
+                                                style={{
+                                                    width: "65px",
+                                                    background: "#F3F6F9",
+                                                    borderColor: "#F3F6F9",
+                                                    color: "#9E9E9E",
+                                                }}
+                                                onChange={e => handleLimit(e.target.value)}
+                                                onBlur={e => handleLimit(e.target.value)}
+                                            >
+                                                <option value='5'>5</option>
+                                                <option value='10'>10</option>
+                                                <option value='15'>15</option>
+                                                <option value='20'>20</option>
+                                            </select>
+                                        </div>
+                                        <div className="col-8 my-auto">
+                                            <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {faq.total}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

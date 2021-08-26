@@ -331,7 +331,7 @@ const Galeri = () => {
                                                                 row.status === 1 ? (
                                                                     row.tanggal_publish
                                                                   ) : (
-                                                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                                                    <span className="label label-inline label-light-danger font-weight-bold">
                                                                       Belum dipublish
                                                                     </span>
                                                                   )
@@ -339,11 +339,11 @@ const Galeri = () => {
                                                             <td className='align-middle'>{row.role_name}</td>
                                                             <td className='align-middle'>
                                                                 { row.status  === 1 ? (
-                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                    <span className="label label-inline label-light-success font-weight-bold">
                                                                     Publish
                                                                   </span>
                                                                 ) : (
-                                                                  <span class="label label-inline label-light-warning font-weight-bold">
+                                                                  <span className="label label-inline label-light-warning font-weight-bold">
                                                                     Belum di publish
                                                                   </span>
                                                                 )}
