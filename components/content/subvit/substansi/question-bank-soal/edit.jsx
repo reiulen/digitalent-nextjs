@@ -341,7 +341,7 @@ const EditSoalSubstansi = () => {
                             </div>
 
                             <div className="button-back">
-                                <button type='button' className="btn btn-sm btn-light-danger font-weight-bold" >Kembali</button>
+                                <button type='button' onClick={() => router.back()} className="btn btn-sm btn-light-danger font-weight-bold" >Kembali</button>
                             </div>
                         </div>
 

@@ -23,7 +23,6 @@
     "next": "11.0.1",
     "next-absolute-url": "^1.2.2",
     "next-redux-wrapper": "^7.0.2",
-    "nextjs-breadcrumbs": "^1.1.4",
     "pdfjs-dist": "^2.6.347",
     "react": "17.0.2",
     "react-csv": "^2.0.3",

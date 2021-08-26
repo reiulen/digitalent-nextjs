@@ -234,8 +234,6 @@ const DetailSurvey = () => {
                                             <th className="text-center">No</th>
                                             <th>ID Soal</th>
                                             <th>Soal</th>
-                                            <th>Kategori</th>
-                                            <th>Bobot</th>
                                             <th>Status</th>
                                             <th className="text-center">Aksi</th>
                                         </tr>
@@ -260,16 +258,10 @@ const DetailSurvey = () => {
                                                                 </span>
                                                             </td>
                                                             <td className="align-middle">
-                                                                {question.subtance_question_bank_id}
+                                                                CC{question.id}
                                                             </td>
                                                             <td className="align-middle">
                                                                 {question.question}
-                                                            </td>
-                                                            <td className="align-middle">
-                                                                {question.type.name}
-                                                            </td>
-                                                            <td className="align-middle">
-                                                                {question.type.value}
                                                             </td>
                                                             <td className="align-middle">
                                                                 {question.status === true ? (
@@ -283,7 +275,7 @@ const DetailSurvey = () => {
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">
-                                                                <ButtonAction icon="write.svg" />
+                                                                <ButtonAction icon="write.svg" link={`edit-soal-survey?id=${question.id}`} />
                                                                 <button
                                                                     onClick={() => handleDelete(question.id)}
                                                                     className="btn mr-1"

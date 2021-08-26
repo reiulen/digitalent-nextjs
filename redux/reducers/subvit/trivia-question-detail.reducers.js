@@ -200,6 +200,7 @@ export const updateTriviaQuestionDetailReducer = (state = { trivia_question_deta
                 error: null
             }
 
+
         default:
             return state
     }

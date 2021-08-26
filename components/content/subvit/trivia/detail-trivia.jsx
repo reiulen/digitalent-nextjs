@@ -241,8 +241,6 @@ const DetailTrivia = () => {
                                             <th className="text-center">No</th>
                                             <th>ID Soal</th>
                                             <th>Soal</th>
-                                            <th>Kategori</th>
-                                            <th>Bobot</th>
                                             <th>Status</th>
                                             <th className="text-center">Aksi</th>
                                         </tr>
@@ -271,12 +269,6 @@ const DetailTrivia = () => {
                                                             </td>
                                                             <td className="align-middle">
                                                                 {question.question}
-                                                            </td>
-                                                            <td className="align-middle">
-                                                                {question.type.name}
-                                                            </td>
-                                                            <td className="align-middle">
-                                                                {question.type.value}
                                                             </td>
                                                             <td className="align-middle">
                                                                 {question.status === true ? (
