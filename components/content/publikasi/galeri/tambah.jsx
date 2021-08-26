@@ -44,8 +44,8 @@ const thumbInner = {
 
 const img = {
     display: 'block',
-    width: 'auto',
-    height: '100%'
+    // width: 'auto',
+    // height: '100%'
 };
 
 const TambahGaleri = () => {
@@ -76,12 +76,15 @@ const TambahGaleri = () => {
     const thumbs = files.map(file => (
         <div style={thumb} key={file.name}>
             <div style={thumbInner}>
-                <img
+                <Image
                     src={file.preview}
-                    style={img}
-                    width={img.width}
-                    height={img.height}
                     alt="thumb"
+                    width= '10vh'
+                    height= '10vh'
+                    // style={img}
+                    // width={img.width}
+                    // height={img.height}
+                    
                 />
             </div>
         </div>

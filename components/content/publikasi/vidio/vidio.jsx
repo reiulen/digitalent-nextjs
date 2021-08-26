@@ -332,7 +332,7 @@ const Vidio = () => {
                                                                     row.publish === 1 ? (
                                                                     row.tanggal_publish
                                                                     ) : (
-                                                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                                                    <span className="label label-inline label-light-danger font-weight-bold">
                                                                         Belum dipublish
                                                                     </span>
                                                                     )
