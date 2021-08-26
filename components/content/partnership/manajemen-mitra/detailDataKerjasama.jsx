@@ -4,47 +4,84 @@ import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+
+import {
+  getSingleValue,
+  searchByKeyDetail,
+  setPageDetail,
+  setLimitDetail,
+  exportFileCSVDetail
+} from "../../../../redux/actions/partnership/mitra.actions";
 
 const DetailDataKerjasama = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const mitraDetailAll = useSelector(state => state.allMitra)
+  console.log("mitraDetailAll",mitraDetailAll)
+
+  const [keyWord, setKeyWord] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(searchByKeyDetail(keyWord));
+  };
+
+const getDataSingleAll =(id)=>{
+  if(id){
+    dispatch(getSingleValue(id))
+  }
+}
+
+useEffect(() => {
+  getDataSingleAll(router.query.id)
+}, [router.query.id,mitraDetailAll.keywordDetail,mitraDetailAll.pageDetail,mitraDetailAll.limitDetail,mitraDetailAll.statusDetail,mitraDetailAll.categories_cooporation])
+
+
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Kerjasama Microsoft
+              Kerjasama {mitraDetailAll?.mitraDetailAll?.data?.list_cooperation_categories[0]?.partner?.user?.name}
             </h3>
-            <div className="card-toolbar">
-              <Link href="/partnership/manajemen-kerjasama/tambah">
-                <a className="btn px-6 font-weight-bold btn-block btn-primary">
-                  Tambah Kerjasama Baru
-                </a>
-              </Link>
-            </div>
           </div>
 
           <div className="card-body pt-0">
-            <div className="table-filter">
-              <div className="row align-items-center">
-                <div className="col-lg-12 col-xl-12">
-                  <div className="row align-items-center">
-                    <div className="col-md-12 my-2 my-md-0">
-                      <div className="input-icon">
-                        <input
-                          style={{ background: "#F3F6F9", border: "none" }}
-                          type="text"
-                          className="form-control"
-                          placeholder="Pencarian"
-                          id="kt_datatable_search_query"
-                        />
-                        <span>
-                          <i className="flaticon2-search-1 text-muted"></i>
-                        </span>
-                      </div>
+              <form onSubmit={handleSubmit}>
+              <div className="table-filter">
+                <div className="row align-items-center">
+                  <div className="col-lg-10 col-xl-10">
+                    <div className="input-icon">
+                      <input
+                        style={{ background: "#F3F6F9", border: "none" }}
+                        type="text"
+                        className="form-control"
+                        placeholder="Search..."
+                        id="kt_datatable_search_query"
+                        onChange={(e) => setKeyWord(e.target.value)}
+                      />
+                      <span>
+                        <i className="flaticon2-search-1 text-muted"></i>
+                      </span>
                     </div>
+                  </div>
+                  <div className="col-lg-2 col-xl-2">
+                    <button
+                      type="submit"
+                      className="btn btn-light-primary btn-block"
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
               </div>
+            </form>
+
+            <div className="table-filter">
 
               <div className="row align-items-right">
                 <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
@@ -76,12 +113,19 @@ const DetailDataKerjasama = () => {
                   </a>
                 </div>
                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
-                  <a
+                  {/* <a
                     href="#"
                     className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
                   >
                     Export .csv
-                  </a>
+                  </a> */}
+                  <button
+                  type="button"
+                  onClick={() => dispatch(exportFileCSVDetail())}
+                  className="btn btn-primary px-6 font-weight-bold btn-block"
+                >
+                  Export .csv
+                </button>
                 </div>
               </div>
             </div>
@@ -111,26 +155,34 @@ const DetailDataKerjasama = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                   {mitraDetailAll.status === "success" ? mitraDetailAll.mitraDetailAll.length === 0 ?"":mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map((items,index)=>{
+                     return(
+                    <tr key={index}>
                       <td className="text-center align-middle   ">
                         <button
                           className="btn mr-1"
                           style={{ background: "#F3F6F9", borderRadius: "6px" }}
                         >
-                          1
+                          {mitraDetailAll.pageDetail === 1
+                                        ? index + 1
+                                        : (mitraDetailAll.pageDetail - 1) * mitraDetailAll.limitDetail +
+                                          (index + 1)}
                         </button>
                       </td>
-                      <td className="align-middle text-center">Microsoft</td>
+                      <td className="align-middle text-center">{items.partner.user.name}</td>
                       <td className="align-middle text-center">
                         Proposal Pelatihan Programmer Web
+                        {items.cooperation_category.cooperation_categories}
                         <br />
-                        <small style={{ color: "grey" }}>
+                        {/* <small style={{ color: "grey" }}>
                           Memodanrum of Understanding (MoU)
-                        </small>
+                        </small> */}
                       </td>
-                      <td className="align-middle text-center">3 Tahun</td>
-                      <td className="align-middle text-center">12 Juli 2021</td>
-                      <td className="align-middle">15 Juli 2021</td>
+                      <td className="align-middle text-center">3 Tahun
+                      {items.period} {items.period_unit}
+                      </td>
+                      <td className="align-middle text-center">{items.signing_date}</td>
+                      <td className="align-middle">{items.period_date_end}</td>
                       <td className="align-middle text-center">
                         <select name="" id="" className="form-control">
                           <option value="Kategori" selected>
@@ -151,21 +203,23 @@ const DetailDataKerjasama = () => {
                         />
                       </td>
                     </tr>
-                  </tbody>
+                    )
+                 }):""}
+                 </tbody>
                 </table>
               </div>
 
               <div className="row">
                 <div className="table-pagination">
                   <Pagination
-                    // activePage={page}
-                    itemsCountPerPage={10}
-                    totalItemsCount={60}
+                    activePage={mitraDetailAll.pageDetail}
+                    itemsCountPerPage={mitraDetailAll?.mitraDetailAll?.data?.perPage}
+                    totalItemsCount={mitraDetailAll?.mitraDetailAll?.data?.total}
                     pageRangeDisplayed={3}
-                    // onChange={handlePagination}
+                    onChange={(page) => dispatch(setPageDetail(page))}
                     nextPageText={">"}
                     prevPageText={"<"}
-                    // firstPageText={"<<"}
+                    firstPageText={"<<"}
                     lastPageText={">>"}
                     itemClass="page-item"
                     linkClass="page-link"
@@ -183,6 +237,7 @@ const DetailDataKerjasama = () => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) => dispatch(setLimitDetail(e.target.value))}
                       >
                         <option>5</option>
                         <option>10</option>

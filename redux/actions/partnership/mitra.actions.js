@@ -10,6 +10,12 @@ import {
   SET_PAGE_M,
   SET_LIMIT,
   CANCEL_CHANGE_PROVINCES,
+  MITRA_FAIL_DETAIL,
+  MITRA_REQUEST_DETAIL,
+  MITRA_SUCCESS_DETAIL,
+  SEARCH_BY_KEY_DETAIL,
+  SET_PAGE_M_DETAIL,
+  SET_LIMIT_DETAIL,
 } from "../../types/partnership/mitra.type";
 import router from "next/router";
 
@@ -126,6 +132,86 @@ export const exportFileCSV = () => {
         `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export`
       );
       console.log("urlExport.config.url", urlExport.config.url);
+      router.push(urlExport.config.url);
+
+      // console.log("data", data);
+    } catch (error) {
+      console.log("object", error);
+    }
+  };
+};
+
+// ====================================== mitra detail
+
+export async function getAllMitraDetail(paramsID, id) {
+  return await axios.get(
+    `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/cooperation/${id}`,
+    {
+      paramsID,
+    }
+  );
+}
+
+export const getSingleValue = (id) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: MITRA_REQUEST_DETAIL });
+    let keywordState = getState().allMitra.keywordDetail || "";
+    let limitState = getState().allMitra.limitDetail || "";
+    let pageState = getState().allMitra.pageDetail || 1;
+    let categoryState = getState().allMitra.categories_cooporation || 1;
+    let statusState = getState().allMitra.statusDetail;
+
+    const paramsID = {
+      keyword: keywordState,
+      limit: limitState,
+      page: pageState,
+      categories_cooporation: categoryState,
+      status: statusState,
+    };
+
+    try {
+      let { data } = await getAllMitraDetail(paramsID, id);
+      dispatch(successGetSingleValue(data));
+    } catch (error) {
+      console.log("error get single mitra list");
+      dispatch({ type: MITRA_FAIL_DETAIL });
+    }
+  };
+};
+
+export const successGetSingleValue = (data) => {
+  return {
+    type: MITRA_SUCCESS_DETAIL,
+    data,
+  };
+};
+
+export const searchByKeyDetail = (value) => {
+  return {
+    type: SEARCH_BY_KEY_DETAIL,
+    value,
+  };
+};
+
+export const setPageDetail = (page) => {
+  return {
+    type: SET_PAGE_M_DETAIL,
+    page,
+  };
+};
+export const setLimitDetail = (value) => {
+  return {
+    type: SET_LIMIT_DETAIL,
+    value,
+  };
+};
+
+export const exportFileCSVDetail = () => {
+  return async (dispatch, getState) => {
+    try {
+      let urlExport = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export`
+      );
       router.push(urlExport.config.url);
 
       // console.log("data", data);

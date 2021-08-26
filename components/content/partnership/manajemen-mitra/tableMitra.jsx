@@ -313,11 +313,11 @@ const Table = () => {
                                         padding: "8px 10px 3px 10px",
                                       }}
                                       className="btn position-relative btn-delete"
-                                      // onClick={() =>
-                                      //   router.push(
-                                      //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                      //   )
-                                      // }
+                                      onClick={() =>
+                                        router.push(
+                                          `/partnership/manajemen-mitra/detail/${item.id}`
+                                        )
+                                      }
                                     >
                                       <Image
                                         src={`/assets/icon/detail.JPG`}

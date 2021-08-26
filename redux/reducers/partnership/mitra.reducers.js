@@ -8,6 +8,12 @@ import {
   SET_PAGE_M,
   SET_LIMIT,
   CANCEL_CHANGE_PROVINCES,
+  MITRA_FAIL_DETAIL,
+  MITRA_REQUEST_DETAIL,
+  MITRA_SUCCESS_DETAIL,
+  SEARCH_BY_KEY_DETAIL,
+  SET_PAGE_M_DETAIL,
+  SET_LIMIT_DETAIL,
 } from "../../types/partnership/mitra.type";
 
 const statuslist = {
@@ -31,6 +37,13 @@ const initialState = {
   card: "",
   //
   provinces: [],
+  //
+  mitraDetailAll: [],
+  pageDetail: 1,
+  limitDetail: 5,
+  keywordDetail: "",
+  categories_cooporation: "",
+  statusDetail: "",
 };
 
 export const allMitraReducer = (state = initialState, action) => {
@@ -62,6 +75,12 @@ export const allMitraReducer = (state = initialState, action) => {
         keyword: action.value,
         page: 1,
       };
+    case SEARCH_BY_KEY_DETAIL:
+      return {
+        ...state,
+        keywordDetail: action.value,
+        pageDetail: 1,
+      };
 
     case SUCESS_DELETE_MITRA:
       return {
@@ -86,6 +105,11 @@ export const allMitraReducer = (state = initialState, action) => {
         ...state,
         page: action.page,
       };
+    case SET_PAGE_M_DETAIL:
+      return {
+        ...state,
+        pageDetail: action.page,
+      };
 
     case SET_LIMIT:
       return {
@@ -93,6 +117,32 @@ export const allMitraReducer = (state = initialState, action) => {
         limit: action.value,
         page: 1,
         card: "",
+      };
+    case SET_LIMIT_DETAIL:
+      return {
+        ...state,
+        limitDetail: action.value,
+        pageDetail: 1,
+      };
+
+    // =================================== detail mitra
+    case MITRA_REQUEST_DETAIL:
+      return {
+        ...state,
+        status: statuslist.process,
+      };
+
+    case MITRA_SUCCESS_DETAIL:
+      return {
+        ...state,
+        status: statuslist.success,
+        mitraDetailAll: action.data,
+      };
+
+    case MITRA_FAIL_DETAIL:
+      return {
+        ...state,
+        status: statuslist.error,
       };
 
     default:
