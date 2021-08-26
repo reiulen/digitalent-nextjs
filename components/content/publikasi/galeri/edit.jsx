@@ -83,7 +83,7 @@ const EditGaleri = () => {
     const thumbs = files.map(file => (
         <div style={thumb} key={file.name}>
             <div style={thumbInner}>
-                <img
+                <Image
                     src={file.preview}
                     style={img}
                     width={img.width}

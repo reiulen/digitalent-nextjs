@@ -3,6 +3,10 @@ import {
     KATEGORI_SUCCESS,
     KATEGORI_FAIL,
 
+    PAGINATION_KATEGORI_REQUEST,
+    PAGINATION_KATEGORI_SUCCESS,
+    PAGINATION_KATEGORI_FAIL,
+
     NEW_KATEGORI_REQUEST,
     NEW_KATEGORI_SUCCESS,
     NEW_KATEGORI_RESET,
@@ -39,6 +43,35 @@ export const allKategoriReducer = (state = { kategori: [] }, action) => {
             }
 
         case KATEGORI_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const paginationKategoriReducer = (state = { paginateKategori: [] }, action) => {
+    switch (action.type) {
+        case PAGINATION_KATEGORI_REQUEST:
+            return {
+                loading: true
+            }
+
+        case PAGINATION_KATEGORI_SUCCESS:
+            return {
+                loading: false,
+                paginateKategori: action.payload.data
+            }
+
+        case PAGINATION_KATEGORI_FAIL:
             return {
                 loading: false,
                 error: action.payload

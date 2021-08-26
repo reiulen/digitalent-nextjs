@@ -186,11 +186,11 @@ const ArtikelPeserta = () => {
                                                             <td className='align-middle'>{artikel.users_id}</td>
                                                             <td className='align-middle'>
                                                                 {artikel.publish === 1 ?
-                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                    <span className="label label-inline label-light-success font-weight-bold">
                                                                         Publish
                                                                     </span>
                                                                     :
-                                                                    <span class="label label-inline label-light-warning font-weight-bold">
+                                                                    <span className="label label-inline label-light-warning font-weight-bold">
                                                                         Unpublish
                                                                     </span>
                                                                 }
