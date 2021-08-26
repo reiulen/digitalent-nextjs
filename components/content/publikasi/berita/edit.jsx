@@ -58,7 +58,7 @@ const EditBerita = () => {
             })
         }
 
-    }, [dispatch, error, success, loading]);
+    }, [dispatch, error, success, loading, router]);
 
     const [id, setId] = useState(berita.id)
     const [judul_berita, setJudulBerita] = useState(berita.judul_berita)

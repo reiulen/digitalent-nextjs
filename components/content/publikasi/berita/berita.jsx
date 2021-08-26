@@ -76,7 +76,7 @@ const Berita = () => {
             // console.log (publishValue)
         }
       
-    }, [limit, isDeleted, publishValue]);
+    }, [limit, isDeleted, publishValue, dispatch, router]);
 
     const onNewReset = () => {
         router.replace("/publikasi/berita", undefined, { shallow: true });

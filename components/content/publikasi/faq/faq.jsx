@@ -67,7 +67,7 @@ const Faq = () => {
         if (publishValue) {
             router.push(`${router.pathname}?publish=${publishValue}`);
           }
-    }, [dispatch, limit, isDeleted, publishValue])
+    }, [dispatch, limit, isDeleted, publishValue, router, search])
 
     const onSetPin = (checked, id) => {
         const data = {

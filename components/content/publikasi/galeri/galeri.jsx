@@ -71,7 +71,7 @@ const Galeri = () => {
             console.log("check")
             console.log (publishValue)
           }
-      }, [limit, isDeleted, publishValue]);
+      }, [limit, isDeleted, publishValue, dispatch, router]);
 
     // const override = css`
     //     margin: 0 auto;
