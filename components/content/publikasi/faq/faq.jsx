@@ -376,7 +376,7 @@ const Faq = () => {
                                                                 {row.publish === 1 ? (
                                                                     row.tanggal_publish
                                                                 ) : (
-                                                                    <span class="label label-inline label-light-danger font-weight-bold">
+                                                                    <span className="label label-inline label-light-danger font-weight-bold">
                                                                         Belum dipublish
                                                                     </span>
                                                                 )}
@@ -402,11 +402,11 @@ const Faq = () => {
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ? (
-                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                    <span className="label label-inline label-light-success font-weight-bold">
                                                                         Publish
                                                                     </span>
                                                                 ) : (
-                                                                    <span class="label label-inline label-light-warning font-weight-bold">
+                                                                    <span className="label label-inline label-light-warning font-weight-bold">
                                                                         Belum dipublish
                                                                     </span>
                                                                 )}
