@@ -49,7 +49,12 @@ const Preview = () => {
     // }
 
     return (
-        <>
+        <>  
+            <div className="text-center mt-5">
+                <h1 className="mt-5">
+                    {judul_artikel}
+                </h1>
+            </div>
             <Image
                 src={Backdrop} 
                 alt="backdrop"
@@ -61,11 +66,11 @@ const Preview = () => {
                     <div className="card card-custom card-stretch gutter-b">
 
                         <div className="card-body pt-0">
-                                <div className="text-center mt-5">
+                                {/* <div className="text-center mt-5">
                                     <h3>
                                         {judul_artikel}
                                     </h3>
-                                </div>
+                                </div> */}
 
                                 <div className="d-flex justify-content-center my-3">
                                     <img 
