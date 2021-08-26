@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 
 import Link from 'next/link'
-// import Image from 'next/image'
+import Image from 'next/image'
 import dynamic from "next/dynamic";
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from "next/router";
@@ -123,7 +123,7 @@ const TambahGaleri = () => {
             })
         }
 
-    }, [dispatch, error, success, files]);
+    }, [dispatch, error, success, files, router]);
 
 
     const [judul, setJudulGaleri] = useState('')

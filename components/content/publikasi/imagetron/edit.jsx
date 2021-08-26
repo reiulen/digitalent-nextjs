@@ -62,7 +62,7 @@ const EditImagetron = () => {
         //     })
         // }
 
-    }, [dispatch, error, success, simpleValidator]);
+    }, [dispatch, error, success, simpleValidator, router]);
 
     const [id, setId] = useState(imagetron.id);
     const [kategori_id, setKategoriId] = useState(imagetron.kategori_id)

@@ -45,7 +45,7 @@ const EditFaq = () => {
             });
         }
 
-    }, [dispatch, error, isUpdated]);
+    }, [dispatch, error, isUpdated, router]);
 
 
     const [judul, setJudulPertanyaan] = useState(faq.judul)
@@ -110,119 +110,125 @@ const EditFaq = () => {
 
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 {loading ? <LoadingPage loading={loading} /> : ""}
-                <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Edit FAQ</h3>
-                    </div>
-                    <div className="card-body">
-                        <form onSubmit={onSubmit}>
-                            <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul Pertanyaan</label>
-                                <div className="col-sm-10">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Isi Judul disini"
-                                        value={judul}
-                                        onChange={(e) => setJudulPertanyaan(e.target.value)}
-                                        onBlur={() => simpleValidator.current.showMessageFor("judul pertanyaan")}
-                                    />
-                                    {simpleValidator.current.message("judul pertanyaan", judul, "required", { className: "text-danger" })}
-                                </div>
+                {
+                    faq ? 
+                        <div className="card card-custom card-stretch gutter-b">
+                            <div className="card-header border-0">
+                                <h3 className="card-title font-weight-bolder text-dark">Edit FAQ</h3>
                             </div>
+                            <div className="card-body">
+                                <form onSubmit={onSubmit}>
+                                    <div className="form-group row">
+                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul Pertanyaan</label>
+                                        <div className="col-sm-10">
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Isi Judul disini"
+                                                value={judul}
+                                                onChange={(e) => setJudulPertanyaan(e.target.value)}
+                                                onBlur={() => simpleValidator.current.showMessageFor("judul pertanyaan")}
+                                            />
+                                            {simpleValidator.current.message("judul pertanyaan", judul, "required", { className: "text-danger" })}
+                                        </div>
+                                    </div>
 
-                            <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Jawaban</label>
-                                <div className="col-sm-10">
-                                    <textarea
-                                        className='form-control'
-                                        placeholder='isi deskripsi jawaban disini'
-                                        name="jawaban"
-                                        rows="10"
-                                        onChange={e => setJawaban(e.target.value)}
-                                        value={jawaban}
-                                        onBlur={() => simpleValidator.current.showMessageFor("jawaban")}
-                                    />
-                                    {simpleValidator.current.message("jawaban", jawaban, "required", { className: "text-danger" })}
-                                </div>
+                                    <div className="form-group row">
+                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Jawaban</label>
+                                        <div className="col-sm-10">
+                                            <textarea
+                                                className='form-control'
+                                                placeholder='isi deskripsi jawaban disini'
+                                                name="jawaban"
+                                                rows="10"
+                                                onChange={e => setJawaban(e.target.value)}
+                                                value={jawaban}
+                                                onBlur={() => simpleValidator.current.showMessageFor("jawaban")}
+                                            />
+                                            {simpleValidator.current.message("jawaban", jawaban, "required", { className: "text-danger" })}
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group row">
+                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
+                                        <div className="col-sm-10">
+                                            <select
+                                                className='form-control'
+                                                value={kategori_id}
+                                                onChange={e => setKategoriId(e.target.value)}
+                                                onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor("kategori") }}
+                                            >
+                                                <option value="" disabled selected>-- KATEGORI --</option>
+                                                {!kategori || (kategori && kategori.length === 0) ? (
+                                                    <option value="">Data kosong</option>
+                                                ) : (
+                                                    kategori &&
+                                                    kategori.kategori &&
+                                                    kategori.kategori.map((row) => {
+                                                        return (
+                                                            row.jenis_kategori == "Faq" ?
+                                                                <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                                                    {row.nama_kategori}
+                                                                </option>
+                                                            :
+                                                                null
+                                                        );
+                                                    })
+                                                )}
+                                            </select>
+                                            {simpleValidator.current.message("kategori", kategori_id, "required", { className: "text-danger" })}
+                                        </div>
+                                    </div>
+
+
+                                    <div className="form-group row">
+                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ</label>
+                                        <div className="col-sm-1">
+                                            <SwitchButton
+                                                checked={pinned}
+                                                onlabel=' '
+                                                onstyle='primary'
+                                                offlabel=' '
+                                                offstyle='danger'
+                                                size='sm'
+                                                width={30}
+                                                onChange={(checked) => setPinnedFaq(checked)}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group row">
+                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
+                                        <div className="col-sm-1">
+                                            <SwitchButton
+                                                checked={publish}
+                                                onlabel=' '
+                                                onstyle='primary'
+                                                offlabel=' '
+                                                offstyle='danger'
+                                                size='sm'
+                                                width={30}
+                                                onChange={(checked) => setPublish(checked)}
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group row">
+                                        <div className="col-sm-2"></div>
+                                        <div className="col-sm-10">
+                                            <Link href='/publikasi/faq'>
+                                                <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
+                                            </Link>
+                                            <button className='btn btn-primary btn-sm'>Simpan</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-
-                            <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
-                                <div className="col-sm-10">
-                                    <select
-                                        className='form-control'
-                                        value={kategori_id}
-                                        onChange={e => setKategoriId(e.target.value)}
-                                        onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor("kategori") }}
-                                    >
-                                        <option value="" disabled selected>-- KATEGORI --</option>
-                                        {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
-                                        ) : (
-                                            kategori &&
-                                            kategori.kategori &&
-                                            kategori.kategori.map((row) => {
-                                                return (
-                                                    row.jenis_kategori == "Faq" ?
-                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
-                                                            {row.nama_kategori}
-                                                        </option>
-                                                    :
-                                                        null
-                                                );
-                                            })
-                                        )}
-                                    </select>
-                                    {simpleValidator.current.message("kategori", kategori_id, "required", { className: "text-danger" })}
-                                </div>
-                            </div>
-
-
-                            <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ</label>
-                                <div className="col-sm-1">
-                                    <SwitchButton
-                                        checked={pinned}
-                                        onlabel=' '
-                                        onstyle='primary'
-                                        offlabel=' '
-                                        offstyle='danger'
-                                        size='sm'
-                                        width={30}
-                                        onChange={(checked) => setPinnedFaq(checked)}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
-                                <div className="col-sm-1">
-                                    <SwitchButton
-                                        checked={publish}
-                                        onlabel=' '
-                                        onstyle='primary'
-                                        offlabel=' '
-                                        offstyle='danger'
-                                        size='sm'
-                                        width={30}
-                                        onChange={(checked) => setPublish(checked)}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="form-group row">
-                                <div className="col-sm-2"></div>
-                                <div className="col-sm-10">
-                                    <Link href='/publikasi/faq'>
-                                        <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
-                                    </Link>
-                                    <button className='btn btn-primary btn-sm'>Simpan</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                        </div>
+                    :
+                        null    
+                }
+                
             </div>
         </PageWrapper>
     )

@@ -33,7 +33,7 @@ const TambahKategori = () => {
             // setJenisKategori('')
         }
 
-    }, [dispatch, success]);
+    }, [dispatch, success, router]);
 
 
     const [nama, setNamaKategori] = useState('')

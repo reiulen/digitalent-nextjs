@@ -55,7 +55,7 @@ const TambahImagetron = () => {
         //     })
         // }
 
-    }, [dispatch, error, success, simpleValidator]);
+    }, [dispatch, error, success, simpleValidator, router]);
 
 
     const [kategori_id, setKategoriId] = useState('')

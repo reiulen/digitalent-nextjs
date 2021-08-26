@@ -141,7 +141,7 @@ export const updateTriviaQuestionDetail = (id, dataBankSoal) => async (dispatch)
 
         dispatch({ type: UPDATE_TRIVIA_QUESTION_DETAIL_REQUEST })
 
-        const { data } = await axios.put(process.env.END_POINT_API_SUBVIT + `api/trivia-question-bank-details/${id}`, dataBankSoal)
+        const { data } = await axios.post(process.env.END_POINT_API_SUBVIT + `api/trivia-question-bank-details/${id}`, dataBankSoal)
 
         dispatch({
             type: UPDATE_TRIVIA_QUESTION_DETAIL_SUCCESS,

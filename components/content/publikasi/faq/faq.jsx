@@ -67,7 +67,7 @@ const Faq = () => {
         if (publishValue) {
             router.push(`${router.pathname}?publish=${publishValue}`);
           }
-    }, [dispatch, limit, isDeleted, publishValue])
+    }, [dispatch, limit, isDeleted, publishValue, router, search])
 
     const onSetPin = (checked, id) => {
         const data = {
@@ -381,7 +381,10 @@ const Faq = () => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            <td className='align-middle'>
+                                                                {/* {row.dibuat} */}
+                                                                Super Admin
+                                                            </td>
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? 
@@ -396,7 +399,7 @@ const Faq = () => {
                                                                         onChange={(checked) => onSetPin(checked, row.id)}
                                                                     />
                                                                     :
-                                                                    <div className="text-center"> --- </div>
+                                                                    <div className="text-center ml-1"> - </div>
                                                                 }
                                                                 
                                                             </td>
@@ -440,18 +443,6 @@ const Faq = () => {
                                     </table> : ''
                                 }
                             </div>
-
-                            {/* {
-                                console.log (faq)
-                            }
-
-                            {
-                                console.log ("test")
-                            }
-
-                            {
-                                console.log (paginateFaq)
-                            }    */}
 
                             <div className="row">
                                 {faq && faq.perPage < faq.total &&

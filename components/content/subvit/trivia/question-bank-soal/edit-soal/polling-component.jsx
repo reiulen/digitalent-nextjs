@@ -1,13 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import dynamic from "next/dynamic";
+import React, { useState } from 'react'
 import Image from 'next/image'
 
 const PollingComponent = ({ propsAnswer, propsStatus, sendPropsAnswer, sendPropsStatus }) => {
-
-    const importSwitch = () => import("bootstrap-switch-button-react");
-    const SwitchButton = dynamic(importSwitch, {
-        ssr: false,
-    });
 
     const [answer, setAnswer] = useState(propsAnswer)
     const [status, setStatus] = useState(propsStatus)
@@ -43,22 +37,6 @@ const PollingComponent = ({ propsAnswer, propsStatus, sendPropsAnswer, sendProps
         setAnswer(list)
         sendPropsAnswer(list)
     }
-
-    // const handleAnswer = (value, i) => {
-    //     setAnswerKey(answer[i].key)
-    //     if (value === false) {
-    //         setAnswerKey('')
-    //     }
-    //     const list = [...answer]
-    //     list.forEach((row, j) => {
-    //         list[j]['is_right'] = false
-    //     })
-    //     list[i]['is_right'] = value
-    // }
-
-    useEffect(() => {
-        console.log(propsStatus)
-    }, [propsStatus])
 
     return (
         <>

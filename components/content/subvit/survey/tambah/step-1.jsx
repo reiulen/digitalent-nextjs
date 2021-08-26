@@ -24,6 +24,12 @@ const TambahSurveyStepOne = () => {
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState('lanjut')
 
+
+  const [academy_id, setAcademyId] = useState("");
+  const [theme_id, setThemeId] = useState("");
+  const [training_id, setTrainingId] = useState("");
+  const [metode, setMetode] = useState('entry')
+
   useEffect(() => {
     // if (error) {
     //     dispatch(clearErrors())
@@ -44,12 +50,7 @@ const TambahSurveyStepOne = () => {
       }
     }
 
-  }, [dispatch, error, success, typeSave, metode, router, survey.id]);
-
-  const [academy_id, setAcademyId] = useState("");
-  const [theme_id, setThemeId] = useState("");
-  const [training_id, setTrainingId] = useState("");
-  const [metode, setMetode] = useState('entry')
+  }, [dispatch, error, success, typeSave, metode, router, survey]);
 
   const saveDraft = () => {
     setTypeSave('draft')

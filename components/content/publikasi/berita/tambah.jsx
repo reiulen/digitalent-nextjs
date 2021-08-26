@@ -68,14 +68,15 @@ const TambahBerita = () => {
             })
         }
 
-    }, [dispatch, error, success]);
+    }, [dispatch, error, success, router]);
 
 
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUserId] = useState(1)
+    const [users_id, setUserId] = useState(3)
     const [judul_berita, setJudulBerita] = useState('')
     const [isi_berita, setIsiBerita] = useState('');
     const [gambar, setGambar] = useState('')
+    const [gambarName, setGambarName] = useState (null)
     const [publish, setPublish] = useState(false)
     const [tag, setTag] = useState([])
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
@@ -90,6 +91,7 @@ const TambahBerita = () => {
                 }
             }
             reader.readAsDataURL(e.target.files[0])
+            setGambarName(e.target.files[0].name)
         }
     }
 
@@ -114,9 +116,33 @@ const TambahBerita = () => {
                 publish,
                 tag
             }
+
+            Swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data ini akan ditambahkan !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya !",
+                cancelButtonText: "Batal",
+              })
+                .then((result) => {
+                  if (result.isConfirmed) {
+                    // if (success) {
+                    //   dispatch({
+                    //     type: NEW_ARTIKEL_RESET,
+                    //   });
+                    // }
+        
+                    dispatch(newBerita(data))
+        
+                    // console.log(data);
+                  }
+              });
     
-            dispatch(newBerita(data))
-            console.log(data)
+            // dispatch(newBerita(data))
+            // console.log(data)
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
@@ -226,9 +252,15 @@ const TambahBerita = () => {
                                     <div className="input-group">
                                         <div className="custom-file">
                                             <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} accept="image/*"/>
-                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
+                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih file</label>
                                         </div>
                                     </div>
+                                    {
+                                        gambarName !== null ?
+                                            <small>{gambarName}</small>
+                                        :
+                                            null
+                                    }
                                 </div>
                             </div>
 
@@ -242,7 +274,12 @@ const TambahBerita = () => {
                                         ) : (
                                             kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                 return (
-                                                    <option key={row.id} value={row.id}>{row.jenis_kategori}</option>
+                                                    row.jenis_kategori == "Berita" ?
+                                                        <option key={row.id} value={row.id}>
+                                                            {row.nama_kategori}
+                                                        </option>
+                                                        :
+                                                        null
                                                 )
                                             })
                                         )}

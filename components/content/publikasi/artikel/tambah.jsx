@@ -56,7 +56,7 @@ const TambahArtikel = () => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, success, simpleValidator]);
+  }, [dispatch, error, success, simpleValidator, router]);
 
   const [judul_artikel, setJudulArtikel] = useState("");
   const [isi_artikel, setIsiArtikel] = useState("");

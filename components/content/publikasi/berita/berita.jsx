@@ -76,7 +76,7 @@ const Berita = () => {
             // console.log (publishValue)
         }
       
-    }, [limit, isDeleted, publishValue]);
+    }, [limit, isDeleted, publishValue, dispatch, router]);
 
     const onNewReset = () => {
         router.replace("/publikasi/berita", undefined, { shallow: true });
@@ -100,24 +100,68 @@ const Berita = () => {
     }
 
     const handlePagination = (pageNumber) => {
-        if (limit != null) {
-          router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        if (limit !== null  && search === "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+    
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
         } else {
-          router.push(`${router.pathname}?page=${pageNumber}`)
+            router.push(`${router.pathname}?page=${pageNumber}`)
         }
-      }
+    }
 
     const handleSearch = () => {
-        if (limit != null) {
+        if (limit != null && startDate === null && endDate === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit !== null && startDate !== null && endDate !== null ) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
-    }
+    
+    };
 
     const handleSearchDate = () => {
-    router.push(`${router.pathname}?page=1&startdate=${moment(startDate).format('YYYY-MM-DD')}&enddate=${moment(endDate).format('YYYY-MM-DD')}`)
-    }
+        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+        } else {
+            if (limit !== null && search === null) {
+                router.push(
+                    `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                );
+    
+            } else if (limit !== null && search !== null) {
+              `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+    
+            } else {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+                ); 
+            }
+        }
+      };
 
     const handleLimit = (val) => {
     setLimit(val)
@@ -315,10 +359,18 @@ const Berita = () => {
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     berita && berita.berita.map((row, i) => {
                                                         return <tr key={row.id}>
-                                                            <td className="align-middle text-center">
-                                                                <span className="badge badge-secondary text-muted">
-                                                                {i + 1 * (page * 5 || limit) - 4}
-                                                                </span>
+                                                            <td className='align-middle text-center'>
+                                                                {
+                                                                    limit === null ?
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                                                    </span>
+                                                                    :
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * limit) - (limit - 1)}
+                                                                    </span>
+                                                                }
+                                                                
                                                             </td>
                                                             <td className='text-center'>
                                                                 <Image
@@ -329,7 +381,8 @@ const Berita = () => {
                                                                     height={50}
                                                                 />
                                                             </td>
-                                                            <td className='align-middle'>{row.jenis_kategori}</td>
+                                                            
+                                                            <td className='align-middle'>{row.kategori}</td>
                                                             <td className='align-middle'>{row.judul_berita}</td>
                                                             <td className='align-middle'>
                                                                 {
@@ -342,7 +395,10 @@ const Berita = () => {
                                                                     )
                                                                 }
                                                             </td>
-                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            <td className='align-middle'>
+                                                                {/* {row.dibuat} */}
+                                                                Super Admin
+                                                            </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
                                                                     <span className="label label-inline label-light-success font-weight-bold">
@@ -355,7 +411,7 @@ const Berita = () => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>Admin Publikasi</td>
+                                                            <td className='align-middle'>Super Admin</td>
                                                             <td className='align-middle'>
                                                                 <ButtonNewTab icon='setting.svg' link={`/publikasi/berita/preview/${row.id}`} />
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/berita/${row.id}`}/>
@@ -401,7 +457,7 @@ const Berita = () => {
                                         />
                                     </div>
                                 }
-                                {berita && berita.total > 5 ?
+                                {berita  ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
@@ -425,11 +481,13 @@ const Berita = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>{berita.total}</p>
+                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {berita.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''
                                 }
+                                
+                                
                             </div>
                         </div>
                     </div>

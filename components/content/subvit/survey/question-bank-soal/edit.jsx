@@ -1,53 +1,46 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import dynamic from "next/dynamic";
 import Swal from "sweetalert2"
 
 import { useDispatch, useSelector } from 'react-redux'
 
-import { clearErrors, updateTriviaQuestionDetail } from '../../../../../redux/actions/subvit/trivia-question-detail.action'
-import { UPDATE_TRIVIA_QUESTION_DETAIL_RESET } from '../../../../../redux/types/subvit/trivia-question-detail.type'
+import { clearErrors, updateSurveyQuestionDetail } from '../../../../../redux/actions/subvit/survey-question-detail.action'
+import { UPDATE_SURVEY_QUESTION_DETAIL_RESET } from '../../../../../redux/types/subvit/survey-question-detail.type'
 
 import PageWrapper from '../../../../wrapper/page.wrapper'
 import LoadingPage from '../../../../LoadingPage'
-import PollingComponent from './edit-soal/polling-component';
-import CheckboxComponent from './edit-soal/checkbox-component';
-import BlankComponent from './edit-soal/blank-component';
+
+import ObjectiveComponent from './edit-soal/objective-component'
+import MultipleChoiceComponent from './edit-soal/multiple-choice-component'
+import TriggeredQuestionComponent from './edit-soal/triggered-question-component'
 
 const EditSoalTrivia = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
-    const importSwitch = () => import("bootstrap-switch-button-react");
-    const SwitchButton = dynamic(importSwitch, {
-        ssr: false,
-    });
 
-    const { loading: detailLoading, error: detailError, trivia_question_detail } = useSelector(state => state.detailTriviaQuestionDetail)
-    const { loading, error, success } = useSelector((state) => state.updateTriviaQuestionDetail)
+    const { loading: detailLoading, error: detailError, survey_question_detail } = useSelector(state => state.detailSurveyQuestionDetail)
+    const { loading, error, success } = useSelector((state) => state.updateSurveyQuestionDetail)
     let { id } = router.query
 
-    const [methodAdd, setMethodAdd] = useState(trivia_question_detail.type)
+    const [methodAdd, setMethodAdd] = useState(survey_question_detail.type)
 
-    const [question, setQuestion] = useState(trivia_question_detail.question)
-    const [question_image, setQuestionImage] = useState(trivia_question_detail.question_image)
+    const [question, setQuestion] = useState(survey_question_detail.question)
+    const [question_image, setQuestionImage] = useState(survey_question_detail.image)
 
-    const [answer, setAnswer] = useState(JSON.parse(trivia_question_detail.answer))
+    const [answer, setAnswer] = useState(JSON.parse(survey_question_detail.answer))
 
-    const [duration, setDuration] = useState(trivia_question_detail.duration)
-    const [answerKey, setAnswerKey] = useState(trivia_question_detail.answer_key)
-    const [status, setStatus] = useState(trivia_question_detail.status)
+    const [status, setStatus] = useState(survey_question_detail.status)
 
     useEffect(() => {
         if (success) {
             dispatch({
-                type: UPDATE_TRIVIA_QUESTION_DETAIL_RESET
+                type: UPDATE_SURVEY_QUESTION_DETAIL_RESET
             })
             router.push({
-                pathname: `/subvit/trivia`,
+                pathname: `/subvit/survey`,
                 query: { success: true },
             });
         }
@@ -77,7 +70,7 @@ const EditSoalTrivia = () => {
 
         if (success) {
             dispatch({
-                type: UPDATE_TRIVIA_QUESTION_DETAIL_RESET
+                type: UPDATE_SURVEY_QUESTION_DETAIL_RESET
             })
         }
 
@@ -103,10 +96,10 @@ const EditSoalTrivia = () => {
 
         const answers = JSON.stringify(answer)
         switch (methodAdd) {
-            case "polling":
+            case "objective":
                 if (valid) {
                     const data = {
-                        trivia_question_bank_id: trivia_question_detail.trivia_question_bank_id,
+                        survey_question_bank_id: survey_question_detail.survey_question_bank_id,
                         question,
                         question_image,
                         answer: answers,
@@ -114,37 +107,48 @@ const EditSoalTrivia = () => {
                         type: methodAdd,
                         _method: 'put'
                     }
-                    dispatch(updateTriviaQuestionDetail(id, data))
+                    dispatch(updateSurveyQuestionDetail(id, data))
                 }
                 break
-            case "checkbox":
+            case "multiple_choice":
                 if (valid) {
                     const data = {
-                        trivia_question_bank_id: trivia_question_detail.trivia_question_bank_id,
+                        survey_question_bank_id: survey_question_detail.survey_question_bank_id,
                         question,
                         question_image,
                         answer: answers,
-                        duration,
                         status,
                         type: methodAdd,
                         _method: 'put'
                     }
-                    dispatch(updateTriviaQuestionDetail(id, data))
+                    dispatch(updateSurveyQuestionDetail(id, data))
                 }
                 break
-            case "fill_in_the_blank":
+            case "pertanyaan_terbuka":
                 if (valid) {
                     const data = {
-                        trivia_question_bank_id: trivia_question_detail.trivia_question_bank_id,
+                        survey_question_bank_id: survey_question_detail.survey_question_bank_id,
                         question,
                         question_image,
-                        answer: answers,
-                        duration,
                         status,
                         type: methodAdd,
                         _method: 'put'
                     }
-                    dispatch(updateTriviaQuestionDetail(id, data))
+                    dispatch(updateSurveyQuestionDetail(id, data))
+                }
+                break
+            case "triggered_question":
+                if (valid) {
+                    const data = {
+                        survey_question_bank_id: survey_question_detail.survey_question_bank_id,
+                        question,
+                        question_image,
+                        answer: answers,
+                        status,
+                        type: methodAdd,
+                        _method: 'put'
+                    }
+                    dispatch(updateSurveyQuestionDetail(id, data))
                 }
                 break
             default:
@@ -155,9 +159,9 @@ const EditSoalTrivia = () => {
 
     const handleMethodeInput = () => {
         switch (methodAdd) {
-            case "polling":
+            case "objective":
                 return (
-                    <PollingComponent
+                    <ObjectiveComponent
                         propsAnswer={answer}
                         propsStatus={status}
                         sendPropsAnswer={answers => setAnswer(answers)}
@@ -165,37 +169,35 @@ const EditSoalTrivia = () => {
                     />
                 )
                 break
-            case "checkbox":
+            case "multiple_choice":
                 return (
-                    <CheckboxComponent
+                    <MultipleChoiceComponent
                         propsAnswer={answer}
                         propsStatus={status}
-                        propsDuration={duration}
-                        propsAnswerKey={answerKey}
                         sendPropsAnswer={answers => setAnswer(answers)}
                         sendPropsStatus={status => setStatus(status)}
-                        sendPropsDuration={duration => setDuration(duration)}
-                        sendPropsAnswerKey={answerKey => setAnswerKey(answerKey)}
                     />
                 )
                 break
-            case "fill_in_the_blank":
+            case "pertanyaan_terbuka":
+                return ('')
+            case "triggered_question":
                 return (
-                    <BlankComponent
+                    <TriggeredQuestionComponent
                         propsAnswer={answer}
                         propsStatus={status}
-                        propsDuration={duration}
                         sendPropsAnswer={answers => setAnswer(answers)}
                         sendPropsStatus={status => setStatus(status)}
-                        sendPropsDuration={duration => setDuration(duration)}
                     />
                 )
                 break
             default:
                 return (
-                    <PollingComponent
-                        propsAnswer={answer => setAnswer(answer)}
-                        propsStatus={status => setStatus(status)}
+                    <ObjectiveComponent
+                        propsAnswer={answer}
+                        propsStatus={status}
+                        sendPropsAnswer={answers => setAnswer(answers)}
+                        sendPropsStatus={status => setStatus(status)}
                     />
                 )
                 break
@@ -261,14 +263,14 @@ const EditSoalTrivia = () => {
                                     </div>
                                 </div>
                                 <div className="col-md-2 d-flex my-auto">
-                                    <button className="btn pt-0 mr-3" style={{ marginTop: '45px' }} type='button' >
+                                    {/* <button className="btn pt-0 mr-3" style={{ marginTop: '45px' }} type='button' >
                                         <Image
                                             alt="button-action"
                                             src="/assets/icon/trash-red.svg"
                                             width={20}
                                             height={30}
                                         />
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
 
@@ -281,12 +283,12 @@ const EditSoalTrivia = () => {
                                             type="radio"
                                             name="inlineRadioOptions"
                                             id="inlineRadio1"
-                                            value="polling"
-                                            checked={methodAdd === "polling"}
-                                            onChange={() => setMethodAdd("polling")}
+                                            value="objective"
+                                            checked={methodAdd === "objective"}
+                                            onChange={() => setMethodAdd("objective")}
                                         />
                                         <label className="form-check-label" htmlFor="inlineRadio1">
-                                            Polling
+                                            Objective
                                         </label>
                                     </div>
                                     <div className="form-check form-check-inline">
@@ -295,12 +297,12 @@ const EditSoalTrivia = () => {
                                             type="radio"
                                             name="inlineRadioOptions"
                                             id="inlineRadio2"
-                                            value="checkbox"
-                                            checked={methodAdd === "checkbox"}
-                                            onChange={() => setMethodAdd("checkbox")}
+                                            value="multiple_choice"
+                                            checked={methodAdd === "multiple_choice"}
+                                            onChange={() => setMethodAdd("multiple_choice")}
                                         />
                                         <label className="form-check-label" htmlFor="inlineRadio2">
-                                            Checkbox
+                                            Multiple Choice
                                         </label>
                                     </div>
                                     <div className="form-check form-check-inline">
@@ -309,18 +311,32 @@ const EditSoalTrivia = () => {
                                             type="radio"
                                             name="inlineRadioOptions"
                                             id="inlineRadio3"
-                                            value="fill_in_the_blank"
-                                            checked={methodAdd === "fill_in_the_blank"}
-                                            onChange={() => setMethodAdd("fill_in_the_blank")}
+                                            value="pertanyaan_terbuka"
+                                            checked={methodAdd === "pertanyaan_terbuka"}
+                                            onChange={() => setMethodAdd("pertanyaan_terbuka")}
                                         />
                                         <label className="form-check-label" htmlFor="inlineRadio3">
-                                            Fill in the blank
+                                            Pertanyaan Terbuka
+                                        </label>
+                                    </div>
+                                    <div className="form-check form-check-inline">
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="inlineRadioOptions"
+                                            id="inlineRadio4"
+                                            value="triggered_question"
+                                            checked={methodAdd === "triggered_question"}
+                                            onChange={() => setMethodAdd("triggered_question")}
+                                        />
+                                        <label className="form-check-label" htmlFor="inlineRadio4">
+                                            Triggered Question
                                         </label>
                                     </div>
                                 </div>
                             </div>
                             <div className="">
-                                <span className="text-muted">Silahkan Pilih Metode Tambah Trivia</span>
+                                <span className="text-muted">Silahkan Pilih Metode Edit Survey</span>
                             </div>
 
                             {

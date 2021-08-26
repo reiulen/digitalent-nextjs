@@ -67,7 +67,7 @@ const EditArtikel = () => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, success, router]);
 
   const [id, setId] = useState(artikel.id);
   const [judul_artikel, setJudulArtikel] = useState(artikel.judul_artikel);

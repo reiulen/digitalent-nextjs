@@ -23,6 +23,12 @@ const EditTipeSoal = () => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
   let { id } = router.query;
 
+
+  const [name, setName] = useState(subtance_question_type.name)
+  const [value, setValue] = useState(subtance_question_type.value)
+  const [status, setStatus] = useState(subtance_question_type.status)
+  const [, forceUpdate] = useState();
+
   useEffect(() => {
     // if (error) {
     //     dispatch(clearErrors())
@@ -40,11 +46,6 @@ const EditTipeSoal = () => {
 
   }, [dispatch, isUpdated, router]);
 
-  const [name, setName] = useState(subtance_question_type.name)
-  const [value, setValue] = useState(subtance_question_type.value)
-  const [status, setStatus] = useState(subtance_question_type.status)
-  const [, forceUpdate] = useState();
-
   const handleBack = () => {
     router.push("/subvit/substansi/tipe-soal");
   };
@@ -57,8 +58,8 @@ const EditTipeSoal = () => {
       const data = {
         name,
         value,
+        status,
         _method: 'put'
-        // status,
       }
 
       dispatch(updatewSubtanceQuestionBanksType(id, data))

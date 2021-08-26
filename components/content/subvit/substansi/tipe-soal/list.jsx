@@ -217,7 +217,11 @@ const ListTipeSoal = () => {
                     </thead>
                     <tbody>
                       {subtance_question_type && subtance_question_type.list_types.length === 0
-                        ? ""
+                        ? (
+                          <tr>
+                            <td className='text-center' colSpan={6}>Data Masih Kosong</td>
+                          </tr>
+                        )
                         : subtance_question_type &&
                         subtance_question_type.list_types.map((row, i) => {
                           return (

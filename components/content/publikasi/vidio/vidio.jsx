@@ -65,7 +65,7 @@ const Vidio = () => {
             console.log("check")
             // console.log (publishValue)
           }
-      }, [limit, isDeleted, publishValue]);
+      }, [limit, isDeleted, publishValue, dispatch, router]);
 
     const onNewReset = () => {
     router.replace('/publikasi/video', undefined, { shallow: true })
