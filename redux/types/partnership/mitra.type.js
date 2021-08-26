@@ -4,3 +4,6 @@ export const MITRA_FAIL = "MITRA_FAIL";
 export const SEARCH_BY_KEY = "SEARCH_BY_KEY";
 export const SUCESS_DELETE_MITRA = "SUCESS_DELETE_MITRA";
 export const SUCESS_PROVINCE = "SUCESS_PROVINCE";
+export const SET_PAGE_M = "SET_PAGE_M";
+export const SET_LIMIT = "SET_LIMIT";
+export const CANCEL_CHANGE_PROVINCES = "CANCEL_CHANGE_PROVINCES";

@@ -71,7 +71,7 @@ const TambahTandaTangan = () => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, success, simpleValidator]);
+  }, [dispatch,router, error, success, simpleValidator]);
 
   const onSubmit = (e) => {
     e.preventDefault();

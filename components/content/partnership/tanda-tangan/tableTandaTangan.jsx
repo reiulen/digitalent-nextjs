@@ -110,7 +110,7 @@ const Table = () => {
         type: DELETE_TANDA_TANGAN_RESET,
       });
     }
-  }, [limit, isDeleted]);
+  }, [dispatch,router,limit, isDeleted]);
 
   const onNewReset = () => {
     router.replace("/partnership/tanda-tangan", undefined, { shallow: true });

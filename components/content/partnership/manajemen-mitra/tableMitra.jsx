@@ -12,7 +12,10 @@ import ButtonAction from "../../../ButtonAction";
 import {
   fetchMitra,
   searchByKey,
-  deleteMitra
+  deleteMitra,
+  setPage,
+  setLimit,
+  exportFileCSV
 } from "../../../../redux/actions/partnership/mitra.actions";
 
 import Swal from "sweetalert2";
@@ -20,6 +23,7 @@ import Swal from "sweetalert2";
 const Table = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const {success,update} = router.query
 
   const allMitra = useSelector(state => state.allMitra)
   console.log("state allMitra",allMitra)
@@ -52,13 +56,13 @@ const Table = () => {
   }
   const onNewReset = () => {
     setSuccessDelete(false);
-    // router.replace(`/partnership/master-kategori-kerjasama`);
+    router.replace(`/partnership/manajemen-mitra`);
   };
   // dipake ketika selesai tambah data mitra
-const [success, setSuccess] = useState(false)
+// const [success, setSuccess] = useState(false)
   useEffect(() => {
     dispatch(fetchMitra())
-  }, [allMitra.keyword,allMitra.status_reload])
+  }, [dispatch,allMitra.keyword,allMitra.status_reload,allMitra.page,allMitra.limit,allMitra.card])
 
   return (
     <PageWrapper>
@@ -75,7 +79,38 @@ const [success, setSuccess] = useState(false)
           <div className="alert-text" style={{color:success?"#1BC5BD":"#c51b1b"}}>
             {successDelete
               ? "Berhasil menghapus data Data"
-              : "Berhasil menyimpan Data"}
+              : "Berhasil menyimpan data"}
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {update || successDelete ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: success ? "#C9F7F5" : "#f7c9c9" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{color:success?"#1BC5BD":"#c51b1b"}}></i>
+          </div>
+          <div className="alert-text" style={{color:success?"#1BC5BD":"#c51b1b"}}>
+            {successDelete
+              ? "Berhasil menghapus data Data"
+              : "Berhasil mengupdate data"}
           </div>
           <div className="alert-close">
             <button
@@ -119,13 +154,29 @@ const [success, setSuccess] = useState(false)
             <h3 className="card-title font-weight-bolder text-dark">
               Manajemen Mitra
             </h3>
-            <div className="card-toolbar">
+            <div className="d-flex align-items-center">
+            <div className="card-toolbar mr-3">
               <Link href="/partnership/manajemen-mitra/tambah">
                 <a className="btn btn-primary px-6 font-weight-bold btn-block ">
                   Tambah Mitra Baru
                 </a>
               </Link>
             </div>
+            <div className="card-toolbar">
+              {/* <Link href="/partnership/manajemen-mitra/tambah">
+                <a className="btn btn-primary px-6 font-weight-bold btn-block ">
+                  Export Csv
+                </a>
+              </Link> */}
+              <button
+                    type="button"
+                    onClick={()=>dispatch(exportFileCSV())}
+                      className="btn btn-primary px-6 font-weight-bold btn-block"
+                    >
+                      Export .csv
+                    </button>
+            </div>
+          </div>
           </div>
 
           <div className="card-body pt-0">
@@ -206,15 +257,84 @@ const [success, setSuccess] = useState(false)
                                 {item.cooperations_count} Kerjasama
                               </td>
                               <td className="align-middle text-center">
-                                <ButtonAction
+
+                                <button
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                        className="btn position-relative btn-delete"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <Image
+                                          src={`/assets/icon/detail.JPG`}
+                                          width="18"
+                                          height="16"
+                                          className="btn"
+                                          alt="detail"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+                                      
+                                {/* <ButtonAction
                                   icon="detail.svg"
                                   link="/partnership/manajemen-mitra/detail-data-kerjasama"
-                                />
-                                <ButtonAction
-                                  icon="write.svg"
-                                  // link={`/partnership/manajemen-mitra/${dataMitra.id}`}
-                                />
-                                <button
+                                /> */}
+                                {/* <button
+                                        className="btn ml-3 position-relative btn-delete"
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/manajemen-mitra/edit/${item.id}`
+                                          )
+                                        }
+                                      >
+                                        <Image
+                                          width="14"
+                                          height="14"
+                                          src={`/assets/icon/write.svg`}
+                                          alt="write"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Edit
+                                        </div>
+                                      </button> */}
+
+                                      <button
+                                        className="btn ml-3 position-relative btn-delete"
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/manajemen-mitra/edit/${item.id}`
+                                          )
+                                        }
+                                      >
+                                        <Image
+                                          width="14"
+                                          height="14"
+                                          src={`/assets/icon/write.svg`}
+                                          alt="write"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Edit
+                                        </div>
+                                      </button>
+                                {/* <button
                                   onClick={() => handleDelete(item.id)}
                                   className="btn mr-1"
                                   style={{
@@ -228,7 +348,27 @@ const [success, setSuccess] = useState(false)
                                     width={18}
                                     height={18}
                                   />
-                                </button>
+                                </button> */}
+
+                                <button
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                        className="ml-3 btn position-relative btn-delete"
+                                        onClick={() => handleDelete(item.id)}
+                                      >
+                                        <Image
+                                          width="14"
+                                          height="14"
+                                          src={`/assets/icon/trash.svg`}
+                                          alt="trash"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Hapus
+                                        </div>
+                                      </button>
                               </td>
                             </tr>
                             )
@@ -242,19 +382,19 @@ const [success, setSuccess] = useState(false)
               <div className="row">
                 {/* {allMitra && allMitra.perPage < allMitra.total && ( */}
                   <div className="table-pagination">
-                    {/* <Pagination
-                      activePage={page}
-                      itemsCountPerPage={allMitra.perPage}
-                      totalItemsCount={allMitra.total}
-                      pageRangeDisplayed={3}
-                      onChange={handlePagination}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    /> */}
+                    <Pagination
+                    activePage={allMitra.page}
+                    itemsCountPerPage={allMitra?.mitraAll?.data?.perPage}
+                    totalItemsCount={allMitra?.mitraAll?.data?.total}
+                    pageRangeDisplayed={3}
+                    onChange={(page) => dispatch(setPage(page))}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
                   </div>
                 {/* )} */}
                 {/* {allMitra && allMitra.total > 5 ? ( */}
@@ -270,8 +410,9 @@ const [success, setSuccess] = useState(false)
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          // onChange={(e) => handleLimit(e.target.value)}
-                          // onBlur={(e) => handleLimit(e.target.value)}
+                          onChange={(e) =>
+                          dispatch(setLimit(e.target.value))
+                        }
                         >
                           <option value="5">5</option>
                           <option value="10">10</option>

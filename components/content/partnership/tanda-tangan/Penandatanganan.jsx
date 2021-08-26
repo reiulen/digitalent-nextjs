@@ -90,6 +90,7 @@ const Penandatanganan = () => {
                       src="/assets/icon/file-upload.svg"
                       height={40}
                       width={40}
+                      alt="file-upload"
                     ></Image>
                   </div>
                   <div

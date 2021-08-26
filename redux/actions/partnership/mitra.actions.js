@@ -7,7 +7,11 @@ import {
   SEARCH_BY_KEY,
   SUCESS_DELETE_MITRA,
   SUCESS_PROVINCE,
+  SET_PAGE_M,
+  SET_LIMIT,
+  CANCEL_CHANGE_PROVINCES,
 } from "../../types/partnership/mitra.type";
+import router from "next/router";
 
 export async function getAllMitra(params) {
   return await axios.get(
@@ -74,6 +78,20 @@ export const deleteMitra = (id) => {
     }
   };
 };
+export const setPage = (page) => {
+  return {
+    type: SET_PAGE_M,
+    page,
+  };
+};
+
+export const setLimit = (value) => {
+  return {
+    type: SET_LIMIT,
+    value,
+  };
+};
+
 export const getProvinces = () => {
   return async (dispatch, getState) => {
     try {
@@ -81,9 +99,38 @@ export const getProvinces = () => {
         `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
       );
       console.log("respon data provinsi", data);
-      dispatch({ type: SUCESS_PROVINCE });
+      dispatch(successGetProvinces(data));
     } catch (error) {
       console.log("gagal get province", error);
+    }
+  };
+};
+
+export const successGetProvinces = (data) => {
+  return {
+    type: SUCESS_PROVINCE,
+    data,
+  };
+};
+
+export const cancelChangeProvinces = () => {
+  return {
+    type: CANCEL_CHANGE_PROVINCES,
+  };
+};
+
+export const exportFileCSV = () => {
+  return async (dispatch, getState) => {
+    try {
+      let urlExport = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export`
+      );
+      console.log("urlExport.config.url", urlExport.config.url);
+      router.push(urlExport.config.url);
+
+      // console.log("data", data);
+    } catch (error) {
+      console.log("object", error);
     }
   };
 };

@@ -476,14 +476,14 @@ const Sidebar = () => {
                     <li className="menu-item" aria-haspopup="true">
                       <Link href="/partnership/manajemen-kerjasama">
                         <a className="menu-link">
-                          <span className="menu-text">Manajemen Kerjasama</span>
+                          <span className="menu-text">Kerjasama</span>
                         </a>
                       </Link>
                     </li>
                     <li className="menu-item" aria-haspopup="true">
                       <Link href="/partnership/manajemen-mitra">
                         <a className="menu-link">
-                          <span className="menu-text">Manajemen Mitra</span>
+                          <span className="menu-text">Master Mitra</span>
                         </a>
                       </Link>
                     </li>
@@ -499,7 +499,7 @@ const Sidebar = () => {
                     <li className="menu-item" aria-haspopup="true">
                       <Link href="/partnership/tanda-tangan">
                         <a className="menu-link">
-                          <span className="menu-text">Tanda Tangan</span>
+                          <span className="menu-text">Tanda Tangan Digital</span>
                         </a>
                       </Link>
                     </li>

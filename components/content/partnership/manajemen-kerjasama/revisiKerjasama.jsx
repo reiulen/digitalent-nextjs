@@ -91,15 +91,15 @@ const RevisiKerjasama = () => {
                   Upload Dokumen Kerjasama
                 </label>
                 <div className="col-sm-3">
-                  <div class="input-group">
-                    <div class="custom-file">
+                  <div className="input-group">
+                    <div className="custom-file">
                       <input
                         type="file"
                         name="gambar"
-                        class="custom-file-input"
+                        className="custom-file-input"
                         id="inputGroupFile04"
                       />
-                      <label class="custom-file-label" for="inputGroupFile04">
+                      <label className="custom-file-label" htmlFor="inputGroupFile04">
                         Cari Dokumen
                       </label>
                     </div>

@@ -417,18 +417,18 @@ onFocus={()=>setError({...error,signing_date:""})}
                   Upload Dokumen Kerjasama
                 </label>
                 <div className="col-sm-3">
-                  <div class="input-group">
-                    <div class="custom-file">
+                  <div className="input-group">
+                    <div className="custom-file">
                       <input
                       onFocus={()=>setError({...error,document:""})}
                         type="file"
                         name="gambar"
-                        class="custom-file-input cursor-pointer"
+                        className="custom-file-input cursor-pointer"
                         id="inputGroupFile04"
                         
                         onChange={handlePdfFileChange}
                       />
-                      <label class="custom-file-label" for="inputGroupFile04">
+                      <label className="custom-file-label" htmlFor="inputGroupFile04">
                         
                         {NamePDF ? NamePDF : "Cari Dokumen"}
                       </label>

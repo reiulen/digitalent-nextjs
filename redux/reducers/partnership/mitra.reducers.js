@@ -5,6 +5,9 @@ import {
   SEARCH_BY_KEY,
   SUCESS_DELETE_MITRA,
   SUCESS_PROVINCE,
+  SET_PAGE_M,
+  SET_LIMIT,
+  CANCEL_CHANGE_PROVINCES,
 } from "../../types/partnership/mitra.type";
 
 const statuslist = {
@@ -70,6 +73,26 @@ export const allMitraReducer = (state = initialState, action) => {
       return {
         ...state,
         provinces: action.data,
+      };
+
+    case CANCEL_CHANGE_PROVINCES:
+      return {
+        ...state,
+        provinces: [],
+      };
+
+    case SET_PAGE_M:
+      return {
+        ...state,
+        page: action.page,
+      };
+
+    case SET_LIMIT:
+      return {
+        ...state,
+        limit: action.value,
+        page: 1,
+        card: "",
       };
 
     default:

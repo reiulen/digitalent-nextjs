@@ -71,7 +71,7 @@ const Table = () => {
     if (searchValue === "") {
       dispatch(fetchAllMKCooporation("clear keyword"));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <PageWrapper>
