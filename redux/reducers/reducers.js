@@ -24,6 +24,7 @@ import {
 } from "./publikasi/imagetron.reducers";
 import {
   allKategoriReducer,
+  paginationKategoriReducer,
   newKategoriReducer,
   deleteKategoriReducer,
   detailKategoriReducer,
@@ -196,6 +197,7 @@ const reducer = combineReducers({
   updatedVideo: updateVideoReducer,
 
   allKategori: allKategoriReducer,
+  paginationKategori: paginationKategoriReducer,
   newKategori: newKategoriReducer,
   deleteKategori: deleteKategoriReducer,
   detailKategori: detailKategoriReducer,

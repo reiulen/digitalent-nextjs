@@ -388,10 +388,21 @@ const Artikel = () => {
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td> */}
+                        
                               <td className='align-middle text-center'>
-                                  <span className="badge badge-secondary text-muted">
-                                      {i + 1 * (page * limit) - (limit - 1)}
-                                  </span>
+                                  {
+                                    limit === null ?
+                                      <span className="badge badge-secondary text-muted">
+                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                        {console.log ("check1")}
+                                      </span>
+                                    :
+                                      <span className="badge badge-secondary text-muted">
+                                        {i + 1 * (page * limit) - (limit - 1)}
+                                        {console.log ("check2")}
+                                      </span>
+                                  }
+                                  
                               </td>
 
                               <td>
@@ -504,7 +515,7 @@ const Artikel = () => {
                     />
                   </div>
                 )}
-                {artikel && artikel.total > 5 ? (
+                {/* {artikel && artikel.total > 5 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -538,7 +549,38 @@ const Artikel = () => {
                   </div>
                 ) : (
                   ""
-                )}
+                )} */}
+                <div className="table-total ml-auto">
+                    <div className="row">
+                      <div className="col-4 mr-0 p-0">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect2"
+                          style={{
+                            width: "65px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
+                        >
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3" }}
+                        >
+                          Total Data {artikel.total}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
               </div>
             </div>
           </div>
