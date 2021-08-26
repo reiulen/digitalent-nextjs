@@ -265,7 +265,7 @@ const DetailTrivia = () => {
                                                                 </span>
                                                             </td>
                                                             <td className="align-middle">
-                                                                {question.id}
+                                                                CC{question.id}
                                                             </td>
                                                             <td className="align-middle">
                                                                 {question.question}

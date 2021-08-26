@@ -32,7 +32,6 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
 
         if (index == null && parent == null && children != null) {
             const listOption = list[children]
-            listOption.option = value
             if (name === 'image') {
                 const reader = new FileReader()
                 reader.onload = () => {
@@ -41,12 +40,13 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                     }
                 }
                 reader.readAsDataURL(e.target.files[0])
+            } else {
+                listOption.option = value
             }
         }
 
         if (index == null && parent != null && children != null) {
             const listAnswer = list[parent].sub[children]
-            listAnswer.question = value
             if (name === 'image') {
                 const reader = new FileReader()
                 reader.onload = () => {
@@ -55,12 +55,13 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                     }
                 }
                 reader.readAsDataURL(e.target.files[0])
+            } else {
+                listAnswer.question = value
             }
         }
 
         if (index != null && parent != null && children != null) {
             const listOption = list[index].sub[parent].answer[children]
-            listOption.option = value
             if (name === 'image') {
                 const reader = new FileReader()
                 reader.onload = () => {
@@ -69,6 +70,8 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                     }
                 }
                 reader.readAsDataURL(e.target.files[0])
+            } else {
+                listOption.option = value
             }
         }
         setSoalList(list)

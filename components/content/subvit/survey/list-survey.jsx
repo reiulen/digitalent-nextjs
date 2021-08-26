@@ -212,10 +212,10 @@ const ListSurvey = () => {
                                 </span>
                               </td>
                               <td className="align-middle">
-                                {row.academy_id}
+                                {row.academy.name}
                               </td>
                               <td className="align-middle">
-                                {row.theme_id}
+                                {row.theme.name}
                               </td>
                               <td className="align-middle">{row.bank_soal} Soal</td>
                               <td className="align-middle">

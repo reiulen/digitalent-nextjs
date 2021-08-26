@@ -224,6 +224,7 @@ const reducer = combineReducers({
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
+  detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetail: deleteSubtanceQuestionDetailReducer,
   importFileSubtanceQuestionDetail: importFileSubtanceQuestionDetailReducer,

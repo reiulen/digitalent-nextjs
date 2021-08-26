@@ -59,7 +59,6 @@ export const allSurveyQuestionDetailReducer = (state = { survey_question_detail:
             return {
                 error: null
             }
-
         default:
             return state
     }
@@ -128,7 +127,6 @@ export const deleteSurveyQuestionDetailReducer = (state = {}, action) => {
 
         case CLEAR_ERRORS:
             return {
-                ...state,
                 error: null
             }
 
@@ -194,7 +192,6 @@ export const updateSurveyQuestionDetailReducer = (state = { survey_question_deta
 
         case CLEAR_ERRORS:
             return {
-                ...state,
                 error: null
             }
 

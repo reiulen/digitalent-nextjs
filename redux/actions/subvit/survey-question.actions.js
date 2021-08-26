@@ -152,7 +152,7 @@ export const deleteSurveyQuestionBanks = (id) => async (dispatch) => {
 
         dispatch({
             type: DELETE_SURVEY_QUESTION_BANKS_SUCCESS,
-            payload: data.success
+            payload: data.status
         })
 
     } catch (error) {

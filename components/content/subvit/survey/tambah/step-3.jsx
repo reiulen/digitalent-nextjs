@@ -62,7 +62,7 @@ const StepThree = () => {
         end_at,
         duration,
         status: false,
-        question_to_share: jumlah_soal,
+        questions_to_share: jumlah_soal,
       }
 
       dispatch(updateSurveyQuestionBanksPublish(data, id))
@@ -96,7 +96,7 @@ const StepThree = () => {
         end_at,
         duration,
         status: true,
-        question_to_share: jumlah_soal,
+        questions_to_share: jumlah_soal,
       }
 
       dispatch(updateSurveyQuestionBanksPublish(data, id))
