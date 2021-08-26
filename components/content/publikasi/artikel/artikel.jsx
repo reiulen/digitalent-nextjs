@@ -124,7 +124,7 @@ const Artikel = () => {
     } else {
         router.push(`${router.pathname}?page=${pageNumber}`)
     }
-}
+  }
 
   const handleSearch = () => {
     if (limit != null && startDate === null && endDate === null) {
@@ -352,6 +352,9 @@ const Artikel = () => {
                 </div>
               </div>
             </div>
+            {/* {
+              console.log (artikel)
+            } */}
 
             <div className="table-page mt-5">
               <div className="table-responsive">
@@ -373,14 +376,14 @@ const Artikel = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {!artikel || (artikel && artikel.artikel.length === 0) ? (
+                      {!artikel || (artikel && artikel.length === 0) ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Masih Kosong
                         </td>
                       ) : (
                         artikel &&
-                        artikel.artikel &&
-                        artikel.artikel.map((artikel, i) => {
+                        // artikel.artikel &&
+                        artikel.map((artikel, i) => {
                           return (
                             <tr key={artikel.id}>
                               {/* <td className="align-middle text-center">
@@ -439,7 +442,10 @@ const Artikel = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">{artikel.dibuat}</td>
+                              <td className="align-middle">
+                                {/* {artikel.dibuat} */}
+                                Super Admin
+                              </td>
                               <td className="align-middle">
                                 {artikel.publish === 1 ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
@@ -513,7 +519,7 @@ const Artikel = () => {
                     />
                   </div>
                 )}
-                {/* {artikel && artikel.total > 5 ? (
+                {artikel  ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -547,38 +553,8 @@ const Artikel = () => {
                   </div>
                 ) : (
                   ""
-                )} */}
-                <div className="table-total ml-auto">
-                    <div className="row">
-                      <div className="col-4 mr-0 p-0">
-                        <select
-                          className="form-control"
-                          id="exampleFormControlSelect2"
-                          style={{
-                            width: "65px",
-                            background: "#F3F6F9",
-                            borderColor: "#F3F6F9",
-                            color: "#9E9E9E",
-                          }}
-                          onChange={(e) => handleLimit(e.target.value)}
-                          onBlur={(e) => handleLimit(e.target.value)}
-                        >
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                          <option value="15">15</option>
-                          <option value="20">20</option>
-                        </select>
-                      </div>
-                      <div className="col-8 my-auto">
-                        <p
-                          className="align-middle mt-3"
-                          style={{ color: "#B5B5C3" }}
-                        >
-                          Total Data {artikel.total}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                )}
+                
               </div>
             </div>
           </div>
