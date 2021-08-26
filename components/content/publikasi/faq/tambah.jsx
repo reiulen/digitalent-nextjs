@@ -44,7 +44,7 @@ const TambahFaq = () => {
             });
         }
 
-    }, [dispatch, error, success]);
+    }, [dispatch, error, success, router]);
 
     const [judul, setJudulPertanyaan] = useState('')
     const [jawaban, setJawaban] = useState('');

@@ -29,7 +29,7 @@ const DashbardPublikasi = () => {
                                                         position: 'absolute', right: '10px',
                                                         top: '-50px'
                                                     }}>
-                                                    <Image src='/assets/media/ilustrator-1.svg' width={300} height={200} />
+                                                    <Image src='/assets/media/ilustrator-1.svg' width={300} height={200} alt="dashboard-pict"/>
                                                 </div>
                                             </div>
                                         </div>
