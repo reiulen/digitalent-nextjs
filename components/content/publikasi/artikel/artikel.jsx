@@ -79,7 +79,7 @@ const Artikel = () => {
       // console.log("check")
       // console.log (publishValue)
     }
-  }, [limit, isDeleted, publishValue]);
+  }, [limit, isDeleted, publishValue, dispatch, router]);
 
   const onNewReset = () => {
     router.replace("/publikasi/artikel", undefined, { shallow: true });
@@ -376,14 +376,14 @@ const Artikel = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {!artikel || (artikel && artikel.length === 0) ? (
+                      {!artikel || (artikel && artikel.artikel.length === 0) ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Masih Kosong
                         </td>
                       ) : (
                         artikel &&
                         // artikel.artikel &&
-                        artikel.map((artikel, i) => {
+                        artikel.artikel.map((artikel, i) => {
                           return (
                             <tr key={artikel.id}>
                               {/* <td className="align-middle text-center">

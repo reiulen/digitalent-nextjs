@@ -127,7 +127,7 @@ const EditGaleri = () => {
             query: { success: true }
         })
     }
-  }, [dispatch, error, success, files]);
+  }, [dispatch, error, success, files, router]);
 
   const [id, setId] = useState(galeri.id_gallery);
   const [judul, setJudulGaleri] = useState(galeri.judul);

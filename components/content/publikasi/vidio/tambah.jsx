@@ -63,7 +63,7 @@ const TambahVidio = () => {
             })
         }
 
-    }, [dispatch, error, success]);
+    }, [dispatch, error, success, router]);
 
 
     const [kategori_id, setKategoriId] = useState('')

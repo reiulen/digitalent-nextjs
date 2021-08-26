@@ -32,7 +32,7 @@ const EditKategori = () => {
             });
         }
 
-    }, [dispatch, isUpdated]);
+    }, [dispatch, isUpdated,router]);
 
 
     const [nama, setNamaKategori] = useState(kategori.nama)

@@ -45,7 +45,7 @@ const EditFaq = () => {
             });
         }
 
-    }, [dispatch, error, isUpdated]);
+    }, [dispatch, error, isUpdated, router]);
 
 
     const [judul, setJudulPertanyaan] = useState(faq.judul)

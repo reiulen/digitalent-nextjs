@@ -50,7 +50,7 @@ const EditVideo = () => {
             })
         }
 
-    }, [dispatch, error, success]);
+    }, [dispatch, error, success, router]);
 
     const [id, setId] = useState(video.id)
     const [judul_video, setJudulVideo] = useState(video.judul_video)
