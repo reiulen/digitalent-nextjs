@@ -225,10 +225,10 @@ const ListSubstansi = () => {
                                 </span>
                               </td>
                               <td className="align-middle">
-                                {subtance.academy_id}
+                                {subtance.academy.name}
                               </td>
                               <td className="align-middle">
-                                {subtance.theme_id}
+                                {subtance.theme.name}
                               </td>
                               <td className="align-middle">{subtance.bank_soal} Soal</td>
                               <td className="align-middle">
