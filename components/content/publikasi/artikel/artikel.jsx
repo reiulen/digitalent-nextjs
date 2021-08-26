@@ -394,12 +394,10 @@ const Artikel = () => {
                                     limit === null ?
                                       <span className="badge badge-secondary text-muted">
                                         {i + 1 * (page * 5 ) - (5 - 1 )}
-                                        {console.log ("check1")}
                                       </span>
                                     :
                                       <span className="badge badge-secondary text-muted">
                                         {i + 1 * (page * limit) - (limit - 1)}
-                                        {console.log ("check2")}
                                       </span>
                                   }
                                   
