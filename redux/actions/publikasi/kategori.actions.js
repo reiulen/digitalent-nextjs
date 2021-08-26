@@ -3,6 +3,10 @@ import {
     KATEGORI_SUCCESS,
     KATEGORI_FAIL,
 
+    PAGINATION_KATEGORI_REQUEST,
+    PAGINATION_KATEGORI_SUCCESS,
+    PAGINATION_KATEGORI_FAIL,
+
     NEW_KATEGORI_REQUEST,
     NEW_KATEGORI_SUCCESS,
     NEW_KATEGORI_RESET,
@@ -28,16 +32,50 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllKategori = (page = 1, keyword = "", limit = 5, startdate = '', enddate = '') => async (dispatch) => {
+// export const getAllKategori = (page = 1, keyword = "", limit = 5, startdate = '', enddate = '') => async (dispatch) => {
+//     try {
+
+//         dispatch({ type: KATEGORI_REQUEST })
+
+//         let link = process.env.END_POINT_API_PUBLIKASI + `api/kategori?page=${page}`;
+//         if (keyword) link = link.concat(`&keyword=${keyword}`);
+//         if (limit) link = link.concat(`&limit=${limit}`);
+//         if (startdate) link = link.concat(`&startdate=${startdate}`)
+//         if (enddate) link = link.concat(`&enddate=${enddate}`)
+
+//         // const config = {
+//         //     headers: {
+//         //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+//         //         'Access-Control-Allow-Origin': '*',
+//         //         'apikey': process.env.END_POINT_KEY_AUTH
+//         //     }
+//         // }
+
+//         const { data } = await axios.get(link)
+
+//         dispatch({
+//             type: KATEGORI_SUCCESS,
+//             payload: data
+//         })
+
+//     } catch (error) {
+//         dispatch({
+//             type: KATEGORI_FAIL,
+//             payload: error.message
+//         })
+//     }
+// }
+
+export const getAllKategori = () => async (dispatch) => {
     try {
 
         dispatch({ type: KATEGORI_REQUEST })
 
-        let link = process.env.END_POINT_API_PUBLIKASI + `api/kategori?page=${page}`;
-        if (keyword) link = link.concat(`&keyword=${keyword}`);
-        if (limit) link = link.concat(`&limit=${limit}`);
-        if (startdate) link = link.concat(`&startdate=${startdate}`)
-        if (enddate) link = link.concat(`&enddate=${enddate}`)
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/kategori`;
+        // if (keyword) link = link.concat(`&keyword=${keyword}`);
+        // if (limit) link = link.concat(`&limit=${limit}`);
+        // if (startdate) link = link.concat(`&startdate=${startdate}`)
+        // if (enddate) link = link.concat(`&enddate=${enddate}`)
 
         // const config = {
         //     headers: {
@@ -61,6 +99,42 @@ export const getAllKategori = (page = 1, keyword = "", limit = 5, startdate = ''
         })
     }
 }
+
+export const paginationKategori = (page = 1, keyword = "", limit = 5, startdate = '', enddate = '') => async (dispatch) => {
+    try {
+
+        dispatch({ type: PAGINATION_KATEGORI_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/kategori?page=${page}`;
+        if (keyword) link = link.concat(`&keyword=${keyword}`);
+        if (limit) link = link.concat(`&limit=${limit}`);
+        if (startdate) link = link.concat(`&startdate=${startdate}`)
+        if (enddate) link = link.concat(`&enddate=${enddate}`)
+
+        // const config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+        //         'Access-Control-Allow-Origin': '*',
+        //         'apikey': process.env.END_POINT_KEY_AUTH
+        //     }
+        // }
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: PAGINATION_KATEGORI_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: PAGINATION_KATEGORI_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+
 
 export const getAllKategoriInput = (kategori) => async (dispatch) => {
     try {

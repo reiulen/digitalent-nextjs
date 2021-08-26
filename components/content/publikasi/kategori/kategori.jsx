@@ -12,7 +12,7 @@ import ButtonAction from '../../../ButtonAction'
 import LoadingTable from '../../../LoadingTable';
 
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteKategori, clearErrors } from '../../../../redux/actions/publikasi/kategori.actions'
+import { deleteKategori, clearErrors, getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import { DELETE_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.type'
 
 const Kategori = () => {
@@ -21,6 +21,7 @@ const Kategori = () => {
     const router = useRouter()
 
     const { loading, error, kategori } = useSelector(state => state.allKategori)
+    const { paginateKategori } = useSelector(state => state.paginationKategori)
     const { error: deleteError, isDeleted } = useSelector(state => state.deleteKategori)
 
     let { page = 1, success } = router.query
@@ -29,6 +30,9 @@ const Kategori = () => {
     const [limit, setLimit] = useState(null)
     const [search, setSearch] = useState('')
 
+    // useEffect (() => {
+    //     dispatch (getAllKategori())
+    // }, [])
 
     useEffect(() => {
         if (limit !== null && search === "") {
@@ -211,17 +215,27 @@ const Kategori = () => {
                                                 <th className='text-center'>Aksi</th>
                                             </tr>
                                         </thead>
-                                        {/* {
-                                            console.log (kategori)
-                                        } */}
+                                        
                                         <tbody>
                                             {
-                                                !kategori || kategori && kategori.kategori.length === 0 ?
+                                                !paginateKategori || paginateKategori && paginateKategori.kategori.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={4}>Data Masih Kosong</td> :
-                                                    kategori && kategori.kategori.map((row, i) => {
+                                                    paginateKategori && paginateKategori.kategori.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             {/* <td className='align-middle text-center'>{i + 1 * (page * 5 || limit) - 4}</td> */}
-                                                            <td className='align-middle text-center'>{i + 1 * (page * limit) - (limit - 1)}</td>
+                                                            <td className='align-middle text-center'>
+                                                                {
+                                                                    limit === null ?
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                                                    </span>
+                                                                    :
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * limit) - (limit - 1)}
+                                                                    </span>
+                                                                }
+                                                                
+                                                            </td>
                                                             <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.jenis_kategori}</td>
                                                             <td className='align-middle text-center'>
@@ -238,57 +252,92 @@ const Kategori = () => {
                                     </table> : ''
                                 }
                             </div>
+
                             {
                                 console.log (kategori)
                             }
-
-                            <div className="row">
-                                {kategori && kategori.perPage < kategori.total &&
-                                    <div className="table-pagination">
-                                        <Pagination
-                                            activePage={page}
-                                            itemsCountPerPage={kategori.perPage}
-                                            totalItemsCount={kategori.total}
-                                            pageRangeDisplayed={3}
-                                            onChange={handlePagination}
-                                            nextPageText={'>'}
-                                            prevPageText={'<'}
-                                            firstPageText={'<<'}
-                                            lastPageText={'>>'}
-                                            itemClass='page-item'
-                                            linkClass='page-link'
-                                        />
-                                    </div>
-                                }
-                                {kategori && kategori.total > 5 ?
-                                    <div className="table-total ml-auto">
-                                        <div className="row">
-                                            <div className="col-4 mr-0 p-0">
-                                                <select
-                                                    className="form-control"
-                                                    id="exampleFormControlSelect2"
-                                                    style={{
-                                                        width: "65px",
-                                                        background: "#F3F6F9",
-                                                        borderColor: "#F3F6F9",
-                                                        color: "#9E9E9E",
-                                                    }}
-                                                    onChange={e => handleLimit(e.target.value)}
-                                                    onBlur={e => handleLimit(e.target.value)}
-                                                >
-                                                    <option value='5' selected={limit == "5" ? true: false}>5</option>
-                                                    <option value='10' selected={limit == "10" ? true: false}>10</option>
-                                                    <option value='15' selected={limit === "15" ? true: false}>15</option>
-                                                    <option value='20' selected={limit === "20" ? true: false}>20</option>
-                                                </select>
+                            {
+                                console.log (paginateKategori)
+                            }
+                            {
+                                kategori && paginateKategori ?
+                                    <div className="row">
+                                        {paginateKategori.perPage < kategori.total &&
+                                            <div className="table-pagination">
+                                                <Pagination
+                                                    activePage={page}
+                                                    itemsCountPerPage={paginateKategori.perPage}
+                                                    totalItemsCount={kategori.total}
+                                                    pageRangeDisplayed={3}
+                                                    onChange={handlePagination}
+                                                    nextPageText={'>'}
+                                                    prevPageText={'<'}
+                                                    firstPageText={'<<'}
+                                                    lastPageText={'>>'}
+                                                    itemClass='page-item'
+                                                    linkClass='page-link'
+                                                />
                                             </div>
-                                            <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {kategori.total}</p>
+                                        }
+                                        {/* {kategori && kategori.total > 5 ?
+                                            <div className="table-total ml-auto">
+                                                <div className="row">
+                                                    <div className="col-4 mr-0 p-0">
+                                                        <select
+                                                            className="form-control"
+                                                            id="exampleFormControlSelect2"
+                                                            style={{
+                                                                width: "65px",
+                                                                background: "#F3F6F9",
+                                                                borderColor: "#F3F6F9",
+                                                                color: "#9E9E9E",
+                                                            }}
+                                                            onChange={e => handleLimit(e.target.value)}
+                                                            onBlur={e => handleLimit(e.target.value)}
+                                                        >
+                                                            <option value='5' selected={limit == "5" ? true: false}>5</option>
+                                                            <option value='10' selected={limit == "10" ? true: false}>10</option>
+                                                            <option value='15' selected={limit === "15" ? true: false}>15</option>
+                                                            <option value='20' selected={limit === "20" ? true: false}>20</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="col-8 my-auto">
+                                                        <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {kategori.total}</p>
+                                                    </div>
+                                                </div>
+                                            </div> : ''
+                                        } */}
+                                        <div className="table-total ml-auto">
+                                            <div className="row">
+                                                <div className="col-4 mr-0 p-0">
+                                                    <select
+                                                        className="form-control"
+                                                        id="exampleFormControlSelect2"
+                                                        style={{
+                                                            width: "65px",
+                                                            background: "#F3F6F9",
+                                                            borderColor: "#F3F6F9",
+                                                            color: "#9E9E9E",
+                                                        }}
+                                                        onChange={e => handleLimit(e.target.value)}
+                                                        onBlur={e => handleLimit(e.target.value)}
+                                                    >
+                                                        <option value='5' selected={limit == "5" ? true: false}>5</option>
+                                                        <option value='10' selected={limit == "10" ? true: false}>10</option>
+                                                        <option value='15' selected={limit === "15" ? true: false}>15</option>
+                                                        <option value='20' selected={limit === "20" ? true: false}>20</option>
+                                                    </select>
+                                                </div>
+                                                <div className="col-8 my-auto">
+                                                    <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {kategori.total}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div> : ''
-                                }
-                            </div>
+                                    </div>
+                                :
+                                    null
+                            }
+                            
                         </div>
                     </div>
                 </div>

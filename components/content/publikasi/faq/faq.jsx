@@ -358,9 +358,19 @@ const Faq = () => {
                                                                 </span>
                                                             </td> */}
                                                             <td className='align-middle text-center'>
-                                                                <span className="badge badge-secondary text-muted">
-                                                                    {i + 1 * (page * limit) - (limit - 1)}
-                                                                </span>
+                                                                {
+                                                                    limit === null ?
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                                                        {console.log ("check1")}
+                                                                    </span>
+                                                                    :
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * limit) - (limit - 1)}
+                                                                        {console.log ("check2")}
+                                                                    </span>
+                                                                }
+                                                                
                                                             </td>
                                                             <td className='align-middle'>{row.judul}</td>
                                                             <td className='align-middle'>{row.kategori}</td>
@@ -388,7 +398,7 @@ const Faq = () => {
                                                                         onChange={(checked) => onSetPin(checked, row.id)}
                                                                     />
                                                                     :
-                                                                    ""
+                                                                    <div className="text-center"> --- </div>
                                                                 }
                                                                 
                                                             </td>
