@@ -11,6 +11,14 @@ import {
     DELETE_SURVEY_QUESTION_DETAIL_SUCCESS,
     DELETE_SURVEY_QUESTION_DETAIL_FAIL,
 
+    DETAIL_SURVEY_QUESTION_DETAIL_REQUEST,
+    DETAIL_SURVEY_QUESTION_DETAIL_SUCCESS,
+    DETAIL_SURVEY_QUESTION_DETAIL_FAIL,
+
+    UPDATE_SURVEY_QUESTION_DETAIL_REQUEST,
+    UPDATE_SURVEY_QUESTION_DETAIL_SUCCESS,
+    UPDATE_SURVEY_QUESTION_DETAIL_FAIL,
+
     IMPORT_FILE_SURVEY_QUESTION_DETAIL_REQUEST,
     IMPORT_FILE_SURVEY_QUESTION_DETAIL_SUCCESS,
     IMPORT_FILE_SURVEY_QUESTION_DETAIL_FAIL,
@@ -106,6 +114,46 @@ export const deleteSurveyQuestionDetail = (id) => async (dispatch) => {
     }
 }
 
+export const detailSurveyQuestionDetail = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DETAIL_SURVEY_QUESTION_DETAIL_REQUEST })
+
+        const { data } = await axios.get(process.env.END_POINT_API_SUBVIT + `api/survey-question-bank-details/${id}`)
+
+        console.log(data)
+        dispatch({
+            type: DETAIL_SURVEY_QUESTION_DETAIL_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DETAIL_SURVEY_QUESTION_DETAIL_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const updateSurveyQuestionDetail = (id, dataBankSoal) => async (dispatch) => {
+    try {
+
+        dispatch({ type: UPDATE_SURVEY_QUESTION_DETAIL_REQUEST })
+
+        const { data } = await axios.post(process.env.END_POINT_API_SUBVIT + `api/survey-question-bank-details/${id}`, dataBankSoal)
+
+        dispatch({
+            type: UPDATE_SURVEY_QUESTION_DETAIL_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: UPDATE_SURVEY_QUESTION_DETAIL_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
 
 export const importFileSurveyQuestionDetail = (triviaDetailFile) => async (dispatch) => {
     try {

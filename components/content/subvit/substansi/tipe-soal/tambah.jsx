@@ -13,6 +13,7 @@ import { NEW_SUBTANCE_QUESTION_TYPE_RESET } from "../../../../../redux/types/sub
 import PageWrapper from "/components/wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import LoadingPage from "../../../../LoadingPage";
+import { FAIL_COOPERTAION_ACTIVE_SELECT_BY_ID } from "../../../../../redux/types/partnership/management_cooporation.type";
 
 const TambahTipeSoal = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,27 @@ const TambahTipeSoal = () => {
   const [, forceUpdate] = useState();
 
   const saveDraft = () => {
-    router.push("/subvit/substansi/tipe-soal");
+    if (error) {
+      dispatch(clearErrors())
+    }
+    if (simpleValidator.current.allValid()) {
+
+      const data = {
+        name,
+        value,
+        status: false
+      }
+
+      dispatch(newSubtanceQuestionBanksType(data))
+    } else {
+      simpleValidator.current.showMessages()
+      forceUpdate(1)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi data dengan benar !'
+      })
+    }
   };
 
   const onSubmit = (e) => {

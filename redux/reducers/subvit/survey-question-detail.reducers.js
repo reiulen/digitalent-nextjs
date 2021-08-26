@@ -14,6 +14,15 @@ import {
     DELETE_SURVEY_QUESTION_DETAIL_RESET,
     DELETE_SURVEY_QUESTION_DETAIL_FAIL,
 
+    DETAIL_SURVEY_QUESTION_DETAIL_REQUEST,
+    DETAIL_SURVEY_QUESTION_DETAIL_SUCCESS,
+    DETAIL_SURVEY_QUESTION_DETAIL_FAIL,
+
+    UPDATE_SURVEY_QUESTION_DETAIL_REQUEST,
+    UPDATE_SURVEY_QUESTION_DETAIL_SUCCESS,
+    UPDATE_SURVEY_QUESTION_DETAIL_RESET,
+    UPDATE_SURVEY_QUESTION_DETAIL_FAIL,
+
     IMPORT_FILE_SURVEY_QUESTION_DETAIL_REQUEST,
     IMPORT_FILE_SURVEY_QUESTION_DETAIL_SUCCESS,
     IMPORT_FILE_SURVEY_QUESTION_DETAIL_RESET,
@@ -122,6 +131,73 @@ export const deleteSurveyQuestionDetailReducer = (state = {}, action) => {
                 ...state,
                 error: null
             }
+
+        default:
+            return state
+    }
+}
+
+export const detailSurveyQuestionDetailReducer = (state = { survey_question_detail: {} }, action) => {
+    switch (action.type) {
+        case DETAIL_SURVEY_QUESTION_DETAIL_REQUEST:
+            return {
+                loading: true
+            }
+
+        case DETAIL_SURVEY_QUESTION_DETAIL_SUCCESS:
+            return {
+                loading: false,
+                survey_question_detail: action.payload.data
+            }
+
+        case DETAIL_SURVEY_QUESTION_DETAIL_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const updateSurveyQuestionDetailReducer = (state = { survey_question_detail: {} }, action) => {
+    switch (action.type) {
+        case UPDATE_SURVEY_QUESTION_DETAIL_REQUEST:
+            return {
+                loading: true
+            }
+
+        case UPDATE_SURVEY_QUESTION_DETAIL_SUCCESS:
+            return {
+                loading: false,
+                success: action.payload.message,
+                survey_question_detail: action.payload.data
+            }
+
+        case UPDATE_SURVEY_QUESTION_DETAIL_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case UPDATE_SURVEY_QUESTION_DETAIL_RESET:
+            return {
+                success: false
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
 
         default:
             return state

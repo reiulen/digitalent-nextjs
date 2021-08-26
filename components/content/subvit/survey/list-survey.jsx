@@ -217,7 +217,7 @@ const ListSurvey = () => {
                               <td className="align-middle">
                                 {row.theme_id}
                               </td>
-                              <td className="align-middle">{row.question_to_share} Soal</td>
+                              <td className="align-middle">{row.bank_soal} Soal</td>
                               <td className="align-middle">
                                 {row.start_at}
                               </td>

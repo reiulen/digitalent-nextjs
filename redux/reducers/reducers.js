@@ -97,6 +97,8 @@ import {
   allSurveyQuestionDetailReducer,
   newSurveyQuestionDetailReducer,
   deleteSurveyQuestionDetailReducer,
+  detailSurveyQuestionDetailReducer,
+  updateSurveyQuestionDetailReducer,
   importFileSurveyQuestionDetailReducer,
   importImagesSurveyQuestionDetailReducer,
 } from "./subvit/survey-question-detail.reducers";
@@ -238,7 +240,8 @@ const reducer = combineReducers({
   allSurveyQuestionDetail: allSurveyQuestionDetailReducer,
   newSurveyQuestionDetail: newSurveyQuestionDetailReducer,
   deleteSurveyQuestionDetail: deleteSurveyQuestionDetailReducer,
-  detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
+  detailSurveyQuestionDetail: detailSurveyQuestionDetailReducer,
+  updateSurveyQuestionDetail: updateSurveyQuestionDetailReducer,
   importFileSurveyQuestionDetail: importFileSurveyQuestionDetailReducer,
   importImagesSurveyQuestionDetail: importImagesSurveyQuestionDetailReducer,
   // =============== end substansi ==================

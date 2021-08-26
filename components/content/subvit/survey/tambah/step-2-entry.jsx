@@ -132,7 +132,7 @@ const StepTwo = () => {
             answer: answers,
             question_image,
             answer_key: null,
-            survey_question_type: methodAdd
+            type: methodAdd
           }
 
           dispatch(newSurveyQuestionDetail(data))
@@ -159,7 +159,7 @@ const StepTwo = () => {
             answer: answers_multiple,
             question_image,
             answer_key: null,
-            survey_question_type: methodAdd
+            type: methodAdd
           }
 
           dispatch(newSurveyQuestionDetail(data))
@@ -171,7 +171,7 @@ const StepTwo = () => {
             survey_question_bank_id: id,
             question,
             question_image,
-            survey_question_type: methodAdd,
+            type: methodAdd,
           }
           dispatch(newSurveyQuestionDetail(data))
         }
@@ -196,7 +196,7 @@ const StepTwo = () => {
             answer: answers_triggered,
             question_image,
             answer_key: null,
-            survey_question_type: methodAdd
+            type: methodAdd
           }
 
           // console.log(data)
@@ -254,7 +254,7 @@ const StepTwo = () => {
             answer: answers,
             question_image,
             answer_key: null,
-            survey_question_type: methodAdd
+            type: methodAdd
           }
 
           dispatch(newSurveyQuestionDetail(data))
@@ -281,7 +281,7 @@ const StepTwo = () => {
             answer: answers_multiple,
             question_image,
             answer_key: null,
-            survey_question_type: methodAdd
+            type: methodAdd
           }
 
           dispatch(newSurveyQuestionDetail(data))
@@ -293,7 +293,7 @@ const StepTwo = () => {
             survey_question_bank_id: id,
             question,
             question_image,
-            survey_question_type: methodAdd,
+            type: methodAdd,
           }
           dispatch(newSurveyQuestionDetail(data))
         }
@@ -318,7 +318,7 @@ const StepTwo = () => {
             answer: answers_triggered,
             question_image,
             answer_key: null,
-            survey_question_type: methodAdd
+            type: methodAdd
           }
 
           dispatch(newSurveyQuestionDetail(data))

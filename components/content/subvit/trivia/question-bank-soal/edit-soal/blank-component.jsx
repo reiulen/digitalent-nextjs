@@ -1,13 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import dynamic from "next/dynamic";
+import React, { useState } from 'react'
 import Image from 'next/image'
 
 const BlankComponent = ({ propsAnswer, propsStatus, propsDuration, sendPropsAnswer, sendPropsStatus, sendPropsDuration }) => {
-
-    const importSwitch = () => import("bootstrap-switch-button-react");
-    const SwitchButton = dynamic(importSwitch, {
-        ssr: false,
-    });
 
     const [answer, setAnswer] = useState(propsAnswer)
     const [status, setStatus] = useState(propsStatus)
@@ -45,10 +39,6 @@ const BlankComponent = ({ propsAnswer, propsStatus, propsDuration, sendPropsAnsw
         sendPropsAnswer(list)
     }
 
-    useEffect(() => {
-        console.log(propsStatus)
-    }, [propsStatus])
-
     return (
         <>
             <div className="answer mt-5">
@@ -65,22 +55,27 @@ const BlankComponent = ({ propsAnswer, propsStatus, propsDuration, sendPropsAnsw
                                         ) : ''
                                     }
                                     <div className="col-md-8 pt-2">
+                                        <select
+                                            name="type"
+                                            className="form-control"
+                                            value={row.type}
+                                            placeholder={row.key}
+                                            onChange={e => handleInputChange(e, i)}
+                                        >
+                                            <option value="" disabled selected>-- PILIHAN TIPE --</option>
+                                            <option value="Percis">Percis</option>
+                                            <option value="Mengandung">Mengandung</option>
+                                            <option value="Sama Dengan">Sama Dengan</option>
+                                        </select>
                                         <input
                                             type="text"
                                             name="option"
-                                            className='form-control'
+                                            className='form-control mt-2'
                                             placeholder={`Jawaban ` + row.key}
                                             value={row.option}
                                             onChange={e => handleInputChange(e, i)}
                                             autoComplete='off'
                                         />
-                                        <div className="custom-file mt-2">
-                                            <span>Gambar Pertanyaan (Opsional)</span>
-                                            <input type="file" className="custom-file-input" name='question_image' />
-                                            <label className="custom-file-label" htmlFor="customFile">
-                                                Choose file
-                                            </label>
-                                        </div>
                                     </div>
                                     <div className="col-md-3 d-flex justify-content-start my-auto">
                                         <div className='col-md-4 mb-5 pr-0'>
