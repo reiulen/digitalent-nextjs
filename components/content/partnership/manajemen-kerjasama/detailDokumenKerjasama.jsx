@@ -41,7 +41,7 @@ const DetailDokumenKerjasama = () => {
     getSingleValue(router.query.id)
     dispatch(getSingleCooperation(router.query.id));
     
-  }, [router.query.id]);
+  }, [dispatch,router.query.id]);
 
   return (
     <PageWrapper>
@@ -372,7 +372,7 @@ const DetailDokumenKerjasama = () => {
               {allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.cooperation_category.data_content.map((items,i)=>{
                 return(
                   
-              <div className="form-group row">
+              <div className="form-group row" key={i}>
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"

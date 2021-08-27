@@ -248,13 +248,13 @@ const EditDokumentKerjasama = () => {
     setDataSingle(router.query.id);
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
-  }, [router.query.id]);
+  }, [dispatch,router.query.id]);
   useEffect(() => {
     dispatch(fetchListCooperationSelectById(cooperationC_id));
-  }, [allMK.idCooporationSelect]);
+  }, [dispatch,allMK.idCooporationSelect,cooperationC_id]);
   useEffect(() => {
     dispatch(fetchDataEmail());
-  }, [allMK.institution_name, allMK.stateListMitra]);
+  }, [dispatch,allMK.institution_name, allMK.stateListMitra]);
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -352,9 +352,9 @@ const EditDokumentKerjasama = () => {
                       <option value="">Pilih Kategory Kerjasama</option>
                       {allMK.stateListKerjaSama.length === 0
                         ? ""
-                        : allMK.stateListKerjaSama.data.map((items) => {
+                        : allMK.stateListKerjaSama.data.map((items,i) => {
                             return (
-                              <option value={items.id}>
+                              <option key={i} value={items.id}>
                                 {items.cooperation_categories}
                               </option>
                             );
@@ -681,7 +681,7 @@ const EditDokumentKerjasama = () => {
                         />
                         <label
                           className="custom-file-label"
-                          for="inputGroupFile04"
+                          htmlFor="inputGroupFile04"
                         >
                           {NamePDF ? NamePDF : "Tambah dokumen baru"}
                         </label>
@@ -736,7 +736,7 @@ const EditDokumentKerjasama = () => {
                 ? ""
                 : cooperationID.data_content.map((items, i) => {
                     return (
-                      <div
+                      <div key={i}
                         className={`form-group row ${
                           allMK.stateListKerjaSama.length !== 0 ? "d-none" : ""
                         }`}
@@ -771,6 +771,7 @@ const EditDokumentKerjasama = () => {
                     (items, index) => {
                       return (
                         <div
+                        key={index}
                           className={`form-group row ${
                             allMK.stateListKerjaSama.length === 0
                               ? "d-none"

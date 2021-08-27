@@ -261,6 +261,9 @@ margin-top: 1rem;
 .react-datepicker-popper{
   z-index: 2 !important;
 }
+.image-view img{
+  width: 100%;
+}
 
 
 

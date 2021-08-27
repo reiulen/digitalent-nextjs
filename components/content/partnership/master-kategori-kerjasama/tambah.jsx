@@ -148,7 +148,6 @@ const Tambah = () => {
                         onChange={(e) => handleChange(e, index)}
                         className="form-control"
                         value={valueCreateCooporation}
-                        name="valueCreateCooporation"
                       />
                       {index===0 ?"":
                       <button type="button" onClick={()=>handleDelete(index)} className="btn position-absolute" style={{top:"0",right:"10px"}}>
