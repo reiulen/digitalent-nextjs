@@ -191,7 +191,7 @@ export const updateSubtanceQuestionBanksPublish = (subtanceData, id) => async (d
     }
 }
 
-export const allReportSubtanceQuestionBanks = (id, page = 1, keyword = '', limit = null) => async (dispatch) => {
+export const allReportSubtanceQuestionBanks = (id, page = 1, keyword = '', limit = null, pelatihan = null, status = null, nilai = null) => async (dispatch) => {
     try {
 
         dispatch({ type: REPORT_SUBTANCE_QUESTION_BANKS_REQUEST })
@@ -199,6 +199,9 @@ export const allReportSubtanceQuestionBanks = (id, page = 1, keyword = '', limit
         let link = process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/report/${id}?page=${page}`
         if (keyword) link = link.concat(`&keyword=${keyword}`)
         if (limit) link = link.concat(`&limit=${limit}`)
+        if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
+        if (status) link = link.concat(`&status=${status}`)
+        if (nilai) link = link.concat(`&nilai=${nilai}`)
 
         // const config = {
         //     headers: {

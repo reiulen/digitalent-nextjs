@@ -21,6 +21,9 @@ const ListSubstansi = () => {
 
     const [search, setSearch] = useState('')
     const [limit, setLimit] = useState(null)
+    const [status, setStatus] = useState('')
+    const [nilai, setNilai] = useState(null)
+    const [pelatihan, setPelatihan] = useState(null)
 
     let { page = 1, id } = router.query
     page = Number(page)
@@ -30,15 +33,13 @@ const ListSubstansi = () => {
     }, [dispatch])
 
     const handlePagination = (pageNumber) => {
-        if (limit != null) {
-            router.push(`${router.pathname}?id=${id}&page=${pageNumber}&limit=${limit}`)
-        } else if (search != '' && limit != null) {
-            router.push(`${router.pathname}?id=${id}&page=${pageNumber}&limit=${limit}&keyword=${search}`)
-        } else if (search != '') {
-            router.push(`${router.pathname}?id=${id}&page=${pageNumber}&keyword=${search}`)
-        } else {
-            router.push(`${router.pathname}?id=${id}&page=${pageNumber}`)
-        }
+        let link = `${router.pathname}?id=${id}&page=${pageNumber}`
+        if (limit) link = link.concat(`&limit=${limit}`)
+        if (search) link = link.concat(`&keyword=${search}`)
+        if (status) link = link.concat(`&status=${status}`)
+        if (nilai) link = link.concat(`&nilai=${nilai}`)
+        if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
+        router.push(link)
     }
 
     const handleSearch = () => {
@@ -58,6 +59,14 @@ const ListSubstansi = () => {
         await axios.get(`http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`).then((res) => {
             window.location.href = res.data.data
         })
+    }
+
+    const handleFilter = () => {
+        let link = `${router.pathname}?id=${id}&page=${1}`
+        if (status) link = link.concat(`&status=${status}`)
+        if (nilai) link = link.concat(`&nilai=${nilai}`)
+        if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
+        router.push(link)
     }
 
     return (
@@ -123,34 +132,63 @@ const ListSubstansi = () => {
                                 </div>
                             </div>
 
-                            <div className="row align-items-center mt-2">
-                                <div className="col-lg-3 col-xl-3">
-                                    <div className="form-group">
+                            <div className="row align-items-center my-5">
+                                <div className="col-lg-3 col-xl-3 ">
+                                    <div className="form-group mb-0">
                                         <select className="form-control">
                                             <option>Semua</option>
                                         </select>
-                                        <p className="text-muted mt-1">Filter by Pelatihan</p>
+                                        <small className="text-muted mt-1 p-0">
+                                            Filter by Pelatihan
+                                        </small>
                                     </div>
                                 </div>
 
-                                <div className="col-lg-3 col-xl-3">
-                                    <div className="form-group">
-                                        <select className="form-control">
-                                            <option>Semua</option>
+                                <div className="col-lg-3 col-xl-3 ">
+                                    <div className="form-group mb-0">
+                                        <select
+                                            className="form-control"
+                                            onChange={e => setStatus(e.target.value)}
+                                            onBlur={e => setStatus(e.target.value)}
+                                            value={status}
+                                        >
+                                            <option value='' selected>Semua</option>
+                                            <option value={1}>Publish</option>
+                                            <option value={0}>Draft</option>
                                         </select>
-                                        <p className="text-muted mt-1">Filter by Status</p>
+                                        <small className="text-muted mt-1 p-0">
+                                            Filter by Status
+                                        </small>
                                     </div>
                                 </div>
 
-                                <div className="col-lg-3 col-xl-3">
-                                    <div className="form-group">
-                                        <select className="form-control">
-                                            <option>Semua</option>
+                                <div className="col-lg-3 col-xl-3 ">
+                                    <div className="form-group mb-0">
+                                        <select
+                                            className="form-control"
+                                            onChange={e => setNilai(e.target.value)}
+                                            onBlur={e => setNilai(e.target.value)}
+                                            value={nilai}
+                                        >
+                                            <option value='' selected>Semua</option>
                                         </select>
-                                        <p className="text-muted mt-1">Filter by Nilai</p>
+                                        <small className="text-muted mt-1 p-0">
+                                            Filter by nilai
+                                        </small>
+                                    </div>
+                                </div>
+
+
+                                <div className="col-lg-3 col-xl-3 ">
+                                    <div className="mb-0">
+                                        <button className='btn btn-light-primary' onClick={handleFilter}>Filter</button>
+                                    </div>
+                                    <div className="text-muted mt-5 p-0">
+                                        {' '}
                                     </div>
                                 </div>
                             </div>
+
                         </div>
 
                         <div className="table-page mt-5">
@@ -187,8 +225,8 @@ const ListSubstansi = () => {
                                                                     <p className="my-0">{row.no_telp}</p>
                                                                 </div>
                                                             </td>
-                                                            <td className='align-middle'><p className="h6">{row.pelatihan}</p></td>
-                                                            <td className='align-middle'><p className="h6">{row.nilai}</p></td>
+                                                            <td className='align-middle'><p className="h6">{row.training.name}</p></td>
+                                                            <td className='align-middle'><p className="h6">{row.score}</p></td>
                                                             <td className='align-middle'>
                                                                 <div>
                                                                     <p className="my-0 h6">{row.total_workmanship_date}</p>

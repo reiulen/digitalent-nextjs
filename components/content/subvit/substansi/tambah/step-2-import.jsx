@@ -362,7 +362,7 @@ const StepTwo = () => {
                                                                 </span>
                                                             </td>
                                                             <td className="align-middle">
-                                                                {question.subtance_question_bank_id}
+                                                                CC{question.id}
                                                             </td>
                                                             <td className="align-middle">
                                                                 {question.question}
@@ -385,7 +385,7 @@ const StepTwo = () => {
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">
-                                                                <ButtonAction icon="write.svg" />
+                                                                <ButtonAction icon="write.svg" link={`edit-soal-substansi?id=${question.id}`} />
                                                                 <button
                                                                     onClick={() => handleDelete(question.id)}
                                                                     className="btn mr-1"
