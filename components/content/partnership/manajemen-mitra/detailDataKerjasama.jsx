@@ -7,37 +7,58 @@ import ButtonAction from "../../../ButtonAction";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import Image from "next/image";
 
 import {
   getSingleValue,
   searchByKeyDetail,
   setPageDetail,
   setLimitDetail,
-  exportFileCSVDetail
+  exportFileCSVDetail,
+  fetchListSelectCooperation,
+  fetchListSelectStatus,
+  changeValueStatus,
+  changeValueKerjaSama,
 } from "../../../../redux/actions/partnership/mitra.actions";
+import IconArrow from '../../../assets/icon/Arrow'
+import IconCalender from '../../../assets/icon/Calender'
 
 const DetailDataKerjasama = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const mitraDetailAll = useSelector(state => state.allMitra)
-  console.log("mitraDetailAll",mitraDetailAll)
 
   const [keyWord, setKeyWord] = useState("");
+  const [valueStatus, setValueStatus] = useState("");
+  const [valueKerjaSama, setValueKerjaSama] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(searchByKeyDetail(keyWord));
   };
 
-const getDataSingleAll =(id)=>{
-  if(id){
-    dispatch(getSingleValue(id))
-  }
-}
+  const handleSubmitSearchMany = (event) => {
+    event.preventDefault();
+    dispatch(changeValueStatus(valueStatus));
+    dispatch(changeValueKerjaSama(valueKerjaSama));
+  };
+
+// const getDataSingleAll =(id)=>{
+//   if(id){
+//     dispatch(getSingleValue(id))
+//     dispatch(fetchListSelectCooperation());
+//     dispatch(fetchListSelectStatus());
+//   }
+// }
 
 useEffect(() => {
-  getDataSingleAll(router.query.id)
-}, [router.query.id,mitraDetailAll.keywordDetail,mitraDetailAll.pageDetail,mitraDetailAll.limitDetail,mitraDetailAll.statusDetail,mitraDetailAll.categories_cooporation])
+  // getDataSingleAll(router.query.id)
+  if(router.query.id){
+    dispatch(getSingleValue(router.query.id))
+    dispatch(fetchListSelectCooperation());
+    dispatch(fetchListSelectStatus());
+  }
+}, [dispatch,router.query.id,mitraDetailAll.keywordDetail,mitraDetailAll.pageDetail,mitraDetailAll.limitDetail,mitraDetailAll.statusDetail,mitraDetailAll.categories_cooporation])
 
 
   return (
@@ -82,35 +103,59 @@ useEffect(() => {
             </form>
 
             <div className="table-filter">
-
+            <form onSubmit={handleSubmitSearchMany}>
               <div className="row align-items-right">
                 <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                  <select name="" id="" className="form-control">
-                    <option value="1">Kategori Kerjasama</option>
-                    <option value="2">Kategori 2</option>
-                  </select>
+                  <div className="position-relative d-flex align-items-center cursor-pointer">
+                    <select
+                      onChange={(e) => setValueKerjaSama(e.target.value)}
+                      name=""
+                      id=""
+                      className="form-control remove-icon-default cursor-pointer dropdown-lists"
+                    >
+                      <option value="">Kategori Kerjasama</option>
+                      {mitraDetailAll.stateListKerjaSama.length === 0
+                        ? ""
+                        : mitraDetailAll.stateListKerjaSama.data.map((items,i) => {
+                            return (
+                              <option key={i} value={items.cooperation_categories}>
+                                {items.cooperation_categories}
+                              </option>
+                            );
+                          })}
+
+                    </select>
+                    <IconCalender className="right-center-absolute" style={{right:"10px"}}/>
+                    </div>
                 </div>
                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                  <select name="" id="" className="form-control">
-                    <option value="1">Status</option>
-                    <option value="2">Aktif</option>
-                  </select>
+                  <div className="position-relative d-flex align-items-center cursor-pointer">
+                    <select
+                      onChange={(e) => setValueStatus(e.target.value)}
+                      name=""
+                      id=""
+                      className="form-control remove-icon-default cursor-pointer dropdown-lists"
+                    >
+                      <option value="">Status</option>
+                      {mitraDetailAll.stateListStatus.length === 0
+                        ? ""
+                        : mitraDetailAll.stateListStatus.data.map((items,i) => {
+                            return (
+                              <option key={i} value={items.name}>{items.name}</option>
+                            );
+                          })}
+                    </select>
+                    <IconCalender className="right-center-absolute" style={{right:"10px"}}/>
+                    </div>
                 </div>
                 <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
-                  <a
-                    href="#"
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                  >
-                    Filter
-                  </a>
-                </div>
-                <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
-                  <a
-                    href="#"
-                    className="btn btn-sm btn-light-danger px-6 font-weight-bold btn-block"
-                  >
-                    Reset
-                  </a>
+                  <button
+                      type="submit"
+                      className="btn bg-light-primary text-primary position-relative"
+                      style={{ width: "120px", bottom: "2px" }}
+                    >
+                      Cari
+                    </button>
                 </div>
                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
                   {/* <a
@@ -128,6 +173,7 @@ useEffect(() => {
                 </button>
                 </div>
               </div>
+              </form>
             </div>
 
             <div className="table-page mt-5">
@@ -170,37 +216,122 @@ useEffect(() => {
                         </button>
                       </td>
                       <td className="align-middle text-center">{items.partner.user.name}</td>
-                      <td className="align-middle text-center">
-                        Proposal Pelatihan Programmer Web
-                        {items.cooperation_category.cooperation_categories}
+                      <td className="d-flex justify-content-center">
+
+                        <div className="d-flex align-items-center justify-content-center flex-column">
+                                    <p className="p-part-t">{items.title}</p>
+                                    <p className="p-part-d">
+                                      (
+                                      {
+                                        items.cooperation_category ===null ? "tidak ada kategori kerjasama":
+                                          items.cooperation_category.cooperation_categories
+                                      }
+                                      )
+                                    </p>
+                                  </div>
+
+                        {/* {items.title}
+                        {items.cooperation_category.cooperation_categories} */}
                         <br />
                         {/* <small style={{ color: "grey" }}>
                           Memodanrum of Understanding (MoU)
                         </small> */}
                       </td>
-                      <td className="align-middle text-center">3 Tahun
+                      <td className="align-middle text-center">
                       {items.period} {items.period_unit}
                       </td>
                       <td className="align-middle text-center">{items.signing_date}</td>
                       <td className="align-middle">{items.period_date_end}</td>
                       <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="Kategori" selected>
-                            aktif
-                          </option>
-                          <option value="Kategori">non aktif</option>
-                          {/* <option value="Kategori">pengajuan - revisi</option> */}
-                        </select>
+                        <div className="position-relative"> 
+                                  <select
+                                    name=""
+                                    id=""
+                                    className="form-control remove-icon-default dropdown-arrows"
+                                    // key={index}
+                                    // onChange={(e)=> changeListStatus(e.target.value,items.id)}
+                                  >
+                                    <option value="1">
+                                      {items.status.name}
+                                    </option> 
+                                    <option value="2">
+                                      tidak aktif
+                                    </option> 
+                                  </select>
+                                  <IconArrow className="right-center-absolute" style={{right:"10px"}} width="7" height="7"/>
+                                  </div>
                       </td>
                       <td className="align-middle text-center">
-                        <ButtonAction
-                          icon="detail.svg"
-                          link="/partnership/manajemen-mitra/detail-data-kerjasama"
-                        />
-                        <ButtonAction
-                          icon="write.svg"
-                          link={`/partnership/manajemen-mitra/`}
-                        />
+                           <button
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                        className="btn position-relative btn-delete"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <Image
+                                          src={`/assets/icon/detail.JPG`}
+                                          width="18"
+                                          height="16"
+                                          className="btn"
+                                          alt="detail"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+                                      <button
+                                        className="btn ml-3 position-relative btn-delete"
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/manajemen-kerjasama/edit/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <Image
+                                          width="14"
+                                          height="14"
+                                          src={`/assets/icon/write.svg`}
+                                          alt="write"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Edit
+                                        </div>
+                                      </button>
+                                      <button
+                                        style={{
+                                          background: "#F3F6F9",
+                                          borderRadius: "6px",
+                                          padding: "8px 10px 3px 10px",
+                                        }}
+                                        className="ml-3 btn position-relative btn-delete"
+                                        // onClick={() =>
+                                        //   cooperationDelete(items.id)
+                                          
+                                        // }
+                                      >
+                                        <Image
+                                          width="14"
+                                          height="14"
+                                          src={`/assets/icon/trash.svg`}
+                                          alt="trash"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Hapus
+                                        </div>
+                                      </button>
+                                   
                       </td>
                     </tr>
                     )
@@ -251,7 +382,9 @@ useEffect(() => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data 120
+                        Total Data{" "}
+                        {mitraDetailAll.mitraDetailAll &&
+                          mitraDetailAll.totalDataDetail}
                       </p>
                     </div>
                   </div>

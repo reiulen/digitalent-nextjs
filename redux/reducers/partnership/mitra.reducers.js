@@ -14,6 +14,10 @@ import {
   SEARCH_BY_KEY_DETAIL,
   SET_PAGE_M_DETAIL,
   SET_LIMIT_DETAIL,
+  LIST_COOPERATION_SUCCESS_DETAIL,
+  LIST_STATUS_SUCCESS_DETAIL,
+  SET_VALUE_KERJA_SAMA_M_DETAIL,
+  SET_VALUE_STATUS_M_DETAIL,
 } from "../../types/partnership/mitra.type";
 
 const statuslist = {
@@ -39,6 +43,9 @@ const initialState = {
   provinces: [],
   //
   mitraDetailAll: [],
+  totalDataDetail: 0,
+  stateListKerjaSama: [],
+  stateListStatus: [],
   pageDetail: 1,
   limitDetail: 5,
   keywordDetail: "",
@@ -137,12 +144,36 @@ export const allMitraReducer = (state = initialState, action) => {
         ...state,
         status: statuslist.success,
         mitraDetailAll: action.data,
+        totalDataDetail: action.totalData,
       };
 
     case MITRA_FAIL_DETAIL:
       return {
         ...state,
         status: statuslist.error,
+      };
+
+    case LIST_COOPERATION_SUCCESS_DETAIL:
+      return {
+        ...state,
+        stateListKerjaSama: action.data,
+      };
+    case LIST_STATUS_SUCCESS_DETAIL:
+      return {
+        ...state,
+        stateListStatus: action.data,
+      };
+
+    case SET_VALUE_KERJA_SAMA_M_DETAIL:
+      return {
+        ...state,
+        categories_cooporation: action.value,
+      };
+
+    case SET_VALUE_STATUS_M_DETAIL:
+      return {
+        ...state,
+        statusDetail: action.value,
       };
 
     default:

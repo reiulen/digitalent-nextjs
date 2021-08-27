@@ -255,6 +255,9 @@ router.push({
   }, [router.query.id]);
 
   useEffect( () => {
+    if(indonesia_provinces_id === ""){
+      return;
+    }else{
       async function fetchAPI(){
         try {
           let { data } = await axios.get(
@@ -266,7 +269,9 @@ router.push({
         }
       }
       fetchAPI()
-  }, [statuLoadCities]);
+    }
+      
+  }, [statuLoadCities,indonesia_provinces_id]);
 
   return (
     <PageWrapper>

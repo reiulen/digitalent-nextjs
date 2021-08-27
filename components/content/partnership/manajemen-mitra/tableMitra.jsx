@@ -260,7 +260,7 @@ const Table = () => {
                   </thead>
                   <tbody>
                     {allMitra.status === "success"
-                      ? allMitra.mitraAll.data.list_mitras.length === 0
+                      ? allMitra.mitraAll.length === 0
                         ? "Tidak ada data"
                         : allMitra.mitraAll.data.list_mitras.map(
                             (item, index) => {
