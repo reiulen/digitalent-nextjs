@@ -221,7 +221,7 @@ const ListSubstansi = () => {
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
                                 <span className="badge badge-secondary text-muted">
-                                  {i + 1 * (page * limit) - (limit - 1)}
+                                  {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
                               <td className="align-middle">
