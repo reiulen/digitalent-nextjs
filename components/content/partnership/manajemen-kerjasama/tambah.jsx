@@ -139,7 +139,7 @@ const Tambah = () => {
     dispatch(fetchListCooperationSelectById(cooperationC_id))
     dispatch(fetchListSelectMitra())
     setDate(moment(new Date()).format("YYYY-MM-DD"))
-  }, [allMK.institution_name,allMK.idCooporationSelect])
+  }, [dispatch,allMK.institution_name,allMK.idCooporationSelect,cooperationC_id])
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -174,7 +174,7 @@ const Tambah = () => {
                     <option value="">Pilih lembaga</option>
                     {allMK.stateListMitra.length=== 0?"":allMK.stateListMitra.data.map((items,index)=>{
                       return(
-                        <option value={items.name}>{items.name}</option>
+                        <option key={index} value={items.name}>{items.name}</option>
                         )
                     })}
                   </select>
@@ -234,9 +234,9 @@ const Tambah = () => {
                 <div className="col-sm-10">
                   <select onFocus={()=>setError({...error,cooperationC_id:""})}  onChange={(e)=>changeSetCooperationC_id(e.target.value)} name="" id="" className="form-control">
                     <option value="">Pilih Kategory Kerjasama</option>
-                    {allMK.cooperationActiveSelect.length === 0 ? "":allMK.cooperationActiveSelect.data.map(items =>{
+                    {allMK.cooperationActiveSelect.length === 0 ? "":allMK.cooperationActiveSelect.data.map((items,index) =>{
                       return(
-                        <option value={items.id}>{items.cooperation_categories}</option>
+                        <option key={index} value={items.id}>{items.cooperation_categories}</option>
                         )
                       })}
                   </select>
@@ -302,7 +302,7 @@ const Tambah = () => {
               {allMK.singleCooporationSelect.length === 0 ?"": allMK.singleCooporationSelect.data.option.map((items,index)=>{
                 return(
                   
-                  <div className="form-group row">
+                  <div className="form-group row" key={index}>
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"

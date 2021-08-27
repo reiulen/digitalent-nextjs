@@ -1,245 +1,283 @@
+import axios from "axios";
+import debounce from "debounce-promise";
 import {
-  // MITRA
   MITRA_REQUEST,
   MITRA_SUCCESS,
   MITRA_FAIL,
-
-  // NEW MITRA
-  NEW_MITRA_REQUEST,
-  NEW_MITRA_SUCCESS,
-  NEW_MITRA_RESET,
-  NEW_MITRA_FAIL,
-
-  // EDIT MITRA
-  DETAIL_MITRA_REQUEST,
-  DETAIL_MITRA_SUCCESS,
-  DETAIL_MITRA_FAIL,
-
-  // update
-  UPDATE_MITRA_REQUEST,
-  UPDATE_MITRA_SUCCESS,
-  UPDATE_MITRA_FAIL,
-  UPDATE_MITRA_RESET,
-
-  // delete
-  DELETE_MITRA_REQUEST,
-  DELETE_MITRA_SUCCESS,
-  DELETE_MITRA_FAIL,
-
-  // dashboard card count
-  CARD_TOTAL_MITRA_REQUEST,
-  CARD_TOTAL_MITRA_SUCCESS,
-  CARD_TOTAL_MITRA_FAIL,
-  // ...
-  CARD_ACTIVE_MITRA_REQUEST,
-  CARD_ACTIVE_MITRA_SUCCESS,
-  CARD_ACTIVE_MITRA_FAIL,
-  // ...
-  CARD_NON_ACTIVE_MITRA_REQUEST,
-  CARD_NON_ACTIVE_MITRA_SUCCESS,
-  CARD_NON_ACTIVE_MITRA_FAIL,
-
-  // ------
-  CLEAR_ERRORS,
+  SEARCH_BY_KEY,
+  SUCESS_DELETE_MITRA,
+  SUCESS_PROVINCE,
+  SET_PAGE_M,
+  SET_LIMIT,
+  CANCEL_CHANGE_PROVINCES,
+  MITRA_FAIL_DETAIL,
+  MITRA_REQUEST_DETAIL,
+  MITRA_SUCCESS_DETAIL,
+  SEARCH_BY_KEY_DETAIL,
+  SET_PAGE_M_DETAIL,
+  SET_LIMIT_DETAIL,
+  LIST_COOPERATION_SUCCESS_DETAIL,
+  LIST_STATUS_SUCCESS_DETAIL,
+  SET_VALUE_KERJA_SAMA_M_DETAIL,
+  SET_VALUE_STATUS_M_DETAIL,
 } from "../../types/partnership/mitra.type";
+import router from "next/router";
 
-import axios from "axios";
+export async function getAllMitra(params) {
+  return await axios.get(
+    `${process.env.END_POINT_API_PARTNERSHIP}/api/partners`,
+    {
+      params,
+    }
+  );
+}
+// ============== GET DETAIL FETCH
+export async function getCooperation() {
+  return await axios.get(
+    `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation`
+  );
+}
+export async function getStatus() {
+  return await axios.get(
+    `${process.env.END_POINT_API_PARTNERSHIP}/api/option/status`
+  );
+}
+// ============== GET DETAIL FETCH
 
-export const getAllMitra =
-  (page = 1, keyword = "", limit = 5, card = null) =>
-  async (dispatch) => {
+let debouncedFetchMitra = debounce(getAllMitra, 0);
+
+export const fetchMitra = (keyword) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: MITRA_REQUEST });
+    let keywordState = getState().allMitra.keyword || "";
+    let limitState = getState().allMitra.limit || "";
+    let pageState = getState().allMitra.page || 1;
+
+    const params = {
+      keyword: keywordState,
+      limit: limitState,
+      page: pageState,
+    };
+
     try {
-      dispatch({ type: MITRA_REQUEST });
-
-      let link =
-        process.env.END_POINT_API_PARTNERSHIP + `/api/partners?page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
-      if (card) link = link.concat(`&card=${card}`);
-
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
-
-      const { data } = await axios.get(link);
-
-      dispatch({
-        type: MITRA_SUCCESS,
-        payload: data,
-      });
+      const { data } = await debouncedFetchMitra(params);
+      console.log("data fetch all mitra", data);
+      dispatch(successFetchMitra(data, data.data.total));
     } catch (error) {
-      dispatch({
-        type: MITRA_FAIL,
-        payload: error.message,
-      });
+      dispatch(errorFetchMitra());
     }
   };
-
-export const newMitra = (newMitraData) => async (dispatch) => {
-  try {
-    dispatch({
-      type: NEW_MITRA_REQUEST,
-    });
-
-    // const config = {
-    //     headers: {
-    //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-    //         'Access-Control-Allow-Origin': '*',
-    //         'apikey': process.env.END_POINT_KEY_AUTH
-    //     }
-    // }
-
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PARTNERSHIP + "/api/partners/create",
-      newMitraData
-    );
-
-    dispatch({
-      type: NEW_MITRA_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: NEW_MITRA_FAIL,
-      payload: error.response.data.message,
-    });
-  }
 };
 
-export const getDetailMitra = (id) => async (dispatch) => {
-  try {
-    let link = process.env.END_POINT_API_PARTNERSHIP + `/api/partners/${id}`;
-
-    const { data } = await axios.get(link);
-
-    dispatch({
-      type: DETAIL_MITRA_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_MITRA_FAIL,
-      payload: error.response.data.message,
-    });
-  }
+export const successFetchMitra = (data, totalData) => {
+  return {
+    type: MITRA_SUCCESS,
+    data,
+    totalData,
+  };
+};
+export const errorFetchMitra = (data) => {
+  return {
+    type: MITRA_FAIL,
+    data,
+  };
+};
+export const searchByKey = (value) => {
+  return {
+    type: SEARCH_BY_KEY,
+    value,
+  };
+};
+export const deleteMitra = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      let { data } = await axios.delete(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`
+      );
+      console.log("respon data delete mitra", data);
+      dispatch({ type: SUCESS_DELETE_MITRA });
+    } catch (error) {
+      console.log("gagal delete mitra", error);
+    }
+  };
+};
+export const setPage = (page) => {
+  return {
+    type: SET_PAGE_M,
+    page,
+  };
 };
 
-export const clearErrors = () => async (dispatch) => {
-  dispatch({
-    type: CLEAR_ERRORS,
-  });
+export const setLimit = (value) => {
+  return {
+    type: SET_LIMIT,
+    value,
+  };
 };
 
-export const updateMitra = (id, updateMitraRes) => async (dispatch) => {
-  try {
-    dispatch({
-      type: UPDATE_MITRA_REQUEST,
-    });
-
-    const { data } = await axios.put(
-      process.env.END_POINT_API_PARTNERSHIP + `/api/partners/${id}`,
-      updateMitraRes
-    );
-
-    dispatch({
-      type: UPDATE_MITRA_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_MITRA_FAIL,
-      payload: error.response.data.message,
-    });
-  }
+export const getProvinces = () => {
+  return async (dispatch, getState) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
+      );
+      console.log("respon data provinsi", data);
+      dispatch(successGetProvinces(data));
+    } catch (error) {
+      console.log("gagal get province", error);
+    }
+  };
 };
 
-export const deleteMitra = (id) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_MITRA_REQUEST });
-
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_PARTNERSHIP + `/api/partners/${id}`
-    );
-
-    dispatch({
-      type: DELETE_MITRA_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_MITRA_FAIL,
-      payload: error.response.data.message,
-    });
-  }
+export const successGetProvinces = (data) => {
+  return {
+    type: SUCESS_PROVINCE,
+    data,
+  };
 };
 
-//dashboard card
-export const getTotalMitra = () => async (dispatch) => {
-  try {
-    dispatch({ type: CARD_TOTAL_MITRA_REQUEST });
-
-    let link =
-      process.env.END_POINT_API_PARTNERSHIP +
-      `/api/partners/?card=non-active&page=1&limit=1&card=all`;
-
-    const { data } = await axios.get(link);
-
-    dispatch({
-      type: CARD_TOTAL_MITRA_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: CARD_TOTAL_MITRA_FAIL,
-      payload: error.message,
-    });
-  }
+export const cancelChangeProvinces = () => {
+  return {
+    type: CANCEL_CHANGE_PROVINCES,
+  };
 };
 
-export const getActiveMitra = () => async (dispatch) => {
-  try {
-    dispatch({ type: CARD_ACTIVE_MITRA_REQUEST });
+export const exportFileCSV = () => {
+  return async (dispatch, getState) => {
+    try {
+      let urlExport = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export`
+      );
+      console.log("urlExport.config.url", urlExport.config.url);
+      router.push(urlExport.config.url);
 
-    let link =
-      process.env.END_POINT_API_PARTNERSHIP +
-      `/api/partners/?card=non-active&page=1&limit=1&card=active`;
-
-    const { data } = await axios.get(link);
-
-    dispatch({
-      type: CARD_ACTIVE_MITRA_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: CARD_ACTIVE_MITRA_FAIL,
-      payload: error.message,
-    });
-  }
+      // console.log("data", data);
+    } catch (error) {
+      console.log("object", error);
+    }
+  };
 };
 
-export const getNonActiveMitra = () => async (dispatch) => {
-  try {
-    dispatch({ type: CARD_NON_ACTIVE_MITRA_REQUEST });
+// ====================================== mitra detail
 
-    let link =
-      process.env.END_POINT_API_PARTNERSHIP +
-      `/api/partners/?card=non-active&page=1&limit=1&card=non-active`;
+export async function getAllMitraDetail(paramsID, id) {
+  return await axios.get(
+    `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/cooperation/${id}?categories_cooporation=${paramsID.categories_cooporation}&status=${paramsID.status}&page=${paramsID.page}&limit=${paramsID.limit}&keyword=${paramsID.keyword}`
+  );
+}
 
-    const { data } = await axios.get(link);
+export const getSingleValue = (id) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: MITRA_REQUEST_DETAIL });
+    let keywordState = getState().allMitra.keywordDetail || "";
+    let limitState = getState().allMitra.limitDetail || "";
+    let pageState = getState().allMitra.pageDetail || 1;
+    let categoryState = getState().allMitra.categories_cooporation;
+    let statusState = getState().allMitra.statusDetail;
+    console.log(categoryState, statusState);
 
-    dispatch({
-      type: CARD_NON_ACTIVE_MITRA_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: CARD_NON_ACTIVE_MITRA_FAIL,
-      payload: error.message,
-    });
-  }
+    const paramsID = {
+      keyword: keywordState,
+      limit: limitState,
+      page: pageState,
+      categories_cooporation: categoryState,
+      status: statusState,
+    };
+
+    try {
+      let { data } = await getAllMitraDetail(paramsID, id);
+      dispatch(successGetSingleValue(data, data.data.total));
+      console.log("data", data);
+    } catch (error) {
+      console.log("error get single mitra list");
+      dispatch({ type: MITRA_FAIL_DETAIL });
+    }
+  };
+};
+
+export const successGetSingleValue = (data, totalData) => {
+  return {
+    type: MITRA_SUCCESS_DETAIL,
+    data,
+    totalData,
+  };
+};
+
+export const searchByKeyDetail = (value) => {
+  return {
+    type: SEARCH_BY_KEY_DETAIL,
+    value,
+  };
+};
+
+export const setPageDetail = (page) => {
+  return {
+    type: SET_PAGE_M_DETAIL,
+    page,
+  };
+};
+export const setLimitDetail = (value) => {
+  return {
+    type: SET_LIMIT_DETAIL,
+    value,
+  };
+};
+
+export const exportFileCSVDetail = () => {
+  return async (dispatch, getState) => {
+    try {
+      let urlExport = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export`
+      );
+      router.push(urlExport.config.url);
+
+      // console.log("data", data);
+    } catch (error) {
+      console.log("object", error);
+    }
+  };
+};
+export const fetchListSelectCooperation = () => {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await getCooperation();
+      dispatch(successFetchListSelectCooperation(data));
+    } catch (error) {
+      console.log("eror get list cooperation", error);
+    }
+  };
+};
+export const successFetchListSelectCooperation = (data) => {
+  return {
+    type: LIST_COOPERATION_SUCCESS_DETAIL,
+    data,
+  };
+};
+export const fetchListSelectStatus = () => {
+  return async (dispatch, getState) => {
+    try {
+      const { data } = await getStatus();
+      dispatch(successFetchListSelectStatus(data));
+    } catch (error) {
+      console.log("eror get list status", error);
+    }
+  };
+};
+export const successFetchListSelectStatus = (data) => {
+  return {
+    type: LIST_STATUS_SUCCESS_DETAIL,
+    data,
+  };
+};
+export const changeValueKerjaSama = (value) => {
+  return {
+    type: SET_VALUE_KERJA_SAMA_M_DETAIL,
+    value,
+  };
+};
+export const changeValueStatus = (value) => {
+  return {
+    type: SET_VALUE_STATUS_M_DETAIL,
+    value,
+  };
 };

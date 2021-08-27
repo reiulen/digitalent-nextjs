@@ -50,10 +50,10 @@ const SubmitKerjasama = () => {
           <div className={`card-body ${Style.refreshZindex}`}>
             <div className={Style.containerProggres}>
               <ul className={Style.progressbar}>
-                <li class={Style.active}>Submit Kerjasama</li>
-                <li class={Style.active}>Review Kerjasama</li>
-                <li class={Style.active}>Pembahasan</li>
-                <li class={Style.active}>Dokumen Kerjasama</li>
+                <li className={Style.active}>Submit Kerjasama</li>
+                <li className={Style.active}>Review Kerjasama</li>
+                <li className={Style.active}>Pembahasan</li>
+                <li className={Style.active}>Dokumen Kerjasama</li>
                 <li>Review Dokumen </li>
                 <li>Selesai</li>
               </ul>
@@ -175,15 +175,15 @@ const SubmitKerjasama = () => {
                   Upload Dokumen Kerjasama
                 </label>
                 <div className="col-sm-3">
-                  <div class="input-group">
-                    <div class="custom-file">
+                  <div className="input-group">
+                    <div className="custom-file">
                       <input
                         type="file"
                         name="gambar"
-                        class="custom-file-input"
+                        className="custom-file-input"
                         id="inputGroupFile04"
                       />
-                      <label class="custom-file-label" for="inputGroupFile04">
+                      <label className="custom-file-label" htmlFor="inputGroupFile04">
                         Cari Dokumen
                       </label>
                     </div>

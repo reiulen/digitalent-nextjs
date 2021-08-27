@@ -23,7 +23,7 @@ const DetailDokumenKerjasama = () => {
           <div className={`card-body ${Style.refreshZindex}`}>
             <div className={Style.containerProggres}>
               <ul className={Style.progressbar}>
-                <li class={Style.active}>Submit Kerjasama</li>
+                <li className={Style.active}>Submit Kerjasama</li>
                 <li>Review Kerjasama</li>
                 <li>Pembahasan</li>
                 <li>Dokumen Kerjasama</li>

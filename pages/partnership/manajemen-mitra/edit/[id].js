@@ -1,5 +1,5 @@
-import Layout from "../../../components/templates/layout.component";
-import EditMitra from "../../../components/content/partnership/manajemen-mitra/edit";
+import Layout from "../../../../components/templates/layout.component";
+import EditMitra from "../../../../components/content/partnership/manajemen-mitra/edit";
 
 export default function EditMitraPage() {
   return (

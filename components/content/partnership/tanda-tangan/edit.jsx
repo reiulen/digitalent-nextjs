@@ -47,7 +47,7 @@ const EditTandaTangan = () => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, isUpdated, simpleValidator]);
+  }, [dispatch,router, error, isUpdated, simpleValidator]);
 
   // const storageAPI = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
 
@@ -246,6 +246,7 @@ const EditTandaTangan = () => {
                       src={`${imgSignature}/partnership/images/signatures/${imageSignature}`}
                       width={500}
                       height={500}
+                      alt="imageSignature"
                     />
                     {/* <Image
                       src={

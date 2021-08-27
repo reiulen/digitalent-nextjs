@@ -137,7 +137,7 @@ const Table = () => {
     dispatch(fetchListSelectCooperation());
     dispatch(fetchListSelectStatus());
  
-  }, []);
+  }, [dispatch]);
   return (
     <PageWrapper>
       {console.log("object html")}
@@ -249,9 +249,9 @@ const Table = () => {
                       <option value="">Mitra</option>
                       {allMK.stateListMitra.length === 0
                         ? ""
-                        : allMK.stateListMitra.data.map((items) => {
+                        : allMK.stateListMitra.data.map((items,i) => {
                             return (
-                              <option value={items.name}>{items.name}</option>
+                              <option key={i} value={items.name}>{items.name}</option>
                             );
                           })}
                     </select>
@@ -269,9 +269,9 @@ const Table = () => {
                       <option value="">Kategory Kerjasama</option>
                       {allMK.stateListKerjaSama.length === 0
                         ? ""
-                        : allMK.stateListKerjaSama.data.map((items) => {
+                        : allMK.stateListKerjaSama.data.map((items,i) => {
                             return (
-                              <option value={items.cooperation_categories}>
+                              <option key={i} value={items.cooperation_categories}>
                                 {items.cooperation_categories}
                               </option>
                             );
@@ -291,9 +291,9 @@ const Table = () => {
                       <option value="">Status</option>
                       {allMK.stateListStatus.length === 0
                         ? ""
-                        : allMK.stateListStatus.data.map((items) => {
+                        : allMK.stateListStatus.data.map((items,i) => {
                             return (
-                              <option value={items.name}>{items.name}</option>
+                              <option key={i} value={items.name}>{items.name}</option>
                             );
                           })}
                     </select>
@@ -476,6 +476,7 @@ const Table = () => {
                                           src={`/assets/icon/detail.JPG`}
                                           width="18"
                                           height="16"
+                                          alt="detail"
                                         />
                                         <div className="text-hover-show-hapus">
                                           Detail
@@ -498,6 +499,7 @@ const Table = () => {
                                           width="14"
                                           height="14"
                                           src={`/assets/icon/write.svg`}
+                                          alt="write"
                                         />
                                         <div className="text-hover-show-hapus">
                                           Edit
@@ -524,6 +526,7 @@ const Table = () => {
                                           width="18"
                                           height="16"
                                           className="btn"
+                                          alt="detail"
                                         />
                                         <div className="text-hover-show-hapus">
                                           Detail
@@ -546,6 +549,7 @@ const Table = () => {
                                           width="14"
                                           height="14"
                                           src={`/assets/icon/write.svg`}
+                                          alt="write"
                                         />
                                         <div className="text-hover-show-hapus">
                                           Edit
@@ -567,6 +571,7 @@ const Table = () => {
                                           width="14"
                                           height="14"
                                           src={`/assets/icon/trash.svg`}
+                                          alt="trash"
                                         />
                                         <div className="text-hover-show-hapus">
                                           Hapus

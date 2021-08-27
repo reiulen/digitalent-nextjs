@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   deleteTandaTangan,
-  updateStatusTandaTangan,
+  // updateStatusTandaTangan,
   clearErrors,
 } from "../../../../redux/actions/partnership/tandaTangan.actions";
 
@@ -69,7 +69,7 @@ const Table = () => {
     };
 
     // console.log(JSON.stringify(data));
-    dispatch(updateStatusTandaTangan(data, id));
+    // dispatch(updateStatusTandaTangan(data, id));
   };
 
   const handleDelete = (id) => {
@@ -110,7 +110,7 @@ const Table = () => {
         type: DELETE_TANDA_TANGAN_RESET,
       });
     }
-  }, [limit, isDeleted]);
+  }, [dispatch,router,limit, isDeleted]);
 
   const onNewReset = () => {
     router.replace("/partnership/tanda-tangan", undefined, { shallow: true });

@@ -1,297 +1,179 @@
 import {
-  // MITRA
   MITRA_REQUEST,
   MITRA_SUCCESS,
   MITRA_FAIL,
-
-  // NEW MITRA
-  NEW_MITRA_REQUEST,
-  NEW_MITRA_SUCCESS,
-  NEW_MITRA_RESET,
-  NEW_MITRA_FAIL,
-
-  // detail
-  DETAIL_MITRA_REQUEST,
-  DETAIL_MITRA_SUCCESS,
-  DETAIL_MITRA_FAIL,
-
-  // update
-  UPDATE_MITRA_REQUEST,
-  UPDATE_MITRA_SUCCESS,
-  UPDATE_MITRA_FAIL,
-  UPDATE_MITRA_RESET,
-
-  // delete
-  DELETE_MITRA_REQUEST,
-  DELETE_MITRA_SUCCESS,
-  DELETE_MITRA_FAIL,
-  DELETE_MITRA_RESET,
-
-  // card dashboard type
-  CARD_TOTAL_MITRA_REQUEST,
-  CARD_TOTAL_MITRA_SUCCESS,
-  CARD_TOTAL_MITRA_FAIL,
-  // ...
-  CARD_ACTIVE_MITRA_REQUEST,
-  CARD_ACTIVE_MITRA_SUCCESS,
-  CARD_ACTIVE_MITRA_FAIL,
-  // ...
-  CARD_NON_ACTIVE_MITRA_REQUEST,
-  CARD_NON_ACTIVE_MITRA_SUCCESS,
-  CARD_NON_ACTIVE_MITRA_FAIL,
-
-  // ---
-  CLEAR_ERRORS,
+  SEARCH_BY_KEY,
+  SUCESS_DELETE_MITRA,
+  SUCESS_PROVINCE,
+  SET_PAGE_M,
+  SET_LIMIT,
+  CANCEL_CHANGE_PROVINCES,
+  MITRA_FAIL_DETAIL,
+  MITRA_REQUEST_DETAIL,
+  MITRA_SUCCESS_DETAIL,
+  SEARCH_BY_KEY_DETAIL,
+  SET_PAGE_M_DETAIL,
+  SET_LIMIT_DETAIL,
+  LIST_COOPERATION_SUCCESS_DETAIL,
+  LIST_STATUS_SUCCESS_DETAIL,
+  SET_VALUE_KERJA_SAMA_M_DETAIL,
+  SET_VALUE_STATUS_M_DETAIL,
 } from "../../types/partnership/mitra.type";
 
-export const allMitraReducer = (state = { allMitra: [] }, action) => {
+const statuslist = {
+  idle: "idle",
+  process: "process",
+  success: "success",
+  error: "error",
+};
+
+const initialState = {
+  status: statuslist.idle,
+  status_reload: "",
+  //
+  mitraAll: [],
+  totalDataMitra: 0,
+  mitraSingle: [],
+  //
+  keyword: "",
+  limit: 5,
+  page: 1,
+  card: "",
+  //
+  provinces: [],
+  //
+  mitraDetailAll: [],
+  totalDataDetail: 0,
+  stateListKerjaSama: [],
+  stateListStatus: [],
+  pageDetail: 1,
+  limitDetail: 5,
+  keywordDetail: "",
+  categories_cooporation: "",
+  statusDetail: "",
+};
+
+export const allMitraReducer = (state = initialState, action) => {
   switch (action.type) {
     case MITRA_REQUEST:
       return {
-        loading: true,
+        ...state,
+        status: statuslist.process,
       };
 
     case MITRA_SUCCESS:
       return {
-        loading: false,
-        allMitra: action.payload.data,
+        ...state,
+        status: statuslist.success,
+        mitraAll: action.data,
+        totalDataMitra: action.totalData,
       };
 
     case MITRA_FAIL:
       return {
-        loading: false,
+        ...state,
+        status: statuslist.error,
         error: action.payload,
       };
 
-    case CLEAR_ERRORS:
-      return {
-        error: null,
-      };
-
-    default:
-      return state;
-  }
-};
-
-export const newMitraReducer = (state = { newMitra: {} }, action) => {
-  switch (action.type) {
-    case NEW_MITRA_REQUEST:
-      return {
-        loading: true,
-      };
-
-    case NEW_MITRA_SUCCESS:
-      return {
-        loading: false,
-        success: action.payload.message,
-        newMitra: action.payload.data,
-      };
-
-    case NEW_MITRA_FAIL:
-      return {
-        loading: false,
-        error: action.payload,
-      };
-
-    case NEW_MITRA_RESET:
-      return {
-        success: false,
-      };
-
-    case CLEAR_ERRORS:
-      return {
-        error: null,
-      };
-
-    default:
-      return state;
-  }
-};
-
-export const detailMitraReducer = (state = { detailMitraRes: {} }, action) => {
-  switch (action.type) {
-    case DETAIL_MITRA_SUCCESS:
-      return {
-        detailMitraRes: action.payload,
-      };
-
-    case DETAIL_MITRA_FAIL:
-      return {
-        error: action.payload,
-      };
-
-    case CLEAR_ERRORS:
-      return {
-        error: null,
-      };
-
-    default:
-      return state;
-  }
-};
-
-export const updateMitraReducer = (state = {}, action) => {
-  switch (action.type) {
-    case UPDATE_MITRA_REQUEST:
-      return {
-        loading: true,
-      };
-
-    case UPDATE_MITRA_SUCCESS:
-      return {
-        loading: false,
-        isUpdated: action.payload,
-      };
-
-    case UPDATE_MITRA_RESET:
-      return {
-        loading: false,
-        isUpdated: false,
-      };
-
-    case UPDATE_MITRA_FAIL:
-      return {
-        loading: false,
-        error: action.payload,
-      };
-
-    case CLEAR_ERRORS:
+    case SEARCH_BY_KEY:
       return {
         ...state,
-        error: null,
+        keyword: action.value,
+        page: 1,
       };
-
-    default:
-      return state;
-  }
-};
-
-export const deleteMitraReducer = (state = {}, action) => {
-  switch (action.type) {
-    case DELETE_MITRA_REQUEST:
-      return {
-        loading: true,
-      };
-
-    case DELETE_MITRA_SUCCESS:
-      return {
-        loading: false,
-        isDeleted: action.payload,
-      };
-
-    case DELETE_MITRA_RESET:
-      return {
-        loading: false,
-        isDeleted: false,
-      };
-
-    case DELETE_MITRA_FAIL:
-      return {
-        loading: false,
-        error: action.payload,
-      };
-
-    case CLEAR_ERRORS:
+    case SEARCH_BY_KEY_DETAIL:
       return {
         ...state,
-        error: null,
+        keywordDetail: action.value,
+        pageDetail: 1,
       };
 
-    default:
-      return state;
-  }
-};
-
-// card dashboard type
-export const totalMitraCardReducer = (
-  state = { totalMitraCardRes: [] },
-  action
-) => {
-  switch (action.type) {
-    case CARD_TOTAL_MITRA_REQUEST:
+    case SUCESS_DELETE_MITRA:
       return {
-        loading: true,
+        ...state,
+        status_reload: state.status_reload === "" ? "reload" : "",
       };
 
-    case CARD_TOTAL_MITRA_SUCCESS:
+    case SUCESS_PROVINCE:
       return {
-        loading: false,
-        totalMitraCardRes: action.payload.data,
+        ...state,
+        provinces: action.data,
       };
 
-    case CARD_TOTAL_MITRA_FAIL:
+    case CANCEL_CHANGE_PROVINCES:
       return {
-        loading: false,
-        error: action.payload,
+        ...state,
+        provinces: [],
       };
 
-    case CLEAR_ERRORS:
+    case SET_PAGE_M:
       return {
-        error: null,
+        ...state,
+        page: action.page,
+      };
+    case SET_PAGE_M_DETAIL:
+      return {
+        ...state,
+        pageDetail: action.page,
       };
 
-    default:
-      return state;
-  }
-};
-
-export const activeMitraCardReducer = (
-  state = { activeMitraCardRes: [] },
-  action
-) => {
-  switch (action.type) {
-    case CARD_ACTIVE_MITRA_REQUEST:
+    case SET_LIMIT:
       return {
-        loading: true,
+        ...state,
+        limit: action.value,
+        page: 1,
+        card: "",
+      };
+    case SET_LIMIT_DETAIL:
+      return {
+        ...state,
+        limitDetail: action.value,
+        pageDetail: 1,
       };
 
-    case CARD_ACTIVE_MITRA_SUCCESS:
+    // =================================== detail mitra
+    case MITRA_REQUEST_DETAIL:
       return {
-        loading: false,
-        activeMitraCardRes: action.payload.data,
+        ...state,
+        status: statuslist.process,
       };
 
-    case CARD_ACTIVE_MITRA_FAIL:
+    case MITRA_SUCCESS_DETAIL:
       return {
-        loading: false,
-        error: action.payload,
+        ...state,
+        status: statuslist.success,
+        mitraDetailAll: action.data,
+        totalDataDetail: action.totalData,
       };
 
-    case CLEAR_ERRORS:
+    case MITRA_FAIL_DETAIL:
       return {
-        error: null,
+        ...state,
+        status: statuslist.error,
       };
 
-    default:
-      return state;
-  }
-};
-
-export const nonActiveMitraCardReducer = (
-  state = { nonActiveMitraCardRes: [] },
-  action
-) => {
-  switch (action.type) {
-    case CARD_NON_ACTIVE_MITRA_REQUEST:
+    case LIST_COOPERATION_SUCCESS_DETAIL:
       return {
-        loading: true,
+        ...state,
+        stateListKerjaSama: action.data,
+      };
+    case LIST_STATUS_SUCCESS_DETAIL:
+      return {
+        ...state,
+        stateListStatus: action.data,
       };
 
-    case CARD_NON_ACTIVE_MITRA_SUCCESS:
+    case SET_VALUE_KERJA_SAMA_M_DETAIL:
       return {
-        loading: false,
-        nonActiveMitraCardRes: action.payload.data,
+        ...state,
+        categories_cooporation: action.value,
       };
 
-    case CARD_NON_ACTIVE_MITRA_FAIL:
+    case SET_VALUE_STATUS_M_DETAIL:
       return {
-        loading: false,
-        error: action.payload,
-      };
-
-    case CLEAR_ERRORS:
-      return {
-        error: null,
+        ...state,
+        statusDetail: action.value,
       };
 
     default:

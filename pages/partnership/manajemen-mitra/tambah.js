@@ -1,12 +1,6 @@
 import Layout from "../../../components/templates/layout.component";
 import Tambah from "../../../components/content/partnership/manajemen-mitra/tambahMitra";
 
-import {
-  getAllProvinsi,
-  getAllKota,
-} from "../../../redux/actions/utils/utils.actions";
-import { wrapper } from "../../../redux/store";
-
 export default function TambahPage() {
   return (
     <>
@@ -18,10 +12,3 @@ export default function TambahPage() {
     </>
   );
 }
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ params }) => {
-      await store.dispatch(getAllProvinsi());
-    }
-);

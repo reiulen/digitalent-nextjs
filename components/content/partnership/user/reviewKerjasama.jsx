@@ -34,8 +34,8 @@ function ReviewKerjasama() {
             <div className={`card-body ${Style.refreshZindex}`}>
               <div className={Style.containerProggres}>
                 <ul className={Style.progressbar}>
-                  <li class={Style.active}>Submit Kerjasama</li>
-                  <li class={Style.active}>Review Kerjasama</li>
+                  <li className={Style.active}>Submit Kerjasama</li>
+                  <li className={Style.active}>Review Kerjasama</li>
                   <li>Pembahasan</li>
                   <li>Dokumen Kerjasama</li>
                   <li>Review Dokumen </li>
@@ -48,6 +48,7 @@ function ReviewKerjasama() {
                     src="/assets/media/hubungi-kami-1.svg"
                     height={300}
                     width={400}
+                    alt="hubungi-kami"
                   />
                 </div>
                 <div className="col-md mt-5">
@@ -74,7 +75,7 @@ function ReviewKerjasama() {
                     >
                       Kembali
                     </button>
-                    <Link href="/partnership/user/pembahasan">
+                    <Link href="/partnership/user/pembahasan" passHref>
                       <button
                         type="button"
                         className="btn bg-light-danger mr-2 btn-sm"

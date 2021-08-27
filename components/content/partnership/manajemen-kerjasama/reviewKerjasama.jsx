@@ -179,12 +179,12 @@ const ReviewKerjasama = () => {
                       Tolak Kerjasama
                     </a>
                   </Link>
-                  <Link href="/partnership/manajemen-kerjasama/detail-revisi-kerjasama">
+                  <Link href="/partnership/manajemen-kerjasama/detail-revisi-kerjasama" passHref>
                     <button className="btn bg-light-success btn-sm">
                       Ajukan Revisi
                     </button>
                   </Link>
-                  <Link href="/partnership/manajemen-kerjasama">
+                  <Link href="/partnership/manajemen-kerjasama" passHref>
                     <button className="btn btn-primary btn-sm ml-3">
                       Terima
                     </button>

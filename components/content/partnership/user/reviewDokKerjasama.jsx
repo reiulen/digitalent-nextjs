@@ -33,12 +33,12 @@ function reviewDokKerjasama() {
             <div className={`card-body ${Style.refreshZindex}`}>
               <div className={Style.containerProggres}>
                 <ul className={Style.progressbar}>
-                  <li class={Style.active}>Submit Kerjasama</li>
-                  <li class={Style.active}>Review Kerjasama</li>
-                  <li class={Style.active}>Pembahasan</li>
-                  <li class={Style.active}>Dokumen Kerjasama</li>
-                  <li class={Style.active}>Review Dokumen </li>
-                  <li class={Style.active}>Selesai</li>
+                  <li className={Style.active}>Submit Kerjasama</li>
+                  <li className={Style.active}>Review Kerjasama</li>
+                  <li className={Style.active}>Pembahasan</li>
+                  <li className={Style.active}>Dokumen Kerjasama</li>
+                  <li className={Style.active}>Review Dokumen </li>
+                  <li className={Style.active}>Selesai</li>
                 </ul>
               </div>
               <div className={`row ${Style.clearRow}`}>
@@ -47,6 +47,7 @@ function reviewDokKerjasama() {
                     src="/assets/media/hubungi-kami-1.svg"
                     height={300}
                     width={400}
+                    alt="hubungi-kami"
                   />
                 </div>
                 <div className="col-md mt-5">
