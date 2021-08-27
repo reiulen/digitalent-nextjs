@@ -190,10 +190,14 @@ const [status, setStatus] = useState("");
         formData
       );
       // console.log("respon data edit",data)
-      Swal.fire(
-  'Berhasil update data!',
-  'Sukses'
-)
+//       Swal.fire(
+//   'Berhasil update data!',
+//   'Sukses'
+// )
+router.push({
+  pathname:"/partnership/master-kategori-kerjasama",
+  query:{update:true}
+})
     } catch (error) {
       console.log(error.response);
     }

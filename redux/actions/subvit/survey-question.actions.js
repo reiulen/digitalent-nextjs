@@ -193,7 +193,7 @@ export const updateSurveyQuestionBanksPublish = (subtanceData, id) => async (dis
     }
 }
 
-export const allReportSurveyQuestionBanks = (id, page = 1, keyword = '', limit = null) => async (dispatch) => {
+export const allReportSurveyQuestionBanks = (id, page = 1, keyword = '', limit = null, pelatihan = null, status = null) => async (dispatch) => {
     try {
 
         dispatch({ type: REPORT_SURVEY_QUESTION_BANKS_REQUEST })
@@ -201,6 +201,8 @@ export const allReportSurveyQuestionBanks = (id, page = 1, keyword = '', limit =
         let link = process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/report/${id}?page=${page}`
         if (keyword) link = link.concat(`&keyword=${keyword}`)
         if (limit) link = link.concat(`&limit=${limit}`)
+        if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
+        if (status) link = link.concat(`&status=${status}`)
 
         // const config = {
         //     headers: {

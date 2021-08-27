@@ -276,7 +276,7 @@ const StepTwo = () => {
                             <div className="form-group row">
                                 <div className="col-sm-8 col-md-8">
                                     <div className="custom-file">
-                                        <span>Gambar Pertanyaan (Opsional)</span>
+                                        <span>Pertanyaan (Opsional)</span>
                                         <input type="file" className="custom-file-input" accept=".csv,.xlsx,.xls" name='question_image' onChange={e => setQuestionFile(e.target.files[0])} />
                                         <label className="custom-file-label" htmlFor="customFile">
                                             Choose file
@@ -362,7 +362,7 @@ const StepTwo = () => {
                                                                 </span>
                                                             </td>
                                                             <td className="align-middle">
-                                                                {question.subtance_question_bank_id}
+                                                                CC{question.id}
                                                             </td>
                                                             <td className="align-middle">
                                                                 {question.question}
@@ -385,7 +385,7 @@ const StepTwo = () => {
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">
-                                                                <ButtonAction icon="write.svg" />
+                                                                <ButtonAction icon="write.svg" link={`edit-soal-substansi?id=${question.id}`} />
                                                                 <button
                                                                     onClick={() => handleDelete(question.id)}
                                                                     className="btn mr-1"
@@ -426,8 +426,8 @@ const StepTwo = () => {
                                             prevPageText={"<"}
                                             firstPageText={"<<"}
                                             lastPageText={">>"}
-                                            itemClassName="page-item"
-                                            linkClassName="page-link"
+                                            itemClass="page-item"
+                                            linkClass="page-link"
                                         />
                                     }
                                 </div>

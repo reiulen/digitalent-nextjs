@@ -224,6 +224,7 @@ const EditSoalSubstansi = () => {
                                             className="custom-file-input"
                                             name='question_image'
                                             onChange={e => handleSoalImage(e)}
+                                            accept="image/png, image/gif, image/jpeg , image/jpg"
                                         />
                                         <label className="custom-file-label" htmlFor="customFile">
                                             Choose file
@@ -254,7 +255,7 @@ const EditSoalSubstansi = () => {
                                                         />
                                                         <div className="custom-file mt-2">
                                                             <span>Gambar Pertanyaan (Opsional)</span>
-                                                            <input type="file" className="custom-file-input" name='question_image' />
+                                                            <input type="file" className="custom-file-input" name='question_image' accept="image/png, image/gif, image/jpeg , image/jpg" />
                                                             <label className="custom-file-label" htmlFor="customFile">
                                                                 Choose file
                                                             </label>
