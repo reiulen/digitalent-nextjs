@@ -15,15 +15,23 @@ import moment from 'moment'
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
+import LoadingPage from "../../../../LoadingPage";
 
 const StepTwo = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
 
   let { id } = router.query;
   const { error: detailData, trivia } = useSelector((state) => state.detailTriviaQuestionBanks)
   const { loading, error, success } = useSelector((state) => state.updateTriviaQuestionBanksPublish)
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+
+  const [startDate, setStartDate] = useState(new Date(trivia.start_at));
+  const [endDate, setEndDate] = useState(new Date(trivia.end_at));
+  const [duration, setDuration] = useState(trivia.duration)
+  const [jumlah_soal, setJumlahSoal] = useState(trivia.questions_to_share)
+  const [status, setStatus] = useState(trivia.status)
+  const [, forceUpdate] = useState();
 
   useEffect(() => {
     // if (error) {
@@ -40,13 +48,6 @@ const StepTwo = () => {
       });
     }
   }, [dispatch, error, success, router]);
-
-  const [startDate, setStartDate] = useState(trivia.start_at);
-  const [endDate, setEndDate] = useState(trivia.end_at);
-  const [duration, setDuration] = useState(trivia.duration)
-  const [jumlah_soal, setJumlahSoal] = useState(null)
-  const [status, setStatus] = useState(trivia.status)
-  const [, forceUpdate] = useState();
 
 
   const saveDraft = () => {
@@ -137,6 +138,11 @@ const StepTwo = () => {
         ""
       )}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        {
+          loading ?
+            <LoadingPage loading={loading} />
+            : ''
+        }
         <div className="card card-custom card-stretch gutter-b">
           <StepInputPublish step="2"></StepInputPublish>
           <div className="card-header border-0">
@@ -199,9 +205,8 @@ const StepTwo = () => {
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={jumlah_soal}
-                      onChange={e => setJumlahSoal(e.target.value)}
+                      onChange={(e) => setJumlahSoal(e.target.value)}
                       onBlur={() => simpleValidator.current.showMessageFor('jumlah soal')}
-                      min={1}
                     />
                     <div className="input-group-append">
                       <span className="input-group-text" id="basic-addon2">

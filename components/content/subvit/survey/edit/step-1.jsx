@@ -22,9 +22,9 @@ const StepOne = () => {
   const { loading, error, isUpdated } = useSelector((state) => state.updateSurveyQuestion)
 
   const [typeSave, setTypeSave] = useState('lanjut')
-  const [academy_id, setAcademyId] = useState(survey.academy_id)
-  const [theme_id, setThemeId] = useState(survey.theme_id)
-  const [training_id, setTrainingId] = useState(survey.training_id)
+  const [academy_id, setAcademyId] = useState()
+  const [theme_id, setThemeId] = useState()
+  const [training_id, setTrainingId] = useState()
 
   useEffect(() => {
     // if (error) {

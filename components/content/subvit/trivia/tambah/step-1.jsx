@@ -24,6 +24,11 @@ const TambahTriviaStepOne = () => {
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState('lanjut')
 
+  const [academy_id, setAcademyId] = useState("");
+  const [theme_id, setThemeId] = useState("");
+  const [training_id, setTrainingId] = useState("");
+  const [metode, setMetode] = useState('entry')
+
   useEffect(() => {
     // if (error) {
     //     dispatch(clearErrors())
@@ -44,12 +49,7 @@ const TambahTriviaStepOne = () => {
       }
     }
 
-  }, [dispatch, error, success, typeSave, router, metode, trivia.id]);
-
-  const [academy_id, setAcademyId] = useState("");
-  const [theme_id, setThemeId] = useState("");
-  const [training_id, setTrainingId] = useState("");
-  const [metode, setMetode] = useState('entry')
+  }, [dispatch, error, success, typeSave, router, metode, trivia]);
 
   const saveDraft = () => {
     setTypeSave('draft')

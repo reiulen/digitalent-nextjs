@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import {
   updatewTriviaQuestionBanks,
   clearErrors,
@@ -11,7 +12,7 @@ import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from '../../../../../redux
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
-import { useRouter } from "next/router";
+import LoadingPage from "../../../../LoadingPage";
 
 const StepOne = () => {
   const dispatch = useDispatch();
@@ -109,6 +110,11 @@ const StepOne = () => {
         ""
       )}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        {
+          loading ?
+            <LoadingPage loading={loading} />
+            : ''
+        }
         <div className="card card-custom card-stretch gutter-b">
           <StepInputPublish step="1"></StepInputPublish>
           <div className="card-header border-0">

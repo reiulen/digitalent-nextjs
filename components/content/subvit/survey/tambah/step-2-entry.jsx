@@ -213,9 +213,9 @@ const StepTwo = () => {
     setTypeSave('lanjut')
     let valid = true
 
-    if (error) {
-      dispatch(clearErrors())
-    }
+    // if (error) {
+    //   dispatch(clearErrors())
+    // }
 
     if (success) {
       dispatch({
