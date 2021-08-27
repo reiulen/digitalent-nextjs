@@ -18,7 +18,7 @@ import Image from "next/image";
 const Table = () => {
   let dispatch = useDispatch();
   const router = useRouter();
-  let { success } = router.query;
+  let { success,update } = router.query;
   const [valueSearch, setValueSearch] = useState("");
   const allMKCooporation = useSelector((state) => state.allMKCooporation);
   const handleChangeValueSearch = (value) => {
@@ -45,6 +45,7 @@ const Table = () => {
       if (result.value) {
         dispatch(deleteCooporation(id));
         setSuccessDelete(true);
+        router.replace(`/partnership/master-kategori-kerjasama`);
       }
     });
   };
@@ -75,7 +76,6 @@ const Table = () => {
 
   return (
     <PageWrapper>
-      {console.log("successDelete", successDelete)}
       {success || successDelete ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
@@ -87,8 +87,37 @@ const Table = () => {
           </div>
           <div className="alert-text" style={{color:success?"#1BC5BD":"#c51b1b"}}>
             {successDelete
-              ? "Berhasil menghapus data Data"
-              : "Berhasil menyimpan Data"}
+              ? "Berhasil menghapus data"
+              : "Berhasil menyimpan data"}
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {update ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{color:"#1BC5BD"}}></i>
+          </div>
+          <div className="alert-text" style={{color:"#1BC5BD"}}>
+            Berhasil mengupdate data
           </div>
           <div className="alert-close">
             <button

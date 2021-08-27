@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
-import router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 import Pagination from "react-js-pagination";
@@ -50,10 +50,16 @@ const Table = () => {
 //   fileName:'Repost.csv',
 //   data:data,
 // }
+const router = useRouter();
+
+let { update, success } = router.query;
+
+
 
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
+  console.log("allMK",allMK)
   const exportCSV = {
     width: "77%",
     marginLeft: "2rem",
@@ -109,13 +115,18 @@ const Table = () => {
     }).then(async (result) => {
       if (result.value) {
         dispatch(deleteCooperation(id))
+        setDeleteBar(true)
       }else{
         dispatch(reloadTable())
       }
     })
   }
 
-  console.log("var");
+  const [deleteBar, setDeleteBar] = useState(false)
+  const onNewReset = () => {
+    router.replace("/partnership/manajemen-kerjasama");
+    setDeleteBar(false)
+  };
   useEffect(() => {
     console.log("useffect");
     dispatch(fetchAllMK());
@@ -140,7 +151,74 @@ const Table = () => {
   }, [dispatch]);
   return (
     <PageWrapper>
-      {console.log("object html")}
+      {update  ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5"}}
+        >
+          <div className="alert-icon">
+            <i
+              className="flaticon2-checkmark"
+              style={{ color: "#1BC5BD" }}
+            ></i>
+          </div>
+          <div
+            className="alert-text"
+            style={{ color: "#1BC5BD" }}
+          >Berhasil mengupdate data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {deleteBar  ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#f7c9c9"}}
+        >
+          <div className="alert-icon">
+            <i
+              className="flaticon2-checkmark"
+              style={{ color: "#c51b1b" }}
+            ></i>
+          </div>
+          <div
+            className="alert-text"
+            style={{ color: "#c51b1b" }}
+          >Berhasil menghapus data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="col-lg-12 col-md-12">
         <div className="row">
 
@@ -293,7 +371,7 @@ const Table = () => {
                         ? ""
                         : allMK.stateListStatus.data.map((items,i) => {
                             return (
-                              <option key={i} value={items.name}>{items.name}</option>
+                              <option key={i} value={items.name_en}>{items.name}</option>
                             );
                           })}
                     </select>
