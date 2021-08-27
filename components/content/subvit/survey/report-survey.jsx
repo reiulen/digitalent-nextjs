@@ -142,7 +142,7 @@ const ReportSurvey = () => {
           <div className="card-header border-0 align-items-center row">
             <div className="col-lg-10 col-xl-10">
               <h3 className="card-title font-weight-bolder text-dark">
-                Report Trivia
+                Report Survey
               </h3>
               <p className="text-muted">FGA - Cloud Computing</p>
             </div>
@@ -289,7 +289,7 @@ const ReportSurvey = () => {
               </div>
 
               <div className="row">
-                {survey && survey.perPage && (
+                {survey && survey.total > 5 && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
