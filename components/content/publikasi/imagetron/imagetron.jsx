@@ -86,7 +86,7 @@ const Imagetron = () => {
             // console.log("check")
             // console.log (publishValue)
         }
-    }, [limit, isDeleted, publishValue, dispatch, router]);
+    }, [limit, isDeleted, publishValue, dispatch]);
 
     // const override = css`
     //     margin: 0 auto;
@@ -449,10 +449,10 @@ const Imagetron = () => {
                                                 onChange={(e) => handleLimit(e.target.value)}
                                                 onBlur={(e) => handleLimit(e.target.value)}
                                                 >
-                                                <option value="5">5</option>
-                                                <option value="10">10</option>
-                                                <option value="15">15</option>
-                                                <option value="20">20</option>
+                                                    <option value='5' selected={limit == "5" ? true: false}>5</option>
+                                                    <option value='10' selected={limit == "10" ? true: false}>10</option>
+                                                    <option value='15' selected={limit == "15" ? true: false}>15</option>
+                                                    <option value='20' selected={limit == "20" ? true: false}>20</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">

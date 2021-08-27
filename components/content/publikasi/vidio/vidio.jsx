@@ -65,7 +65,7 @@ const Vidio = () => {
             console.log("check")
             // console.log (publishValue)
           }
-      }, [limit, isDeleted, publishValue, dispatch, router]);
+      }, [limit, isDeleted, publishValue, dispatch]);
 
     const onNewReset = () => {
     router.replace('/publikasi/video', undefined, { shallow: true })
@@ -397,11 +397,10 @@ const Vidio = () => {
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
                                                 <select className="form-control" id="exampleFormControlSelect2" style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}>
-                                                    <option>5</option>
-                                                    <option>10</option>
-                                                    <option>30</option>
-                                                    <option>40</option>
-                                                    <option>50</option>
+                                                    <option value='5' selected={limit == "5" ? true: false}>5</option>
+                                                    <option value='10' selected={limit == "10" ? true: false}>10</option>
+                                                    <option value='15' selected={limit == "15" ? true: false}>15</option>
+                                                    <option value='20' selected={limit == "20" ? true: false}>20</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
