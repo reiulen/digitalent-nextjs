@@ -64,7 +64,7 @@ const ReportTrivia = () => {
   }
 
   return (
-    <PageWrapper>handlePagination
+    <PageWrapper>
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"

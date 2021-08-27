@@ -5,10 +5,10 @@ import Image from "next/image";
 const BlankComponent = ({ props_answer, props_duration }) => {
 
     const [answer, setSoalList] = useState([
-        { key: 'A', value: '', type: '', option: '' },
-        { key: 'B', value: '', type: '', option: '' },
-        { key: 'C', value: '', type: '', option: '' },
-        { key: 'D', value: '', type: '', option: '' }
+        { key: 'A', value: '', type: '', option: '', image: '' },
+        { key: 'B', value: '', type: '', option: '', image: '' },
+        { key: 'C', value: '', type: '', option: '', image: '' },
+        { key: 'D', value: '', type: '', option: '', image: '' }
     ])
     const [duration, setDuration] = useState(null)
 
