@@ -275,7 +275,7 @@ const DetailSurvey = () => {
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">
-                                                                <ButtonAction icon="write.svg" link={`edit-soal-survey?id=${question.id}`} />
+                                                                <ButtonAction icon="write.svg" link={`edit-soal-survey?id=${question.id}`} title='Edit' />
                                                                 <button
                                                                     onClick={() => handleDelete(question.id)}
                                                                     className="btn mr-1"
@@ -283,6 +283,9 @@ const DetailSurvey = () => {
                                                                         background: "#F3F6F9",
                                                                         borderRadius: "6px",
                                                                     }}
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="bottom"
+                                                                    title="Hapus"
                                                                 >
                                                                     <Image
                                                                         alt="button-action"

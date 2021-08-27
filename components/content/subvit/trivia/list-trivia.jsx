@@ -236,12 +236,14 @@ const ListTrivia = () => {
                                 <ButtonAction
                                   icon="setting.svg"
                                   link={`/subvit/trivia/report?id=${row.id}`}
+                                  title='Report'
                                 />
                                 <ButtonAction
                                   icon="write.svg"
                                   link={`/subvit/trivia/edit?id=${row.id}`}
+                                  title='Edit'
                                 />
-                                <ButtonAction icon="detail.svg" link={`/subvit/trivia/${row.id}`} />
+                                <ButtonAction icon="detail.svg" link={`/subvit/trivia/${row.id}`} title='Detail' />
                                 <button
                                   onClick={() => handleDelete(row.id)}
                                   className="btn mr-1"
@@ -249,6 +251,9 @@ const ListTrivia = () => {
                                     background: "#F3F6F9",
                                     borderRadius: "6px",
                                   }}
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Hapus"
                                 >
                                   <Image
                                     alt="button-action"
