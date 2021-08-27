@@ -201,6 +201,7 @@ useEffect(() => {
                     </tr>
                   </thead>
                   <tbody>
+                    
                    {mitraDetailAll.status === "success" ? mitraDetailAll.mitraDetailAll.length === 0 ?"":mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map((items,index)=>{
                      return(
                     <tr key={index}>
@@ -335,7 +336,8 @@ useEffect(() => {
                       </td>
                     </tr>
                     )
-                 }):""}
+                 }):"Belom ada data kerjasama"}
+                 {mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.length === 0 ?"Belom ada data kerjasama" :""}
                  </tbody>
                 </table>
               </div>

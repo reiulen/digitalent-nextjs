@@ -50,6 +50,7 @@ const Table = () => {
       if (result.value) {
         dispatch(deleteMitra(id));
         setSuccessDelete(true);
+        router.replace(`/partnership/manajemen-mitra`);
       }
     });
   };
@@ -72,25 +73,24 @@ const Table = () => {
 
   return (
     <PageWrapper>
-      {success || successDelete ? (
+      {success ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
-          style={{ backgroundColor: success ? "#C9F7F5" : "#f7c9c9" }}
+          style={{ backgroundColor: "#C9F7F5" }}
         >
           <div className="alert-icon">
             <i
               className="flaticon2-checkmark"
-              style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
+              style={{ color: "#1BC5BD" }}
             ></i>
           </div>
           <div
             className="alert-text"
-            style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
+            style={{ color: "#1BC5BD" }}
           >
-            {successDelete
-              ? "Berhasil menghapus data Data"
-              : "Berhasil menyimpan data"}
+            
+              Berhasil menyimpan data
           </div>
           <div className="alert-close">
             <button
@@ -109,25 +109,56 @@ const Table = () => {
       ) : (
         ""
       )}
-      {update || successDelete ? (
+      {update? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
-          style={{ backgroundColor: success ? "#C9F7F5" : "#f7c9c9" }}
+          style={{ backgroundColor: "#C9F7F5" }}
         >
           <div className="alert-icon">
             <i
               className="flaticon2-checkmark"
-              style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
+              style={{ color: "#1BC5BD"}}
             ></i>
           </div>
           <div
             className="alert-text"
-            style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
-          >
-            {successDelete
-              ? "Berhasil menghapus data Data"
-              : "Berhasil mengupdate data"}
+            style={{ color:"#1BC5BD"}}
+          >Berhasil mengupdate data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {successDelete? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#f7c9c9" }}
+        >
+          <div className="alert-icon">
+            <i
+              className="flaticon2-checkmark"
+              style={{ color: "#c51b1b"}}
+            ></i>
+          </div>
+          <div
+            className="alert-text"
+            style={{ color:"#c51b1b"}}
+          >Berhasil menghapus data
           </div>
           <div className="alert-close">
             <button
@@ -422,7 +453,7 @@ const Table = () => {
                               );
                             }
                           )
-                      : "loading"}
+                      : "Loading .. / silahkan reload halaman"}
                   </tbody>
                 </table>
               </div>

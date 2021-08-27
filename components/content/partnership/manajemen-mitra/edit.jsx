@@ -106,11 +106,19 @@ const EditMitra = () => {
     dispatch(getProvinces())
   }
 
+  const [showImage, setShowImage] = useState(false)
+
+  const hideImage = () =>{
+      setShowImage(showImage?false:true)
+  }
+
+
+  const [NamePDF, setNamePDF] = useState(null);
   const fileType = ["image/png"];
   const fileMax = 2097152;
   const onChangeImage = (e) => {
     let selectedFile = e.target.files[0];
-    console.log("selectedFile", selectedFile);
+    setNamePDF(selectedFile.name)
     if (selectedFile) {
       if (
         selectedFile &&
@@ -121,6 +129,7 @@ const EditMitra = () => {
         reader.readAsDataURL(selectedFile);
         reader.onloadend = (e) => {
           setAgency_logo(e.target.result);
+          setShowImage(true)
           // setPdfFileError("");
           // setNamePDF(selectedFile.name);
           // alert(e.target.result)
@@ -135,10 +144,11 @@ const EditMitra = () => {
 
    const handleSubmit = async() => {
     // e.preventDefault();
-    if (agency_logo === "") {
-      setError({ ...error, agency_logo: "Harus isi gambar logo dengan format png" });
-      notify("Harus isi gambar logo dengan format png");
-    } else if (institution_name === "") {
+    // if (agency_logo === "") {
+    //   setError({ ...error, agency_logo: "Harus isi gambar logo dengan format png" });
+    //   notify("Harus isi gambar logo dengan format png");
+    // } else
+     if (institution_name === "") {
       setError({ ...error, institution_name: "Harus isi nama lembaga" });
       notify("Harus isi nama lembaga");
     } else if (email === "") {
@@ -221,10 +231,10 @@ const EditMitra = () => {
           //   pathname: '/partnership/manajemen-mitra',
           //   query: { success:true  },
           // })
-          Swal.fire(
-  'Berhasil update data!',
-  'success'
-)
+//           Swal.fire(
+//   'Berhasil update data!',
+//   'success'
+// )
 router.push({
               pathname: "/partnership/manajemen-mitra",
               query: { update: true },
@@ -249,6 +259,11 @@ router.push({
       draggable: true,
       progress: undefined,
     });
+
+    const cancelChangeImage = () =>{
+      setAgency_logo("")
+      setNamePDF(null)
+    }
 
   useEffect(() => {
     setDataSingle(router.query.id);
@@ -314,17 +329,33 @@ router.push({
                         onChange={(e) => onChangeImage(e)}
                         type="file"
                         name="logo"
-                        className="custom-file-input"
+                        className="custom-file-input cursor-pointer"
                         id="inputGroupFile04"
                         // onChange={onChangeGambar}
                       />
                       <label className="custom-file-label" htmlFor="inputGroupFile04">
-                        Cari Dokumen
+                        {NamePDF ? NamePDF : "Unggah gambar baru" }
                       </label>
                     </div>
                   </div>
-                </div>
+                  <div className="flex items-center">
 
+                  {NamePDF?<button className="btn btn-primary btn-sm my-3 mr-3" type="button" onClick={()=>hideImage()}>{showImage?"Tutup":"Buka"}</button>:""}
+
+                  {agency_logo
+                  
+                  ?
+
+                  <button className="btn btn-primary btn-sm my-3" type="button" onClick={()=>cancelChangeImage()}>
+                    {/* {showImage?"Tutup":"Buka"} */}
+                    Batal ubah gambar menjadi default
+                  </button>
+                  
+                  :""}
+
+                  </div>
+                </div>
+{showImage ?
                 <div
                   className={`${
                     agency_logo ? "pdf-container w-100 border my-3" : "d-none"
@@ -338,6 +369,7 @@ router.push({
                     width="100%"
                   ></iframe>
                 </div>
+                :""}
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (
