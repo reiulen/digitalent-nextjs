@@ -74,12 +74,32 @@ const Artikel = () => {
       });
     }
 
-    if (publishValue) {
+    if (publishValue !== null && startDate === null && endDate === null && limit === null && search === null){
       router.push(`${router.pathname}?publish=${publishValue}`);
-      // console.log("check")
-      // console.log (publishValue)
+
+    } else if (publishValue !== null && startDate !== null && endDate !== null && limit === null && search === null) {
+        router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+    } else if (publishValue !== null && startDate !== null && endDate !== null && limit !== null && search === null) {
+        router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+    
+    } else if (publishValue !== null && startDate !== null && endDate !== null && limit === null && search !== null) {
+        router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+
+    } else if (publishValue !== null && startDate === null && endDate === null && limit !== null && search === null) {
+        router.push(`${router.pathname}?publish=${publishValue}&limit=${limit}`);
+
+    } else if (publishValue !== null && startDate === null && endDate === null && limit === null && search !== null) {
+        router.push(`${router.pathname}?publish=${publishValue}&keyword=${search}`);
+    
+    } else if (publishValue !== null && startDate === null && endDate === null && limit !== null && search !== null) {
+        router.push(`${router.pathname}?publish=${publishValue}&limit=${limit}&keyword=${search}`);
+    
+    } else if (publishValue !== null && startDate !== null && endDate !== null && limit !== null && search !== null) {
+        router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
     }
-  }, [limit, isDeleted, publishValue, dispatch, router]);
+     
+  }, [limit, isDeleted, publishValue, dispatch, search]);
 
   const onNewReset = () => {
     router.replace("/publikasi/artikel", undefined, { shallow: true });
@@ -535,10 +555,10 @@ const Artikel = () => {
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option value="5">5</option>
-                          <option value="10">10</option>
-                          <option value="15">15</option>
-                          <option value="20">20</option>
+                          <option value='5' selected={limit == "5" ? true: false}>5</option>
+                          <option value='10' selected={limit == "10" ? true: false}>10</option>
+                          <option value='15' selected={limit == "15" ? true: false}>15</option>
+                          <option value='20' selected={limit == "20" ? true: false}>20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
