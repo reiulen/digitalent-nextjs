@@ -65,7 +65,7 @@ const MultipleChoiceComponent = ({ props_answer }) => {
                             </div>
                             <div className="col-sm-12 col-md-3">
                                 <div className="custom-file">
-                                    <input type="file" className="custom-file-input" name='image' onChange={e => handleInputChange(e, i)} />
+                                    <input type="file" className="custom-file-input" name='image' onChange={e => handleInputChange(e, i)} accept="image/png, image/gif, image/jpeg , image/jpg" />
                                     <label className="custom-file-label" htmlFor="customFile">
                                         Choose file
                                     </label>

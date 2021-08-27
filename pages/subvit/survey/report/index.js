@@ -17,6 +17,6 @@ export default function ReportSurveyPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-    await store.dispatch(allReportSurveyQuestionBanks(query.id, query.page, query.keyword, query.limit))
+    await store.dispatch(allReportSurveyQuestionBanks(query.id, query.page, query.keyword, query.limit, query.pelatihan, query.status))
 })
 
