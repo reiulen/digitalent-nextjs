@@ -16,6 +16,7 @@ import {
   setPage,
   setLimit,
   exportFileCSV,
+  cancelChangeProvinces
 } from "../../../../redux/actions/partnership/mitra.actions";
 
 import Swal from "sweetalert2";
@@ -62,6 +63,7 @@ const Table = () => {
   // const [success, setSuccess] = useState(false)
   useEffect(() => {
     dispatch(fetchMitra());
+    dispatch(cancelChangeProvinces())
   }, [
     dispatch,
     allMitra.keyword,
@@ -69,6 +71,7 @@ const Table = () => {
     allMitra.page,
     allMitra.limit,
     allMitra.card,
+    update
   ]);
 
   return (
@@ -398,9 +401,15 @@ const Table = () => {
                                         padding: "8px 10px 3px 10px",
                                       }}
                                       onClick={() =>
-                                        router.push(
+                                        router.push({
+                                          pathname:
                                           `/partnership/manajemen-mitra/edit/${item.id}`
+                                        },undefined, { shallow: true }
                                         )
+
+                                        // router.push('/partnership/manajemen-mitra/', `/partnership/manajemen-mitra/edit/${item.id}`, { shallow: true })
+
+
                                       }
                                     >
                                       <Image
@@ -499,10 +508,10 @@ const Table = () => {
                     </div>
                     <div className="col-8 my-auto">
                       <p
-                        className="align-middle mt-3"
+                        className="align-middle mt-3 ml-3"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data
+                        Total Data {allMitra.totalDataMitra}
                       </p>
                     </div>
                   </div>

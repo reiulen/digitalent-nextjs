@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Image from "next/image";
 
+import Swal from "sweetalert2";
+
 import {
   getSingleValue,
   searchByKeyDetail,
@@ -19,6 +21,8 @@ import {
   fetchListSelectStatus,
   changeValueStatus,
   changeValueKerjaSama,
+  deleteCooperation,
+  reloadTable
 } from "../../../../redux/actions/partnership/mitra.actions";
 import IconArrow from '../../../assets/icon/Arrow'
 import IconCalender from '../../../assets/icon/Calender'
@@ -26,6 +30,7 @@ import IconCalender from '../../../assets/icon/Calender'
 const DetailDataKerjasama = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  let {update} = router.query
   const mitraDetailAll = useSelector(state => state.allMitra)
 
   const [keyWord, setKeyWord] = useState("");
@@ -50,20 +55,114 @@ const DetailDataKerjasama = () => {
 //     dispatch(fetchListSelectStatus());
 //   }
 // }
+const [deleteBar, setDeleteBar] = useState(false)
+const onNewReset = () => {
+    router.replace(`/partnership/manajemen-kerjasama/detail/${router.query.id}`);
+    setDeleteBar(false)
+  };
+const cooperationDelete = (id) =>{
+    Swal.fire({
+      title: "Apakah anda yakin ingin menghapus data ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        dispatch(deleteCooperation(id))
+        setDeleteBar(true)
+      }else{
+        dispatch(reloadTable())
+      }
+    })
+  }
 
+const [getId, setgetId] = useState("")
 useEffect(() => {
   // getDataSingleAll(router.query.id)
   if(router.query.id){
+    setgetId(router.query.id)
     dispatch(getSingleValue(router.query.id))
     dispatch(fetchListSelectCooperation());
     dispatch(fetchListSelectStatus());
   }
-}, [dispatch,router.query.id,mitraDetailAll.keywordDetail,mitraDetailAll.pageDetail,mitraDetailAll.limitDetail,mitraDetailAll.statusDetail,mitraDetailAll.categories_cooporation])
+}, [dispatch,router.query.id,mitraDetailAll.keywordDetail,mitraDetailAll.pageDetail,mitraDetailAll.limitDetail,mitraDetailAll.statusDetail,mitraDetailAll.categories_cooporation,mitraDetailAll.status_reload])
 
 
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        {deleteBar  ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#f7c9c9"}}
+        >
+          <div className="alert-icon">
+            <i
+              className="flaticon2-checkmark"
+              style={{ color: "#c51b1b" }}
+            ></i>
+          </div>
+          <div
+            className="alert-text"
+            style={{ color: "#c51b1b" }}
+          >Berhasil menghapus data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+        )}
+        {update  ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5"}}
+        >
+          <div className="alert-icon">
+            <i
+              className="flaticon2-checkmark"
+              style={{ color: "#1BC5BD" }}
+            ></i>
+          </div>
+          <div
+            className="alert-text"
+            style={{ color: "#1BC5BD" }}
+          >Berhasil mengupdate data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
@@ -164,9 +263,10 @@ useEffect(() => {
                   >
                     Export .csv
                   </a> */}
+                  {/* {console.log("pages",getId)} */}
                   <button
                   type="button"
-                  onClick={() => dispatch(exportFileCSVDetail())}
+                  onClick={() => dispatch(exportFileCSVDetail(getId))}
                   className="btn btn-primary px-6 font-weight-bold btn-block"
                 >
                   Export .csv
@@ -270,11 +370,18 @@ useEffect(() => {
                                           padding: "8px 10px 3px 10px",
                                         }}
                                         className="btn position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          // router.push(
+                                          //   `/partnership/manajemen-mitra/detail/mitra/${items.id}`
+                                          // )
+                                          
+
+                                          router.push({
+                                            pathname:`/partnership/manajemen-mitra/detail/mitra/${items.id}`,
+                                            query:{idDetail:getId}
+                                          }
+                                          )
+                                        }
                                       >
                                         <Image
                                           src={`/assets/icon/detail.JPG`}
@@ -294,11 +401,13 @@ useEffect(() => {
                                           borderRadius: "6px",
                                           padding: "8px 10px 3px 10px",
                                         }}
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/edit/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          router.push({
+                                            pathname:`/partnership/manajemen-mitra/edit/mitra/${items.id}`,
+                                            query:{idDetail:getId}
+                                          }
+                                          )
+                                        }
                                       >
                                         <Image
                                           width="14"
@@ -317,10 +426,10 @@ useEffect(() => {
                                           padding: "8px 10px 3px 10px",
                                         }}
                                         className="ml-3 btn position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   cooperationDelete(items.id)
+                                        onClick={() =>
+                                          cooperationDelete(items.id)
                                           
-                                        // }
+                                        }
                                       >
                                         <Image
                                           width="14"
@@ -337,7 +446,7 @@ useEffect(() => {
                     </tr>
                     )
                  }):"Belom ada data kerjasama"}
-                 {mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.length === 0 ?"Belom ada data kerjasama" :""}
+                 {/* {mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.length === 0 ?"Belom ada data kerjasama" :""} */}
                  </tbody>
                 </table>
               </div>

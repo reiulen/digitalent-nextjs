@@ -16,7 +16,7 @@ const EditMitra = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const allMitra = useSelector((state) => state.allMitra);
-  console.log("allMitra",allMitra)
+  console.log("allMitra",allMitra.provinces.length)
 
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
@@ -25,6 +25,7 @@ const EditMitra = () => {
   const [website, setWesite] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
+  console.log("indonesia_provinces_id",indonesia_provinces_id)
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
   const [postal_code, setPostal_code] = useState("");
   const [pic_name, setPic_name] = useState("");
@@ -37,6 +38,7 @@ const EditMitra = () => {
   const [citiesAll, setCitiesAll] = useState([]);
   // default send
   const [defaultValueProvinceID, setDefaultValueProvinceID] = useState("")
+  console.log("defaultValueProvinceID",defaultValueProvinceID)
   const [defaultValueCitieID, setDefaultValueCitieID] = useState("")
 
   const [error, setError] = useState({
@@ -97,6 +99,8 @@ const EditMitra = () => {
   const cancelProvincesChange = () =>{
     setCitiesAll([]);
     dispatch(cancelChangeProvinces())
+    setIndonesia_cities_id(defaultValueCitieID)
+    setIndonesia_provinces_id(defaultValueProvinceID)
   }
   const [statuLoadCities, setStatuLoadCities] = useState(false)
   const changeValueProvinces = () =>{
@@ -207,11 +211,13 @@ const EditMitra = () => {
           formData.append("address", address);
 
           if(allMitra.provinces.length === 0){
-            formData.append("indonesia_provinces_id", indonesia_provinces_id);
-            formData.append("indonesia_cities_id", indonesia_cities_id);
-          }else{
+            
             formData.append("indonesia_provinces_id", defaultValueProvinceID);
             formData.append("indonesia_cities_id", defaultValueCitieID);
+          }else{
+            formData.append("indonesia_provinces_id", indonesia_provinces_id);
+            formData.append("indonesia_cities_id", indonesia_cities_id);
+            
 
           }
 
@@ -238,7 +244,7 @@ const EditMitra = () => {
 router.push({
               pathname: "/partnership/manajemen-mitra",
               query: { update: true },
-            });
+            },undefined, { shallow: true });
 
           } catch (error) {
             console.log(error.response.data.message)
@@ -413,6 +419,7 @@ router.push({
                   <input
                     onFocus={() => setError({ ...error, email: "" })}
                     type="email"
+                    readOnly
                     className="form-control"
                     placeholder="Masukkan Email"
                     value={email}
@@ -478,7 +485,7 @@ router.push({
                     Provinsi
                   </label>
                   <div className="col-7">
-                    <select className="form-control" disabled>
+                    <select onFocus={() => setError({ ...error, indonesia_provinces_id: "" })} className="form-control" disabled>
                       <option value={indonesia_provinces_id}>{defaultValueProvince}</option>
                     </select>
                   </div>
@@ -489,6 +496,11 @@ router.push({
                   >
                     Ubah Provinsi
                   </button>
+                  {error.indonesia_provinces_id ? (
+                    <p className="error-text">{error.indonesia_provinces_id}</p>
+                  ) : (
+                    ""
+                  )}
                 </div>
               ) : (
                 <div className="form-group row">
@@ -499,8 +511,8 @@ router.push({
                     Provinsi
                   </label>
                   <div className="col-7">
-                    <select className="form-control" onChange={(e)=>changeProvinces(e.target.value)}>
-                      <option value="">Pilih data provinsi</option>
+                    <select onFocus={() => setError({ ...error, indonesia_provinces_id: "" })} className="form-control" onChange={(e)=>changeProvinces(e.target.value)}>
+                      <option value={defaultValueProvinceID}>Pilih data provinsi</option>
                       {allMitra.provinces.length === 0 ?"": allMitra.provinces.data.map((itemss,index)=>{
                         return(
                           <option key={index} value={itemss.id}>{itemss.name}</option>
@@ -513,8 +525,13 @@ router.push({
                     className="col-sm-3 btn btn-primary btn-sm"
                     onClick={() => cancelProvincesChange()}
                   >
-                    Batal Ubah Kategory
+                    Batal Ubah Provinsi
                   </button>
+                  {error.indonesia_provinces_id ? (
+                    <p className="error-text">{error.indonesia_provinces_id}</p>
+                  ) : (
+                    ""
+                  )}
                 </div>
               )}
 {allMitra.provinces.length === 0 ? <div className="form-group row">
@@ -526,12 +543,18 @@ router.push({
                 </label>
                 <div className="col-sm-10">
                   <select
+                  onFocus={() => setError({ ...error, indonesia_cities_id: "" })}
                   disabled
                     className="form-control"
                   >
                     <option value={indonesia_cities_id}>{defaultValueCitie}</option>
                   </select>
                 </div>
+                {error.indonesia_cities_id ? (
+                    <p className="error-text">{error.indonesia_cities_id}</p>
+                  ) : (
+                    ""
+                  )}
               </div> : 
               <div className="form-group row">
                 <label
@@ -542,11 +565,12 @@ router.push({
                 </label>
                 <div className="col-sm-10">
                   <select
+                  onFocus={() => setError({ ...error, indonesia_cities_id: "" })}
                     className="form-control"
                     onChange={(e) => setIndonesia_cities_id(e.target.value)}
                     // onBlur={(e) => setKotaKabupaten(e.target.value)}
                   >
-                    <option value="">Pilih data Kab/Kota</option>
+                    <option value={defaultValueCitieID}>Pilih data Kab/Kota</option>
 
                     {citiesAll.map((itemsss,index)=>{
                       return(
@@ -555,6 +579,11 @@ router.push({
                     })}
                   </select>
                 </div>
+                {error.indonesia_cities_id ? (
+                    <p className="error-text">{error.indonesia_cities_id}</p>
+                  ) : (
+                    ""
+                  )}
               </div>
               }
 
@@ -593,6 +622,7 @@ router.push({
                   <input
                     onFocus={() => setError({ ...error, pic_name: "" })}
                     type="text"
+                    onChange={(e)=>setPic_name(e.target.value)}
                     className="form-control"
                     placeholder="Masukkan Nama"
                     value={pic_name}
