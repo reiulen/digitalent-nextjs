@@ -220,7 +220,11 @@ const ReportTrivia = () => {
                     <tbody>
                       {
                         trivia && trivia.reports.length === 0 ?
-                          '' :
+                          (
+                            <tr>
+                              <td className='text-center' colSpan={7}>Data Masih Kosong</td>
+                            </tr>
+                          ) :
                           trivia && trivia.reports.map((row, i) => {
                             return <tr key={row.id}>
                               <td className='align-middle text-center'>

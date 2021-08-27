@@ -369,7 +369,7 @@ const DetailDokumenKerjasama = () => {
 
               {/* start loop */}
 
-              {allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.cooperation_category.data_content.map((items,i)=>{
+              {allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.cooperation_category.data_content.cooperation_form === "-"?<h1 className="my-4">Data kerja sama tidak ada</h1>:allMK.cooperationById.data.cooperation_category.data_content.map((items,i)=>{
                 return(
                   
               <div className="form-group row" key={i}>

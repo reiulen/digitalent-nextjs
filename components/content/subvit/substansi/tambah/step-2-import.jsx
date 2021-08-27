@@ -276,7 +276,7 @@ const StepTwo = () => {
                             <div className="form-group row">
                                 <div className="col-sm-8 col-md-8">
                                     <div className="custom-file">
-                                        <span>Gambar Pertanyaan (Opsional)</span>
+                                        <span>Pertanyaan (Opsional)</span>
                                         <input type="file" className="custom-file-input" accept=".csv,.xlsx,.xls" name='question_image' onChange={e => setQuestionFile(e.target.files[0])} />
                                         <label className="custom-file-label" htmlFor="customFile">
                                             Choose file
@@ -426,8 +426,8 @@ const StepTwo = () => {
                                             prevPageText={"<"}
                                             firstPageText={"<<"}
                                             lastPageText={">>"}
-                                            itemClassName="page-item"
-                                            linkClassName="page-link"
+                                            itemClass="page-item"
+                                            linkClass="page-link"
                                         />
                                     }
                                 </div>
