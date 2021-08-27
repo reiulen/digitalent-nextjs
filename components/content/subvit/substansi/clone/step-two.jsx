@@ -307,7 +307,7 @@ const StepTwo = () => {
                                   )}
                                 </td>
                                 <td className="align-middle">
-                                  <ButtonAction icon="write.svg" />
+                                  <ButtonAction icon="write.svg" title='Edit' link={`edit-soal-substansi?id=${question.id}`} />
                                 </td>
                               </tr>
                             );

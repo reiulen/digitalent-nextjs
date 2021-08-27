@@ -282,7 +282,7 @@ const DetailTrivia = () => {
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">
-                                                                <ButtonAction icon="write.svg" link={`edit-soal-trivia?id=${question.id}`} />
+                                                                <ButtonAction icon="write.svg" link={`edit-soal-trivia?id=${question.id}`} title='Edit' />
                                                                 <button
                                                                     onClick={() => handleDelete(question.id)}
                                                                     className="btn mr-1"
@@ -290,6 +290,9 @@ const DetailTrivia = () => {
                                                                         background: "#F3F6F9",
                                                                         borderRadius: "6px",
                                                                     }}
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="bottom"
+                                                                    title="Hapus"
                                                                 >
                                                                     <Image
                                                                         alt="button-action"
