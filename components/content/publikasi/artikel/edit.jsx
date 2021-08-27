@@ -85,9 +85,10 @@ const EditArtikel = () => {
   const [_method, setMethod] = useState("put");
 
   const onChangeGambar = (e) => {
-    // console.log (e.target.files[0])
+    const type = ["image/jpg", "image/png", "image/jpeg"]
+    // console.log (e.target.files[0].type)
 
-    if (e.target.name === "gambar") {
+    if (type.includes (e.target.files[0].type)){
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -95,8 +96,21 @@ const EditArtikel = () => {
           setGambarPreview(reader.result);
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(e.target.files[0])
       setGambarName(e.target.files[0].name)
+    } 
+    else {
+      // setGambar("")
+      // setGambarPreview("/assets/media/default.jpg")
+      // setGambarName(null)
+      // simpleValidator.current.showMessages();
+      // forceUpdate(1);
+      e.target.value = null
+      Swal.fire(
+        'Oops !',
+        'Data yang bisa dimasukkan hanya berupa data gambar.',
+        'error'
+      )
     }
   };
 
@@ -254,7 +268,16 @@ const EditArtikel = () => {
                       placeholder="Isi Judul disini"
                       value={judul_artikel}
                       onChange={(e) => setJudulArtikel(e.target.value)}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("judul_artikel")
+                      }
                     />
+                    {simpleValidator.current.message(
+                      "judul_artikel",
+                      judul_artikel,
+                      "required|max:50",
+                      { className: "text-danger" }
+                    )}
                   </div>
                 </div>
 
