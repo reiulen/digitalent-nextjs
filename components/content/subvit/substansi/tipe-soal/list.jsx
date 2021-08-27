@@ -249,6 +249,7 @@ const ListTipeSoal = () => {
                                 <ButtonAction
                                   icon="write.svg"
                                   link={`/subvit/substansi/tipe-soal/${row.id}`}
+                                  title='Edit'
                                 />
                                 <button
                                   onClick={() => handleDelete(row.id)}
@@ -257,6 +258,9 @@ const ListTipeSoal = () => {
                                     background: "#F3F6F9",
                                     borderRadius: "6px",
                                   }}
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Hapus"
                                 >
                                   <Image
                                     alt="button-action"

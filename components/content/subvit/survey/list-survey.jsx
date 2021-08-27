@@ -230,10 +230,12 @@ const ListSurvey = () => {
                                 <ButtonAction
                                   icon="setting.svg"
                                   link={`/subvit/survey/report?id=${row.id}`}
+                                  title='Report'
                                 />
                                 <ButtonAction
                                   icon="write.svg"
                                   link={`/subvit/survey/edit?id=${row.id}`}
+                                  title='Edit'
                                 />
                                 <ButtonAction icon="detail.svg" link={`/subvit/survey/${row.id}`} />
                                 <button
@@ -243,6 +245,9 @@ const ListSurvey = () => {
                                     background: "#F3F6F9",
                                     borderRadius: "6px",
                                   }}
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Hapus"
                                 >
                                   <Image
                                     alt="button-action"

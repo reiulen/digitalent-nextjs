@@ -221,7 +221,7 @@ const ListSubstansi = () => {
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
                                 <span className="badge badge-secondary text-muted">
-                                  {i + 1 * (page * limit) - (limit - 1)}
+                                  {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
                               <td className="align-middle">
@@ -252,14 +252,17 @@ const ListSubstansi = () => {
                                 <ButtonAction
                                   icon="setting.svg"
                                   link={`/subvit/substansi/report?id=${subtance.id}`}
+                                  title='Report'
                                 />
                                 <ButtonAction
                                   icon="write.svg"
                                   link={`/subvit/substansi/edit?id=${subtance.id}`}
+                                  title='Edit'
                                 />
                                 <ButtonAction
                                   icon="detail.svg"
                                   link={`/subvit/substansi/${subtance.id}`}
+                                  title='Detail'
                                 />
                                 <button
                                   onClick={() => handleDelete(subtance.id)}
@@ -268,6 +271,9 @@ const ListSubstansi = () => {
                                     background: "#F3F6F9",
                                     borderRadius: "6px",
                                   }}
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Hapus"
                                 >
                                   <Image
                                     alt="button-action"

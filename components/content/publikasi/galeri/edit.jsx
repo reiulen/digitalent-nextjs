@@ -84,12 +84,21 @@ const EditGaleri = () => {
         <div style={thumb} key={file.name}>
             <div style={thumbInner}>
                 <Image
+                    loader={() => file.preview}
                     src={file.preview}
-                    style={img}
-                    width={img.width}
-                    height={img.height}
                     alt="thumb"
+                    width= {250}
+                    height= "100%"
+                    display="block"
+                    objectFit="fill"
+                    
                 />
+                {/* <img
+                    src={file.preview}
+                    alt="thumb"
+                    width= '10vh'
+                    height= '10vh'>
+                </img> */}
             </div>
         </div>
     ));
@@ -213,9 +222,7 @@ const EditGaleri = () => {
 
   return (
     <PageWrapper>
-        {
-            console.log (galeri)
-        }
+
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -284,15 +291,13 @@ const EditGaleri = () => {
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
                                         <p className='text-center my-auto'>Seret gambar ke sini atau klik untuk memilih.</p>
+                                        <p className='text-center my-auto'>Untuk memilih banyak gambar klik dengan menekan tombol CTRL atau seret gambar dengan menekan Shift</p>
                                     </div>
                                     <aside style={thumbsContainer}>
                                         {thumbs}
                                     </aside>
                                 </div>
                             </div>
-                            {/* {
-                                console.log (kategori)
-                            } */}
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
@@ -304,7 +309,13 @@ const EditGaleri = () => {
                                         ) : (
                                             kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                 return (
-                                                    <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
+                                                    row.jenis_kategori == "Galeri" ?
+                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                                            {row.nama_kategori}
+                                                        </option>
+                                                    :
+                                                        null
+                                                    // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.jenis_kategori}</option>
                                                 )
                                             })
                                         )}

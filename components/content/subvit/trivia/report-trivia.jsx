@@ -146,7 +146,7 @@ const ReportTrivia = () => {
           </div>
 
           <div className="card-body pt-0">
-            <div className="table-filter">
+            <div className="table-filter mb-5">
               <div className="row align-items-center">
                 <div className="col-lg-10 col-xl-10">
                   <div className="input-icon">
@@ -164,40 +164,6 @@ const ReportTrivia = () => {
                 </div>
               </div>
 
-              <div className="row align-items-center my-5">
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
-                    </select>
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Pelatihan
-                    </small>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
-                    </select>
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Status
-                    </small>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
-                    </select>
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Nilai
-                    </small>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div className="table-page">
@@ -263,16 +229,16 @@ const ReportTrivia = () => {
                   ""
                 )}
               </div>
-              {/* 
+
               <div className="row">
-                {perPage < total && (
+                {trivia && trivia.total > 5 && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={perPage}
-                      totalItemsCount={total}
+                      itemsCountPerPage={trivia.perPage}
+                      totalItemsCount={trivia.total}
                       pageRangeDisplayed={3}
-                      // onChange={handlePagination}
+                      onChange={handlePagination}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -282,7 +248,7 @@ const ReportTrivia = () => {
                     />
                   </div>
                 )}
-                {total > 5 ? (
+                {trivia && trivia.total > 4 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -295,12 +261,13 @@ const ReportTrivia = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
+                          onChange={e => handleLimit(e.target.value)}
+                          onBlur={e => handleLimit(e.target.value)}
                         >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
+                          <option value='5'>5</option>
+                          <option value='10'>10</option>
+                          <option value='15'>15</option>
+                          <option value='20'>20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -308,7 +275,7 @@ const ReportTrivia = () => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data 120
+                          Total Data {trivia.total}
                         </p>
                       </div>
                     </div>
@@ -316,7 +283,7 @@ const ReportTrivia = () => {
                 ) : (
                   ""
                 )}
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

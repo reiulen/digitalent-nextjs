@@ -385,7 +385,7 @@ const StepTwo = () => {
                                                                 )}
                                                             </td>
                                                             <td className="align-middle">
-                                                                <ButtonAction icon="write.svg" link={`edit-soal-substansi?id=${question.id}`} />
+                                                                <ButtonAction icon="write.svg" title='Edit' link={`edit-soal-substansi?id=${question.id}`} />
                                                                 <button
                                                                     onClick={() => handleDelete(question.id)}
                                                                     className="btn mr-1"
@@ -393,6 +393,9 @@ const StepTwo = () => {
                                                                         background: "#F3F6F9",
                                                                         borderRadius: "6px",
                                                                     }}
+                                                                    data-toggle="tooltip"
+                                                                    data-placement="bottom"
+                                                                    title="Hapus"
                                                                 >
                                                                     <Image
                                                                         alt="button-action"

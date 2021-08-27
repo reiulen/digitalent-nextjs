@@ -42,11 +42,11 @@ const thumbInner = {
     overflow: 'hidden'
 };
 
-const img = {
-    display: 'block',
-    // width: 'auto',
-    // height: '100%'
-};
+// const img = {
+//     display: 'block',
+//     width: 'auto',
+//     height: '100%'
+// };
 
 const TambahGaleri = () => {
     const dispatch = useDispatch()
@@ -77,15 +77,21 @@ const TambahGaleri = () => {
         <div style={thumb} key={file.name}>
             <div style={thumbInner}>
                 <Image
+                    loader={() => file.preview}
+                    src={file.preview}
+                    alt="thumb"
+                    // layout="fill"
+                    width= {250}
+                    height= "100%"
+                    display="block"
+                    objectFit="fill"
+                />
+                {/* <img
                     src={file.preview}
                     alt="thumb"
                     width= '10vh'
-                    height= '10vh'
-                    // style={img}
-                    // width={img.width}
-                    // height={img.height}
-                    
-                />
+                    height= '10vh'>
+                </img> */}
             </div>
         </div>
     ));
@@ -114,7 +120,6 @@ const TambahGaleri = () => {
         }
 
         setGambar(temps)
-        
 
         if (success) {
             router.push({
@@ -129,7 +134,7 @@ const TambahGaleri = () => {
     const [judul, setJudulGaleri] = useState('')
     const [isi_galleri, setIsiGaleri] = useState('');
     const [gambar, setGambar] = useState([])
-    // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
+    const [gambarPreview, setGambarPreview] = useState(null)
     const [kategori_id, setKategoriId] = useState('')
     // const [kategori_id, setKategoriId] = useState(1)
     const [users_id, setUserId] = useState(1)
@@ -205,6 +210,7 @@ const TambahGaleri = () => {
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
                                         <p className='text-center my-auto'>Seret gambar ke sini atau klik untuk memilih.</p>
+                                        <p className='text-center my-auto'>Untuk memilih banyak gambar klik dengan menekan tombol CTRL atau seret gambar dengan menekan Shift</p>
                                     </div>
                                     <aside style={thumbsContainer}>
                                         {thumbs}
@@ -244,9 +250,12 @@ const TambahGaleri = () => {
                                         kategori.kategori &&
                                         kategori.kategori.map((row) => {
                                         return (
-                                            <option key={row.id} value={row.id}>
-                                            {row.jenis_kategori}
-                                            </option>
+                                            row.jenis_kategori == "Galeri" ?
+                                                <option key={row.id} value={row.id}>
+                                                    {row.nama_kategori}
+                                                </option>
+                                            :
+                                                null
                                         );
                                         })
                                     )}

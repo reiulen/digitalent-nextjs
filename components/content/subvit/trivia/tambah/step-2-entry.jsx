@@ -43,10 +43,10 @@ const StepTwo = () => {
   const [duration, setDuration] = useState(null)
   //blank
   const [answer_blank, setBlanklList] = useState([
-    { key: 'A', value: '', type: '', option: '' },
-    { key: 'B', value: '', type: '', option: '' },
-    { key: 'C', value: '', type: '', option: '' },
-    { key: 'D', value: '', type: '', option: '' }
+    { key: 'A', value: '', type: '', option: '', image: '' },
+    { key: 'B', value: '', type: '', option: '', image: '' },
+    { key: 'C', value: '', type: '', option: '', image: '' },
+    { key: 'D', value: '', type: '', option: '', image: '' }
   ])
   const [durationBlank, setDurationBlank] = useState(null)
 
@@ -105,10 +105,10 @@ const StepTwo = () => {
     ])
     setDuration('')
     setBlanklList([
-      { key: 'A', value: '', type: '', option: '' },
-      { key: 'B', value: '', type: '', option: '' },
-      { key: 'C', value: '', type: '', option: '' },
-      { key: 'D', value: '', type: '', option: '' }
+      { key: 'A', value: '', type: '', option: '', image: '' },
+      { key: 'B', value: '', type: '', option: '', image: '' },
+      { key: 'C', value: '', type: '', option: '', image: '' },
+      { key: 'D', value: '', type: '', option: '', image: '' }
     ])
     setDurationBlank('')
     setAnswerKey('')
@@ -323,6 +323,7 @@ const StepTwo = () => {
             type: methodAdd,
             answer_key: null
           }
+          // console.log(data)
           dispatch(newTriviaQuestionDetail(data))
         }
         break
