@@ -45,9 +45,9 @@ const Vidio = () => {
     page = Number(page)
 
     useEffect(() => {
-        if (limit) {
-          router.push(`${router.pathname}?page=1&limit=${limit}`)
-        }
+        // if (limit) {
+        //   router.push(`${router.pathname}?page=1&limit=${limit}`)
+        // }
 
         if (isDeleted) {
           Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
@@ -60,12 +60,7 @@ const Vidio = () => {
           })
         }
 
-        if (publishValue){
-            router.push(`${router.pathname}?publish=${publishValue}`);
-            console.log("check")
-            // console.log (publishValue)
-          }
-      }, [limit, isDeleted, publishValue, dispatch]);
+      }, [isDeleted, dispatch]);
 
     const onNewReset = () => {
     router.replace('/publikasi/video', undefined, { shallow: true })
@@ -111,6 +106,49 @@ const Vidio = () => {
             )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
         );
     };
+
+    const handleLimit = (val) => {
+        setLimit(val)
+        if (search === "") {
+            router.push(`${router.pathname}?page=1&limit=${val}`);
+        
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        }
+        
+    };
+    
+    const handlePublish = (val) => {
+        if (val !== null || val !== "") {
+          setPublishValue (val)
+    
+          if ( startDate === null && endDate === null && limit === null && search === null){
+            router.push(`${router.pathname}?publish=${val}`);
+      
+          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+      
+          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+          
+          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+      
+          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+      
+          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+          
+          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+          
+          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+          }
+        }
+        
+    }
 
     return (
         <PageWrapper>
@@ -164,7 +202,7 @@ const Vidio = () => {
                         titleValue='Video' 
                         title='Total Publish' 
                         publishedVal = "1"
-                        routePublish = { () => setPublishValue("1")}
+                        routePublish = { () => handlePublish("1")}
                     />
                     <CardPage 
                         background='bg-light-warning' 
@@ -174,7 +212,7 @@ const Vidio = () => {
                         titleValue='Video' 
                         title='Total Author' 
                         publishedVal = ""
-                        routePublish = { () => setPublishValue("")}
+                        routePublish = { () => handlePublish("")}
                     />
                     <CardPage 
                         background='bg-light-success' 
@@ -184,7 +222,7 @@ const Vidio = () => {
                         titleValue='Orang' 
                         title='Total Yang Baca' 
                         publishedVal = ""
-                        routePublish = { () => setPublishValue("")}
+                        routePublish = { () => handlePublish("")}
                     />
                     <CardPage 
                         background='bg-light-danger' 
@@ -194,7 +232,7 @@ const Vidio = () => {
                         titleValue='Video' 
                         title='Total Belum Publish'
                         publishedVal = "0"
-                        routePublish = { () => setPublishValue("0")} 
+                        routePublish = { () => handlePublish("0")} 
                         />
                 </div>
             </div>
@@ -354,11 +392,23 @@ const Vidio = () => {
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
                                                                 {/* <ButtonAction icon='setting.svg'/> */}
-                                                                <button onClick={() => setUrlVideo(row.url_video)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }} data-target="#exampleModalCenter" data-toggle="modal">
+                                                                <button 
+                                                                    onClick={() => setUrlVideo(row.url_video)} 
+                                                                    className='btn mr-1' 
+                                                                    style={{ background: '#F3F6F9', borderRadius: '6px' }} 
+                                                                    data-target="#exampleModalCenter" 
+                                                                    data-toggle="modal">
                                                                     <Image alt='button-action' src={`/assets/icon/setting.svg`} width={18} height={18} />
                                                                 </button>
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/video/${row.id}`}/>
-                                                                <button onClick={() => handleDelete(row.id)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
+                                                                <ButtonAction icon='write.svg' link={`/publikasi/video/${row.id}`} title="Edit"/>
+                                                                <button 
+                                                                    onClick={() => handleDelete(row.id)}
+                                                                    className='btn mr-1' 
+                                                                    style={{ background: '#F3F6F9', borderRadius: '6px' }}
+                                                                    data-toggle="tooltip" 
+                                                                    data-placement="bottom" 
+                                                                    title="Hapus"
+                                                                >
                                                                     <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
                                                                 </button>
                                                             </td>
@@ -396,7 +446,13 @@ const Vidio = () => {
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
-                                                <select className="form-control" id="exampleFormControlSelect2" style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}>
+                                                <select 
+                                                    className="form-control" 
+                                                    id="exampleFormControlSelect2" 
+                                                    style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}
+                                                    onChange={(e) => handleLimit(e.target.value)}
+                                                    onBlur={(e) => handleLimit(e.target.value)}
+                                                >
                                                     <option value='5' selected={limit == "5" ? true: false}>5</option>
                                                     <option value='10' selected={limit == "10" ? true: false}>10</option>
                                                     <option value='15' selected={limit == "15" ? true: false}>15</option>

@@ -53,9 +53,9 @@ const Berita = () => {
     page = Number(page);
 
     useEffect(() => {
-        if (limit) {
-        router.push(`${router.pathname}?page=1&limit=${limit}`);
-        }
+        // if (limit) {
+        // router.push(`${router.pathname}?page=1&limit=${limit}`);
+        // }
 
         if (isDeleted) {
         Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
@@ -69,33 +69,8 @@ const Berita = () => {
             type: DELETE_BERITA_RESET,
             });
         }
-
-        if (publishValue !== null && startDate === null && endDate === null && limit === null && search === null){
-            router.push(`${router.pathname}?publish=${publishValue}`);
-            
-        } else if (publishValue !== null && startDate !== null && endDate !== null && limit === null && search === null) {
-            router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-        } else if (publishValue !== null && startDate !== null && endDate !== null && limit !== null && search === null) {
-            router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-        
-        } else if (publishValue !== null && startDate !== null && endDate !== null && limit === null && search !== null) {
-            router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-
-        } else if (publishValue !== null && startDate === null && endDate === null && limit !== null && search === null) {
-            router.push(`${router.pathname}?publish=${publishValue}&limit=${limit}`);
-
-        } else if (publishValue !== null && startDate === null && endDate === null && limit === null && search !== null) {
-            router.push(`${router.pathname}?publish=${publishValue}&keyword=${search}`);
-        
-        } else if (publishValue !== null && startDate === null && endDate === null && limit !== null && search !== null) {
-            router.push(`${router.pathname}?publish=${publishValue}&limit=${limit}&keyword=${search}`);
-        
-        } else if (publishValue !== null && startDate !== null && endDate !== null && limit !== null && search !== null) {
-            router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-        } 
       
-    }, [limit, isDeleted, publishValue, dispatch, search]);
+    }, [isDeleted, dispatch, ]);
 
     const onNewReset = () => {
         router.replace("/publikasi/berita", undefined, { shallow: true });
@@ -182,9 +157,48 @@ const Berita = () => {
         }
       };
 
-    const handleLimit = (val) => {
-    setLimit(val)
-    }
+      const handleLimit = (val) => {
+        setLimit(val)
+        if (search === "") {
+            router.push(`${router.pathname}?page=1&limit=${val}`);
+        
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        }
+        
+      };
+    
+      const handlePublish = (val) => {
+        if (val !== null || val !== "") {
+          setPublishValue (val)
+    
+          if ( startDate === null && endDate === null && limit === null && search === null){
+            router.push(`${router.pathname}?publish=${val}`);
+      
+          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+      
+          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+          
+          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+      
+          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+      
+          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+          
+          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+          
+          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+          }
+        }
+        
+      }
 
     return (
         <PageWrapper>
@@ -237,7 +251,7 @@ const Berita = () => {
                         titleValue='Berita' 
                         title='Total Publish'
                         publishedVal = "1"
-                        routePublish = { () => setPublishValue("1")}
+                        routePublish = { () => handlePublish("1")}
                         />
                     <CardPage 
                         background='bg-light-warning' 
@@ -247,7 +261,7 @@ const Berita = () => {
                         titleValue='Berita' 
                         title='Total Author'
                         publishedVal = ""
-                        routePublish = { () => setPublishValue("")} 
+                        routePublish = { () => handlePublish("")} 
                         />
                     <CardPage 
                         background='bg-light-success' 
@@ -257,7 +271,7 @@ const Berita = () => {
                         titleValue='Orang' 
                         title='Total Yang Baca' 
                         publishedVal = ""
-                        routePublish = { () => setPublishValue("")}
+                        routePublish = { () => handlePublish("")}
                         />
                     <CardPage 
                         background='bg-light-danger' 
@@ -267,7 +281,7 @@ const Berita = () => {
                         titleValue='Berita' 
                         title='Total Belum Publish'
                         publishedVal = "0"
-                        routePublish = { () => setPublishValue("0")} 
+                        routePublish = { () => handlePublish("0")} 
                         />
                 </div>
             </div>
@@ -432,15 +446,19 @@ const Berita = () => {
                                                             </td>
                                                             <td className='align-middle'>Super Admin</td>
                                                             <td className='align-middle'>
-                                                                <ButtonNewTab icon='setting.svg' link={`/publikasi/berita/preview/${row.id}`} />
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/berita/${row.id}`}/>
+                                                                <ButtonNewTab icon='setting.svg' link={`/publikasi/berita/preview/${row.id}`} title="Preview"/>
+                                                                <ButtonAction icon='write.svg' link={`/publikasi/berita/${row.id}`} title="Edit"/>
                                                                 <button 
                                                                     onClick={() => handleDelete(row.id)} 
                                                                     className='btn mr-1' 
                                                                     style={{ 
                                                                         background: '#F3F6F9', 
                                                                         borderRadius: '6px' 
-                                                                    }}>
+                                                                    }}
+                                                                    data-toggle="tooltip" 
+                                                                    data-placement="bottom" 
+                                                                    title="Hapus"
+                                                                    >
                                                                     <Image 
                                                                         alt='button-action' 
                                                                         src={`/assets/icon/trash.svg`} 

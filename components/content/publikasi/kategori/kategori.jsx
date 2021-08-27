@@ -35,12 +35,12 @@ const Kategori = () => {
     // }, [])
 
     useEffect(() => {
-        if (limit !== null && search === "") {
-            router.push(`${router.pathname}?page=1&limit=${limit}`)
+        // if (limit !== null && search === "") {
+        //     router.push(`${router.pathname}?page=1&limit=${limit}`)
 
-        } else if (limit !== null && search !== ""){
-            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
-        }
+        // } else if (limit !== null && search !== ""){
+        //     router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+        // }
 
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
@@ -52,7 +52,7 @@ const Kategori = () => {
                 type: DELETE_KATEGORI_RESET
             })
         }
-    }, [dispatch, limit, isDeleted, search])
+    }, [dispatch, isDeleted ])
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -104,7 +104,14 @@ const Kategori = () => {
 
     const handleLimit = (val) => {
         setLimit(val)
-    }
+        if (search === "") {
+            router.push(`${router.pathname}?page=1&limit=${val}`);
+        
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        }
+        
+    };
 
     return (
         <PageWrapper>
@@ -239,8 +246,15 @@ const Kategori = () => {
                                                             <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.jenis_kategori}</td>
                                                             <td className='align-middle text-center'>
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/kategori/${row.id}`} />
-                                                                <button onClick={() => handleDelete(row.id)} className='btn mr-1' style={{ background: '#F3F6F9', borderRadius: '6px' }}>
+                                                                <ButtonAction icon='write.svg' link={`/publikasi/kategori/${row.id}`} title="Edit"/>
+                                                                <button 
+                                                                    onClick={() => handleDelete(row.id)} 
+                                                                    className='btn mr-1' 
+                                                                    style={{ background: '#F3F6F9', borderRadius: '6px' }}
+                                                                    data-toggle="tooltip" 
+                                                                    data-placement="bottom" 
+                                                                    title="Hapus"
+                                                                >
                                                                     <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
                                                                 </button>
                                                             </td>
