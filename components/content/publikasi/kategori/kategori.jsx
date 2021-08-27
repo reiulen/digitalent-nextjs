@@ -52,7 +52,7 @@ const Kategori = () => {
                 type: DELETE_KATEGORI_RESET
             })
         }
-    }, [dispatch, limit, isDeleted, router, search])
+    }, [dispatch, limit, isDeleted, search])
 
     const handleDelete = (id) => {
         Swal.fire({
