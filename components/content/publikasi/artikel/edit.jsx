@@ -87,6 +87,8 @@ const EditArtikel = () => {
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
     // console.log (e.target.files[0].type)
+    // console.log (e.target.files[0])
+    // console.log ("check")
 
     if (type.includes (e.target.files[0].type)){
       const reader = new FileReader();
@@ -97,6 +99,7 @@ const EditArtikel = () => {
         }
       };
       reader.readAsDataURL(e.target.files[0])
+      // console.log (reader.readAsDataURL(e.target.files[0]))
       setGambarName(e.target.files[0].name)
     } 
     else {

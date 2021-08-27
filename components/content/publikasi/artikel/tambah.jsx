@@ -71,32 +71,33 @@ const TambahArtikel = () => {
   const [publish, setPublish] = useState(false);
 
   const onChangeGambar = (e) => {
-    // const type = ["image/jpg", "image/png", "image/jpeg"]
-    // // console.log (e.target.files[0].type)
+    const type = ["image/jpg", "image/png", "image/jpeg"]
+    // console.log (e.target.files[0])
+    // console.log ("check")
 
-    // if (type.includes (e.target.files[0].type)){
-    //   const reader = new FileReader();
-    //   reader.onload = () => {
-    //     if (reader.readyState === 2) {
-    //       setGambar(reader.result);
-    //       setGambarPreview(reader.result);
-    //     }
-    //   };
-    //   reader.readAsDataURL(e.target.files[0])
-    //   setGambarName(e.target.files[0].name)
-    // } 
-
-    if (e.target.name === 'gambar') {
-      const reader = new FileReader()
+    if (type.includes (e.target.files[0].type)){
+      const reader = new FileReader();
       reader.onload = () => {
-          if (reader.readyState === 2) {
-              setGambar(reader.result)
-              setGambarPreview(reader.result)
-          }
-      }
+        if (reader.readyState === 2) {
+          setGambar(reader.result);
+          setGambarPreview(reader.result);
+        }
+      };
       reader.readAsDataURL(e.target.files[0])
       setGambarName(e.target.files[0].name)
-  }
+      // console.log (reader.readAsDataURL(e.target.files[0]))
+    } 
+
+    // if (e.target.name === 'gambar') {
+    //   const reader = new FileReader()
+    //   reader.onload = () => {
+    //       if (reader.readyState === 2) {
+    //           setGambar(reader.result)
+    //           setGambarPreview(reader.result)
+    //       }
+    //   }
+    //   reader.readAsDataURL(e.target.files[0])
+    //   setGambarName(e.target.files[0].name)
     
   };
 
