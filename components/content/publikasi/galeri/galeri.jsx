@@ -39,6 +39,7 @@ const Galeri = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [publishValue, setPublishValue] = useState(null)
+    const [index_galleri, setIndexGalleri] = useState (null)
 
     let loading = false
 
@@ -94,24 +95,67 @@ const Galeri = () => {
     };
 
     const handlePagination = (pageNumber) => {
-        if (limit != null) {
+        if (limit !== null  && search === "" && startDate === null && endDate === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+    
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
         }
-    }
+      }
 
     const handleSearch = () => {
-        if (limit != null) {
-            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+        if (limit != null && startDate === null && endDate === null) {
+           router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit !== null && startDate !== null && endDate !== null ) {
+           router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
         } else {
-            router.push(`${router.pathname}?page=1&keyword=${search}`)
+          router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
     }
 
     const handleSearchDate = () => {
-        router.push(`${router.pathname}?page=1&startdate=${moment(startDate).format('YYYY-MM-DD')}&enddate=${moment(endDate).format('YYYY-MM-DD')}`)
-    }
+        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+        } else {
+            if (limit !== null && search === null) {
+                router.push(
+                    `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                );
+    
+            } else if (limit !== null && search !== null) {
+              `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+    
+            } else {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+                ); 
+            }
+        }
+    };
 
     const handleLimit = (val) => {
         setLimit(val)
@@ -154,6 +198,10 @@ const Galeri = () => {
           }
         }
         
+    }
+
+    const handleIndexGallery = (i) => {
+        setIndexGalleri(i)
     }
 
     return (
@@ -342,16 +390,27 @@ const Galeri = () => {
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     galeri && galeri.gallery.map((row, i) => {
                                                         return <tr key={row.id}>
-                                                            <td className="align-middle text-center">
-                                                                <span className="badge badge-secondary text-muted">
-                                                                {i + 1 * (page * 5 || limit) - 4}
-                                                                </span>
+                                                            <td className='align-middle text-center'>
+                                                                {
+                                                                    limit === null ?
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                                                    </span>
+                                                                    :
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * limit) - (limit - 1)}
+                                                                    </span>
+                                                                }
+                                                                
                                                             </td>
                                                             <td className='text-center'>
                                                                 <Image alt='name_image' 
                                                                 unoptimized={
                                                                     process.env.ENVIRONMENT !== "PRODUCTION"
                                                                 }
+                                                                loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                    "publikasi/images/" +
+                                                                    row.gambar)}
                                                                 src={
                                                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                     "publikasi/images/" +
@@ -370,7 +429,10 @@ const Galeri = () => {
                                                                     </span>
                                                                   )
                                                             }</td>
-                                                            <td className='align-middle'>{row.role_name}</td>
+                                                            <td className='align-middle'>
+                                                                {/* {row.role_name} */}
+                                                                Super Admin
+                                                            </td>
                                                             <td className='align-middle'>
                                                                 { row.status  === 1 ? (
                                                                     <span className="label label-inline label-light-success font-weight-bold">
@@ -382,9 +444,24 @@ const Galeri = () => {
                                                                   </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>Admin Publikasi</td>
+                                                            <td className='align-middle'>Super Admin</td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' data-toggle="modal" data-target="#exampleModalCenter" title="Preview"/>
+                                                                {/* <ButtonAction icon='setting.svg' data-toggle="modal" data-target="#exampleModalCenter"/> */}
+                                                                <button
+                                                                    className='btn mr-1' 
+                                                                    style={{ background: '#F3F6F9', borderRadius: '6px' }} 
+                                                                    data-target="#exampleModalCenter" 
+                                                                    data-toggle="modal"
+                                                                    onClick={() => handleIndexGallery(i)}
+                                                                    
+                                                                >
+                                                                    <Image
+                                                                        alt="button-action"
+                                                                        src={`/assets/icon/setting.svg`}
+                                                                        width={18}
+                                                                        height={18}
+                                                                    />
+                                                                </button>
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/galeri/${row.id_gallery}`} title="Edit"/>
                                                                 <button
                                                                     onClick={() => handleDelete(row.id_gallery)}
@@ -444,7 +521,7 @@ const Galeri = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data 120</p>
+                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {galeri.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''
@@ -456,7 +533,7 @@ const Galeri = () => {
             </div>
             
             {/* Modal */}
-            {/* <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -465,24 +542,91 @@ const Galeri = () => {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+                        {/* {
+                            console.log (galeri)
+                        } */}
                         <div className="modal-body text-center" style={{ height: '400px' }}>
-                            <Image
-                                src={
-                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                    "publikasi/images/" +
-                                    galeri.gambar
-                                } 
-                                alt='image'
-                                layout='fill'
-                                objectFit='cover'
-                            />
+                            <div className="row">
+                                <div className="col-7">
+                                    {
+                                        galeri && galeri.gallery.length !== 0 ?
+                                            galeri.gallery.map ((row, i) => {
+                                                return (
+                                                    <Image
+                                                    key={i}
+                                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        "publikasi/images/" +
+                                                        row.gambar)}
+                                                    src={
+                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        "publikasi/images/" +
+                                                        row.gambar
+                                                    } 
+                                                    key
+                                                    alt='image'
+                                                    layout='fill'
+                                                    objectFit='cover'
+                                                    />
+                                                )
+                                            })
+                                            
+                                        :
+                                            null
+                                    }
+                                </div>
+                                <div className="col-5">
+                                    {
+                                        galeri && galeri.gallery.length !== 0  && index_galleri !== null ?
+                                        <>
+                                            <div className="row mb-1">
+                                                <h5>
+                                                    {galeri.gallery[index_galleri].judul}
+                                                </h5>
+                                            </div>
+                                            <div className="row mb-1">
+                                                <div style={{ background: "#F3F6F9"}} 
+                                                    className="mr-5 px-3 py-1 rounded mb-1">
+                                                    <i className="flaticon2-user"></i>
+                                                    <span className="ml-1">
+                                                        User : Super Admin 
+                                                        {/* User : {galeri.gallery[index_galleri].role_name}  */}
+                                                    </span>
+                                                </div>
+
+                                                <div style={{ background: "#F3F6F9"}} 
+                                                    className="mr-5 px-3 py-1 rounded mb-1">
+                                                    <i className="flaticon2-calendar-4"></i>
+                                                    <span className="ml-1">
+                                                        Publish: {galeri.gallery[index_galleri].tanggal_publish}  
+                                                    </span>
+                                                </div>
+
+                                                
+                                            
+                                            </div>
+                                            <div className="row mb-1">
+                                                <p dangerouslySetInnerHTML={{__html: galeri.gallery[index_galleri].isi_galleri}}>
+                                                </p>
+                                            </div>
+                                        </>
+                                        :
+                                        <div>
+                                            Data Kosong
+                                        </div>
+                                    }
+                                    
+                                </div>
+                                
+                            </div>
+                            
+                            
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </PageWrapper>
     )
 }

@@ -123,14 +123,14 @@ const Artikel = () => {
 
   const handleSearch = () => {
     if (limit != null && startDate === null && endDate === null) {
-        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
 
     } else if (limit !== null && startDate !== null && endDate !== null ) {
-        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
     } else {
-        router.push(`${router.pathname}?page=1&keyword=${search}`)
-    }
+      router.push(`${router.pathname}?page=1&keyword=${search}`)
+  }
 
 };
 
