@@ -3,50 +3,83 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import {
-  newArtikel,
+  updatewTriviaQuestionBanks,
   clearErrors,
-} from "/redux/actions/publikasi/artikel.actions";
-import { NEW_ARTIKEL_RESET } from "/redux/types/publikasi/artikel.type";
+} from '../../../../../redux/actions/subvit/trivia-question.actions';
+import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from '../../../../../redux/types/subvit/trivia-question.type';
 
 import PageWrapper from "/components/wrapper/page.wrapper";
-import StepInput from "/components/StepInputClone";
-import { useRouter } from "next/router";
+import StepInputPublish from "/components/StepInputPublish";
+import LoadingPage from "../../../../LoadingPage";
 
 const StepOne = () => {
   const dispatch = useDispatch();
-  const importSwitch = () => import("bootstrap-switch-button-react");
-  const SwitchButton = dynamic(importSwitch, {
-    ssr: false,
-  });
   const router = useRouter();
 
-  const { loading, error, success } = useSelector((state) => state.newArtikel);
+  let { id } = router.query;
+  const { error: detailData, trivia } = useSelector((state) => state.detailTriviaQuestionBanks)
+  const { loading, error, isUpdated } = useSelector((state) => state.updateTriviaQuestion)
+
+  const [typeSave, setTypeSave] = useState('lanjut')
+  const [academy_id, setAcademyId] = useState(trivia.academy_id)
+  const [theme_id, setThemeId] = useState(trivia.theme_id)
+  const [training_id, setTrainingId] = useState(trivia.training_id)
 
   useEffect(() => {
     // if (error) {
     //     dispatch(clearErrors())
     // }
 
-    if (success) {
+    if (isUpdated) {
       dispatch({
-        type: NEW_ARTIKEL_RESET,
+        type: UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
       });
+      if (typeSave === 'lanjut') {
+        router.push({
+          pathname: `/subvit/trivia/edit/step-2`,
+          query: { id }
+        })
+      } else if (typeSave === 'draft') {
+        router.push({
+          pathname: `/subvit/trivia`,
+          query: { success: true },
+        });
+      }
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, isUpdated, id, router, typeSave]);
 
-  const [role, setRole] = useState("");
-
-  const saveAndContinue = () => {
-    router.push("/subvit/trivia/edit/step-2");
-  };
+  // const saveAndContinue = () => {
+  //   router.push("/subvit/substansi/edit/step-2");
+  // };
 
   const saveDraft = () => {
-    router.push("/subvit/trivia");
+    setTypeSave('draft')
+    const data = {
+      academy_id,
+      theme_id,
+      training_id,
+      _method: 'put'
+    }
+
+    dispatch(updatewTriviaQuestionBanks(id, data))
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setTypeSave('lanjut')
+
+    const data = {
+      academy_id,
+      theme_id,
+      training_id,
+      _method: 'put'
+    }
+
+    dispatch(updatewTriviaQuestionBanks(id, data))
+
+    console.log(data)
   };
 
   return (
@@ -77,11 +110,16 @@ const StepOne = () => {
         ""
       )}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        {
+          loading ?
+            <LoadingPage loading={loading} />
+            : ''
+        }
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="1"></StepInput>
+          <StepInputPublish step="1"></StepInputPublish>
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Edit Trivia
+              Publish Soal
             </h3>
           </div>
           <div className="card-body">
@@ -97,12 +135,12 @@ const StepOne = () => {
                   <select
                     name="academy_id"
                     id=""
-                    onChange={(e) => setRole(e.target.value)}
+                    onChange={(e) => setAcademyId(e.target.value)}
                     className="form-control"
                   >
-                    <option selected> -Pilih Akademi -</option>
-                    <option value="1"> Computer Scientist </option>
-                    <option value="1"> Designer </option>
+                    <option> -Pilih Akademi -</option>
+                    <option value="1" selected> Computer Scientist </option>
+                    <option value="2"> Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Akademi</span>
                 </div>
@@ -119,12 +157,12 @@ const StepOne = () => {
                   <select
                     name="the_id"
                     id=""
-                    onChange={(e) => setRole(e.target.value)}
+                    onChange={(e) => setThemeId(e.target.value)}
                     className="form-control"
                   >
-                    <option selected> -Pilih Tema-</option>
-                    <option value="1"> Cloud Computing </option>
-                    <option value="1"> UI/UX Designer </option>
+                    <option> -Pilih Tema-</option>
+                    <option value="1" selected> Cloud Computing </option>
+                    <option value="2"> UI/UX Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Tema</span>
                 </div>
@@ -141,36 +179,14 @@ const StepOne = () => {
                   <select
                     name="training_id"
                     id=""
-                    onChange={(e) => setRole(e.target.value)}
+                    onChange={(e) => setTrainingId(e.target.value)}
                     className="form-control"
                   >
-                    <option selected> -Pilih Pelatihan-</option>
-                    <option value="1"> Google Cloud Computing </option>
-                    <option value="1"> Adobe UI/UX Designer </option>
+                    <option> -Pilih Pelatihan-</option>
+                    <option value="1" selected> Google Cloud Computing </option>
+                    <option value="2"> Adobe UI/UX Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Pelatihan</span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
-                >
-                  Kategori
-                </label>
-                <div className="col-sm-10">
-                  <select
-                    name="category"
-                    id=""
-                    onChange={(e) => setRole(e.target.value)}
-                    className="form-control"
-                  >
-                    <option selected> -Pilih Kategori-</option>
-                    <option value="tes_substansi"> Tes Substansi </option>
-                    <option value="mid_tes"> Mid Tes </option>
-                  </select>
-                  <span className="text-muted">Silahkan Pilih Kategori</span>
                 </div>
               </div>
 
@@ -179,13 +195,13 @@ const StepOne = () => {
                 <div className="col-sm-10 text-right">
                   <button
                     className="btn btn-light-primary btn-sm mr-2"
-                    onClick={saveAndContinue}
                   >
                     Simpan & Lanjut
                   </button>
                   <button
                     className="btn btn-primary btn-sm"
                     onClick={saveDraft}
+                    type='button'
                   >
                     Simpan Draft
                   </button>

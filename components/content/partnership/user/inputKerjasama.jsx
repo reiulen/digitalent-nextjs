@@ -17,8 +17,8 @@ const InputKerjasama = () => {
           <div className={`card-body ${Style.refreshZindex}`}>
             <div className={Style.containerProggres}>
               <ul className={Style.progressbar}>
-                <li class={Style.active}>Submit Kerjasama</li>
-                <li class={Style.active}>Review Kerjasama</li>
+                <li className={Style.active}>Submit Kerjasama</li>
+                <li className={Style.active}>Review Kerjasama</li>
                 <li>Pembahasan</li>
                 <li>Dokumen Kerjasama</li>
                 <li>Review Dokumen </li>
@@ -225,7 +225,7 @@ const InputKerjasama = () => {
                       Kembali
                     </a>
                   </Link>
-                  <Link href="/partnership/manajemen-kerjasama/review-kerjasama">
+                  <Link href="/partnership/manajemen-kerjasama/review-kerjasama" passHref>
                     <button className="btn btn-primary btn-sm">Submit</button>
                   </Link>
                 </div>

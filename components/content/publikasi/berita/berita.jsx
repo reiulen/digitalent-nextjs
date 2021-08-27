@@ -8,34 +8,73 @@ import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import Swal from 'sweetalert2'
+import moment from "moment";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
 import LoadingTable from '../../../LoadingTable';
+import ButtonNewTab from "../../../ButtonNewTab";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllBerita, deleteBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
+import { deleteBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
+
+import { DELETE_BERITA_RESET } from "../../../../redux/types/publikasi/berita.type";
 
 const Berita = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, berita } = useSelector(state => state.allBerita)
-    // const { error: deleteError, isDeleted } = useSelector(state => state.deleteBerita)
+    const { 
+        loading: allLoading,
+        error, 
+        berita 
+    } = useSelector(state => state.allBerita)
+    const { 
+        loading: deleteLoading, 
+        error: deleteError, 
+        isDeleted 
+    } = useSelector(state => state.deleteBerita)
+
+    const [search, setSearch] = useState("");
+    const [limit, setLimit] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [publishValue, setPublishValue] = useState(null)
 
-
-    let { page = 1 } = router.query
-    page = Number(page)
+    let loading = false;
+    let { page = 1, keyword, success } = router.query;
+    if (allLoading) {
+        loading = allLoading;
+    } else if (deleteLoading) {
+        loading = deleteLoading;
+    }
+    page = Number(page);
 
     useEffect(() => {
+        // if (limit) {
+        // router.push(`${router.pathname}?page=1&limit=${limit}`);
+        // }
 
-        dispatch(getAllBerita())
+        if (isDeleted) {
+        Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+            (result) => {
+            if (result.isConfirmed) {
+                window.location.reload();
+            }
+            }
+        );
+        dispatch({
+            type: DELETE_BERITA_RESET,
+            });
+        }
+      
+    }, [isDeleted, dispatch, ]);
 
-    }, [dispatch])
+    const onNewReset = () => {
+        router.replace("/publikasi/berita", undefined, { shallow: true });
+    };
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -50,15 +89,116 @@ const Berita = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 dispatch(deleteBerita(id))
-                // Swal.fire(
-                //     'Berhasil ',
-                //     'Data berhasil dihapus.',
-                //     'success'
-                // )
-                // dispatch(getAllBerita())
             }
         })
     }
+
+    const handlePagination = (pageNumber) => {
+        if (limit !== null  && search === "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+    
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else {
+            router.push(`${router.pathname}?page=${pageNumber}`)
+        }
+    }
+
+    const handleSearch = () => {
+        if (limit != null && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit !== null && startDate !== null && endDate !== null ) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${search}`)
+        }
+    
+    };
+
+    const handleSearchDate = () => {
+        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+        } else {
+            if (limit !== null && search === null) {
+                router.push(
+                    `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                );
+    
+            } else if (limit !== null && search !== null) {
+              `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+    
+            } else {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+                ); 
+            }
+        }
+      };
+
+      const handleLimit = (val) => {
+        setLimit(val)
+        if (search === "") {
+            router.push(`${router.pathname}?page=1&limit=${val}`);
+        
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        }
+        
+      };
+    
+      const handlePublish = (val) => {
+        if (val !== null || val !== "") {
+          setPublishValue (val)
+    
+          if ( startDate === null && endDate === null && limit === null && search === null){
+            router.push(`${router.pathname}?publish=${val}`);
+      
+          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+      
+          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+          
+          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+      
+          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+      
+          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+          
+          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+          
+          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+          }
+        }
+        
+      }
 
     return (
         <PageWrapper>
@@ -74,13 +214,75 @@ const Berita = () => {
                 </div>
                 : ''
             }
+            {success ? (
+                <div
+                    className="alert alert-custom alert-light-success fade show mb-5"
+                    role="alert"
+                >
+                    <div className="alert-icon">
+                        <i className="flaticon2-checkmark"></i>
+                    </div>
+                    <div className="alert-text">Berhasil Menambah Data</div>
+                    <div className="alert-close">
+                        <button
+                            type="button"
+                            className="close"
+                            data-dismiss="alert"
+                            aria-label="Close"
+                            onClick={onNewReset}
+                            >
+                            <span aria-hidden="true">
+                                <i className="ki ki-close"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                ""
+            )}
 
             <div className="col-lg-12 col-md-12">
                 <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Berita' title='Total Publish' />
-                    <CardPage background='bg-light-warning' icon='garis-yellow.svg' color='#634100' value='64' titleValue='Berita' title='Total Author' />
-                    <CardPage background='bg-light-success' icon='orang-tambah-green.svg' color='#74BBB7' value='64' titleValue='K' title='Total Yang Baca' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Berita' title='Total Unpublish' />
+                    <CardPage 
+                        background='bg-light-info' 
+                        icon='mail-purple.svg' 
+                        color='#8A50FC' 
+                        value={berita && berita.publish != "" ? berita.publish : 0}
+                        titleValue='Berita' 
+                        title='Total Publish'
+                        publishedVal = "1"
+                        routePublish = { () => handlePublish("1")}
+                        />
+                    <CardPage 
+                        background='bg-light-warning' 
+                        icon='garis-yellow.svg' 
+                        color='#634100' 
+                        value='64' 
+                        titleValue='Berita' 
+                        title='Total Author'
+                        publishedVal = ""
+                        routePublish = { () => handlePublish("")} 
+                        />
+                    <CardPage 
+                        background='bg-light-success' 
+                        icon='orang-tambah-green.svg' 
+                        color='#74BBB7' 
+                        value={berita && berita.total_views != "" ? berita.total_views : 0} 
+                        titleValue='Orang' 
+                        title='Total Yang Baca' 
+                        publishedVal = ""
+                        routePublish = { () => handlePublish("")}
+                        />
+                    <CardPage 
+                        background='bg-light-danger' 
+                        icon='kotak-kotak-red.svg' 
+                        color='#F65464' 
+                        value={berita && berita.unpublish != "" ? berita.unpublish : 0} 
+                        titleValue='Berita' 
+                        title='Total Belum Publish'
+                        publishedVal = "0"
+                        routePublish = { () => handlePublish("0")} 
+                        />
                 </div>
             </div>
 
@@ -88,7 +290,7 @@ const Berita = () => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen Berita</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Manajemen Berita</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/berita/tambah'>
                                 <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
@@ -102,13 +304,23 @@ const Berita = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-12 col-xl-12">
+                                <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
-                                        <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" />
+                                        <input
+                                        style={{ background: "#F3F6F9", border: "none" }}
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Search..."
+                                        id="kt_datatable_search_query"
+                                        onChange={e => setSearch(e.target.value)}
+                                        />
                                         <span>
-                                            <i className="flaticon2-search-1 text-muted"></i>
+                                        <i className="flaticon2-search-1 text-muted"></i>
                                         </span>
                                     </div>
+                                </div>
+                                <div className="col-lg-2 col-xl-2">
+                                    <button type="button" className='btn btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
                                 </div>
                             </div>
                             <div className="row align-items-right">
@@ -144,11 +356,16 @@ const Berita = () => {
                                     </small>
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block">Cari</a>
+                                <button
+                                    type='button'
+                                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
+                                    onClick={handleSearchDate}
+                                >
+                                    Cari
+                                </button>
                                 </div>
                             </div>
                         </div>
-
                         <div className="table-page mt-5">
                             <div className="table-responsive">
 
@@ -158,10 +375,11 @@ const Berita = () => {
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
+                                                <th className="text-center">No</th>
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
-                                                <th>Tanggal Membuat</th>
+                                                <th>Tanggal Publish</th>
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
@@ -172,8 +390,21 @@ const Berita = () => {
                                             {
                                                 !berita || berita && berita.berita.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    berita && berita.berita.map((row) => {
+                                                    berita && berita.berita.map((row, i) => {
                                                         return <tr key={row.id}>
+                                                            <td className='align-middle text-center'>
+                                                                {
+                                                                    limit === null ?
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                                                    </span>
+                                                                    :
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * limit) - (limit - 1)}
+                                                                    </span>
+                                                                }
+                                                                
+                                                            </td>
                                                             <td className='text-center'>
                                                                 <Image
                                                                     alt={row.judul_berita}
@@ -183,33 +414,51 @@ const Berita = () => {
                                                                     height={50}
                                                                 />
                                                             </td>
-                                                            <td className='align-middle'>{row.jenis_kategori}</td>
+                                                            
+                                                            <td className='align-middle'>{row.kategori}</td>
                                                             <td className='align-middle'>{row.judul_berita}</td>
-                                                            <td className='align-middle'>{new Date(row.created_at).toLocaleDateString("fr-CA")}</td>
-                                                            <td className='align-middle'>{row.users_id}</td>
+                                                            <td className='align-middle'>
+                                                                {
+                                                                    row.publish === 1 ? (
+                                                                    row.tanggal_publish
+                                                                    ) : (
+                                                                    <span className="label label-inline label-light-danger font-weight-bold">
+                                                                        Belum dipublish
+                                                                    </span>
+                                                                    )
+                                                                }
+                                                            </td>
+                                                            <td className='align-middle'>
+                                                                {/* {row.dibuat} */}
+                                                                Super Admin
+                                                            </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
-                                                                    <span class="label label-inline label-light-success font-weight-bold">
+                                                                    <span className="label label-inline label-light-success font-weight-bold">
                                                                         Publish
                                                                     </span>
                                                                     :
-                                                                    <span class="label label-inline label-light-warning font-weight-bold">
+                                                                    <span className="label label-inline label-light-warning font-weight-bold">
                                                                         Unpublish
                                                                     </span>
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>Admin Publikasi</td>
+                                                            <td className='align-middle'>Super Admin</td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/berita/${row.id}`}/>
+                                                                <ButtonNewTab icon='setting.svg' link={`/publikasi/berita/preview/${row.id}`} title="Preview"/>
+                                                                <ButtonAction icon='write.svg' link={`/publikasi/berita/${row.id}`} title="Edit"/>
                                                                 <button 
                                                                     onClick={() => handleDelete(row.id)} 
                                                                     className='btn mr-1' 
                                                                     style={{ 
                                                                         background: '#F3F6F9', 
                                                                         borderRadius: '6px' 
-                                                                    }}>
+                                                                    }}
+                                                                    data-toggle="tooltip" 
+                                                                    data-placement="bottom" 
+                                                                    title="Hapus"
+                                                                    >
                                                                     <Image 
                                                                         alt='button-action' 
                                                                         src={`/assets/icon/trash.svg`} 
@@ -235,7 +484,7 @@ const Berita = () => {
                                             itemsCountPerPage={berita.perPage}
                                             totalItemsCount={berita.total}
                                             pageRangeDisplayed={3}
-                                            // onChange={handlePagination}
+                                            onChange={handlePagination}
                                             nextPageText={'>'}
                                             prevPageText={'<'}
                                             firstPageText={'<<'}
@@ -245,24 +494,37 @@ const Berita = () => {
                                         />
                                     </div>
                                 }
-                                {berita && berita.total > 5 ?
+                                {berita  ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
-                                                <select className="form-control" id="exampleFormControlSelect2" style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}>
-                                                    <option>5</option>
-                                                    <option>10</option>
-                                                    <option>30</option>
-                                                    <option>40</option>
-                                                    <option>50</option>
+                                                <select 
+                                                    className="form-control" 
+                                                    id="exampleFormControlSelect2" 
+                                                    style={{ 
+                                                        width: '65px', 
+                                                        background: '#F3F6F9', 
+                                                        borderColor: '#F3F6F9', 
+                                                        color: '#9E9E9E' 
+                                                    }}
+                                                    onChange={e => handleLimit(e.target.value)}
+                                                    onBlur={e => handleLimit(e.target.value)}
+                                                    >
+                                                    <option value='5' selected={limit == "5" ? true: false}>5</option>
+                                                    <option value='10' selected={limit == "10" ? true: false}>10</option>
+                                                    <option value='15' selected={limit == "15" ? true: false}>15</option>
+                                                    <option value='20' selected={limit == "20" ? true: false}>20</option>
+                                                    {/* <option value='50' selected={limit == "50" ? true: false}>50</option> */}
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data 120</p>
+                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {berita.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''
                                 }
+                                
+                                
                             </div>
                         </div>
                     </div>

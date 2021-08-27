@@ -35,6 +35,7 @@ function Selesai() {
                     src="/assets/media/selesai.svg"
                     height={300}
                     width={400}
+                    alt="selesai"
                   />
                 </div>
                 <div className="col-md mt-5">

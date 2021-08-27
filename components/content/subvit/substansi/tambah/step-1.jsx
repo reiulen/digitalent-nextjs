@@ -24,6 +24,12 @@ const StepOne = () => {
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState('lanjut')
 
+  const [academy_id, setAcademyId] = useState("");
+  const [theme_id, setThemeId] = useState("");
+  const [training_id, setTrainingId] = useState("");
+  const [category, setCategory] = useState("");
+  const [metode, setMetode] = useState('entry')
+
   useEffect(() => {
     // if (error) {
     //     dispatch(clearErrors())
@@ -34,7 +40,7 @@ const StepOne = () => {
       if (typeSave === 'lanjut') {
         router.push({
           pathname: `/subvit/substansi/tambah-step-2-${metode}`,
-          query: { id }
+          query: { id, metode }
         })
       } else if (typeSave === 'draft') {
         router.push({
@@ -44,13 +50,8 @@ const StepOne = () => {
       }
     }
 
-  }, [dispatch, error, success, typeSave]);
+  }, [dispatch, error, success, typeSave, metode, subtance, router]);
 
-  const [academy_id, setAcademyId] = useState("");
-  const [theme_id, setThemeId] = useState("");
-  const [training_id, setTrainingId] = useState("");
-  const [category, setCategory] = useState("");
-  const [metode, setMetode] = useState('entry')
 
   const saveDraft = () => {
     setTypeSave('draft')

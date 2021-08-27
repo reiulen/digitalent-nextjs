@@ -5,7 +5,9 @@ import Link from 'next/link'
 const convertBreadcrumb = string => {
     return string
         .charAt(0)
-        .toUpperCase() + string.slice(1);
+        .toUpperCase() + string.slice(1)
+            .concat('/')
+            .split('?')[0]
 };
 
 const SubHeader = () => {
@@ -41,7 +43,7 @@ const SubHeader = () => {
                                 <Link href={breadcrumb.href} key={i}>
                                     <a>
                                         <p className="text-default mt-2 mb-2 font-weight-bold">
-                                            {convertBreadcrumb(breadcrumb.breadcrumb)} /
+                                            {convertBreadcrumb(breadcrumb.breadcrumb)}
                                         </p>
                                     </a>
                                 </Link>

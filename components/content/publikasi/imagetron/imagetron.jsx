@@ -5,39 +5,175 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 
 import Pagination from 'react-js-pagination';
-import { css } from '@emotion/react'
-import BeatLoader from 'react-spinners/BeatLoader'
+// import { css } from '@emotion/react'
+// import BeatLoader from 'react-spinners/BeatLoader'
 import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
+import Swal from "sweetalert2";
+import moment from "moment";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import ButtonAction from '../../../ButtonAction'
+import LoadingTable from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
+import {
+    deleteImagetron,
+    clearErrors,
+  } from "../../../../redux/actions/publikasi/imagetron.actions";
+  
+  import { DELETE_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron.type";
+// import { getAllImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
 
 const Imagetron = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, imagetron } = useSelector(state => state.allImagetron)
+    const {
+        loading: allLoading,
+        error,
+        imagetron,
+      } = useSelector((state) => state.allImagetron);
+
+      const {
+        loading: deleteLoading,
+        error: deleteError,
+        isDeleted,
+      } = useSelector((state) => state.deleteImagetron);
+    
+    const [search, setSearch] = useState("");
+    const [limit, setLimit] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [publishValue, setPublishValue] = useState(null)
 
-    let { page = 1 } = router.query
-    page = Number(page)
+    let loading = false;
+    let { page = 1, keyword, success } = router.query;
+    if (allLoading) {
+        loading = allLoading;
+    } else if (deleteLoading) {
+        loading = deleteLoading;
+    }
+    page = Number(page);
+
+    // useEffect(() => {
+
+    //     dispatch(getAllImagetron())
+
+    // }, [dispatch])
 
     useEffect(() => {
+        // if (limit) {
+        //     router.push(`${router.pathname}?page=1&limit=${limit}`);
+        // }
+        if (isDeleted) {
+            Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+            (result) => {
+                if (result.isConfirmed) {
+                window.location.reload();
+                }
+            }
+            );
+            dispatch({
+            type: DELETE_IMAGETRON_RESET,
+            });
+        }
 
-        dispatch(getAllImagetron())
+    }, [isDeleted, dispatch]);
 
-    }, [dispatch])
+    // const override = css`
+    //     margin: 0 auto;
+    // `;
 
-    const override = css`
-        margin: 0 auto;
-    `;
+    const onNewReset = () => {
+        router.replace("/publikasi/imagetron", undefined, { shallow: true });
+    };
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: "Apakah anda yakin ?",
+            text: "Data ini tidak bisa dikembalikan !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya !",
+            cancelButtonText: "Batal",
+        }).then((result) => {
+            if (result.isConfirmed) {
+            dispatch(deleteImagetron(id));
+            }
+        });
+    };
+
+    const handlePagination = (pageNumber) => {
+        if (limit != null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
+        } else {
+            router.push(`${router.pathname}?page=${pageNumber}`);
+        }
+    };
+
+    const handleSearch = () => {
+        if (limit != null) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${search}`);
+        }
+    };
+
+    const handleSearchDate = () => {
+        router.push(
+            `${router.pathname}?page=1&startdate=${moment(startDate).format(
+            "YYYY-MM-DD"
+            )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+        );
+    };
+
+    const handleLimit = (val) => {
+        setLimit(val)
+        if (search === "") {
+            router.push(`${router.pathname}?page=1&limit=${val}`);
+        
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        }
+        
+    };
+    
+    const handlePublish = (val) => {
+        if (val !== null || val !== "") {
+          setPublishValue (val)
+    
+          if ( startDate === null && endDate === null && limit === null && search === null){
+            router.push(`${router.pathname}?publish=${val}`);
+      
+          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+      
+          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+          
+          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+      
+          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+      
+          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+          
+          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+          
+          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+          }
+        }
+        
+    }
 
     return (
         <PageWrapper>
@@ -53,24 +189,82 @@ const Imagetron = () => {
                 </div>
                 : ''
             }
+            {success ? (
+                <div
+                className="alert alert-custom alert-light-success fade show mb-5"
+                role="alert"
+                >
+                <div className="alert-icon">
+                    <i className="flaticon2-checkmark"></i>
+                </div>
+                <div className="alert-text">Berhasil Menambah Data</div>
+                <div className="alert-close">
+                    <button
+                    type="button"
+                    className="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                    onClick={onNewReset}
+                    >
+                    <span aria-hidden="true">
+                        <i className="ki ki-close"></i>
+                    </span>
+                    </button>
+                </div>
+                </div>
+            ) : (
+                ""
+            )}
 
             <div className="col-lg-12 col-md-12">
                 <div className="row">
-                    <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Imagetron' title='Total Publish' />
-                    <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Imagetron' title='Total Unpublish' />
-                    <CardPage background='bg-light-success' icon='orang-tambah-green.svg' color='#74BBB7' value='64' titleValue='K' title='Total Konten Author' />
+                    <CardPage 
+                        background='bg-light-info' 
+                        icon='mail-purple.svg' 
+                        color='#8A50FC' 
+                        value={imagetron.data && imagetron.data.publish != "" ? imagetron.data.publish : 0} 
+                        titleValue='Imagetron' 
+                        title='Total Publish' 
+                        publishedVal = "1"
+                        routePublish = { () => handlePublish("1")}
+                    />
+                    <CardPage 
+                        background='bg-light-success' 
+                        icon='orang-tambah-green.svg' 
+                        color='#74BBB7' 
+                        value='64' 
+                        titleValue='K' 
+                        title='Total Konten Author' 
+                        publishedVal = ""
+                        routePublish = { () => handlePublish("")}
+                    />
+                    <CardPage 
+                        background='bg-light-danger' 
+                        icon='kotak-kotak-red.svg' 
+                        color='#F65464' 
+                        value={imagetron.data && imagetron.data.unpublish != "" ? imagetron.data.unpublish : 0} 
+                        titleValue='Imagetron' 
+                        title='Total Unpublish' 
+                        publishedVal = "0"
+                        routePublish = { () => handlePublish("0")}
+                    />
                 </div>
             </div>
-
+            
+            {
+                console.log (imagetron)
+            }
 
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen Imagetron</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">
+                        Manajemen Imagetron
+                        </h3>
                         <div className="card-toolbar">
-                            <Link href='/publikasi/imagetron/tambah'>
+                            <Link href="/publikasi/imagetron/tambah">
                                 <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
-                                    Tambah Imagetron
+                                Tambah Imagetron
                                 </a>
                             </Link>
                         </div>
@@ -80,13 +274,29 @@ const Imagetron = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-12 col-xl-12">
+                                <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
-                                        <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" />
+                                        <input
+                                        style={{ background: "#F3F6F9", border: "none" }}
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Search..."
+                                        id="kt_datatable_search_query"
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        />
                                         <span>
                                             <i className="flaticon2-search-1 text-muted"></i>
                                         </span>
-                                    </div>
+                                    </div>  
+                                </div>
+                                <div className="col-lg-2 col-xl-2">
+                                    <button
+                                        type="button"
+                                        className="btn btn-light-primary btn-block"
+                                        onClick={handleSearch}
+                                    >
+                                        Cari
+                                    </button>
                                 </div>
                             </div>
                             <div className="row align-items-right">
@@ -122,7 +332,13 @@ const Imagetron = () => {
                                     </small>
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block">Cari</a>
+                                    <button
+                                        type="button"
+                                        className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
+                                        onClick={handleSearchDate}
+                                    >
+                                        Cari
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -130,14 +346,17 @@ const Imagetron = () => {
                         <div className="table-page mt-5">
                             <div className="table-responsive">
 
-                                <div className="loading text-center justify-content-center">
+                                {/* <div className="loading text-center justify-content-center">
                                     <BeatLoader color='#3699FF' loading={loading} css={override} size={10} />
-                                </div>
+                                </div> */}
+
+                                <LoadingTable loading={loading} />
 
                                 {loading === false ?
                                     <table className='table table-separate table-head-custom table-checkable'>
                                         <thead style={{ background: '#F3F6F9' }}>
                                             <tr>
+                                                <th className="text-center">No</th>
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
@@ -145,28 +364,84 @@ const Imagetron = () => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
+                                        {
+                                            console.log (imagetron)
+                                        }
                                         <tbody>
                                             {
-                                                !imagetron || imagetron && imagetron.imagetron.length === 0 ?
+                                                !imagetron || imagetron && imagetron.data.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    imagetron && imagetron.imagetron.map((row) => {
+                                                    imagetron && imagetron.data.imagetron.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='text-center'>
-                                                                <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} />
+                                                            <td className="align-middle text-center">
+                                                                <span className="badge badge-secondary text-muted">
+                                                                {i + 1 * (page * 5 || limit) - 4}
+                                                                </span>
                                                             </td>
-                                                            <td className='align-middle'>{row.kategori_id}</td>
+                                                            <Image
+                                                                alt={row.judul}
+                                                                unoptimized={
+                                                                    process.env.ENVIRONMENT !== "PRODUCTION"
+                                                                }
+                                                                src={
+                                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                    "publikasi/images/" +
+                                                                    row.gambar
+                                                                }
+                                                                width={80}
+                                                                height={50}
+                                                            />
+                                                                {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
+                                                            </td>
+                                                            <td className='align-middle'>{row.jenis_kategori}</td>
                                                             <td className='align-middle'>{row.judul}</td>
-                                                            <td className='align-middle'>{row.created_at}</td>
-                                                            <td className='align-middle'>{row.users_id}</td>
-                                                            <td className='align-middle'>{row.publish}</td>
+                                                            <td className="align-middle">
+                                                                {row.publish === 1 ? (
+                                                                row.tanggal_publish
+                                                                ) : (
+                                                                <span className="label label-inline label-light-danger font-weight-bold">
+                                                                    Belum dipublish
+                                                                </span>
+                                                                )}
+                                                            </td>
+                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            <td className="align-middle">
+                                                                {row.publish === 1 ? (
+                                                                <span className="label label-inline label-light-success font-weight-bold">
+                                                                    Publish
+                                                                </span>
+                                                                ) : (
+                                                                <span className="label label-inline label-light-warning font-weight-bold">
+                                                                    Belum dipublish
+                                                                </span>
+                                                                )}
+                                                            </td>
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='setting.svg' />
-                                                                <ButtonAction icon='write.svg' />
-                                                                <ButtonAction icon='trash.svg' />
+                                                                {/* <ButtonAction icon='setting.svg' /> */}
+                                                                <ButtonAction icon='write.svg' link={`/publikasi/imagetron/${row.id}`} title="Edit"/>
+                                                                <button
+                                                                    onClick={() => handleDelete(row.id)}
+                                                                    className="btn mr-1"
+                                                                    style={{
+                                                                        background: "#F3F6F9",
+                                                                        borderRadius: "6px",
+                                                                    }}
+                                                                    data-toggle="tooltip" 
+                                                                    data-placement="bottom" 
+                                                                    title="Hapus"
+                                                                    >
+                                                                    <Image
+                                                                        alt="button-action"
+                                                                        src={`/assets/icon/trash.svg`}
+                                                                        width={18}
+                                                                        height={18}
+                                                                    />
+                                                                </button>
                                                             </td>
                                                         </tr>
 
@@ -185,7 +460,7 @@ const Imagetron = () => {
                                             itemsCountPerPage={imagetron.perPage}
                                             totalItemsCount={imagetron.total}
                                             pageRangeDisplayed={3}
-                                            // onChange={handlePagination}
+                                            onChange={handlePagination}
                                             nextPageText={'>'}
                                             prevPageText={'<'}
                                             firstPageText={'<<'}
@@ -199,16 +474,26 @@ const Imagetron = () => {
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
-                                                <select className="form-control" id="exampleFormControlSelect2" style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}>
-                                                    <option>5</option>
-                                                    <option>10</option>
-                                                    <option>30</option>
-                                                    <option>40</option>
-                                                    <option>50</option>
+                                                <select
+                                                className="form-control"
+                                                id="exampleFormControlSelect2"
+                                                style={{
+                                                    width: "65px",
+                                                    background: "#F3F6F9",
+                                                    borderColor: "#F3F6F9",
+                                                    color: "#9E9E9E",
+                                                }}
+                                                onChange={(e) => handleLimit(e.target.value)}
+                                                onBlur={(e) => handleLimit(e.target.value)}
+                                                >
+                                                    <option value='5' selected={limit == "5" ? true: false}>5</option>
+                                                    <option value='10' selected={limit == "10" ? true: false}>10</option>
+                                                    <option value='15' selected={limit == "15" ? true: false}>15</option>
+                                                    <option value='20' selected={limit == "20" ? true: false}>20</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data 120</p>
+                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {imagetron.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''

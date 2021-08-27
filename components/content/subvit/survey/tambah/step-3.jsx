@@ -1,25 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-import Link from "next/link";
-import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import DatePicker from "react-datepicker";
+import SimpleReactValidator from 'simple-react-validator'
+import Swal from "sweetalert2"
+import moment from 'moment'
+
 import {
-  newArtikel,
+  updateSurveyQuestionBanksPublish,
   clearErrors,
-} from "/redux/actions/publikasi/artikel.actions";
-import { NEW_ARTIKEL_RESET } from "/redux/types/publikasi/artikel.type";
+} from '../../../../../redux/actions/subvit/survey-question.actions'
+import { UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET } from '../../../../../redux/types/subvit/survey-question.type'
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
+import LoadingPage from "../../../../LoadingPage";
 
 const StepThree = () => {
   const dispatch = useDispatch();
-  const importSwitch = () => import("bootstrap-switch-button-react");
-  const SwitchButton = dynamic(importSwitch, {
-    ssr: false,
-  });
+  const router = useRouter();
 
-  const { loading, error, success } = useSelector((state) => state.newArtikel);
+  let { id } = router.query;
+  const { loading, error, success } = useSelector((state) => state.
+    updateSurveyQuestionBanksPublish);
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
 
   useEffect(() => {
     // if (error) {
@@ -28,15 +33,84 @@ const StepThree = () => {
 
     if (success) {
       dispatch({
-        type: NEW_ARTIKEL_RESET,
+        type: UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET,
+      });
+      router.push({
+        pathname: `/subvit/survey`,
+        query: { success: true },
       });
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, success, router]);
 
-  const [role, setRole] = useState("");
+  const [, forceUpdate] = useState();
+
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [duration, setDuration] = useState(null)
+  const [jumlah_soal, setJumlahSoal] = useState(null)
+  const [status, setStatus] = useState('')
+
+  const saveDraft = () => {
+    if (simpleValidator.current.allValid()) {
+
+      const start_at = moment(startDate).format('YYYY-MM-DD')
+      const end_at = moment(endDate).format('YYYY-MM-DD')
+
+      const data = {
+        _method: 'put',
+        start_at,
+        end_at,
+        duration,
+        status: false,
+        questions_to_share: jumlah_soal,
+      }
+
+      dispatch(updateSurveyQuestionBanksPublish(data, id))
+
+    } else {
+      simpleValidator.current.showMessages()
+      forceUpdate(1)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi data dengan benar !'
+      })
+    }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if (error) {
+      dispatch(clearErrors())
+    }
+
+    if (simpleValidator.current.allValid()) {
+
+      const start_at = moment(startDate).format('YYYY-MM-DD')
+      const end_at = moment(endDate).format('YYYY-MM-DD')
+
+      const data = {
+        _method: 'put',
+        start_at,
+        end_at,
+        duration,
+        status: true,
+        questions_to_share: jumlah_soal,
+      }
+
+      dispatch(updateSurveyQuestionBanksPublish(data, id))
+
+    } else {
+      simpleValidator.current.showMessages()
+      forceUpdate(1)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi data dengan benar !'
+      })
+    }
+
   };
 
   return (
@@ -66,7 +140,12 @@ const StepThree = () => {
       ) : (
         ""
       )}
-      <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+      <div className="col-lg-12 order-1 order-xxl-2 px-0">
+        {
+          loading ?
+            <LoadingPage loading={loading} />
+            : ''
+        }
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="3"></StepInput>
           <div className="card-header border-0">
@@ -77,44 +156,62 @@ const StepThree = () => {
           <div className="card-body">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-6 col-md-2">
                   <span>Pelaksanaan dari</span>
-                  <input
-                    name="start_at"
-                    type="date"
+                  <DatePicker
                     className="form-control"
-                    onChange={(e) => setRole(e.target.value)}
+                    name='start_date'
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    onBlur={() => simpleValidator.current.showMessageFor('tanggal mulai')}
+                    selectsStart
+                    startDate={startDate}
+                    endDate={endDate}
+                    dateFormat="dd/MM/yyyy"
+                    autoComplete="off"
                   />
                   <small className="text-muted">
                     Silahkan Pilih Tanggal Dari
                   </small>
+                  {simpleValidator.current.message('tanggal mulai', startDate, 'required', { className: 'text-danger' })}
                 </div>
 
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-6 col-md-2">
                   <span>Sampai</span>
-                  <input
-                    name="end_at"
-                    type="date"
+                  <DatePicker
                     className="form-control"
-                    onChange={(e) => setRole(e.target.value)}
+                    selected={endDate}
+                    onChange={(date) => setEndDate(date)}
+                    onBlur={() => simpleValidator.current.showMessageFor('tanggal sampai')}
+                    selectsEnd
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={startDate}
+                    dateFormat="dd/MM/yyyy"
+                    autoComplete="off"
                   />
                   <small className="text-muted">
                     Silahkan Pilih Tanggal Sampai
                   </small>
+                  {simpleValidator.current.message('tanggal sampai', endDate, 'required', { className: 'text-danger' })}
                 </div>
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-6 col-md-2">
+                <div className="col-sm-6 col-md-3">
                   <span>Jumlah Soal</span>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
-                      type="text"
-                      class="form-control"
+                      type="number"
+                      className="form-control"
                       aria-describedby="basic-addon2"
+                      value={jumlah_soal}
+                      onChange={e => setJumlahSoal(e.target.value)}
+                      onBlur={() => simpleValidator.current.showMessageFor('jumlah soal')}
+                      min={1}
                     />
-                    <div class="input-group-append">
-                      <span class="input-group-text" id="basic-addon2">
+                    <div className="input-group-append">
+                      <span className="input-group-text" id="basic-addon2">
                         Soal
                       </span>
                     </div>
@@ -122,20 +219,25 @@ const StepThree = () => {
                   <small className="text-muted">
                     Silahkan Input Jumlah Soal
                   </small>
+                  {simpleValidator.current.message('jumlah soal', jumlah_soal, 'required', { className: 'text-danger' })}
                 </div>
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-6 col-md-2">
+                <div className="col-sm-6 col-md-3">
                   <span>Durasi Test</span>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
-                      type="text"
-                      class="form-control"
+                      type="number"
+                      className="form-control"
                       aria-describedby="basic-addon2"
+                      value={duration}
+                      onChange={e => setDuration(e.target.value)}
+                      onBlur={() => simpleValidator.current.showMessageFor('durasi')}
+                      min={1}
                     />
-                    <div class="input-group-append">
-                      <span class="input-group-text" id="basic-addon2">
+                    <div className="input-group-append bg-sedondary">
+                      <span className="input-group-text" id="basic-addon2">
                         Menit
                       </span>
                     </div>
@@ -143,27 +245,7 @@ const StepThree = () => {
                   <small className="text-muted">
                     Silahkan Input Durasi Test
                   </small>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <div className="col-sm-6 col-md-2">
-                  <span>Passing Grade</span>
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      aria-describedby="basic-addon2"
-                    />
-                    <div class="input-group-append">
-                      <span class="input-group-text" id="basic-addon2">
-                        Nilai
-                      </span>
-                    </div>
-                  </div>
-                  <small className="text-muted">
-                    Silahkan Input Passing Grade
-                  </small>
+                  {simpleValidator.current.message('durasi', duration, 'required', { className: 'text-danger' })}
                 </div>
               </div>
 
@@ -171,29 +253,37 @@ const StepThree = () => {
                 <div className="col-sm-12 col-md-8">
                   <span>Status</span>
                   <select
-                    name="training_id"
+                    name="status"
                     id=""
-                    onChange={(e) => setRole(e.target.value)}
                     className="form-control"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    onBlur={e => { setStatus(e.target.value); simpleValidator.current.showMessageFor('status') }}
                   >
-                    <option value="1"> Publish </option>
-                    <option value="1"> Draft </option>
+                    <option value="" selected disabled>-- PILIH STATUS --</option>
+                    <option value={true}> Publish </option>
+                    <option value={false}> Draft </option>
                   </select>
                   <span className="text-muted">
                     Silahkan Pilih Status Publish
                   </span>
+                  {simpleValidator.current.message('status', status, 'required', { className: 'text-danger' })}
                 </div>
               </div>
 
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <Link href='/subvit/survey/'>
-                    <a className="btn btn-light-primary btn-sm mr-2">
-                      Simpan & Lanjut
-                    </a>
-                  </Link>
-                  <button className="btn btn-primary btn-sm">
+                  <button
+                    className="btn btn-light-primary btn-sm mr-2"
+                  >
+                    Simpan & Lanjut
+                  </button>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={saveDraft}
+                    type='button'
+                  >
                     Simpan Draft
                   </button>
                 </div>

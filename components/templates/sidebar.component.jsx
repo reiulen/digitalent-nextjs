@@ -12,6 +12,7 @@ const Sidebar = () => {
   const [menuItem5, setMenuItem5] = useState("");
   const [menuItem6, setMenuItem6] = useState("");
   const [menuItem7, setMenuItem7] = useState("");
+  const [menuItem8, setMenuItem8] = useState("");
   const [menuItemS, setMenuItemS] = useState("");
 
   const onSetMenuItem1 = () => {
@@ -67,6 +68,14 @@ const Sidebar = () => {
       setMenuItem7("");
     } else {
       setMenuItem7("menu-item-open");
+    }
+  };
+
+  const onSetMenuItem8 = () => {
+    if (menuItem8 !== "") {
+      setMenuItem8("");
+    } else {
+      setMenuItem8("menu-item-open");
     }
   };
 
@@ -467,14 +476,14 @@ const Sidebar = () => {
                     <li className="menu-item" aria-haspopup="true">
                       <Link href="/partnership/manajemen-kerjasama">
                         <a className="menu-link">
-                          <span className="menu-text">Manajemen Kerjasama</span>
+                          <span className="menu-text">Kerjasama</span>
                         </a>
                       </Link>
                     </li>
                     <li className="menu-item" aria-haspopup="true">
                       <Link href="/partnership/manajemen-mitra">
                         <a className="menu-link">
-                          <span className="menu-text">Manajemen Mitra</span>
+                          <span className="menu-text">Master Mitra</span>
                         </a>
                       </Link>
                     </li>
@@ -490,7 +499,7 @@ const Sidebar = () => {
                     <li className="menu-item" aria-haspopup="true">
                       <Link href="/partnership/tanda-tangan">
                         <a className="menu-link">
-                          <span className="menu-text">Tanda Tangan</span>
+                          <span className="menu-text">Tanda Tangan Digital</span>
                         </a>
                       </Link>
                     </li>
@@ -631,6 +640,60 @@ const Sidebar = () => {
                   </ul>
                 </div>
               </li>
+
+              {/* <li
+                className={`menu-item menu-item-submenu ${menuItem8}`}
+                onClick={onSetMenuItem8}
+                aria-haspopup="true"
+                data-menu-toggle="hover"
+              >
+                <a href="javascript:;" className="menu-link menu-toggle">
+                  <span className="svg-icon menu-icon">
+                    <Image
+                      alt="icon-sidebar-perisai"
+                      src="/assets/icon/perisai.svg"
+                      width={24}
+                      height={24}
+                    />
+                  </span>
+                  <span className="menu-text">User</span>
+                  <i className="menu-arrow"></i>
+                </a>
+                <div className="menu-submenu">
+                  <i className="menu-arrow"></i>
+                  <ul className="menu-subnav">
+                    <li
+                      className="menu-item menu-item-parent"
+                      aria-haspopup="true"
+                    >
+                      <span className="menu-link">
+                        <span className="menu-text">User</span>
+                      </span>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/user/">
+                        <a className="menu-link">
+                          <span className="menu-text">Manajemen Kerjasama</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <a className="menu-link">
+                        <span className="menu-text">Profil Lembaga</span>
+                      </a>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/user/tanda-tangan">
+                        <a className="menu-link">
+                          <span className="menu-text">
+                            Tanda Tangan Digital
+                          </span>
+                        </a>
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              </li> */}
             </ul>
             {/* <!--end::Menu Nav--> */}
           </div>

@@ -213,7 +213,7 @@ const DetailRevisiKerjasama = () => {
                       Kembali
                     </a>
                   </Link>
-                  <Link href="/partnership/manajemen-kerjasama/review-kerjasama">
+                  <Link href="/partnership/manajemen-kerjasama/review-kerjasama" passHref>
                     <button className="btn btn-primary btn-sm">Submit</button>
                   </Link>
                 </div>

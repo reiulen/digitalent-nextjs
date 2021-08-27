@@ -18,8 +18,8 @@ a {
 /* Pagination */
 
 .page-item {
-  width: 36px;
-  height: 36px;
+  width: 45px;
+  height: 45px;
   margin-right: 10px;
   text-align: center;
 }
@@ -90,12 +90,17 @@ a {
   border: #f3f6f9 !important;
 }
 
-.custom-file-label:after{
-  background: #D6D6E0;
+.custom-file-label:after {
+  background: #d6d6e0;
 }
 
 .bg-accent-info {
   background-color: #f4e1f0;
+}
+
+.input-group-text{
+  background: #D6D6E0;
+  color:#80808F;
 }
 
 @media only screen and (max-width: 768px) {
@@ -109,3 +114,45 @@ a {
 }
 
 /* --------------------------------pembatas-------------- */
+
+.pageNumbers {
+  list-style: none;
+  display: flex;
+}
+
+.pageNumbers li {
+  padding: 10px;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+.pageNumbers li.active {
+  background-color: white;
+  color: black;
+}
+
+.pageNumbers li button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.pageNumbers li button:hover {
+  background-color: white;
+  color: black;
+}
+.pageNumbers li button:focus {
+  outline: none;
+}
+
+.loadmore {
+  padding: 1rem;
+  background-color: transparent;
+
+  color: white;
+  font-size: 1.2rem;
+  border: 1px solid white;
+  cursor: pointer;
+}
+

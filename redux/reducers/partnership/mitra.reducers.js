@@ -1,74 +1,179 @@
 import {
-  // MITRA
   MITRA_REQUEST,
   MITRA_SUCCESS,
   MITRA_FAIL,
-  CLEAR_ERRORS,
-
-  // NEW MITRA
-  NEW_MITRA_REQUEST,
-  NEW_MITRA_SUCCESS,
-  NEW_MITRA_RESET,
-  NEW_MITRA_FAIL,
+  SEARCH_BY_KEY,
+  SUCESS_DELETE_MITRA,
+  SUCESS_PROVINCE,
+  SET_PAGE_M,
+  SET_LIMIT,
+  CANCEL_CHANGE_PROVINCES,
+  MITRA_FAIL_DETAIL,
+  MITRA_REQUEST_DETAIL,
+  MITRA_SUCCESS_DETAIL,
+  SEARCH_BY_KEY_DETAIL,
+  SET_PAGE_M_DETAIL,
+  SET_LIMIT_DETAIL,
+  LIST_COOPERATION_SUCCESS_DETAIL,
+  LIST_STATUS_SUCCESS_DETAIL,
+  SET_VALUE_KERJA_SAMA_M_DETAIL,
+  SET_VALUE_STATUS_M_DETAIL,
 } from "../../types/partnership/mitra.type";
 
-export const allMitraReducer = (state = { mitra: [] }, action) => {
+const statuslist = {
+  idle: "idle",
+  process: "process",
+  success: "success",
+  error: "error",
+};
+
+const initialState = {
+  status: statuslist.idle,
+  status_reload: "",
+  //
+  mitraAll: [],
+  totalDataMitra: 0,
+  mitraSingle: [],
+  //
+  keyword: "",
+  limit: 5,
+  page: 1,
+  card: "",
+  //
+  provinces: [],
+  //
+  mitraDetailAll: [],
+  totalDataDetail: 0,
+  stateListKerjaSama: [],
+  stateListStatus: [],
+  pageDetail: 1,
+  limitDetail: 5,
+  keywordDetail: "",
+  categories_cooporation: "",
+  statusDetail: "",
+};
+
+export const allMitraReducer = (state = initialState, action) => {
   switch (action.type) {
     case MITRA_REQUEST:
       return {
-        loading: true,
+        ...state,
+        status: statuslist.process,
       };
 
     case MITRA_SUCCESS:
       return {
-        loading: false,
-        mitra: action.payload.data,
+        ...state,
+        status: statuslist.success,
+        mitraAll: action.data,
+        totalDataMitra: action.totalData,
       };
 
     case MITRA_FAIL:
       return {
-        loading: false,
+        ...state,
+        status: statuslist.error,
         error: action.payload,
       };
 
-    case CLEAR_ERRORS:
+    case SEARCH_BY_KEY:
       return {
-        error: null,
+        ...state,
+        keyword: action.value,
+        page: 1,
+      };
+    case SEARCH_BY_KEY_DETAIL:
+      return {
+        ...state,
+        keywordDetail: action.value,
+        pageDetail: 1,
       };
 
-    default:
-      return state;
-  }
-};
-
-export const newMitraReducer = (state = { mitra: {} }, action) => {
-  switch (action.type) {
-    case NEW_MITRA_REQUEST:
+    case SUCESS_DELETE_MITRA:
       return {
-        loading: true,
+        ...state,
+        status_reload: state.status_reload === "" ? "reload" : "",
       };
 
-    case NEW_MITRA_SUCCESS:
+    case SUCESS_PROVINCE:
       return {
-        loading: false,
-        success: action.payload.message,
-        mitra: action.payload.data,
+        ...state,
+        provinces: action.data,
       };
 
-    case NEW_MITRA_FAIL:
+    case CANCEL_CHANGE_PROVINCES:
       return {
-        loading: false,
-        error: action.payload,
+        ...state,
+        provinces: [],
       };
 
-    case NEW_MITRA_RESET:
+    case SET_PAGE_M:
       return {
-        success: false,
+        ...state,
+        page: action.page,
+      };
+    case SET_PAGE_M_DETAIL:
+      return {
+        ...state,
+        pageDetail: action.page,
       };
 
-    case CLEAR_ERRORS:
+    case SET_LIMIT:
       return {
-        error: null,
+        ...state,
+        limit: action.value,
+        page: 1,
+        card: "",
+      };
+    case SET_LIMIT_DETAIL:
+      return {
+        ...state,
+        limitDetail: action.value,
+        pageDetail: 1,
+      };
+
+    // =================================== detail mitra
+    case MITRA_REQUEST_DETAIL:
+      return {
+        ...state,
+        status: statuslist.process,
+      };
+
+    case MITRA_SUCCESS_DETAIL:
+      return {
+        ...state,
+        status: statuslist.success,
+        mitraDetailAll: action.data,
+        totalDataDetail: action.totalData,
+      };
+
+    case MITRA_FAIL_DETAIL:
+      return {
+        ...state,
+        status: statuslist.error,
+      };
+
+    case LIST_COOPERATION_SUCCESS_DETAIL:
+      return {
+        ...state,
+        stateListKerjaSama: action.data,
+      };
+    case LIST_STATUS_SUCCESS_DETAIL:
+      return {
+        ...state,
+        stateListStatus: action.data,
+      };
+
+    case SET_VALUE_KERJA_SAMA_M_DETAIL:
+      return {
+        ...state,
+        categories_cooporation: action.value,
+      };
+
+    case SET_VALUE_STATUS_M_DETAIL:
+      return {
+        ...state,
+        statusDetail: action.value,
       };
 
     default:

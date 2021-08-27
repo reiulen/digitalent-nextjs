@@ -10,7 +10,7 @@ import {
 import { UPDATE_SUBTANCE_QUESTION_BANKS_RESET } from '../../../../../redux/types/subvit/subtance.type';
 
 import PageWrapper from "/components/wrapper/page.wrapper";
-import StepInput from "/components/StepInputClone";
+import StepInputPublish from "/components/StepInputPublish";
 import { useRouter } from "next/router";
 
 const StepOne = () => {
@@ -48,7 +48,7 @@ const StepOne = () => {
         });
       }
     }
-  }, [dispatch, error, isUpdated]);
+  }, [dispatch, error, isUpdated, typeSave, router, id]);
 
   // const saveAndContinue = () => {
   //   router.push("/subvit/substansi/edit/step-2");
@@ -113,7 +113,7 @@ const StepOne = () => {
       )}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="1"></StepInput>
+          <StepInputPublish step="1"></StepInputPublish>
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
               Edit Test Substansi

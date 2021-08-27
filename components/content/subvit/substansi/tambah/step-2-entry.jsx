@@ -28,6 +28,7 @@ const StepTwo = () => {
   let { metode, id } = router.query;
   const { loading, error, success } = useSelector((state) => state.newSubtanceQuestionDetail);
   const { loading: allLoading, error: allError, subtance_question_type } = useSelector((state) => state.allSubtanceQuestionType);
+  const { loading: oneLoading, subtance } = useSelector((state) => state.detailSubtanceQuestionBanks)
 
   const [question, setSoal] = useState('')
   const [question_image, setSoalImage] = useState('')
@@ -43,22 +44,25 @@ const StepTwo = () => {
 
   useEffect(() => {
 
-    // dispatch(getAllSubtanceQuestionBanksType())
-
     if (success) {
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_DETAIL_RESET
+      })
       if (typeSave === 'lanjut') {
         router.push({
           pathname: `/subvit/substansi/tambah-step-3`,
           query: { id }
         })
+        console.log(typeSave)
       } else if (typeSave === 'draft') {
+        handleResetForm()
         router.push({
-          pathname: `/subvit/substansi/tambah-step-2`,
-          query: { metode, id }
+          pathname: `/subvit/substansi/tambah-step-2-${metode}`,
+          query: { id, metode }
         });
       }
     }
-  }, [dispatch, error, success, typeSave]);
+  }, [dispatch, error, success, typeSave, id, metode, router]);
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -113,9 +117,84 @@ const StepTwo = () => {
     setSoalList([...answer, { key: newKey, question: '', image: '', is_right: false }])
   }
 
+  const handleResetForm = () => {
+    setSoal('')
+    setSoalImage('')
+    setSoalList([
+      { key: 'A', option: '', image: '', is_right: false },
+      { key: 'B', option: '', image: '', is_right: false },
+      { key: 'C', option: '', image: '', is_right: false },
+      { key: 'D', option: '', image: '', is_right: false }
+    ])
+    setAnswerKey('')
+    setQuestionTypeId('')
+  }
+
   const saveDraft = () => {
     setTypeSave('draft')
-    // router.push("/subvit/substansi");
+    let valid = true
+
+    if (error) {
+      dispatch(clearErrors())
+    }
+
+    if (success) {
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_DETAIL_RESET
+      })
+    }
+
+    if (answer_key === '') {
+      valid = false
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi kunci jawaban dengan benar !'
+      })
+    }
+
+    if (question == '' && question_image == '') {
+      valid = false
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi pertanyaan dengan benar !'
+      })
+    }
+
+    answer.forEach((row, j) => {
+      if (row.option == '' && row.image == '') {
+        valid = false
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Isi jawaban dengan benar !'
+        })
+      }
+    })
+
+    if (question_type_id === '') {
+      valid = false
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi Tipe Soal dengan benar !'
+      })
+    }
+
+    const answers = JSON.stringify(answer)
+    if (valid) {
+      const data = {
+        subtance_question_bank_id: id,
+        question,
+        answer: answers,
+        question_image,
+        question_type_id,
+        answer_key,
+      }
+
+      dispatch(newSubtanceQuestionDetail(data))
+    }
   };
 
   const onSubmit = (e) => {
@@ -222,7 +301,7 @@ const StepTwo = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">Soal 1</h3>
+            <h3 className="card-title font-weight-bolder text-dark">Soal {subtance.bank_soal + 1}</h3>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
@@ -236,10 +315,10 @@ const StepTwo = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 col-md-8">
-                  <div class="custom-file">
+                  <div className="custom-file">
                     <span>Gambar Pertanyaan (Opsional)</span>
-                    <input type="file" class="custom-file-input" name='question_image' onChange={e => handleSoalImage(e)} />
-                    <label class="custom-file-label" for="customFile">
+                    <input type="file" className="custom-file-input" name='question_image' onChange={e => handleSoalImage(e)} />
+                    <label className="custom-file-label" htmlFor="customFile">
                       Choose file
                     </label>
                   </div>
@@ -266,9 +345,9 @@ const StepTwo = () => {
                         <span className="text-muted">Silahkan Pilihan {x.key}</span>
                       </div>
                       <div className="col-sm-12 col-md-3">
-                        <div class="custom-file">
-                          <input type="file" class="custom-file-input" name='image' onChange={e => handleInputChange(e, i)} />
-                          <label class="custom-file-label" for="customFile">
+                        <div className="custom-file">
+                          <input type="file" className="custom-file-input" name='image' onChange={e => handleInputChange(e, i)} />
+                          <label className="custom-file-label" htmlFor="customFile">
                             Choose file
                           </label>
                         </div>
@@ -353,6 +432,7 @@ const StepTwo = () => {
                   <button
                     className="btn btn-primary btn-sm"
                     onClick={saveDraft}
+                    type='button'
                   >
                     Simpan Draft
                   </button>

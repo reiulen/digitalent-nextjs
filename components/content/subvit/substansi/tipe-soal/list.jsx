@@ -54,7 +54,7 @@ const ListTipeSoal = () => {
         type: DELETE_SUBTANCE_QUESTION_TYPE_RESET
       })
     }
-  }, [dispatch, limit, isDeleted]);
+  }, [dispatch, limit, isDeleted, router]);
 
   const onNewReset = () => {
     router.replace('/subvit/substansi/tipe-soal', undefined, { shallow: true })
@@ -153,7 +153,7 @@ const ListTipeSoal = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              List Tipe Soal Test Substansi
+              List Tipe Soal Tes Substansi
             </h3>
             <div className="card-toolbar"></div>
           </div>
@@ -208,6 +208,7 @@ const ListTipeSoal = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
+                        <th>ID</th>
                         <th>Tipe Soal</th>
                         <th>Bobot Nilai</th>
                         <th>Status</th>
@@ -216,25 +217,30 @@ const ListTipeSoal = () => {
                     </thead>
                     <tbody>
                       {subtance_question_type && subtance_question_type.list_types.length === 0
-                        ? ""
+                        ? (
+                          <tr>
+                            <td className='text-center' colSpan={6}>Data Masih Kosong</td>
+                          </tr>
+                        )
                         : subtance_question_type &&
-                        subtance_question_type.list_types.map((row) => {
+                        subtance_question_type.list_types.map((row, i) => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary">
-                                  {row.no}
+                                <span className="badge badge-secondary text-muted">
+                                  {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
+                              <td className="align-middle">{row.id}</td>
                               <td className="align-middle">{row.name}</td>
                               <td className="align-middle">{row.value}</td>
                               <td className="align-middle">
                                 {row.status === true ? (
-                                  <span class="label label-inline label-light-success font-weight-bold">
+                                  <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
                                 ) : (
-                                  <span class="label label-inline label-light-warning font-weight-bold">
+                                  <span className="label label-inline label-light-warning font-weight-bold">
                                     Draft
                                   </span>
                                 )}

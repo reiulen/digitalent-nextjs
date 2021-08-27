@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from 'simple-react-validator'
 import { TagsInput } from 'react-tag-input-component';
-
+import Swal from "sweetalert2";
 import { newBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import { NEW_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
@@ -27,6 +27,7 @@ const TambahBerita = () => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+    const [, forceUpdate] = useState();
     const { loading, error, success } = useSelector(state => state.newBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
 
@@ -67,14 +68,15 @@ const TambahBerita = () => {
             })
         }
 
-    }, [dispatch, error, success]);
+    }, [dispatch, error, success, router]);
 
 
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUserId] = useState(1)
+    const [users_id, setUserId] = useState(3)
     const [judul_berita, setJudulBerita] = useState('')
     const [isi_berita, setIsiBerita] = useState('');
     const [gambar, setGambar] = useState('')
+    const [gambarName, setGambarName] = useState (null)
     const [publish, setPublish] = useState(false)
     const [tag, setTag] = useState([])
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
@@ -89,33 +91,68 @@ const TambahBerita = () => {
                 }
             }
             reader.readAsDataURL(e.target.files[0])
+            setGambarName(e.target.files[0].name)
         }
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
+        if (simpleValidator.current.allValid()) {
+            if (error) {
+                dispatch(clearErrors())
+            }
+            if (success) {
+                dispatch({
+                    type: NEW_BERITA_RESET
+                })
+            }
+    
+            const data = {
+                kategori_id,
+                users_id,
+                judul_berita,
+                isi_berita,
+                gambar,
+                publish,
+                tag
+            }
 
-        if (error) {
-            dispatch(clearErrors())
+            Swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data ini akan ditambahkan !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya !",
+                cancelButtonText: "Batal",
+              })
+                .then((result) => {
+                  if (result.isConfirmed) {
+                    // if (success) {
+                    //   dispatch({
+                    //     type: NEW_ARTIKEL_RESET,
+                    //   });
+                    // }
+        
+                    dispatch(newBerita(data))
+        
+                    // console.log(data);
+                  }
+              });
+    
+            // dispatch(newBerita(data))
+            // console.log(data)
+        } else {
+            simpleValidator.current.showMessages();
+            forceUpdate(1);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
+            });
         }
-        if (success) {
-            dispatch({
-                type: NEW_BERITA_RESET
-            })
-        }
-
-        const data = {
-            kategori_id,
-            users_id,
-            judul_berita,
-            isi_berita,
-            gambar,
-            publish,
-            tag
-        }
-
-        dispatch(newBerita(data))
-        console.log(data)
+        
     }
 
     const onNewReset = () => {
@@ -183,7 +220,18 @@ const TambahBerita = () => {
                                                 setIsiBerita(data);
                                                 // console.log({ event, editor, data })
                                             }}
+                                            onBlur={() =>
+                                                simpleValidator.current.showMessageFor(
+                                                    "isi_berita"
+                                                )
+                                            }
                                         /> : <p>Tunggu Sebentar</p>}
+                                        {simpleValidator.current.message(
+                                            "isi_berita",
+                                            isi_berita,
+                                            "required|min:100",
+                                            { className: "text-danger" }
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -203,10 +251,16 @@ const TambahBerita = () => {
                                 <div className="col-sm-9">
                                     <div className="input-group">
                                         <div className="custom-file">
-                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
-                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
+                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} accept="image/*"/>
+                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih file</label>
                                         </div>
                                     </div>
+                                    {
+                                        gambarName !== null ?
+                                            <small>{gambarName}</small>
+                                        :
+                                            null
+                                    }
                                 </div>
                             </div>
 
@@ -220,7 +274,12 @@ const TambahBerita = () => {
                                         ) : (
                                             kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                 return (
-                                                    <option key={row.id} value={row.id}>{row.nama}</option>
+                                                    row.jenis_kategori == "Berita" ?
+                                                        <option key={row.id} value={row.id}>
+                                                            {row.nama_kategori}
+                                                        </option>
+                                                        :
+                                                        null
                                                 )
                                             })
                                         )}
@@ -237,14 +296,14 @@ const TambahBerita = () => {
                                         value={tag}
                                         onChange={setTag}
                                         name="tag"
-                                        placeHolder="Isi Tag disini"
+                                        placeHolder="Isi Tag disini dan enter."
                                     />
                                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                 </div>
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish ?</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish </label>
                                 <div className="col-sm-1">
                                     <SwitchButton
                                         checked={publish}
@@ -265,7 +324,7 @@ const TambahBerita = () => {
                                     <Link href='/publikasi/berita'>
                                         <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Submit</button>
+                                    <button className='btn btn-primary btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>

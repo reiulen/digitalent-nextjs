@@ -27,8 +27,8 @@ function RevisiList() {
             <div className={`card-body ${Style.refreshZindex}`}>
               <div className={Style.containerProggres}>
                 <ul className={Style.progressbar}>
-                  <li class={Style.active}>Submit Kerjasama</li>
-                  <li class={Style.active}>Review Kerjasama</li>
+                  <li className={Style.active}>Submit Kerjasama</li>
+                  <li className={Style.active}>Review Kerjasama</li>
                   <li>Pembahasan</li>
                   <li>Dokumen Kerjasama</li>
                   <li>Review Dokumen </li>
@@ -36,29 +36,29 @@ function RevisiList() {
                 </ul>
               </div>
               <div style={{ marginTop: "100px" }}></div>
-              <div class="d-flex" style={cardContainer}>
-                <div class="p-5">
+              <div className="d-flex" style={cardContainer}>
+                <div className="p-5">
                   <h2>Perjanjian Kerjasama</h2>
                   <p>Pengajuan Kerjasama Anda Perlu direvisi.</p>
                   <p>Revisi Versi.1</p>
                 </div>
-                <div class="ml-auto my-auto pr-5">
+                <div className="ml-auto my-auto pr-5">
                   <button
                     type="button"
-                    class="btn btn-outline-success btn-light-success"
+                    className="btn btn-outline-success btn-light-success"
                   >
                     Sudah Direvisi
                   </button>
                 </div>
               </div>
-              <div class="d-flex" style={cardContainer}>
-                <div class="p-5">
+              <div className="d-flex" style={cardContainer}>
+                <div className="p-5">
                   <h2>Perjanjian Kerjasama</h2>
                   <p>Pengajuan Kerjasama Anda Perlu direvisi.</p>
                   <p>Revisi Versi.1</p>
                 </div>
-                <div class="ml-auto my-auto pr-5">
-                  <button type="button" class="btn btn-primary">
+                <div className="ml-auto my-auto pr-5">
+                  <button type="button" className="btn btn-primary">
                     Lihat Detail Revisi
                   </button>
                 </div>

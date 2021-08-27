@@ -49,18 +49,13 @@ const ListSubstansi = () => {
         type: DELETE_SUBTANCE_QUESTION_BANKS_RESET
       })
     }
-  }, [dispatch, limit, isDeleted]);
+  }, [dispatch, limit, isDeleted, router]);
 
   const handlePagination = (pageNumber) => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-    } else if (search != '' && limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${search}`)
-    } else if (search != '') {
-      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
-    } else {
-      router.push(`${router.pathname}?page=${pageNumber}`)
-    }
+    let link = `${router.pathname}?page=${pageNumber}`
+    if (limit) link = link.concat(`&limit=${limit}`)
+    if (search) link = link.concat(`&keyword=${search}`)
+    router.push(link)
   }
 
   const handleSearch = () => {
@@ -95,11 +90,6 @@ const ListSubstansi = () => {
       }
     });
   };
-
-  let count = subtance.total
-  if (search || limit && limit != 5) {
-    count = subtance.totalFiltered
-  }
 
   return (
     <PageWrapper>
@@ -146,7 +136,7 @@ const ListSubstansi = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              List Test Substansi
+              List Tes Substansi
             </h3>
             <div className="card-toolbar">{/* for add */}</div>
           </div>
@@ -231,14 +221,14 @@ const ListSubstansi = () => {
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
                                 <span className="badge badge-secondary text-muted">
-                                  {i + 1 * (page * 5 || limit) - 4}
+                                  {i + 1 * (page * limit) - (limit - 1)}
                                 </span>
                               </td>
                               <td className="align-middle">
-                                {subtance.academy_id}
+                                {subtance.academy.name}
                               </td>
                               <td className="align-middle">
-                                {subtance.theme_id}
+                                {subtance.theme.name}
                               </td>
                               <td className="align-middle">{subtance.bank_soal} Soal</td>
                               <td className="align-middle">
@@ -249,11 +239,11 @@ const ListSubstansi = () => {
                               </td>
                               <td className="align-middle">
                                 {subtance.status === true ? (
-                                  <span class="label label-inline label-light-success font-weight-bold">
+                                  <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
                                 ) : (
-                                  <span class="label label-inline label-light-warning font-weight-bold">
+                                  <span className="label label-inline label-light-warning font-weight-bold">
                                     Draft
                                   </span>
                                 )}

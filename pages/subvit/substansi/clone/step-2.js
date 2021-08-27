@@ -1,6 +1,9 @@
 import Layout from "/components/templates/layout.component";
 import StepTwo from "/components/content/subvit/substansi/clone/step-two";
 
+import { getAllSubtanceQuestionDetail } from '../../../../redux/actions/subvit/subtance-question-detail.action'
+import { wrapper } from '../../../../redux/store'
+
 export default function CloneSoalSubtansi() {
     return (
         <>
@@ -12,3 +15,7 @@ export default function CloneSoalSubtansi() {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+    await store.dispatch(getAllSubtanceQuestionDetail(query.id, query.page, query.keyword, query.limit))
+})

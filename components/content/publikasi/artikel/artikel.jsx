@@ -8,7 +8,7 @@ import Pagination from "react-js-pagination";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 import Swal from "sweetalert2";
-import moment from 'moment'
+import moment from "moment";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
@@ -23,51 +23,62 @@ import {
   clearErrors,
 } from "../../../../redux/actions/publikasi/artikel.actions";
 
-import {
-  DELETE_ARTIKEL_RESET
-} from '../../../../redux/types/publikasi/artikel.type'
+import { DELETE_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.type";
 
 const Artikel = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const {
+    loading: allLoading,
+    error,
+    artikel,
+  } = useSelector((state) => state.allArtikel);
 
-  const { loading: allLoading, error, artikel } = useSelector((state) => state.allArtikel);
-  const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteArtikel);
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    isDeleted,
+  } = useSelector((state) => state.deleteArtikel);
 
-  const [search, setSearch] = useState('')
-  const [limit, setLimit] = useState(null)
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [publishValue, setPublishValue] = useState(null);
 
-  let loading = false
+  let loading = false;
   let { page = 1, keyword, success } = router.query;
   if (allLoading) {
-    loading = allLoading
+    loading = allLoading;
   } else if (deleteLoading) {
-    loading = deleteLoading
+    loading = deleteLoading;
   }
   page = Number(page);
 
   useEffect(() => {
-    if (limit) {
-      router.push(`${router.pathname}?page=1&limit=${limit}`)
-    }
+    // if (limit) {
+    //   router.push(`${router.pathname}?page=1&limit=${limit}`);
+    // }
+
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
-        if (result.isConfirmed) {
-          window.location.reload()
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
         }
-      });
+      );
       dispatch({
-        type: DELETE_ARTIKEL_RESET
-      })
+        type: DELETE_ARTIKEL_RESET,
+      });
     }
-  }, [limit, isDeleted]);
+
+  }, [limit, isDeleted, publishValue, dispatch, search]);
 
   const onNewReset = () => {
-    router.replace('/publikasi/artikel', undefined, { shallow: true })
-  }
+    router.replace("/publikasi/artikel", undefined, { shallow: true });
+  };
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -87,31 +98,115 @@ const Artikel = () => {
   };
 
   const handlePagination = (pageNumber) => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    if (limit !== null  && search === "" && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    
+    } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+
+    } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+
+    } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+    } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+    } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
     } else {
-      router.push(`${router.pathname}?page=${pageNumber}`)
+        router.push(`${router.pathname}?page=${pageNumber}`)
     }
   }
 
   const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    if (limit != null && startDate === null && endDate === null) {
+        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+
+    } else if (limit !== null && startDate !== null && endDate !== null ) {
+        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
     } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`)
+        router.push(`${router.pathname}?page=1&keyword=${search}`)
     }
-  }
+
+};
 
   const handleSearchDate = () => {
-    router.push(`${router.pathname}?page=1&startdate=${moment(startDate).format('YYYY-MM-DD')}&enddate=${moment(endDate).format('YYYY-MM-DD')}`)
-  }
+    if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+        Swal.fire(
+            'Oops !',
+            'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+            'error'
+        )
+        setStartDate (null)
+        setEndDate (null)
+
+    } else {
+        if (limit !== null && search === null) {
+            router.push(
+                `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+            );
+
+        } else if (limit !== null && search !== null) {
+          `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+
+        } else {
+            router.push(
+                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+            ); 
+        }
+    }
+  };
 
   const handleLimit = (val) => {
     setLimit(val)
+    if (search === "") {
+        router.push(`${router.pathname}?page=1&limit=${val}`);
+    
+    } else {
+        router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+    }
+    
+  };
+
+  const handlePublish = (val) => {
+    if (val !== null || val !== "") {
+      setPublishValue (val)
+
+      if ( startDate === null && endDate === null && limit === null && search === null){
+        router.push(`${router.pathname}?publish=${val}`);
+  
+      } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+  
+      } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+      
+      } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+  
+      } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+          router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+  
+      } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+          router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+      
+      } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+          router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+      
+      } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+      }
+    }
+    
   }
 
   return (
     <PageWrapper>
+      {console.log(artikel)}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -137,18 +232,32 @@ const Artikel = () => {
       ) : (
         ""
       )}
-      {success ?
-        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+      {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
           <div className="alert-text">Berhasil Menambah Data</div>
           <div className="alert-close">
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
             </button>
           </div>
         </div>
-        : ''
-      }
+      ) : (
+        ""
+      )}
 
       <div className="col-lg-12 col-md-12">
         <div className="row">
@@ -156,10 +265,13 @@ const Artikel = () => {
             background="bg-light-info"
             icon="mail-purple.svg"
             color="#8A50FC"
-            value={artikel && artikel.publish != '' ? artikel.publish : 0}
+            value={artikel && artikel.publish != "" ? artikel.publish : 0}
             titleValue="Artikel"
             title="Total Publish"
+            publishedVal="1"
+            routePublish={() => handlePublish("1")}
           />
+
           <CardPage
             background="bg-light-warning"
             icon="garis-yellow.svg"
@@ -167,6 +279,8 @@ const Artikel = () => {
             value="64"
             titleValue="Artikel"
             title="Total Author"
+            publishedVal=""
+            routePublish={() => handlePublish("")}
           />
           <CardPage
             background="bg-light-success"
@@ -175,14 +289,18 @@ const Artikel = () => {
             value="64"
             titleValue="K"
             title="Total Yang Baca"
+            publishedVal=""
+            routePublish={() => handlePublish("")}
           />
           <CardPage
             background="bg-light-danger"
             icon="kotak-kotak-red.svg"
             color="#F65464"
-            value={artikel && artikel.unpublish != '' ? artikel.unpublish : 0}
+            value={artikel && artikel.unpublish != "" ? artikel.unpublish : 0}
             titleValue="Artikel"
             title="Total Belum Publish"
+            publishedVal="0"
+            routePublish={() => handlePublish("0")}
           />
         </div>
       </div>
@@ -191,7 +309,7 @@ const Artikel = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Managemen Artikel
+              Manajemen Artikel
             </h3>
             <div className="card-toolbar">
               <Link href="/publikasi/artikel/tambah">
@@ -213,7 +331,7 @@ const Artikel = () => {
                       className="form-control"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
@@ -221,7 +339,13 @@ const Artikel = () => {
                   </div>
                 </div>
                 <div className="col-lg-2 col-xl-2">
-                  <button type="button" className='btn btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
+                  <button
+                    type="button"
+                    className="btn btn-light-primary btn-block"
+                    onClick={handleSearch}
+                  >
+                    Cari
+                  </button>
                 </div>
               </div>
               <div className="row align-items-right">
@@ -253,7 +377,7 @@ const Artikel = () => {
                 </div>
                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                   <button
-                    type='button'
+                    type="button"
                     className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
                     onClick={handleSearchDate}
                   >
@@ -262,10 +386,12 @@ const Artikel = () => {
                 </div>
               </div>
             </div>
+            {/* {
+              console.log (artikel)
+            } */}
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-
                 <LoadingTable loading={loading} />
 
                 {loading === false ? (
@@ -273,14 +399,14 @@ const Artikel = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th >Thumbnail</th>
+                        <th>Thumbnail</th>
                         <th>Kategori</th>
                         <th>Judul</th>
                         <th>Tanggal Publish</th>
                         <th>Dibuat</th>
                         <th>Status</th>
                         <th>Role</th>
-                        <th>Action</th>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -290,21 +416,41 @@ const Artikel = () => {
                         </td>
                       ) : (
                         artikel &&
-                        artikel.artikel &&
+                        // artikel.artikel &&
                         artikel.artikel.map((artikel, i) => {
                           return (
                             <tr key={artikel.id}>
-                              <td className="align-middle text-center">
+                              {/* <td className="align-middle text-center">
                                 <span className="badge badge-secondary text-muted">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
+                              </td> */}
+                        
+                              <td className='align-middle text-center'>
+                                  {
+                                    limit === null ?
+                                      <span className="badge badge-secondary text-muted">
+                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                      </span>
+                                    :
+                                      <span className="badge badge-secondary text-muted">
+                                        {i + 1 * (page * limit) - (limit - 1)}
+                                      </span>
+                                  }
+                                  
                               </td>
-                              <td >
+
+                              <td>
                                 <Image
                                   alt={artikel.judul_artikel}
                                   unoptimized={
                                     process.env.ENVIRONMENT !== "PRODUCTION"
                                   }
+                                  // loader={() => process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                  //   "publikasi/images/" +
+                                  //   artikel.gambar + `?w=80&q=75`
+                                  // }
+                                  // src={artikel.gambar}
                                   src={
                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                     "publikasi/images/" +
@@ -315,7 +461,8 @@ const Artikel = () => {
                                 />
                               </td>
                               <td className="align-middle">
-                                {artikel.jenis_kategori}
+                                {/* {artikel.jenis_kategori} */}
+                                {artikel.nama_kategori}
                               </td>
                               <td className="align-middle">
                                 {artikel.judul_artikel}
@@ -324,29 +471,45 @@ const Artikel = () => {
                                 {artikel.publish === 1 ? (
                                   artikel.tanggal_publish
                                 ) : (
-                                  <span class="label label-inline label-light-danger font-weight-bold">
+                                  <span className="label label-inline label-light-danger font-weight-bold">
                                     Belum dipublish
                                   </span>
                                 )}
                               </td>
                               <td className="align-middle">
-                                {artikel.dibuat}
+                                {/* {artikel.dibuat} */}
+                                Super Admin
                               </td>
                               <td className="align-middle">
                                 {artikel.publish === 1 ? (
-                                  <span class="label label-inline label-light-success font-weight-bold">
+                                  <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
                                 ) : (
-                                  <span class="label label-inline label-light-warning font-weight-bold">
-                                    Belum di publish
+                                  <span className="label label-inline label-light-warning font-weight-bold">
+                                    Belum dipublish
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">Admin Publikasi</td>
+                              <td className="align-middle">Super Admin</td>
                               <td className="align-middle">
-                                <ButtonNewTab icon="setting.svg" link={`/publikasi/artikel/preview/${artikel.id}`}/>
-                                <ButtonAction icon="write.svg" link={`/publikasi/artikel/${artikel.id}`} />
+                                {/* conflict nih cuy */}
+                                {/* <ButtonAction icon="setting.svg" />
+                                <ButtonAction
+                                  icon="write.svg"
+                                  link={`/publikasi/artikel/${artikel.id}`}
+                                /> */}
+
+                                <ButtonNewTab
+                                  icon="setting.svg"
+                                  link={`/publikasi/artikel/preview/${artikel.id}`}
+                                  title="Preview"
+                                />
+                                <ButtonAction
+                                  icon="write.svg"
+                                  link={`/publikasi/artikel/${artikel.id}`}
+                                  title="Edit"
+                                />
                                 <button
                                   onClick={() => handleDelete(artikel.id)}
                                   className="btn mr-1"
@@ -354,6 +517,9 @@ const Artikel = () => {
                                     background: "#F3F6F9",
                                     borderRadius: "6px",
                                   }}
+                                  data-toggle="tooltip" 
+                                  data-placement="bottom" 
+                                  title="Hapus"
                                 >
                                   <Image
                                     alt="button-action"
@@ -373,7 +539,6 @@ const Artikel = () => {
                   ""
                 )}
               </div>
-
               <div className="row">
                 {artikel && artikel.perPage < artikel.total && (
                   <div className="table-pagination">
@@ -392,7 +557,7 @@ const Artikel = () => {
                     />
                   </div>
                 )}
-                {artikel && artikel.total > 5 ? (
+                {artikel  ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -405,13 +570,13 @@ const Artikel = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option value='5'>5</option>
-                          <option value='10'>10</option>
-                          <option value='15'>15</option>
-                          <option value='20'>20</option>
+                          <option value='5' selected={limit == "5" ? true: false}>5</option>
+                          <option value='10' selected={limit == "10" ? true: false}>10</option>
+                          <option value='15' selected={limit == "15" ? true: false}>15</option>
+                          <option value='20' selected={limit == "20" ? true: false}>20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -427,6 +592,7 @@ const Artikel = () => {
                 ) : (
                   ""
                 )}
+                
               </div>
             </div>
           </div>
@@ -435,5 +601,6 @@ const Artikel = () => {
     </PageWrapper>
   );
 };
+
 
 export default Artikel;

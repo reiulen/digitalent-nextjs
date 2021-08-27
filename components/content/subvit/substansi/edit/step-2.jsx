@@ -14,7 +14,7 @@ import Swal from "sweetalert2"
 import moment from 'moment'
 
 import PageWrapper from "/components/wrapper/page.wrapper";
-import StepInput from "/components/StepInputClone";
+import StepInputPublish from "/components/StepInputPublish";
 
 const StepTwo = () => {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const StepTwo = () => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, success]);
+  }, [dispatch, error, success, router]);
 
   const [startDate, setStartDate] = useState(subtance.start_at);
   const [endDate, setEndDate] = useState(subtance.end_at);
@@ -47,6 +47,8 @@ const StepTwo = () => {
   const [jumlah_soal, setJumlahSoal] = useState(null)
   const [passing_grade, setPassingGrade] = useState(subtance.passing_grade)
   const [status, setStatus] = useState(subtance.status)
+  const [, forceUpdate] = useState();
+
 
   const saveDraft = () => {
     if (simpleValidator.current.allValid()) {
@@ -138,16 +140,16 @@ const StepTwo = () => {
       )}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <StepInput step="2"></StepInput>
+          <StepInputPublish step="2"></StepInputPublish>
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Publish Soal Cloning
+              Publish Soal
             </h3>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-6 col-md-2">
                   <span>Pelaksanaan dari</span>
                   <DatePicker
                     className="form-control"
@@ -168,7 +170,7 @@ const StepTwo = () => {
                   {simpleValidator.current.message('tanggal mulai', startDate, 'required', { className: 'text-danger' })}
                 </div>
 
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-6 col-md-2">
                   <span>Sampai</span>
                   <DatePicker
                     className="form-control"
@@ -193,18 +195,18 @@ const StepTwo = () => {
               <div className="form-group row">
                 <div className="col-sm-6 col-md-3">
                   <span>Jumlah Soal</span>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
                       type="number"
-                      class="form-control"
+                      className="form-control"
                       aria-describedby="basic-addon2"
                       value={jumlah_soal}
                       onChange={e => setJumlahSoal(e.target.value)}
                       onBlur={() => simpleValidator.current.showMessageFor('jumlah soal')}
                       min={1}
                     />
-                    <div class="input-group-append">
-                      <span class="input-group-text" id="basic-addon2">
+                    <div className="input-group-append">
+                      <span className="input-group-text" id="basic-addon2">
                         Soal
                       </span>
                     </div>
@@ -219,18 +221,18 @@ const StepTwo = () => {
               <div className="form-group row">
                 <div className="col-sm-6 col-md-3">
                   <span>Durasi Test</span>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
                       type="number"
-                      class="form-control"
+                      className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
                       onChange={e => setDuration(e.target.value)}
                       onBlur={() => simpleValidator.current.showMessageFor('durasi')}
                       min={1}
                     />
-                    <div class="input-group-append bg-sedondary">
-                      <span class="input-group-text" id="basic-addon2">
+                    <div className="input-group-append bg-sedondary">
+                      <span className="input-group-text" id="basic-addon2">
                         Menit
                       </span>
                     </div>
@@ -245,17 +247,17 @@ const StepTwo = () => {
               <div className="form-group row">
                 <div className="col-sm-6 col-md-3">
                   <span>Passing Grade</span>
-                  <div class="input-group">
+                  <div className="input-group">
                     <input
                       type="number"
-                      class="form-control"
+                      className="form-control"
                       aria-describedby="basic-addon2"
                       value={passing_grade}
                       onChange={e => setPassingGrade(e.target.value)}
                       onBlur={() => simpleValidator.current.showMessageFor('passing grade')}
                     />
-                    <div class="input-group-append">
-                      <span class="input-group-text" id="basic-addon2">
+                    <div className="input-group-append">
+                      <span className="input-group-text" id="basic-addon2">
                         Nilai
                       </span>
                     </div>

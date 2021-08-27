@@ -15,6 +15,10 @@ import {
     DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
     DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
 
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL,
+
     UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST,
     UPDATE_SUBTANCE_QUESTION_BANKS_SUCCESS,
     UPDATE_SUBTANCE_QUESTION_BANKS_RESET,
@@ -28,6 +32,16 @@ import {
     REPORT_SUBTANCE_QUESTION_BANKS_REQUEST,
     REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS,
     REPORT_SUBTANCE_QUESTION_BANKS_FAIL,
+
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
+    NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_RESET,
+    DELETE_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
 
     CLEAR_ERRORS,
 } from '../../types/subvit/subtance.type'
@@ -120,6 +134,28 @@ export const getDetailSubtanceQuestionBanks = (id) => async (dispatch) => {
     }
 }
 
+export const getOneSubtanceQuestionBanks = (id) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST })
+
+        let link = process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data.data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
 export const updatewSubtanceQuestionBanks = (id, substanceQuestionData) => async (dispatch) => {
     try {
 
@@ -146,16 +182,36 @@ export const deleteSubtanceQuestionBanks = (id) => async (dispatch) => {
 
         dispatch({ type: DELETE_SUBTANCE_QUESTION_BANKS_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`)
+        const data = await axios.delete(process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`)
 
         dispatch({
-            type: DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
-            payload: data.success
+            type: DELETE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data.status
         })
 
     } catch (error) {
         dispatch({
             type: DELETE_SUBTANCE_QUESTION_BANKS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const deleteCloneSubtanceQuestionBanks = (dataId) => async (dispatch) => {
+    try {
+
+        dispatch({ type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST })
+
+        const data = await axios.post(process.env.END_POINT_API_SUBVIT + `api/subtance-question-bank-details/multiple-delete`, dataId)
+
+        dispatch({
+            type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data.status
+        })
+
+    } catch (error) {
+        dispatch({
+            type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
             payload: error.response.data.message
         })
     }
@@ -225,6 +281,37 @@ export const allReportSubtanceQuestionBanks = (id, page = 1, keyword = '', limit
         })
     }
 }
+
+export const newCloneSubtanceQuestionBanks = (subtanceData) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST
+        })
+
+        // const config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+        //         'Access-Control-Allow-Origin': '*',
+        //         'apikey': process.env.END_POINT_KEY_AUTH
+        //     }
+        // }
+
+        const { data } = await axios.post(process.env.END_POINT_API_SUBVIT + 'api/subtance-question-banks/clone', subtanceData)
+
+        dispatch({
+            type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
 
 // Clear Error
 export const clearErrors = () => async (dispatch) => {

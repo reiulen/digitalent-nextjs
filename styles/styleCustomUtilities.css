@@ -1,0 +1,269 @@
+/* paginate cs */
+.paginate-cs .page-item:last-child .page-link {
+  width: 41px;
+
+}
+
+.paginate-cs .page-item:first-child .page-link {
+  width: 41px;
+}
+
+
+.btn-delete:hover .text-hover-show-hapus,
+.btn-edit:hover .text-hover-show-edit {
+  display: block !important;
+  transition: all 1s;
+  opacity: 1;
+}
+
+.text-hover-show-hapus,
+.text-hover-show-edit {
+  /* display: none; */
+  opacity: 0;
+  position: absolute;
+  bottom: -19px;
+  left: 50%;
+  background-color: white;
+  color: gray;
+  font-size: 10px;
+  border: 1px solid #efefef;
+  padding: 0 8px;
+  border-radius: 3px;
+  transform: translateX(-50%);
+}
+
+/* toggle */
+.switches {
+  position: relative;
+  display: inline-block;
+  min-width: 110px;
+  min-height: 24px;
+}
+
+.switches input.checkbox {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sliders {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border: 1px solid #8F8F8F;
+  display: flex;
+  justify-content: center;
+}
+
+.sliders:before {
+  position: absolute;
+  content: "";
+  min-height: 18px;
+  min-width: 18px;
+  left: 5px;
+  bottom: 1.9px;
+  background-color: #8F8F8F;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input.checkbox:checked+.sliders {
+  background-color: #2196f3;
+  border: 1px solid #2196f3;
+}
+
+input.checkbox:checked+.sliders:before {
+  background-color: #fff;
+  left: 70px;
+  bottom: 2.6px;
+  height: 17px;
+  min-width: 17px;
+
+
+}
+
+input.checkbox:focus+.sliders {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input.checkbox:checked+.sliders:before {
+  -webkit-transform: translateX(18px);
+  -ms-transform: translateX(18px);
+  transform: translateX(18px);
+}
+
+/* Rounded sliderss */
+.sliders.round {
+  border-radius: 34px;
+}
+
+.sliders.round:before {
+  border-radius: 50%;
+}
+
+
+.switches-small {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 16px;
+}
+
+.switches-small input.checkbox-small {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sliders-small {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border: 1px solid #8F8F8F;
+}
+
+.sliders-small:before {
+  position: absolute;
+  content: "";
+  height: 11px;
+  width: 11px;
+  left: 2px;
+  bottom: 1.7px;
+  background-color: #8F8F8F;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input.checkbox-small:checked+.sliders-small {
+  background-color: #2196f3;
+  border: 1px solid #2196f3;
+}
+
+input.checkbox-small:checked+.sliders-small:before {
+  background-color: #fff;
+  left: 4px;
+  bottom: 1.7px;
+  height: 11px;
+  width: 11px;
+
+
+}
+
+input.checkbox-small:focus+.sliders-small {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input.checkbox-small:checked+.sliders-small:before {
+  -webkit-transform: translateX(11px);
+  -ms-transform: translateX(11px);
+  transform: translateX(11px);
+}
+
+/* Rounded sliderss */
+.sliders-small.round {
+  border-radius: 34px;
+}
+
+.sliders-small.round:before {
+  border-radius: 50%;
+}
+
+/* utilities */
+.cursor-pointer:hover {
+  cursor: pointer;
+}
+
+/* text table */
+.p-part-t {
+  font-size: 13px;
+  font-weight: 600;
+  color: gray;
+  margin: 0;
+  text-align: center;
+
+}
+
+.p-part-d {
+  font-size: 11px;
+  font-weight: 500;
+  color: gray;
+  margin: 0;
+  text-align: center;
+}
+.center-absolute{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.left-center-absolute{
+position: absolute;
+left: 0;
+top: 50%;
+transform: translateY(-50%);
+}
+.right-center-absolute {
+position: absolute;
+right: 0;
+top: 50%;
+transform: translateY(-50%);
+}
+.datepicker-w .react-datepicker-wrapper {
+  width: 100%;
+}
+/* status div */
+.status-div{
+  padding: 6px 11px;
+  border-radius: 8px;
+  color: #1BC5BD;
+  background-color: #C9F7F5;
+}
+/* dropdown list icon calender */
+.dropdown-lists{
+  background: white !important;
+  border: 1px solid #D9D9D9 !important;
+  border-radius: 0px !important;
+  color: #acacac !important;
+}
+/* dropdown list icon arrow */
+.dropdown-arrows{
+  background: #D7F9EF !important;
+  color: #16A277 !important;
+  cursor: pointer;
+
+}
+/* remove icon select option */
+.remove-icon-default {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+/* error text */
+.error-text{
+color: red;
+font-weight: 600;
+margin-bottom: 0;
+margin-top: 1rem;
+}
+/*  */
+.react-datepicker-popper{
+  z-index: 2 !important;
+}
+.image-view img{
+  width: 100%;
+}
+
+
+

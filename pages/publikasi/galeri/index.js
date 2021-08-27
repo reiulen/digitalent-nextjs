@@ -1,6 +1,9 @@
 import Layout from "../../../components/templates/layout.component";
 import Galeri from "../../../components/content/publikasi/galeri/galeri";
 
+import { getAllGaleri } from '../../../redux/actions/publikasi/galeri.actions'
+import { wrapper } from '../../../redux/store'
+
 export default function GaleriPage() {
     return (
         <>
@@ -12,3 +15,7 @@ export default function GaleriPage() {
         </>
     )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+    await store.dispatch(getAllGaleri(query.page, query.keyword, query.limit, query.publish))
+})

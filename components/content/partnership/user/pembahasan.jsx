@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
+import Link from "next/link";
 
 import Style from "../../../../styles/progressbar.module.css";
 
@@ -33,9 +34,9 @@ function Pembahasan() {
             <div className={`card-body ${Style.refreshZindex}`}>
               <div className={Style.containerProggres}>
                 <ul className={Style.progressbar}>
-                  <li class={Style.active}>Submit Kerjasama</li>
-                  <li class={Style.active}>Review Kerjasama</li>
-                  <li class={Style.active}>Pembahasan</li>
+                  <li className={Style.active}>Submit Kerjasama</li>
+                  <li className={Style.active}>Review Kerjasama</li>
+                  <li className={Style.active}>Pembahasan</li>
                   <li>Dokumen Kerjasama</li>
                   <li>Review Dokumen </li>
                   <li>Selesai</li>
@@ -48,6 +49,7 @@ function Pembahasan() {
                     src="/assets/media/hubungi-kami-1.svg"
                     height={300}
                     width={400}
+                    alt="hubungi-kami-1"
                   />
                 </div>
                 <div className="col-md mt-5">
@@ -73,13 +75,15 @@ function Pembahasan() {
                     >
                       Input Tanda Tangan Digital
                     </button>
-                    <button
-                      type="button"
-                      className="btn border border-primary bg-light-primary mr-2 btn-sm"
-                      style={{ color: "#6AA0D6" }}
-                    >
-                      Submit Dokumen Kerjasama
-                    </button>
+                    <Link href="/partnership/user/pembahasan" passHref>
+                      <button
+                        type="button"
+                        className="btn border border-primary bg-light-primary mr-2 btn-sm"
+                        style={{ color: "#6AA0D6" }}
+                      >
+                        Submit Dokumen Kerjasama
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

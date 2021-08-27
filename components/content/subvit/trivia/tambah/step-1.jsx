@@ -1,23 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
-import Link from "next/link";
-import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
+import SimpleReactValidator from 'simple-react-validator'
+import Swal from "sweetalert2"
+
 import {
-  newArtikel,
+  newTriviaQuestionBanks,
   clearErrors,
-} from "/redux/actions/publikasi/artikel.actions";
-import { NEW_ARTIKEL_RESET } from "/redux/types/publikasi/artikel.type";
+} from "../../../../../redux/actions/subvit/trivia-question.actions";
+import { NEW_TRIVIA_QUESTION_BANKS_RESET } from "../../../../../redux/types/subvit/trivia-question.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
-import { useRouter } from "next/router";
+import LoadingPage from "../../../../LoadingPage";
 
-const StepOne = () => {
+const TambahTriviaStepOne = () => {
   const dispatch = useDispatch();
-  const importSwitch = () => import("bootstrap-switch-button-react");
   const router = useRouter();
-  const { loading, error, success } = useSelector((state) => state.newArtikel);
+
+  const { loading, error, success, trivia } = useSelector((state) => state.newTriviaQuestionBanks);
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+  const [, forceUpdate] = useState();
+  const [typeSave, setTypeSave] = useState('lanjut')
+
+  const [academy_id, setAcademyId] = useState("");
+  const [theme_id, setThemeId] = useState("");
+  const [training_id, setTrainingId] = useState("");
+  const [metode, setMetode] = useState('entry')
 
   useEffect(() => {
     // if (error) {
@@ -25,28 +35,84 @@ const StepOne = () => {
     // }
 
     if (success) {
-      dispatch({
-        type: NEW_ARTIKEL_RESET,
-      });
+      const id = trivia.id
+      if (typeSave === 'lanjut') {
+        router.push({
+          pathname: `/subvit/trivia/tambah/step-2-${metode}`,
+          query: { id, metode }
+        })
+      } else if (typeSave === 'draft') {
+        router.push({
+          pathname: `/subvit/trivia`,
+          query: { success: true },
+        });
+      }
     }
-  }, [dispatch, error, success]);
 
-  const [nama, setNama] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm_password, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("");
-
-  const saveAndContinue = () => {
-    router.push("/subvit/trivia/tambah/step-2");
-  };
+  }, [dispatch, error, success, typeSave, router, metode, trivia]);
 
   const saveDraft = () => {
-    router.push("/subvit/trivia");
+    setTypeSave('draft')
+    if (error) {
+      dispatch(clearErrors())
+    }
+    if (success) {
+      dispatch({
+        type: NEW_TRIVIA_QUESTION_BANKS_RESET
+      })
+    }
+    if (simpleValidator.current.allValid()) {
+
+      const data = {
+        academy_id,
+        theme_id,
+        training_id,
+      }
+
+      dispatch(newTriviaQuestionBanks(data))
+
+    } else {
+      simpleValidator.current.showMessages()
+      forceUpdate(1)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi data dengan benar !'
+      })
+    }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setTypeSave('lanjut')
+
+    if (error) {
+      dispatch(clearErrors())
+    }
+    if (success) {
+      dispatch({
+        type: NEW_TRIVIA_QUESTION_BANKS_RESET
+      })
+    }
+    if (simpleValidator.current.allValid()) {
+
+      const data = {
+        academy_id,
+        theme_id,
+        training_id,
+      }
+
+      dispatch(newTriviaQuestionBanks(data))
+
+    } else {
+      simpleValidator.current.showMessages()
+      forceUpdate(1)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Isi data dengan benar !'
+      })
+    }
   };
 
   return (
@@ -76,12 +142,18 @@ const StepOne = () => {
       ) : (
         ""
       )}
-      <div className="col-lg-12 col-xxl-4 order-1 order-xxl-2 px-0">
+
+      <div className="col-lg-12 order-1 order-xxl-2 px-0">
+        {
+          loading ?
+            <LoadingPage loading={loading} />
+            : ''
+        }
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="1"></StepInput>
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Tambah Trivia
+              Tambah Test Trivia
             </h3>
           </div>
           <div className="card-body">
@@ -97,14 +169,17 @@ const StepOne = () => {
                   <select
                     name="academy_id"
                     id=""
-                    onChange={(e) => setRole(e.target.value)}
+                    value={academy_id}
+                    onChange={(e) => setAcademyId(e.target.value)}
+                    onBlur={e => { setAcademyId(e.target.value); simpleValidator.current.showMessageFor('academy_id') }}
                     className="form-control"
                   >
-                    <option selected> -Pilih Akademi -</option>
+                    <option selected disabled value=''> -Pilih Akademi -</option>
                     <option value="1"> Computer Scientist </option>
-                    <option value="1"> Designer </option>
+                    <option value="2"> Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Akademi</span>
+                  {simpleValidator.current.message('academy_id', academy_id, 'required', { className: 'text-danger' })}
                 </div>
               </div>
 
@@ -119,14 +194,16 @@ const StepOne = () => {
                   <select
                     name="the_id"
                     id=""
-                    onChange={(e) => setRole(e.target.value)}
+                    onChange={(e) => setThemeId(e.target.value)}
+                    onBlur={e => { setThemeId(e.target.value); simpleValidator.current.showMessageFor('theme_id') }}
                     className="form-control"
                   >
-                    <option selected> -Pilih Tema-</option>
+                    <option selected disabled value=''> -Pilih Tema-</option>
                     <option value="1"> Cloud Computing </option>
-                    <option value="1"> UI/UX Designer </option>
+                    <option value="2"> UI/UX Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Tema</span>
+                  {simpleValidator.current.message('theme_id', theme_id, 'required', { className: 'text-danger' })}
                 </div>
               </div>
 
@@ -141,36 +218,15 @@ const StepOne = () => {
                   <select
                     name="training_id"
                     id=""
-                    onChange={(e) => setRole(e.target.value)}
+                    onChange={(e) => setTrainingId(e.target.value)}
+                    onBlur={e => setTrainingId(e.target.value)}
                     className="form-control"
                   >
-                    <option selected> -Pilih Pelatihan-</option>
+                    <option selected disabled> -Pilih Pelatihan-</option>
                     <option value="1"> Google Cloud Computing </option>
                     <option value="1"> Adobe UI/UX Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Pelatihan</span>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
-                >
-                  Kategori
-                </label>
-                <div className="col-sm-10">
-                  <select
-                    name="category"
-                    id=""
-                    onChange={(e) => setRole(e.target.value)}
-                    className="form-control"
-                  >
-                    <option selected> -Pilih Kategori-</option>
-                    <option value="tes_trivia"> Tes Trivia </option>
-                    <option value="mid_tes"> Mid Tes </option>
-                  </select>
-                  <span className="text-muted">Silahkan Pilih Kategori</span>
                 </div>
               </div>
 
@@ -187,7 +243,9 @@ const StepOne = () => {
                       className="form-check-input"
                       type="radio"
                       name="method"
-                      value="option1"
+                      value="entry"
+                      checked={metode === 'entry'}
+                      onClick={() => setMetode('entry')}
                     />
                     <label className="form-check-label">Entry Soal</label>
                   </div>
@@ -196,14 +254,16 @@ const StepOne = () => {
                       className="form-check-input"
                       type="radio"
                       name="method"
-                      value="option2"
+                      value="import"
+                      checked={metode === 'import'}
+                      onClick={() => setMetode('import')}
                     />
                     <label className="form-check-label">Import .csv/.xls</label>
                   </div>
 
                   <div>
                     <span className="text-muted">
-                      Silahkan Pilih Metode Tambah Trivia
+                      Silahkan Pilih Metode Tambah Test Substansi
                     </span>
                   </div>
                 </div>
@@ -213,7 +273,7 @@ const StepOne = () => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    onClick={saveAndContinue}
+                    type='submit'
                     className="btn btn-light-primary btn-sm mr-2"
                   >
                     Simpan & Lanjut
@@ -221,6 +281,7 @@ const StepOne = () => {
                   <button
                     onClick={saveDraft}
                     className="btn btn-primary btn-sm"
+                    type='button'
                   >
                     Simpan Draft
                   </button>
@@ -230,8 +291,8 @@ const StepOne = () => {
           </div>
         </div>
       </div>
-    </PageWrapper>
+    </PageWrapper >
   );
 };
 
-export default StepOne;
+export default TambahTriviaStepOne;
