@@ -71,41 +71,34 @@ const TambahArtikel = () => {
   const [publish, setPublish] = useState(false);
 
   const onChangeGambar = (e) => {
-    if (e.target.name === "gambar") {
-      const reader = new FileReader();
+    // const type = ["image/jpg", "image/png", "image/jpeg"]
+    // // console.log (e.target.files[0].type)
+
+    // if (type.includes (e.target.files[0].type)){
+    //   const reader = new FileReader();
+    //   reader.onload = () => {
+    //     if (reader.readyState === 2) {
+    //       setGambar(reader.result);
+    //       setGambarPreview(reader.result);
+    //     }
+    //   };
+    //   reader.readAsDataURL(e.target.files[0])
+    //   setGambarName(e.target.files[0].name)
+    // } 
+
+    if (e.target.name === 'gambar') {
+      const reader = new FileReader()
       reader.onload = () => {
-        if (reader.readyState === 2) {
-          setGambar(reader.result);
-          setGambarPreview(reader.result);
-        }
-      };
+          if (reader.readyState === 2) {
+              setGambar(reader.result)
+              setGambarPreview(reader.result)
+          }
+      }
       reader.readAsDataURL(e.target.files[0])
       setGambarName(e.target.files[0].name)
-    }
+  }
+    
   };
-
-  // const onSetPublish = (checked) => {
-  //   if (!checked) {
-  //     setPublish(false);
-  //   }
-
-  //   if (!publish) {
-  //     Swal.fire({
-  //       title: "Apakah anda yakin ?",
-  //       text: "Artikel anda di publish !",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Ya !",
-  //       cancelButtonText: "Batal",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         setPublish(checked);
-  //       }
-  //     });
-  //   }
-  // };
 
   const onSubmit = (e) => {
 
@@ -226,7 +219,7 @@ const TambahArtikel = () => {
                     {simpleValidator.current.message(
                       "judul_artikel",
                       judul_artikel,
-                      "required",
+                      "required|max:50",
                       { className: "text-danger" }
                     )}
                   </div>
@@ -324,7 +317,7 @@ const TambahArtikel = () => {
                     )}
                     {
                       gambarName !== null ?
-                        <small>{gambarName}</small>
+                        <small className="text-danger">{gambarName}</small>
                       :
                         null
                     }
