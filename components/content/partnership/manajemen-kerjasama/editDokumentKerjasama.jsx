@@ -18,9 +18,14 @@ import {
   setNameLembaga,
   fetchDataEmail,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
+import IconCalender from '../../../assets/icon/Calender'
+import moment from 'moment'
 
 
 import Swal from "sweetalert2";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const EditDokumentKerjasama = () => {
   const dispatch = useDispatch();
@@ -44,6 +49,7 @@ const EditDokumentKerjasama = () => {
   const [periodUnit, setPeriodUnit] = useState("tahun");
   console.log("periodUnit", periodUnit);
   const [periodDateStart, setPeriodDateStart] = useState("");
+  console.log("periodDateStart",periodDateStart)
   const [periodDateEnd, setPeriodDateEnd] = useState("");
   const [aggrementNumber, setAggrementNumber] = useState("");
   const [aggrementNumberInfo, setAggrementNumberInfo] = useState("");
@@ -120,8 +126,8 @@ const EditDokumentKerjasama = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
+      cancelButtonText: "Tidak",
+      confirmButtonText: "Ya",
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
@@ -138,6 +144,7 @@ const EditDokumentKerjasama = () => {
         } else {
           formData.append("document", documentLocal);
         }
+        
 
         formData.append("period_date_start", periodDateStart);
         formData.append("period_date_end", periodDateEnd);
@@ -174,12 +181,20 @@ const EditDokumentKerjasama = () => {
             `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${router.query.id}`,
             formData
           );
-          Swal.fire(
-  'Berhasil update data!',
-  'success'
-)
+
+//           Swal.fire(
+//   'Berhasil update data!',
+//   'success'
+// )
+
+          router.push({
+            pathname:'/partnership/manajemen-kerjasama/',
+            query:{update:true},
+          })
+          
         } catch (error) {
-          alert("gagal menambahkan data tipe file harus pdf");
+console.log("error.response",error.response)
+notify(error.response.data.message)
         }
       }
     });
@@ -242,7 +257,16 @@ const EditDokumentKerjasama = () => {
     dispatch(setNameLembaga(value));
   };
 
-  // const downloadFilePdf = () => {};
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   
   useEffect(() => {
     setDataSingle(router.query.id);
@@ -257,7 +281,19 @@ const EditDokumentKerjasama = () => {
   }, [dispatch,allMK.institution_name, allMK.stateListMitra]);
   return (
     <PageWrapper>
+      
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
@@ -431,36 +467,59 @@ const EditDokumentKerjasama = () => {
                 <div className="col-sm-10">
                   <div className="row align-items-right">
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      <input
+                      {/* <input
                         required
                         type="date"
                         onChange={(e) => setPeriodDateStart(e.target.value)}
                         value={periodDateStart}
                         className="form-control"
-                      />
-                    </div>
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      {/* <DatePicker
-                        className="form-control-sm form-control"
-                        // selected={endDate}
-                        
-                        
-                        // onChange={(date) => setEndDate(date)}
-                        selectsEnd
+                      /> */}
+
+                      <div className="d-flex align-items-center position-relative datepicker-w">
+                      <DatePicker
+                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        // selected={periodDateStart}
+                        onChange={(date) => setPeriodDateStart(moment(date).format('YYYY-MM-DD'))}
+                        value={periodDateStart}
+                        // selectsEnd
                         // startDate={startDate}
                         // endDate={endDate}
                         // minDate={startDate}
+                        minDate={moment().toDate()}
                         // maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
-                      /> */}
+                      />
+                      <IconCalender className="right-center-absolute" style={{right:"10px"}} />
+                      </div>
+
+                    </div>
+                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                      <div className="d-flex align-items-center position-relative datepicker-w">
+                      <DatePicker
+                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        // selected={periodDateStart}
+                        onChange={(date) => setPeriodDateEnd(moment(date).format('YYYY-MM-DD'))}
+                        value={periodDateEnd}
+                        // selectsEnd
+                        // startDate={startDate}
+                        // endDate={endDate}
+                        // minDate={startDate}
+                        minDate={moment().toDate()}
+                        // maxDate={addDays(startDate, 20)}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Sampai Tanggal"
+                      />
+                      <IconCalender className="right-center-absolute" style={{right:"10px"}} />
+                      </div>
+{/* 
                       <input
                         required
                         onChange={(e) => setPeriodDateEnd(e.target.value)}
                         type="date"
                         value={periodDateEnd}
                         className="form-control"
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -628,13 +687,33 @@ const EditDokumentKerjasama = () => {
                 <div className="col-sm-10">
                   <div className="row align-items-right">
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      <input
+                      {/* <input
                         required
                         onChange={(e) => setSigninDate(e.target.value)}
                         value={signinDate}
                         type="date"
                         className="form-control form-control-sm"
+                      /> */}
+
+                      <div className="d-flex align-items-center position-relative datepicker-w">
+                      <DatePicker
+                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        // selected={periodDateStart}
+                        onChange={(date) => setSigninDate(moment(date).format('YYYY-MM-DD'))}
+                        value={signinDate}
+                        // selectsEnd
+                        // startDate={startDate}
+                        // endDate={endDate}
+                        // minDate={startDate}
+                        minDate={moment().toDate()}
+                        // maxDate={addDays(startDate, 20)}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Sampai Tanggal"
                       />
+                      <IconCalender className="right-center-absolute" style={{right:"10px"}} />
+                      </div>
+
+                      
                     </div>
                   </div>
                 </div>

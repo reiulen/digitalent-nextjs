@@ -397,12 +397,6 @@ onFocus={()=>setError({...error,signing_date:""})}
                       />
                       <IconCalender className="right-center-absolute" style={{right:"10px"}} />
                       </div>
-
-                      {/* <input
-                        type="date"
-                        className="form-control"
-                        onChange={(e) => setSigning_date(e.target.value)}
-                      /> */}
                       {error.signing_date ? <p className="error-text">{error.signing_date}</p>:"" }
                     </div>
                   </div>
