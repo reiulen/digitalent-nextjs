@@ -174,7 +174,7 @@ const DetailSubstansi = () => {
                     <p>FGA</p>
                     <p>Cloude Computing</p>
                     <p>-</p>
-                    <p>Publish</p>
+                    <p>{subtance.status ? 'Publish' : 'Draft'}</p>
                   </div>
                 </div>
               </div>
@@ -190,8 +190,8 @@ const DetailSubstansi = () => {
                   </div>
                   <div className="col value-1">
                     <p>1 - 5 Juli 2021</p>
-                    <p>40 Soal</p>
-                    <p>60 Menit</p>
+                    <p>{subtance.bank_soal} Soal</p>
+                    <p>{subtance.duration} Menit</p>
                   </div>
                 </div>
               </div>
@@ -337,7 +337,7 @@ const DetailSubstansi = () => {
                               </span>
                             </td>
                             <td className="align-middle">
-                              {question.subtance_question_bank_id}
+                              CC{question.id}
                             </td>
                             <td className="align-middle">
                               {question.question}

@@ -24,6 +24,8 @@ const ReportSurvey = () => {
 
   const [search, setSearch] = useState('')
   const [limit, setLimit] = useState(null)
+  const [status, setStatus] = useState('')
+  const [pelatihan, setPelatihan] = useState(null)
 
   useEffect(() => {
     if (limit) {
@@ -32,15 +34,12 @@ const ReportSurvey = () => {
   }, [dispatch, limit, router, id]);
 
   const handlePagination = (pageNumber) => {
-    if (limit != null) {
-      router.push(`${router.pathname}?id=${id}&page=${pageNumber}&limit=${limit}`)
-    } else if (search != '' && limit != null) {
-      router.push(`${router.pathname}?id=${id}&page=${pageNumber}&limit=${limit}&keyword=${search}`)
-    } else if (search != '') {
-      router.push(`${router.pathname}?id=${id}&page=${pageNumber}&keyword=${search}`)
-    } else {
-      router.push(`${router.pathname}?id=${id}&page=${pageNumber}`)
-    }
+    let link = `${router.pathname}?id=${id}&page=${pageNumber}`
+    if (limit) link = link.concat(`&limit=${limit}`)
+    if (search) link = link.concat(`&keyword=${search}`)
+    if (status) link = link.concat(`&status=${status}`)
+    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
+    router.push(link)
   }
 
   const handleSearch = () => {
@@ -56,10 +55,21 @@ const ReportSurvey = () => {
   }
 
   const handleExportReport = async () => {
-    console.log('berhasil')
-    await axios.get(`http://dts-subvit-dev.majapahit.id/api/trivia-question-banks/report/export/${id}`).then((res) => {
+    let link = `http://dts-subvit-dev.majapahit.id/api/trivia-question-banks/report/export/${id}`
+    if (search) link = link.concat(`&keyword=${search}`)
+    if (status) link = link.concat(`&status=${status}`)
+    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
+
+    await axios.get(link).then((res) => {
       window.location.href = res.data.data
     })
+  }
+
+  const handleFilter = () => {
+    let link = `${router.pathname}?id=${id}&page=${1}`
+    if (status) link = link.concat(`&status=${status}`)
+    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
+    router.push(link)
   }
 
   return (
@@ -166,36 +176,39 @@ const ReportSurvey = () => {
               <div className="row align-items-center my-5">
                 <div className="col-lg-3 col-xl-3 ">
                   <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
-                    </select>
-                    <small className="text-muted mt-1 p-0">
+                    <small className="text-muted p-0">
                       Filter by Pelatihan
                     </small>
+                    <select className="form-control mb-1">
+                      <option>Semua</option>
+                    </select>
                   </div>
                 </div>
 
                 <div className="col-lg-3 col-xl-3 ">
                   <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
-                    </select>
-                    <small className="text-muted mt-1 p-0">
+                    <small className="text-muted p-0">
                       Filter by Status
                     </small>
+                    <select
+                      className="form-control mb-1"
+                      onChange={e => setStatus(e.target.value)}
+                      onBlur={e => setStatus(e.target.value)}
+                      value={status}
+                    >
+                      <option value='' selected>Semua</option>
+                      <option value={1}>Publish</option>
+                      <option value={0}>Draft</option>
+                    </select>
                   </div>
                 </div>
 
                 <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
-                    </select>
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Nilai
-                    </small>
+                  <div className="mt-4">
+                    <button className='btn btn-light-primary' onClick={handleFilter}>Filter</button>
                   </div>
                 </div>
+
               </div>
             </div>
 
@@ -210,7 +223,6 @@ const ReportSurvey = () => {
                         <th className="text-center">No</th>
                         <th>Peserta Test</th>
                         <th>Pelatihan</th>
-                        <th>Nilai</th>
                         <th>Total Pengerjaan</th>
                         <th>Jawaban</th>
                         <th>Status</th>
@@ -219,21 +231,24 @@ const ReportSurvey = () => {
                     <tbody>
                       {
                         survey && survey.reports.length === 0 ?
-                          '' :
+                          (
+                            <tr>
+                              <td className='text-center' colSpan={6}>Data Masih Kosong</td>
+                            </tr>
+                          ) :
                           survey && survey.reports.map((row, i) => {
                             return <tr key={row.id}>
                               <td className='align-middle text-center'>
-                                <p className="badge badge-secondary h6">{i + 1 * (page * 5 || limit) - 4}</p>
+                                <p className="badge badge-secondary text-muted">{i + 1 * (page * 5 || limit) - 4}</p>
                               </td>
                               <td className='align-middle'>
                                 <div>
                                   <p className="my-0 h6">{row.name}</p>
                                   <p className="my-0">{row.email}</p>
-                                  <p className="my-0">{row.no_telp}</p>
+                                  <p className="my-0">{row.nik}</p>
                                 </div>
                               </td>
-                              <td className='align-middle'><p className="h6">{row.pelatihan}</p></td>
-                              <td className='align-middle'><p className="h6">{row.nilai}</p></td>
+                              <td className='align-middle'><p className="h6">{row.training.name}</p></td>
                               <td className='align-middle'>
                                 <div>
                                   <p className="my-0 h6">{row.total_workmanship_date}</p>
@@ -242,12 +257,26 @@ const ReportSurvey = () => {
                               </td>
                               <td className='align-middle'>
                                 <div>
-                                  <p className="my-0">Benar: {row.jawaban_benar} Jawaban</p>
-                                  <p className="my-0">Salah: {row.jawaban_salah} Jawaban</p>
-                                  <p className="my-0">Jumlah: {row.jumlah_soal} Jawaban</p>
+                                  <p className="my-0">Benar: {row.right_answer} Jawaban</p>
+                                  <p className="my-0">Salah: {row.wrong_answer} Jawaban</p>
+                                  <p className="my-0">Jumlah: {row.total_questions} Jawaban</p>
                                 </div>
                               </td>
-                              <td className='align-middle'><p className="badge badge-success">{row.status}</p></td>
+                              {
+                                row.status ? (
+                                  <td className='align-middle'>
+                                    <span className="label label-inline label-light-success font-weight-bold">
+                                      Publish
+                                    </span>
+                                  </td>
+                                ) : (
+                                  <td className='align-middle'>
+                                    <span className="label label-inline label-light-warning font-weight-bold">
+                                      Draft
+                                    </span>
+                                  </td>
+                                )
+                              }
                             </tr>
                           })
                       }
