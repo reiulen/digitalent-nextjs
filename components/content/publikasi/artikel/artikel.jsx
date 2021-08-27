@@ -57,9 +57,9 @@ const Artikel = () => {
   page = Number(page);
 
   useEffect(() => {
-    if (limit) {
-      router.push(`${router.pathname}?page=1&limit=${limit}`);
-    }
+    // if (limit) {
+    //   router.push(`${router.pathname}?page=1&limit=${limit}`);
+    // }
 
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
@@ -74,31 +74,6 @@ const Artikel = () => {
       });
     }
 
-    if (publishValue !== null && startDate === null && endDate === null && limit === null && search === null){
-      router.push(`${router.pathname}?publish=${publishValue}`);
-
-    } else if (publishValue !== null && startDate !== null && endDate !== null && limit === null && search === null) {
-        router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-    } else if (publishValue !== null && startDate !== null && endDate !== null && limit !== null && search === null) {
-        router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-    
-    } else if (publishValue !== null && startDate !== null && endDate !== null && limit === null && search !== null) {
-        router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-
-    } else if (publishValue !== null && startDate === null && endDate === null && limit !== null && search === null) {
-        router.push(`${router.pathname}?publish=${publishValue}&limit=${limit}`);
-
-    } else if (publishValue !== null && startDate === null && endDate === null && limit === null && search !== null) {
-        router.push(`${router.pathname}?publish=${publishValue}&keyword=${search}`);
-    
-    } else if (publishValue !== null && startDate === null && endDate === null && limit !== null && search !== null) {
-        router.push(`${router.pathname}?publish=${publishValue}&limit=${limit}&keyword=${search}`);
-    
-    } else if (publishValue !== null && startDate !== null && endDate !== null && limit !== null && search !== null) {
-        router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-    }
-     
   }, [limit, isDeleted, publishValue, dispatch, search]);
 
   const onNewReset = () => {
@@ -187,8 +162,47 @@ const Artikel = () => {
   };
 
   const handleLimit = (val) => {
-    setLimit(val);
+    setLimit(val)
+    if (search === "") {
+        router.push(`${router.pathname}?page=1&limit=${val}`);
+    
+    } else {
+        router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+    }
+    
   };
+
+  const handlePublish = (val) => {
+    if (val !== null || val !== "") {
+      setPublishValue (val)
+
+      if ( startDate === null && endDate === null && limit === null && search === null){
+        router.push(`${router.pathname}?publish=${val}`);
+  
+      } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+  
+      } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+      
+      } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+  
+      } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+          router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+  
+      } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+          router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+      
+      } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+          router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+      
+      } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+      }
+    }
+    
+  }
 
   return (
     <PageWrapper>
@@ -255,7 +269,7 @@ const Artikel = () => {
             titleValue="Artikel"
             title="Total Publish"
             publishedVal="1"
-            routePublish={() => setPublishValue("1")}
+            routePublish={() => handlePublish("1")}
           />
 
           <CardPage
@@ -266,7 +280,7 @@ const Artikel = () => {
             titleValue="Artikel"
             title="Total Author"
             publishedVal=""
-            routePublish={() => setPublishValue("")}
+            routePublish={() => handlePublish("")}
           />
           <CardPage
             background="bg-light-success"
@@ -276,7 +290,7 @@ const Artikel = () => {
             titleValue="K"
             title="Total Yang Baca"
             publishedVal=""
-            routePublish={() => setPublishValue("")}
+            routePublish={() => handlePublish("")}
           />
           <CardPage
             background="bg-light-danger"
@@ -286,7 +300,7 @@ const Artikel = () => {
             titleValue="Artikel"
             title="Total Belum Publish"
             publishedVal="0"
-            routePublish={() => setPublishValue("0")}
+            routePublish={() => handlePublish("0")}
           />
         </div>
       </div>
@@ -489,11 +503,12 @@ const Artikel = () => {
                                 <ButtonNewTab
                                   icon="setting.svg"
                                   link={`/publikasi/artikel/preview/${artikel.id}`}
-                                  // title="Preview Artikel"
+                                  title="Preview"
                                 />
                                 <ButtonAction
                                   icon="write.svg"
                                   link={`/publikasi/artikel/${artikel.id}`}
+                                  title="Edit"
                                 />
                                 <button
                                   onClick={() => handleDelete(artikel.id)}
@@ -502,6 +517,9 @@ const Artikel = () => {
                                     background: "#F3F6F9",
                                     borderRadius: "6px",
                                   }}
+                                  data-toggle="tooltip" 
+                                  data-placement="bottom" 
+                                  title="Hapus"
                                 >
                                   <Image
                                     alt="button-action"

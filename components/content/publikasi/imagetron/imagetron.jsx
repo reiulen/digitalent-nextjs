@@ -65,9 +65,9 @@ const Imagetron = () => {
     // }, [dispatch])
 
     useEffect(() => {
-        if (limit) {
-            router.push(`${router.pathname}?page=1&limit=${limit}`);
-        }
+        // if (limit) {
+        //     router.push(`${router.pathname}?page=1&limit=${limit}`);
+        // }
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
             (result) => {
@@ -81,12 +81,7 @@ const Imagetron = () => {
             });
         }
 
-        if (publishValue){
-            router.push(`${router.pathname}?publish=${publishValue}`);
-            // console.log("check")
-            // console.log (publishValue)
-        }
-    }, [limit, isDeleted, publishValue, dispatch]);
+    }, [isDeleted, dispatch]);
 
     // const override = css`
     //     margin: 0 auto;
@@ -138,8 +133,47 @@ const Imagetron = () => {
     };
 
     const handleLimit = (val) => {
-        setLimit(val);
+        setLimit(val)
+        if (search === "") {
+            router.push(`${router.pathname}?page=1&limit=${val}`);
+        
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        }
+        
     };
+    
+    const handlePublish = (val) => {
+        if (val !== null || val !== "") {
+          setPublishValue (val)
+    
+          if ( startDate === null && endDate === null && limit === null && search === null){
+            router.push(`${router.pathname}?publish=${val}`);
+      
+          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+      
+          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+          
+          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+      
+          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+      
+          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+          
+          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+          
+          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+          }
+        }
+        
+    }
 
     return (
         <PageWrapper>
@@ -192,7 +226,7 @@ const Imagetron = () => {
                         titleValue='Imagetron' 
                         title='Total Publish' 
                         publishedVal = "1"
-                        routePublish = { () => setPublishValue("1")}
+                        routePublish = { () => handlePublish("1")}
                     />
                     <CardPage 
                         background='bg-light-success' 
@@ -202,7 +236,7 @@ const Imagetron = () => {
                         titleValue='K' 
                         title='Total Konten Author' 
                         publishedVal = ""
-                        routePublish = { () => setPublishValue("")}
+                        routePublish = { () => handlePublish("")}
                     />
                     <CardPage 
                         background='bg-light-danger' 
@@ -212,7 +246,7 @@ const Imagetron = () => {
                         titleValue='Imagetron' 
                         title='Total Unpublish' 
                         publishedVal = "0"
-                        routePublish = { () => setPublishValue("0")}
+                        routePublish = { () => handlePublish("0")}
                     />
                 </div>
             </div>
@@ -389,7 +423,7 @@ const Imagetron = () => {
                                                             <td className='align-middle'>Admin Publikasi</td>
                                                             <td className='align-middle'>
                                                                 {/* <ButtonAction icon='setting.svg' /> */}
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/imagetron/${row.id}`}/>
+                                                                <ButtonAction icon='write.svg' link={`/publikasi/imagetron/${row.id}`} title="Edit"/>
                                                                 <button
                                                                     onClick={() => handleDelete(row.id)}
                                                                     className="btn mr-1"
@@ -397,6 +431,9 @@ const Imagetron = () => {
                                                                         background: "#F3F6F9",
                                                                         borderRadius: "6px",
                                                                     }}
+                                                                    data-toggle="tooltip" 
+                                                                    data-placement="bottom" 
+                                                                    title="Hapus"
                                                                     >
                                                                     <Image
                                                                         alt="button-action"

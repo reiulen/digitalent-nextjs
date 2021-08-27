@@ -45,12 +45,12 @@ const Faq = () => {
     useEffect(() => {
         // dispatch (getAllFaqPagination())
 
-        if (limit !== null && search === "") {
-            router.push(`${router.pathname}?page=1&limit=${limit}`)
+        // if (limit !== null && search === "") {
+        //     router.push(`${router.pathname}?page=1&limit=${limit}`)
 
-        } else if (limit !== null && search !== ""){
-            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
-        }
+        // } else if (limit !== null && search !== ""){
+        //     router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+        // }
 
 
         if (isDeleted) {
@@ -64,32 +64,7 @@ const Faq = () => {
             })
         }
 
-        if (publishValue !== null && startDate === null && endDate === null && limit === null && search === null){
-            router.push(`${router.pathname}?publish=${publishValue}`);
-      
-        } else if (publishValue !== null && startDate !== null && endDate !== null && limit === null && search === null) {
-            router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
-        } else if (publishValue !== null && startDate !== null && endDate !== null && limit !== null && search === null) {
-            router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-        
-        } else if (publishValue !== null && startDate !== null && endDate !== null && limit === null && search !== null) {
-            router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-    
-        } else if (publishValue !== null && startDate === null && endDate === null && limit !== null && search === null) {
-            router.push(`${router.pathname}?publish=${publishValue}&limit=${limit}`);
-    
-        } else if (publishValue !== null && startDate === null && endDate === null && limit === null && search !== null) {
-            router.push(`${router.pathname}?publish=${publishValue}&keyword=${search}`);
-        
-        } else if (publishValue !== null && startDate === null && endDate === null && limit !== null && search !== null) {
-            router.push(`${router.pathname}?publish=${publishValue}&limit=${limit}&keyword=${search}`);
-        
-        } else if (publishValue !== null && startDate !== null && endDate !== null && limit !== null && search !== null) {
-            router.push(`${router.pathname}?publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-        }
-        
-    }, [dispatch, limit, isDeleted, publishValue, search])
+    }, [dispatch, isDeleted, ])
 
     const onSetPin = (checked, id) => {
         const data = {
@@ -187,8 +162,47 @@ const Faq = () => {
     };
 
     const handleLimit = (val) => {
-        setLimit(val);
+        setLimit(val)
+        if (search === "") {
+            router.push(`${router.pathname}?page=1&limit=${val}`);
+        
+        } else {
+            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        }
+        
     };
+    
+    const handlePublish = (val) => {
+        if (val !== null || val !== "") {
+          setPublishValue (val)
+    
+          if ( startDate === null && endDate === null && limit === null && search === null){
+            router.push(`${router.pathname}?publish=${val}`);
+      
+          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+      
+          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+          
+          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+      
+          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+      
+          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+          
+          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+          
+          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+          }
+        }
+        
+      }
 
 
     return (
@@ -242,7 +256,7 @@ const Faq = () => {
                         titleValue='FAQ' 
                         title='Total Publish'
                         publishedVal="1"
-                        routePublish={() => setPublishValue("1")} 
+                        routePublish={() => handlePublish("1")} 
                     />
                     <CardPage 
                         background='bg-light-warning' 
@@ -252,7 +266,7 @@ const Faq = () => {
                         titleValue='FAQ' 
                         title='Total Author'
                         publishedVal=""
-                        routePublish={() => setPublishValue("")} 
+                        routePublish={() => handlePublish("")} 
                     />
                     <CardPage 
                         background='bg-light-danger' 
@@ -262,7 +276,7 @@ const Faq = () => {
                         titleValue='FAQ' 
                         title='Total Unpublish' 
                         publishedVal="0"
-                        routePublish={() => setPublishValue("0")}
+                        routePublish={() => handlePublish("0")}
                     />
                 </div>
             </div>
@@ -441,7 +455,7 @@ const Faq = () => {
                                                                 Super Admin
                                                             </td>
                                                             <td className='align-middle'>
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/faq/${row.id}`} />
+                                                                <ButtonAction icon='write.svg' link={`/publikasi/faq/${row.id}`} title="Edit"/>
                                                                 <button
                                                                     onClick={() => handleDelete(row.id)}
                                                                     className="btn mr-1"
@@ -449,6 +463,9 @@ const Faq = () => {
                                                                         background: "#F3F6F9",
                                                                         borderRadius: "6px",
                                                                     }}
+                                                                    data-toggle="tooltip" 
+                                                                    data-placement="bottom" 
+                                                                    title="Hapus"
                                                                 >
                                                                     <Image
                                                                         alt="button-action"
