@@ -260,6 +260,7 @@ const EditDokumentKerjasama = () => {
   // onchange textarea default cooperationID
   const changeDataContentDefault = (event, i) => {
     // console.log("object")
+    
     let dataCoopertaion = { ...cooperationID };
     dataCoopertaion.data_content[i].form_content = event.target.value;
     console.log("dataCoopertaion", dataCoopertaion);
