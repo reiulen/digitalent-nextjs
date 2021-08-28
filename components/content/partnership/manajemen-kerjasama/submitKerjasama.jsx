@@ -63,6 +63,7 @@ const SubmitKerjasama = () => {
 
 const [NamePDF, setNamePDF] = useState(null);
   // onchange pdf
+  
 
   const fileType = ["application/pdf"];
   const handlePdfFileChange = (e) => {
