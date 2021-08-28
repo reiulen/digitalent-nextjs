@@ -25,7 +25,6 @@ const EditMitra = () => {
   const [website, setWesite] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
-  console.log("indonesia_provinces_id",indonesia_provinces_id)
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
   const [postal_code, setPostal_code] = useState("");
   const [pic_name, setPic_name] = useState("");
@@ -38,7 +37,6 @@ const EditMitra = () => {
   const [citiesAll, setCitiesAll] = useState([]);
   // default send
   const [defaultValueProvinceID, setDefaultValueProvinceID] = useState("")
-  console.log("defaultValueProvinceID",defaultValueProvinceID)
   const [defaultValueCitieID, setDefaultValueCitieID] = useState("")
 
   const [imageview, setImageview] = useState("")
