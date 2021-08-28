@@ -20,6 +20,9 @@ import {
   LIST_STATUS_SUCCESS_DETAIL,
   SET_VALUE_KERJA_SAMA_M_DETAIL,
   SET_VALUE_STATUS_M_DETAIL,
+  RELOAD_TABLE_DETAIL,
+  SUCCESS_DELETE_COOPERATION_M_DETAIL,
+  CHANGE_STATUS_LIST_M_DETAIL,
 } from "../../types/partnership/mitra.type";
 import router from "next/router";
 
@@ -223,11 +226,13 @@ export const setLimitDetail = (value) => {
   };
 };
 
-export const exportFileCSVDetail = () => {
+export const exportFileCSVDetail = (id) => {
   return async (dispatch, getState) => {
+    let statusState = getState().allMitra.statusDetail || "";
+    let cooperationState = getState().allMitra.categories_cooporation || "";
     try {
       let urlExport = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export-cooperation/${id}?categories_cooporation=${statusState}&status=${cooperationState}`
       );
       router.push(urlExport.config.url);
 
@@ -278,6 +283,55 @@ export const changeValueKerjaSama = (value) => {
 export const changeValueStatus = (value) => {
   return {
     type: SET_VALUE_STATUS_M_DETAIL,
+    value,
+  };
+};
+
+export const deleteCooperation = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      let { data } = await axios.delete(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
+      );
+      dispatch(successDeleteCooperation());
+    } catch (error) {
+      console.log("action delete gagal", error);
+    }
+  };
+};
+
+export const successDeleteCooperation = () => {
+  return {
+    type: SUCESS_DELETE_MITRA,
+  };
+};
+
+export const reloadTable = () => {
+  return {
+    type: RELOAD_TABLE_DETAIL,
+  };
+};
+
+export const changeStatusList = (value, id) => {
+  console.log(value, id);
+  return async (dispatch, getState) => {
+    try {
+      let dataSend = { status: value };
+      let { data } = await axios.put(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/update-status/${id}`,
+        dataSend
+      );
+      console.log("status list data value", data);
+      dispatch(successChangeStatusList(value));
+    } catch (error) {
+      console.log("error change status list");
+    }
+  };
+};
+
+export const successChangeStatusList = (value) => {
+  return {
+    type: CHANGE_STATUS_LIST_M_DETAIL,
     value,
   };
 };

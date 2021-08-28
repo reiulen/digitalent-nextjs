@@ -22,6 +22,10 @@ import {
     DETAIL_SURVEY_QUESTION_BANKS_SUCCESS,
     DETAIL_SURVEY_QUESTION_BANKS_FAIL,
 
+    DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST,
+    DETAIL_ONE_SURVEY_QUESTION_BANKS_SUCCESS,
+    DETAIL_ONE_SURVEY_QUESTION_BANKS_FAIL,
+
     UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST,
     UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_SUCCESS,
     UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET,
@@ -101,17 +105,20 @@ export const newSurveyQuestionBanksReducer = (state = { survey: {} }, action) =>
 export const detailSurveyQuestionBanksReducer = (state = { survey: {} }, action) => {
     switch (action.type) {
         case DETAIL_SURVEY_QUESTION_BANKS_REQUEST:
+        case DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST:
             return {
                 loading: true
             }
 
         case DETAIL_SURVEY_QUESTION_BANKS_SUCCESS:
+        case DETAIL_ONE_SURVEY_QUESTION_BANKS_SUCCESS:
             return {
                 loading: false,
                 survey: action.payload
             }
 
         case DETAIL_SURVEY_QUESTION_BANKS_FAIL:
+        case DETAIL_ONE_SURVEY_QUESTION_BANKS_FAIL:
             return {
                 loading: false,
                 error: action.payload

@@ -237,7 +237,7 @@ const ListSurvey = () => {
                                   link={`/subvit/survey/edit?id=${row.id}`}
                                   title='Edit'
                                 />
-                                <ButtonAction icon="detail.svg" link={`/subvit/survey/${row.id}`} />
+                                <ButtonAction icon="detail.svg" link={`/subvit/survey/${row.id}`} title='Detail' />
                                 <button
                                   onClick={() => handleDelete(row.id)}
                                   className="btn mr-1"

@@ -181,11 +181,12 @@ const TambahMitra = () => {
     setIndonesia_provinces_id(e.target.value);
   };
 
+  const [NamePDF, setNamePDF] = useState(null);
   const fileType = ["image/png"];
   const fileMax = 2097152;
   const onChangeImage = (e) => {
     let selectedFile = e.target.files[0];
-    console.log("selectedFile", selectedFile);
+    setNamePDF(selectedFile.name)
     if (selectedFile) {
       if (
         selectedFile &&
@@ -196,6 +197,7 @@ const TambahMitra = () => {
         reader.readAsDataURL(selectedFile);
         reader.onloadend = (e) => {
           setAgency_logo(e.target.result);
+          setShowImage(true)
           // setPdfFileError("");
           // setNamePDF(selectedFile.name);
           // alert(e.target.result)
@@ -216,6 +218,12 @@ const TambahMitra = () => {
     //         console.log("e.target.result",e.target.result)
     //     }
   };
+
+
+  const [showImage, setShowImage] = useState(false)
+  const hideImage = () =>{
+      setShowImage(showImage?false:true)
+  }
 
   useEffect(() => {
     getDataProvinces();
@@ -281,7 +289,7 @@ const TambahMitra = () => {
                         onChange={(e) => onChangeImage(e)}
                         type="file"
                         name="logo"
-                        className="custom-file-input"
+                        className="custom-file-input cursor-pointer"
                         id="inputGroupFile04"
                         // onChange={onChangeGambar}
                       />
@@ -290,11 +298,14 @@ const TambahMitra = () => {
                         className="custom-file-label"
                         htmlFor="inputGroupFile04"
                       >
-                        Cari Dokumen
+                        {NamePDF ? NamePDF : "Cari Dokumen" }
                       </label>
                     </div>
                   </div>
+                  {NamePDF?<button className="btn btn-primary btn-sm my-3" type="button" onClick={()=>hideImage()}>{showImage?"Tutup":"Buka"}</button>:""}
+                  {/* <button></button> */}
                 </div>
+                {showImage ? 
                 <div
                   className={`${
                     agency_logo ? "pdf-container w-100 border my-3" : "d-none"
@@ -308,6 +319,7 @@ const TambahMitra = () => {
                     width="100%"
                   ></iframe>
                 </div>
+                :""}
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (
