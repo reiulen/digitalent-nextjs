@@ -14,63 +14,69 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteSurveyQuestionBanks,
   clearErrors,
-} from '../../../../redux/actions/subvit/survey-question.actions';
-import {
-  DELETE_SURVEY_QUESTION_BANKS_RESET
-} from '../../../../redux/types/subvit/survey-question.type'
+} from "../../../../redux/actions/subvit/survey-question.actions";
+import { DELETE_SURVEY_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/survey-question.type";
 
 const ListSurvey = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, survey } = useSelector((state) => state.allSurveyQuestionBanks);
-  const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteSurveyQuestionBanks);
+  const { loading, error, survey } = useSelector(
+    (state) => state.allSurveyQuestionBanks
+  );
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    isDeleted,
+  } = useSelector((state) => state.deleteSurveyQuestionBanks);
 
   let { page = 1, success } = router.query;
   page = Number(page);
 
-  const [search, setSearch] = useState('')
-  const [limit, setLimit] = useState(null)
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
 
   useEffect(() => {
-    if (limit) {
-      router.push(`${router.pathname}?page=1&limit=${limit}`)
-    }
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
-        if (result.isConfirmed) {
-          window.location.reload()
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
         }
-      });
+      );
       dispatch({
-        type: DELETE_SURVEY_QUESTION_BANKS_RESET
-      })
+        type: DELETE_SURVEY_QUESTION_BANKS_RESET,
+      });
     }
-  }, [limit, isDeleted, dispatch, router]);
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-    } else if (search != '' && limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${search}`)
-    } else if (search != '') {
-      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
+    } else if (search != "" && limit != null) {
+      router.push(
+        `${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${search}`
+      );
+    } else if (search != "") {
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`);
     } else {
-      router.push(`${router.pathname}?page=${pageNumber}`)
+      router.push(`${router.pathname}?page=${pageNumber}`);
     }
-  }
+  };
 
   const handleSearch = () => {
     if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`)
+      router.push(`${router.pathname}?page=1&keyword=${search}`);
     }
-  }
+  };
 
   const handleLimit = (val) => {
-    setLimit(val)
-  }
+    setLimit(val);
+    router.push(`${router.pathname}?page=1&limit=${val}`);
+  };
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -86,12 +92,12 @@ const ListSurvey = () => {
       if (result.isConfirmed) {
         dispatch(deleteSurveyQuestionBanks(id));
       }
-    })
-  }
+    });
+  };
 
   const onNewReset = () => {
-    router.replace('/subvit/survey', undefined, { shallow: true })
-  }
+    router.replace("/subvit/survey", undefined, { shallow: true });
+  };
 
   return (
     <PageWrapper>
@@ -121,18 +127,32 @@ const ListSurvey = () => {
         ""
       )}
 
-      {success ?
-        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+      {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
           <div className="alert-text">Berhasil Menyimpan Data</div>
           <div className="alert-close">
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
             </button>
           </div>
         </div>
-        : ''
-      }
+      ) : (
+        ""
+      )}
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -155,7 +175,7 @@ const ListSurvey = () => {
                       placeholder="Search..."
                       id="kt_datatable_search_query"
                       autoComplete="off"
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
@@ -163,7 +183,12 @@ const ListSurvey = () => {
                   </div>
                 </div>
                 <div className="col-lg-1 col-xl-1">
-                  <button className='btn btn-sm btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
+                  <button
+                    className="btn btn-sm btn-light-primary btn-block"
+                    onClick={handleSearch}
+                  >
+                    Cari
+                  </button>
                 </div>
 
                 <div className="col-lg-2 col-xl-2 ml-auto">
@@ -195,14 +220,12 @@ const ListSurvey = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {survey && survey.list_survey.length === 0
-                        ?
-                        (
-                          <td className="align-middle text-center" colSpan={8}>
-                            Data Masih Kosong
-                          </td>
-                        )
-                        : survey &&
+                      {survey && survey.list_survey.length === 0 ? (
+                        <td className="align-middle text-center" colSpan={8}>
+                          Data Masih Kosong
+                        </td>
+                      ) : (
+                        survey &&
                         survey.list_survey.map((row, i) => {
                           return (
                             <tr key={row.id}>
@@ -214,13 +237,11 @@ const ListSurvey = () => {
                               <td className="align-middle">
                                 {row.academy.name}
                               </td>
+                              <td className="align-middle">{row.theme.name}</td>
                               <td className="align-middle">
-                                {row.theme.name}
+                                {row.bank_soal} Soal
                               </td>
-                              <td className="align-middle">{row.bank_soal} Soal</td>
-                              <td className="align-middle">
-                                {row.start_at}
-                              </td>
+                              <td className="align-middle">{row.start_at}</td>
                               <td className="align-middle">
                                 <span className="badge badge-success">
                                   Publish
@@ -230,14 +251,18 @@ const ListSurvey = () => {
                                 <ButtonAction
                                   icon="setting.svg"
                                   link={`/subvit/survey/report?id=${row.id}`}
-                                  title='Report'
+                                  title="Report"
                                 />
                                 <ButtonAction
                                   icon="write.svg"
                                   link={`/subvit/survey/edit?id=${row.id}`}
-                                  title='Edit'
+                                  title="Edit"
                                 />
-                                <ButtonAction icon="detail.svg" link={`/subvit/survey/${row.id}`} title='Detail' />
+                                <ButtonAction
+                                  icon="detail.svg"
+                                  link={`/subvit/survey/${row.id}`}
+                                  title="Detail"
+                                />
                                 <button
                                   onClick={() => handleDelete(row.id)}
                                   className="btn mr-1"
@@ -259,7 +284,8 @@ const ListSurvey = () => {
                               </td>
                             </tr>
                           );
-                        })}
+                        })
+                      )}
                     </tbody>
                   </table>
                 ) : (
@@ -298,13 +324,13 @@ const ListSurvey = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option value='5'>5</option>
-                          <option value='10'>10</option>
-                          <option value='15'>15</option>
-                          <option value='20'>20</option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
