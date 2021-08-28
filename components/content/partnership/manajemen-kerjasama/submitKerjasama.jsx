@@ -63,6 +63,7 @@ const SubmitKerjasama = () => {
 
 const [NamePDF, setNamePDF] = useState(null);
   // onchange pdf
+  
 
   const fileType = ["application/pdf"];
   const handlePdfFileChange = (e) => {
@@ -278,6 +279,7 @@ const [NamePDF, setNamePDF] = useState(null);
                         selected={startDate}
                         
                         onChange={(date) => onChangePeriodeDateStart(date)}
+                        
                         selectsStart
                         value={period_date_start}
                         startDate={startDate}

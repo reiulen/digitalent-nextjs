@@ -41,6 +41,8 @@ const EditMitra = () => {
   console.log("defaultValueProvinceID",defaultValueProvinceID)
   const [defaultValueCitieID, setDefaultValueCitieID] = useState("")
 
+  const [imageview, setImageview] = useState("")
+
   const [error, setError] = useState({
     institution_name: "",
     email: "",
@@ -65,7 +67,7 @@ const EditMitra = () => {
       
       setEmail(data.data.email);
       // tambah url logo
-      // setAgency_logo(data.data.agency_logo);
+      setImageview(data.data.agency_logo);
       setWesite(data.data.website);
       setAddress(data.data.alamat);
 
@@ -119,14 +121,15 @@ const EditMitra = () => {
 
   const [NamePDF, setNamePDF] = useState(null);
   const fileType = ["image/png"];
+  const fileTypeJpeg = ["image/jpeg"];
   const fileMax = 2097152;
   const onChangeImage = (e) => {
     let selectedFile = e.target.files[0];
-    setNamePDF(selectedFile.name)
+      
     if (selectedFile) {
       if (
         selectedFile &&
-        fileType.includes(selectedFile.type) &&
+        fileTypeJpeg.includes(selectedFile.type) || fileType.includes(selectedFile.type) &&
         selectedFile.size <= fileMax
       ) {
         let reader = new FileReader();
@@ -134,12 +137,13 @@ const EditMitra = () => {
         reader.onloadend = (e) => {
           setAgency_logo(e.target.result);
           setShowImage(true)
+          setNamePDF(selectedFile.name)
           // setPdfFileError("");
           // setNamePDF(selectedFile.name);
           // alert(e.target.result)
         };
       } else {
-        notify("gambar harus PNG dan max size 2mb");
+        notify("gambar harus PNG atau JPG dan max size 2mb");
       }
     } else {
       notify("upload gambar dulu");
@@ -344,6 +348,24 @@ router.push({
                       </label>
                     </div>
                   </div>
+                  {!NamePDF ?
+                  <div className="border my-3">
+                <Image
+                                      unoptimized={
+                                        process.env.ENVIRONMENT !== "PRODUCTION"
+                                      }
+                                      src={
+                                        process.env
+                                          .END_POINT_API_IMAGE_PARTNERSHIP +
+                                        "partnership/images/profile-images/" +
+                                        imageview
+                                      }
+                                      width={500} 
+                                      height={500}
+                                      alt="logo"
+                                    />
+                                    </div>
+                                    :""}
                   <div className="flex items-center">
 
                   {NamePDF?<button className="btn btn-primary btn-sm my-3 mr-3" type="button" onClick={()=>hideImage()}>{showImage?"Tutup":"Buka"}</button>:""}
@@ -381,6 +403,7 @@ router.push({
                 ) : (
                   ""
                 )}
+
                 
               </div>
 

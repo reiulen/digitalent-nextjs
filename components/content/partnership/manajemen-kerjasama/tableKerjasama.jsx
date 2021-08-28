@@ -40,26 +40,11 @@ import {
 
 
 const Table = () => {
-
-//   const data = [
-//   { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
-//   { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
-//   { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" }
-// ];
-// const csvReport = {
-//   fileName:'Repost.csv',
-//   data:data,
-// }
 const router = useRouter();
-
 let { update, success } = router.query;
-
-
-
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK",allMK)
   const exportCSV = {
     width: "77%",
     marginLeft: "2rem",
@@ -67,7 +52,6 @@ let { update, success } = router.query;
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
-  console.log("valueStatus", valueStatus);
   const [valueKerjaSama, setValueKerjaSama] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -96,6 +80,7 @@ let { update, success } = router.query;
     }).then(async (result) => {
       if (result.value) {
         dispatch(changeStatusList(value,id))
+        setIsStatusBar(true)
       }else{
         dispatch(reloadTable())
       }
@@ -121,11 +106,12 @@ let { update, success } = router.query;
       }
     })
   }
-
+const [isStatusBar, setIsStatusBar] = useState(false)
   const [deleteBar, setDeleteBar] = useState(false)
   const onNewReset = () => {
     router.replace("/partnership/manajemen-kerjasama");
     setDeleteBar(false)
+    setIsStatusBar(false)
   };
   useEffect(() => {
     console.log("useffect");
@@ -167,6 +153,40 @@ let { update, success } = router.query;
             className="alert-text"
             style={{ color: "#1BC5BD" }}
           >Berhasil mengupdate data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {isStatusBar  ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5"}}
+        >
+          <div className="alert-icon">
+            <i
+              className="flaticon2-checkmark"
+              style={{ color: "#1BC5BD" }}
+            ></i>
+          </div>
+          <div
+            className="alert-text"
+            style={{ color: "#1BC5BD" }}
+          >Berhasil mengupdate status
           </div>
           <div className="alert-close">
             <button
