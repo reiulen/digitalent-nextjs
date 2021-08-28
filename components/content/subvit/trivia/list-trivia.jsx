@@ -14,63 +14,60 @@ import LoadingTable from "../../../LoadingTable";
 import {
   deleteTriviaQuestionBanks,
   clearErrors,
-} from '../../../../redux/actions/subvit/trivia-question.actions'
-import {
-  DELETE_TRIVIA_QUESTION_BANKS_RESET
-} from '../../../../redux/types/subvit/trivia-question.type'
+} from "../../../../redux/actions/subvit/trivia-question.actions";
+import { DELETE_TRIVIA_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/trivia-question.type";
 
 const ListTrivia = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, trivia } = useSelector((state) => state.allTriviaQuestionBanks)
-  const { loading: loadingDelete, error: errorDelete, isDeleted } = useSelector((state) => state.deleteTriviaQuestionBanks)
+  const { loading, error, trivia } = useSelector(
+    (state) => state.allTriviaQuestionBanks
+  );
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    isDeleted,
+  } = useSelector((state) => state.deleteTriviaQuestionBanks);
 
   let { page = 1, success } = router.query;
   page = Number(page);
 
-  const [search, setSearch] = useState('')
-  const [limit, setLimit] = useState(null)
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
 
   useEffect(() => {
-    if (limit) {
-      router.push(`${router.pathname}?page=1&limit=${limit}`)
-    }
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
-        if (result.isConfirmed) {
-          window.location.reload()
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
         }
-      });
+      );
       dispatch({
-        type: DELETE_TRIVIA_QUESTION_BANKS_RESET
-      })
+        type: DELETE_TRIVIA_QUESTION_BANKS_RESET,
+      });
     }
-  }, [dispatch, limit, isDeleted, router]);
+  }, [dispatch, isDeleted]);
 
   const handlePagination = (pageNumber) => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-    } else if (search != '' && limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${search}`)
-    } else if (search != '') {
-      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
-    } else {
-      router.push(`${router.pathname}?page=${pageNumber}`)
-    }
-  }
+    let link = `${router.pathname}?page=${pageNumber}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
+  };
 
   const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
-    } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`)
-    }
-  }
+    let link = `${router.pathname}?page=1&keyword=${search}`;
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
+  };
 
   const handleLimit = (val) => {
-    setLimit(val)
-  }
+    setLimit(val);
+    router.push(`${router.pathname}?page=1&limit=${limit}`);
+  };
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -84,14 +81,14 @@ const ListTrivia = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteTriviaQuestionBanks(id))
+        dispatch(deleteTriviaQuestionBanks(id));
       }
-    })
-  }
+    });
+  };
 
   const onNewReset = () => {
-    router.replace('/subvit/trivia', undefined, { shallow: true })
-  }
+    router.replace("/subvit/trivia", undefined, { shallow: true });
+  };
 
   return (
     <PageWrapper>
@@ -121,18 +118,32 @@ const ListTrivia = () => {
         ""
       )}
 
-      {success ?
-        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+      {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
           <div className="alert-text">Berhasil Menyimpan Data</div>
           <div className="alert-close">
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
             </button>
           </div>
         </div>
-        : ''
-      }
+      ) : (
+        ""
+      )}
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -155,7 +166,7 @@ const ListTrivia = () => {
                       placeholder="Search..."
                       id="kt_datatable_search_query"
                       autoComplete="off"
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
@@ -163,7 +174,12 @@ const ListTrivia = () => {
                   </div>
                 </div>
                 <div className="col-lg-1 col-xl-1">
-                  <button className='btn btn-sm btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
+                  <button
+                    className="btn btn-sm btn-light-primary btn-block"
+                    onClick={handleSearch}
+                  >
+                    Cari
+                  </button>
                 </div>
 
                 <div className="col-lg-2 col-xl-2 ml-auto">
@@ -195,14 +211,12 @@ const ListTrivia = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {trivia && trivia.list_trivia.length === 0
-                        ?
-                        (
-                          <td className="align-middle text-center" colSpan={8}>
-                            Data Masih Kosong
-                          </td>
-                        )
-                        : trivia &&
+                      {trivia && trivia.list_trivia.length === 0 ? (
+                        <td className="align-middle text-center" colSpan={8}>
+                          Data Masih Kosong
+                        </td>
+                      ) : (
+                        trivia &&
                         trivia.list_trivia.map((row, i) => {
                           return (
                             <tr key={row.id}>
@@ -214,13 +228,14 @@ const ListTrivia = () => {
                               <td className="align-middle">
                                 {row.academy.name}
                               </td>
-                              <td className="align-middle">question
+                              <td className="align-middle">
+                                question
                                 {row.theme.name}
                               </td>
-                              <td className="align-middle">{row.bank_soal} Soal</td>
                               <td className="align-middle">
-                                {row.start_at}
+                                {row.bank_soal} Soal
                               </td>
+                              <td className="align-middle">{row.start_at}</td>
                               <td className="align-middle">
                                 {row.status === true ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
@@ -236,14 +251,18 @@ const ListTrivia = () => {
                                 <ButtonAction
                                   icon="setting.svg"
                                   link={`/subvit/trivia/report?id=${row.id}`}
-                                  title='Report'
+                                  title="Report"
                                 />
                                 <ButtonAction
                                   icon="write.svg"
                                   link={`/subvit/trivia/edit?id=${row.id}`}
-                                  title='Edit'
+                                  title="Edit"
                                 />
-                                <ButtonAction icon="detail.svg" link={`/subvit/trivia/${row.id}`} title='Detail' />
+                                <ButtonAction
+                                  icon="detail.svg"
+                                  link={`/subvit/trivia/${row.id}`}
+                                  title="Detail"
+                                />
                                 <button
                                   onClick={() => handleDelete(row.id)}
                                   className="btn mr-1"
@@ -265,7 +284,8 @@ const ListTrivia = () => {
                               </td>
                             </tr>
                           );
-                        })}
+                        })
+                      )}
                     </tbody>
                   </table>
                 ) : (
@@ -304,8 +324,8 @@ const ListTrivia = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
                           <option>5</option>
                           <option>10</option>
