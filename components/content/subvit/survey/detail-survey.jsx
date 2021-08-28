@@ -269,7 +269,7 @@ const DetailSurvey = () => {
                                                                         Publish
                                                                     </span>
                                                                 ) : (
-                                                                    <span className="label label-inline label-light-warning font-weight-bold">
+                                                                    <span className="label label-inline label-light-danger font-weight-bold">
                                                                         Draft
                                                                     </span>
                                                                 )}

@@ -228,7 +228,7 @@ const EditSoalTrivia = () => {
                 <div className="card card-custom card-stretch gutter-b">
                     <form onSubmit={handleSubmit}>
                         <div className="card-header border-0 d-flex pb-0">
-                            <h3 className="card-title font-weight-bolder text-dark">Soal 1</h3>
+                            <h3 className="card-title font-weight-bolder text-dark">Soal {survey_question_detail.bank_soal + 1}</h3>
                             <div className="card-toolbar ml-auto">
                                 <button className="btn btn-sm btn-primary px-6 font-weight-bold ">
                                     Simpan
