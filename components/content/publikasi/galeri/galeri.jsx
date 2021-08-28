@@ -631,4 +631,5 @@ const Galeri = () => {
     )
 }
 
+
 export default Galeri
