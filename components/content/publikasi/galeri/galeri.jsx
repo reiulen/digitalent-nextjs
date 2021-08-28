@@ -562,7 +562,7 @@ const Galeri = () => {
                                                         "publikasi/images/" +
                                                         row.gambar
                                                     } 
-                                                    key
+                                                    
                                                     alt='image'
                                                     layout='fill'
                                                     objectFit='cover'
@@ -630,5 +630,6 @@ const Galeri = () => {
         </PageWrapper>
     )
 }
+
 
 export default Galeri
