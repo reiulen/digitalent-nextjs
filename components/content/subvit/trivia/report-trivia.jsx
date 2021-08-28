@@ -21,47 +21,52 @@ const ReportTrivia = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, trivia } = useSelector((state) => state.allReportTriviaQuestionBanks);
+  const { loading, error, trivia } = useSelector(
+    (state) => state.allReportTriviaQuestionBanks
+  );
 
   let { page = 1, id } = router.query;
   page = Number(page);
 
-  const [search, setSearch] = useState('')
-  const [limit, setLimit] = useState(null)
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
+  const [publishValue, setPublishValue] = useState(null);
 
   // useEffect(() => {
   // }, [dispatch]);
 
   const handlePagination = (pageNumber) => {
-    if (limit != null) {
-      router.push(`${router.pathname}?id=${id}&page=${pageNumber}&limit=${limit}`)
-    } else if (search != '' && limit != null) {
-      router.push(`${router.pathname}?id=${id}&page=${pageNumber}&limit=${limit}&keyword=${search}`)
-    } else if (search != '') {
-      router.push(`${router.pathname}?id=${id}&page=${pageNumber}&keyword=${search}`)
-    } else {
-      router.push(`${router.pathname}?id=${id}&page=${pageNumber}`)
-    }
-  }
+    let link = `${router.pathname}?id=${id}&page=${pageNumber}`;
+    if (limit) link = link.concat(`&limit=${limit}`);
+    if (search) link = link.concat(`&keyword=${search}`);
+    router.push(link);
+  };
 
   const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}&limit=${limit}`)
-    } else {
-      router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}`)
-    }
-  }
+    let link = `${router.pathname}?id=${id}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
+  };
 
   const handleLimit = (val) => {
-    setLimit(val)
-  }
+    setLimit(val);
+  };
 
   const handleExportReport = async () => {
-    console.log('berhasil')
-    await axios.get(`http://dts-subvit-dev.majapahit.id/api/trivia-question-banks/report/export/${id}`).then((res) => {
-      window.location.href = res.data.data
-    })
-  }
+    let link = `http://dts-subvit-dev.majapahit.id/api/trivia-question-banks/report/export/${id}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    await axios.get(link).then((res) => {
+      window.location.href = res.data.data;
+    });
+  };
+
+  const handlePublish = (val) => {
+    setPublishValue(val);
+    let link = `${router.pathname}?id=${id}&page=${1}&card=${val}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    router.push(link);
+  };
 
   return (
     <PageWrapper>
@@ -97,33 +102,41 @@ const ReportTrivia = () => {
             background="bg-light-info"
             icon="orang-tambah-purple.svg"
             color="#8A50FC"
-            value="90"
+            value={trivia.data.total_peserta}
             titleValue=""
             title="Total Peserta"
+            publishedVal=""
+            routePublish={() => handlePublish("")}
           />
           <CardPage
             background="bg-light-success"
             icon="done-circle.svg"
             color="#0BB783"
-            value="64"
+            value={trivia.data.sudah_mengerjakan}
             titleValue=""
             title="Sudah Mengerjakan"
+            publishedVal="sudah-mengerjakan"
+            routePublish={() => handlePublish("sudah-mengerjakan")}
           />
           <CardPage
             background="bg-light-warning"
             icon="book-open.svg"
             color="#634100"
-            value="64"
+            value={trivia.data.sedang_mengerjakan}
             titleValue=""
             title="Sedang Mengerjakan"
+            publishedVal="sedang-mengerjakan"
+            routePublish={() => handlePublish("sedang-mengerjakan")}
           />
           <CardPage
             background="bg-accent-info"
             icon="mail-purple.svg"
             color="#663259"
-            value="64"
+            value={trivia.data.belum_mengerjakan}
             titleValue=""
             title="Belum Mengerjakan"
+            publishedVal="belum-mengerjakan"
+            routePublish={() => handlePublish("belum-mengerjakan")}
           />
         </div>
       </div>
@@ -133,12 +146,21 @@ const ReportTrivia = () => {
           <div className="card-header border-0 align-items-center row">
             <div className="col-lg-10 col-xl-10">
               <h3 className="card-title font-weight-bolder text-dark">
-                Report Trivia
+                Report Trivia{" "}
+                {publishValue === null || ""
+                  ? ""
+                  : `- ${
+                      publishValue.charAt(0).toUpperCase() +
+                      publishValue.slice(1).replace("-", " ")
+                    }`}
               </h3>
               <p className="text-muted">FGA - Cloud Computing</p>
             </div>
             <div className="col-lg-2 col-xl-2">
-              <button className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block " onClick={handleExportReport}>
+              <button
+                className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block "
+                onClick={handleExportReport}
+              >
                 Export .CSV
               </button>
             </div>
@@ -146,11 +168,19 @@ const ReportTrivia = () => {
           </div>
 
           <div className="card-body pt-0">
-            <div className="table-filter">
+            <div className="table-filter mb-5">
               <div className="row align-items-center">
                 <div className="col-lg-10 col-xl-10">
                   <div className="input-icon">
-                    <input style={{ background: '#F3F6F9', border: 'none' }} type="text" className="form-control" placeholder="Search..." id="kt_datatable_search_query" autoComplete='off' onChange={e => setSearch(e.target.value)} />
+                    <input
+                      style={{ background: "#F3F6F9", border: "none" }}
+                      type="text"
+                      className="form-control"
+                      placeholder="Search..."
+                      id="kt_datatable_search_query"
+                      autoComplete="off"
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
@@ -158,44 +188,12 @@ const ReportTrivia = () => {
                 </div>
 
                 <div className="col-lg-2 col-xl-2">
-                  <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block" onClick={handleSearch}>
+                  <button
+                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
+                    onClick={handleSearch}
+                  >
                     Cari
                   </button>
-                </div>
-              </div>
-
-              <div className="row align-items-center my-5">
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
-                    </select>
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Pelatihan
-                    </small>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
-                    </select>
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Status
-                    </small>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
-                    </select>
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Nilai
-                    </small>
-                  </div>
                 </div>
               </div>
             </div>
@@ -211,68 +209,83 @@ const ReportTrivia = () => {
                         <th className="text-center">No</th>
                         <th>Peserta Test</th>
                         <th>Pelatihan</th>
-                        <th>Nilai</th>
                         <th>Total Pengerjaan</th>
-                        <th>Jawaban</th>
                         <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {
-                        trivia && trivia.reports.length === 0 ?
-                          (
-                            <tr>
-                              <td className='text-center' colSpan={7}>Data Masih Kosong</td>
-                            </tr>
-                          ) :
-                          trivia && trivia.reports.map((row, i) => {
-                            return <tr key={row.id}>
-                              <td className='align-middle text-center'>
-                                <p className="badge badge-secondary h6">{i + 1 * (page * 5 || limit) - 4}</p>
+                      {trivia && trivia.data.reports.length === 0 ? (
+                        <tr>
+                          <td className="text-center" colSpan={7}>
+                            Data Masih Kosong
+                          </td>
+                        </tr>
+                      ) : (
+                        trivia &&
+                        trivia.data.reports.map((row, i) => {
+                          return (
+                            <tr key={row.id}>
+                              <td className="align-middle text-center">
+                                <p className="badge badge-secondary text-muted">
+                                  {i + 1 * (page * 5 || limit) - 4}
+                                </p>
                               </td>
-                              <td className='align-middle'>
+                              <td className="align-middle">
                                 <div>
                                   <p className="my-0 h6">{row.name}</p>
                                   <p className="my-0">{row.email}</p>
                                   <p className="my-0">{row.no_telp}</p>
                                 </div>
                               </td>
-                              <td className='align-middle'><p className="h6">{row.pelatihan}</p></td>
-                              <td className='align-middle'><p className="h6">{row.nilai}</p></td>
-                              <td className='align-middle'>
+                              <td className="align-middle">
+                                <p className="h6">{row.training.name}</p>
+                              </td>
+                              <td className="align-middle">
                                 <div>
-                                  <p className="my-0 h6">{row.total_workmanship_date}</p>
-                                  <p className="my-0">{row.total_workmanship_time}</p>
+                                  <p className="my-0 h6">
+                                    {row.total_workmanship_date}
+                                  </p>
+                                  <p className="my-0">
+                                    {row.total_workmanship_time}
+                                  </p>
                                 </div>
                               </td>
-                              <td className='align-middle'>
-                                <div>
-                                  <p className="my-0">Benar: {row.jawaban_benar} Jawaban</p>
-                                  <p className="my-0">Salah: {row.jawaban_salah} Jawaban</p>
-                                  <p className="my-0">Jumlah: {row.jumlah_soal} Jawaban</p>
-                                </div>
-                              </td>
-                              <td className='align-middle'><p className="badge badge-success">{row.status}</p></td>
-                            </tr>
-                          })
-                      }
 
+                              <td className="align-middle">
+                                {row.status ? (
+                                  <td className="align-middle">
+                                    <span className="label label-inline label-light-success font-weight-bold">
+                                      Diterima
+                                    </span>
+                                  </td>
+                                ) : (
+                                  <td className="align-middle">
+                                    <span className="label label-inline label-light-danger font-weight-bold">
+                                      Ditolak
+                                    </span>
+                                  </td>
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
                     </tbody>
                   </table>
                 ) : (
                   ""
                 )}
               </div>
-              {/* 
+
               <div className="row">
-                {perPage < total && (
+                {trivia && trivia.total > 5 && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={perPage}
-                      totalItemsCount={total}
+                      itemsCountPerPage={trivia.perPage}
+                      totalItemsCount={trivia.total}
                       pageRangeDisplayed={3}
-                      // onChange={handlePagination}
+                      onChange={handlePagination}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -282,7 +295,7 @@ const ReportTrivia = () => {
                     />
                   </div>
                 )}
-                {total > 5 ? (
+                {trivia && trivia.total > 4 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -295,12 +308,13 @@ const ReportTrivia = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -308,7 +322,7 @@ const ReportTrivia = () => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data 120
+                          Total Data {trivia.total}
                         </p>
                       </div>
                     </div>
@@ -316,7 +330,7 @@ const ReportTrivia = () => {
                 ) : (
                   ""
                 )}
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

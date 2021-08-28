@@ -1,6 +1,9 @@
 import Layout from "../../../../components/templates/layout.component";
 import StepTwo from "../../../../components/content/subvit/survey/tambah/step-2-entry";
 
+import { getOneSurveyQuestionBanks } from '../../../../redux/actions/subvit/survey-question.actions'
+import { wrapper } from '../../../../redux/store'
+
 export default function TambahBankSoalTesSurveyStep2() {
   return (
     <>
@@ -12,4 +15,8 @@ export default function TambahBankSoalTesSurveyStep2() {
     </>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
+  await store.dispatch(getOneSurveyQuestionBanks(query.id))
+})
 

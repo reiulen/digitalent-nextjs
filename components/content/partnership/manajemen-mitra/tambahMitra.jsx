@@ -29,13 +29,11 @@ const TambahMitra = () => {
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
-  console.log("agency_logo", agency_logo);
+  console.log("agency_logo",agency_logo)
   const [wesite, setWesite] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
-  console.log("provinces sdsdsda",indonesia_provinces_id)
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
-  console.log("indonesia_cities_id sdsdsda",indonesia_cities_id)
   const [postal_code, setPostal_code] = useState("");
   const [pic_name, setPic_name] = useState("");
   const [pic_contact_number, setPic_contact_number] = useState("");
@@ -181,27 +179,32 @@ const TambahMitra = () => {
     setIndonesia_provinces_id(e.target.value);
   };
 
+  const [NamePDF, setNamePDF] = useState(null);
   const fileType = ["image/png"];
+  const fileTypeJpeg = ["image/jpeg"];
   const fileMax = 2097152;
   const onChangeImage = (e) => {
     let selectedFile = e.target.files[0];
-    console.log("selectedFile", selectedFile);
+    console.log("selectedFile",selectedFile)
+    
     if (selectedFile) {
       if (
         selectedFile &&
-        fileType.includes(selectedFile.type) &&
+        fileTypeJpeg.includes(selectedFile.type) || fileType.includes(selectedFile.type) &&
         selectedFile.size <= fileMax
       ) {
         let reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onloadend = (e) => {
           setAgency_logo(e.target.result);
+          setShowImage(true)
+          setNamePDF(selectedFile.name)
           // setPdfFileError("");
           // setNamePDF(selectedFile.name);
           // alert(e.target.result)
         };
       } else {
-        notify("gambar harus PNG dan max size 2mb");
+        notify("gambar harus PNG atau JPG dan max size 2mb");
       }
     } else {
       notify("upload gambar dulu");
@@ -216,6 +219,12 @@ const TambahMitra = () => {
     //         console.log("e.target.result",e.target.result)
     //     }
   };
+
+
+  const [showImage, setShowImage] = useState(false)
+  const hideImage = () =>{
+      setShowImage(showImage?false:true)
+  }
 
   useEffect(() => {
     getDataProvinces();
@@ -281,7 +290,7 @@ const TambahMitra = () => {
                         onChange={(e) => onChangeImage(e)}
                         type="file"
                         name="logo"
-                        className="custom-file-input"
+                        className="custom-file-input cursor-pointer"
                         id="inputGroupFile04"
                         // onChange={onChangeGambar}
                       />
@@ -290,11 +299,14 @@ const TambahMitra = () => {
                         className="custom-file-label"
                         htmlFor="inputGroupFile04"
                       >
-                        Cari Dokumen
+                        {NamePDF ? NamePDF : "Cari Dokumen" }
                       </label>
                     </div>
                   </div>
+                  {NamePDF?<button className="btn btn-primary btn-sm my-3" type="button" onClick={()=>hideImage()}>{showImage?"Tutup":"Buka"}</button>:""}
+                  {/* <button></button> */}
                 </div>
+                {showImage ? 
                 <div
                   className={`${
                     agency_logo ? "pdf-container w-100 border my-3" : "d-none"
@@ -308,6 +320,7 @@ const TambahMitra = () => {
                     width="100%"
                   ></iframe>
                 </div>
+                :""}
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (

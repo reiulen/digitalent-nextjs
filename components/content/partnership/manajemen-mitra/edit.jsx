@@ -16,7 +16,7 @@ const EditMitra = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const allMitra = useSelector((state) => state.allMitra);
-  console.log("allMitra",allMitra)
+  console.log("allMitra",allMitra.provinces.length)
 
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
@@ -25,6 +25,7 @@ const EditMitra = () => {
   const [website, setWesite] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
+  console.log("indonesia_provinces_id",indonesia_provinces_id)
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
   const [postal_code, setPostal_code] = useState("");
   const [pic_name, setPic_name] = useState("");
@@ -37,7 +38,10 @@ const EditMitra = () => {
   const [citiesAll, setCitiesAll] = useState([]);
   // default send
   const [defaultValueProvinceID, setDefaultValueProvinceID] = useState("")
+  console.log("defaultValueProvinceID",defaultValueProvinceID)
   const [defaultValueCitieID, setDefaultValueCitieID] = useState("")
+
+  const [imageview, setImageview] = useState("")
 
   const [error, setError] = useState({
     institution_name: "",
@@ -63,7 +67,7 @@ const EditMitra = () => {
       
       setEmail(data.data.email);
       // tambah url logo
-      // setAgency_logo(data.data.agency_logo);
+      setImageview(data.data.agency_logo);
       setWesite(data.data.website);
       setAddress(data.data.alamat);
 
@@ -97,6 +101,8 @@ const EditMitra = () => {
   const cancelProvincesChange = () =>{
     setCitiesAll([]);
     dispatch(cancelChangeProvinces())
+    setIndonesia_cities_id(defaultValueCitieID)
+    setIndonesia_provinces_id(defaultValueProvinceID)
   }
   const [statuLoadCities, setStatuLoadCities] = useState(false)
   const changeValueProvinces = () =>{
@@ -106,27 +112,38 @@ const EditMitra = () => {
     dispatch(getProvinces())
   }
 
+  const [showImage, setShowImage] = useState(false)
+
+  const hideImage = () =>{
+      setShowImage(showImage?false:true)
+  }
+
+
+  const [NamePDF, setNamePDF] = useState(null);
   const fileType = ["image/png"];
+  const fileTypeJpeg = ["image/jpeg"];
   const fileMax = 2097152;
   const onChangeImage = (e) => {
     let selectedFile = e.target.files[0];
-    console.log("selectedFile", selectedFile);
+      
     if (selectedFile) {
       if (
         selectedFile &&
-        fileType.includes(selectedFile.type) &&
+        fileTypeJpeg.includes(selectedFile.type) || fileType.includes(selectedFile.type) &&
         selectedFile.size <= fileMax
       ) {
         let reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onloadend = (e) => {
           setAgency_logo(e.target.result);
+          setShowImage(true)
+          setNamePDF(selectedFile.name)
           // setPdfFileError("");
           // setNamePDF(selectedFile.name);
           // alert(e.target.result)
         };
       } else {
-        notify("gambar harus PNG dan max size 2mb");
+        notify("gambar harus PNG atau JPG dan max size 2mb");
       }
     } else {
       notify("upload gambar dulu");
@@ -135,10 +152,11 @@ const EditMitra = () => {
 
    const handleSubmit = async() => {
     // e.preventDefault();
-    if (agency_logo === "") {
-      setError({ ...error, agency_logo: "Harus isi gambar logo dengan format png" });
-      notify("Harus isi gambar logo dengan format png");
-    } else if (institution_name === "") {
+    // if (agency_logo === "") {
+    //   setError({ ...error, agency_logo: "Harus isi gambar logo dengan format png" });
+    //   notify("Harus isi gambar logo dengan format png");
+    // } else
+     if (institution_name === "") {
       setError({ ...error, institution_name: "Harus isi nama lembaga" });
       notify("Harus isi nama lembaga");
     } else if (email === "") {
@@ -197,11 +215,13 @@ const EditMitra = () => {
           formData.append("address", address);
 
           if(allMitra.provinces.length === 0){
-            formData.append("indonesia_provinces_id", indonesia_provinces_id);
-            formData.append("indonesia_cities_id", indonesia_cities_id);
-          }else{
+            
             formData.append("indonesia_provinces_id", defaultValueProvinceID);
             formData.append("indonesia_cities_id", defaultValueCitieID);
+          }else{
+            formData.append("indonesia_provinces_id", indonesia_provinces_id);
+            formData.append("indonesia_cities_id", indonesia_cities_id);
+            
 
           }
 
@@ -221,14 +241,14 @@ const EditMitra = () => {
           //   pathname: '/partnership/manajemen-mitra',
           //   query: { success:true  },
           // })
-          Swal.fire(
-  'Berhasil update data!',
-  'success'
-)
+//           Swal.fire(
+//   'Berhasil update data!',
+//   'success'
+// )
 router.push({
               pathname: "/partnership/manajemen-mitra",
               query: { update: true },
-            });
+            },undefined, { shallow: true });
 
           } catch (error) {
             console.log(error.response.data.message)
@@ -249,6 +269,11 @@ router.push({
       draggable: true,
       progress: undefined,
     });
+
+    const cancelChangeImage = () =>{
+      setAgency_logo("")
+      setNamePDF(null)
+    }
 
   useEffect(() => {
     setDataSingle(router.query.id);
@@ -314,17 +339,51 @@ router.push({
                         onChange={(e) => onChangeImage(e)}
                         type="file"
                         name="logo"
-                        className="custom-file-input"
+                        className="custom-file-input cursor-pointer"
                         id="inputGroupFile04"
                         // onChange={onChangeGambar}
                       />
                       <label className="custom-file-label" htmlFor="inputGroupFile04">
-                        Cari Dokumen
+                        {NamePDF ? NamePDF : "Unggah gambar baru" }
                       </label>
                     </div>
                   </div>
-                </div>
+                  {!NamePDF ?
+                  <div className="border my-3">
+                <Image
+                                      unoptimized={
+                                        process.env.ENVIRONMENT !== "PRODUCTION"
+                                      }
+                                      src={
+                                        process.env
+                                          .END_POINT_API_IMAGE_PARTNERSHIP +
+                                        "partnership/images/profile-images/" +
+                                        imageview
+                                      }
+                                      width={500} 
+                                      height={500}
+                                      alt="logo"
+                                    />
+                                    </div>
+                                    :""}
+                  <div className="flex items-center">
 
+                  {NamePDF?<button className="btn btn-primary btn-sm my-3 mr-3" type="button" onClick={()=>hideImage()}>{showImage?"Tutup":"Buka"}</button>:""}
+
+                  {agency_logo
+                  
+                  ?
+
+                  <button className="btn btn-primary btn-sm my-3" type="button" onClick={()=>cancelChangeImage()}>
+                    {/* {showImage?"Tutup":"Buka"} */}
+                    Batal ubah gambar menjadi default
+                  </button>
+                  
+                  :""}
+
+                  </div>
+                </div>
+{showImage ?
                 <div
                   className={`${
                     agency_logo ? "pdf-container w-100 border my-3" : "d-none"
@@ -338,11 +397,13 @@ router.push({
                     width="100%"
                   ></iframe>
                 </div>
+                :""}
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (
                   ""
                 )}
+
                 
               </div>
 
@@ -381,6 +442,7 @@ router.push({
                   <input
                     onFocus={() => setError({ ...error, email: "" })}
                     type="email"
+                    readOnly
                     className="form-control"
                     placeholder="Masukkan Email"
                     value={email}
@@ -446,7 +508,7 @@ router.push({
                     Provinsi
                   </label>
                   <div className="col-7">
-                    <select className="form-control" disabled>
+                    <select onFocus={() => setError({ ...error, indonesia_provinces_id: "" })} className="form-control" disabled>
                       <option value={indonesia_provinces_id}>{defaultValueProvince}</option>
                     </select>
                   </div>
@@ -457,6 +519,11 @@ router.push({
                   >
                     Ubah Provinsi
                   </button>
+                  {error.indonesia_provinces_id ? (
+                    <p className="error-text">{error.indonesia_provinces_id}</p>
+                  ) : (
+                    ""
+                  )}
                 </div>
               ) : (
                 <div className="form-group row">
@@ -467,8 +534,8 @@ router.push({
                     Provinsi
                   </label>
                   <div className="col-7">
-                    <select className="form-control" onChange={(e)=>changeProvinces(e.target.value)}>
-                      <option value="">Pilih data provinsi</option>
+                    <select onFocus={() => setError({ ...error, indonesia_provinces_id: "" })} className="form-control" onChange={(e)=>changeProvinces(e.target.value)}>
+                      <option value={defaultValueProvinceID}>Pilih data provinsi</option>
                       {allMitra.provinces.length === 0 ?"": allMitra.provinces.data.map((itemss,index)=>{
                         return(
                           <option key={index} value={itemss.id}>{itemss.name}</option>
@@ -481,8 +548,13 @@ router.push({
                     className="col-sm-3 btn btn-primary btn-sm"
                     onClick={() => cancelProvincesChange()}
                   >
-                    Batal Ubah Kategory
+                    Batal Ubah Provinsi
                   </button>
+                  {error.indonesia_provinces_id ? (
+                    <p className="error-text">{error.indonesia_provinces_id}</p>
+                  ) : (
+                    ""
+                  )}
                 </div>
               )}
 {allMitra.provinces.length === 0 ? <div className="form-group row">
@@ -494,12 +566,18 @@ router.push({
                 </label>
                 <div className="col-sm-10">
                   <select
+                  onFocus={() => setError({ ...error, indonesia_cities_id: "" })}
                   disabled
                     className="form-control"
                   >
                     <option value={indonesia_cities_id}>{defaultValueCitie}</option>
                   </select>
                 </div>
+                {error.indonesia_cities_id ? (
+                    <p className="error-text">{error.indonesia_cities_id}</p>
+                  ) : (
+                    ""
+                  )}
               </div> : 
               <div className="form-group row">
                 <label
@@ -510,11 +588,12 @@ router.push({
                 </label>
                 <div className="col-sm-10">
                   <select
+                  onFocus={() => setError({ ...error, indonesia_cities_id: "" })}
                     className="form-control"
                     onChange={(e) => setIndonesia_cities_id(e.target.value)}
                     // onBlur={(e) => setKotaKabupaten(e.target.value)}
                   >
-                    <option value="">Pilih data Kab/Kota</option>
+                    <option value={defaultValueCitieID}>Pilih data Kab/Kota</option>
 
                     {citiesAll.map((itemsss,index)=>{
                       return(
@@ -523,6 +602,11 @@ router.push({
                     })}
                   </select>
                 </div>
+                {error.indonesia_cities_id ? (
+                    <p className="error-text">{error.indonesia_cities_id}</p>
+                  ) : (
+                    ""
+                  )}
               </div>
               }
 
@@ -561,6 +645,7 @@ router.push({
                   <input
                     onFocus={() => setError({ ...error, pic_name: "" })}
                     type="text"
+                    onChange={(e)=>setPic_name(e.target.value)}
                     className="form-control"
                     placeholder="Masukkan Nama"
                     value={pic_name}

@@ -18,6 +18,9 @@ import {
   LIST_STATUS_SUCCESS_DETAIL,
   SET_VALUE_KERJA_SAMA_M_DETAIL,
   SET_VALUE_STATUS_M_DETAIL,
+  RELOAD_TABLE_DETAIL,
+  SUCCESS_DELETE_COOPERATION_M_DETAIL,
+  CHANGE_STATUS_LIST_M_DETAIL,
 } from "../../types/partnership/mitra.type";
 
 const statuslist = {
@@ -30,6 +33,7 @@ const statuslist = {
 const initialState = {
   status: statuslist.idle,
   status_reload: "",
+  status_delete: "",
   //
   mitraAll: [],
   totalDataMitra: 0,
@@ -174,6 +178,24 @@ export const allMitraReducer = (state = initialState, action) => {
       return {
         ...state,
         statusDetail: action.value,
+      };
+
+    case SUCCESS_DELETE_COOPERATION_M_DETAIL:
+      return {
+        ...state,
+        status_delete: state.status_delete === "" ? "delete" : "",
+      };
+
+    case RELOAD_TABLE_DETAIL:
+      return {
+        ...state,
+        status_reload: state.status_reload === "" ? "reload" : "",
+      };
+
+    case CHANGE_STATUS_LIST_M_DETAIL:
+      return {
+        ...state,
+        status_reload: state.status_reload === "" ? "reload" : "",
       };
 
     default:

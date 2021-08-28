@@ -16,6 +16,7 @@ import {
   setPage,
   setLimit,
   exportFileCSV,
+  cancelChangeProvinces
 } from "../../../../redux/actions/partnership/mitra.actions";
 
 import Swal from "sweetalert2";
@@ -50,6 +51,7 @@ const Table = () => {
       if (result.value) {
         dispatch(deleteMitra(id));
         setSuccessDelete(true);
+        router.replace(`/partnership/manajemen-mitra`);
       }
     });
   };
@@ -61,6 +63,7 @@ const Table = () => {
   // const [success, setSuccess] = useState(false)
   useEffect(() => {
     dispatch(fetchMitra());
+    dispatch(cancelChangeProvinces())
   }, [
     dispatch,
     allMitra.keyword,
@@ -68,29 +71,29 @@ const Table = () => {
     allMitra.page,
     allMitra.limit,
     allMitra.card,
+    update
   ]);
 
   return (
     <PageWrapper>
-      {success || successDelete ? (
+      {success ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
-          style={{ backgroundColor: success ? "#C9F7F5" : "#f7c9c9" }}
+          style={{ backgroundColor: "#C9F7F5" }}
         >
           <div className="alert-icon">
             <i
               className="flaticon2-checkmark"
-              style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
+              style={{ color: "#1BC5BD" }}
             ></i>
           </div>
           <div
             className="alert-text"
-            style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
+            style={{ color: "#1BC5BD" }}
           >
-            {successDelete
-              ? "Berhasil menghapus data Data"
-              : "Berhasil menyimpan data"}
+            
+              Berhasil menyimpan data
           </div>
           <div className="alert-close">
             <button
@@ -109,25 +112,56 @@ const Table = () => {
       ) : (
         ""
       )}
-      {update || successDelete ? (
+      {update? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
-          style={{ backgroundColor: success ? "#C9F7F5" : "#f7c9c9" }}
+          style={{ backgroundColor: "#C9F7F5" }}
         >
           <div className="alert-icon">
             <i
               className="flaticon2-checkmark"
-              style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
+              style={{ color: "#1BC5BD"}}
             ></i>
           </div>
           <div
             className="alert-text"
-            style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
-          >
-            {successDelete
-              ? "Berhasil menghapus data Data"
-              : "Berhasil mengupdate data"}
+            style={{ color:"#1BC5BD"}}
+          >Berhasil mengupdate data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {successDelete? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#f7c9c9" }}
+        >
+          <div className="alert-icon">
+            <i
+              className="flaticon2-checkmark"
+              style={{ color: "#c51b1b"}}
+            ></i>
+          </div>
+          <div
+            className="alert-text"
+            style={{ color:"#c51b1b"}}
+          >Berhasil menghapus data
           </div>
           <div className="alert-close">
             <button
@@ -367,9 +401,15 @@ const Table = () => {
                                         padding: "8px 10px 3px 10px",
                                       }}
                                       onClick={() =>
-                                        router.push(
+                                        router.push({
+                                          pathname:
                                           `/partnership/manajemen-mitra/edit/${item.id}`
+                                        },undefined, { shallow: true }
                                         )
+
+                                        // router.push('/partnership/manajemen-mitra/', `/partnership/manajemen-mitra/edit/${item.id}`, { shallow: true })
+
+
                                       }
                                     >
                                       <Image
@@ -406,6 +446,7 @@ const Table = () => {
                                       }}
                                       className="ml-3 btn position-relative btn-delete"
                                       onClick={() => handleDelete(item.id)}
+                                      
                                     >
                                       <Image
                                         width="14"
@@ -422,7 +463,7 @@ const Table = () => {
                               );
                             }
                           )
-                      : "loading"}
+                      : "Loading .. / silahkan reload halaman"}
                   </tbody>
                 </table>
               </div>
@@ -468,10 +509,10 @@ const Table = () => {
                     </div>
                     <div className="col-8 my-auto">
                       <p
-                        className="align-middle mt-3"
+                        className="align-middle mt-3 ml-3"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data
+                        Total Data {allMitra.totalDataMitra}
                       </p>
                     </div>
                   </div>

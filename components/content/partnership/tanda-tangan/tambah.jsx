@@ -17,6 +17,11 @@ import {
 } from "../../../../redux/actions/partnership/tandaTangan.actions";
 import { NEW_TANDA_TANGAN_RESET } from "../../../../redux/types/partnership/tandaTangan.type";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import axios from 'axios'
+
 const TambahTandaTangan = () => {
   const importSwitch = () => import("bootstrap-switch-button-react");
 
@@ -28,22 +33,28 @@ const TambahTandaTangan = () => {
   const clear = () => {
     signCanvas.current.clear();
     setTandaTangan("");
-    Swal.fire({
-      icon: "success",
-      title: "Tanda Tangan Berhasil di Reset",
-      // text: "Berhasil",
-    });
+    // Swal.fire({
+    //   icon: "success",
+    //   title: "Tanda Tangan Berhasil di Reset",
+    //   // text: "Berhasil",
+    // });
   };
 
-  const { loading, error, success } = useSelector(
-    (state) => state.newTandaTangan
-  );
+  // const { loading, error, success } = useSelector(
+  //   (state) => state.newTandaTangan
+  // );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   const [nama, setNama] = useState("");
   const [jabatan, setJabatan] = useState("");
   const [tandaTangan, setTandaTangan] = useState("");
+
+  const [error, setError] = useState({
+    nama: "",
+    jabatan: "",
+    tandaTangan: "",
+  });
 
   const dataTandaTangan = () => {
     const data = signCanvas.current.toDataURL();
@@ -64,46 +75,111 @@ const TambahTandaTangan = () => {
     }
   };
 
-  useEffect(() => {
-    if (success) {
-      router.push({
-        pathname: `/partnership/tanda-tangan`,
-        query: { success: true },
-      });
-    }
-  }, [dispatch,router, error, success, simpleValidator]);
+  // useEffect(() => {
+  //   if (success) {
+  //     router.push({
+  //       pathname: `/partnership/tanda-tangan`,
+  //       query: { success: true },
+  //     });
+  //   }
+  // }, [dispatch,router, error, success, simpleValidator]);
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (simpleValidator.current.allValid()) {
-      if (error) {
-        dispatch(clearErrors());
-      }
-
-      if (success) {
-        dispatch({
-          type: NEW_TANDA_TANGAN_RESET,
-        });
-      }
-      const data = {
-        name: nama,
-        position: jabatan,
-        signature_image: tandaTangan,
-        // status: "aktif",
-      };
-      console.log(data);
-      dispatch(newTandaTangan(data));
-      // dispatch(newTandaTangan(JSON.stringify(data)));
+  const submit = (e) => {
+    e.preventDefault()
+    console.log("nama",nama)
+    console.log("jabatan",jabatan)
+    console.log("tanda_tangan",tandaTangan)
+    // e.preventDefault();
+    if (nama === "") {
+      setError({...error,nama: "Harus isi nama"})
+      notify("Harus isi nama")
+    } else if (jabatan === "") {
+      setError({ ...error,jabatan: "Harus isi jabatan"})
+      notify("Harus isi jabatan")
+    } else if (tandaTangan === "") {
+      setError({...error,tandaTangan: "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan"})
+      notify("Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan")
     } else {
-      simpleValidator.current.showMessages();
-      // forceUpdate(1);
+      console.log("sdfsdfdsf")
       Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
+        title: "Apakah anda yakin ingin simpan ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          let formData = new FormData();
+          formData.append("name", nama);
+          formData.append("position", jabatan);
+          formData.append("signature_image", tandaTangan);
+
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/create`,
+              formData
+            );
+            console.log("data",data)
+            router.push({
+              pathname: "/partnership/tanda-tangan",
+              query: { success: true },
+            });
+          } catch (error) {
+            console.log(error.response.data.message);
+            notify(error.response.data.message);
+          }
+
+
+        }
       });
+
+
     }
-  };
+  }
+
+    const notify = (value) =>
+      toast.info(`🦄 ${value}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    // if (simpleValidator.current.allValid()) {
+    //   if (error) {
+    //     dispatch(clearErrors());
+    //   }
+
+    //   if (success) {
+    //     dispatch({
+    //       type: NEW_TANDA_TANGAN_RESET,
+    //     });
+    //   }
+    //   const data = {
+    //     name: nama,
+    //     position: jabatan,
+    //     signature_image: tandaTangan,
+    //     // status: "aktif",
+    //   };
+    //   console.log(data);
+    //   dispatch(newTandaTangan(data));
+    //   // dispatch(newTandaTangan(JSON.stringify(data)));
+    // } else {
+    //   simpleValidator.current.showMessages();
+    //   // forceUpdate(1);
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Oops...",
+    //     text: "Isi data dengan benar !",
+    //   });
+    // }
+  
 
   const onNewReset = () => {
     router.replace("/partnership/tanda-tangan", undefined, { shallow: true });
@@ -111,7 +187,7 @@ const TambahTandaTangan = () => {
 
   return (
     <PageWrapper>
-      {error ? (
+      {/* {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -135,9 +211,9 @@ const TambahTandaTangan = () => {
         </div>
       ) : (
         ""
-      )}
+      )} */}
 
-      {success ? (
+      {/* {success ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
@@ -162,10 +238,21 @@ const TambahTandaTangan = () => {
         </div>
       ) : (
         ""
-      )}
+      )} */}
 
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        {loading ? <LoadingPage loading={loading} /> : ""}
+        {/* {loading ? <LoadingPage loading={loading} /> : ""} */}
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
@@ -173,7 +260,7 @@ const TambahTandaTangan = () => {
             </h3>
           </div>
           <div className="card-body">
-            <form>
+            <form onSubmit={submit}>
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -183,23 +270,25 @@ const TambahTandaTangan = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
+                  onFocus={()=>setError({...error,nama:""})}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nama"
                     value={nama}
                     onChange={(e) => setNama(e.target.value)}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("nama")
-                    }
+                    // onBlur={() =>
+                    //   simpleValidator.current.showMessageFor("nama")
+                    // }
                   />
-                  {simpleValidator.current.message(
+                  {error.nama ? <p className="error-text">{error.nama}</p>:"" }
+                  {/* {simpleValidator.current.message(
                     "nama",
                     nama,
                     "required|max:50",
                     {
                       className: "text-danger",
                     }
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="form-group row">
@@ -211,22 +300,24 @@ const TambahTandaTangan = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
+                  onFocus={()=>setError({...error,jabatan:""})}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Jabatan"
                     onChange={(e) => setJabatan(e.target.value)}
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("jabatan")
-                    }
+                    // onBlur={() =>
+                    //   simpleValidator.current.showMessageFor("jabatan")
+                    // }
                   />
-                  {simpleValidator.current.message(
+                  {error.jabatan ? <p className="error-text">{error.jabatan}</p>:"" }
+                  {/* {simpleValidator.current.message(
                     "jabatan",
                     jabatan,
                     "required|max:50",
                     {
                       className: "text-danger",
                     }
-                  )}
+                  )} */}
                 </div>
               </div>
               <div className="form-group row">
@@ -321,7 +412,8 @@ const TambahTandaTangan = () => {
                     {/* <Link href="/partnership/tanda-tangan"> */}
                     <button
                       className="btn btn-primary btn-sm"
-                      onClick={(e) => onSubmit(e)}
+                      // onClick={(e) => onSubmit(e)}
+                      type="submit"
                     >
                       Simpan
                     </button>

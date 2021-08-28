@@ -15,10 +15,3 @@ export default function EditTandaTanganPage() {
     </>
   );
 }
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ params }) => {
-      await store.dispatch(getDetailTandaTangan(params.id));
-    }
-);

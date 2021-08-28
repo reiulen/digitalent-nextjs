@@ -135,14 +135,7 @@ import { allMitraReducer } from "./partnership/mitra.reducers";
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
 // management kerjasama
 import { allMCooporationReducerMK } from "./partnership/managementCooporation.reducer";
-import {
-  allTandaTanganReducer,
-  newTandaTanganReducer,
-  deleteTandaTanganReducer,
-  detailTandaTanganReducer,
-  updateTandaTanganReducer,
-  // updateStatusTandaTanganReducer,
-} from "./partnership/tandaTangan.reducers";
+import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
 
 // utils
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
@@ -268,10 +261,6 @@ const reducer = combineReducers({
 
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,
-  newTandaTangan: newTandaTanganReducer,
-  deleteTandaTangan: deleteTandaTanganReducer,
-  updateTandaTangan: updateTandaTanganReducer,
-  detailTandaTangan: detailTandaTanganReducer,
   // updateStatusTandaTangan: updateStatusTandaTanganReducer,
 
   allProvinsi: allProvinsiReducer,

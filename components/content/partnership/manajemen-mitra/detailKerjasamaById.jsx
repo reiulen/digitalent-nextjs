@@ -27,9 +27,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const EditDokumentKerjasama = () => {
+const EditDokumentKerjasamaById = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+  let {idDetail} = router.query
   
   const allMK = useSelector((state) => state.allMK);
   console.log("allMK", allMK);
@@ -92,10 +93,6 @@ const EditDokumentKerjasama = () => {
       console.log("select your file");
     }
   };
-
-  
-
-  
 
   // show document
   const showDocument = () => {
@@ -210,33 +207,6 @@ notify(error.response.data.message)
     dispatch(changeCooperationSelectByID(value));
   };
 
-  const onChangePeriodeDateStart = (date) =>{
-    setPeriodDateStart(moment(date).format('YYYY-MM-DD'))
-    checkPeriod(moment(date).format('YYYY-MM-DD'))
-  }
-  
-
-
-const checkPeriod = (dateNow) =>{
-    // let periodValue = value.period
-    // let periodUnitValue = value.periodUnit
-    // console.log("periodUnitValue",periodUnitValue)
-    // clg
-
-    if(periodUnit === "bulan"){
-      let futureMonth = moment(dateNow).add(parseInt(period), 'M').format('YYYY-MM-DD');
-      console.log("BULAN SEKARANG",moment().format('YYYY-MM-DD'))
-      console.log("BULAN UPDATE",futureMonth)
-      setPeriodDateEnd(futureMonth)
-    }
-    // jika tahun
-    else{
-      let futureYear = moment(dateNow).add(parseInt(period), 'y').format('YYYY-MM-DD');
-      console.log("TAHUN SEKARANG",moment().format('YYYY-MM-DD'))
-      console.log("TAHUN UPDATE",futureYear)
-      setPeriodDateEnd(futureYear)
-    }
-  }
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
@@ -247,13 +217,10 @@ const checkPeriod = (dateNow) =>{
       setTitle(data.data.title);
       setDate(data.data.submission_date);
       setCooperationID(data.data.cooperation_category);
-      // 
       setPeriod(data.data.period);
       setPeriodUnit(data.data.period_unit);
-      // 
       setPeriodDateStart(data.data.period_date_start);
       setPeriodDateEnd(data.data.period_date_end);
-      // 
       setAggrementNumber(data.data.agreement_number_partner);
       setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
       setSigninDate(data.data.signing_date);
@@ -313,10 +280,6 @@ const checkPeriod = (dateNow) =>{
   useEffect(() => {
     dispatch(fetchDataEmail());
   }, [dispatch,allMK.institution_name, allMK.stateListMitra]);
-
-  useEffect(() => {
-    checkPeriod(moment(date).format('YYYY-MM-DD'))
-  }, [period])
   return (
     <PageWrapper>
       
@@ -335,7 +298,7 @@ const checkPeriod = (dateNow) =>{
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Edit Dokumen Kerjasama
+              Detail Dokumen Kerjasama
             </h3>
           </div>
 
@@ -369,6 +332,7 @@ const checkPeriod = (dateNow) =>{
                 <div className="col-sm-10">
                   <input
                     required
+                    readOnly
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     type="text"
@@ -387,7 +351,7 @@ const checkPeriod = (dateNow) =>{
                   >
                     Kategori kerjasama
                   </label>
-                  <div className="col-sm-7">
+                  <div className="col-sm-10">
                     <select
                       name=""
                       id=""
@@ -399,13 +363,13 @@ const checkPeriod = (dateNow) =>{
                       <option>{cooperationID.name}</option>
                     </select>
                   </div>
-                  <button
+                  {/* <button
                     type="button"
                     className="col-sm-3 btn btn-primary btn-sm"
                     onClick={() => dispatch(fetchListSelectCooperation())}
                   >
                     Ubah Kategory
-                  </button>
+                  </button> */}
                 </div>
               ) : (
                 <div className="form-group row">
@@ -457,6 +421,7 @@ const checkPeriod = (dateNow) =>{
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
                       <input
                         required
+                        readOnly
                         type="number"
                         className="form-control"
                         onChange={(e) => setPeriod(e.target.value)}
@@ -515,15 +480,10 @@ const checkPeriod = (dateNow) =>{
 
                       <div className="d-flex align-items-center position-relative datepicker-w">
                       <DatePicker
+                      readOnly
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         // selected={periodDateStart}
-
-                        // onChange={(date) => setPeriodDateStart(moment(date).format('YYYY-MM-DD'))}
-                        // value={periodDateStart}
-
-                        onChange={(date) => onChangePeriodeDateStart(date)}
-
-
+                        onChange={(date) => setPeriodDateStart(moment(date).format('YYYY-MM-DD'))}
                         value={periodDateStart}
                         // selectsEnd
                         // startDate={startDate}
@@ -541,8 +501,8 @@ const checkPeriod = (dateNow) =>{
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
                       <div className="d-flex align-items-center position-relative datepicker-w">
                       <DatePicker
+                      readOnly  
                         className="form-search-date form-control-sm form-control cursor-pointer"
-                        readOnly
                         // selected={periodDateStart}
                         onChange={(date) => setPeriodDateEnd(moment(date).format('YYYY-MM-DD'))}
                         value={periodDateEnd}
@@ -691,6 +651,7 @@ const checkPeriod = (dateNow) =>{
                   /> */}
                   <input
                     required
+                    readOnly
                     onChange={(e) => setAggrementNumber(e.target.value)}
                     type="text"
                     value={aggrementNumber}
@@ -713,6 +674,7 @@ const checkPeriod = (dateNow) =>{
                     placeholder="Masukkan Nomor Perjanjian Kemkominfo"
                   /> */}
                   <input
+                  readOnly
                     required
                     type="text"
                     onChange={(e) => setAggrementNumberInfo(e.target.value)}
@@ -742,6 +704,7 @@ const checkPeriod = (dateNow) =>{
 
                       <div className="d-flex align-items-center position-relative datepicker-w">
                       <DatePicker
+                      readOnly
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         // selected={periodDateStart}
                         onChange={(date) => setSigninDate(moment(date).format('YYYY-MM-DD'))}
@@ -784,13 +747,13 @@ const checkPeriod = (dateNow) =>{
                       ? "Tutup dokument"
                       : "Lihat dokumen"}
                   </button>
-                  <button
+                  {/* <button
                     type="button"
                     className="btn btn-primary btn-sm mr-3"
                     onClick={() => setDocumentChange()}
                   >
                     {!changeDokumen ? "Ubah dokumen" : "Batal Ubah"}
-                  </button>
+                  </button> */}
 
                   {changeDokumen && !viewPDF ? (
                     <div className="input-group mt-3">
@@ -873,6 +836,7 @@ const checkPeriod = (dateNow) =>{
                         </label>
                         <div className="col-sm-10">
                           <textarea
+                          readOnly
                             onChange={(e) => changeDataContentDefault(e, i)}
                             value={items.form_content}
                             name=""
@@ -929,8 +893,14 @@ const checkPeriod = (dateNow) =>{
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
                   <Link
-                    href="/partnership/manajemen-kerjasama"
+                    href={`/partnership/manajemen-mitra/detail/${idDetail}`}
                     className="mr-2"
+
+
+          //  router.push({
+          //   pathname:`/partnership/manajemen-mitra/detail/${idDetail}`,
+          //   query:{update:true},
+          // })
                   >
                     <a className="btn btn-outline-primary mr-2 btn-sm">
                       Kembali
@@ -953,4 +923,4 @@ const checkPeriod = (dateNow) =>{
   );
 };
 
-export default EditDokumentKerjasama;
+export default EditDokumentKerjasamaById;
