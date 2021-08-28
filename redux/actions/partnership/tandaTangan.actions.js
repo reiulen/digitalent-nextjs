@@ -3,188 +3,92 @@ import {
   TANDA_TANGAN_REQUEST,
   TANDA_TANGAN_SUCCESS,
   TANDA_TANGAN_FAIL,
-
-  // new tanda tangan
-  NEW_TANDA_TANGAN_REQUEST,
-  NEW_TANDA_TANGAN_SUCCESS,
-  NEW_TANDA_TANGAN_FAIL,
-
-  // detail tanda tangan
-  DETAIL_TANDA_TANGAN_SUCCESS,
-  DETAIL_TANDA_TANGAN_REQUEST,
-  DETAIL_TANDA_TANGAN_FAIL,
-
-  // delete tanda tangan
-  DELETE_TANDA_TANGAN_REQUEST,
-  DELETE_TANDA_TANGAN_SUCCESS,
-  DELETE_TANDA_TANGAN_FAIL,
-
-  // update status action
-  UPDATE_STATUS_TANDA_TANGAN_REQUEST,
-  UPDATE_STATUS_TANDA_TANGAN_SUCCESS,
-  UPDATE_STATUS_TANDA_TANGAN_FAIL,
-
-  // edit tanda tangan
-  UPDATE_TANDA_TANGAN_REQUEST,
-  UPDATE_TANDA_TANGAN_SUCCESS,
-  UPDATE_TANDA_TANGAN_FAIL,
-  CLEAR_ERRORS,
+  RELOAD_TABLE,
+  SET_PAGE_M_TD,
+  SET_LIMIT_TD,
+  SUCESS_DELETE_TD,
+  SEARCH_BY_KEY_TTD,
 } from "../../types/partnership/tandaTangan.type";
 
 import axios from "axios";
 
-// get all data
-export const getAllTandaTangan =
-  (page = 1, keyword = "", limit = 5) =>
-  async (dispatch) => {
+export async function fetchSignatureApi(params) {
+  return await axios.get(
+    `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures`,
+    {
+      params,
+    }
+  );
+}
+
+export const fetchSignature = () => {
+  return async (dispatch, getState) => {
+    dispatch({ type: TANDA_TANGAN_REQUEST });
+    let keywordState = getState().allTandaTangan.keyword || "";
+    let limitState = getState().allTandaTangan.limit || "";
+    let pageState = getState().allTandaTangan.page || 1;
+
+    const params = {
+      keyword: keywordState,
+      limit: limitState,
+      page: pageState,
+    };
     try {
-      dispatch({ type: TANDA_TANGAN_REQUEST });
-
-      let link =
-        process.env.END_POINT_API_PARTNERSHIP + `/api/signatures?page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
-      // let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel`
-
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
-
-      const { data } = await axios.get(link);
-
-      dispatch({
-        type: TANDA_TANGAN_SUCCESS,
-        payload: data,
-      });
+      let { data } = await fetchSignatureApi(params);
+      console.log("data signature action", data);
+      dispatch(successFetchSignature(data));
     } catch (error) {
-      dispatch({
-        type: TANDA_TANGAN_FAIL,
-        payload: error.message,
-      });
+      console.log("error data signature action", error);
     }
   };
-
-export const newTandaTangan = (tandaTanganData) => async (dispatch) => {
-  try {
-    dispatch({
-      type: NEW_TANDA_TANGAN_REQUEST,
-    });
-
-    // const config = {
-    //     headers: {
-    //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-    //         'Access-Control-Allow-Origin': '*',
-    //         'apikey': process.env.END_POINT_KEY_AUTH
-    //     }
-    // }
-
-    const { data } = await axios.post(
-      process.env.END_POINT_API_PARTNERSHIP + "/api/signatures/create",
-      tandaTanganData
-    );
-
-    dispatch({
-      type: NEW_TANDA_TANGAN_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: NEW_TANDA_TANGAN_FAIL,
-      payload: error.response.data.message,
-    });
-  }
 };
 
-// Clear Error
-export const clearErrors = () => async (dispatch) => {
-  dispatch({
-    type: CLEAR_ERRORS,
-  });
+export const successFetchSignature = (data) => {
+  return {
+    type: TANDA_TANGAN_SUCCESS,
+    data,
+  };
+};
+export const errorFetchSignature = (data) => {
+  return {
+    type: TANDA_TANGAN_FAIL,
+  };
+};
+export const reloadTable = () => {
+  return {
+    type: RELOAD_TABLE,
+  };
+};
+// =============================================
+export const setPage = (page) => {
+  return {
+    type: SET_PAGE_M_TD,
+    page,
+  };
+};
+export const setLimit = (value) => {
+  return {
+    type: SET_LIMIT_TD,
+    value,
+  };
+};
+export const deleteTandaTangan = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      let { data } = await axios.delete(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`
+      );
+      console.log("respon data delete ttd", data);
+      dispatch({ type: SUCESS_DELETE_TD });
+    } catch (error) {
+      console.log("gagal delete ttd", error);
+    }
+  };
 };
 
-export const getDetailTandaTangan = (id) => async (dispatch) => {
-  try {
-    let link = process.env.END_POINT_API_PARTNERSHIP + `/api/signatures/${id}`;
-
-    const { data } = await axios.get(link);
-
-    dispatch({
-      type: DETAIL_TANDA_TANGAN_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_TANDA_TANGAN_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
-
-export const updateTandaTangan = (id, tandaTangan) => async (dispatch) => {
-  try {
-    dispatch({
-      type: UPDATE_TANDA_TANGAN_REQUEST,
-    });
-
-    const { data } = await axios.put(
-      process.env.END_POINT_API_PARTNERSHIP + `/api/signatures/${id}`,
-      tandaTangan
-    );
-
-    dispatch({
-      type: UPDATE_TANDA_TANGAN_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: UPDATE_TANDA_TANGAN_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
-
-// export const updateStatusTandaTangan = (dataStatus, id) => async (dispatch) => {
-//   try {
-//     dispatch({ type: UPDATE_STATUS_TANDA_TANGAN_REQUEST });
-
-//     const { data } = await axios.put(
-//       process.env.END_POINT_API_PARTNERSHIP +
-//         `/api/signatures/update-status/${id}`,
-//       dataStatus
-//     );
-
-//     dispatch({
-//       type: UPDATE_STATUS_TANDA_TANGAN_SUCCESS,
-//       payload: data.status,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: UPDATE_STATUS_TANDA_TANGAN_FAIL,
-//       payload: error.response.data.message,
-//     });
-//   }
-// };
-
-export const deleteTandaTangan = (id) => async (dispatch) => {
-  try {
-    dispatch({ type: DELETE_TANDA_TANGAN_REQUEST });
-
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_PARTNERSHIP + `/api/signatures/${id}`
-    );
-
-    dispatch({
-      type: DELETE_TANDA_TANGAN_SUCCESS,
-      payload: data.status,
-    });
-  } catch (error) {
-    dispatch({
-      type: DELETE_TANDA_TANGAN_FAIL,
-      payload: error.response.data.message,
-    });
-  }
+export const searchByKey = (value) => {
+  return {
+    type: SEARCH_BY_KEY_TTD,
+    value,
+  };
 };

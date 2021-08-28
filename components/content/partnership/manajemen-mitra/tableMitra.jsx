@@ -468,10 +468,10 @@ const Table = () => {
                     </div>
                     <div className="col-8 my-auto">
                       <p
-                        className="align-middle mt-3"
+                        className="align-middle mt-3 ml-3"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data
+                        Total Data {allMitra.totalDataMitra}
                       </p>
                     </div>
                   </div>

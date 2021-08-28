@@ -93,6 +93,10 @@ const EditDokumentKerjasama = () => {
     }
   };
 
+  
+
+  
+
   // show document
   const showDocument = () => {
     if (changeDokumen) {
@@ -206,6 +210,33 @@ notify(error.response.data.message)
     dispatch(changeCooperationSelectByID(value));
   };
 
+  const onChangePeriodeDateStart = (date) =>{
+    setPeriodDateStart(moment(date).format('YYYY-MM-DD'))
+    checkPeriod(moment(date).format('YYYY-MM-DD'))
+  }
+  
+
+
+const checkPeriod = (dateNow) =>{
+    // let periodValue = value.period
+    // let periodUnitValue = value.periodUnit
+    // console.log("periodUnitValue",periodUnitValue)
+    // clg
+
+    if(periodUnit === "bulan"){
+      let futureMonth = moment(dateNow).add(parseInt(period), 'M').format('YYYY-MM-DD');
+      console.log("BULAN SEKARANG",moment().format('YYYY-MM-DD'))
+      console.log("BULAN UPDATE",futureMonth)
+      setPeriodDateEnd(futureMonth)
+    }
+    // jika tahun
+    else{
+      let futureYear = moment(dateNow).add(parseInt(period), 'y').format('YYYY-MM-DD');
+      console.log("TAHUN SEKARANG",moment().format('YYYY-MM-DD'))
+      console.log("TAHUN UPDATE",futureYear)
+      setPeriodDateEnd(futureYear)
+    }
+  }
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
@@ -216,10 +247,13 @@ notify(error.response.data.message)
       setTitle(data.data.title);
       setDate(data.data.submission_date);
       setCooperationID(data.data.cooperation_category);
+      // 
       setPeriod(data.data.period);
       setPeriodUnit(data.data.period_unit);
+      // 
       setPeriodDateStart(data.data.period_date_start);
       setPeriodDateEnd(data.data.period_date_end);
+      // 
       setAggrementNumber(data.data.agreement_number_partner);
       setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
       setSigninDate(data.data.signing_date);
@@ -279,6 +313,10 @@ notify(error.response.data.message)
   useEffect(() => {
     dispatch(fetchDataEmail());
   }, [dispatch,allMK.institution_name, allMK.stateListMitra]);
+
+  useEffect(() => {
+    checkPeriod(moment(date).format('YYYY-MM-DD'))
+  }, [period])
   return (
     <PageWrapper>
       
@@ -479,7 +517,13 @@ notify(error.response.data.message)
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         // selected={periodDateStart}
-                        onChange={(date) => setPeriodDateStart(moment(date).format('YYYY-MM-DD'))}
+
+                        // onChange={(date) => setPeriodDateStart(moment(date).format('YYYY-MM-DD'))}
+                        // value={periodDateStart}
+
+                        onChange={(date) => onChangePeriodeDateStart(date)}
+
+
                         value={periodDateStart}
                         // selectsEnd
                         // startDate={startDate}
@@ -498,6 +542,7 @@ notify(error.response.data.message)
                       <div className="d-flex align-items-center position-relative datepicker-w">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
+                        readOnly
                         // selected={periodDateStart}
                         onChange={(date) => setPeriodDateEnd(moment(date).format('YYYY-MM-DD'))}
                         value={periodDateEnd}

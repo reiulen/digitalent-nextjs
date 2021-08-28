@@ -278,6 +278,7 @@ const [NamePDF, setNamePDF] = useState(null);
                         selected={startDate}
                         
                         onChange={(date) => onChangePeriodeDateStart(date)}
+                        
                         selectsStart
                         value={period_date_start}
                         startDate={startDate}
