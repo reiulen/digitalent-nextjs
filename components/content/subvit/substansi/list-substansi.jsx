@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import Image from 'next/image'
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -9,16 +9,14 @@ import Swal from "sweetalert2";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
-import LoadingTable from '../../../LoadingTable'
+import LoadingTable from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
   clearErrors,
-  deleteSubtanceQuestionBanks
+  deleteSubtanceQuestionBanks,
 } from "/redux/actions/subvit/subtance.actions";
-import {
-  DELETE_SUBTANCE_QUESTION_BANKS_RESET
-} from '../../../../redux/types/subvit/subtance.type'
+import { DELETE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/subtance.type";
 
 const ListSubstansi = () => {
   const dispatch = useDispatch();
@@ -27,52 +25,56 @@ const ListSubstansi = () => {
   const { loading, error, subtance } = useSelector(
     (state) => state.allSubtanceQuestionBanks
   );
-  const { loading: loadingDelete, error: errorDelete, isDeleted } = useSelector((state) => state.deleteSubtanceQuestionBanks)
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    isDeleted,
+  } = useSelector((state) => state.deleteSubtanceQuestionBanks);
 
   let { page = 1, success } = router.query;
   page = Number(page);
 
-  const [search, setSearch] = useState('')
-  const [limit, setLimit] = useState(null)
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
 
   useEffect(() => {
-    if (limit) {
-      router.push(`${router.pathname}?page=1&limit=${limit}`)
-    }
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
-        if (result.isConfirmed) {
-          window.location.reload()
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
         }
-      });
+      );
       dispatch({
-        type: DELETE_SUBTANCE_QUESTION_BANKS_RESET
-      })
+        type: DELETE_SUBTANCE_QUESTION_BANKS_RESET,
+      });
     }
-  }, [dispatch, limit, isDeleted, router]);
+  }, [dispatch, isDeleted]);
 
   const handlePagination = (pageNumber) => {
-    let link = `${router.pathname}?page=${pageNumber}`
-    if (limit) link = link.concat(`&limit=${limit}`)
-    if (search) link = link.concat(`&keyword=${search}`)
-    router.push(link)
-  }
+    let link = `${router.pathname}?page=${pageNumber}`;
+    if (limit) link = link.concat(`&limit=${limit}`);
+    if (search) link = link.concat(`&keyword=${search}`);
+    router.push(link);
+  };
 
   const handleSearch = () => {
     if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`)
+      router.push(`${router.pathname}?page=1&keyword=${search}`);
     }
-  }
+  };
 
   const handleLimit = (val) => {
-    setLimit(val)
-  }
+    setLimit(val);
+    router.push(`${router.pathname}?page=1&limit=${val}`);
+  };
 
   const onNewReset = () => {
-    router.replace('/subvit/substansi', undefined, { shallow: true })
-  }
+    router.replace("/subvit/substansi", undefined, { shallow: true });
+  };
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -86,7 +88,7 @@ const ListSubstansi = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionBanks(id))
+        dispatch(deleteSubtanceQuestionBanks(id));
       }
     });
   };
@@ -119,18 +121,32 @@ const ListSubstansi = () => {
         ""
       )}
 
-      {success ?
-        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+      {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
           <div className="alert-text">Berhasil Menyimpan Data</div>
           <div className="alert-close">
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
             </button>
           </div>
         </div>
-        : ''
-      }
+      ) : (
+        ""
+      )}
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -152,7 +168,7 @@ const ListSubstansi = () => {
                       className="form-control"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
@@ -161,7 +177,12 @@ const ListSubstansi = () => {
                 </div>
 
                 <div className="col-lg-1 col-xl-1">
-                  <button className='btn btn-sm btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
+                  <button
+                    className="btn btn-sm btn-light-primary btn-block"
+                    onClick={handleSearch}
+                  >
+                    Cari
+                  </button>
                 </div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
                   <Link href="/subvit/substansi/clone">
@@ -209,13 +230,14 @@ const ListSubstansi = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {!subtance || (subtance && subtance.list_substance.length === 0)
-                        ? (
-                          <td className="align-middle text-center" colSpan={8}>
-                            Data Masih Kosong
-                          </td>
-                        )
-                        : subtance && subtance.list_substance &&
+                      {!subtance ||
+                      (subtance && subtance.list_substance.length === 0) ? (
+                        <td className="align-middle text-center" colSpan={8}>
+                          Data Masih Kosong
+                        </td>
+                      ) : (
+                        subtance &&
+                        subtance.list_substance &&
                         subtance.list_substance.map((subtance, i) => {
                           return (
                             <tr key={subtance.id}>
@@ -230,7 +252,9 @@ const ListSubstansi = () => {
                               <td className="align-middle">
                                 {subtance.theme.name}
                               </td>
-                              <td className="align-middle">{subtance.bank_soal} Soal</td>
+                              <td className="align-middle">
+                                {subtance.bank_soal} Soal
+                              </td>
                               <td className="align-middle">
                                 {subtance.start_at}
                               </td>
@@ -252,17 +276,17 @@ const ListSubstansi = () => {
                                 <ButtonAction
                                   icon="setting.svg"
                                   link={`/subvit/substansi/report?id=${subtance.id}`}
-                                  title='Report'
+                                  title="Report"
                                 />
                                 <ButtonAction
                                   icon="write.svg"
                                   link={`/subvit/substansi/edit?id=${subtance.id}`}
-                                  title='Edit'
+                                  title="Edit"
                                 />
                                 <ButtonAction
                                   icon="detail.svg"
                                   link={`/subvit/substansi/${subtance.id}`}
-                                  title='Detail'
+                                  title="Detail"
                                 />
                                 <button
                                   onClick={() => handleDelete(subtance.id)}
@@ -285,7 +309,8 @@ const ListSubstansi = () => {
                               </td>
                             </tr>
                           );
-                        })}
+                        })
+                      )}
                     </tbody>
                   </table>
                 ) : (
@@ -324,8 +349,8 @@ const ListSubstansi = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
                           <option>5</option>
                           <option>10</option>
