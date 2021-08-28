@@ -234,7 +234,7 @@ const Table = () => {
                         : allTandaTangan.tanda_tangan.data.list_signatures.map(
                             (items, index) => {
                               return (
-                                <tr>
+                                <tr key={index}>
                                   <td className="text-center align-middle">
                                     <button
                                       className="btn"
