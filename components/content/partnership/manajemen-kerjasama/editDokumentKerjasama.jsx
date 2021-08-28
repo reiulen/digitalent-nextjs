@@ -316,7 +316,7 @@ const checkPeriod = (dateNow) =>{
 
   useEffect(() => {
     checkPeriod(moment(date).format('YYYY-MM-DD'))
-  }, [period])
+  }, [period], date, checkPeriod)
   return (
     <PageWrapper>
       
