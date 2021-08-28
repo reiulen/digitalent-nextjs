@@ -165,7 +165,7 @@ const ReportSurvey = () => {
             <div className="col-lg-10 col-xl-10">
               <h3 className="card-title font-weight-bolder text-dark">
                 Report Survey{" "}
-                {publishValue === "" || null
+                {publishValue === null || ""
                   ? ""
                   : `- ${
                       publishValue.charAt(0).toUpperCase() +
