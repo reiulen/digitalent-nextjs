@@ -56,10 +56,6 @@ const StepOne = () => {
     }
   }, [dispatch, error, isUpdated, typeSave, router, id]);
 
-  // const saveAndContinue = () => {
-  //   router.push("/subvit/substansi/edit/step-2");
-  // };
-
   const saveDraft = () => {
     setTypeSave("draft");
     const data = {
