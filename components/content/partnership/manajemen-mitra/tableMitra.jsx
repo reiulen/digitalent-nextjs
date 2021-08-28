@@ -446,6 +446,7 @@ const Table = () => {
                                       }}
                                       className="ml-3 btn position-relative btn-delete"
                                       onClick={() => handleDelete(item.id)}
+                                      
                                     >
                                       <Image
                                         width="14"
