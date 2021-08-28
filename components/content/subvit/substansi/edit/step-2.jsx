@@ -31,10 +31,6 @@ const StepTwo = () => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
-    // if (error) {
-    //     dispatch(clearErrors())
-    // }
-
     if (success) {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET,
@@ -44,7 +40,7 @@ const StepTwo = () => {
         query: { success: true },
       });
     }
-  }, [dispatch, error, success, router]);
+  }, [dispatch, success, router]);
 
   const [startDate, setStartDate] = useState(new Date(subtance.start_at));
   const [endDate, setEndDate] = useState(new Date(subtance.end_at));
