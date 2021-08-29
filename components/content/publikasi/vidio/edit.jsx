@@ -58,6 +58,8 @@ const EditVideo = () => {
     const [gambar, setGambar] = useState(video.gambar)
     const [url_video, setUrlVideo] = useState(video.url_video)
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
+    // const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
+    const [gambarName, setGambarName] = useState (video.gambar)
     const [kategori_id, setKategoriId] = useState(video.kategori_id) 
     const [users_id, setUserId] = useState(video.users_id)
     const [tag, setTag] = useState(video.tag)
@@ -65,17 +67,37 @@ const EditVideo = () => {
     const [_method, setMethod] = useState("put")
 
     const onChangeGambar = (e) => {
-        if (e.target.name === 'gambar') {
-            const reader = new FileReader()
+        const type = ["image/jpg", "image/png", "image/jpeg"]
+        // console.log (e.target.files[0].type)
+        // console.log (e.target.files[0])
+        // console.log ("check")
+
+        if (type.includes (e.target.files[0].type)){
+            const reader = new FileReader();
             reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setGambar(reader.result)
-                    setGambarPreview(reader.result)
-                }
+            if (reader.readyState === 2) {
+                setGambar(reader.result);
+                setGambarPreview(reader.result);
             }
+            };
             reader.readAsDataURL(e.target.files[0])
+            // console.log (reader.readAsDataURL(e.target.files[0]))
+            setGambarName(e.target.files[0].name)
+        } 
+        else {
+            // setGambar("")
+            // setGambarPreview("/assets/media/default.jpg")
+            // setGambarName(null)
+            // simpleValidator.current.showMessages();
+            // forceUpdate(1);
+            e.target.value = null
+            Swal.fire(
+            'Oops !',
+            'Data yang bisa dimasukkan hanya berupa data gambar.',
+            'error'
+            )
         }
-    }
+    };
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -206,8 +228,9 @@ const EditVideo = () => {
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi</label>
                                     <div className="col-sm-10">
-                                        <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)}/>
-                                        <small className='text-danger'>*Maksimal 160 Karakter</small> 
+                                        <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}/>
+                                        {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:50",{ className: "text-danger" })}
+                                        <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small>
                                     </div>
                                 </div>
 
@@ -226,11 +249,15 @@ const EditVideo = () => {
                                     <div className="col-sm-9">
                                         <div className="input-group">
                                             <div className="custom-file">
-                                                <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
-                                                <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
+                                                <input type="file" name='gambar'accept="image/*" className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
+                                                <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih file</label>
                                             </div>
+                                            
                                         </div>
+                                        <small>{gambarName}</small>
+                                        {/* <div><h5>test</h5></div> */}
                                     </div>
+                                    
                                 </div>
 
                                 <div className="form-group row">
@@ -244,12 +271,12 @@ const EditVideo = () => {
                                     
                                 </div>
 
-                                {
+                                {/* {
                                     console.log (kategori)
                                 }
                                 {
                                     console.log (kategori_id)
-                                }
+                                } */}
 
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
@@ -261,8 +288,14 @@ const EditVideo = () => {
                                             ) : (
                                                 kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                     return (
-                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
-                                                    )
+                                                        row.jenis_kategori == "Video" ?
+                                                          <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                                            {row.nama_kategori}
+                                                          </option>
+                                                          
+                                                        :
+                                                          null
+                                                      );
                                                 })
                                             )}
 
@@ -285,9 +318,9 @@ const EditVideo = () => {
                                     </div>
                                 </div>
 
-                                {
+                                {/* {
                                     console.log (video)
-                                }
+                                } */}
 
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
