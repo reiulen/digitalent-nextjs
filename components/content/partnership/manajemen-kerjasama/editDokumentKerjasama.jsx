@@ -18,19 +18,17 @@ import {
   setNameLembaga,
   fetchDataEmail,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
-import IconCalender from '../../../assets/icon/Calender'
-import moment from 'moment'
-
+import IconCalender from "../../../assets/icon/Calender";
+import moment from "moment";
 
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const EditDokumentKerjasama = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  
+
   const allMK = useSelector((state) => state.allMK);
   console.log("allMK", allMK);
   //
@@ -49,7 +47,7 @@ const EditDokumentKerjasama = () => {
   const [periodUnit, setPeriodUnit] = useState("tahun");
   console.log("periodUnit", periodUnit);
   const [periodDateStart, setPeriodDateStart] = useState("");
-  console.log("periodDateStart",periodDateStart)
+  console.log("periodDateStart", periodDateStart);
   const [periodDateEnd, setPeriodDateEnd] = useState("");
   const [aggrementNumber, setAggrementNumber] = useState("");
   const [aggrementNumberInfo, setAggrementNumberInfo] = useState("");
@@ -93,10 +91,6 @@ const EditDokumentKerjasama = () => {
     }
   };
 
-  
-
-  
-
   // show document
   const showDocument = () => {
     if (changeDokumen) {
@@ -119,11 +113,9 @@ const EditDokumentKerjasama = () => {
   };
   // console.log("viewPDF",viewPDF)
 
-  
-
   const handleSubmit = async () => {
     // e.preventDefault();
-    console.log("edit")
+    console.log("edit");
     Swal.fire({
       title: "Apakah anda yakin ?",
       icon: "warning",
@@ -148,7 +140,6 @@ const EditDokumentKerjasama = () => {
         } else {
           formData.append("document", documentLocal);
         }
-        
 
         formData.append("period_date_start", periodDateStart);
         formData.append("period_date_end", periodDateEnd);
@@ -156,7 +147,6 @@ const EditDokumentKerjasama = () => {
         formData.append("agreement_number_kemkominfo", aggrementNumberInfo);
         formData.append("signing_date", signinDate);
 
-      
         if (AllCooperation === "") {
           // start data default
           formData.append("cooperation_category_id", cooperationID.id);
@@ -179,112 +169,104 @@ const EditDokumentKerjasama = () => {
           // end jika tidak default
         }
 
-
         try {
           let { data } = await axios.post(
             `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${router.query.id}`,
             formData
           );
 
-//           Swal.fire(
-//   'Berhasil update data!',
-//   'success'
-// )
+          //           Swal.fire(
+          //   'Berhasil update data!',
+          //   'success'
+          // )
 
           router.push({
-            pathname:'/partnership/manajemen-kerjasama/',
-            query:{update:true},
-          })
-          
+            pathname: "/partnership/manajemen-kerjasama/",
+            query: { update: true },
+          });
         } catch (error) {
-console.log("error.response",error.response)
-notify(error.response.data.message)
+          console.log("error.response", error.response);
+          notify(error.response.data.message);
         }
       }
     });
   };
-
 
   const changeSetCooperationC_id = (value) => {
     setCooperationC_id(value);
     dispatch(changeCooperationSelectByID(value));
   };
 
-  const onChangePeriodeDateStart = (date) =>{
-    setPeriodDateStart(moment(date).format('YYYY-MM-DD'))
-    checkPeriod(moment(date).format('YYYY-MM-DD'))
-  }
-  
+  const onChangePeriodeDateStart = (date) => {
+    setPeriodDateStart(moment(date).format("YYYY-MM-DD"));
+    checkPeriod(moment(date).format("YYYY-MM-DD"));
+  };
 
-
-const checkPeriod = (dateNow) =>{
-    // let periodValue = value.period
-    // let periodUnitValue = value.periodUnit
-    // console.log("periodUnitValue",periodUnitValue)
-    // clg
-
-    if(periodUnit === "bulan"){
-      let futureMonth = moment(dateNow).add(parseInt(period), 'M').format('YYYY-MM-DD');
-      console.log("BULAN SEKARANG",moment().format('YYYY-MM-DD'))
-      console.log("BULAN UPDATE",futureMonth)
-      setPeriodDateEnd(futureMonth)
+  const checkPeriod = (dateNow) => {
+    if (periodUnit === "bulan") {
+      let futureMonth = moment(dateNow)
+        .add(parseInt(period), "M")
+        .format("YYYY-MM-DD");
+      console.log("BULAN SEKARANG", moment().format("YYYY-MM-DD"));
+      console.log("BULAN UPDATE", futureMonth);
+      setPeriodDateEnd(futureMonth);
     }
     // jika tahun
-    else{
-      let futureYear = moment(dateNow).add(parseInt(period), 'y').format('YYYY-MM-DD');
-      console.log("TAHUN SEKARANG",moment().format('YYYY-MM-DD'))
-      console.log("TAHUN UPDATE",futureYear)
-      setPeriodDateEnd(futureYear)
+    else {
+      let futureYear = moment(dateNow)
+        .add(parseInt(period), "y")
+        .format("YYYY-MM-DD");
+      console.log("TAHUN SEKARANG", moment().format("YYYY-MM-DD"));
+      console.log("TAHUN UPDATE", futureYear);
+      setPeriodDateEnd(futureYear);
     }
-  }
+  };
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
       );
-      console.log("data",data)
+      console.log("data", data);
       setIsntitusiName(data.data.institution_name);
       setTitle(data.data.title);
       setDate(data.data.submission_date);
       setCooperationID(data.data.cooperation_category);
-      // 
+      //
       setPeriod(data.data.period);
       setPeriodUnit(data.data.period_unit);
-      // 
+      //
       setPeriodDateStart(data.data.period_date_start);
       setPeriodDateEnd(data.data.period_date_end);
-      // 
+      //
       setAggrementNumber(data.data.agreement_number_partner);
       setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
       setSigninDate(data.data.signing_date);
       setDocument(data.data.document_file);
       setEmail(data.data.email);
-      
-
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
   };
-
 
   const [AllCooperation, setAllCooperation] = useState("");
   console.log(AllCooperation, "AllCooperation");
   const changeFormCooporation = (index, e) => {
     let dataaa = [...allMK.singleCooporationSelect.data.option];
     dataaa[index].cooperation = e.target.value;
-    console.log("dataaa",dataaa)
+    console.log("dataaa", dataaa);
     setAllCooperation(dataaa);
   };
 
   // onchange textarea default cooperationID
   const changeDataContentDefault = (event, i) => {
     // console.log("object")
+    
     let dataCoopertaion = { ...cooperationID };
     dataCoopertaion.data_content[i].form_content = event.target.value;
-    console.log("dataCoopertaion",dataCoopertaion)
+    console.log("dataCoopertaion", dataCoopertaion);
     setCooperationID(dataCoopertaion);
   };
-  console.log("cooperationID",cooperationID)
+  console.log("cooperationID", cooperationID);
 
   const changeInstitusi = (value) => {
     setIsntitusiName(value);
@@ -301,25 +283,46 @@ const checkPeriod = (dateNow) =>{
       draggable: true,
       progress: undefined,
     });
-  
+
   useEffect(() => {
     setDataSingle(router.query.id);
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
-  }, [dispatch,router.query.id]);
+  }, [dispatch, router.query.id]);
   useEffect(() => {
     dispatch(fetchListCooperationSelectById(cooperationC_id));
-  }, [dispatch,allMK.idCooporationSelect,cooperationC_id]);
+  }, [dispatch, allMK.idCooporationSelect, cooperationC_id]);
   useEffect(() => {
     dispatch(fetchDataEmail());
-  }, [dispatch,allMK.institution_name, allMK.stateListMitra]);
+  }, [dispatch, allMK.institution_name, allMK.stateListMitra]);
 
   useEffect(() => {
-    checkPeriod(moment(date).format('YYYY-MM-DD'))
-  }, [period], date, checkPeriod)
+    function periodCheck(date) {
+      setPeriodDateStart(moment(date).format("YYYY-MM-DD"));
+      if (periodUnit === "bulan") {
+        let futureMonth = moment(date)
+          .add(parseInt(period), "M")
+          .format("YYYY-MM-DD");
+        console.log("BULAN SEKARANG", moment().format("YYYY-MM-DD"));
+        console.log("BULAN UPDATE", futureMonth);
+        setPeriodDateEnd(futureMonth);
+      }
+      // jika tahun
+      else {
+        let futureYear = moment(date)
+          .add(parseInt(period), "y")
+          .format("YYYY-MM-DD");
+        console.log("TAHUN SEKARANG", moment().format("YYYY-MM-DD"));
+        console.log("TAHUN UPDATE", futureYear);
+        setPeriodDateEnd(futureYear);
+      }
+    }
+    periodCheck()
+
+    // checkPeriod(moment(date).format('YYYY-MM-DD'))
+  }, [period, date,periodUnit]);
   return (
     <PageWrapper>
-      
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <ToastContainer
           position="top-right"
@@ -350,7 +353,7 @@ const checkPeriod = (dateNow) =>{
                 </label>
                 <div className="col-sm-3">
                   <input
-                  readOnly
+                    readOnly
                     type="date"
                     required
                     value={date}
@@ -426,7 +429,7 @@ const checkPeriod = (dateNow) =>{
                       <option value="">Pilih Kategory Kerjasama</option>
                       {allMK.stateListKerjaSama.length === 0
                         ? ""
-                        : allMK.stateListKerjaSama.data.map((items,i) => {
+                        : allMK.stateListKerjaSama.data.map((items, i) => {
                             return (
                               <option key={i} value={items.id}>
                                 {items.cooperation_categories}
@@ -481,9 +484,7 @@ const checkPeriod = (dateNow) =>{
                           <option value="bulan">Bulan</option>
                         </select>
                       )} */}
-                      <div className="form-control">
-                          Tahun
-                      </div>
+                      <div className="form-control">Tahun</div>
                       {/* <input
                       required
                         type="text"
@@ -514,50 +515,55 @@ const checkPeriod = (dateNow) =>{
                       /> */}
 
                       <div className="d-flex align-items-center position-relative datepicker-w">
-                      <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
-                        // selected={periodDateStart}
+                        <DatePicker
+                          className="form-search-date form-control-sm form-control cursor-pointer"
+                          // selected={periodDateStart}
 
-                        // onChange={(date) => setPeriodDateStart(moment(date).format('YYYY-MM-DD'))}
-                        // value={periodDateStart}
+                          // onChange={(date) => setPeriodDateStart(moment(date).format('YYYY-MM-DD'))}
+                          // value={periodDateStart}
 
-                        onChange={(date) => onChangePeriodeDateStart(date)}
-
-
-                        value={periodDateStart}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
-                        minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      />
-                      <IconCalender className="right-center-absolute" style={{right:"10px"}} />
+                          onChange={(date) => onChangePeriodeDateStart(date)}
+                          value={periodDateStart}
+                          // selectsEnd
+                          // startDate={startDate}
+                          // endDate={endDate}
+                          // minDate={startDate}
+                          minDate={moment().toDate()}
+                          // maxDate={addDays(startDate, 20)}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="Sampai Tanggal"
+                        />
+                        <IconCalender
+                          className="right-center-absolute"
+                          style={{ right: "10px" }}
+                        />
                       </div>
-
                     </div>
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
                       <div className="d-flex align-items-center position-relative datepicker-w">
-                      <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
-                        readOnly
-                        // selected={periodDateStart}
-                        onChange={(date) => setPeriodDateEnd(moment(date).format('YYYY-MM-DD'))}
-                        value={periodDateEnd}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
-                        minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      />
-                      <IconCalender className="right-center-absolute" style={{right:"10px"}} />
+                        <DatePicker
+                          className="form-search-date form-control-sm form-control cursor-pointer"
+                          readOnly
+                          // selected={periodDateStart}
+                          onChange={(date) =>
+                            setPeriodDateEnd(moment(date).format("YYYY-MM-DD"))
+                          }
+                          value={periodDateEnd}
+                          // selectsEnd
+                          // startDate={startDate}
+                          // endDate={endDate}
+                          // minDate={startDate}
+                          minDate={moment().toDate()}
+                          // maxDate={addDays(startDate, 20)}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="Sampai Tanggal"
+                        />
+                        <IconCalender
+                          className="right-center-absolute"
+                          style={{ right: "10px" }}
+                        />
                       </div>
-{/* 
+                      {/* 
                       <input
                         required
                         onChange={(e) => setPeriodDateEnd(e.target.value)}
@@ -569,19 +575,19 @@ const checkPeriod = (dateNow) =>{
                   </div>
                 </div>
               </div>
-               <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Nama Lembaga
-                  </label>
-                  <div className="col-sm-10">
-                    <div aria-readonly disabled className="form-control">
-                      {isntitusiName}
-                    </div>
+              <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Nama Lembaga
+                </label>
+                <div className="col-sm-10">
+                  <div aria-readonly disabled className="form-control">
+                    {isntitusiName}
                   </div>
                 </div>
+              </div>
 
               {/* {allMK.stateListMitra.length === 0 ? (
                 <div className="form-group row">
@@ -639,16 +645,16 @@ const checkPeriod = (dateNow) =>{
               )} */}
 
               <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Email
-                  </label>
-                  <div className="col-sm-10">
-                    <p className="form-control">{email}</p>
-                  </div>
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Email
+                </label>
+                <div className="col-sm-10">
+                  <p className="form-control">{email}</p>
                 </div>
+              </div>
 
               {/* {allMK.email === "-" ? (
                 <div className="form-group row">
@@ -741,24 +747,27 @@ const checkPeriod = (dateNow) =>{
                       /> */}
 
                       <div className="d-flex align-items-center position-relative datepicker-w">
-                      <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
-                        // selected={periodDateStart}
-                        onChange={(date) => setSigninDate(moment(date).format('YYYY-MM-DD'))}
-                        value={signinDate}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
-                        minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      />
-                      <IconCalender className="right-center-absolute" style={{right:"10px"}} />
+                        <DatePicker
+                          className="form-search-date form-control-sm form-control cursor-pointer"
+                          // selected={periodDateStart}
+                          onChange={(date) =>
+                            setSigninDate(moment(date).format("YYYY-MM-DD"))
+                          }
+                          value={signinDate}
+                          // selectsEnd
+                          // startDate={startDate}
+                          // endDate={endDate}
+                          // minDate={startDate}
+                          minDate={moment().toDate()}
+                          // maxDate={addDays(startDate, 20)}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="Sampai Tanggal"
+                        />
+                        <IconCalender
+                          className="right-center-absolute"
+                          style={{ right: "10px" }}
+                        />
                       </div>
-
-                      
                     </div>
                   </div>
                 </div>
@@ -860,7 +869,8 @@ const checkPeriod = (dateNow) =>{
                 ? ""
                 : cooperationID.data_content.map((items, i) => {
                     return (
-                      <div key={i}
+                      <div
+                        key={i}
                         className={`form-group row ${
                           allMK.stateListKerjaSama.length !== 0 ? "d-none" : ""
                         }`}
@@ -895,7 +905,7 @@ const checkPeriod = (dateNow) =>{
                     (items, index) => {
                       return (
                         <div
-                        key={index}
+                          key={index}
                           className={`form-group row ${
                             allMK.stateListKerjaSama.length === 0
                               ? "d-none"
@@ -913,7 +923,7 @@ const checkPeriod = (dateNow) =>{
                               required
                               onChange={(e) => changeFormCooporation(index, e)}
                               name="cooperation"
-                              id={index+1}
+                              id={index + 1}
                               cols="30"
                               rows="5"
                               className="form-control"

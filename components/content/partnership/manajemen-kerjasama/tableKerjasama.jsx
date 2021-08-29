@@ -18,6 +18,7 @@ import { CSVLink } from "react-csv";
 
 import IconCalender from '../../../assets/icon/Calender'
 import IconArrow from '../../../assets/icon/Arrow'
+import axios from 'axios'
 
 import {
   fetchAllMK,
@@ -129,11 +130,25 @@ const [isStatusBar, setIsStatusBar] = useState(false)
     allMK.status_list,
   ]);
 
+  const [sumWillExpire, setSumWillExpire] = useState(0)
+  const getWillExpire = async () =>{
+    try {
+      let {data} = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`
+      );
+      // router.push(urlExport.config.url);
+
+      setSumWillExpire(data.data.total)
+    } catch (error) {
+      console.log("object", error);
+    }
+  }
+
   useEffect(() => {
     dispatch(fetchListSelectMitra());
     dispatch(fetchListSelectCooperation());
     dispatch(fetchListSelectStatus());
- 
+    getWillExpire()
   }, [dispatch]);
   return (
     <PageWrapper>
@@ -272,7 +287,7 @@ const [isStatusBar, setIsStatusBar] = useState(false)
                   <div className="position-relative" style={{top:"8px"}}>
                     <Image alt='card-page-icon' src={`/assets/icon/info-danger.svg`} width={35} height={35} />
                     </div>
-                    <p className={`font-weight-bold font-size-h2 ml-2 my-auto`} style={{ color: "#F65464", opacity: '0.5' }}>{allMK.totalDataNonActive} Kerjasama akan Habis</p>
+                    <p className={`font-weight-bold font-size-h2 ml-2 my-auto`} style={{ color: "#F65464", opacity: '0.5' }}>{sumWillExpire} Kerjasama akan Habis</p>
                 </div>
             </span>
             <p className='ml-3 mt-2 position-relative' style={{ color: "#F65464",bottom:"8px", fontSize: '15px', fontWeight: '500', opacity: '0.50' }}>Kerjasama akan Habis</p>
