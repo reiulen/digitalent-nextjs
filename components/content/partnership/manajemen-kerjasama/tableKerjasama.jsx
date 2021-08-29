@@ -258,6 +258,7 @@ const [isStatusBar, setIsStatusBar] = useState(false)
         <div className="row">
 
 {/* card 1 */}
+
           <div className={`col bg-light-success cursor-pointer px-6 py-8 rounded-xl mr-7 mb-7`} onClick={() => dispatch(changeValueStatusCard("active"))} >
             <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
                 <div className="row ml-4">
