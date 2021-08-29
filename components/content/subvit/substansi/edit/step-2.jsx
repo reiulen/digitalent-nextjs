@@ -61,7 +61,7 @@ const StepTwo = () => {
         end_at,
         duration,
         passing_grade,
-        status: false,
+        status: 0,
         questions_to_share: jumlah_soal,
       };
 
@@ -90,7 +90,7 @@ const StepTwo = () => {
         end_at,
         duration,
         passing_grade,
-        status: true,
+        status: 1,
         questions_to_share: jumlah_soal,
       };
 
