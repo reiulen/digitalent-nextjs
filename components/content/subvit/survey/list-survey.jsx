@@ -243,7 +243,7 @@ const ListSurvey = () => {
                               </td>
                               <td className="align-middle">{row.start_at}</td>
                               <td className="align-middle">
-                                {row.status === true ? (
+                                {row.status ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
