@@ -339,6 +339,7 @@ router.push({
                         name="logo"
                         className="custom-file-input cursor-pointer"
                         id="inputGroupFile04"
+                        accept="image/png,image/jpg"
                         // onChange={onChangeGambar}
                       />
                       <label className="custom-file-label" htmlFor="inputGroupFile04">

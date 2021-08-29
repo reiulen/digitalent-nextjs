@@ -805,6 +805,7 @@ const EditDokumentKerjasama = () => {
                     <div className="input-group mt-3">
                       <div className="custom-file">
                         <input
+                        accept=".pdf"
                           type="file"
                           name="gambar"
                           className="custom-file-input cursor-pointer"
