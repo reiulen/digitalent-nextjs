@@ -62,22 +62,43 @@ const TambahImagetron = () => {
     const [judul, setJudulImagetron] = useState('')
     const [gambar, setGambar] = useState('')
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
+    const [gambarName, setGambarName] = useState (null)
     const [url_link, setUrlRedirect] = useState('')
     const [publish, setPublish] = useState(false)
-    const [users_id, setUserId] = useState(1)
+    const [users_id, setUserId] = useState(3)
 
     const onChangeGambar = (e) => {
-        if (e.target.name === 'gambar') {
-            const reader = new FileReader()
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setGambar(reader.result)
-                    setGambarPreview(reader.result)
-                }
+        const type = ["image/jpg", "image/png", "image/jpeg"]
+        // console.log (e.target.files[0].type)
+        // console.log (e.target.files[0])
+        // console.log ("check")
+    
+        if (type.includes (e.target.files[0].type)){
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setGambar(reader.result);
+              setGambarPreview(reader.result);
             }
-            reader.readAsDataURL(e.target.files[0])
+          };
+          reader.readAsDataURL(e.target.files[0])
+          // console.log (reader.readAsDataURL(e.target.files[0]))
+          setGambarName(e.target.files[0].name)
+        } 
+        else {
+          // setGambar("")
+          // setGambarPreview("/assets/media/default.jpg")
+          // setGambarName(null)
+          // simpleValidator.current.showMessages();
+          // forceUpdate(1);
+          e.target.value = null
+          Swal.fire(
+            'Oops !',
+            'Data yang bisa dimasukkan hanya berupa data gambar.',
+            'error'
+          )
         }
-    }
+      };
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -174,11 +195,14 @@ const TambahImagetron = () => {
                         kategori &&
                         kategori.kategori &&
                         kategori.kategori.map((row) => {
-                          return (
-                            <option key={row.id} value={row.id}>
-                              {row.jenis_kategori}
-                            </option>
-                          );
+                            return (
+                                row.jenis_kategori == "Imagetron" ?
+                                  <option key={row.id} value={row.id}>
+                                    {row.nama_kategori}
+                                  </option>
+                                :
+                                  null
+                              );
                         })
                       )}
                     </select>
@@ -233,9 +257,15 @@ const TambahImagetron = () => {
                                                 "required",
                                                 { className: "text-danger" }
                                             )}
-                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
+                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih file</label>
                                         </div>
                                     </div>
+                                    {
+                                        gambarName !== null ?
+                                            <small className="text-danger">{gambarName}</small>
+                                        :
+                                            null
+                                    }
                                 </div>
                             </div>
 

@@ -109,27 +109,67 @@ const Imagetron = () => {
     };
 
     const handlePagination = (pageNumber) => {
-        if (limit != null) {
-            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
+        if (limit !== null  && search === "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+    
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
         } else {
-            router.push(`${router.pathname}?page=${pageNumber}`);
+            router.push(`${router.pathname}?page=${pageNumber}`)
         }
-    };
+    }
 
     const handleSearch = () => {
-        if (limit != null) {
-            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
+        if (limit != null && startDate === null && endDate === null) {
+           router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit !== null && startDate !== null && endDate !== null ) {
+           router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
         } else {
-            router.push(`${router.pathname}?page=1&keyword=${search}`);
+          router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
+    
     };
 
     const handleSearchDate = () => {
-        router.push(
-            `${router.pathname}?page=1&startdate=${moment(startDate).format(
-            "YYYY-MM-DD"
-            )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-        );
+        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+        } else {
+            if (limit !== null && search === null) {
+                router.push(
+                    `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                );
+    
+            } else if (limit !== null && search !== null) {
+              `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+    
+            } else {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+                ); 
+            }
+        }
     };
 
     const handleLimit = (val) => {
@@ -376,12 +416,21 @@ const Imagetron = () => {
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     imagetron && imagetron.data.imagetron.map((row, i) => {
                                                         return <tr key={row.id}>
-                                                            <td className='text-center'>
-                                                            <td className="align-middle text-center">
-                                                                <span className="badge badge-secondary text-muted">
-                                                                {i + 1 * (page * 5 || limit) - 4}
-                                                                </span>
+                                                            <td className='align-middle text-center'>
+                                                                {
+                                                                    limit === null ?
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                                                    </span>
+                                                                    :
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * limit) - (limit - 1)}
+                                                                    </span>
+                                                                }
+                                                                
                                                             </td>
+                                                            <td className='text-center'>
+                                                            
                                                             <Image
                                                                 alt={row.judul}
                                                                 unoptimized={
@@ -397,7 +446,7 @@ const Imagetron = () => {
                                                             />
                                                                 {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
                                                             </td>
-                                                            <td className='align-middle'>{row.jenis_kategori}</td>
+                                                            <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.judul}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
@@ -408,7 +457,8 @@ const Imagetron = () => {
                                                                 </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            {/* <td className='align-middle'>{row.dibuat}</td> */}
+                                                            <td className='align-middle'>Super Admin</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                 <span className="label label-inline label-light-success font-weight-bold">
@@ -420,7 +470,7 @@ const Imagetron = () => {
                                                                 </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>Admin Publikasi</td>
+                                                            <td className='align-middle'>Super Admin</td>
                                                             <td className='align-middle'>
                                                                 {/* <ButtonAction icon='setting.svg' /> */}
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/imagetron/${row.id}`} title="Edit"/>
@@ -470,7 +520,7 @@ const Imagetron = () => {
                                         />
                                     </div>
                                 }
-                                {imagetron && imagetron.total > 5 ?
+                                {imagetron ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
@@ -493,7 +543,7 @@ const Imagetron = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {imagetron.total}</p>
+                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {imagetron.data.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''

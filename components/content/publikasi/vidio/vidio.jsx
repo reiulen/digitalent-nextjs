@@ -392,10 +392,23 @@ const Vidio = () => {
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     video && video.video.map((row, i) => {
                                                         return <tr key={row.id}>
-                                                            <td className="align-middle text-center">
+                                                            {/* <td className="align-middle text-center">
                                                                 <span className="badge badge-secondary text-muted">
                                                                 {i + 1 * (page * 5 || limit) - 4}
                                                                 </span>
+                                                            </td> */}
+                                                            <td className='align-middle text-center'>
+                                                                {
+                                                                    limit === null ?
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                                                    </span>
+                                                                    :
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * limit) - (limit - 1)}
+                                                                    </span>
+                                                                }
+                                                                
                                                             </td>
                                                             <td className='text-center'>
                                                                 <Image
@@ -487,7 +500,7 @@ const Vidio = () => {
                                         />
                                     </div>
                                 }
-                                {video && video.total > 5 ?
+                                {video  ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
