@@ -270,7 +270,7 @@ const ListTipeSoal = () => {
                               <td className="align-middle">{row.name}</td>
                               <td className="align-middle">{row.value}</td>
                               <td className="align-middle">
-                                {row.status === true ? (
+                                {row.status ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>

@@ -3,28 +3,33 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import {
   updateSurveyQuestionBanks,
   clearErrors,
-} from '../../../../../redux/actions/subvit/survey-question.actions';
-import { UPDATE_SURVEY_QUESTION_BANKS_RESET } from '../../../../../redux/types/subvit/survey-question.type';
+} from "../../../../../redux/actions/subvit/survey-question.actions";
+import { UPDATE_SURVEY_QUESTION_BANKS_RESET } from "../../../../../redux/types/subvit/survey-question.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
-import { useRouter } from "next/router";
+import LoadingPage from "../../../../LoadingPage";
 
 const StepOne = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   let { id } = router.query;
-  const { error: detailData, survey } = useSelector((state) => state.detailSurveyQuestionBanks)
-  const { loading, error, isUpdated } = useSelector((state) => state.updateSurveyQuestion)
+  const { error: detailData, survey } = useSelector(
+    (state) => state.detailSurveyQuestionBanks
+  );
+  const { loading, error, isUpdated } = useSelector(
+    (state) => state.updateSurveyQuestion
+  );
 
-  const [typeSave, setTypeSave] = useState('lanjut')
-  const [academy_id, setAcademyId] = useState()
-  const [theme_id, setThemeId] = useState()
-  const [training_id, setTrainingId] = useState()
+  const [typeSave, setTypeSave] = useState("lanjut");
+  const [academy_id, setAcademyId] = useState(survey.academy_id);
+  const [theme_id, setThemeId] = useState(survey.theme_id);
+  const [training_id, setTrainingId] = useState(survey.training_id);
 
   useEffect(() => {
     // if (error) {
@@ -35,12 +40,12 @@ const StepOne = () => {
       dispatch({
         type: UPDATE_SURVEY_QUESTION_BANKS_RESET,
       });
-      if (typeSave === 'lanjut') {
+      if (typeSave === "lanjut") {
         router.push({
           pathname: `/subvit/survey/edit/step-2`,
-          query: { id }
-        })
-      } else if (typeSave === 'draft') {
+          query: { id },
+        });
+      } else if (typeSave === "draft") {
         router.push({
           pathname: `/subvit/survey`,
           query: { success: true },
@@ -54,31 +59,31 @@ const StepOne = () => {
   // };
 
   const saveDraft = () => {
-    setTypeSave('draft')
+    setTypeSave("draft");
     const data = {
       academy_id,
       theme_id,
       training_id,
-      _method: 'put'
-    }
+      _method: "put",
+    };
 
-    dispatch(updateSurveyQuestionBanks(id, data))
+    dispatch(updateSurveyQuestionBanks(id, data));
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setTypeSave('lanjut')
+    setTypeSave("lanjut");
 
     const data = {
       academy_id,
       theme_id,
       training_id,
-      _method: 'put'
-    }
+      _method: "put",
+    };
 
-    dispatch(updateSurveyQuestionBanks(id, data))
+    dispatch(updateSurveyQuestionBanks(id, data));
 
-    console.log(data)
+    console.log(data);
   };
 
   return (
@@ -109,6 +114,7 @@ const StepOne = () => {
         ""
       )}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
           <StepInputPublish step="1"></StepInputPublish>
           <div className="card-header border-0">
@@ -133,7 +139,10 @@ const StepOne = () => {
                     className="form-control"
                   >
                     <option> -Pilih Akademi -</option>
-                    <option value="1" selected> Computer Scientist </option>
+                    <option value="1" selected>
+                      {" "}
+                      Computer Scientist{" "}
+                    </option>
                     <option value="2"> Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Akademi</span>
@@ -155,7 +164,10 @@ const StepOne = () => {
                     className="form-control"
                   >
                     <option> -Pilih Tema-</option>
-                    <option value="1" selected> Cloud Computing </option>
+                    <option value="1" selected>
+                      {" "}
+                      Cloud Computing{" "}
+                    </option>
                     <option value="2"> UI/UX Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Tema</span>
@@ -177,7 +189,10 @@ const StepOne = () => {
                     className="form-control"
                   >
                     <option> -Pilih Pelatihan-</option>
-                    <option value="1" selected> Google Cloud Computing </option>
+                    <option value="1" selected>
+                      {" "}
+                      Google Cloud Computing{" "}
+                    </option>
                     <option value="2"> Adobe UI/UX Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Pelatihan</span>
@@ -187,15 +202,13 @@ const StepOne = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <button
-                    className="btn btn-light-primary btn-sm mr-2"
-                  >
+                  <button className="btn btn-light-primary btn-sm mr-2">
                     Simpan & Lanjut
                   </button>
                   <button
                     className="btn btn-primary btn-sm"
                     onClick={saveDraft}
-                    type='button'
+                    type="button"
                   >
                     Simpan Draft
                   </button>
