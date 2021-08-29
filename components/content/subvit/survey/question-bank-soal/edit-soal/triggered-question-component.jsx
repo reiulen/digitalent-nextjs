@@ -538,8 +538,8 @@ const TriggeredQuestionComponent = ({
             <option selected disabled value="">
               -- Status --
             </option>
-            <option value={true}>Publish</option>
-            <option value={false}>Draft</option>
+            <option value={1}>Publish</option>
+            <option value={0}>Draft</option>
           </select>
           <span className="text-muted">Silahkan Pilih Status</span>
         </div>

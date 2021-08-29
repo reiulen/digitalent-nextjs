@@ -3,15 +3,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import DatePicker from "react-datepicker";
-import SimpleReactValidator from 'simple-react-validator'
-import Swal from "sweetalert2"
-import moment from 'moment'
+import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
+import moment from "moment";
 
 import {
   updateSurveyQuestionBanksPublish,
   clearErrors,
-} from '../../../../../redux/actions/subvit/survey-question.actions'
-import { UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET } from '../../../../../redux/types/subvit/survey-question.type'
+} from "../../../../../redux/actions/subvit/survey-question.actions";
+import { UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../redux/types/subvit/survey-question.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
@@ -22,9 +22,10 @@ const StepThree = () => {
   const router = useRouter();
 
   let { id } = router.query;
-  const { loading, error, success } = useSelector((state) => state.
-    updateSurveyQuestionBanksPublish);
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+  const { loading, error, success } = useSelector(
+    (state) => state.updateSurveyQuestionBanksPublish
+  );
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   useEffect(() => {
     // if (error) {
@@ -46,35 +47,33 @@ const StepThree = () => {
 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [duration, setDuration] = useState(null)
-  const [jumlah_soal, setJumlahSoal] = useState(null)
-  const [status, setStatus] = useState('')
+  const [duration, setDuration] = useState(null);
+  const [jumlah_soal, setJumlahSoal] = useState(null);
+  const [status, setStatus] = useState("");
 
   const saveDraft = () => {
     if (simpleValidator.current.allValid()) {
-
-      const start_at = moment(startDate).format('YYYY-MM-DD')
-      const end_at = moment(endDate).format('YYYY-MM-DD')
+      const start_at = moment(startDate).format("YYYY-MM-DD");
+      const end_at = moment(endDate).format("YYYY-MM-DD");
 
       const data = {
-        _method: 'put',
+        _method: "put",
         start_at,
         end_at,
         duration,
-        status: false,
+        status: 0,
         questions_to_share: jumlah_soal,
-      }
+      };
 
-      dispatch(updateSurveyQuestionBanksPublish(data, id))
-
+      dispatch(updateSurveyQuestionBanksPublish(data, id));
     } else {
-      simpleValidator.current.showMessages()
-      forceUpdate(1)
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Isi data dengan benar !'
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
     }
   };
 
@@ -82,35 +81,32 @@ const StepThree = () => {
     e.preventDefault();
 
     if (error) {
-      dispatch(clearErrors())
+      dispatch(clearErrors());
     }
 
     if (simpleValidator.current.allValid()) {
-
-      const start_at = moment(startDate).format('YYYY-MM-DD')
-      const end_at = moment(endDate).format('YYYY-MM-DD')
+      const start_at = moment(startDate).format("YYYY-MM-DD");
+      const end_at = moment(endDate).format("YYYY-MM-DD");
 
       const data = {
-        _method: 'put',
+        _method: "put",
         start_at,
         end_at,
         duration,
-        status: true,
+        status: 1,
         questions_to_share: jumlah_soal,
-      }
+      };
 
-      dispatch(updateSurveyQuestionBanksPublish(data, id))
-
+      dispatch(updateSurveyQuestionBanksPublish(data, id));
     } else {
-      simpleValidator.current.showMessages()
-      forceUpdate(1)
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Isi data dengan benar !'
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
     }
-
   };
 
   return (
@@ -141,11 +137,7 @@ const StepThree = () => {
         ""
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
-        {
-          loading ?
-            <LoadingPage loading={loading} />
-            : ''
-        }
+        {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="3"></StepInput>
           <div className="card-header border-0">
@@ -160,10 +152,12 @@ const StepThree = () => {
                   <span>Pelaksanaan dari</span>
                   <DatePicker
                     className="form-control"
-                    name='start_date'
+                    name="start_date"
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
-                    onBlur={() => simpleValidator.current.showMessageFor('tanggal mulai')}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("tanggal mulai")
+                    }
                     selectsStart
                     startDate={startDate}
                     endDate={endDate}
@@ -173,7 +167,12 @@ const StepThree = () => {
                   <small className="text-muted">
                     Silahkan Pilih Tanggal Dari
                   </small>
-                  {simpleValidator.current.message('tanggal mulai', startDate, 'required', { className: 'text-danger' })}
+                  {simpleValidator.current.message(
+                    "tanggal mulai",
+                    startDate,
+                    "required",
+                    { className: "text-danger" }
+                  )}
                 </div>
 
                 <div className="col-sm-6 col-md-2">
@@ -182,7 +181,9 @@ const StepThree = () => {
                     className="form-control"
                     selected={endDate}
                     onChange={(date) => setEndDate(date)}
-                    onBlur={() => simpleValidator.current.showMessageFor('tanggal sampai')}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("tanggal sampai")
+                    }
                     selectsEnd
                     startDate={startDate}
                     endDate={endDate}
@@ -193,7 +194,12 @@ const StepThree = () => {
                   <small className="text-muted">
                     Silahkan Pilih Tanggal Sampai
                   </small>
-                  {simpleValidator.current.message('tanggal sampai', endDate, 'required', { className: 'text-danger' })}
+                  {simpleValidator.current.message(
+                    "tanggal sampai",
+                    endDate,
+                    "required",
+                    { className: "text-danger" }
+                  )}
                 </div>
               </div>
 
@@ -206,8 +212,10 @@ const StepThree = () => {
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={jumlah_soal}
-                      onChange={e => setJumlahSoal(e.target.value)}
-                      onBlur={() => simpleValidator.current.showMessageFor('jumlah soal')}
+                      onChange={(e) => setJumlahSoal(e.target.value)}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("jumlah soal")
+                      }
                       min={1}
                     />
                     <div className="input-group-append">
@@ -219,7 +227,12 @@ const StepThree = () => {
                   <small className="text-muted">
                     Silahkan Input Jumlah Soal
                   </small>
-                  {simpleValidator.current.message('jumlah soal', jumlah_soal, 'required', { className: 'text-danger' })}
+                  {simpleValidator.current.message(
+                    "jumlah soal",
+                    jumlah_soal,
+                    "required",
+                    { className: "text-danger" }
+                  )}
                 </div>
               </div>
 
@@ -232,8 +245,10 @@ const StepThree = () => {
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
-                      onChange={e => setDuration(e.target.value)}
-                      onBlur={() => simpleValidator.current.showMessageFor('durasi')}
+                      onChange={(e) => setDuration(e.target.value)}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("durasi")
+                      }
                       min={1}
                     />
                     <div className="input-group-append bg-sedondary">
@@ -245,7 +260,12 @@ const StepThree = () => {
                   <small className="text-muted">
                     Silahkan Input Durasi Test
                   </small>
-                  {simpleValidator.current.message('durasi', duration, 'required', { className: 'text-danger' })}
+                  {simpleValidator.current.message(
+                    "durasi",
+                    duration,
+                    "required",
+                    { className: "text-danger" }
+                  )}
                 </div>
               </div>
 
@@ -258,31 +278,39 @@ const StepThree = () => {
                     className="form-control"
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    onBlur={e => { setStatus(e.target.value); simpleValidator.current.showMessageFor('status') }}
+                    onBlur={(e) => {
+                      setStatus(e.target.value);
+                      simpleValidator.current.showMessageFor("status");
+                    }}
                   >
-                    <option value="" selected disabled>-- PILIH STATUS --</option>
+                    <option value="" selected disabled>
+                      -- PILIH STATUS --
+                    </option>
                     <option value={true}> Publish </option>
                     <option value={false}> Draft </option>
                   </select>
                   <span className="text-muted">
                     Silahkan Pilih Status Publish
                   </span>
-                  {simpleValidator.current.message('status', status, 'required', { className: 'text-danger' })}
+                  {simpleValidator.current.message(
+                    "status",
+                    status,
+                    "required",
+                    { className: "text-danger" }
+                  )}
                 </div>
               </div>
 
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <button
-                    className="btn btn-light-primary btn-sm mr-2"
-                  >
+                  <button className="btn btn-light-primary btn-sm mr-2">
                     Simpan & Lanjut
                   </button>
                   <button
                     className="btn btn-primary btn-sm"
                     onClick={saveDraft}
-                    type='button'
+                    type="button"
                   >
                     Simpan Draft
                   </button>

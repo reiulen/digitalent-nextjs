@@ -243,9 +243,15 @@ const ListSurvey = () => {
                               </td>
                               <td className="align-middle">{row.start_at}</td>
                               <td className="align-middle">
-                                <span className="badge badge-success">
-                                  Publish
-                                </span>
+                                {row.status === true ? (
+                                  <span className="label label-inline label-light-success font-weight-bold">
+                                    Publish
+                                  </span>
+                                ) : (
+                                  <span className="label label-inline label-light-warning font-weight-bold">
+                                    Draft
+                                  </span>
+                                )}
                               </td>
                               <td className="align-middle">
                                 <ButtonAction
