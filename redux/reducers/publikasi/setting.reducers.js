@@ -4,9 +4,18 @@ import {
     SETTING_FAIL,
 
     UPDATE_SETTING_REQUEST,
-    UPDATE_SETTING_SUCCESS,
+
+    UPDATE_SETTING_IMAGE_SUCCESS,
+    UPDATE_SETTING_IMAGETRON_SUCCESS,
+    UPDATE_SETTING_SLIDER_SUCCESS,
+    UPDATE_SETTING_FAQ_SUCCESS,
+
+    UPDATE_SETTING_IMAGE_FAIL,
+    UPDATE_SETTING_IMAGETRON_FAIL,
+    UPDATE_SETTING_SLIDER_FAIL,
+    UPDATE_SETTING_FAQ_FAIL, 
+
     UPDATE_SETTING_RESET,
-    UPDATE_SETTING_FAIL,
 
     CLEAR_ERRORS
 } from "../../types/publikasi/setting.type"
@@ -47,7 +56,28 @@ export const updateSettingPublikasiReducer = (state = {}, action) => {
                 loading: true
             }
         
-        case UPDATE_SETTING_SUCCESS:
+        case UPDATE_SETTING_IMAGE_SUCCESS:
+            return {
+                loading: false,
+                isUpdated: action.payload,
+                success: true
+            }
+
+        case UPDATE_SETTING_IMAGETRON_SUCCESS:
+            return {
+                loading: false,
+                isUpdated: action.payload,
+                success: true
+            }
+
+        case UPDATE_SETTING_SLIDER_SUCCESS:
+            return {
+                loading: false,
+                isUpdated: action.payload,
+                success: true
+            }
+
+        case UPDATE_SETTING_FAQ_SUCCESS:
             return {
                 loading: false,
                 isUpdated: action.payload,
@@ -61,7 +91,25 @@ export const updateSettingPublikasiReducer = (state = {}, action) => {
                 success: false
             }
 
-        case UPDATE_SETTING_FAIL:
+        case UPDATE_SETTING_IMAGE_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+        
+        case UPDATE_SETTING_IMAGETRON_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+            
+        case UPDATE_SETTING_SLIDER_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case UPDATE_SETTING_FAQ_FAIL:
             return {
                 loading: false,
                 error: action.payload
