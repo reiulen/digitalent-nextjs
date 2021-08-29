@@ -34,10 +34,6 @@ const StepOne = () => {
   const [category, setCategory] = useState(subtance.category);
 
   useEffect(() => {
-    // if (error) {
-    //     dispatch(clearErrors())
-    // }
-
     if (isUpdated) {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_BANKS_RESET,
@@ -54,7 +50,7 @@ const StepOne = () => {
         });
       }
     }
-  }, [dispatch, error, isUpdated, typeSave, router, id]);
+  }, [dispatch, isUpdated, typeSave, router, id]);
 
   const saveDraft = () => {
     setTypeSave("draft");

@@ -155,7 +155,7 @@ export const updateSurveyQuestionBanks =
 
       dispatch({
         type: UPDATE_SURVEY_QUESTION_BANKS_SUCCESS,
-        payload: data.success,
+        payload: data.status,
       });
     } catch (error) {
       dispatch({

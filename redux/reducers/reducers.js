@@ -54,6 +54,11 @@ import {
   updateVideoReducer,
 } from "./publikasi/video.reducers";
 
+import {
+  allSettingPublikasiReducer,
+  updateSettingPublikasiReducer
+} from "./publikasi/setting.reducers"
+
 // Subvit
 // ============== substansi ===============
 import {
@@ -186,6 +191,9 @@ const reducer = combineReducers({
   deleteKategori: deleteKategoriReducer,
   detailKategori: detailKategoriReducer,
   updateKategori: updateKategoriReducer,
+
+  allSettingPublikasi: allSettingPublikasiReducer,
+  updateSettingPublikasi: updateSettingPublikasiReducer,
 
   // Subvit
   // =============== substansi ==================

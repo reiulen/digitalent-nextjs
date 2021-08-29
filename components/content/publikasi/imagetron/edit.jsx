@@ -68,10 +68,13 @@ const EditImagetron = () => {
     const [kategori_id, setKategoriId] = useState(imagetron.kategori_id)
     const [judul, setJudulImagetron] = useState(imagetron.judul)
     const [gambar, setGambar] = useState(imagetron.gambar)
+    // const [gambar, setGambar] = useState('/assets/media/default.jpg')
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
+    // const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + imagetron.gambar);
+    const [gambarName, setGambarName] = useState (imagetron.gambar)
     const [url_link, setUrlRedirect] = useState(imagetron.url_link)
     const [publish, setPublish] = useState(imagetron.publish)
-    const [users_id, setUserId] = useState(1)
+    const [users_id, setUserId] = useState(3)
     const [_method, setMethod] = useState("put");
 
     const onChangeGambar = (e) => {
@@ -84,6 +87,7 @@ const EditImagetron = () => {
                 }
             }
             reader.readAsDataURL(e.target.files[0])
+            setGambarName(e.target.files[0].name)
         }
     }
 
@@ -105,7 +109,7 @@ const EditImagetron = () => {
         }
 
         dispatch(updateImagetron(data))
-        // console.log(data)
+        console.log(data)
     }
 
     const onNewReset = () => {
@@ -114,6 +118,9 @@ const EditImagetron = () => {
 
     return (
         <PageWrapper>
+            {
+                console.log (imagetron)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -173,11 +180,15 @@ const EditImagetron = () => {
                         kategori &&
                         kategori.kategori &&
                         kategori.kategori.map((row) => {
-                          return (
-                            <option key={row.id} value={row.id}>
-                              {row.jenis_kategori}
-                            </option>
-                          );
+                            return (
+                                row.jenis_kategori == "Imagetron" ?
+                                    <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                    {row.nama_kategori}
+                                    </option>
+                                :
+                                    null
+                                    // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
+                            )
                         })
                       )}
                     </select>
@@ -202,6 +213,7 @@ const EditImagetron = () => {
                                 <div className="col-sm-1">
                                     <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
                                         <Image
+                                            loader={() => gambarPreview}
                                             src={gambarPreview}
                                             alt='image'
                                             width={60}
@@ -213,10 +225,12 @@ const EditImagetron = () => {
                                     <div className="input-group">
                                         <div className="custom-file">
                                             <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} accept="image/*"/>
-                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
+                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih file</label>
                                         </div>
                                     </div>
+                                    <small>{gambarName}</small>
                                 </div>
+                                
                             </div>
 
                             <div className="form-group row">

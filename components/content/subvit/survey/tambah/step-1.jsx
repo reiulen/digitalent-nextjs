@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import SimpleReactValidator from 'simple-react-validator'
-import Swal from "sweetalert2"
+import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
 
 import {
   newSurveyQuestionBanks,
@@ -19,16 +19,17 @@ const TambahSurveyStepOne = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, success, survey } = useSelector((state) => state.newSurveyQuestionBanks);
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+  const { loading, error, success, survey } = useSelector(
+    (state) => state.newSurveyQuestionBanks
+  );
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
-  const [typeSave, setTypeSave] = useState('lanjut')
-
+  const [typeSave, setTypeSave] = useState("lanjut");
 
   const [academy_id, setAcademyId] = useState("");
   const [theme_id, setThemeId] = useState("");
   const [training_id, setTrainingId] = useState("");
-  const [metode, setMetode] = useState('entry')
+  const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
     // if (error) {
@@ -36,83 +37,78 @@ const TambahSurveyStepOne = () => {
     // }
 
     if (success) {
-      const id = survey.id
-      if (typeSave === 'lanjut') {
+      const id = survey.id;
+      if (typeSave === "lanjut") {
         router.push({
           pathname: `/subvit/survey/tambah/step-2-${metode}`,
-          query: { id, metode }
-        })
-      } else if (typeSave === 'draft') {
+          query: { id, metode },
+        });
+      } else if (typeSave === "draft") {
         router.push({
           pathname: `/subvit/survey`,
           query: { success: true },
         });
       }
     }
-
   }, [dispatch, error, success, typeSave, metode, router, survey]);
 
   const saveDraft = () => {
-    setTypeSave('draft')
+    setTypeSave("draft");
     if (error) {
-      dispatch(clearErrors())
+      dispatch(clearErrors());
     }
     if (success) {
       dispatch({
-        type: NEW_SURVEY_QUESTION_BANKS_RESET
-      })
+        type: NEW_SURVEY_QUESTION_BANKS_RESET,
+      });
     }
     if (simpleValidator.current.allValid()) {
-
       const data = {
         academy_id,
         theme_id,
         training_id,
-      }
+      };
 
-      dispatch(newSurveyQuestionBanks(data))
-
+      dispatch(newSurveyQuestionBanks(data));
     } else {
-      simpleValidator.current.showMessages()
-      forceUpdate(1)
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Isi data dengan benar !'
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
     }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setTypeSave('lanjut')
+    setTypeSave("lanjut");
 
     if (error) {
-      dispatch(clearErrors())
+      dispatch(clearErrors());
     }
     if (success) {
       dispatch({
-        type: NEW_SURVEY_QUESTION_BANKS_RESET
-      })
+        type: NEW_SURVEY_QUESTION_BANKS_RESET,
+      });
     }
     if (simpleValidator.current.allValid()) {
-
       const data = {
         academy_id,
         theme_id,
         training_id,
-      }
+      };
 
-      dispatch(newSurveyQuestionBanks(data))
-
+      dispatch(newSurveyQuestionBanks(data));
     } else {
-      simpleValidator.current.showMessages()
-      forceUpdate(1)
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Isi data dengan benar !'
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data dengan benar !",
+      });
     }
   };
 
@@ -145,11 +141,7 @@ const TambahSurveyStepOne = () => {
       )}
 
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
-        {
-          loading ?
-            <LoadingPage loading={loading} />
-            : ''
-        }
+        {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="1"></StepInput>
           <div className="card-header border-0">
@@ -172,15 +164,26 @@ const TambahSurveyStepOne = () => {
                     id=""
                     value={academy_id}
                     onChange={(e) => setAcademyId(e.target.value)}
-                    onBlur={e => { setAcademyId(e.target.value); simpleValidator.current.showMessageFor('academy_id') }}
+                    onBlur={(e) => {
+                      setAcademyId(e.target.value);
+                      simpleValidator.current.showMessageFor("academy_id");
+                    }}
                     className="form-control"
                   >
-                    <option selected disabled value=''> -Pilih Akademi -</option>
+                    <option selected disabled value="">
+                      {" "}
+                      -Pilih Akademi -
+                    </option>
                     <option value="1"> Computer Scientist </option>
                     <option value="2"> Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Akademi</span>
-                  {simpleValidator.current.message('academy_id', academy_id, 'required', { className: 'text-danger' })}
+                  {simpleValidator.current.message(
+                    "academy_id",
+                    academy_id,
+                    "required",
+                    { className: "text-danger" }
+                  )}
                 </div>
               </div>
 
@@ -196,15 +199,26 @@ const TambahSurveyStepOne = () => {
                     name="the_id"
                     id=""
                     onChange={(e) => setThemeId(e.target.value)}
-                    onBlur={e => { setThemeId(e.target.value); simpleValidator.current.showMessageFor('theme_id') }}
+                    onBlur={(e) => {
+                      setThemeId(e.target.value);
+                      simpleValidator.current.showMessageFor("theme_id");
+                    }}
                     className="form-control"
                   >
-                    <option selected disabled value=''> -Pilih Tema-</option>
+                    <option selected disabled value="">
+                      {" "}
+                      -Pilih Tema-
+                    </option>
                     <option value="1"> Cloud Computing </option>
                     <option value="2"> UI/UX Designer </option>
                   </select>
                   <span className="text-muted">Silahkan Pilih Tema</span>
-                  {simpleValidator.current.message('theme_id', theme_id, 'required', { className: 'text-danger' })}
+                  {simpleValidator.current.message(
+                    "theme_id",
+                    theme_id,
+                    "required",
+                    { className: "text-danger" }
+                  )}
                 </div>
               </div>
 
@@ -220,10 +234,13 @@ const TambahSurveyStepOne = () => {
                     name="training_id"
                     id=""
                     onChange={(e) => setTrainingId(e.target.value)}
-                    onBlur={e => setTrainingId(e.target.value)}
+                    onBlur={(e) => setTrainingId(e.target.value)}
                     className="form-control"
                   >
-                    <option selected disabled> -Pilih Pelatihan-</option>
+                    <option selected disabled>
+                      {" "}
+                      -Pilih Pelatihan-
+                    </option>
                     <option value="1"> Google Cloud Computing </option>
                     <option value="1"> Adobe UI/UX Designer </option>
                   </select>
@@ -245,8 +262,8 @@ const TambahSurveyStepOne = () => {
                       type="radio"
                       name="method"
                       value="entry"
-                      checked={metode === 'entry'}
-                      onClick={() => setMetode('entry')}
+                      checked={metode === "entry"}
+                      onClick={() => setMetode("entry")}
                     />
                     <label className="form-check-label">Entry Soal</label>
                   </div>
@@ -256,8 +273,8 @@ const TambahSurveyStepOne = () => {
                       type="radio"
                       name="method"
                       value="import"
-                      checked={metode === 'import'}
-                      onClick={() => setMetode('import')}
+                      checked={metode === "import"}
+                      onClick={() => setMetode("import")}
                     />
                     <label className="form-check-label">Import .csv/.xls</label>
                   </div>
@@ -274,7 +291,7 @@ const TambahSurveyStepOne = () => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    type='submit'
+                    type="submit"
                     className="btn btn-light-primary btn-sm mr-2"
                   >
                     Simpan & Lanjut
@@ -282,7 +299,7 @@ const TambahSurveyStepOne = () => {
                   <button
                     onClick={saveDraft}
                     className="btn btn-primary btn-sm"
-                    type='button'
+                    type="button"
                   >
                     Simpan Draft
                   </button>

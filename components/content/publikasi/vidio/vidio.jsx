@@ -33,6 +33,7 @@ const Vidio = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [url_video, setUrlVideo] = useState("")
+    const [video_playing, setVideoPlaying] = useState(false)
     const [publishValue, setPublishValue] = useState(null)
 
     let loading = false
@@ -84,28 +85,68 @@ const Vidio = () => {
     };
 
     const handlePagination = (pageNumber) => {
-        if (limit != null) {
+        if (limit !== null  && search === "" && startDate === null && endDate === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+        
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+    
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
         }
     }
 
     const handleSearch = () => {
-        if (limit != null) {
-            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+        if (limit != null && startDate === null && endDate === null) {
+           router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit !== null && startDate !== null && endDate !== null ) {
+           router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
         } else {
-            router.push(`${router.pathname}?page=1&keyword=${search}`)
-        }
-    }
+          router.push(`${router.pathname}?page=1&keyword=${search}`)
+      }
+    
+    };
 
     const handleSearchDate = () => {
-        router.push(
-            `${router.pathname}?page=1&startdate=${moment(startDate).format(
-            "YYYY-MM-DD"
-            )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-        );
-    };
+        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+
+        } else {
+            if (limit !== null && search === null) {
+                router.push(
+                    `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                );
+
+            } else if (limit !== null && search !== null) {
+                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+
+            } else {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+                ); 
+            }
+        }
+        };
 
     const handleLimit = (val) => {
         setLimit(val)
@@ -148,6 +189,11 @@ const Vidio = () => {
           }
         }
         
+    }
+
+    const handlePreview = (url) => {
+        setVideoPlaying(true)
+        setUrlVideo(url) 
     }
 
     return (
@@ -228,7 +274,7 @@ const Vidio = () => {
                         background='bg-light-danger' 
                         icon='kotak-kotak-red.svg' 
                         color='#F65464' 
-                        value={video && video.publish != "" ? video.unpublish : 0} 
+                        value={video && video.unpublish != "" ? video.unpublish : 0} 
                         titleValue='Video' 
                         title='Total Belum Publish'
                         publishedVal = "0"
@@ -340,19 +386,29 @@ const Vidio = () => {
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
-                                        {
-                                            console.log (video)
-                                        }
                                         <tbody>
                                             {
                                                 !video || video && video.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     video && video.video.map((row, i) => {
                                                         return <tr key={row.id}>
-                                                            <td className="align-middle text-center">
+                                                            {/* <td className="align-middle text-center">
                                                                 <span className="badge badge-secondary text-muted">
                                                                 {i + 1 * (page * 5 || limit) - 4}
                                                                 </span>
+                                                            </td> */}
+                                                            <td className='align-middle text-center'>
+                                                                {
+                                                                    limit === null ?
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
+                                                                    </span>
+                                                                    :
+                                                                    <span className="badge badge-secondary text-muted">
+                                                                        {i + 1 * (page * limit) - (limit - 1)}
+                                                                    </span>
+                                                                }
+                                                                
                                                             </td>
                                                             <td className='text-center'>
                                                                 <Image
@@ -376,7 +432,8 @@ const Vidio = () => {
                                                                     )
                                                                 }
                                                             </td>
-                                                            <td className='align-middle'>{row.dibuat}</td>
+                                                            {/* <td className='align-middle'>{row.dibuat}</td> */}
+                                                            <td className='align-middle'>Super Admin</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
                                                                     <span className="label label-inline label-light-success font-weight-bold">
@@ -389,11 +446,12 @@ const Vidio = () => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>Admin Publikasi</td>
+                                                            <td className='align-middle'>Super Admin</td>
                                                             <td className='align-middle'>
                                                                 {/* <ButtonAction icon='setting.svg'/> */}
                                                                 <button 
-                                                                    onClick={() => setUrlVideo(row.url_video)} 
+                                                                    onClick={() => handlePreview(row.url_video)}
+                                                                    // onClick={() => setUrlVideo(row.url_video)} 
                                                                     className='btn mr-1' 
                                                                     style={{ background: '#F3F6F9', borderRadius: '6px' }} 
                                                                     data-target="#exampleModalCenter" 
@@ -442,7 +500,7 @@ const Vidio = () => {
                                         />
                                     </div>
                                 }
-                                {video && video.total > 5 ?
+                                {video  ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0">
@@ -482,10 +540,10 @@ const Vidio = () => {
                             </button>
                         </div>
                         <div className="modal-body d-flex justify-content-center" style={{ height: '400px' }}>
-                            <ReactPlayer url={url_video} controls width="700px"/>
+                            <ReactPlayer url={url_video} controls width="700px" playing={video_playing}/>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => setVideoPlaying(false)}>Tutup</button>
                         </div>
                     </div>
                 </div>

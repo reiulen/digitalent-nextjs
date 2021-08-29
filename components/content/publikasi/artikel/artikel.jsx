@@ -130,9 +130,9 @@ const Artikel = () => {
 
     } else {
       router.push(`${router.pathname}?page=1&keyword=${search}`)
-  }
+    }
 
-};
+  };
 
   const handleSearchDate = () => {
     if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
