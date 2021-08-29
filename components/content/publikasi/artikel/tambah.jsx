@@ -72,6 +72,7 @@ const TambahArtikel = () => {
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
+    // console.log (e.target.files[0].type)
     // console.log (e.target.files[0])
     // console.log ("check")
 
@@ -84,21 +85,22 @@ const TambahArtikel = () => {
         }
       };
       reader.readAsDataURL(e.target.files[0])
-      setGambarName(e.target.files[0].name)
       // console.log (reader.readAsDataURL(e.target.files[0]))
+      setGambarName(e.target.files[0].name)
     } 
-
-    // if (e.target.name === 'gambar') {
-    //   const reader = new FileReader()
-    //   reader.onload = () => {
-    //       if (reader.readyState === 2) {
-    //           setGambar(reader.result)
-    //           setGambarPreview(reader.result)
-    //       }
-    //   }
-    //   reader.readAsDataURL(e.target.files[0])
-    //   setGambarName(e.target.files[0].name)
-    
+    else {
+      // setGambar("")
+      // setGambarPreview("/assets/media/default.jpg")
+      // setGambarName(null)
+      // simpleValidator.current.showMessages();
+      // forceUpdate(1);
+      e.target.value = null
+      Swal.fire(
+        'Oops !',
+        'Data yang bisa dimasukkan hanya berupa data gambar.',
+        'error'
+      )
+    }
   };
 
   const onSubmit = (e) => {
@@ -470,7 +472,7 @@ const TambahArtikel = () => {
                   className="btn btn-secondary"
                   data-dismiss="modal"
                 >
-                  Close
+                  Tutup
                 </button>
               </div>
             </div>

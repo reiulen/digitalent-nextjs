@@ -64,8 +64,8 @@ const EditBerita = () => {
     const [judul_berita, setJudulBerita] = useState(berita.judul_berita)
     const [isi_berita, setIsiBerita] = useState(berita.isi_berita);
     const [gambar, setGambar] = useState(berita.gambar)
-    // const [gambarPreview, setGambarPreview] = useState("/assets/media/default.jpg") 
-    const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
+    const [gambarPreview, setGambarPreview] = useState("/assets/media/default.jpg") 
+    // const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
     const [gambarName, setGambarName] = useState (berita.gambar)
     const [kategori_id, setKategoriId] = useState(berita.kategori_id)
     const [users_id, setUserId] = useState(berita.users_id)

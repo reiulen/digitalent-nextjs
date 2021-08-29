@@ -41,21 +41,21 @@ const TambahVidio = () => {
         //     dispatch(clearErrors())
         // }
 
-        if (success) {
-            setKategoriId('')
-            setJudulVideo('')
-            setIsiVideo('')
-            setUrlVideo('')
-            setGambar('')
-            setPublish(false)
-            setTag('')
-            setGambarPreview('/assets/media/default.jpg')
-            // dispatch({
-            //     type: NEW_ARTIKEL_RESET
-            // })
-        }
+        // if (success) {
+        //     setKategoriId('')
+        //     setJudulVideo('')
+        //     setIsiVideo('')
+        //     setUrlVideo('')
+        //     setGambar('')
+        //     setPublish(false)
+        //     setTag('')
+        //     setGambarPreview('/assets/media/default.jpg')
+        //     // dispatch({
+        //     //     type: NEW_ARTIKEL_RESET
+        //     // })
+        // }
 
-        setEditorLoaded(true)
+        // setEditorLoaded(true)
         if (success) {
             router.push({
                 pathname: `/publikasi/video`,
@@ -67,52 +67,81 @@ const TambahVidio = () => {
 
 
     const [kategori_id, setKategoriId] = useState('')
-    const [users_id, setUserId] = useState(1)
+    const [users_id, setUserId] = useState(3)
     const [judul_video, setJudulVideo] = useState('')
     const [isi_video, setIsiVideo] = useState('');
     const [url_video, setUrlVideo] = useState('')
     const [gambar, setGambar] = useState('')
     const [tag, setTag] = useState('')
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
+    const [gambarName, setGambarName] = useState (null)
     const [publish, setPublish] = useState(false)
 
     const onChangeGambar = (e) => {
-        if (e.target.name === 'gambar') {
-            const reader = new FileReader()
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setGambar(reader.result)
-                    setGambarPreview(reader.result)
-                }
+        const type = ["image/jpg", "image/png", "image/jpeg"]
+        // console.log (e.target.files[0])
+        // console.log ("check")
+
+        if (type.includes (e.target.files[0].type)){
+        const reader = new FileReader();
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+            setGambar(reader.result);
+            setGambarPreview(reader.result);
             }
-            reader.readAsDataURL(e.target.files[0])
-        }
+        };
+        reader.readAsDataURL(e.target.files[0])
+        setGambarName(e.target.files[0].name)
+        // console.log (reader.readAsDataURL(e.target.files[0]))
+        } 
+
+        // if (e.target.name === 'gambar') {
+        //     const reader = new FileReader()
+        //     reader.onload = () => {
+        //         if (reader.readyState === 2) {
+        //             setGambar(reader.result)
+        //             setGambarPreview(reader.result)
+        //         }
+        //     }
+        //     reader.readAsDataURL(e.target.files[0])
+        // }
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (error) {
-            dispatch(clearErrors())
-        }
-        if (success) {
-            dispatch({
-                type: NEW_VIDEO_RESET
-            })
-        }
-
-        const data = {
-            kategori_id,
-            users_id,
-            judul_video,
-            isi_video,
-            url_video,
-            gambar,
-            tag,
-            publish
-        }
-
-        dispatch(newVideo(data))
-        console.log(data)
+        if (simpleValidator.current.allValid()){
+            if (error) {
+                dispatch(clearErrors())
+            }
+            if (success) {
+                dispatch({
+                    type: NEW_VIDEO_RESET
+                })
+            }
+    
+            const data = {
+                kategori_id,
+                users_id,
+                judul_video,
+                isi_video,
+                url_video,
+                gambar,
+                tag,
+                publish
+            }
+    
+            dispatch(newVideo(data))
+            console.log(data)
+        } else {
+            simpleValidator.current.showMessages();
+            forceUpdate(1);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Isi data dengan benar !",
+            });
+          }
+        
     }
 
     const onNewReset = () => {
@@ -160,15 +189,16 @@ const TambahVidio = () => {
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
                                 <div className="col-sm-10">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} />
+                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)}/>
                                 </div>
                             </div>
 
                             <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi Video</label>
                                 <div className="col-sm-10">
-                                    <textarea className='form-control' placeholder='isi deskripsi video disini' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video}></textarea>
-                                    <small className='text-danger'>*Maksimal 160 Karakter</small>
+                                    <textarea className='form-control' placeholder='isi deskripsi video disini' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
+                                    {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:50",{ className: "text-danger" })}
+                                    <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small>
                                 </div>
                             </div>
 
@@ -187,10 +217,16 @@ const TambahVidio = () => {
                                 <div className="col-sm-9">
                                     <div className="input-group">
                                         <div className="custom-file">
-                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
-                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Choose file</label>
+                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" accept="image/*" onChange={onChangeGambar} />
+                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih File</label>
                                         </div>
                                     </div>
+                                    {
+                                        gambarName !== null ?
+                                            <small className="text-danger">{gambarName}</small>
+                                        :
+                                            null
+                                    }
                                 </div>
                             </div>
 
@@ -234,11 +270,14 @@ const TambahVidio = () => {
                                         kategori &&
                                         kategori.kategori &&
                                         kategori.kategori.map((row) => {
-                                        return (
-                                            <option key={row.id} value={row.id}>
-                                            {row.jenis_kategori}
-                                            </option>
-                                        );
+                                            return (
+                                                row.jenis_kategori == "Video" ?
+                                                  <option key={row.id} value={row.id}>
+                                                    {row.nama_kategori}
+                                                  </option>
+                                                :
+                                                  null
+                                              );
                                         })
                                     )}
                                     </select>
