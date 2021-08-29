@@ -421,6 +421,7 @@ onFocus={()=>setError({...error,signing_date:""})}
                         name="gambar"
                         className="custom-file-input cursor-pointer"
                         id="inputGroupFile04"
+                        accept=".pdf"
                         
                         onChange={handlePdfFileChange}
                       />

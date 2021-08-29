@@ -293,6 +293,7 @@ const TambahMitra = () => {
                         className="custom-file-input cursor-pointer"
                         id="inputGroupFile04"
                         // onChange={onChangeGambar}
+                        accept="image/png,image/jpg"
                       />
 
                       <label
