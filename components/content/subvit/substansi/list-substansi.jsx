@@ -262,7 +262,7 @@ const ListSubstansi = () => {
                                 {subtance.category}
                               </td>
                               <td className="align-middle">
-                                {subtance.status === true ? (
+                                {subtance.status ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
