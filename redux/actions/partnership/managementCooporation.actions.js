@@ -136,6 +136,7 @@ export const fetchAllMK = (keyword) => {
       getState().allMK.categories_cooporation || "";
     let partnerState = getState().allMK.partner || "";
     let keywordState = getState().allMK.keyword || "";
+    console.log("cardState", cardState);
 
     const params = {
       page: pageState,
@@ -155,10 +156,21 @@ export const fetchAllMK = (keyword) => {
       keyword: "",
       card: "",
     };
+    const paramssz = {
+      page: 1,
+      limit: 1000,
+      status: "",
+      categories_cooporation: "",
+      partner: "",
+      keyword: "",
+      card: "will_expire",
+    };
 
     try {
       const { data } = await debouncedFetchMC(params);
+      console.log("object", data);
       let dataSortirAll = await debouncedFetchMC(paramss);
+
       let totalData = dataSortirAll.data.data.list_cooperations.length;
       // get total data status aktif
       let resultDataActive = dataSortirAll.data.data.list_cooperations.filter(

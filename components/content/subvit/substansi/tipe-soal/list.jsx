@@ -15,70 +15,76 @@ import {
   deleteSubtanceQuestionBanksType,
   clearErrors,
 } from "../../../../../redux/actions/subvit/subtance-question-type.actions";
-import {
-  DELETE_SUBTANCE_QUESTION_TYPE_RESET
-} from '../../../../../redux/types/subvit/subtance-question-type.type'
+import { DELETE_SUBTANCE_QUESTION_TYPE_RESET } from "../../../../../redux/types/subvit/subtance-question-type.type";
 
 const ListTipeSoal = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading: allLoading, error, subtance_question_type } = useSelector(
-    (state) => state.allSubtanceQuestionType
-  );
-  const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteSubtanceQuestionType);
+  const {
+    loading: allLoading,
+    error,
+    subtance_question_type,
+  } = useSelector((state) => state.allSubtanceQuestionType);
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    isDeleted,
+  } = useSelector((state) => state.deleteSubtanceQuestionType);
 
   let { page = 1, success, successUpdate } = router.query;
-  let loading = false
+  let loading = false;
   page = Number(page);
   if (allLoading) {
-    loading = allLoading
+    loading = allLoading;
   } else if (deleteLoading) {
-    loading = deleteLoading
+    loading = deleteLoading;
   }
 
-  const [limit, setLimit] = useState(null)
-  const [search, setSearch] = useState('')
+  const [limit, setLimit] = useState(null);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     if (limit) {
-      router.push(`${router.pathname}?page=1&limit=${limit}`)
+      router.push(`${router.pathname}?page=1&limit=${limit}`);
     }
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
-        if (result.isConfirmed) {
-          window.location.reload()
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
         }
-      });
+      );
       dispatch({
-        type: DELETE_SUBTANCE_QUESTION_TYPE_RESET
-      })
+        type: DELETE_SUBTANCE_QUESTION_TYPE_RESET,
+      });
     }
   }, [dispatch, limit, isDeleted, router]);
 
   const onNewReset = () => {
-    router.replace('/subvit/substansi/tipe-soal', undefined, { shallow: true })
-  }
+    router.replace("/subvit/substansi/tipe-soal", undefined, { shallow: true });
+  };
 
   const handlePagination = (pageNumber) => {
     if (limit != null) {
-      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`);
     } else {
-      router.push(`${router.pathname}?page=${pageNumber}`)
+      router.push(`${router.pathname}?page=${pageNumber}`);
     }
-  }
+  };
 
   const handleSearch = () => {
     if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`)
+      router.push(`${router.pathname}?page=1&keyword=${search}`);
     }
-  }
+  };
 
   const handleLimit = (val) => {
-    setLimit(val)
-  }
+    setLimit(val);
+  };
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -124,30 +130,58 @@ const ListTipeSoal = () => {
       ) : (
         ""
       )}
-      {success ?
-        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+      {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
           <div className="alert-text">Berhasil Menambah Data</div>
           <div className="alert-close">
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
             </button>
           </div>
         </div>
-        : ''
-      }
-      {successUpdate ?
-        <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
-          <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
+      ) : (
+        ""
+      )}
+      {successUpdate ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
           <div className="alert-text">Berhasil Merubah Data</div>
           <div className="alert-close">
-            <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-              <span aria-hidden="true"><i className="ki ki-close"></i></span>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
             </button>
           </div>
         </div>
-        : ''
-      }
+      ) : (
+        ""
+      )}
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -170,17 +204,21 @@ const ListTipeSoal = () => {
                       placeholder="Search..."
                       id="kt_datatable_search_query"
                       autoComplete="off"
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
                   </div>
-
                 </div>
 
                 <div className="col-lg-2 col-xl-2 col-sm-3">
-                  <button className='btn btn-light-primary' onClick={handleSearch}>Cari</button>
+                  <button
+                    className="btn btn-light-primary"
+                    onClick={handleSearch}
+                  >
+                    Cari
+                  </button>
                 </div>
 
                 <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto">
@@ -196,12 +234,7 @@ const ListTipeSoal = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-
-                {
-                  loading === true ?
-                    <LoadingTable loading={loading} />
-                    : ""
-                }
+                {loading === true ? <LoadingTable loading={loading} /> : ""}
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -216,13 +249,15 @@ const ListTipeSoal = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {subtance_question_type && subtance_question_type.list_types.length === 0
-                        ? (
-                          <tr>
-                            <td className='text-center' colSpan={6}>Data Masih Kosong</td>
-                          </tr>
-                        )
-                        : subtance_question_type &&
+                      {subtance_question_type &&
+                      subtance_question_type.list_types.length === 0 ? (
+                        <tr>
+                          <td className="text-center" colSpan={6}>
+                            Data Masih Kosong
+                          </td>
+                        </tr>
+                      ) : (
+                        subtance_question_type &&
                         subtance_question_type.list_types.map((row, i) => {
                           return (
                             <tr key={row.id}>
@@ -231,7 +266,7 @@ const ListTipeSoal = () => {
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
-                              <td className="align-middle">{row.id}</td>
+                              <td className="align-middle">CC{row.id}</td>
                               <td className="align-middle">{row.name}</td>
                               <td className="align-middle">{row.value}</td>
                               <td className="align-middle">
@@ -249,7 +284,7 @@ const ListTipeSoal = () => {
                                 <ButtonAction
                                   icon="write.svg"
                                   link={`/subvit/substansi/tipe-soal/${row.id}`}
-                                  title='Edit'
+                                  title="Edit"
                                 />
                                 <button
                                   onClick={() => handleDelete(row.id)}
@@ -272,7 +307,8 @@ const ListTipeSoal = () => {
                               </td>
                             </tr>
                           );
-                        })}
+                        })
+                      )}
                     </tbody>
                   </table>
                 ) : (
@@ -281,23 +317,25 @@ const ListTipeSoal = () => {
               </div>
 
               <div className="row">
-                {subtance_question_type && subtance_question_type.perPage < subtance_question_type.total && (
-                  <div className="table-pagination">
-                    <Pagination
-                      activePage={page}
-                      itemsCountPerPage={subtance_question_type.perPage}
-                      totalItemsCount={subtance_question_type.total}
-                      pageRangeDisplayed={3}
-                      onChange={handlePagination}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                )}
+                {subtance_question_type &&
+                  subtance_question_type.perPage <
+                    subtance_question_type.total && (
+                    <div className="table-pagination">
+                      <Pagination
+                        activePage={page}
+                        itemsCountPerPage={subtance_question_type.perPage}
+                        totalItemsCount={subtance_question_type.total}
+                        pageRangeDisplayed={3}
+                        onChange={handlePagination}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
+                  )}
                 {subtance_question_type && subtance_question_type.total > 5 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
@@ -311,13 +349,13 @@ const ListTipeSoal = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option value='5'>5</option>
-                          <option value='10'>10</option>
-                          <option value='15'>15</option>
-                          <option value='20'>20</option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
