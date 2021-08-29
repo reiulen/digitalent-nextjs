@@ -17,5 +17,5 @@ export default function VidioPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-    await store.dispatch(getAllVideo(query.page, query.keyword, query.limit, query.publish))
+    await store.dispatch(getAllVideo(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
 })
