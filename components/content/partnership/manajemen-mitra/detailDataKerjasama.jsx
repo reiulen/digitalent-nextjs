@@ -701,7 +701,7 @@ const DetailDataKerjasama = () => {
                             }
                           )
                       : "Belom ada data kerjasama"}
-                    {/* {mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.length === 0 ?"Belom ada data kerjasama" :""} */}
+                    {mitraDetailAll?.mitraDetailAll?.data?.list_cooperation_categories.length === 0 ?"Belom ada data kerjasama" :""}
                   </tbody>
                 </table>
               </div>
