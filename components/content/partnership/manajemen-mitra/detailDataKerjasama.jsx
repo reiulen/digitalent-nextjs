@@ -315,7 +315,7 @@ const DetailDataKerjasama = () => {
                           : mitraDetailAll.stateListStatus.data.map(
                               (items, i) => {
                                 return (
-                                  <option key={i} value={items.name}>
+                                  <option key={i} value={items.name_en}>
                                     {items.name}
                                   </option>
                                 );
@@ -700,8 +700,8 @@ const DetailDataKerjasama = () => {
                               );
                             }
                           )
-                      : "Belom ada data kerjasama"}
-                    {mitraDetailAll?.mitraDetailAll?.data?.list_cooperation_categories.length === 0 ?"Belom ada data kerjasama" :""}
+                      : "Tidak ada data kerjasama"}
+                    {mitraDetailAll?.mitraDetailAll?.data?.list_cooperation_categories.length === 0 ?"Tidak ada data kerjasama" :""}
                   </tbody>
                 </table>
               </div>
