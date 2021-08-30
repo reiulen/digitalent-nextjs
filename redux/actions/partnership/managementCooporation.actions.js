@@ -267,7 +267,13 @@ export const fetchListSelectMitra = () => {
     dispatch({ type: LIST_MITRA_REQUEST });
     try {
       const { data } = await getMitra();
-      dispatch(successFetchListSelectMitra(data));
+
+      let dataNewLembaga = data.data.map((items) => {
+        return { ...items, label: items.name, value: items.id };
+      });
+      dataNewLembaga.splice(0, 0, { label: "Pilih Lembaga", value: "" });
+
+      dispatch(successFetchListSelectMitra(dataNewLembaga));
     } catch (error) {
       console.log("eror get list all mitra", error);
       dispatch(errorFetchListSelectMitra());
