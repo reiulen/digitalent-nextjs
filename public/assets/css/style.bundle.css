@@ -30798,7 +30798,8 @@ h3 {
 }
 
 .bg-light-success {
-  background-color: #C9F7F5 !important;
+  background-color: var(--success) !important;
+  /* background-color: #C9F7F5 !important; */
 }
 
 .bg-hover-light-success {
@@ -30817,7 +30818,8 @@ h3 {
 }
 
 .bg-light-info {
-  background-color: #EEE5FF !important;
+  background-color: var(--primary)!important;
+  /* background-color: #EEE5FF !important; */
 }
 
 .bg-hover-light-info {
@@ -30836,7 +30838,8 @@ h3 {
 }
 
 .bg-light-warning {
-  background-color: #FFF4DE !important;
+  background-color: var(--warning) !important;
+  /* background-color: #FFF4DE !important; */
 }
 
 .bg-hover-light-warning {
