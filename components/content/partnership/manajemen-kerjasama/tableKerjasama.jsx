@@ -514,7 +514,7 @@ const [isStatusBar, setIsStatusBar] = useState(false)
                                   <br />
                                   {/* <small style={{ color: "grey" }}>
                           Memodanrum of Understanding (MoU)
-                        </small> */}
+                        </small>dddd */}
                                 </td>
                                 <td className="align-middle text-center">
                                   <p className="p-part-t">
@@ -522,7 +522,11 @@ const [isStatusBar, setIsStatusBar] = useState(false)
                                   </p>{" "}
 
 
-                                  
+
+
+
+
+
                                 </td>
                                 <td className="align-middle text-center">
                                   <p className="p-part-t">
