@@ -67,7 +67,6 @@ export const searchCooporation = (text) => {
 };
 
 export const limitCooporation = (value) => {
-  console.log("value limit", value);
   return {
     type: LIMIT_CONFIGURATION,
     limitValue: value,
@@ -135,7 +134,6 @@ export const successChangeStatusList = (data, index_list) => {
   };
 };
 export const setPage = (page) => {
-  console.log(page);
   return {
     type: SET_PAGE,
     page,

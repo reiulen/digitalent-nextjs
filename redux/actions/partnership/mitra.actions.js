@@ -64,7 +64,6 @@ export const fetchMitra = (keyword) => {
 
     try {
       const { data } = await debouncedFetchMitra(params);
-      console.log("data fetch all mitra", data);
       dispatch(successFetchMitra(data, data.data.total));
     } catch (error) {
       dispatch(errorFetchMitra());
@@ -97,7 +96,6 @@ export const deleteMitra = (id) => {
       let { data } = await axios.delete(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`
       );
-      console.log("respon data delete mitra", data);
       dispatch({ type: SUCESS_DELETE_MITRA });
     } catch (error) {
       console.log("gagal delete mitra", error);
@@ -129,8 +127,6 @@ export const getProvinces = () => {
         return { ...items, label: items.name, value: items.id };
       });
       dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-      // setAllProvinces(dataNewProvinces);
-      // console.log("dataNewProvinces", dataNewProvinces);
 
       dispatch(successGetProvinces(dataNewProvinces));
     } catch (error) {
@@ -159,8 +155,6 @@ export const exportFileCSV = () => {
         `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export`
       );
       router.push(urlExport.config.url);
-
-      // console.log("data", data);
     } catch (error) {
       console.log("object", error);
     }

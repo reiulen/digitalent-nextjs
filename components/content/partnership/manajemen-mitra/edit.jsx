@@ -20,7 +20,6 @@ const EditMitra = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const allMitra = useSelector((state) => state.allMitra);
-  console.log("allMitra", allMitra);
 
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
@@ -64,7 +63,6 @@ const EditMitra = () => {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`
       );
-      console.log(data);
       setInstitution_name(data.data.institution_name);
 
       setEmail(data.data.email);
@@ -244,7 +242,6 @@ const EditMitra = () => {
               { shallow: true }
             );
           } catch (error) {
-            console.log(error.response.data.message);
             notify(error.response.data.message);
           }
         }

@@ -28,7 +28,6 @@ const Table = () => {
   const { success, update } = router.query;
 
   const allMitra = useSelector((state) => state.allMitra);
-  console.log("state allMitra", allMitra);
 
   const [keyWord, setKeyWord] = useState("");
 

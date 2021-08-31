@@ -12,33 +12,13 @@ import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 
 const TambahMitra = () => {
-  // test react select
-  //   const colourOptions= [
-  //   { value: '', label: 'Pilih provinsi' },
-  //   { value: 'ocean', label: 'Ocean' },
-  //   { value: 'blue', label: 'Blue' },
-  //   { value: 'purple', label: 'Purple' },
-  //   { value: 'red', label: 'Red', },
-  //   { value: 'orange', label: 'Orange' },
-  //   { value: 'yellow', label: 'Yellow' },
-  //   { value: 'green', label: 'Green' },
-  //   { value: 'forest', label: 'Forest' },
-  //   { value: 'slate', label: 'Slate' },
-  //   { value: 'silver', label: 'Silver' },
-  // ];
-
-  // const chengeSelectProvinces = (e) =>{
-  //   console.log(e.id)
-  // }
 
   const router = useRouter();
   const dispatch = useDispatch();
   const allMitra = useSelector((state) => state.allMitra);
-  console.log("allMitra", allMitra);
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
-  console.log("agency_logo", agency_logo);
   const [wesite, setWesite] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
@@ -153,7 +133,6 @@ const TambahMitra = () => {
               query: { success: true },
             });
           } catch (error) {
-            console.log(error.response.data.message);
             notify(error.response.data.message);
           }
         }
@@ -182,7 +161,6 @@ const TambahMitra = () => {
   const fileMax = 2097152;
   const onChangeImage = (e) => {
     let selectedFile = e.target.files[0];
-    console.log("selectedFile", selectedFile);
 
     if (selectedFile) {
       if (
@@ -219,20 +197,17 @@ const TambahMitra = () => {
       });
       dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
       setAllProvinces(dataNewProvinces);
-      console.log("dataNewProvinces", dataNewProvinces);
     } catch (error) {
       console.log("gagal get province", error);
     }
   };
 
-  console.log("allProvinces state", allProvinces);
 
   useEffect(() => {
     getDataProvinces();
   }, []);
 
   useEffect(() => {
-    console.log("indonesia_provinces_id", indonesia_provinces_id);
     // get data cities
     if (indonesia_provinces_id === "") {
       console.log("kosong");

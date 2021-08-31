@@ -33,7 +33,6 @@ const EditDokumentKerjasamaById = () => {
   let {idDetail} = router.query
   
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK", allMK);
   //
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
