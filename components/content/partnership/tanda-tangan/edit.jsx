@@ -28,8 +28,25 @@ const EditTandaTangan = () => {
   // const dispatch = useDispatch();
 
   const clear = () => {
-    signCanvas.current.clear();
-    setSignature("");
+
+    Swal.fire({
+      title: "Apakah anda yakin ingin reset tanda tangan ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then( (result) => {
+      if (result.isConfirmed) {
+        signCanvas.current.clear();
+        setSignature("");
+      }
+    });
+
+    
   };
 
   // const editorRef = useRef();

@@ -1,22 +1,45 @@
 import React, { useEffect, useState } from "react";
 
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
 import DatePicker from "react-datepicker";
 
+import Swal from "sweetalert2";
+
+import Image from "next/image";
+
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
-import { useDispatch, useSelector } from "react-redux";
+import IconCalender from "../../../assets/icon/Calender";
+import IconArrow from "../../../assets/icon/Arrow";
+import axios from "axios";
+
+import {
+  reqCooperationUser,
+  setPage,
+} from "../../../../redux/actions/partnership/user/cooperation.actions";
 
 const Table = () => {
-  const exportCSV = {
-    width: "77%",
-    marginLeft: "2rem",
-  };
+  // const exportCSV = {
+  //   width: "77%",
+  //   marginLeft: "2rem",
+  // };
+
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const allCooperationUser = useSelector((state) => state.allCooperationUser);
+  console.log("allCooperationUser", allCooperationUser);
+
+  useEffect(() => {
+    dispatch(reqCooperationUser());
+  }, []);
+
   return (
     <PageWrapper>
       <div className="col-lg-10 col-md-10">
@@ -91,20 +114,26 @@ const Table = () => {
               </div>
 
               <div className="row align-items-right">
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                  <select name="" id="" className="form-control">
-                    <option value="1">Mitra</option>
-                    <option value="2">Microsoft</option>
-                  </select>
+                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 d-flex flex-column justify-content-start">
+                  <p>Filter by Kerjasama</p>
+                  <input
+                    type="date"
+                    placeholder="Dari Tanggal"
+                    className="form-control"
+                  />
+                  <p>Silahkan Pilih Tanggal Dari</p>
                 </div>
-                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                  <select name="" id="" className="form-control">
-                    <option value="1">Kategori Kerjasama</option>
-                    <option value="2">Kategori 2</option>
-                  </select>
+                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5 d-flex flex-column justify-content-start">
+                  <p>Filter by Kerjasama</p>
+                  <input
+                    type="date"
+                    placeholder="Sampai Tanggal"
+                    className="form-control"
+                  />
+                  <p>Silahkan Pilih Tanggal Dari</p>
                 </div>
 
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 p-0 mx-2 py-1">
+                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 p-0 mx-2 py-1 d-flex align-items-center">
                   <a
                     href="#"
                     className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
@@ -112,11 +141,11 @@ const Table = () => {
                     Cari
                   </a>
                 </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
+                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto d-flex align-items-center">
                   <a
                     href="#"
                     className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
-                    style={exportCSV}
+                    // style={exportCSV}
                   >
                     Export .csv
                   </a>
@@ -126,251 +155,106 @@ const Table = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-center">No</th>
-                      <th className="text-center align-middle">Mitra</th>
-                      <th className="text-center align-middle">
-                        Judul Kerjasama
-                      </th>
-                      <th className="text-center align-middle">Periode</th>
-                      <th className="text-center align-middle">
-                        Tanggal Tanda Tangan
-                      </th>
-                      <th className="text-center align-middle">
-                        Tanggal Selesai
-                      </th>
-                      <th className="text-center align-middle">Status</th>
-                      <th className="text-center align-middle">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          1
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">DQ Lab</td>
-                      <td className="align-middle text-center">
-                        Proposal Pelatihan Programmer Web
-                        <br />
-                        <small style={{ color: "grey" }}>
-                          Memodanrum of Understanding (MoU)
-                        </small>
-                      </td>
-                      <td className="align-middle text-center">3 Tahun</td>
-                      <td className="align-middle text-center">12 Juli 2021</td>
-                      <td className="align-middle text-center">15 juli 2021</td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
+                {allCooperationUser.cooperationMitra.length === 0 ? (
+                  "Loading"
+                ) : (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-center">No</th>
+                        <th className="text-center align-middle">Mitra</th>
+                        <th className="text-center align-middle">
+                          Judul Kerjasama
+                        </th>
+                        <th className="text-center align-middle">Periode</th>
+                        <th className="text-center align-middle">
+                          Tanggal Tanda Tangan
+                        </th>
+                        <th className="text-center align-middle">
+                          Tanggal Selesai
+                        </th>
+                        <th className="text-center align-middle">Status</th>
+                        <th className="text-center align-middle">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allCooperationUser.cooperationMitra.statusLoad ===
+                      "error"
+                        ? "data error"
+                        : allCooperationUser.cooperationMitra.data.list_cooperations.map(
+                            (items, index) => {
+                              return (
+                                <tr key={index}>
+                                  <td className="text-center align-middle">
+                                    <button
+                                      className="btn"
+                                      style={{
+                                        background: "#F3F6F9",
+                                        borderRadius: "6px",
+                                      }}
+                                    >
+                                      {allCooperationUser.page === 1
+                                        ? index + 1
+                                        : (allCooperationUser.page - 1) *
+                                            allCooperationUser.limit +
+                                          (index + 1)}
+                                    </button>
+                                  </td>
+                                  <td className="align-middle text-center">
+                                    DQ Lab
+                                  </td>
+                                  <td className="align-middle text-center">
+                                    {items.title}
+                                    <br />
+                                    <small style={{ color: "grey" }}>
+                                      {items.cooperation_category === null
+                                        ? "tidak ada kategori kerjasama"
+                                        : items.cooperation_category
+                                            .cooperation_categories}
+                                    </small>
+                                  </td>
+                                  <td className="align-middle text-center">
+                                    {items.period} {items.period_unit}
+                                  </td>
+                                  <td className="align-middle text-center">
+                                    {items.signing_date}
+                                  </td>
+                                  <td className="align-middle text-center">
+                                    {items.period_date_end}
+                                  </td>
+                                  <td className="align-middle text-center">
+                                    {/* <select name="" id="" className="form-control">
                           <option value="2">Aktif</option>
-                        </select>
-                      </td>
-                      <td
-                        className="align-middle text-center "
-                        // style={{ border: "1px solid black" }}
-                      >
-                        <ButtonAction icon="trash.svg" />
-                        <ButtonAction icon="trash.svg" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          2
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">Microsoft</td>
-                      <td className="align-middle text-center">
-                        Proposal Pelatihan Programmer Web
-                        <br />
-                        <small style={{ color: "grey" }}>
-                          Memodanrum of Understanding (MoU)
-                        </small>
-                      </td>
-                      <td className="align-middle text-center">3 Tahun</td>
-                      <td className="align-middle text-center">12 Juli 2021</td>
-                      <td className="align-middle text-center">15 juli 2021</td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="2">Pengajuan - Review</option>
-                        </select>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          3
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">Google</td>
-                      <td className="align-middle text-center">
-                        Proposal Pelatihan Programmer Web
-                        <br />
-                        <small style={{ color: "grey" }}>
-                          Memodanrum of Understanding (MoU)
-                        </small>
-                      </td>
-                      <td className="align-middle text-center">3 Tahun</td>
-                      <td className="align-middle text-center">12 Juli 2021</td>
-                      <td className="align-middle text-center">15 juli 2021</td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="2">Pengajuan - Revisi</option>
-                        </select>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          4
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">Youtube</td>
-                      <td className="align-middle text-center">
-                        Proposal Pelatihan Programmer Web
-                        <br />
-                        <small style={{ color: "grey" }}>
-                          Memodanrum of Understanding (MoU)
-                        </small>
-                      </td>
-                      <td className="align-middle text-center">3 Tahun</td>
-                      <td className="align-middle text-center">12 Juli 2021</td>
-                      <td className="align-middle text-center">15 juli 2021</td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="2">Pengajuan - pembahasan</option>
-                        </select>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          5
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">Google</td>
-                      <td className="align-middle text-center">
-                        Proposal Pelatihan Programmer Web
-                        <br />
-                        <small style={{ color: "grey" }}>
-                          Memodanrum of Understanding (MoU)
-                        </small>
-                      </td>
-                      <td className="align-middle text-center">3 Tahun</td>
-                      <td className="align-middle text-center">12 Juli 2021</td>
-                      <td className="align-middle text-center">15 juli 2021</td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="2">Pengajuan - selesai</option>
-                        </select>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          6
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">Skype</td>
-                      <td className="align-middle text-center">
-                        Proposal Pelatihan Programmer Web
-                        <br />
-                        <small style={{ color: "grey" }}>
-                          Memodanrum of Understanding (MoU)
-                        </small>
-                      </td>
-                      <td className="align-middle text-center">3 Tahun</td>
-                      <td className="align-middle text-center">12 Juli 2021</td>
-                      <td className="align-middle text-center">15 juli 2021</td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="2">Pengajuan - Dokumen</option>
-                        </select>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          7
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">Facebook</td>
-                      <td className="align-middle text-center">
-                        Proposal Pelatihan Programmer Web
-                        <br />
-                        <small style={{ color: "grey" }}>
-                          Memodanrum of Understanding (MoU)
-                        </small>
-                      </td>
-                      <td className="align-middle text-center">3 Tahun</td>
-                      <td className="align-middle text-center">12 Juli 2021</td>
-                      <td className="align-middle text-center">15 juli 2021</td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="2">Ditolak</option>
-                        </select>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="text-center align-middle">
-                        <button
-                          className="btn"
-                          style={{ background: "#F3F6F9", borderRadius: "6px" }}
-                        >
-                          8
-                        </button>
-                      </td>
-                      <td className="align-middle text-center">Instagram</td>
-                      <td className="align-middle text-center">
-                        Proposal Pelatihan Programmer Web
-                        <br />
-                        <small style={{ color: "grey" }}>
-                          Memodanrum of Understanding (MoU)
-                        </small>
-                      </td>
-                      <td className="align-middle text-center">3 Tahun</td>
-                      <td className="align-middle text-center">12 Juli 2021</td>
-                      <td className="align-middle text-center">15 juli 2021</td>
-                      <td className="align-middle text-center">
-                        <select name="" id="" className="form-control">
-                          <option value="2">Nonaktif</option>
-                        </select>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                        </select> */}
+                                    {items.status.name}
+                                  </td>
+                                  <td
+                                    className="align-middle text-center "
+                                    // style={{ border: "1px solid black" }}
+                                  >
+                                    <ButtonAction icon="trash.svg" />
+                                    <ButtonAction icon="trash.svg" />
+                                  </td>
+                                </tr>
+                              );
+                            }
+                          )}
+                    </tbody>
+                  </table>
+                )}
               </div>
               <div className="row">
                 <div className="table-pagination">
                   <Pagination
-                    activePage={5}
-                    itemsCountPerPage={2}
-                    totalItemsCount={5}
+                    activePage={allCooperationUser.page}
+                    itemsCountPerPage={
+                      allCooperationUser.cooperationMitra?.data?.perPage
+                    }
+                    totalItemsCount={
+                      allCooperationUser.cooperationMitra?.data?.total
+                    }
                     pageRangeDisplayed={3}
+                    onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}
@@ -401,10 +285,11 @@ const Table = () => {
                     </div>
                     <div className="col-8 my-auto">
                       <p
-                        className="align-middle mt-3"
+                        className="align-middle mt-3 ml-3"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data 120 {process.env.END_POINT_API_PARTNERSHIP}
+                        Total Data{" "}
+                        {allCooperationUser.cooperationMitra?.data?.total}
                       </p>
                     </div>
                   </div>

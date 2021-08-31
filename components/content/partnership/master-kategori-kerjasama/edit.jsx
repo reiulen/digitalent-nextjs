@@ -8,6 +8,8 @@ import { getSingleCooporation } from "../../../../redux/actions/partnership/mk_c
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Image from "next/image";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Edit = () => {
   const dispatch = useDispatch();
@@ -17,68 +19,48 @@ const Edit = () => {
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [stateDataSingleOld, setStateDataSingleOld] = useState([]);
   const [stateDataSingle, setStateDataSingle] = useState([]);
-  // console.log("stateDataSingle");
-  // console.log(stateDataSingle);
-  // console.log("stateDataSingleOld");
-  // console.log(stateDataSingleOld);
-
   const handleChange = (e, index) => {
     const { name, value } = e.target;
-    
-    let _temp_new = [...stateDataSingle]
-    let _temp_old = [...stateDataSingleOld]
-    
-    if(_temp_new[index]["isTipe"] ===  _temp_old[index]["isTipe"]){
-      // console.log("nice")
-      _temp_new[index][name] = value
-      setStateDataSingle(_temp_new)
-    }else{
-      _temp_new[index]["name"] = value
-      _temp_old[index]["cooperation_form"] = value
-      setStateDataSingle(_temp_new)
-      setStateDataSingleOld(_temp_old)
 
+    let _temp_new = [...stateDataSingle];
+    let _temp_old = [...stateDataSingleOld];
+
+    if (_temp_new[index]["isTipe"] === _temp_old[index]["isTipe"]) {
+      _temp_new[index][name] = value;
+      setStateDataSingle(_temp_new);
+    } else {
+      _temp_new[index]["name"] = value;
+      _temp_old[index]["cooperation_form"] = value;
+      setStateDataSingle(_temp_new);
+      setStateDataSingleOld(_temp_old);
     }
-  
   };
 
   const handleAddInput = () => {
-    let arr_new = [...stateDataSingle]
-    let arr_old = [...stateDataSingleOld]
+    let arr_new = [...stateDataSingle];
+    let arr_old = [...stateDataSingleOld];
 
     arr_new.push({
       cooperation_category_id: new Date(),
-      name : '',
-      isTipe : 'new'
-    })
+      name: "",
+      isTipe: "new",
+    });
     arr_old.push({
       cooperation_category_id: new Date(),
-      cooperation_form : '',
-      isTipe : 'old'
-    })
+      cooperation_form: "",
+      isTipe: "old",
+    });
     setStateDataSingle(arr_new);
     setStateDataSingleOld(arr_old);
   };
 
   const handleDelete = (i) => {
-    let arr_new = [...stateDataSingle]
-    let arr_old = [...stateDataSingleOld]
-
-    // arr_new.push({
-    //   cooperation_category_id: new Date(),
-    //   name : '',
-    //   isTipe : 'new'
-    // })
-    // arr_old.push({
-    //   cooperation_category_id: new Date(),
-    //   cooperation_form : '',
-    //   isTipe : 'old'
-    // })
-    let filterResultNew = arr_new.filter((items,index)=>index!==i)
-    let filterResultOld = arr_old.filter((items,index)=>index!==i)
+    let arr_new = [...stateDataSingle];
+    let arr_old = [...stateDataSingleOld];
+    let filterResultNew = arr_new.filter((items, index) => index !== i);
+    let filterResultOld = arr_old.filter((items, index) => index !== i);
     setStateDataSingle(filterResultNew);
     setStateDataSingleOld(filterResultOld);
-    
   };
 
   const importSwitch = () => import("bootstrap-switch-button-react");
@@ -86,11 +68,16 @@ const Edit = () => {
     ssr: false,
   });
 
+  const [status, setStatus] = useState("");
+  const handleChangeStatus = (e) => {
+    console.log("e.target.checked", e.target.checked);
+    setStatus(e.target.checked);
+  };
 
-  const submit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     Swal.fire({
-      title: "Apakah anda yakin ?",
+      title: "Apakah anda yakin ingin update data?",
       // text: "Data ini tidak bisa dikembalikan !",
       icon: "warning",
       showCancelButton: true,
@@ -99,108 +86,49 @@ const Edit = () => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then((result) => {
-      if (result.value) {
-        Swal.fire(
-  'Berhasil update data!',
-  'Sukses'
-)
-        router.push("/partnership/master-kategori-kerjasama");
+    }).then(async (result) => {
+      if (result) {
+        // here
+        let formData = new FormData();
+        formData.append("cooperation_categories", categoryCooporation);
+        formData.append("_method", "PUT");
+        for (let i = 0; i < stateDataSingle.length; i++) {
+          let statusPro = status ? 1 : 0;
+          let method = "PUT";
+          if (stateDataSingle[i].isTipe === stateDataSingleOld[i].isTipe) {
+            formData.append("_method", method);
+            formData.append(
+              `cooperation_form_old[${i}]`,
+              stateDataSingleOld[i].cooperation_form
+            );
+            formData.append(`cooperation_form[${i}]`, stateDataSingle[i].name);
+            formData.append("status", statusPro);
+          } else {
+            formData.append("_method", method);
+            formData.append(
+              `cooperation_form_old[${i}]`,
+              stateDataSingle[i].name
+            );
+            formData.append(`cooperation_form[${i}]`, stateDataSingle[i].name);
+            formData.append("status", statusPro);
+          }
+        }
+        try {
+          let id = router.query.id;
+          let { data } = await axios.post(
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`,
+            formData
+          );
+          router.push({
+            pathname: "/partnership/master-kategori-kerjasama",
+            query: { update: true },
+          });
+        } catch (error) {
+          // console.log("erorr message",error.response.message);
+          notify(error.response.data.message);
+        }
       }
     });
-  };
-
-  // useEffect(async() => {
-
-  //   try {
-  //     let { data } = await axios.get(
-  //       `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`
-  //     );
-  //     console.log("datadsdsd sd")
-  //     console.log(data)
-  //   } catch (error) {
-
-  //   }
-
-  // }, [router.query.id])
-const [status, setStatus] = useState("");
-  const handleChangeStatus = (e) => {
-    console.log("e.target.checked",e.target.checked)
-    setStatus(e.target.checked);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("object")
-    
-    let formData = new FormData();
-    formData.append("cooperation_categories", categoryCooporation);
-    formData.append("_method", "PUT");
-    // console.log("nice")
-    let arr_old = [], arr_new=[];
-
-    
-    
-    for (let i = 0; i < stateDataSingle.length; i++) {
-      // console.log(stateDataSingle[i].isTipe)
-      // console.log(stateDataSingleOld[i].isTipe)
-      let statusPro = status ? 1 : 0;
-      let method = 'PUT';
-      if(stateDataSingle[i].isTipe === stateDataSingleOld[i].isTipe){
-        
-    
-        // console.log(cooperation_form)
-        // arr_old.push(cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingleOld[i].cooperation_form)
-        // arr_new.push(cooperation_form['cooperation_form' +[i]  ] = stateDataSingle[i].name)
-        formData.append('_method',method);
-        formData.append(`cooperation_form_old[${i}]`, stateDataSingleOld[i].cooperation_form);
-        formData.append(`cooperation_form[${i}]`, stateDataSingle[i].name);
-        formData.append('status',statusPro);
-        
-        
-        // console.log("cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingleOld[i].cooperation_form >>")
-        // console.log(cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingleOld[i].cooperation_form)
-      }else{
-        formData.append('_method',method);
-        
-        // let cooperation_form = {} 
-        // arr_old.push(cooperation_form['cooperation_form_old' +[i]  ] = stateDataSingle[i].name)
-        // arr_new.push(cooperation_form['cooperation_form' + [i]  ] = stateDataSingle[i].name)
-        formData.append(`cooperation_form_old[${i}]`, stateDataSingle[i].name);
-        formData.append(`cooperation_form[${i}]`, stateDataSingle[i].name);
-        formData.append('status',statusPro);
-        
-      }
-      
-   }
-
-    // valueCreateCooporations.forEach((item, i) => {
-    //   formData.append(`cooperation_form[${i}]`, item);
-    // });
-
-    // console.log("arr_new")
-    // console.log(arr_new)
-    // console.log("arr_old")
-    // console.log(arr_old)
-    try {
-      // console.log("objectsss ss")
-      let id = router.query.id;
-      let { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`,
-        formData
-      );
-      // console.log("respon data edit",data)
-//       Swal.fire(
-//   'Berhasil update data!',
-//   'Sukses'
-// )
-router.push({
-  pathname:"/partnership/master-kategori-kerjasama",
-  query:{update:true}
-})
-    } catch (error) {
-      console.log(error.response);
-    }
   };
 
   const getSingleData = async (id) => {
@@ -209,13 +137,14 @@ router.push({
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`
       );
 
-      let arr = [], arr_new= [];
+      let arr = [],
+        arr_new = [];
       data.data.cooperation_category_forms.forEach((item) => {
         item.isTipe = "old";
         arr.push(item);
       });
       data.data.cooperation_category_forms.forEach((item) => {
-        item.name = item.cooperation_form
+        item.name = item.cooperation_form;
         item.isTipe = "old";
         arr_new.push(item);
       });
@@ -228,11 +157,33 @@ router.push({
     }
   };
 
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   useEffect(() => {
     getSingleData(router.query.id);
   }, [router.query.id]);
   return (
     <PageWrapper>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -241,7 +192,6 @@ router.push({
             </h3>
           </div>
           <div className="card-body">
-            {/* {allMKCooporation.mk_single_cooporation && allMKCooporation.mk_single_cooporation.data.cooperation_categories } */}
             <form>
               <div className="form-group row">
                 <label
@@ -252,7 +202,7 @@ router.push({
                 </label>
                 <div className="col-sm-10">
                   <input
-                  required
+                    required
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Kategori Lembaga"
@@ -284,11 +234,23 @@ router.push({
                               value={item.name}
                               onChange={(e) => handleChange(e, index)}
                             />
-                            {index===0 ?"":
-                      <button type="button" onClick={()=>handleDelete(index)} className="btn position-absolute" style={{top:"0",right:"10px"}}>
-                      <Image src={`/assets/icon/trash.svg`} width={18} height={18} alt="btn-delete"/>
-                      </button>
-                      }
+                            {index === 0 ? (
+                              ""
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={() => handleDelete(index)}
+                                className="btn position-absolute"
+                                style={{ top: "0", right: "10px" }}
+                              >
+                                <Image
+                                  src={`/assets/icon/trash.svg`}
+                                  width={18}
+                                  height={18}
+                                  alt="btn-delete"
+                                />
+                              </button>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -311,7 +273,7 @@ router.push({
                           </label>
                           <div className="col-sm-10">
                             <input
-                            required
+                              required
                               type="text"
                               name="cooperation_form"
                               className="form-control"
@@ -381,7 +343,7 @@ router.push({
                     /> */}
                   <label className="switches">
                     <input
-                    required
+                      required
                       className="checkbox"
                       checked={status}
                       type="checkbox"
@@ -389,7 +351,7 @@ router.push({
                     />
                     <span
                       className={`sliders round ${
-                        status  ? "text-white" : "pl-2"
+                        status ? "text-white" : "pl-2"
                       }`}
                     >
                       {status ? "Aktif" : "Tidak aktif"}
@@ -432,7 +394,11 @@ router.push({
                     >
                       Simpan
                     </button> */}
-                    <button type="button" className="btn btn-primary btn-sm" onClick={(e)=>handleSubmit(e)}>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      onClick={(e) => handleSubmit(e)}
+                    >
                       Simpan
                     </button>
                     {/* </Link> */}

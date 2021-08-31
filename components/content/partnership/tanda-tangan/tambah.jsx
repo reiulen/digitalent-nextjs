@@ -20,7 +20,7 @@ import { NEW_TANDA_TANGAN_RESET } from "../../../../redux/types/partnership/tand
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import axios from 'axios'
+import axios from "axios";
 
 const TambahTandaTangan = () => {
   const importSwitch = () => import("bootstrap-switch-button-react");
@@ -28,16 +28,24 @@ const TambahTandaTangan = () => {
   const signCanvas = useRef({});
   const dispatch = useDispatch();
   const router = useRouter();
-  const Swal = require("sweetalert2");
 
   const clear = () => {
-    signCanvas.current.clear();
-    setTandaTangan("");
-    // Swal.fire({
-    //   icon: "success",
-    //   title: "Tanda Tangan Berhasil di Reset",
-    //   // text: "Berhasil",
-    // });
+    Swal.fire({
+      title: "Apakah anda yakin ingin reset tanda tangan ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then( (result) => {
+      if (result.isConfirmed) {
+        signCanvas.current.clear();
+        setTandaTangan("");
+      }
+    });
   };
 
   // const { loading, error, success } = useSelector(
@@ -85,22 +93,28 @@ const TambahTandaTangan = () => {
   // }, [dispatch,router, error, success, simpleValidator]);
 
   const submit = (e) => {
-    e.preventDefault()
-    console.log("nama",nama)
-    console.log("jabatan",jabatan)
-    console.log("tanda_tangan",tandaTangan)
+    e.preventDefault();
+    console.log("nama", nama);
+    console.log("jabatan", jabatan);
+    console.log("tanda_tangan", tandaTangan);
     // e.preventDefault();
     if (nama === "") {
-      setError({...error,nama: "Harus isi nama"})
-      notify("Harus isi nama")
+      setError({ ...error, nama: "Harus isi nama" });
+      notify("Harus isi nama");
     } else if (jabatan === "") {
-      setError({ ...error,jabatan: "Harus isi jabatan"})
-      notify("Harus isi jabatan")
+      setError({ ...error, jabatan: "Harus isi jabatan" });
+      notify("Harus isi jabatan");
     } else if (tandaTangan === "") {
-      setError({...error,tandaTangan: "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan"})
-      notify("Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan")
+      setError({
+        ...error,
+        tandaTangan:
+          "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan",
+      });
+      notify(
+        "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan"
+      );
     } else {
-      console.log("sdfsdfdsf")
+      console.log("sdfsdfdsf");
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -123,7 +137,7 @@ const TambahTandaTangan = () => {
               `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/create`,
               formData
             );
-            console.log("data",data)
+            console.log("data", data);
             router.push({
               pathname: "/partnership/tanda-tangan",
               query: { success: true },
@@ -132,54 +146,49 @@ const TambahTandaTangan = () => {
             console.log(error.response.data.message);
             notify(error.response.data.message);
           }
-
-
         }
       });
-
-
     }
-  }
+  };
 
-    const notify = (value) =>
-      toast.info(`🦄 ${value}`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
-    // if (simpleValidator.current.allValid()) {
-    //   if (error) {
-    //     dispatch(clearErrors());
-    //   }
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+  // if (simpleValidator.current.allValid()) {
+  //   if (error) {
+  //     dispatch(clearErrors());
+  //   }
 
-    //   if (success) {
-    //     dispatch({
-    //       type: NEW_TANDA_TANGAN_RESET,
-    //     });
-    //   }
-    //   const data = {
-    //     name: nama,
-    //     position: jabatan,
-    //     signature_image: tandaTangan,
-    //     // status: "aktif",
-    //   };
-    //   console.log(data);
-    //   dispatch(newTandaTangan(data));
-    //   // dispatch(newTandaTangan(JSON.stringify(data)));
-    // } else {
-    //   simpleValidator.current.showMessages();
-    //   // forceUpdate(1);
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Oops...",
-    //     text: "Isi data dengan benar !",
-    //   });
-    // }
-  
+  //   if (success) {
+  //     dispatch({
+  //       type: NEW_TANDA_TANGAN_RESET,
+  //     });
+  //   }
+  //   const data = {
+  //     name: nama,
+  //     position: jabatan,
+  //     signature_image: tandaTangan,
+  //     // status: "aktif",
+  //   };
+  //   console.log(data);
+  //   dispatch(newTandaTangan(data));
+  //   // dispatch(newTandaTangan(JSON.stringify(data)));
+  // } else {
+  //   simpleValidator.current.showMessages();
+  //   // forceUpdate(1);
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Oops...",
+  //     text: "Isi data dengan benar !",
+  //   });
+  // }
 
   const onNewReset = () => {
     router.replace("/partnership/tanda-tangan", undefined, { shallow: true });
@@ -270,7 +279,7 @@ const TambahTandaTangan = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
-                  onFocus={()=>setError({...error,nama:""})}
+                    onFocus={() => setError({ ...error, nama: "" })}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nama"
@@ -280,7 +289,7 @@ const TambahTandaTangan = () => {
                     //   simpleValidator.current.showMessageFor("nama")
                     // }
                   />
-                  {error.nama ? <p className="error-text">{error.nama}</p>:"" }
+                  {error.nama ? <p className="error-text">{error.nama}</p> : ""}
                   {/* {simpleValidator.current.message(
                     "nama",
                     nama,
@@ -300,7 +309,7 @@ const TambahTandaTangan = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
-                  onFocus={()=>setError({...error,jabatan:""})}
+                    onFocus={() => setError({ ...error, jabatan: "" })}
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Jabatan"
@@ -309,7 +318,11 @@ const TambahTandaTangan = () => {
                     //   simpleValidator.current.showMessageFor("jabatan")
                     // }
                   />
-                  {error.jabatan ? <p className="error-text">{error.jabatan}</p>:"" }
+                  {error.jabatan ? (
+                    <p className="error-text">{error.jabatan}</p>
+                  ) : (
+                    ""
+                  )}
                   {/* {simpleValidator.current.message(
                     "jabatan",
                     jabatan,
