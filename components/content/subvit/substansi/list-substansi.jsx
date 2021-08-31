@@ -186,7 +186,7 @@ const ListSubstansi = () => {
                 </div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
                   <Link href="/subvit/substansi/clone">
-                    <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block mt-2">
+                    <a className="btn btn-sm text-white btn-light-success px-6 font-weight-bold btn-block mt-2">
                       <i className="flaticon-file-1"></i>
                       Clone
                     </a>
