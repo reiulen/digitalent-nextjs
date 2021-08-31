@@ -57514,8 +57514,10 @@ button {
   color: #3F4254;
 }
 .btn.btn-light-secondary {
-  color: #E4E6EF;
-  background-color: #EBEDF3;
+  /* color: #E4E6EF; */
+  color: var(--white);
+  background-color: var(--secondary);
+  /* background-color: #EBEDF3; */
   border-color: transparent;
 }
 .btn.btn-light-secondary i {
@@ -58124,8 +58126,10 @@ button {
   color: #ffffff;
 }
 .btn.btn-light-success {
-  color: #1BC5BD;
-  background-color: #C9F7F5;
+  /* color: #1BC5BD; */
+  color: var(--white);
+  background-color: var(--success);
+  /* background-color: #C9F7F5; */
   border-color: transparent;
 }
 .btn.btn-light-success i {
