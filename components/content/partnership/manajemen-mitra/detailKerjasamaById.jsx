@@ -906,13 +906,7 @@ notify(error.response.data.message)
                       Kembali
                     </a>
                   </Link>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-sm"
-                    onClick={() => handleSubmit()}
-                  >
-                    Ubah
-                  </button>
+                
                 </div>
               </div>
             </form>

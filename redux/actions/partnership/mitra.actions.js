@@ -124,8 +124,15 @@ export const getProvinces = () => {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
       );
-      console.log("respon data provinsi", data);
-      dispatch(successGetProvinces(data));
+
+      let dataNewProvinces = data.data.map((items) => {
+        return { ...items, label: items.name, value: items.id };
+      });
+      dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
+      // setAllProvinces(dataNewProvinces);
+      // console.log("dataNewProvinces", dataNewProvinces);
+
+      dispatch(successGetProvinces(dataNewProvinces));
     } catch (error) {
       console.log("gagal get province", error);
     }

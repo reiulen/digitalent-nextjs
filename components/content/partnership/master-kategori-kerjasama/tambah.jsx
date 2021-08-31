@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Image from "next/image";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Tambah = () => {
   const dispatch = useDispatch();
@@ -17,11 +19,9 @@ const Tambah = () => {
     ssr: false,
   });
 
-  const [valueCreateCooporations, setValueCreateCooporations] = useState([
-    "",
-  ]);
+  const [valueCreateCooporations, setValueCreateCooporations] = useState([""]);
 
-  console.log(valueCreateCooporations)
+  const router = useRouter();
 
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [status, setStatus] = useState("");
@@ -33,10 +33,12 @@ const Tambah = () => {
     setValueCreateCooporations(list);
   };
 
-  const handleDelete =(i)=>{
-    let filterResult = valueCreateCooporations.filter((items,index)=>index!==i)
-    setValueCreateCooporations(filterResult)
-  }
+  const handleDelete = (i) => {
+    let filterResult = valueCreateCooporations.filter(
+      (items, index) => index !== i
+    );
+    setValueCreateCooporations(filterResult);
+  };
 
   const handleChangeStatus = (e) => {
     setStatus(e.target.checked);
@@ -46,10 +48,25 @@ const Tambah = () => {
     setValueCreateCooporations([...valueCreateCooporations, ""]);
   };
 
-  const handleSubmit = async (e) => {
-    // e.preventDefault();
+  const handleSubmit =  (e) => {
+    e.preventDefault();
 
-    let statusPro = status ? 1 : 0;
+    Swal.fire({
+      title: "Apakah anda yakin ingin tambah data?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => { 
+
+      if(result){
+
+
+        let statusPro = status ? 1 : 0;
 
     let formData = new FormData();
     formData.append("cooperation_categories", categoryCooporation);
@@ -64,42 +81,47 @@ const Tambah = () => {
         formData
       );
 
-      router.push(
-                                            {
-                                              pathname:`/partnership/master-kategori-kerjasama`,
-                                              query:{success:true}
-                                            }
-                                          )
-
-
+      router.push({
+        pathname: `/partnership/master-kategori-kerjasama`,
+        query: { success: true },
+      });
     } catch (error) {
-      console.log(error);
+      notify(error.response.data.message);
     }
-  };
 
-  const router = useRouter();
-  const Swal = require("sweetalert2");
 
-  const submit = (e) => {
-    e.preventDefault();
-    Swal.fire({
-      title: "Apakah anda yakin ?",
-      // text: "Data ini tidak bisa dikembalikan !",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then((result) => {
-      if (result.value) {
-        router.push("/partnership/master-kategori-kerjasama");
+
+
       }
-    });
+    })
+
+    
   };
+
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   return (
     <PageWrapper>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -118,7 +140,7 @@ const Tambah = () => {
                 </label>
                 <div className="col-sm-10">
                   <input
-                  required
+                    required
                     placeholder="Masukkan Kategori Lembaga"
                     type="text"
                     name="category_cooperation"
@@ -141,19 +163,33 @@ const Tambah = () => {
                     </label>
                     <div className="col-sm-10 position-relative">
                       <input
-                      required
-                      placeholder={index===0?"Tujuan kerja sama" :"Opsional"}
+                        required
+                        placeholder={
+                          index === 0 ? "Tujuan kerja sama" : "Opsional"
+                        }
                         name={`cooperation${index}`}
                         type="text"
                         onChange={(e) => handleChange(e, index)}
                         className="form-control"
                         value={valueCreateCooporation}
                       />
-                      {index===0 ?"":
-                      <button type="button" onClick={()=>handleDelete(index)} className="btn position-absolute" style={{top:"0",right:"10px"}}>
-                      <Image src={`/assets/icon/trash.svg`} width={18} height={18} alt="btn-delete"/>
-                      </button>
-                      }
+                      {index === 0 ? (
+                        ""
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => handleDelete(index)}
+                          className="btn position-absolute"
+                          style={{ top: "0", right: "10px" }}
+                        >
+                          <Image
+                            src={`/assets/icon/trash.svg`}
+                            width={18}
+                            height={18}
+                            alt="btn-delete"
+                          />
+                        </button>
+                      )}
                     </div>
                   </div>
                 );
@@ -201,7 +237,7 @@ const Tambah = () => {
                 /> */}
                   <label className="switches">
                     <input
-                    required
+                      required
                       className="checkbox"
                       checked={status}
                       type="checkbox"
@@ -226,7 +262,11 @@ const Tambah = () => {
                         Kembali
                       </a>
                     </Link>
-                    <button type="button" className="btn btn-primary btn-sm" onClick={(e)=> handleSubmit(e)}>
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      onClick={(e) => handleSubmit(e)}
+                    >
                       Simpan
                     </button>
                   </div>
