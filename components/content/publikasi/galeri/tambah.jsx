@@ -137,7 +137,7 @@ const TambahGaleri = () => {
     const [gambarPreview, setGambarPreview] = useState(null)
     const [kategori_id, setKategoriId] = useState('')
     // const [kategori_id, setKategoriId] = useState(1)
-    const [users_id, setUserId] = useState(1)
+    const [users_id, setUserId] = useState(3)
     const [tag, setTag] = useState([])
     const [publish, setPublish] = useState(false)
 
