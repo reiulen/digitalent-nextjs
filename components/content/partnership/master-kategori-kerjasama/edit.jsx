@@ -70,7 +70,6 @@ const Edit = () => {
 
   const [status, setStatus] = useState("");
   const handleChangeStatus = (e) => {
-    console.log("e.target.checked", e.target.checked);
     setStatus(e.target.checked);
   };
 
@@ -124,7 +123,6 @@ const Edit = () => {
             query: { update: true },
           });
         } catch (error) {
-          // console.log("erorr message",error.response.message);
           notify(error.response.data.message);
         }
       }

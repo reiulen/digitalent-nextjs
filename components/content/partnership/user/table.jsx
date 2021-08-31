@@ -34,11 +34,11 @@ const Table = () => {
   const router = useRouter();
 
   const allCooperationUser = useSelector((state) => state.allCooperationUser);
-  console.log("allCooperationUser", allCooperationUser);
+ 
 
   useEffect(() => {
     dispatch(reqCooperationUser());
-  }, []);
+  }, [dispatch]);
 
   return (
     <PageWrapper>

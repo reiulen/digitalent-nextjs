@@ -22,7 +22,6 @@ const Table = () => {
   const { success, update } = router.query;
 
   const allTandaTangan = useSelector((state) => state.allTandaTangan);
-  console.log("state selector allTandaTangan", allTandaTangan);
 
   const [successDelete, setSuccessDelete] = useState(false);
   const [keyWord, setKeyWord] = useState("");
