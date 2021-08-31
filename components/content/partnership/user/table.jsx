@@ -147,6 +147,7 @@ const Table = () => {
                     href="#"
                     className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
                     // style={exportCSV}
+                    
                   >
                     Export .csv
                   </a>

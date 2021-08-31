@@ -20,6 +20,7 @@ import IconCalender from '../../../assets/icon/Calender'
 import IconArrow from '../../../assets/icon/Arrow'
 import axios from 'axios'
 import LoadingTable from '../../../LoadingTable'
+import moment from 'moment'
 
 import {
   fetchAllMK,
@@ -519,15 +520,22 @@ const [isStatusBar, setIsStatusBar] = useState(false)
                                   <p className="p-part-t">
                                     {items.period} {items.period_unit}
                                   </p>{" "}
+
+
+                                  
                                 </td>
                                 <td className="align-middle text-center">
                                   <p className="p-part-t">
-                                    {items.signing_date}
+                                    {moment(items.signing_date).format("YYYY MMM DD")}
+                                    {/* moment().format('MMMM Do YYYY, h:mm:ss a'); */}
+                                    {/* H, HHss     */}
+
                                   </p>
                                 </td>
                                 <td className="align-middle text-center">
                                   <p className="p-part-t">
-                                    {items.period_date_end}
+
+                                    {moment(items.period_date_end).format("YYYY MMM DD")}
                                   </p>
                                 </td>
                                 <td className="align-middle text-center">
