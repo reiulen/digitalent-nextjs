@@ -19,6 +19,7 @@
   --white: #ffffff;
   --gray: #7E8299;
   --gray-dark: #3F4254;
+  --gray-shade:#E4E6EF;
   --primary: #215480;
   --primary-shade: #1A4367;
   --primary-tint: #E9EEF2;
@@ -7629,6 +7630,10 @@ a.close.disabled {
 .bg-primary {
   background-color: var(--primary) !important;
   /* background-color: #3699FF !important; */
+}
+
+.bg-gray-shade{
+  background-color: var(--gray-shade) !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -30798,7 +30803,8 @@ h3 {
 }
 
 .bg-light-success {
-  background-color: #C9F7F5 !important;
+  background-color: var(--success) !important;
+  /* background-color: #C9F7F5 !important; */
 }
 
 .bg-hover-light-success {
@@ -30817,7 +30823,8 @@ h3 {
 }
 
 .bg-light-info {
-  background-color: #EEE5FF !important;
+  background-color: var(--primary)!important;
+  /* background-color: #EEE5FF !important; */
 }
 
 .bg-hover-light-info {
@@ -30836,7 +30843,8 @@ h3 {
 }
 
 .bg-light-warning {
-  background-color: #FFF4DE !important;
+  background-color: var(--warning) !important;
+  /* background-color: #FFF4DE !important; */
 }
 
 .bg-hover-light-warning {

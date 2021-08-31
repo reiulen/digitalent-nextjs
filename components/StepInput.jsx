@@ -10,17 +10,17 @@ const StepInput = ({ step }) => {
 
   if (step == 1) {
     stepBg1 = "bg-white";
-    stepNumber1 = "bg-primary text-white";
+    stepNumber1 = "bg-secondary text-white";
   } else if (step == 2) {
     stepBg2 = "bg-white";
-    stepNumber2 = "bg-primary text-white";
+    stepNumber2 = "bg-secondary text-white";
   } else if (step == 3) {
     stepBg3 = "bg-white";
-    stepNumber3 = "bg-primary text-white";
+    stepNumber3 = "bg-secondary text-white";
   }
   return (
     <div className="col-12">
-      <div className="row bg-secondary">
+      <div className="row bg-gray-shade">
         <div className={`col-4 d-flex rounded-top ${stepBg1}`}>
           <div className="my-5 mx-3">
             <h1 className={`badge badge-secondary h1 ${stepNumber1}`}>1</h1>
