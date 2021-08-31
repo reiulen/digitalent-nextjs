@@ -115,7 +115,6 @@ const [isStatusBar, setIsStatusBar] = useState(false)
     setIsStatusBar(false)
   };
   useEffect(() => {
-    console.log("useffect");
     dispatch(fetchAllMK());
   }, [
     dispatch,

@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Tables from '../../../Table/Table'
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
@@ -279,21 +280,20 @@ const Table = () => {
                 </div>
               </div>
             </form>
-            <div className="table-page mt-5">
-              <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
+            <Tables 
+            tableHead=
+            {
                     <tr>
                       <th className="text-center align-middle">No</th>
                       <th className="text-center align-middle">Logo</th>
                       <th className="text-center align-middle">Mitra</th>
-                      <th className="text-center align-middle">Website</th>
+                      <th className="text-center align-middle">Website Website Website</th>
                       <th className="text-center align-middle">Kerjasama</th>
                       <th className="text-center align-middle">Action</th>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {allMitra.status === "success"
+                  }
+                  tableBody={
+allMitra.status === "success"
                       ? allMitra.mitraAll.length === 0
                         ? "Tidak ada data"
                         : allMitra.mitraAll.data.list_mitras.map(
@@ -364,35 +364,6 @@ const Table = () => {
                                         Detail
                                       </div>
                                     </button>
-
-                                    {/* <ButtonAction
-                                  icon="detail.svg"
-                                  link="/partnership/manajemen-mitra/detail-data-kerjasama"
-                                /> */}
-                                    {/* <button
-                                        className="btn ml-3 position-relative btn-delete"
-                                        style={{
-                                          background: "#F3F6F9",
-                                          borderRadius: "6px",
-                                          padding: "8px 10px 3px 10px",
-                                        }}
-                                        onClick={() =>
-                                          router.push(
-                                            `/partnership/manajemen-mitra/edit/${item.id}`
-                                          )
-                                        }
-                                      >
-                                        <Image
-                                          width="14"
-                                          height="14"
-                                          src={`/assets/icon/write.svg`}
-                                          alt="write"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Edit
-                                        </div>
-                                      </button> */}
-
                                     <button
                                       className="btn ml-3 position-relative btn-delete"
                                       style={{
@@ -406,10 +377,6 @@ const Table = () => {
                                           `/partnership/manajemen-mitra/edit/${item.id}`
                                         },undefined, { shallow: true }
                                         )
-
-                                        // router.push('/partnership/manajemen-mitra/', `/partnership/manajemen-mitra/edit/${item.id}`, { shallow: true })
-
-
                                       }
                                     >
                                       <Image
@@ -422,23 +389,7 @@ const Table = () => {
                                         Edit
                                       </div>
                                     </button>
-                                    {/* <button
-                                  onClick={() => handleDelete(item.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
-                                </button> */}
-
-                                    <button
+                                     <button
                                       style={{
                                         background: "#F3F6F9",
                                         borderRadius: "6px",
@@ -463,15 +414,10 @@ const Table = () => {
                               );
                             }
                           )
-                      : "Loading .. / silahkan reload halaman"}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="row">
-                {/* {allMitra && allMitra.perPage < allMitra.total && ( */}
-                <div className="table-pagination">
-                  <Pagination
+                      : "Loading .. / silahkan reload halaman"
+                  }
+                  pagination={
+                    <Pagination
                     activePage={allMitra.page}
                     itemsCountPerPage={allMitra?.mitraAll?.data?.perPage}
                     totalItemsCount={allMitra?.mitraAll?.data?.total}
@@ -484,45 +430,10 @@ const Table = () => {
                     itemClass="page-item"
                     linkClass="page-link"
                   />
-                </div>
-                {/* )} */}
-                {/* {allMitra && allMitra.total > 5 ? ( */}
-                <div className="table-total ml-auto">
-                  <div className="row">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) => dispatch(setLimit(e.target.value))}
-                      >
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="20">20</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3 ml-3"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data {allMitra.totalDataMitra}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                {/* ) : (
-                  ""
-                )} */}
-              </div>
-            </div>
-          </div>
+                  }
+                  onChangeLimit={(e) => dispatch(setLimit(e.target.value))}
+                  totalData={allMitra.totalDataMitra}
+                  /> </div>
         </div>
       </div>
     </PageWrapper>

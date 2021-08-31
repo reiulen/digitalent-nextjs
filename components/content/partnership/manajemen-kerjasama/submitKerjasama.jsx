@@ -85,7 +85,7 @@ const [NamePDF, setNamePDF] = useState(null);
         setPdfFileError("Please selet valid pdf file");
       }
     } else {
-      console.log("select your file");
+      alert("select your file");
     }
   };
 
@@ -141,7 +141,6 @@ const [NamePDF, setNamePDF] = useState(null);
           let dataee = parseAllCooperation.map((items, i) => {
             return items.cooperation;
           });
-          console.log("dataee",dataee)
           dataee.forEach((item, i) => {
             formData.append(`cooperation_form_content[${i}]`, item);
           });
@@ -151,24 +150,12 @@ const [NamePDF, setNamePDF] = useState(null);
               `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal`,
               formData
             );
-            
-            // console.log("data sadfasdf",data.data.id)
             router.push(
                                             {
                                               pathname:`/partnership/manajemen-kerjasama/view/${data.data.id}`,
                                               query:{success:true}
                                             }
                                           )
-            // alert("data berhasil ditambah");
-
-            // router.push(
-            //       "/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
-            //     );
-            // router.push({
-            //   pathname:`/partnership/manajemen-kerjasama/detail-dokumen-kerjasama`,
-            //   query: { success: true },
-            // })
-            // router.push("/partnership/manajemen-kerjasama");
           } catch (error) {
             alert("gagal menambahkan data tipe file harus pdf");
           }
@@ -193,22 +180,16 @@ const [NamePDF, setNamePDF] = useState(null);
   const [periodUnitValue, setPeriodUnitValue] = useState('')
 
   const checkPeriod = (dateNow) =>{
-    // let periodValue = value.period
-    // let periodUnitValue = value.periodUnit
-    // console.log("periodUnitValue",periodUnitValue)
-    // clg
 
     if(periodUnitValue === "bulan"){
       let futureMonth = moment(dateNow).add(parseInt(periodValue), 'M').format('YYYY-MM-DD');
-      console.log("BULAN SEKARANG",moment().format('YYYY-MM-DD'))
-      console.log("BULAN UPDATE",futureMonth)
+
       setNewDate(futureMonth)
     }
     // jika tahun
     else{
       let futureYear = moment(dateNow).add(parseInt(periodValue), 'y').format('YYYY-MM-DD');
-      console.log("TAHUN SEKARANG",moment().format('YYYY-MM-DD'))
-      console.log("TAHUN UPDATE",futureYear)
+
       setNewDate(futureYear)
     }
   }
@@ -229,9 +210,6 @@ const [NamePDF, setNamePDF] = useState(null);
       progress: undefined,
     });
   useEffect(() => {
-    // checkPeriod(router.query)
-    console.log("router.query.period",router.query.period)
-    console.log("router.query.period",router.query.periodUnit)
     setPeriodValue(router.query.period)
     setPeriodUnitValue(router.query.periodUnit)
   }, [router.query])
