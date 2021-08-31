@@ -94,9 +94,6 @@ const TambahTandaTangan = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    console.log("nama", nama);
-    console.log("jabatan", jabatan);
-    console.log("tanda_tangan", tandaTangan);
     // e.preventDefault();
     if (nama === "") {
       setError({ ...error, nama: "Harus isi nama" });
@@ -114,7 +111,6 @@ const TambahTandaTangan = () => {
         "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan"
       );
     } else {
-      console.log("sdfsdfdsf");
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -137,13 +133,11 @@ const TambahTandaTangan = () => {
               `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/create`,
               formData
             );
-            console.log("data", data);
             router.push({
               pathname: "/partnership/tanda-tangan",
               query: { success: true },
             });
           } catch (error) {
-            console.log(error.response.data.message);
             notify(error.response.data.message);
           }
         }
@@ -161,34 +155,6 @@ const TambahTandaTangan = () => {
       draggable: true,
       progress: undefined,
     });
-  // if (simpleValidator.current.allValid()) {
-  //   if (error) {
-  //     dispatch(clearErrors());
-  //   }
-
-  //   if (success) {
-  //     dispatch({
-  //       type: NEW_TANDA_TANGAN_RESET,
-  //     });
-  //   }
-  //   const data = {
-  //     name: nama,
-  //     position: jabatan,
-  //     signature_image: tandaTangan,
-  //     // status: "aktif",
-  //   };
-  //   console.log(data);
-  //   dispatch(newTandaTangan(data));
-  //   // dispatch(newTandaTangan(JSON.stringify(data)));
-  // } else {
-  //   simpleValidator.current.showMessages();
-  //   // forceUpdate(1);
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Oops...",
-  //     text: "Isi data dengan benar !",
-  //   });
-  // }
 
   const onNewReset = () => {
     router.replace("/partnership/tanda-tangan", undefined, { shallow: true });

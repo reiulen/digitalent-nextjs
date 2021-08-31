@@ -1,0 +1,26 @@
+thead,
+tbody {
+  white-space: nowrap;
+}
+.thead {
+  background-color: #f3f6f9;
+}
+.title-sum-data {
+  color: #b5b5c3;
+}
+.select-limit-table {
+  width: 65px;
+  background-color: #f3f6f9;
+  border-color: #f3f6f9;
+  color: #9e9e9e;
+}
+.table-head-custom {
+  min-width: max-content;
+}
+.table-pagination {
+  max-width: 100%;
+  margin-top: 1rem;
+}
+.pagination-custom .pagintaion {
+  margin-bottom: 0.4rem;
+}

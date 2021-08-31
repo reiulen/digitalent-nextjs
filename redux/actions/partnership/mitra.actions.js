@@ -64,7 +64,6 @@ export const fetchMitra = (keyword) => {
 
     try {
       const { data } = await debouncedFetchMitra(params);
-      console.log("data fetch all mitra", data);
       dispatch(successFetchMitra(data, data.data.total));
     } catch (error) {
       dispatch(errorFetchMitra());
@@ -97,7 +96,6 @@ export const deleteMitra = (id) => {
       let { data } = await axios.delete(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`
       );
-      console.log("respon data delete mitra", data);
       dispatch({ type: SUCESS_DELETE_MITRA });
     } catch (error) {
       console.log("gagal delete mitra", error);
@@ -129,8 +127,6 @@ export const getProvinces = () => {
         return { ...items, label: items.name, value: items.id };
       });
       dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-      // setAllProvinces(dataNewProvinces);
-      // console.log("dataNewProvinces", dataNewProvinces);
 
       dispatch(successGetProvinces(dataNewProvinces));
     } catch (error) {
@@ -158,10 +154,7 @@ export const exportFileCSV = () => {
       let urlExport = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export`
       );
-      console.log("urlExport.config.url", urlExport.config.url);
       router.push(urlExport.config.url);
-
-      // console.log("data", data);
     } catch (error) {
       console.log("object", error);
     }
@@ -184,7 +177,6 @@ export const getSingleValue = (id) => {
     let pageState = getState().allMitra.pageDetail || 1;
     let categoryState = getState().allMitra.categories_cooporation;
     let statusState = getState().allMitra.statusDetail;
-    console.log(categoryState, statusState);
 
     const paramsID = {
       keyword: keywordState,
@@ -197,9 +189,7 @@ export const getSingleValue = (id) => {
     try {
       let { data } = await getAllMitraDetail(paramsID, id);
       dispatch(successGetSingleValue(data, data.data.total));
-      console.log("data", data);
     } catch (error) {
-      console.log("error get single mitra list");
       dispatch({ type: MITRA_FAIL_DETAIL });
     }
   };
@@ -242,8 +232,6 @@ export const exportFileCSVDetail = (id) => {
         `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export-cooperation/${id}?categories_cooporation=${statusState}&status=${cooperationState}`
       );
       router.push(urlExport.config.url);
-
-      // console.log("data", data);
     } catch (error) {
       console.log("object", error);
     }
@@ -320,7 +308,6 @@ export const reloadTable = () => {
 };
 
 export const changeStatusList = (value, id) => {
-  console.log(value, id);
   return async (dispatch, getState) => {
     try {
       let dataSend = { status: value };
@@ -328,7 +315,6 @@ export const changeStatusList = (value, id) => {
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/update-status/${id}`,
         dataSend
       );
-      console.log("status list data value", data);
       dispatch(successChangeStatusList(value));
     } catch (error) {
       console.log("error change status list");

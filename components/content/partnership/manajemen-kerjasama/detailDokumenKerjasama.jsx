@@ -17,7 +17,6 @@ const DetailDokumenKerjasama = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const allMK = useSelector(state => state.allMK)
-  console.log("allMK page detail",allMK)
 
 
   const [pdfFIle, setPdfFIle] = useState("");
@@ -29,7 +28,6 @@ const DetailDokumenKerjasama = () => {
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
       );
       setPdfFIle(data.data.document_file)
-      console.log("getSingleValue", data);
     } catch (error) {
       console.log("action getSingleValue gagal", error);
     }

@@ -30,14 +30,12 @@ const EditDokumentKerjasama = () => {
   const router = useRouter();
 
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK", allMK);
   //
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   //
   // state onchange form data
   let singleproduct = useSelector((state) => state.allMK);
-  // console.log("singleproduct",singleproduct)
   const [isntitusiName, setIsntitusiName] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -45,9 +43,7 @@ const EditDokumentKerjasama = () => {
   const [cooperationC_id, setCooperationC_id] = useState("");
   const [period, setPeriod] = useState("");
   const [periodUnit, setPeriodUnit] = useState("tahun");
-  console.log("periodUnit", periodUnit);
   const [periodDateStart, setPeriodDateStart] = useState("");
-  console.log("periodDateStart", periodDateStart);
   const [periodDateEnd, setPeriodDateEnd] = useState("");
   const [aggrementNumber, setAggrementNumber] = useState("");
   const [aggrementNumberInfo, setAggrementNumberInfo] = useState("");
@@ -111,11 +107,9 @@ const EditDokumentKerjasama = () => {
     setPdfFile(null);
     setNamePDF(null);
   };
-  // console.log("viewPDF",viewPDF)
 
   const handleSubmit = async () => {
     // e.preventDefault();
-    console.log("edit");
     Swal.fire({
       title: "Apakah anda yakin ?",
       icon: "warning",
@@ -185,7 +179,6 @@ const EditDokumentKerjasama = () => {
             query: { update: true },
           });
         } catch (error) {
-          console.log("error.response", error.response);
           notify(error.response.data.message);
         }
       }
@@ -207,8 +200,6 @@ const EditDokumentKerjasama = () => {
       let futureMonth = moment(dateNow)
         .add(parseInt(period), "M")
         .format("YYYY-MM-DD");
-      console.log("BULAN SEKARANG", moment().format("YYYY-MM-DD"));
-      console.log("BULAN UPDATE", futureMonth);
       setPeriodDateEnd(futureMonth);
     }
     // jika tahun
@@ -216,8 +207,6 @@ const EditDokumentKerjasama = () => {
       let futureYear = moment(dateNow)
         .add(parseInt(period), "y")
         .format("YYYY-MM-DD");
-      console.log("TAHUN SEKARANG", moment().format("YYYY-MM-DD"));
-      console.log("TAHUN UPDATE", futureYear);
       setPeriodDateEnd(futureYear);
     }
   };
@@ -226,7 +215,6 @@ const EditDokumentKerjasama = () => {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
       );
-      console.log("data", data);
       setIsntitusiName(data.data.institution_name);
       setTitle(data.data.title);
       setDate(data.data.submission_date);
@@ -249,11 +237,9 @@ const EditDokumentKerjasama = () => {
   };
 
   const [AllCooperation, setAllCooperation] = useState("");
-  console.log(AllCooperation, "AllCooperation");
   const changeFormCooporation = (index, e) => {
     let dataaa = [...allMK.singleCooporationSelect.data.option];
     dataaa[index].cooperation = e.target.value;
-    console.log("dataaa", dataaa);
     setAllCooperation(dataaa);
   };
 
@@ -263,10 +249,8 @@ const EditDokumentKerjasama = () => {
     
     let dataCoopertaion = { ...cooperationID };
     dataCoopertaion.data_content[i].form_content = event.target.value;
-    console.log("dataCoopertaion", dataCoopertaion);
     setCooperationID(dataCoopertaion);
   };
-  console.log("cooperationID", cooperationID);
 
   const changeInstitusi = (value) => {
     setIsntitusiName(value);
@@ -303,8 +287,6 @@ const EditDokumentKerjasama = () => {
         let futureMonth = moment(date)
           .add(parseInt(period), "M")
           .format("YYYY-MM-DD");
-        console.log("BULAN SEKARANG", moment().format("YYYY-MM-DD"));
-        console.log("BULAN UPDATE", futureMonth);
         setPeriodDateEnd(futureMonth);
       }
       // jika tahun
@@ -312,8 +294,6 @@ const EditDokumentKerjasama = () => {
         let futureYear = moment(date)
           .add(parseInt(period), "y")
           .format("YYYY-MM-DD");
-        console.log("TAHUN SEKARANG", moment().format("YYYY-MM-DD"));
-        console.log("TAHUN UPDATE", futureYear);
         setPeriodDateEnd(futureYear);
       }
     }

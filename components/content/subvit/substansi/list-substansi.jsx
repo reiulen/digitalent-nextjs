@@ -178,7 +178,7 @@ const ListSubstansi = () => {
 
                 <div className="col-lg-1 col-xl-1">
                   <button
-                    className="btn btn-sm btn-light-primary btn-block mt-2"
+                    className="btn btn-sm btn-light-primary btn-block mt-2 font-weight-bold"
                     onClick={handleSearch}
                   >
                     Cari
@@ -186,7 +186,7 @@ const ListSubstansi = () => {
                 </div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
                   <Link href="/subvit/substansi/clone">
-                    <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block mt-2">
+                    <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block mt-2">
                       <i className="flaticon-file-1"></i>
                       Clone
                     </a>
@@ -194,7 +194,7 @@ const ListSubstansi = () => {
                 </div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
                   <Link href="/subvit/substansi/tipe-soal">
-                    <a className="btn btn-sm btn-light-warning px-6 font-weight-bold btn-block mt-2">
+                    <a className="btn btn-sm btn-warning px-6 font-weight-bold btn-block mt-2">
                       <i className="flaticon2-paper"></i>
                       Tipe Soal
                     </a>
@@ -202,7 +202,7 @@ const ListSubstansi = () => {
                 </div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
                   <Link href="/subvit/substansi/tambah-step-1">
-                    <a className="btn btn-sm btn-light-info px-6 font-weight-bold btn-block mt-2">
+                    <a className="btn btn-sm btn-primary px-6 font-weight-bold btn-block mt-2">
                       <i className="flaticon2-notepad"></i>
                       Tambah Soal
                     </a>

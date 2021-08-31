@@ -33,7 +33,6 @@ const EditDokumentKerjasamaById = () => {
   let {idDetail} = router.query
   
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK", allMK);
   //
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -47,11 +46,8 @@ const EditDokumentKerjasamaById = () => {
   const [cooperationID, setCooperationID] = useState("");
   const [cooperationC_id, setCooperationC_id] = useState("");
   const [period, setPeriod] = useState("");
-  console.log("period",period)
   const [periodUnit, setPeriodUnit] = useState("tahun");
-  console.log("periodUnit", periodUnit);
   const [periodDateStart, setPeriodDateStart] = useState("");
-  console.log("periodDateStart",periodDateStart)
   const [periodDateEnd, setPeriodDateEnd] = useState("");
   const [aggrementNumber, setAggrementNumber] = useState("");
   const [aggrementNumberInfo, setAggrementNumberInfo] = useState("");
@@ -121,7 +117,6 @@ const EditDokumentKerjasamaById = () => {
 
   const handleSubmit = async () => {
     // e.preventDefault();
-    console.log("edit")
     Swal.fire({
       title: "Apakah anda yakin ?",
       icon: "warning",
@@ -195,7 +190,6 @@ const EditDokumentKerjasamaById = () => {
           })
           
         } catch (error) {
-console.log("error.response",error.response)
 notify(error.response.data.message)
         }
       }
@@ -213,7 +207,6 @@ notify(error.response.data.message)
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
       );
-      console.log("data",data)
       setIsntitusiName(data.data.institution_name);
       setTitle(data.data.title);
       setDate(data.data.submission_date);
@@ -236,11 +229,9 @@ notify(error.response.data.message)
 
 
   const [AllCooperation, setAllCooperation] = useState("");
-  console.log(AllCooperation, "AllCooperation");
   const changeFormCooporation = (index, e) => {
     let dataaa = [...allMK.singleCooporationSelect.data.option];
     dataaa[index].cooperation = e.target.value;
-    console.log("dataaa",dataaa)
     setAllCooperation(dataaa);
   };
 
@@ -249,10 +240,8 @@ notify(error.response.data.message)
     // console.log("object")
     let dataCoopertaion = { ...cooperationID };
     dataCoopertaion.data_content[i].form_content = event.target.value;
-    console.log("dataCoopertaion",dataCoopertaion)
     setCooperationID(dataCoopertaion);
   };
-  console.log("cooperationID",cooperationID)
 
   const changeInstitusi = (value) => {
     setIsntitusiName(value);

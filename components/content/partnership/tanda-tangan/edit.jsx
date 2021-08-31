@@ -82,12 +82,10 @@ const EditTandaTangan = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const allMitra = useSelector((state) => state.allMitra);
-  console.log("allMitra", allMitra);
   const [signature, setSignature] = useState("");
 
   const dataTandaTangan = () => {
     const data = signCanvas.current.toDataURL();
-    console.log("data", data);
     if (!signature) {
       Swal.fire({
         icon: "success",
@@ -109,7 +107,6 @@ const EditTandaTangan = () => {
   const submit = async (e) => {
     e.preventDefault();
 if(signCanvas.current.isEmpty()){
-  console.log("object")
 
 
     Swal.fire({
@@ -139,7 +136,6 @@ if(signCanvas.current.isEmpty()){
             pathname: `/partnership/tanda-tangan`,
             query: { update: true },
           });
-          console.log("respon data", data);
         } catch (error) {
           console.log("error put api ttd", error.response);
         }
@@ -178,7 +174,6 @@ if(signCanvas.current.isEmpty()){
             pathname: `/partnership/tanda-tangan`,
             query: { update: true },
           });
-          console.log("respon data", data);
         } catch (error) {
           console.log("error put api ttd", error.response);
         }

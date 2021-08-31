@@ -33,7 +33,6 @@ const DetailDataKerjasama = () => {
   const router = useRouter();
   let { update } = router.query;
   const mitraDetailAll = useSelector((state) => state.allMitra);
-  console.log("mitraDetailAll", mitraDetailAll);
 
   const [keyWord, setKeyWord] = useState("");
   const [valueStatus, setValueStatus] = useState("");
