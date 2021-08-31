@@ -12,8 +12,8 @@ const Preview = () => {
     const [jenis_kategori, setJenisKategori] = useState(berita.jenis_kategori)
     const [created_at, setCreatedAt] = useState(new Date (berita.created_at).toLocaleDateString("en-IN"))
     const [nama, setNamaKategori] = useState(berita.nama)  
-    // const [gambar, setGambar] = useState(berita.gambar)
-    const [gambar, setGambar] = useState("/assets/media/default.jpg") 
+    const [gambar, setGambar] = useState(berita.gambar)
+    // const [gambar, setGambar] = useState("/assets/media/default.jpg") 
     const [isi_berita, setIsiBerita] = useState(berita.isi_berita)
     const [tags, setTags] = useState(berita.tag)
 
@@ -75,7 +75,7 @@ const Preview = () => {
                                 </div>
 
                                 <div className="text-justify my-5">
-                                    {isi_berita}
+                                    <div dangerouslySetInnerHTML={{__html: isi_berita}}></div> 
                                 </div>
 
                                 <div className="row">
