@@ -35,7 +35,6 @@ export const fetchSignature = () => {
     };
     try {
       let { data } = await fetchSignatureApi(params);
-      console.log("data signature action", data);
       dispatch(successFetchSignature(data));
     } catch (error) {
       console.log("error data signature action", error);
@@ -78,7 +77,6 @@ export const deleteTandaTangan = (id) => {
       let { data } = await axios.delete(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`
       );
-      console.log("respon data delete ttd", data);
       dispatch({ type: SUCESS_DELETE_TD });
     } catch (error) {
       console.log("gagal delete ttd", error);

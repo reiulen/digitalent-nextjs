@@ -24,7 +24,6 @@ const Tambah = () => {
   const dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
   const [pagees, setPagees] = useState(false);
-  console.log("allMK", allMK);
   // state form data 1
   const [institution_name, setInstitution_name] = useState("");
   const changeInstitusi = (value) => {
@@ -45,7 +44,6 @@ const Tambah = () => {
   const [period, setPeriod] = useState("");
   const [periodUnit, setPeriodUnit] = useState("tahun");
   const [cooperationC_id, setCooperationC_id] = useState("");
-  console.log("cooperationC_id", cooperationC_id);
   const changeSetCooperationC_id = (value) => {
     setCooperationC_id(value);
     dispatch(changeCooperationSelectByID(value));

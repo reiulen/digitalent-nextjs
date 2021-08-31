@@ -154,7 +154,6 @@ const Tambah = () => {
               {valueCreateCooporations.map((valueCreateCooporation, index) => {
                 return (
                   <div className="form-group row" key={index}>
-                    {/* {console.log(valueCreateCooporation,index)} */}
                     <label
                       htmlFor="staticEmail"
                       className="col-sm-2 col-form-label"
