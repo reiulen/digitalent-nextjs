@@ -9,19 +9,28 @@ import Swal from "sweetalert2";
 import { getProvinces } from "../../../../redux/actions/partnership/mitra.actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-// import {
-//   newMitra,
-//   clearErrors,
-// } from "../../../../redux/actions/partnership/mitra.actions";
-
-// import { getAllKota } from "../../../../redux/actions/utils/utils.actions";
-
-// import LoadingPage from "../../../LoadingPage";
-
-// import { NEW_MITRA_RESET } from "../../../../redux/types/partnership/mitra.type";
+import Select from "react-select";
 
 const TambahMitra = () => {
+  // test react select
+  //   const colourOptions= [
+  //   { value: '', label: 'Pilih provinsi' },
+  //   { value: 'ocean', label: 'Ocean' },
+  //   { value: 'blue', label: 'Blue' },
+  //   { value: 'purple', label: 'Purple' },
+  //   { value: 'red', label: 'Red', },
+  //   { value: 'orange', label: 'Orange' },
+  //   { value: 'yellow', label: 'Yellow' },
+  //   { value: 'green', label: 'Green' },
+  //   { value: 'forest', label: 'Forest' },
+  //   { value: 'slate', label: 'Slate' },
+  //   { value: 'silver', label: 'Silver' },
+  // ];
+
+  // const chengeSelectProvinces = (e) =>{
+  //   console.log(e.id)
+  // }
+
   const router = useRouter();
   const dispatch = useDispatch();
   const allMitra = useSelector((state) => state.allMitra);
@@ -29,7 +38,7 @@ const TambahMitra = () => {
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
-  console.log("agency_logo",agency_logo)
+  console.log("agency_logo", agency_logo);
   const [wesite, setWesite] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
@@ -62,7 +71,7 @@ const TambahMitra = () => {
     if (agency_logo === "") {
       setError({
         ...error,
-        agency_logo: "Harus isi gambar logo dengan format png",
+        agency_logo: "Harus isi gambar logo dengan format png/jpg",
       });
       notify("Harus isi gambar logo dengan format png");
     } else if (institution_name === "") {
@@ -163,20 +172,8 @@ const TambahMitra = () => {
       progress: undefined,
     });
 
-  const getDataProvinces = async () => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
-      );
-      setAllProvinces(data.data);
-      console.log("respon data provinsi", data);
-    } catch (error) {
-      console.log("gagal get province", error);
-    }
-  };
-
   const onChangeProvinces = (e) => {
-    setIndonesia_provinces_id(e.target.value);
+    setIndonesia_provinces_id(e.id);
   };
 
   const [NamePDF, setNamePDF] = useState(null);
@@ -185,23 +182,19 @@ const TambahMitra = () => {
   const fileMax = 2097152;
   const onChangeImage = (e) => {
     let selectedFile = e.target.files[0];
-    console.log("selectedFile",selectedFile)
-    
+    console.log("selectedFile", selectedFile);
+
     if (selectedFile) {
       if (
-        selectedFile &&
-        fileTypeJpeg.includes(selectedFile.type) || fileType.includes(selectedFile.type) &&
-        selectedFile.size <= fileMax
+        (selectedFile && fileTypeJpeg.includes(selectedFile.type)) ||
+        (fileType.includes(selectedFile.type) && selectedFile.size <= fileMax)
       ) {
         let reader = new FileReader();
         reader.readAsDataURL(selectedFile);
         reader.onloadend = (e) => {
           setAgency_logo(e.target.result);
-          setShowImage(true)
-          setNamePDF(selectedFile.name)
-          // setPdfFileError("");
-          // setNamePDF(selectedFile.name);
-          // alert(e.target.result)
+          setShowImage(true);
+          setNamePDF(selectedFile.name);
         };
       } else {
         notify("gambar harus PNG atau JPG dan max size 2mb");
@@ -209,22 +202,30 @@ const TambahMitra = () => {
     } else {
       notify("upload gambar dulu");
     }
-
-    // console.log(e.target.file)
-    // let files = e.target.files
-    // console.log("files",files)
-    // let reader = new FileReader();
-    //     reader.readAsDataURL(files[0]);
-    //     reader.onload = (e) => {
-    //         console.log("e.target.result",e.target.result)
-    //     }
   };
 
+  const [showImage, setShowImage] = useState(false);
+  const hideImage = () => {
+    setShowImage(showImage ? false : true);
+  };
 
-  const [showImage, setShowImage] = useState(false)
-  const hideImage = () =>{
-      setShowImage(showImage?false:true)
-  }
+  const getDataProvinces = async () => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
+      );
+      let dataNewProvinces = data.data.map((items) => {
+        return { ...items, label: items.name, value: items.id };
+      });
+      dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
+      setAllProvinces(dataNewProvinces);
+      console.log("dataNewProvinces", dataNewProvinces);
+    } catch (error) {
+      console.log("gagal get province", error);
+    }
+  };
+
+  console.log("allProvinces state", allProvinces);
 
   useEffect(() => {
     getDataProvinces();
@@ -241,8 +242,11 @@ const TambahMitra = () => {
           let { data } = await axios.get(
             `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cities/${indonesia_provinces_id}`
           );
-          console.log("respon data cities", data);
-          setCitiesAll(data.data);
+          let dataNewCitites = data.data.map((items) => {
+            return { ...items, label: items.name, value: items.id };
+          });
+          dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
+          setCitiesAll(dataNewCitites);
         } catch (error) {
           console.log("gagal get cities", error);
         }
@@ -293,34 +297,47 @@ const TambahMitra = () => {
                         className="custom-file-input cursor-pointer"
                         id="inputGroupFile04"
                         // onChange={onChangeGambar}
+                        accept="image/png,image/jpg"
                       />
 
                       <label
                         className="custom-file-label"
                         htmlFor="inputGroupFile04"
                       >
-                        {NamePDF ? NamePDF : "Cari Dokumen" }
+                        {NamePDF ? NamePDF : "Cari Dokumen"}
                       </label>
                     </div>
                   </div>
-                  {NamePDF?<button className="btn btn-primary btn-sm my-3" type="button" onClick={()=>hideImage()}>{showImage?"Tutup":"Buka"}</button>:""}
+                  {NamePDF ? (
+                    <button
+                      className="btn btn-primary btn-sm my-3"
+                      type="button"
+                      onClick={() => hideImage()}
+                    >
+                      {showImage ? "Tutup" : "Buka"}
+                    </button>
+                  ) : (
+                    ""
+                  )}
                   {/* <button></button> */}
                 </div>
-                {showImage ? 
-                <div
-                  className={`${
-                    agency_logo ? "pdf-container w-100 border my-3" : "d-none"
-                  }`}
-                >
-                  <iframe
-                    src={agency_logo}
-                    frameBorder="0"
-                    scrolling="auto"
-                    height={agency_logo ? "500px" : ""}
-                    width="100%"
-                  ></iframe>
-                </div>
-                :""}
+                {showImage ? (
+                  <div
+                    className={`${
+                      agency_logo ? "pdf-container w-100 border my-3" : "d-none"
+                    }`}
+                  >
+                    <iframe
+                      src={agency_logo}
+                      frameBorder="0"
+                      scrolling="auto"
+                      height={agency_logo ? "500px" : ""}
+                      width="100%"
+                    ></iframe>
+                  </div>
+                ) : (
+                  ""
+                )}
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (
@@ -428,6 +445,38 @@ const TambahMitra = () => {
                   Provinsi
                 </label>
                 <div className="col-10">
+                  <Select
+                    onFocus={() =>
+                      setError({ ...error, indonesia_provinces_id: "" })
+                    }
+                    className="basic-single"
+                    classNamePrefix="select"
+                    placeholder="Pilih provinsi"
+                    defaultValue={allProvinces[0]}
+                    isDisabled={false}
+                    isLoading={false}
+                    isClearable={false}
+                    isRtl={false}
+                    isSearchable={true}
+                    name="color"
+                    onChange={(e) => onChangeProvinces(e)}
+                    options={allProvinces}
+                  />
+                  {error.indonesia_provinces_id ? (
+                    <p className="error-text">{error.indonesia_provinces_id}</p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+              {/* <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Provinsi
+                </label>
+                <div className="col-10">
                   <select
                     onFocus={() =>
                       setError({ ...error, indonesia_provinces_id: "" })
@@ -454,9 +503,62 @@ const TambahMitra = () => {
                     ""
                   )}
                 </div>
-              </div>
+              </div> */}
 
+              {/* <div className="form-group row">
+                <div className="col-12">
+
+                <Select
+              
+          className="basic-single"
+          classNamePrefix="select"
+          placeholder="Pilih provinsi"
+          defaultValue={allProvinces[0]}
+          isDisabled={false}
+          isLoading={false}
+          isClearable={true}
+          isRtl={false}
+          isSearchable={true}
+          name="color"
+          onChange={chengeSelectProvinces}
+          options={allProvinces}
+          />
+          </div>
+              </div> */}
+              {/* ========================================= cities */}
               <div className="form-group row">
+                <label
+                  htmlFor="staticEmail"
+                  className="col-sm-2 col-form-label"
+                >
+                  Kota / Kabupaten
+                </label>
+                <div className="col-sm-10">
+                  <Select
+                    onFocus={() =>
+                      setError({ ...error, indonesia_cities_id: "" })
+                    }
+                    className="basic-single"
+                    classNamePrefix="select"
+                    placeholder="Pilih data Kab/Kota"
+                    defaultValue={citiesAll[0]}
+                    isDisabled={false}
+                    isLoading={false}
+                    isClearable={false}
+                    isRtl={false}
+                    isSearchable={true}
+                    name="color"
+                    onChange={(e) => setIndonesia_cities_id(e.id)}
+                    options={citiesAll}
+                  />
+                  {error.indonesia_cities_id ? (
+                    <p className="error-text">{error.indonesia_cities_id}</p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+              {/* <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
@@ -488,7 +590,7 @@ const TambahMitra = () => {
                     ""
                   )}
                 </div>
-              </div>
+              </div> */}
 
               <div className="form-group row">
                 <label

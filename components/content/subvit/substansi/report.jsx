@@ -121,7 +121,7 @@ const ListSubstansi = () => {
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row">
           <CardPage
-            background="bg-info"
+            background="bg-primary"
             icon="new/add-user.svg"
             color="#FFFFFF"
             value={subtance.data.total_peserta}
@@ -131,7 +131,7 @@ const ListSubstansi = () => {
             routePublish={() => handlePublish("")}
           />
           <CardPage
-            background="bg-success"
+            background="bg-secondary"
             icon="new/done-circle.svg"
             color="#FFFFFF"
             value={subtance.data.sudah_mengerjakan}
@@ -141,7 +141,7 @@ const ListSubstansi = () => {
             routePublish={() => handlePublish("sudah-mengerjakan")}
           />
           <CardPage
-            background="bg-warning"
+            background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
             value={subtance.data.sedang_mengerjakan}
@@ -151,7 +151,7 @@ const ListSubstansi = () => {
             routePublish={() => handlePublish("sedang-mengerjakan")}
           />
           <CardPage
-            background="bg-accent-info"
+            background="bg-warning"
             icon="new/mail-white.svg"
             color="#FFFFFF"
             value={subtance.data.belum_mengerjakan}

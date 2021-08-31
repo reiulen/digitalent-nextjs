@@ -54,6 +54,11 @@ import {
   updateVideoReducer,
 } from "./publikasi/video.reducers";
 
+import {
+  allSettingPublikasiReducer,
+  updateSettingPublikasiReducer,
+} from "./publikasi/setting.reducers";
+
 // Subvit
 // ============== substansi ===============
 import {
@@ -126,16 +131,20 @@ import {
 } from "./subvit/trivia-question-detail.reducers";
 // ============== trivia ===============
 
-// Partnership
+// start Partnership
 import { allMitraReducer } from "./partnership/mitra.reducers";
 
 //
-
+// ================= admin
 // category management kerjasama
 import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
 // management kerjasama
 import { allMCooporationReducerMK } from "./partnership/managementCooporation.reducer";
 import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
+// ================== user
+import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
+
+// end Partnership
 
 // utils
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
@@ -186,6 +195,9 @@ const reducer = combineReducers({
   deleteKategori: deleteKategoriReducer,
   detailKategori: detailKategoriReducer,
   updateKategori: updateKategoriReducer,
+
+  allSettingPublikasi: allSettingPublikasiReducer,
+  updateSettingPublikasi: updateSettingPublikasiReducer,
 
   // Subvit
   // =============== substansi ==================
@@ -250,18 +262,17 @@ const reducer = combineReducers({
   // =============== end trivia ==================
 
   // PARTNERSHIP
-
+  // ================================= => admin
   // kerjasama mitra
   allMitra: allMitraReducer,
-
   // category management kerjasama
   allMKCooporation: allMKCooporationReducer,
   // management kerjasama
   allMK: allMCooporationReducerMK,
-
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,
-  // updateStatusTandaTangan: updateStatusTandaTanganReducer,
+  // ================================= => user
+  allCooperationUser: cooperationUserReducer,
 
   allProvinsi: allProvinsiReducer,
   allKota: allKotaReducer,
