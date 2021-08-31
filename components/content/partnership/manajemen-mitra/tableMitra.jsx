@@ -19,6 +19,7 @@ import {
   exportFileCSV,
   cancelChangeProvinces
 } from "../../../../redux/actions/partnership/mitra.actions";
+import LoadingTable from '../../../LoadingTable'
 
 import Swal from "sweetalert2";
 
@@ -294,7 +295,7 @@ const Table = () => {
                   tableBody={
 allMitra.status === "success"
                       ? allMitra.mitraAll.length === 0
-                        ? "Tidak ada data"
+                        ? <LoadingTable />
                         : allMitra.mitraAll.data.list_mitras.map(
                             (item, index) => {
                               return (
@@ -413,7 +414,7 @@ allMitra.status === "success"
                               );
                             }
                           )
-                      : "Loading .. / silahkan reload halaman"
+                      : <LoadingTable />
                   }
                   pagination={
                     <Pagination

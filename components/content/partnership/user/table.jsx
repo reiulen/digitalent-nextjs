@@ -23,6 +23,7 @@ import {
   reqCooperationUser,
   setPage,
 } from "../../../../redux/actions/partnership/user/cooperation.actions";
+import LoadingTable from '../../../LoadingTable'
 
 const Table = () => {
   // const exportCSV = {
@@ -156,7 +157,7 @@ const Table = () => {
             <div className="table-page mt-5">
               <div className="table-responsive">
                 {allCooperationUser.cooperationMitra.length === 0 ? (
-                  "Loading"
+                  <LoadingTable />
                 ) : (
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>

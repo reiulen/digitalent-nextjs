@@ -19,6 +19,7 @@ import { CSVLink } from "react-csv";
 import IconCalender from '../../../assets/icon/Calender'
 import IconArrow from '../../../assets/icon/Arrow'
 import axios from 'axios'
+import LoadingTable from '../../../LoadingTable'
 
 import {
   fetchAllMK,
@@ -439,9 +440,7 @@ const [isStatusBar, setIsStatusBar] = useState(false)
             <div className="table-page mt-5">
               <div className="table-responsive">
                 {allMK.statusLoad === "process" ? (
-                  <div className="d-flex justify-content-center py-5 ">
-                    <h4>Loading ..</h4>
-                  </div>
+                  <LoadingTable />
                 ) : (
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>

@@ -27,6 +27,7 @@ import {
 } from "../../../../redux/actions/partnership/mitra.actions";
 import IconArrow from "../../../assets/icon/Arrow";
 import IconCalender from "../../../assets/icon/Calender";
+import LoadingTable from '../../../LoadingTable'
 
 const DetailDataKerjasama = () => {
   const dispatch = useDispatch();
@@ -383,7 +384,7 @@ const DetailDataKerjasama = () => {
                   <tbody>
                     {mitraDetailAll.status === "success"
                       ? mitraDetailAll.mitraDetailAll.length === 0
-                        ? ""
+                        ? <LoadingTable />
                         : mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map(
                             (items, index) => {
                               return (
@@ -699,7 +700,7 @@ const DetailDataKerjasama = () => {
                               );
                             }
                           )
-                      : "Tidak ada data kerjasama"}
+                      : <LoadingTable />}
                     {mitraDetailAll?.mitraDetailAll?.data?.list_cooperation_categories.length === 0 ?"Tidak ada data kerjasama" :""}
                   </tbody>
                 </table>
