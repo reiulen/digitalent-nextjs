@@ -250,7 +250,8 @@ const Berita = () => {
                     <CardPage 
                         background='bg-light-info' 
                         icon='mail-purple.svg' 
-                        color='#8A50FC' 
+                        // color='#8A50FC' 
+                        color='#ffffff'
                         value={berita && berita.publish != "" ? berita.publish : 0}
                         titleValue='Berita' 
                         title='Total Publish'
@@ -260,7 +261,8 @@ const Berita = () => {
                     <CardPage 
                         background='bg-light-warning' 
                         icon='garis-yellow.svg' 
-                        color='#634100' 
+                        // color='#634100' 
+                        color="#ffffff"
                         value='64' 
                         titleValue='Berita' 
                         title='Total Author'
@@ -270,7 +272,8 @@ const Berita = () => {
                     <CardPage 
                         background='bg-light-success' 
                         icon='orang-tambah-green.svg' 
-                        color='#74BBB7' 
+                        // color='#74BBB7' 
+                        color='#ffffff'
                         value={berita && berita.total_views != "" ? berita.total_views : 0} 
                         titleValue='Orang' 
                         title='Total Yang Baca' 

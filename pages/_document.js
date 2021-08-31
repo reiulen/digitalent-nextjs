@@ -42,11 +42,11 @@ class MyDocument extends Document {
           />
           <link
             rel="stylesheet"
-            href="/assets/css/themes/layout/brand/light.css"  //dark
+            href="/assets/css/themes/layout/brand/dark.css" //dark
           />
           <link
             rel="stylesheet"
-            href="/assets/css/themes/layout/aside/light.css"  //dark
+            href="/assets/css/themes/layout/aside/dark.css" //dark
           />
           {/* <link href="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css" /> */}
 
