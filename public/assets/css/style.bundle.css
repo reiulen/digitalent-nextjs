@@ -19,6 +19,7 @@
   --white: #ffffff;
   --gray: #7E8299;
   --gray-dark: #3F4254;
+  --gray-shade:#E4E6EF;
   --primary: #215480;
   --primary-shade: #1A4367;
   --primary-tint: #E9EEF2;
@@ -7629,6 +7630,10 @@ a.close.disabled {
 .bg-primary {
   background-color: var(--primary) !important;
   /* background-color: #3699FF !important; */
+}
+
+.bg-gray-shade{
+  background-color: var(--gray-shade) !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -58133,12 +58138,12 @@ button {
   border-color: transparent;
 }
 .btn.btn-light-success i {
-  color: #1BC5BD;
+  color: #ffffff;
 }
 .btn.btn-light-success .svg-icon svg g [fill] {
   -webkit-transition: fill 0.3s ease;
   transition: fill 0.3s ease;
-  fill: #1BC5BD;
+  fill: #ffffff;
 }
 .btn.btn-light-success .svg-icon svg:hover g [fill] {
   -webkit-transition: fill 0.3s ease;
@@ -58149,7 +58154,7 @@ button {
 }
 .btn.btn-light-success:hover:not(.btn-text):not(:disabled):not(.disabled), .btn.btn-light-success:focus:not(.btn-text), .btn.btn-light-success.focus:not(.btn-text) {
   color: #ffffff;
-  background-color: #1BC5BD;
+  background-color: var(--success);
   border-color: transparent;
 }
 .btn.btn-light-success:hover:not(.btn-text):not(:disabled):not(.disabled) i, .btn.btn-light-success:focus:not(.btn-text) i, .btn.btn-light-success.focus:not(.btn-text) i {

@@ -148,7 +148,7 @@ const Sidebar = () => {
                   <span className="svg-icon menu-icon">
                     <Image
                       alt="icon-sidebar-layers"
-                      src="/assets/icon/Layers.svg"
+                      src="/assets/icon/new/aside/layers-white.svg"
                       width={24}
                       height={24}
                     />
@@ -210,7 +210,7 @@ const Sidebar = () => {
                   <span className="svg-icon menu-icon">
                     <Image
                       alt="icon-sidebar-blok4"
-                      src="/assets/icon/blok4.svg"
+                      src="/assets/icon/new/aside/blocks-white.svg"
                       width={24}
                       height={24}
                     />
@@ -251,7 +251,7 @@ const Sidebar = () => {
                   <span className="svg-icon menu-icon">
                     <Image
                       alt="icon-sidebar-picture"
-                      src="/assets/icon/picture.svg"
+                      src="/assets/icon/new/aside/pictures-white.svg"
                       width={24}
                       height={24}
                     />
@@ -454,7 +454,7 @@ const Sidebar = () => {
                   <span className="svg-icon menu-icon">
                     <Image
                       alt="icon-sidebar-orang"
-                      src="/assets/icon/orang.svg"
+                      src="/assets/icon/new/aside/people-white.svg"
                       width={24}
                       height={24}
                     />
@@ -499,7 +499,9 @@ const Sidebar = () => {
                     <li className="menu-item" aria-haspopup="true">
                       <Link href="/partnership/tanda-tangan">
                         <a className="menu-link">
-                          <span className="menu-text">Tanda Tangan Digital</span>
+                          <span className="menu-text">
+                            Tanda Tangan Digital
+                          </span>
                         </a>
                       </Link>
                     </li>
@@ -517,7 +519,7 @@ const Sidebar = () => {
                   <span className="svg-icon menu-icon">
                     <Image
                       alt="icon-sidebar-document"
-                      src="/assets/icon/document.svg"
+                      src="/assets/icon/new/aside/file-white.svg"
                       width={24}
                       height={24}
                     />
@@ -555,7 +557,7 @@ const Sidebar = () => {
                   <span className="svg-icon menu-icon">
                     <Image
                       alt="icon-sidebar-kotak-kotak"
-                      src="/assets/icon/kotak-kotak.svg"
+                      src="/assets/icon/new/aside/compiling-white.svg"
                       width={24}
                       height={24}
                     />
@@ -613,7 +615,7 @@ const Sidebar = () => {
                   <span className="svg-icon menu-icon">
                     <Image
                       alt="icon-sidebar-perisai"
-                      src="/assets/icon/perisai.svg"
+                      src="/assets/icon/new/aside/shield-white.svg"
                       width={24}
                       height={24}
                     />
