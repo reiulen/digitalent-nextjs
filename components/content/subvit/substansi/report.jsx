@@ -121,9 +121,9 @@ const ListSubstansi = () => {
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row">
           <CardPage
-            background="bg-light-info"
-            icon="orang-tambah-purple.svg"
-            color="#8A50FC"
+            background="bg-info"
+            icon="new/add-user.svg"
+            color="#FFFFFF"
             value={subtance.data.total_peserta}
             titleValue=""
             title="Total Peserta"
@@ -131,9 +131,9 @@ const ListSubstansi = () => {
             routePublish={() => handlePublish("")}
           />
           <CardPage
-            background="bg-light-success"
-            icon="done-circle.svg"
-            color="#0BB783"
+            background="bg-success"
+            icon="new/done-circle.svg"
+            color="#FFFFFF"
             value={subtance.data.sudah_mengerjakan}
             titleValue=""
             title="Sudah Mengerjakan"
@@ -141,9 +141,9 @@ const ListSubstansi = () => {
             routePublish={() => handlePublish("sudah-mengerjakan")}
           />
           <CardPage
-            background="bg-light-warning"
-            icon="book-open.svg"
-            color="#634100"
+            background="bg-warning"
+            icon="new/open-book.svg"
+            color="#FFFFFF"
             value={subtance.data.sedang_mengerjakan}
             titleValue=""
             title="Sedang Mengerjakan"
@@ -152,8 +152,8 @@ const ListSubstansi = () => {
           />
           <CardPage
             background="bg-accent-info"
-            icon="mail-purple.svg"
-            color="#663259"
+            icon="new/mail-white.svg"
+            color="#FFFFFF"
             value={subtance.data.belum_mengerjakan}
             titleValue=""
             title="Belum Mengerjakan"
@@ -161,9 +161,9 @@ const ListSubstansi = () => {
             routePublish={() => handlePublish("belum-mengerjakan")}
           />
           <CardPage
-            background="bg-light-danger"
-            icon="kotak-kotak-red.svg"
-            color="#F65464"
+            background="bg-danger"
+            icon="new/block-white.svg"
+            color="#FFFFFF"
             value={subtance.data.gagal_test}
             titleValue=""
             title="Gagal Test"
@@ -190,7 +190,7 @@ const ListSubstansi = () => {
             </div>
             <div className="col-lg-2 col-xl-2">
               <button
-                className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block "
+                className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
                 type="button"
                 onClick={handleExportReport}
               >
