@@ -47,9 +47,7 @@ const EditDokumentKerjasamaById = () => {
   const [cooperationC_id, setCooperationC_id] = useState("");
   const [period, setPeriod] = useState("");
   const [periodUnit, setPeriodUnit] = useState("tahun");
-  console.log("periodUnit", periodUnit);
   const [periodDateStart, setPeriodDateStart] = useState("");
-  console.log("periodDateStart",periodDateStart)
   const [periodDateEnd, setPeriodDateEnd] = useState("");
   const [aggrementNumber, setAggrementNumber] = useState("");
   const [aggrementNumberInfo, setAggrementNumberInfo] = useState("");
@@ -117,89 +115,6 @@ const EditDokumentKerjasamaById = () => {
 
   
 
-  const handleSubmit = async () => {
-    // e.preventDefault();
-    console.log("edit")
-    Swal.fire({
-      title: "Apakah anda yakin ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Tidak",
-      confirmButtonText: "Ya",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        let formData = new FormData();
-        const method = "PUT";
-        formData.append("_method", method);
-        formData.append("title", title);
-        formData.append("date", date);
-        formData.append("period", period);
-        formData.append("period_unit", periodUnit);
-
-        if (documentLocal === "") {
-          console.log("object");
-        } else {
-          formData.append("document", documentLocal);
-        }
-        
-
-        formData.append("period_date_start", periodDateStart);
-        formData.append("period_date_end", periodDateEnd);
-        formData.append("agreement_number_partner", aggrementNumber);
-        formData.append("agreement_number_kemkominfo", aggrementNumberInfo);
-        formData.append("signing_date", signinDate);
-
-      
-        if (AllCooperation === "") {
-          // start data default
-          formData.append("cooperation_category_id", cooperationID.id);
-          let dataee = cooperationID.data_content.map((items, i) => {
-            return items.form_content;
-          });
-          dataee.forEach((item, i) => {
-            formData.append(`cooperation_form_content[${i}]`, item);
-          });
-          // end data default
-        } else {
-          // start jika tidak default
-          formData.append("cooperation_category_id", cooperationC_id);
-          let ez = AllCooperation.map((items, i) => {
-            return items.cooperation;
-          });
-          ez.forEach((item, i) => {
-            formData.append(`cooperation_form_content[${i}]`, item);
-          });
-          // end jika tidak default
-        }
-
-
-        try {
-          let { data } = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${router.query.id}`,
-            formData
-          );
-
-//           Swal.fire(
-//   'Berhasil update data!',
-//   'success'
-// )
-
-          router.push({
-            pathname:'/partnership/manajemen-kerjasama/',
-            query:{update:true},
-          })
-          
-        } catch (error) {
-console.log("error.response",error.response)
-notify(error.response.data.message)
-        }
-      }
-    });
-  };
-
 
   const changeSetCooperationC_id = (value) => {
     setCooperationC_id(value);
@@ -211,7 +126,6 @@ notify(error.response.data.message)
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
       );
-      console.log("data",data)
       setIsntitusiName(data.data.institution_name);
       setTitle(data.data.title);
       setDate(data.data.submission_date);
@@ -234,11 +148,9 @@ notify(error.response.data.message)
 
 
   const [AllCooperation, setAllCooperation] = useState("");
-  console.log(AllCooperation, "AllCooperation");
   const changeFormCooporation = (index, e) => {
     let dataaa = [...allMK.singleCooporationSelect.data.option];
     dataaa[index].cooperation = e.target.value;
-    console.log("dataaa",dataaa)
     setAllCooperation(dataaa);
   };
 
@@ -247,26 +159,10 @@ notify(error.response.data.message)
     // console.log("object")
     let dataCoopertaion = { ...cooperationID };
     dataCoopertaion.data_content[i].form_content = event.target.value;
-    console.log("dataCoopertaion",dataCoopertaion)
     setCooperationID(dataCoopertaion);
   };
-  console.log("cooperationID",cooperationID)
 
-  const changeInstitusi = (value) => {
-    setIsntitusiName(value);
-    dispatch(setNameLembaga(value));
-  };
 
-  const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
   
   useEffect(() => {
     setDataSingle(router.query.id);
