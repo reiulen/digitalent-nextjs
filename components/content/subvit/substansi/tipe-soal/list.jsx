@@ -103,6 +103,12 @@ const ListTipeSoal = () => {
     });
   };
 
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -120,6 +126,7 @@ const ListTipeSoal = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -187,7 +194,7 @@ const ListTipeSoal = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              List Tipe Soal Tes Substansi
+              Tipe Soal Tes Substansi
             </h3>
             <div className="card-toolbar"></div>
           </div>
@@ -214,7 +221,7 @@ const ListTipeSoal = () => {
 
                 <div className="col-lg-2 col-xl-2 col-sm-3">
                   <button
-                    className="btn btn-light-primary"
+                    className="btn btn-light-primary font-weight-bold"
                     onClick={handleSearch}
                   >
                     Cari
@@ -223,7 +230,7 @@ const ListTipeSoal = () => {
 
                 <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto">
                   <Link href="/subvit/substansi/tipe-soal/tambah">
-                    <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block px-0">
+                    <a className="btn btn-sm btn-primary px-6 font-weight-bold btn-block px-0">
                       <i className="flaticon2-notepad"></i>
                       Tambah Tipe Soal
                     </a>
