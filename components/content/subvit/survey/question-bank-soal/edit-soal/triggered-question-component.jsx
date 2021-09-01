@@ -70,6 +70,10 @@ const TriggeredQuestionComponent = ({
       const list = [...answer];
       // delete list[children]
       list.splice(children, 1);
+      list.forEach((row, i) => {
+        let key = String.fromCharCode(65 + i);
+        list[i]["key"] = key;
+      });
       setAnswer(list);
       sendPropsAnswer(list);
     }
@@ -92,6 +96,10 @@ const TriggeredQuestionComponent = ({
         row1.sub.forEach((row2, j) => {
           // delete row2.answer[children]
           row2.answer.splice(children, 1);
+          row2.answer.forEach((row3, i) => {
+            let key = String.fromCharCode(65 + i);
+            row2.answer[i]["key"] = key;
+          });
           setAnswer(list);
           sendPropsAnswer(list);
         });

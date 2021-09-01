@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 
-import { newSurveyQuestionDetail, clearErrors } from '../../../../../redux/actions/subvit/survey-question-detail.action'
+import {
+  newSurveyQuestionDetail,
+  clearErrors,
+} from "../../../../../redux/actions/subvit/survey-question-detail.action";
 import { NEW_SURVEY_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/survey-question-detail.type";
 import { useRouter } from "next/router";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
-import LoadingPage from "../../../../LoadingPage"
+import LoadingPage from "../../../../LoadingPage";
 import ObjectiveComponent from "./step-2/objective-component";
 import MultipleChoiceComponent from "./step-2/multiple-choice-component";
 import TriggeredQuestionComponent from "./step-2/triggered-question-component";
@@ -19,113 +22,136 @@ const StepTwo = () => {
   const router = useRouter();
 
   let { metode, id } = router.query;
-  const { loading, error, success } = useSelector((state) => state.newSurveyQuestionDetail);
-  const { survey } = useSelector((state) => state.detailSurveyQuestionBanks)
+  const { loading, error, success } = useSelector(
+    (state) => state.newSurveyQuestionDetail
+  );
+  const { survey } = useSelector((state) => state.detailSurveyQuestionBanks);
 
-  const [methodAdd, setMethodAdd] = useState('objective')
-  const [question, setSoal] = useState('')
-  const [question_image, setSoalImage] = useState('')
+  const [methodAdd, setMethodAdd] = useState("objective");
+  const [question, setSoal] = useState("");
+  const [question_image, setSoalImage] = useState("");
   const [answer, setSoalList] = useState([
-    { key: 'A', option: '', image: '' },
-    { key: 'B', option: '', image: '' },
-    { key: 'C', option: '', image: '' },
-    { key: 'D', option: '', image: '' }
-  ])
+    { key: "A", option: "", image: "" },
+    { key: "B", option: "", image: "" },
+    { key: "C", option: "", image: "" },
+    { key: "D", option: "", image: "" },
+  ]);
   const [answer_multiple, setSoalMultipleList] = useState([
-    { key: 'A', option: '', image: '' },
-    { key: 'B', option: '', image: '' },
-    { key: 'C', option: '', image: '' },
-    { key: 'D', option: '', image: '' }
-  ])
+    { key: "A", option: "", image: "" },
+    { key: "B", option: "", image: "" },
+    { key: "C", option: "", image: "" },
+    { key: "D", option: "", image: "" },
+  ]);
   const [answer_triggered, setSoalTriggeredList] = useState([
     {
-      key: 'A', option: '', image: '', type: 'choose', is_next: true, sub: [
+      key: "A",
+      option: "",
+      image: "",
+      type: "choose",
+      is_next: true,
+      sub: [
         {
-          key: 1, question: '', image: '', is_next: false, answer: [
-            { key: 'A', option: '', image: '', type: 'choose' },
-            { key: 'B', option: '', image: '', type: 'choose' },
-            { key: 'C', option: '', image: '', type: 'choose' }
-          ]
-        }
-      ]
+          key: 1,
+          question: "",
+          image: "",
+          is_next: false,
+          answer: [
+            { key: "A", option: "", image: "", type: "choose" },
+            { key: "B", option: "", image: "", type: "choose" },
+            { key: "C", option: "", image: "", type: "choose" },
+          ],
+        },
+      ],
     },
-    { key: 'B', option: '', image: '', type: 'choose', is_next: false, sub: [] },
-    { key: 'C', option: '', image: '', type: 'choose', is_next: false, sub: [] }
-  ])
-  const [typeSave, setTypeSave] = useState('lanjut')
+    {
+      key: "B",
+      option: "",
+      image: "",
+      type: "choose",
+      is_next: false,
+      sub: [],
+    },
+    {
+      key: "C",
+      option: "",
+      image: "",
+      type: "choose",
+      is_next: false,
+      sub: [],
+    },
+  ]);
+  const [typeSave, setTypeSave] = useState("lanjut");
 
   useEffect(() => {
-
     if (success) {
       dispatch({
-        type: NEW_SURVEY_QUESTION_DETAIL_RESET
-      })
-      if (typeSave === 'lanjut') {
-        handleResetForm()
+        type: NEW_SURVEY_QUESTION_DETAIL_RESET,
+      });
+      if (typeSave === "lanjut") {
+        handleResetForm();
         router.push({
           pathname: `/subvit/survey/tambah/step-3`,
-          query: { id }
-        })
-      } else if (typeSave === 'draft') {
-        handleResetForm()
+          query: { id },
+        });
+      } else if (typeSave === "draft") {
+        handleResetForm();
         router.push({
           pathname: `/subvit/survey/tambah/step-2-${metode}`,
-          query: { metode, id }
+          query: { metode, id },
         });
       }
     }
-  }, [dispatch, error, success, typeSave, id, metode, router]);
+  }, [dispatch, success, typeSave, id, metode, router]);
 
   const handleSoalImage = (e) => {
-    if (e.target.name === 'question_image') {
-      const reader = new FileReader()
+    if (e.target.name === "question_image") {
+      const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setSoalImage(reader.result)
+          setSoalImage(reader.result);
         }
-      }
-      reader.readAsDataURL(e.target.files[0])
+      };
+      reader.readAsDataURL(e.target.files[0]);
     }
-  }
+  };
 
   const saveDraft = () => {
-    setTypeSave('draft')
-    let valid = true
+    setTypeSave("draft");
+    let valid = true;
 
     if (error) {
-      dispatch(clearErrors())
+      dispatch(clearErrors());
     }
 
     if (success) {
       dispatch({
-        type: NEW_SURVEY_QUESTION_DETAIL_RESET
-      })
+        type: NEW_SURVEY_QUESTION_DETAIL_RESET,
+      });
     }
 
-    if (question == '' && question_image == '') {
-      valid = false
+    if (question == "" && question_image == "") {
+      valid = false;
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Isi pertanyaan dengan benar !'
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "Isi pertanyaan dengan benar !",
+      });
     }
 
     switch (methodAdd) {
       case "objective":
-
         answer.forEach((row, j) => {
-          if (row.option == '' && row.image == '') {
-            valid = false
+          if (row.option == "" && row.image == "") {
+            valid = false;
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Isi jawaban dengan benar !'
-            })
+              icon: "error",
+              title: "Oops...",
+              text: "Isi jawaban dengan benar !",
+            });
           }
-        })
+        });
 
-        const answers = JSON.stringify(answer)
+        const answers = JSON.stringify(answer);
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -133,26 +159,25 @@ const StepTwo = () => {
             answer: answers,
             question_image,
             answer_key: null,
-            type: methodAdd
-          }
+            type: methodAdd,
+          };
 
-          dispatch(newSurveyQuestionDetail(data))
+          dispatch(newSurveyQuestionDetail(data));
         }
-        break
+        break;
       case "multiple_choice":
-
         answer_multiple.forEach((row, j) => {
-          if (row.option == '' && row.image == '') {
-            valid = false
+          if (row.option == "" && row.image == "") {
+            valid = false;
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Isi jawaban dengan benar !'
-            })
+              icon: "error",
+              title: "Oops...",
+              text: "Isi jawaban dengan benar !",
+            });
           }
-        })
+        });
 
-        const answers_multiple = JSON.stringify(answer_multiple)
+        const answers_multiple = JSON.stringify(answer_multiple);
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -160,12 +185,12 @@ const StepTwo = () => {
             answer: answers_multiple,
             question_image,
             answer_key: null,
-            type: methodAdd
-          }
+            type: methodAdd,
+          };
 
-          dispatch(newSurveyQuestionDetail(data))
+          dispatch(newSurveyQuestionDetail(data));
         }
-        break
+        break;
       case "pertanyaan_terbuka":
         if (valid) {
           const data = {
@@ -173,23 +198,23 @@ const StepTwo = () => {
             question,
             question_image,
             type: methodAdd,
-          }
-          dispatch(newSurveyQuestionDetail(data))
+          };
+          dispatch(newSurveyQuestionDetail(data));
         }
-        break
+        break;
       case "triggered_question":
         answer_triggered.forEach((row, j) => {
-          if (row.option == '' && row.image == '') {
-            valid = false
+          if (row.option == "" && row.image == "") {
+            valid = false;
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Isi jawaban dengan benar !'
-            })
+              icon: "error",
+              title: "Oops...",
+              text: "Isi jawaban dengan benar !",
+            });
           }
-        })
+        });
 
-        const answers_triggered = JSON.stringify(answer_triggered)
+        const answers_triggered = JSON.stringify(answer_triggered);
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -197,12 +222,12 @@ const StepTwo = () => {
             answer: answers_triggered,
             question_image,
             answer_key: null,
-            type: methodAdd
-          }
+            type: methodAdd,
+          };
 
           // console.log(data)
 
-          dispatch(newSurveyQuestionDetail(data))
+          dispatch(newSurveyQuestionDetail(data));
         }
       default:
         break;
@@ -211,8 +236,8 @@ const StepTwo = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setTypeSave('lanjut')
-    let valid = true
+    setTypeSave("lanjut");
+    let valid = true;
 
     // if (error) {
     //   dispatch(clearErrors())
@@ -220,34 +245,33 @@ const StepTwo = () => {
 
     if (success) {
       dispatch({
-        type: NEW_SURVEY_QUESTION_DETAIL_RESET
-      })
+        type: NEW_SURVEY_QUESTION_DETAIL_RESET,
+      });
     }
 
-    if (question == '' && question_image == '') {
-      valid = false
+    if (question == "" && question_image == "") {
+      valid = false;
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Isi pertanyaan dengan benar !'
-      })
+        icon: "error",
+        title: "Oops...",
+        text: "Isi pertanyaan dengan benar !",
+      });
     }
 
     switch (methodAdd) {
       case "objective":
-
         answer.forEach((row, j) => {
-          if (row.option == '' && row.image == '') {
-            valid = false
+          if (row.option == "" && row.image == "") {
+            valid = false;
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Isi jawaban dengan benar !'
-            })
+              icon: "error",
+              title: "Oops...",
+              text: "Isi jawaban dengan benar !",
+            });
           }
-        })
+        });
 
-        const answers = JSON.stringify(answer)
+        const answers = JSON.stringify(answer);
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -255,26 +279,25 @@ const StepTwo = () => {
             answer: answers,
             question_image,
             answer_key: null,
-            type: methodAdd
-          }
+            type: methodAdd,
+          };
 
-          dispatch(newSurveyQuestionDetail(data))
+          dispatch(newSurveyQuestionDetail(data));
         }
-        break
+        break;
       case "multiple_choice":
-
         answer_multiple.forEach((row, j) => {
-          if (row.option == '' && row.image == '') {
-            valid = false
+          if (row.option == "" && row.image == "") {
+            valid = false;
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Isi jawaban dengan benar !'
-            })
+              icon: "error",
+              title: "Oops...",
+              text: "Isi jawaban dengan benar !",
+            });
           }
-        })
+        });
 
-        const answers_multiple = JSON.stringify(answer_multiple)
+        const answers_multiple = JSON.stringify(answer_multiple);
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -282,12 +305,12 @@ const StepTwo = () => {
             answer: answers_multiple,
             question_image,
             answer_key: null,
-            type: methodAdd
-          }
+            type: methodAdd,
+          };
 
-          dispatch(newSurveyQuestionDetail(data))
+          dispatch(newSurveyQuestionDetail(data));
         }
-        break
+        break;
       case "pertanyaan_terbuka":
         if (valid) {
           const data = {
@@ -295,23 +318,23 @@ const StepTwo = () => {
             question,
             question_image,
             type: methodAdd,
-          }
-          dispatch(newSurveyQuestionDetail(data))
+          };
+          dispatch(newSurveyQuestionDetail(data));
         }
-        break
+        break;
       case "triggered_question":
         answer_triggered.forEach((row, j) => {
-          if (row.option == '' && row.image == '') {
-            valid = false
+          if (row.option == "" && row.image == "") {
+            valid = false;
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Isi jawaban dengan benar !'
-            })
+              icon: "error",
+              title: "Oops...",
+              text: "Isi jawaban dengan benar !",
+            });
           }
-        })
+        });
 
-        const answers_triggered = JSON.stringify(answer_triggered)
+        const answers_triggered = JSON.stringify(answer_triggered);
         if (valid) {
           const data = {
             survey_question_bank_id: id,
@@ -319,80 +342,107 @@ const StepTwo = () => {
             answer: answers_triggered,
             question_image,
             answer_key: null,
-            type: methodAdd
-          }
+            type: methodAdd,
+          };
 
-          dispatch(newSurveyQuestionDetail(data))
+          dispatch(newSurveyQuestionDetail(data));
         }
       default:
         break;
     }
-  }
+  };
 
   const handleMethodeInput = () => {
     switch (methodAdd) {
       case "objective":
         return (
-          <ObjectiveComponent
-            props_answer={answer => setSoalList(answer)}
-          />
-        )
+          <ObjectiveComponent props_answer={(answer) => setSoalList(answer)} />
+        );
       case "multiple_choice":
         return (
           <MultipleChoiceComponent
-            props_answer={answer => setSoalMultipleList(answer)}
+            props_answer={(answer) => setSoalMultipleList(answer)}
           />
-        )
+        );
       case "pertanyaan_terbuka":
-        return ('')
+        return "";
       case "triggered_question":
         return (
           <TriggeredQuestionComponent
-            props_answer={answer => setSoalTriggeredList(answer)}
+            props_answer={(answer) => setSoalTriggeredList(answer)}
           />
-        )
+        );
       default:
         return (
           <ObjectiveComponent
-            props_answer={answer => setSoalList(answer)}
-            props_answer_key={key => setAnswerKey(key)}
+            props_answer={(answer) => setSoalList(answer)}
+            props_answer_key={(key) => setAnswerKey(key)}
           />
-        )
+        );
     }
-  }
+  };
 
   const handleResetForm = () => {
-    setMethodAdd('objective')
-    setSoal('')
-    setSoalImage('')
+    setMethodAdd("objective");
+    setSoal("");
+    setSoalImage("");
     setSoalList([
-      { key: 'A', option: '', image: '' },
-      { key: 'B', option: '', image: '' },
-      { key: 'C', option: '', image: '' },
-      { key: 'D', option: '', image: '' }
-    ])
+      { key: "A", option: "", image: "" },
+      { key: "B", option: "", image: "" },
+      { key: "C", option: "", image: "" },
+      { key: "D", option: "", image: "" },
+    ]);
     setSoalMultipleList([
-      { key: 'A', option: '', image: '' },
-      { key: 'B', option: '', image: '' },
-      { key: 'C', option: '', image: '' },
-      { key: 'D', option: '', image: '' }
-    ])
+      { key: "A", option: "", image: "" },
+      { key: "B", option: "", image: "" },
+      { key: "C", option: "", image: "" },
+      { key: "D", option: "", image: "" },
+    ]);
     setSoalTriggeredList([
       {
-        key: 'A', option: '', image: '', type: 'choose', is_next: true, sub: [
+        key: "A",
+        option: "",
+        image: "",
+        type: "choose",
+        is_next: true,
+        sub: [
           {
-            key: 1, question: '', image: '', is_next: false, answer: [
-              { key: 'A', option: '', image: '', type: 'choose' },
-              { key: 'B', option: '', image: '', type: 'choose' },
-              { key: 'C', option: '', image: '', type: 'choose' }
-            ]
-          }
-        ]
+            key: 1,
+            question: "",
+            image: "",
+            is_next: false,
+            answer: [
+              { key: "A", option: "", image: "", type: "choose" },
+              { key: "B", option: "", image: "", type: "choose" },
+              { key: "C", option: "", image: "", type: "choose" },
+            ],
+          },
+        ],
       },
-      { key: 'B', option: '', image: '', type: 'choose', is_next: false, sub: [] },
-      { key: 'C', option: '', image: '', type: 'choose', is_next: false, sub: [] }
-    ])
-  }
+      {
+        key: "B",
+        option: "",
+        image: "",
+        type: "choose",
+        is_next: false,
+        sub: [],
+      },
+      {
+        key: "C",
+        option: "",
+        image: "",
+        type: "choose",
+        is_next: false,
+        sub: [],
+      },
+    ]);
+  };
+
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
 
   return (
     <PageWrapper>
@@ -411,6 +461,7 @@ const StepTwo = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -422,22 +473,26 @@ const StepTwo = () => {
         ""
       )}
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
-        {
-          loading ?
-            <LoadingPage loading={loading} />
-            : ''
-        }
+        {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">Soal {survey.bank_soal + 1}</h3>
+            <h3 className="card-title font-weight-bolder text-dark">
+              Soal {survey.bank_soal + 1}
+            </h3>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12 col-md-8">
                   <span>Pertanyaan</span>
-                  <input type="text" className="form-control" value={question} onChange={e => setSoal(e.target.value)} autoComplete='off' />
+                  <input
+                    type="text"
+                    className="form-control"
+                    value={question}
+                    onChange={(e) => setSoal(e.target.value)}
+                    autoComplete="off"
+                  />
                   <span className="text-muted">Silahkan Input Pertanyaan</span>
                 </div>
               </div>
@@ -446,7 +501,13 @@ const StepTwo = () => {
                 <div className="col-sm-12 col-md-8">
                   <div className="custom-file">
                     <span>Gambar Pertanyaan (Opsional)</span>
-                    <input type="file" className="custom-file-input" name='question_image' onChange={e => handleSoalImage(e)} accept="image/png, image/gif, image/jpeg , image/jpg" />
+                    <input
+                      type="file"
+                      className="custom-file-input"
+                      name="question_image"
+                      onChange={(e) => handleSoalImage(e)}
+                      accept="image/png, image/gif, image/jpeg , image/jpg"
+                    />
                     <label className="custom-file-label" htmlFor="customFile">
                       Choose file
                     </label>
@@ -517,26 +578,26 @@ const StepTwo = () => {
                 </div>
               </div>
               <div className="">
-                <span className="text-muted">Silahkan Pilih Metode Tambah Survey</span>
+                <span className="text-muted">
+                  Silahkan Pilih Metode Tambah Survey
+                </span>
               </div>
 
-              {
-                handleMethodeInput()
-              }
+              {handleMethodeInput()}
 
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
                     className="btn btn-light-primary btn-sm mr-2"
-                    type='submit'
+                    type="submit"
                   >
                     Simpan & Lanjut
                   </button>
                   <button
                     className="btn btn-primary btn-sm"
                     onClick={saveDraft}
-                    type='button'
+                    type="button"
                   >
                     Simpan Draft
                   </button>

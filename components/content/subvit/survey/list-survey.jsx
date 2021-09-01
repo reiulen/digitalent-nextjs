@@ -99,6 +99,12 @@ const ListSurvey = () => {
     router.replace("/subvit/survey", undefined, { shallow: true });
   };
 
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -116,6 +122,7 @@ const ListSurvey = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -171,7 +178,7 @@ const ListSurvey = () => {
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control"
+                      className="form-control mt-2"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
                       autoComplete="off"
@@ -184,7 +191,7 @@ const ListSurvey = () => {
                 </div>
                 <div className="col-lg-1 col-xl-1">
                   <button
-                    className="btn btn-sm btn-light-primary btn-block"
+                    className="btn btn-sm btn-light-primary btn-block mt-2 font-weight-bold"
                     onClick={handleSearch}
                   >
                     Cari
@@ -193,7 +200,7 @@ const ListSurvey = () => {
 
                 <div className="col-lg-2 col-xl-2 ml-auto">
                   <Link href="/subvit/survey/tambah">
-                    <a className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block ">
+                    <a className="btn btn-sm btn-primary px-6 font-weight-bold btn-block mt-2">
                       <i className="flaticon2-notepad"></i>
                       Tambah Soal
                     </a>
