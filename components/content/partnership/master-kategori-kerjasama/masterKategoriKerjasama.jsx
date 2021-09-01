@@ -14,6 +14,7 @@ import {
   setPage,
 } from "../../../../redux/actions/partnership/mk_cooporation.actions";
 import Image from "next/image";
+import LoadingTable from '../../../LoadingTable'
 
 const Table = () => {
   let dispatch = useDispatch();
@@ -188,9 +189,7 @@ const Table = () => {
             <div className="table-page mt-5">
               <div className="table-responsive">
                 {allMKCooporation.status === "process" ? (
-                  <div className="d-flex justify-content-center py-5 ">
-                    <h4>Loading ..</h4>
-                  </div>
+                  <LoadingTable />
                 ) : (
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>
@@ -203,7 +202,7 @@ const Table = () => {
                     </thead>
                     <tbody>
                       {allMKCooporation.mk_cooporation.data === undefined
-                        ? "Data list kategori tidak ada"
+                        ? <LoadingTable />
                         : allMKCooporation.mk_cooporation.data.list_cooperation_categories.map(
                             (cooperation_categorie, index) => {
                               return (

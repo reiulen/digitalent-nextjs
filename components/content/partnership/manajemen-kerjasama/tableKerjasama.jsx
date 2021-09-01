@@ -19,6 +19,8 @@ import { CSVLink } from "react-csv";
 import IconCalender from '../../../assets/icon/Calender'
 import IconArrow from '../../../assets/icon/Arrow'
 import axios from 'axios'
+import LoadingTable from '../../../LoadingTable'
+import moment from 'moment'
 
 import {
   fetchAllMK,
@@ -439,9 +441,7 @@ const [isStatusBar, setIsStatusBar] = useState(false)
             <div className="table-page mt-5">
               <div className="table-responsive">
                 {allMK.statusLoad === "process" ? (
-                  <div className="d-flex justify-content-center py-5 ">
-                    <h4>Loading ..</h4>
-                  </div>
+                  <LoadingTable />
                 ) : (
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>
@@ -514,21 +514,32 @@ const [isStatusBar, setIsStatusBar] = useState(false)
                                   <br />
                                   {/* <small style={{ color: "grey" }}>
                           Memodanrum of Understanding (MoU)
-                        </small> */}
+                        </small>dddd */}
                                 </td>
                                 <td className="align-middle text-center">
                                   <p className="p-part-t">
                                     {items.period} {items.period_unit}
                                   </p>{" "}
+
+
+
+
+
+
+
                                 </td>
                                 <td className="align-middle text-center">
                                   <p className="p-part-t">
-                                    {items.signing_date}
+                                    {moment(items.signing_date).format("YYYY MMM DD")}
+                                    {/* moment().format('MMMM Do YYYY, h:mm:ss a'); */}
+                                    {/* H, HHss     */}
+
                                   </p>
                                 </td>
                                 <td className="align-middle text-center">
                                   <p className="p-part-t">
-                                    {items.period_date_end}
+
+                                    {moment(items.period_date_end).format("YYYY MMM DD")}
                                   </p>
                                 </td>
                                 <td className="align-middle text-center">
