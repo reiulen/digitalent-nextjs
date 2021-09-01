@@ -158,10 +158,32 @@ const ListSubstansi = () => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h1
+              className="card-title text-dark mt-2"
+              style={{ fontSize: "24px" }}
+            >
               List Tes Substansi
-            </h3>
-            <div className="card-toolbar">{/* for add */}</div>
+            </h1>
+            <div className="card-toolbar">
+              <Link href="/subvit/substansi/tipe-soal">
+                <a className="text-light btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                  <i class="ri-article-fill"></i>
+                  Tipe Soal
+                </a>
+              </Link>
+              <Link href="/subvit/substansi/clone">
+                <a className="btn text-light btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                  <i class="ri-mastercard-fill"></i>
+                  Clone Test
+                </a>
+              </Link>
+              <Link href="/subvit/substansi/tambah-step-1">
+                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
+                  <i class="ri-pencil-fill"></i>
+                  Tambah Soal
+                </a>
+              </Link>
+            </div>
           </div>
 
           <div className="card-body pt-0">
@@ -191,30 +213,9 @@ const ListSubstansi = () => {
                     Cari
                   </button>
                 </div>
-                <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
-                  <Link href="/subvit/substansi/clone">
-                    <a className="btn btn-sm text-white btn-primary-rounded-full px-6 font-weight-bold btn-block mt-2">
-                      <i className="flaticon-file-1"></i>
-                      Clone
-                    </a>
-                  </Link>
-                </div>
-                <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
-                  <Link href="/subvit/substansi/tipe-soal">
-                    <a className="btn btn-sm btn-warning px-6 font-weight-bold btn-block mt-2">
-                      <i className="flaticon2-paper"></i>
-                      Tipe Soal
-                    </a>
-                  </Link>
-                </div>
-                <div className="col-lg-2 col-xl-2 justify-content-end d-flex">
-                  <Link href="/subvit/substansi/tambah-step-1">
-                    <a className="btn btn-sm btn-primary px-6 font-weight-bold btn-block mt-2">
-                      <i className="flaticon2-notepad"></i>
-                      Tambah Soal
-                    </a>
-                  </Link>
-                </div>
+                <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
+                <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
+                <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
               </div>
             </div>
 
