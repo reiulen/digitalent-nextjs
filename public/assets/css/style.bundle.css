@@ -3904,6 +3904,62 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
 }
 
+.btn-primary-rounded-full {
+  color: #ffffff !important;
+  background-color: var(--primary);
+  border-color: var(--primary);
+  /* background-color: #3699FF; */
+  /* border-color: #3699FF; */
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 30px;
+}
+
+.btn-primary-rounded-full i {
+  color: var(--white);
+}
+
+
+.btn-primary-rounded-full:hover {
+  color: #ffffff;
+  background-color: var(--primary-shade);
+  border-color: var(--primary-shade);
+  border-radius: 30px;
+  /* background-color: #1086ff;
+  border-color: #037fff; */
+}
+.btn-primary-rounded-full:focus, .btn-primary-rounded-full.focus {
+  color: #ffffff;
+  background-color: var(--primary-shade);
+  border-color: var(--primary-shade);
+  border-radius: 30px;
+  /* background-color: #1086ff;
+  border-color: #037fff; */
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+}
+.btn-primary-rounded-full.disabled, .btn-primary-rounded-full:disabled {
+  color: #ffffff;
+  background-color: var(--primary);
+  border-color: var(--primary);
+  border-radius: 30px;
+  /* background-color: #3699FF;
+  border-color: #3699FF; */
+}
+.btn-primary-rounded-full:not(:disabled):not(.disabled):active, .btn-primary-rounded-full:not(:disabled):not(.disabled).active, .show > .btn-primary-rounded-full.dropdown-toggle {
+  color: #ffffff;
+  background-color: var(--primary-shade);
+  border-color: var(--primary-shade);
+  border-radius: 30px;
+  /* background-color: #037fff;
+  border-color: #0079f5; */
+}
+.btn-primary-rounded-full:not(:disabled):not(.disabled):active:focus, .btn-primary-rounded-full:not(:disabled):not(.disabled).active:focus, .show > .btn-primary-rounded-full.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+  border-radius: 30px;
+}
+
 .btn-link {
   font-weight: 400;
   color: var(--primary);
