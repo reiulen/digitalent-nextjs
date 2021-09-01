@@ -3914,6 +3914,12 @@ fieldset:disabled a.btn {
   box-shadow: none;
   border-radius: 30px;
 }
+
+.btn-primary-rounded-full i {
+  color: var(--white);
+}
+
+
 .btn-primary-rounded-full:hover {
   color: #ffffff;
   background-color: var(--primary-shade);
