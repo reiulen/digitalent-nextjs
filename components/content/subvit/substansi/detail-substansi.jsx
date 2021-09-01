@@ -124,6 +124,12 @@ const DetailSubstansi = () => {
     router.push(link);
   };
 
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -141,6 +147,7 @@ const DetailSubstansi = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -237,7 +244,7 @@ const DetailSubstansi = () => {
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control"
+                      className="form-control mt-2"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
                       onChange={(e) => setSearch(e.target.value)}
@@ -251,7 +258,7 @@ const DetailSubstansi = () => {
 
                 <div className="col-lg-2 col-xl-2">
                   <button
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block "
+                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block mt-2"
                     onClick={handleSearch}
                   >
                     Cari
@@ -262,19 +269,20 @@ const DetailSubstansi = () => {
               <div className="row align-items-center my-5">
                 <div className="col-lg-3 col-xl-3 ">
                   <div className="form-group mb-0">
-                    <select className="form-control">
-                      <option>Semua</option>
-                    </select>
-                    <small className="text-muted mt-1 p-0">
+                    <small className="text-muted p-0">
                       Filter by Pelatihan
                     </small>
+                    <select className="form-control mb-1">
+                      <option>Semua</option>
+                    </select>
                   </div>
                 </div>
 
                 <div className="col-lg-3 col-xl-3 ">
                   <div className="form-group mb-0">
+                    <small className="text-muted p-0">Filter by Status</small>
                     <select
-                      className="form-control"
+                      className="form-control mb-1"
                       onChange={(e) => setStatus(e.target.value)}
                       onBlur={(e) => setStatus(e.target.value)}
                       value={status}
@@ -285,16 +293,14 @@ const DetailSubstansi = () => {
                       <option value={true}>Publish</option>
                       <option value={false}>Draft</option>
                     </select>
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Status
-                    </small>
                   </div>
                 </div>
 
                 <div className="col-lg-3 col-xl-3 ">
                   <div className="form-group mb-0">
+                    <small className="text-muted p-0">Filter by Kategori</small>
                     <select
-                      className="form-control"
+                      className="form-control mb-1"
                       onChange={(e) => setKategori(e.target.value)}
                       onBlur={(e) => setKategori(e.target.value)}
                       value={kategori}
@@ -315,13 +321,11 @@ const DetailSubstansi = () => {
                         })
                       )}
                     </select>
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Kategori
-                    </small>
                   </div>
                 </div>
                 <div className="col-lg-3 col-xl-3 ">
-                  <div className="mb-0">
+                  <div className="text-muted mt-5 p-0"> </div>
+                  <div className="">
                     <button
                       className="btn btn-light-primary"
                       onClick={handleFilter}
@@ -329,7 +333,6 @@ const DetailSubstansi = () => {
                       Filter
                     </button>
                   </div>
-                  <div className="text-muted mt-5 p-0"> </div>
                 </div>
               </div>
             </div>

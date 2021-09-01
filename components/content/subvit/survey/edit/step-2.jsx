@@ -92,28 +92,47 @@ const StepTwo = () => {
       });
     }
 
-    if (simpleValidator.current.allValid()) {
-      const start_at = moment(startDate).format("YYYY-MM-DD");
-      const end_at = moment(endDate).format("YYYY-MM-DD");
-
-      const data = {
-        _method: "put",
-        start_at,
-        end_at,
-        duration,
-        status: 1,
-        questions_to_share: jumlah_soal,
-      };
-
-      dispatch(updateSurveyQuestionBanksPublish(data, id));
+    if (
+      moment(startDate).format("YYYY-MM-DD") >
+      moment(endDate).format("YYYY-MM-DD")
+    ) {
+      Swal.fire(
+        "Oops !",
+        "Tanggal sebelum tidak boleh melebihi tanggal sesudah.",
+        "error"
+      );
+      setStartDate(new Date(survey.start_at));
+      setEndDate(new Date(survey.end_at));
     } else {
-      simpleValidator.current.showMessages();
-      forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data dengan benar !",
-      });
+      if (simpleValidator.current.allValid()) {
+        const start_at = moment(startDate).format("YYYY-MM-DD");
+        const end_at = moment(endDate).format("YYYY-MM-DD");
+
+        const data = {
+          _method: "put",
+          start_at,
+          end_at,
+          duration,
+          status: 1,
+          questions_to_share: jumlah_soal,
+        };
+
+        dispatch(updateSurveyQuestionBanksPublish(data, id));
+      } else {
+        simpleValidator.current.showMessages();
+        forceUpdate(1);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Isi data dengan benar !",
+        });
+      }
+    }
+  };
+
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
     }
   };
 
@@ -134,6 +153,7 @@ const StepTwo = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -240,7 +260,7 @@ const StepTwo = () => {
                   {simpleValidator.current.message(
                     "jumlah soal",
                     jumlah_soal,
-                    "required",
+                    "required|integer",
                     { className: "text-danger" }
                   )}
                 </div>
@@ -273,7 +293,7 @@ const StepTwo = () => {
                   {simpleValidator.current.message(
                     "durasi",
                     duration,
-                    "required",
+                    "required|integer",
                     { className: "text-danger" }
                   )}
                 </div>
