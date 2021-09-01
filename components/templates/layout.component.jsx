@@ -125,42 +125,6 @@ const Layout = ({ children, title = "Dashboard" }) => {
           </div>
 
           <div className="separator separator-dashed mt-8 mb-5"></div>
-
-          {/* <div className="navi navi-spacer-x-0 p-0">
-                        <a href="#" className="navi-item">
-                            <div className="navi-link">
-                                <div className="symbol symbol-40 bg-light mr-3">
-                                    <div className="symbol-label">
-                                        <span className="svg-icon svg-icon-md svg-icon-success">
-
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="navi-text">
-                                    <div className="font-weight-bold">My Profile</div>
-                                    <div className="text-muted">Account settings and more
-                                        <span className="label label-light-danger label-inline font-weight-bold">update</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-
-                        <a href="#" className="navi-item">
-                            <div className="navi-link">
-                                <div className="symbol symbol-40 bg-light mr-3">
-                                    <div className="symbol-label">
-                                        <span className="svg-icon svg-icon-md svg-icon-warning">
-
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="navi-text">
-                                    <div className="font-weight-bold">My Messages</div>
-                                    <div className="text-muted">Inbox and tasks</div>
-                                </div>
-                            </div>
-                        </a>
-                    </div> */}
         </div>
       </div>
 
