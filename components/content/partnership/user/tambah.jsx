@@ -32,6 +32,8 @@ const Tambah = () => {
     });
   };
 
+
+  
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
