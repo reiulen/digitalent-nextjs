@@ -25,10 +25,14 @@ a {
 /* Pagination */
 
 .page-item {
-  width: 45px;
-  height: 45px;
+  width: 33px;
+  height: 30px;
   margin-right: 10px;
   text-align: center;
+}
+.page-item:last-child,
+.page-item:first-child {
+  width: 36px;
 }
 
 .page-link {
@@ -38,8 +42,8 @@ a {
 }
 
 .page-item.active .page-link {
-  background-color: #3699ff;
-  border-color: #3699ff;
+  background-color: #215480;
+  border-color: #215480;
 }
 
 .page-link {
