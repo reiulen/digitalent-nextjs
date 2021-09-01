@@ -29,7 +29,6 @@ const SubmitKerjasama = () => {
   const [endDate, setEndDate] = useState(null);
   // pdf file
   // Create new plugin instance
-  const defaultLayoutPluginInstance = defaultLayoutPlugin();
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfFileError, setPdfFileError] = useState("");
   const [viewPDF, setViewPDF] = useState(null);
@@ -43,15 +42,15 @@ const SubmitKerjasama = () => {
 
   const router = useRouter();
   // form data send
-  const {
-    institution_name,
-    date,
-    title,
-    period,
-    periodUnit,
-    cooperationC_id,
-    AllCooperation,
-  } = router.query;
+  // const {
+  //   institution_name,
+  //   date,
+  //   title,
+  //   period,
+  //   periodUnit,
+  //   cooperationC_id,
+  //   AllCooperation,
+  // } = router.query;
   const [period_date_start, setPeriod_date_start] = useState("");
   const [period_date_end, setPeriod_date_end] = useState("");
   const [agreement_number_partner, setAgreement_number_partner] = useState("");
@@ -91,6 +90,21 @@ const [NamePDF, setNamePDF] = useState(null);
 
 
   const submit = (e) => {
+
+    console.log("institution_name",institution_name)
+    console.log("date",date)
+    console.log("title",title)
+    console.log("period",period)
+    console.log("periodUnit",periodUnit)
+    console.log("cooperationC_id",cooperationC_id)
+    console.log("period_date_start",period_date_start)
+    console.log("newDate",newDate)
+    console.log("agreement_number_partner",agreement_number_partner)
+    console.log("agreement_number_kemkominfo",agreement_number_kemkominfo)
+    console.log("signing_date",signing_date)
+    console.log("document",document)
+    console.log("AllCooperation",AllCooperation)
+    
     e.preventDefault();
     
       if (period_date_start === "") {
@@ -137,7 +151,7 @@ const [NamePDF, setNamePDF] = useState(null);
           );
           formData.append("signing_date", signing_date);
           formData.append("document", document);
-          let parseAllCooperation = JSON.parse(AllCooperation);
+          let parseAllCooperation = AllCooperation;
           let dataee = parseAllCooperation.map((items, i) => {
             return items.cooperation;
           });
@@ -150,6 +164,7 @@ const [NamePDF, setNamePDF] = useState(null);
               `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal`,
               formData
             );
+            sessionStorage.removeItem("dataBefore")
             router.push(
                                             {
                                               pathname:`/partnership/manajemen-kerjasama/view/${data.data.id}`,
@@ -209,10 +224,47 @@ const [NamePDF, setNamePDF] = useState(null);
       draggable: true,
       progress: undefined,
     });
+    
+
+    const [institution_name, setInstituion_name] = useState("")
+    const [date, setDate] = useState("")
+    const [title, setTitle] = useState("")
+    const [period, setPeriod] = useState("")
+    const [periodUnit, setPeriodUnit] = useState("")
+    const [cooperationC_id, setCooperationC_id] = useState("")
+    const [AllCooperation, setAllCooperation] = useState("")
+    
   useEffect(() => {
-    setPeriodValue(router.query.period)
-    setPeriodUnitValue(router.query.periodUnit)
-  }, [router.query])
+    
+    let datas =  JSON.parse(sessionStorage.getItem('dataBefore'));
+    console.log("datas[0].institution_name",datas[0].institution_name)
+    
+    setInstituion_name(datas[0].institution_name)
+    setDate(datas[0].date);
+    setTitle(datas[0].title)
+    setPeriod(datas[0].period)
+    setPeriodUnit(datas[0].periodUnit)
+    setCooperationC_id(datas[0].cooperationC_id)
+    setAllCooperation(datas[0].AllCooperation)
+    
+    
+    setPeriodValue(datas[0].period)
+    setPeriodUnitValue(datas[0].periodUnit)
+  //   let {
+  //   institution_name,
+  //   date,
+  //   title,
+  //   period,
+  //   periodUnit,
+  //   cooperationC_id,
+  //   AllCooperation,
+  // } = datas;
+
+
+
+
+
+  }, [])
   
   return (
     <PageWrapper>
