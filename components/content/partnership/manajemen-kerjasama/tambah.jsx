@@ -104,17 +104,23 @@ const Tambah = () => {
         dismissOnDestroy: false,
       }).then((result) => {
         if (result.value) {
+          let allDataPart = [{institution_name:institution_name,date:date,title:title,period:period,periodUnit:periodUnit,cooperationC_id:cooperationC_id,AllCooperation:AllCooperation}]
+
+          sessionStorage.setItem('dataBefore',JSON.stringify(allDataPart));
+
           router.push({
             pathname: "/partnership/manajemen-kerjasama/submit",
-            query: {
-              institution_name: institution_name,
-              date: date,
-              title: title,
-              period: period,
-              periodUnit: periodUnit,
-              cooperationC_id: cooperationC_id,
-              AllCooperation: JSON.stringify(AllCooperation),
-            },
+            // query: {
+            //   institution_name: institution_name,
+            //   date: date,
+            //   title: title,
+            //   period: period,
+            //   periodUnit: periodUnit,
+            //   cooperationC_id: cooperationC_id,
+            //   AllCooperation: JSON.stringify(AllCooperation),
+
+            
+            // },
           });
         }
       });
