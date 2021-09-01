@@ -18,10 +18,9 @@ export default function Tables({
         </Table>
       </div>
       <div className="row mt-3">
-        <div className="table-pagination pagination-custom">{pagination}</div>
-        <div className="table-total ml-auto">
-          <div className="row">
-            <div className="col-4 mr-0 p-0">
+        <div className="table-pagination pagination-custom col-12 col-md-6">{pagination}</div>
+        <div className="table-total col-12 col-md-6">
+          <div className="d-flex align-items-center justify-content-end">
               <select
                 className="form-control select-limit-table"
                 id="exampleFormControlSelect2"
@@ -32,12 +31,9 @@ export default function Tables({
                 <option value="15">15</option>
                 <option value="20">20</option>
               </select>
-            </div>
-            <div className="col-8 my-auto">
-              <p className="align-middle mt-3 ml-3 title-sum-data">
+              <p className="align-middle ml-3 mb-0 title-sum-data">
                 Total data {totalData}
               </p>
-            </div>
           </div>
         </div>
       </div>

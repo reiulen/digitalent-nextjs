@@ -111,7 +111,6 @@ const EditDokumentKerjasamaById = () => {
     setPdfFile(null);
     setNamePDF(null);
   };
-  // console.log("viewPDF",viewPDF)
 
   
 

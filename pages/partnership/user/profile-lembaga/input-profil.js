@@ -1,5 +1,5 @@
-import Layout from "../../../components/templates/layout.component";
-import Tambah from "../../../components/content/partnership/user/tambah";
+import Layout from "../../../../components/templates/layout.component";
+import Tambah from "../../../../components/content/partnership/user/tambah";
 
 export default function TambahPage() {
   return (

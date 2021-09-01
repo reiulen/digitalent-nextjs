@@ -264,6 +264,32 @@ margin-top: 1rem;
 .image-view img{
   width: 100%;
 }
+/* color  */
+.bg-blue-primary{
+  background: #215480;
+}
+.bg-blue-secondary{
+  background: #4299E1;
+}
+.bg-yellow-primary{
+  background-color: #FFA800;
+}
+.bg-red-primary{
+  background-color: #EE2D41;
+}
+.bg-green-primary{
+  background-color: #04AA77;
+}
+.bg-neutral{
+  background-color: #F2F7FC;
+}
+.rounded-full{
+  border-radius: 30px;
+}
+.rounded-small{
+  border-radius: 6px;
+}
+
 
 
 
