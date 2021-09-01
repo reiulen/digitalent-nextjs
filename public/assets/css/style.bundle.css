@@ -75,9 +75,9 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: Poppins, Helvetica, "sans-serif";
+  font-family: Poppins !important;
   font-size: 1rem;
-  font-weight: 400 !important;
+  font-weight: 500 !important;
   line-height: 1.5;
   color: #3F4254;
   text-align: left;

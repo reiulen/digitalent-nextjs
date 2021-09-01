@@ -14,52 +14,62 @@ import ButtonAction from "../../../ButtonAction";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteSubtanceQuestionDetail,
-  clearErrors
-} from '../../../../redux/actions/subvit/subtance-question-detail.action'
+  clearErrors,
+} from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
 const DetailSubstansi = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { subtance_question_detail } = useSelector((state) => state.allSubtanceQuestionDetail)
-  const { error, isDeleted } = useSelector((state) => state.deleteSubtanceQuestionDetail)
-  const { subtance } = useSelector((state) => state.detailSubtanceQuestionBanks)
-  const { subtance_question_type } = useSelector((state) => state.allSubtanceQuestionType)
+  const { subtance_question_detail } = useSelector(
+    (state) => state.allSubtanceQuestionDetail
+  );
+  const { error, isDeleted } = useSelector(
+    (state) => state.deleteSubtanceQuestionDetail
+  );
+  const { subtance } = useSelector(
+    (state) => state.detailSubtanceQuestionBanks
+  );
+  const { subtance_question_type } = useSelector(
+    (state) => state.allSubtanceQuestionType
+  );
 
   let { page = 1, id } = router.query;
   page = Number(page);
 
   useEffect(() => {
     if (isDeleted) {
-      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
-        if (result.isConfirmed) {
-          window.location.reload()
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
         }
-      });
+      );
     }
   }, [isDeleted]);
 
-  const [status, setStatus] = useState('')
-  const [kategori, setKategori] = useState(null)
-  const [pelatihan, setPelatihan] = useState(null)
-  const [search, setSearch] = useState('')
-  const [limit, setLimit] = useState(null)
+  const [status, setStatus] = useState("");
+  const [kategori, setKategori] = useState(null);
+  const [pelatihan, setPelatihan] = useState(null);
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
 
   const handlePagination = (pageNumber) => {
-    let link = `${router.pathname}?id=${id}&page=${pageNumber}`
-    if (search) link = link.concat(`&keyword=${search}`)
-    if (status) link = link.concat(`&status=${status}`)
-    if (kategori) link = link.concat(`&categori=${kategori}`)
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
-    router.push(link)
-  }
+    let link = `${router.pathname}?id=${id}&page=${pageNumber}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (status) link = link.concat(`&status=${status}`);
+    if (kategori) link = link.concat(`&categori=${kategori}`);
+    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+    router.push(link);
+  };
 
   const handleLimit = (val) => {
-    router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`)
-  }
+    router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
+  };
 
   const handleDelete = (id) => {
-    console.log(id)
+    console.log(id);
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -78,41 +88,41 @@ const DetailSubstansi = () => {
 
   const handleModal = () => {
     Swal.fire({
-      title: 'Silahkan Pilih Metode Entry',
-      icon: 'info',
+      title: "Silahkan Pilih Metode Entry",
+      icon: "info",
       showDenyButton: true,
       showCloseButton: true,
       confirmButtonText: `Entry`,
       denyButtonText: `Import`,
-      confirmButtonColor: '#3085d6',
-      denyButtonColor: '#d33',
+      confirmButtonColor: "#3085d6",
+      denyButtonColor: "#d33",
     }).then((result) => {
       if (result.isConfirmed) {
         router.push({
           pathname: `/subvit/substansi/tambah-step-2-entry`,
-          query: { id }
-        })
+          query: { id },
+        });
       } else if (result.isDenied) {
         router.push({
           pathname: `/subvit/substansi/tambah-step-2-import`,
-          query: { id }
-        })
+          query: { id },
+        });
       }
-    })
-  }
+    });
+  };
 
   const handleFilter = () => {
-    let link = `${router.pathname}?id=${id}&page=${1}`
-    if (status) link = link.concat(`&status=${status}`)
-    if (kategori) link = link.concat(`&categori=${kategori}`)
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`)
-    router.push(link)
-  }
+    let link = `${router.pathname}?id=${id}&page=${1}`;
+    if (status) link = link.concat(`&status=${status}`);
+    if (kategori) link = link.concat(`&categori=${kategori}`);
+    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+    router.push(link);
+  };
 
   const handleSearch = () => {
-    let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`
-    router.push(link)
-  }
+    let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`;
+    router.push(link);
+  };
 
   return (
     <PageWrapper>
@@ -174,7 +184,7 @@ const DetailSubstansi = () => {
                     <p>FGA</p>
                     <p>Cloude Computing</p>
                     <p>-</p>
-                    <p>{subtance.status ? 'Publish' : 'Draft'}</p>
+                    <p>{subtance.status ? "Publish" : "Draft"}</p>
                   </div>
                 </div>
               </div>
@@ -210,7 +220,10 @@ const DetailSubstansi = () => {
               {/* <label htmlFor=""></label> */}
             </div>
             <div className="card-toolbar">
-              <a className="btn btn-sm btn-success px-6 font-weight-bold btn-block" onClick={handleModal}>
+              <a
+                className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block"
+                onClick={handleModal}
+              >
                 Tambah Soal
               </a>
             </div>
@@ -227,7 +240,7 @@ const DetailSubstansi = () => {
                       className="form-control"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                       autoComplete="off"
                     />
                     <span>
@@ -237,7 +250,10 @@ const DetailSubstansi = () => {
                 </div>
 
                 <div className="col-lg-2 col-xl-2">
-                  <button className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block " onClick={handleSearch}>
+                  <button
+                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block "
+                    onClick={handleSearch}
+                  >
                     Cari
                   </button>
                 </div>
@@ -259,11 +275,13 @@ const DetailSubstansi = () => {
                   <div className="form-group mb-0">
                     <select
                       className="form-control"
-                      onChange={e => setStatus(e.target.value)}
-                      onBlur={e => setStatus(e.target.value)}
+                      onChange={(e) => setStatus(e.target.value)}
+                      onBlur={(e) => setStatus(e.target.value)}
                       value={status}
                     >
-                      <option value='' selected>Semua</option>
+                      <option value="" selected>
+                        Semua
+                      </option>
                       <option value={true}>Publish</option>
                       <option value={false}>Draft</option>
                     </select>
@@ -277,12 +295,14 @@ const DetailSubstansi = () => {
                   <div className="form-group mb-0">
                     <select
                       className="form-control"
-                      onChange={e => setKategori(e.target.value)}
-                      onBlur={e => setKategori(e.target.value)}
+                      onChange={(e) => setKategori(e.target.value)}
+                      onBlur={(e) => setKategori(e.target.value)}
                       value={kategori}
                     >
-                      <option value=''>Semua</option>
-                      {!subtance_question_type || (subtance_question_type && subtance_question_type.list_types.length === 0) ? (
+                      <option value="">Semua</option>
+                      {!subtance_question_type ||
+                      (subtance_question_type &&
+                        subtance_question_type.list_types.length === 0) ? (
                         <option value="">Data kosong</option>
                       ) : (
                         subtance_question_type &&
@@ -302,11 +322,14 @@ const DetailSubstansi = () => {
                 </div>
                 <div className="col-lg-3 col-xl-3 ">
                   <div className="mb-0">
-                    <button className='btn btn-light-primary' onClick={handleFilter}>Filter</button>
+                    <button
+                      className="btn btn-light-primary"
+                      onClick={handleFilter}
+                    >
+                      Filter
+                    </button>
                   </div>
-                  <div className="text-muted mt-5 p-0">
-                    {' '}
-                  </div>
+                  <div className="text-muted mt-5 p-0"> </div>
                 </div>
               </div>
             </div>
@@ -326,87 +349,101 @@ const DetailSubstansi = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {
-                      subtance_question_detail && subtance_question_detail.list_questions &&
-                      subtance_question_detail.list_questions.map((question, i) => {
-                        return (
-                          <tr key={question.id}>
-                            <td className="align-middle text-center">
-                              <span className="badge badge-secondary text-muted">
-                                {i + 1 * (page * 5 || limit) - 4}
-                              </span>
-                            </td>
-                            <td className="align-middle">
-                              CC{question.id}
-                            </td>
-                            <td className="align-middle">
-                              {question.question}
-                            </td>
-                            <td className="align-middle">
-                              {question.type.name}
-                            </td>
-                            <td className="align-middle">
-                              {question.type.value}
-                            </td>
-                            <td className="align-middle">
-                              {question.status === true ? (
-                                <span className="label label-inline label-light-success font-weight-bold">
-                                  Publish
+                    {subtance_question_detail &&
+                    subtance_question_detail.list_questions &&
+                    subtance_question_detail.list_questions.length != 0 ? (
+                      subtance_question_detail.list_questions.map(
+                        (question, i) => {
+                          return (
+                            <tr key={question.id}>
+                              <td className="align-middle text-center">
+                                <span className="badge badge-secondary text-muted">
+                                  {i + 1 * (page * 5 || limit) - 4}
                                 </span>
-                              ) : (
-                                <span className="label label-inline label-light-warning font-weight-bold">
-                                  Draft
-                                </span>
-                              )}
-                            </td>
-                            <td className="align-middle">
-                              <ButtonAction icon="write.svg" link={`edit-soal-substansi?id=${question.id}`} title='Edit' />
-                              <button
-                                onClick={() => handleDelete(question.id)}
-                                className="btn mr-1"
-                                style={{
-                                  background: "#F3F6F9",
-                                  borderRadius: "6px",
-                                }}
-                                data-toggle="tooltip"
-                                data-placement="bottom"
-                                title="Hapus"
-                              >
-                                <Image
-                                  alt="button-action"
-                                  src={`/assets/icon/trash.svg`}
-                                  width={18}
-                                  height={18}
+                              </td>
+                              <td className="align-middle">CC{question.id}</td>
+                              <td className="align-middle">
+                                {question.question}
+                              </td>
+                              <td className="align-middle">
+                                {question.type.name}
+                              </td>
+                              <td className="align-middle">
+                                {question.type.value}
+                              </td>
+                              <td className="align-middle">
+                                {question.status === true ? (
+                                  <span className="label label-inline label-light-success font-weight-bold">
+                                    Publish
+                                  </span>
+                                ) : (
+                                  <span className="label label-inline label-light-warning font-weight-bold">
+                                    Draft
+                                  </span>
+                                )}
+                              </td>
+                              <td className="align-middle">
+                                <ButtonAction
+                                  icon="write.svg"
+                                  link={`edit-soal-substansi?id=${question.id}`}
+                                  title="Edit"
                                 />
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })
-                    }
+                                <button
+                                  onClick={() => handleDelete(question.id)}
+                                  className="btn mr-1"
+                                  style={{
+                                    background: "#F3F6F9",
+                                    borderRadius: "6px",
+                                  }}
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Hapus"
+                                >
+                                  <Image
+                                    alt="button-action"
+                                    src={`/assets/icon/trash.svg`}
+                                    width={18}
+                                    height={18}
+                                  />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        }
+                      )
+                    ) : (
+                      <tr>
+                        <td className="text-center" colSpan={7}>
+                          Data Masih Kosong
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>
 
               <div className="row">
-                {subtance_question_detail && subtance_question_detail.perPage < subtance_question_detail.total && (
-                  <div className="table-pagination">
-                    <Pagination
-                      activePage={page}
-                      itemsCountPerPage={subtance_question_detail.perPage}
-                      totalItemsCount={subtance_question_detail.total}
-                      pageRangeDisplayed={3}
-                      onChange={handlePagination}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClass="page-item"
-                      linkClass="page-link"
-                    />
-                  </div>
-                )}
-                {subtance_question_detail && subtance_question_detail.total > 5 ? (
+                {subtance_question_detail &&
+                  subtance_question_detail.perPage <
+                    subtance_question_detail.total && (
+                    <div className="table-pagination">
+                      <Pagination
+                        activePage={page}
+                        itemsCountPerPage={subtance_question_detail.perPage}
+                        totalItemsCount={subtance_question_detail.total}
+                        pageRangeDisplayed={3}
+                        onChange={handlePagination}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
+                    </div>
+                  )}
+                {subtance_question_detail &&
+                subtance_question_detail.total > 5 ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0">
@@ -419,14 +456,14 @@ const DetailSubstansi = () => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option value='5'>5</option>
-                          <option value='10'>10</option>
-                          <option value='15'>15</option>
-                          <option value='20'>20</option>
-                          <option value='30'>30</option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
+                          <option value="30">30</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
