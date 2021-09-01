@@ -30,6 +30,7 @@
     "react-dropzone": "^11.3.4",
     "react-google-recaptcha": "^2.1.0",
     "react-inlinesvg": "^2.3.0",
+    "react-input-autosize": "^3.0.0",
     "react-js-pagination": "^3.0.3",
     "react-player": "^2.9.0",
     "react-read-pdf": "^2.0.9",

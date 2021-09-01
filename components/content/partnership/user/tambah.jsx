@@ -44,16 +44,16 @@ const Tambah = () => {
           <div className="card-body">
             <form
               id="kt_docs_formvalidation_text"
-              class="form"
+              className="form"
               action="#"
-              autocomplete="off"
+              autoComplete="off"
             >
-              <div class="fv-row mb-10">
-                <label class="required fw-bold fs-6 mb-2">Nama Lembaga</label>
+              <div className="fv-row mb-10">
+                <label className="required fw-bold fs-6 mb-2">Nama Lembaga</label>
                 <input
                   type="text"
                   name="text_input"
-                  class="form-control form-control-solid mb-3 mb-lg-0"
+                  className="form-control form-control-solid mb-3 mb-lg-0"
                   placeholder="Masukan Nama Lembaga"
                   value=""
                 />
@@ -64,24 +64,24 @@ const Tambah = () => {
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div class="fv-row mb-10">
-                    <label class="required fw-bold fs-6 mb-2">Website</label>
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2">Website</label>
                     <input
                       type="text"
                       name="text_input"
-                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Alamat Website"
                       value=""
                     />
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div class="fv-row mb-10">
-                    <label class="required fw-bold fs-6 mb-2">E-mail</label>
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2">E-mail</label>
                     <input
                       type="text"
                       name="text_input"
-                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Alamat E-mail"
                       value=""
                     />
@@ -89,8 +89,8 @@ const Tambah = () => {
                 </div>
               </div>
 
-              <div class="fv-row mb-10 d-flex flex-column">
-                <label class="required fw-bold fs-6 mb-2">Logo Lembaga</label>
+              <div className="fv-row mb-10 d-flex flex-column">
+                <label className="required fw-bold fs-6 mb-2">Logo Lembaga</label>
                 {/* <div className="input-group"> */}
                     <div className="custom-file col-12 col-xl-4">
                       <input
@@ -109,12 +109,12 @@ const Tambah = () => {
                   {/* </div> */}
               </div>
 
-              <div class="fv-row mb-10">
-                <label class="required fw-bold fs-6 mb-2">Masukan Alamat Lengkap</label>
+              <div className="fv-row mb-10">
+                <label className="required fw-bold fs-6 mb-2">Masukan Alamat Lengkap</label>
                 <input
                   type="text"
                   name="text_input"
-                  class="form-control form-control-solid mb-3 mb-lg-0"
+                  className="form-control form-control-solid mb-3 mb-lg-0"
                   placeholder="Masukan Alamat Lengkap"
                   value=""
                 />
@@ -122,24 +122,24 @@ const Tambah = () => {
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div class="fv-row mb-10">
-                    <label class="required fw-bold fs-6 mb-2">Provinsi</label>
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2">Provinsi</label>
                     <input
                       type="text"
                       name="text_input"
-                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Alamat Website"
                       value=""
                     />
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div class="fv-row mb-10">
-                    <label class="required fw-bold fs-6 mb-2">Kota/Kabupaten</label>
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2">Kota/Kabupaten</label>
                     <input
                       type="text"
                       name="text_input"
-                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Alamat E-mail"
                       value=""
                     />
@@ -148,12 +148,12 @@ const Tambah = () => {
               </div>
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div class="fv-row mb-10">
-                    <label class="required fw-bold fs-6 mb-2">Kode Pos</label>
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2">Kode Pos</label>
                     <input
                       type="text"
                       name="text_input"
-                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Kode Pos"
                       value=""
                     />
@@ -163,24 +163,24 @@ const Tambah = () => {
 
               <div className="row">
                 <div className="col-12 col-sm-12">
-                  <div class="fv-row mb-10">
-                    <label class="required fw-bold fs-6 mb-2">Nama Person In Charge (PIC)</label>
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2">Nama Person In Charge (PIC)</label>
                     <input
                       type="text"
                       name="text_input"
-                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Nama PIC"
                       value=""
                     />
                   </div>
                 </div>
                 <div className="col-12 col-sm-12">
-                  <div class="fv-row mb-10">
-                    <label class="required fw-bold fs-6 mb-2">Nomor Handphone Person In Charge (PIC)</label>
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2">Nomor Handphone Person In Charge (PIC)</label>
                     <input
                       type="text"
                       name="text_input"
-                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Nama PIC"
                       value=""
                     />
@@ -188,12 +188,12 @@ const Tambah = () => {
                 </div>
               </div>
 
-              <div class="fv-row mb-10">
-                <label class="required fw-bold fs-6 mb-2">E-mail Person In Charge (PIC)</label>
+              <div className="fv-row mb-10">
+                <label className="required fw-bold fs-6 mb-2">E-mail Person In Charge (PIC)</label>
                 <input
                   type="text"
                   name="text_input"
-                  class="form-control form-control-solid mb-3 mb-lg-0"
+                  className="form-control form-control-solid mb-3 mb-lg-0"
                   placeholder="Masukan Alamat E-mail PIC"
                   value=""
                 />
