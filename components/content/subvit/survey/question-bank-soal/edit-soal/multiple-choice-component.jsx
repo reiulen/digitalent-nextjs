@@ -13,6 +13,10 @@ const MultipleChoiceComponent = ({
   const handleRemoveClick = (index) => {
     const list = [...answer];
     list.splice(index, 1);
+    list.forEach((row, i) => {
+      let key = String.fromCharCode(65 + i);
+      list[i]["key"] = key;
+    });
     setAnswer(list);
     sendPropsAnswer(list);
   };

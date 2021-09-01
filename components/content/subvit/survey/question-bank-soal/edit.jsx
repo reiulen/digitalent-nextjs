@@ -18,6 +18,7 @@ import LoadingPage from "../../../../LoadingPage";
 import ObjectiveComponent from "./edit-soal/objective-component";
 import MultipleChoiceComponent from "./edit-soal/multiple-choice-component";
 import TriggeredQuestionComponent from "./edit-soal/triggered-question-component";
+import PertanyaanTerbukaComponent from "./edit-soal/pertanyaan-terbuka-component";
 
 const EditSoalTrivia = () => {
   const dispatch = useDispatch();
@@ -194,7 +195,12 @@ const EditSoalTrivia = () => {
         );
         break;
       case "pertanyaan_terbuka":
-        return "";
+        return (
+          <PertanyaanTerbukaComponent
+            propsStatus={status}
+            sendPropsStatus={(status) => setStatus(status)}
+          />
+        );
       case "triggered_question":
         return (
           <TriggeredQuestionComponent
@@ -218,6 +224,12 @@ const EditSoalTrivia = () => {
     }
   };
 
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -235,6 +247,7 @@ const EditSoalTrivia = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>

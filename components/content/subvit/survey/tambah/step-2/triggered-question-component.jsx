@@ -105,6 +105,10 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
       const list = [...answer];
       // delete list[children]
       list.splice(children, 1);
+      list.forEach((row, i) => {
+        let key = String.fromCharCode(65 + i);
+        list[i]["key"] = key;
+      });
       setSoalList(list);
       props_answer(list);
     }
@@ -127,6 +131,10 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
         row1.sub.forEach((row2, j) => {
           // delete row2.answer[children]
           row2.answer.splice(children, 1);
+          row2.answer.forEach((row3, i) => {
+            let key = String.fromCharCode(65 + i);
+            row2.answer[i]["key"] = key;
+          });
           setSoalList(list);
           props_answer(list);
         });
@@ -560,7 +568,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
       </div>
 
       <div className="form-group row">
-        <div className="col-sm-6 col-md-4 d-flex">
+        <div className="col-sm-6 col-md-5 d-flex">
           {answer.length < 6 ? (
             <>
               <button

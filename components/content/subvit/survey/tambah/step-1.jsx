@@ -112,6 +112,12 @@ const TambahSurveyStepOne = () => {
     }
   };
 
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -129,6 +135,7 @@ const TambahSurveyStepOne = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
