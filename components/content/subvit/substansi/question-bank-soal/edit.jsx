@@ -84,12 +84,21 @@ const EditSoalSubstansi = () => {
   const handleRemoveClick = (index) => {
     const list = [...answer];
     list.splice(index, 1);
+    list.forEach((row, i) => {
+      let key = String.fromCharCode(65 + i);
+      list[i]["key"] = key;
+    });
     setAnswer(list);
   };
 
   const handleAddClick = () => {
-    const lastobj = answer[answer.length - 1];
-    const keyindex = lastobj.key.charCodeAt(0);
+    let keyindex;
+    if (answer.length != 0) {
+      const lastobj = answer[answer.length - 1];
+      keyindex = lastobj.key.charCodeAt(0);
+    } else {
+      keyindex = 64;
+    }
     const newKey = String.fromCharCode(keyindex + 1);
     setAnswer([
       ...answer,
@@ -229,7 +238,7 @@ const EditSoalSubstansi = () => {
           <form onSubmit={handleSubmit}>
             <div className="card-header border-0 d-flex pb-0">
               <h3 className="card-title font-weight-bolder text-dark">
-                Soal 1
+                Soal {subtance_question_detail.bank_soal + 1}
               </h3>
               <div className="card-toolbar ml-auto">
                 <button className="btn btn-sm btn-primary px-6 font-weight-bold ">

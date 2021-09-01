@@ -117,9 +117,9 @@ const ReportSurvey = () => {
       <div className="col-lg-12 col-md-12">
         <div className="row">
           <CardPage
-            background="bg-light-info"
-            icon="orang-tambah-purple.svg"
-            color="#8A50FC"
+            background="bg-primary"
+            icon="new/add-user.svg"
+            color="#FFFFFF"
             value={survey.data.total_peserta}
             titleValue=""
             title="Total Peserta"
@@ -127,9 +127,9 @@ const ReportSurvey = () => {
             routePublish={() => handlePublish("")}
           />
           <CardPage
-            background="bg-light-success"
-            icon="done-circle.svg"
-            color="#0BB783"
+            background="bg-secondary"
+            icon="new/done-circle.svg"
+            color="#FFFFFF"
             value={survey.data.sudah_mengerjakan}
             titleValue=""
             title="Sudah Mengerjakan"
@@ -137,9 +137,9 @@ const ReportSurvey = () => {
             routePublish={() => handlePublish("sudah-mengerjakan")}
           />
           <CardPage
-            background="bg-light-warning"
-            icon="book-open.svg"
-            color="#634100"
+            background="bg-success"
+            icon="new/open-book.svg"
+            color="#FFFFFF"
             value={survey.data.sedang_mengerjakan}
             titleValue=""
             title="Sedang Mengerjakan"
@@ -147,9 +147,9 @@ const ReportSurvey = () => {
             routePublish={() => handlePublish("sedang-mengerjakan")}
           />
           <CardPage
-            background="bg-accent-info"
-            icon="mail-purple.svg"
-            color="#663259"
+            background="bg-warning"
+            icon="new/mail-white.svg"
+            color="#FFFFFF"
             value={survey.data.belum_mengerjakan}
             titleValue=""
             title="Belum Mengerjakan"
@@ -176,7 +176,7 @@ const ReportSurvey = () => {
             </div>
             <div className="col-lg-2 col-xl-2">
               <button
-                className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block "
+                className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block"
                 onClick={handleExportReport}
               >
                 Export .CSV
@@ -193,7 +193,7 @@ const ReportSurvey = () => {
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control"
+                      className="form-control mt-2"
                       placeholder="Search..."
                       id="kt_datatable_search_query"
                       autoComplete="off"
@@ -207,7 +207,7 @@ const ReportSurvey = () => {
 
                 <div className="col-lg-2 col-xl-2">
                   <button
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
+                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block mt-2"
                     onClick={handleSearch}
                   >
                     Cari
@@ -293,17 +293,21 @@ const ReportSurvey = () => {
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 h6">{row.name}</p>
+                                  <p className="my-0 font-weight-bold">
+                                    {row.name}
+                                  </p>
                                   <p className="my-0">{row.email}</p>
                                   <p className="my-0">{row.nik}</p>
                                 </div>
                               </td>
                               <td className="align-middle">
-                                <p className="h6">{row.training.name}</p>
+                                <p className="font-weight-bold">
+                                  {row.training.name}
+                                </p>
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 h6">
+                                  <p className="my-0 font-weight-bold">
                                     {row.total_workmanship_date}
                                   </p>
                                   <p className="my-0">
