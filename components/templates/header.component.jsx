@@ -1,39 +1,51 @@
-import React from 'react'
-import Image from 'next/image'
+import React, { useState } from "react";
+import { Offcanvas } from "react-bootstrap";
 
 const Header = () => {
-    return (
-        <>
-            {/* <!--begin::Header--> */}
-            <div id="kt_header" className="header header-fixed">
-                {/* <!--begin::Container--> */}
-                <div className="container-fluid d-flex align-items-stretch justify-content-between">
-                    {/* <!--begin::Header Menu Wrapper--> */}
-                    <div className="header-menu-wrapper header-menu-wrapper-left" id="kt_header_menu_wrapper">
-                        {/* <!--begin::Header Menu--> */}
-                        <div id="kt_header_menu" className="header-menu header-menu-mobile header-menu-layout-default">
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    setShow(true);
+  };
 
-                            {/* <!--begin::Header Nav--> */}
-                            <ul className="menu-nav">
-                                <li className="menu-item menu-item-submenu menu-item-rel menu-item-active"
-                                    data-menu-toggle="click" aria-haspopup="true">
-                                    <a href="javascript:;" className="menu-link menu-toggle">
-                                        <span className="menu-text">Dashboard</span>
-                                        <i className="menu-arrow"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                            {/* <!--end::Header Nav--> */}
-
-
-                        </div>
-                        {/* <!--end::Header Menu--> */}
-                    </div>
-                    {/* <!--end::Header Menu Wrapper--> */}
-                    {/* <!--begin::Topbar--> */}
-                    <div className="topbar">
-                        {/* <div className="dropdown" id="kt_quick_search_toggle">
+  return (
+    <>
+      {/* <!--begin::Header--> */}
+      <div id="kt_header" className="header header-fixed">
+        {/* <!--begin::Container--> */}
+        <div className="container-fluid d-flex align-items-stretch justify-content-between">
+          {/* <!--begin::Header Menu Wrapper--> */}
+          <div
+            className="header-menu-wrapper header-menu-wrapper-left"
+            id="kt_header_menu_wrapper"
+          >
+            {/* <!--begin::Header Menu--> */}
+            <div
+              id="kt_header_menu"
+              className="header-menu header-menu-mobile header-menu-layout-default"
+            >
+              {/* <!--begin::Header Nav--> */}
+              <ul className="menu-nav">
+                <li
+                  className="menu-item menu-item-submenu menu-item-rel menu-item-active"
+                  data-menu-toggle="click"
+                  aria-haspopup="true"
+                >
+                  <a href="javascript:;" className="menu-link menu-toggle">
+                    <span className="menu-text">Dashboard</span>
+                    <i className="menu-arrow"></i>
+                  </a>
+                </li>
+              </ul>
+              {/* <!--end::Header Nav--> */}
+            </div>
+            {/* <!--end::Header Menu--> */}
+          </div>
+          {/* <!--end::Header Menu Wrapper--> */}
+          {/* <!--begin::Topbar--> */}
+          <div className="topbar">
+            {/* <div className="dropdown" id="kt_quick_search_toggle">
                             <div className="topbar-item" data-toggle="dropdown" data-offset="10px,0px">
                                 <div className="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
                                     <span className="svg-icon svg-icon-xl svg-icon-primary">
@@ -185,29 +197,35 @@ const Header = () => {
                             </div>
                         </div> */}
 
-                        {/* <!--begin::User--> */}
-                        <div className="topbar-item">
-                            <div className="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
-                                id="kt_quick_user_toggle">
-                                <span
-                                    className="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi,</span>
-                                <span
-                                    className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">Dendy</span>
-                                <span className="symbol symbol-lg-35 symbol-25 symbol-light-success">
-                                    <span className="symbol-label font-size-h5 font-weight-bold">D</span>
-                                </span>
-                            </div>
-                        </div>
-                        {/* <!--end::User--> */}
-                    </div>
-                    {/* <!--end::Topbar--> */}
-                </div>
-                {/* <!--end::Container--> */}
+            {/* <!--begin::User--> */}
+            <div className="topbar-item">
+              <div
+                className="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
+                // id="kt_quick_user_toggle"
+                onClick={handleShow}
+              >
+                <span className="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">
+                  Hi,
+                </span>
+                <span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
+                  Dendy
+                </span>
+                <span className="symbol symbol-lg-35 symbol-25 symbol-light-success">
+                  <span className="symbol-label font-size-h5 font-weight-bold">
+                    D
+                  </span>
+                </span>
+              </div>
             </div>
-            {/* <!--end::Header--> */}
+            {/* <!--end::User--> */}
+          </div>
+          {/* <!--end::Topbar--> */}
+        </div>
+        {/* <!--end::Container--> */}
+      </div>
+      {/* <!--end::Header--> */}
+    </>
+  );
+};
 
-        </>
-    )
-}
-
-export default Header
+export default Header;

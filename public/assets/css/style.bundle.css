@@ -3905,7 +3905,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-primary-rounded-full {
-  color: #ffffff;
+  color: #ffffff !important;
   background-color: var(--primary);
   border-color: var(--primary);
   /* background-color: #3699FF; */
