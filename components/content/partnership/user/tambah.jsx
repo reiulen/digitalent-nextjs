@@ -42,7 +42,179 @@ const Tambah = () => {
             </h3>
           </div>
           <div className="card-body">
-            <form>
+            <form
+              id="kt_docs_formvalidation_text"
+              class="form"
+              action="#"
+              autocomplete="off"
+            >
+              <div class="fv-row mb-10">
+                <label class="required fw-bold fs-6 mb-2">Nama Lembaga</label>
+                <input
+                  type="text"
+                  name="text_input"
+                  class="form-control form-control-solid mb-3 mb-lg-0"
+                  placeholder="Masukan Nama Lembaga"
+                  value=""
+                />
+              </div>
+              
+
+              
+
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div class="fv-row mb-10">
+                    <label class="required fw-bold fs-6 mb-2">Website</label>
+                    <input
+                      type="text"
+                      name="text_input"
+                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      placeholder="Masukan Alamat Website"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div className="col-12 col-sm-6">
+                  <div class="fv-row mb-10">
+                    <label class="required fw-bold fs-6 mb-2">E-mail</label>
+                    <input
+                      type="text"
+                      name="text_input"
+                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      placeholder="Masukan Alamat E-mail"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="fv-row mb-10 d-flex flex-column">
+                <label class="required fw-bold fs-6 mb-2">Logo Lembaga</label>
+                {/* <div className="input-group"> */}
+                    <div className="custom-file col-12 col-xl-4">
+                      <input
+                      // onFocus={()=>setError({...error,document:""})}
+                        type="file"
+                        name="gambar"
+                        className="custom-file-input cursor-pointer"
+                        id="inputGroupFile04"
+                        accept="image/png,image/jpg"
+                        // onChange={handlePdfFileChange}
+                      />
+                      <label className="custom-file-label" htmlFor="inputGroupFile04" style={{color:"#bdbdbd"}}>
+                        Pilih Gambar
+                      </label>
+                    </div>
+                  {/* </div> */}
+              </div>
+
+              <div class="fv-row mb-10">
+                <label class="required fw-bold fs-6 mb-2">Masukan Alamat Lengkap</label>
+                <input
+                  type="text"
+                  name="text_input"
+                  class="form-control form-control-solid mb-3 mb-lg-0"
+                  placeholder="Masukan Alamat Lengkap"
+                  value=""
+                />
+              </div>
+
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div class="fv-row mb-10">
+                    <label class="required fw-bold fs-6 mb-2">Provinsi</label>
+                    <input
+                      type="text"
+                      name="text_input"
+                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      placeholder="Masukan Alamat Website"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div className="col-12 col-sm-6">
+                  <div class="fv-row mb-10">
+                    <label class="required fw-bold fs-6 mb-2">Kota/Kabupaten</label>
+                    <input
+                      type="text"
+                      name="text_input"
+                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      placeholder="Masukan Alamat E-mail"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div class="fv-row mb-10">
+                    <label class="required fw-bold fs-6 mb-2">Kode Pos</label>
+                    <input
+                      type="text"
+                      name="text_input"
+                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      placeholder="Masukan Kode Pos"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-12 col-sm-12">
+                  <div class="fv-row mb-10">
+                    <label class="required fw-bold fs-6 mb-2">Nama Person In Charge (PIC)</label>
+                    <input
+                      type="text"
+                      name="text_input"
+                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      placeholder="Masukan Nama PIC"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div className="col-12 col-sm-12">
+                  <div class="fv-row mb-10">
+                    <label class="required fw-bold fs-6 mb-2">Nomor Handphone Person In Charge (PIC)</label>
+                    <input
+                      type="text"
+                      name="text_input"
+                      class="form-control form-control-solid mb-3 mb-lg-0"
+                      placeholder="Masukan Nama PIC"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="fv-row mb-10">
+                <label class="required fw-bold fs-6 mb-2">E-mail Person In Charge (PIC)</label>
+                <input
+                  type="text"
+                  name="text_input"
+                  class="form-control form-control-solid mb-3 mb-lg-0"
+                  placeholder="Masukan Alamat E-mail PIC"
+                  value=""
+                />
+              </div>
+
+              <div className="d-flex justify-content-end align-items-center">
+                <Link href="">
+                  <a className="btn btn-white">
+                        Kembali
+                      </a>
+                </Link>
+                <button className="btn btn-primary ml-4">
+                  Simpan
+
+                   
+
+                </button>
+              </div>
+
+            </form>
+            {/* <form>
               <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -235,20 +407,15 @@ const Tambah = () => {
                       Kembali
                     </a>
                   </Link>
-                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
-                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
-                      Kembali
-                    </a> */}
                   <button
                     className="btn btn-primary btn-sm"
                     onClick={(e) => submit(e)}
                   >
                     Submit
                   </button>
-                  {/* </Link> */}
                 </div>
               </div>
-            </form>
+            </form> */}
           </div>
         </div>
       </div>

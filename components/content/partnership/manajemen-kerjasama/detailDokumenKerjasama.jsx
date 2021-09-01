@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getSingleCooperation } from "../../../../redux/actions/partnership/managementCooporation.actions";
-// import { PDFReader } from 'react-read-pdf';
+
 
 const DetailDokumenKerjasama = () => {
   const dispatch = useDispatch();
@@ -319,10 +319,6 @@ const DetailDokumenKerjasama = () => {
               </div>
 
 
-
-{/* <div style={{overflow:'scroll',height:600}}>
-            <MobilePDFReader url="http://localhost:3000/test.pdf"/>
-           </div> */}
               
               <div className="form-group row">
                 <label
