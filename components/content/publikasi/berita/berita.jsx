@@ -139,16 +139,48 @@ const Berita = () => {
             )
             setStartDate (null)
             setEndDate (null)
-    
+
+        } else if (startDate === null && endDate !== null) {
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh kosong',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+
+        } else if (startDate !== null && endDate === null) {
+            Swal.fire(
+                'Oops !',
+                'Tanggal sesudah tidak boleh kosong',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+
+
         } else {
-            if (limit !== null && search === null) {
+            if (limit !== null && search !== null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 );
     
-            } else if (limit !== null && search !== null) {
-              `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
-    
+            } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                )
+              
+            
+            } else if (limit !== null && search === null && startDate === null && endDate === null) {
+                router.push (
+                    `${router.pathname}?page=1&limit=${limit}`
+                )
+
+            } else if (limit !== null && search !== null && startDate === null && endDate === null) {
+                router.push(
+                    `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
+                )
+                
             } else {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
