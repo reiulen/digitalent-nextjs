@@ -74,18 +74,37 @@ const EditBerita = () => {
     const [_method, setMethod] = useState("put")
 
     const onChangeGambar = (e) => {
-        if (e.target.name === 'gambar') {
-            const reader = new FileReader()
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setGambar(reader.result)
-                    setGambarPreview(reader.result)
-                }
+        const type = ["image/jpg", "image/png", "image/jpeg"]
+        // console.log (e.target.files[0].type)
+        // console.log (e.target.files[0])
+        // console.log ("check")
+    
+        if (type.includes (e.target.files[0].type)){
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setGambar(reader.result);
+              setGambarPreview(reader.result);
             }
-            reader.readAsDataURL(e.target.files[0])
-            setGambarName(e.target.files[0].name)
+          };
+          reader.readAsDataURL(e.target.files[0])
+          // console.log (reader.readAsDataURL(e.target.files[0]))
+          setGambarName(e.target.files[0].name)
+        } 
+        else {
+          // setGambar("")
+          // setGambarPreview("/assets/media/default.jpg")
+          // setGambarName(null)
+          // simpleValidator.current.showMessages();
+          // forceUpdate(1);
+          e.target.value = null
+          Swal.fire(
+            'Oops !',
+            'Data yang bisa dimasukkan hanya berupa data gambar.',
+            'error'
+          )
         }
-    }
+      };
 
     const onSubmit = (e) => {
         e.preventDefault()
