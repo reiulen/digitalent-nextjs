@@ -35,7 +35,7 @@ export default function index() {
         Tambah kerjasama
       </button>
       {/* button rounded full + icon right */}
-      <button className="btn btn-rounded-full bg-blue-primary text-white">
+      <button className="btn btn-rounded-full bg-blue-primary text-white mt-1">
         Export
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ export default function index() {
         </svg>
       </button>
       {/* button rounded full just-text */}
-      <button className="btn btn-rounded-full bg-blue-secondary text-white">
+      <button className="btn btn-rounded-full bg-blue-secondary text-white mt-1 mb-1">
         Tambah kerjasama
       </button>
 
@@ -76,7 +76,7 @@ export default function index() {
       {/* btn action */}
       {/* eye */}
 
-      <button className="btn btn-link-action bg-red-primary">
+      <button className="btn btn-link-action bg-red-primary mt-1 mb-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -106,7 +106,7 @@ export default function index() {
         </svg>
       </button>
       {/* hapus */}
-      <button className="btn btn-link-action bg-red-primary">
+      <button className="btn btn-link-action bg-red-primarymt-1 mb-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -144,7 +144,7 @@ export default function index() {
       </div>
       {/* filter */}
       <button
-        className="btn border d-flex align-items-center justify-content-between"
+        className="btn border d-flex align-items-center justify-content-between mt-1"
         style={{ minWidth: "280px", color: "#bdbdbd" }}
       >
         <div className="d-flex align-items-center">
@@ -176,7 +176,7 @@ export default function index() {
       {/* modal filter */}
 
       <button
-        className="avatar item-rtl btn btn-primary"
+        className="avatar item-rtl btn btn-primary mt-1 mb-1"
         data-toggle="modal"
         data-target="#exampleModalCenter"
       >
@@ -291,6 +291,37 @@ export default function index() {
           className="right-center-absolute"
           style={{ right: "10px" }}
         />
+      </div>
+      {/* input dan button */}
+      <div
+        className="position-relative overflow-hidden mt-3"
+        style={{ maxWidth: "330px" }}
+      >
+        <svg
+          className="left-center-absolute"
+          style={{ left: "10" }}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="16"
+          height="16"
+        >
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path
+            d="M18.031 16.617l4.283 4.282-1.415 1.415-4.282-4.283A8.96 8.96 0 0 1 11 20c-4.968 0-9-4.032-9-9s4.032-9 9-9 9 4.032 9 9a8.96 8.96 0 0 1-1.969 5.617zm-2.006-.742A6.977 6.977 0 0 0 18 11c0-3.868-3.133-7-7-7-3.868 0-7 3.132-7 7 0 3.867 3.132 7 7 7a6.977 6.977 0 0 0 4.875-1.975l.15-.15z"
+            fill="#E4E6EF"
+          />
+        </svg>
+        <input
+          type="text"
+          className="form-control pl-10"
+          placeholder="Placeholder"
+        />
+        <button
+          className="btn bg-blue-primary text-white right-center-absolute"
+          style={{ borderTopLeftRadius: "0", borderBottomLeftRadius: "0" }}
+        >
+          Placeholder
+        </button>
       </div>
     </div>
   );
