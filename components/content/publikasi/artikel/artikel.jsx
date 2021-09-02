@@ -144,15 +144,47 @@ const Artikel = () => {
         setStartDate (null)
         setEndDate (null)
 
+    } else if (startDate === null && endDate !== null) {
+        Swal.fire(
+            'Oops !',
+            'Tanggal sebelum tidak boleh kosong',
+            'error'
+        )
+        setStartDate (null)
+        setEndDate (null)
+
+    } else if (startDate !== null && endDate === null) {
+        Swal.fire(
+            'Oops !',
+            'Tanggal sesudah tidak boleh kosong',
+            'error'
+        )
+        setStartDate (null)
+        setEndDate (null)
+
+
     } else {
-        if (limit !== null && search === null) {
+        if (limit !== null && search !== null && startDate !== null && endDate !== null) {
             router.push(
                 `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
             );
 
-        } else if (limit !== null && search !== null) {
-          `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+        } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
+            router.push(
+                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+            )
+          
+        
+        } else if (limit !== null && search === null && startDate === null && endDate === null) {
+            router.push (
+                `${router.pathname}?page=1&limit=${limit}`
+            )
 
+        } else if (limit !== null && search !== null && startDate === null && endDate === null) {
+            router.push(
+                `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
+            )
+            
         } else {
             router.push(
                 `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
@@ -263,8 +295,10 @@ const Artikel = () => {
         <div className="row">
           <CardPage
             background="bg-light-info"
-            icon="mail-purple.svg"
-            color="#8A50FC"
+            icon="new/open-book.svg"
+            color='#ffffff'
+            // icon="mail-purple.svg"
+            // color="#8A50FC"
             value={artikel && artikel.publish != "" ? artikel.publish : 0}
             titleValue="Artikel"
             title="Total Publish"
@@ -274,8 +308,10 @@ const Artikel = () => {
 
           <CardPage
             background="bg-light-warning"
-            icon="garis-yellow.svg"
-            color="#634100"
+            icon="new/mail-white.svg"
+            color='#ffffff'
+            // icon="garis-yellow.svg"
+            // color="#634100"
             value="64"
             titleValue="Artikel"
             title="Total Author"
@@ -284,8 +320,10 @@ const Artikel = () => {
           />
           <CardPage
             background="bg-light-success"
-            icon="orang-tambah-green.svg"
-            color="#74BBB7"
+            icon='user-white.svg' 
+            color='#ffffff'
+            // icon="orang-tambah-green.svg"
+            // color="#74BBB7"
             value="64"
             titleValue="K"
             title="Total Yang Baca"
@@ -294,8 +332,10 @@ const Artikel = () => {
           />
           <CardPage
             background="bg-light-danger"
-            icon="kotak-kotak-red.svg"
-            color="#F65464"
+            icon="Library.svg"
+            color='#ffffff'
+            // icon="kotak-kotak-red.svg"
+            // color="#F65464"
             value={artikel && artikel.unpublish != "" ? artikel.unpublish : 0}
             titleValue="Artikel"
             title="Total Belum Publish"
@@ -313,7 +353,7 @@ const Artikel = () => {
             </h3>
             <div className="card-toolbar">
               <Link href="/publikasi/artikel/tambah">
-                <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
+                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
                   Tambah Artikel
                 </a>
               </Link>
@@ -349,7 +389,8 @@ const Artikel = () => {
                 </div>
               </div>
               <div className="row align-items-right">
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                <div className="col-lg-2 col-xl-2">
+                  <small className="form-text text-muted">Dari Tanggal</small>
                   <DatePicker
                     className="form-search-date form-control-sm form-control"
                     selected={startDate}
@@ -359,9 +400,10 @@ const Artikel = () => {
                     endDate={endDate}
                     dateFormat="dd/MM/yyyy"
                   />
-                  <small className="form-text text-muted">Dari Tanggal</small>
+                  
                 </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                <div className="col-lg-2 col-xl-2">
+                  <small className="form-text text-muted">Sampai Tanggal</small>
                   <DatePicker
                     className="form-search-date form-control-sm form-control"
                     selected={endDate}
@@ -373,7 +415,7 @@ const Artikel = () => {
                     maxDate={addDays(startDate, 20)}
                     dateFormat="dd/MM/yyyy"
                   />
-                  <small className="form-text text-muted">Sampai Tanggal</small>
+                  
                 </div>
                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                   <button
