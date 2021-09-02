@@ -250,6 +250,7 @@ transform: translateY(-50%);
   -moz-appearance: none;
   appearance: none;
 }
+
 /* error text */
 .error-text{
 color: red;
