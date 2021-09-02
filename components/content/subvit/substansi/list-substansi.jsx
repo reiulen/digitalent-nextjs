@@ -166,13 +166,13 @@ const ListSubstansi = () => {
             </h1>
             <div className="card-toolbar">
               <Link href="/subvit/substansi/tipe-soal">
-                <a className="text-light btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
                   <i class="ri-article-fill"></i>
                   Tipe Soal
                 </a>
               </Link>
               <Link href="/subvit/substansi/clone">
-                <a className="btn text-light btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
                   <i class="ri-mastercard-fill"></i>
                   Clone Test
                 </a>

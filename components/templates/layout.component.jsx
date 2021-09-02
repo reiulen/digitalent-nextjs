@@ -2,14 +2,21 @@ import React from "react";
 
 import Head from "next/head";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
-import Sidebar from "./sidebar.component";
-import Header from "./header.component";
-import HeaderMobile from "./header-mobile.component";
+// import Sidebar from "./sidebar.component";
+// import Header from "./header.component";
+// import HeaderMobile from "./header-mobile.component";
+
+const Sidebar = dynamic(() => import("./sidebar.component"));
+const Header = dynamic(() => import("./header.component"));
+const HeaderMobile = dynamic(() => import("./header-mobile.component"));
 // Content
-import SubHeader from "./subheader.component";
+// import SubHeader from "./subheader.component";
+const SubHeader = dynamic(() => import("./subheader.component"));
 // Wrapper
-import ContentWrapper from "../wrapper/content.wrapper";
+// import ContentWrapper from "../wrapper/content.wrapper";
+const ContentWrapper = dynamic(() => import("../wrapper/content.wrapper"));
 
 import Footer from "./footer.component";
 import SimpleReactValidator from "simple-react-validator";

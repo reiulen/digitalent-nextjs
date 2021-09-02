@@ -492,6 +492,10 @@ small,
   font-weight: 400;
 }
 
+i{
+  color:#ffffff;
+}
+
 mark,
 .mark {
   padding: 0.2em;
