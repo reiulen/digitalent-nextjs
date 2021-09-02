@@ -232,6 +232,7 @@ export default function index() {
                   <label className="required fw-bold fs-6 mb-2">
                     Kategori Kerjasama
                   </label>
+
                   <select
                     className="form-select form-control"
                     aria-label="Select example"
