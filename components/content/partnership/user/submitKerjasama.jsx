@@ -23,12 +23,12 @@ const DetailDokumenKerjasama = () => {
           <div className={`card-body ${Style.refreshZindex}`}>
             <div className={Style.containerProggres}>
               <ul className={Style.progressbar}>
-                <li className={Style.active}>Submit Kerjasama</li>
-                <li>Review Kerjasama</li>
-                <li>Pembahasan</li>
-                <li>Dokumen Kerjasama</li>
-                <li>Review Dokumen </li>
-                <li>Selesai</li>
+                <li className={`list-progess ${Style.active}`}>Submit Kerjasama</li>
+                <li className="list-progess">Review Kerjasama</li>
+                <li className="list-progess">Pembahasan</li>
+                <li className="list-progess">Dokumen Kerjasama</li>
+                <li className="list-progess">Review Dokumen </li>
+                <li className="list-progess">Selesai</li>
               </ul>
             </div>
 

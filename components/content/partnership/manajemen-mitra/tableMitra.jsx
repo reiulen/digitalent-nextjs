@@ -301,18 +301,15 @@ allMitra.status === "success"
                               return (
                                 <tr key={index}>
                                   <td className="text-center align-middle">
-                                    <button
-                                      className="btn"
-                                      style={{
-                                        background: "#F3F6F9",
-                                        borderRadius: "6px",
-                                      }}
+                                    <p
+                                      className="mb-0"
+                                      
                                     >
                                       {allMitra.page === 1
                                         ? index + 1
                                         : (allMitra.page - 1) * allMitra.limit +
                                           (index + 1)}
-                                    </button>
+                                    </p>
                                   </td>
                                   <td className="align-middle text-center">
                                     <Image

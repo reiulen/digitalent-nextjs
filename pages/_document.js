@@ -11,6 +11,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta name="viewport" content="width=617 initial-scale=1" />
           {/* please uncommented if you read this */}
           {/* <meta name="description" content="Aside light theme example" />
                     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" /> */}

@@ -24,3 +24,15 @@ tbody {
 .pagination-custom .pagintaion {
   margin-bottom: 0.4rem;
 }
+
+.table.table-head-custom thead tr,
+.table.table-head-custom thead th{
+  color: #6C6C6C !important;
+}
+.thead {
+  background-color: #F2F7FC;
+}
+.table.table-separate th:first-child,
+.table.table-separate td:first-child{
+  padding-left: 13px !important;
+}
