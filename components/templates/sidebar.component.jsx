@@ -97,7 +97,7 @@ const Sidebar = () => {
         {/* <!--begin::Brand--> */}
         <div className="brand flex-column-auto" id="kt_brand">
           {/* <!--begin::Logo--> */}
-          <a href="index.html" className="brand-logo">
+          <a className="brand-logo">
             <Image
               alt="icon-sidebar-logo"
               src="/assets/logo/logo.png"
