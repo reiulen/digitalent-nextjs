@@ -8,7 +8,7 @@ export default function ArtikelPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Dashboard Publikasi'>
+                <Layout title='Manajemen Publikasi'>
                     <Artikel />
                 </Layout>
             </div>

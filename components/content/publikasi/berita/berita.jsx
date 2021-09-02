@@ -187,9 +187,9 @@ const Berita = () => {
                 ); 
             }
         }
-      };
+    };
 
-      const handleLimit = (val) => {
+    const handleLimit = (val) => {
         setLimit(val)
         if (search === "") {
             router.push(`${router.pathname}?page=1&limit=${val}`);
@@ -197,40 +197,40 @@ const Berita = () => {
         } else {
             router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
         }
-        
-      };
     
-      const handlePublish = (val) => {
+    };
+    
+    const handlePublish = (val) => {
         if (val !== null || val !== "") {
-          setPublishValue (val)
-    
-          if ( startDate === null && endDate === null && limit === null && search === null){
+            setPublishValue (val)
+
+            if ( startDate === null && endDate === null && limit === null && search === null){
             router.push(`${router.pathname}?publish=${val}`);
-      
-          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-      
-          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-          
-          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-      
-          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
-      
-          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
-          
-          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
-          
-          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-          }
-        }
         
-      }
+            } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+            } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+            
+            } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+        
+            } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+        
+            } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+            
+            } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+            
+            } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+            }
+        }
+    
+    }
 
     return (
         <PageWrapper>
