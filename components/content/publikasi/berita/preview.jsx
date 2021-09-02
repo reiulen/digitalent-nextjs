@@ -41,10 +41,10 @@ const Preview = () => {
                                         src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + gambar}
                                         alt="gambar-artikel"
                                         objectFit="cover"
-                                        height= "50vh"
-                                        width= "100vh"
+                                        height= "100%"
+                                        width= "100%"
                                         // layout="fill"
-                                        // style={{height:"50vh", width: "100%"}} 
+                                        // style={{height:"50vh", width: "100%", layout:"fill"}} 
                                     />
                                 </div>
 
