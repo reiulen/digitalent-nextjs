@@ -130,23 +130,55 @@ const Vidio = () => {
             )
             setStartDate (null)
             setEndDate (null)
-
+    
+        } else if (startDate === null && endDate !== null) {
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh kosong',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+        } else if (startDate !== null && endDate === null) {
+            Swal.fire(
+                'Oops !',
+                'Tanggal sesudah tidak boleh kosong',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+    
         } else {
-            if (limit !== null && search === null) {
+            if (limit !== null && search !== null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 );
-
-            } else if (limit !== null && search !== null) {
-                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
-
+    
+            } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                )
+              
+            
+            } else if (limit !== null && search === null && startDate === null && endDate === null) {
+                router.push (
+                    `${router.pathname}?page=1&limit=${limit}`
+                )
+    
+            } else if (limit !== null && search !== null && startDate === null && endDate === null) {
+                router.push(
+                    `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
+                )
+                
             } else {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
                 ); 
             }
         }
-        };
+    };
 
     const handleLimit = (val) => {
         setLimit(val)
@@ -154,7 +186,7 @@ const Vidio = () => {
             router.push(`${router.pathname}?page=1&limit=${val}`);
         
         } else {
-            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
         }
         
     };
@@ -241,9 +273,11 @@ const Vidio = () => {
             <div className="col-lg-12 col-md-3">
                 <div className="row">
                     <CardPage 
-                        background='bg-light-info' 
-                        icon='mail-purple.svg' 
-                        color='#8A50FC' 
+                        background='bg-light-info'
+                        icon="new/open-book.svg"
+                        color='#ffffff' 
+                        // icon='mail-purple.svg' 
+                        // color='#8A50FC' 
                         value={video && video.publish != "" ? video.publish : 0}
                         titleValue='Video' 
                         title='Total Publish' 
@@ -252,8 +286,10 @@ const Vidio = () => {
                     />
                     <CardPage 
                         background='bg-light-warning' 
-                        icon='garis-yellow.svg' 
-                        color='#634100' 
+                        icon="new/mail-white.svg"
+                        color='#ffffff'
+                        // icon='garis-yellow.svg' 
+                        // color='#634100' 
                         value='64' 
                         titleValue='Video' 
                         title='Total Author' 
@@ -262,8 +298,10 @@ const Vidio = () => {
                     />
                     <CardPage 
                         background='bg-light-success' 
-                        icon='orang-tambah-green.svg' 
-                        color='#74BBB7' 
+                        icon='user-white.svg' 
+                        color='#ffffff'
+                        // icon='orang-tambah-green.svg' 
+                        // color='#74BBB7' 
                         value={video && video.total_views != "" ? video.total_views : 0}  
                         titleValue='Orang' 
                         title='Total Yang Baca' 
@@ -272,8 +310,10 @@ const Vidio = () => {
                     />
                     <CardPage 
                         background='bg-light-danger' 
-                        icon='kotak-kotak-red.svg' 
-                        color='#F65464' 
+                        icon="Library.svg"
+                        color='#ffffff'
+                        // icon='kotak-kotak-red.svg' 
+                        // color='#F65464' 
                         value={video && video.unpublish != "" ? video.unpublish : 0} 
                         titleValue='Video' 
                         title='Total Belum Publish'
@@ -287,10 +327,10 @@ const Vidio = () => {
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen Video</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Manajemen Video</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/video/tambah'>
-                                <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
+                                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
                                     Tambah Video
                                 </a>
                             </Link>
@@ -323,7 +363,10 @@ const Vidio = () => {
                             </div>
 
                             <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                <div className="col-lg-2 col-xl-2">
+                                    <small className="form-text text-muted">
+                                        Dari Tanggal
+                                    </small>
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={startDate}
@@ -334,11 +377,12 @@ const Vidio = () => {
                                         dateFormat="dd/MM/yyyy"
                                     // minDate={addDays(new Date(), 20)}
                                     />
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
+                                    
                                 </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                <div className="col-lg-2 col-xl-2">
+                                    <small className="form-text text-muted">
+                                        Sampai Tanggal
+                                    </small>
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={endDate}
@@ -350,9 +394,7 @@ const Vidio = () => {
                                         maxDate={addDays(startDate, 20)}
                                         dateFormat="dd/MM/yyyy"
                                     />
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
+                                    
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                                     <button

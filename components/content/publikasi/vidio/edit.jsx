@@ -230,7 +230,7 @@ const EditVideo = () => {
                                     <div className="col-sm-10">
                                         <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}/>
                                         {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:50",{ className: "text-danger" })}
-                                        <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small>
+                                        {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                     </div>
                                 </div>
 
