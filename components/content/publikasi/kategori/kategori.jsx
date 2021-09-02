@@ -146,7 +146,7 @@ const Kategori = () => {
                         <h3 className="card-title font-weight-bolder text-dark">Manajemen Kategori</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/kategori/tambah'>
-                                <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
+                                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
                                     Tambah Kategori
                                 </a>
                             </Link>
