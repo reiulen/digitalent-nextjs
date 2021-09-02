@@ -167,19 +167,19 @@ const ListSubstansi = () => {
             <div className="card-toolbar">
               <Link href="/subvit/substansi/tipe-soal">
                 <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                  <i class="ri-article-fill"></i>
+                  <i className="ri-article-fill"></i>
                   Tipe Soal
                 </a>
               </Link>
               <Link href="/subvit/substansi/clone">
                 <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                  <i class="ri-mastercard-fill"></i>
+                  <i className="ri-mastercard-fill"></i>
                   Clone Test
                 </a>
               </Link>
               <Link href="/subvit/substansi/tambah-step-1">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i class="ri-pencil-fill"></i>
+                  <i className="ri-pencil-fill"></i>
                   Tambah Soal
                 </a>
               </Link>
