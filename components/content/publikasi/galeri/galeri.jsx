@@ -139,16 +139,48 @@ const Galeri = () => {
             )
             setStartDate (null)
             setEndDate (null)
-    
+
+        } else if (startDate === null && endDate !== null) {
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh kosong',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+
+        } else if (startDate !== null && endDate === null) {
+            Swal.fire(
+                'Oops !',
+                'Tanggal sesudah tidak boleh kosong',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+
+
         } else {
-            if (limit !== null && search === null) {
+            if (limit !== null && search !== null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 );
     
-            } else if (limit !== null && search !== null) {
-              `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
-    
+            } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                )
+              
+            
+            } else if (limit !== null && search === null && startDate === null && endDate === null) {
+                router.push (
+                    `${router.pathname}?page=1&limit=${limit}`
+                )
+
+            } else if (limit !== null && search !== null && startDate === null && endDate === null) {
+                router.push(
+                    `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
+                )
+                
             } else {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
@@ -225,7 +257,7 @@ const Galeri = () => {
             {success ?
                     <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                    <div className="alert-text">Berhasil Menambah Data</div>
+                    <div className="alert-text">Berhasil Menambah atau Mengedit Data</div>
                     <div className="alert-close">
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
                         <span aria-hidden="true"><i className="ki ki-close"></i></span>
@@ -239,8 +271,10 @@ const Galeri = () => {
                 <div className="row">
                     <CardPage 
                         background='bg-light-info' 
-                        icon='mail-purple.svg' 
-                        color='#8A50FC' 
+                        icon="new/open-book.svg"
+                        color='#ffffff'
+                        // icon='mail-purple.svg' 
+                        // color='#8A50FC' 
                         value={galeri && galeri.publish != "" ? galeri.publish : 0} 
                         titleValue='Galeri' 
                         title='Total Publish'
@@ -249,8 +283,10 @@ const Galeri = () => {
                     />
                     <CardPage 
                         background='bg-light-warning' 
-                        icon='garis-yellow.svg' 
-                        color='#634100' 
+                        icon="new/mail-white.svg"
+                        color="#ffffff"
+                        // icon='garis-yellow.svg' 
+                        // color='#634100' 
                         value='64' 
                         titleValue='Galeri' 
                         title='Total Author' 
@@ -259,8 +295,10 @@ const Galeri = () => {
                     />
                     <CardPage 
                         background='bg-light-success' 
-                        icon='orang-tambah-green.svg' 
-                        color='#74BBB7' 
+                        icon='user-white.svg' 
+                        color='#ffffff'
+                        // icon='orang-tambah-green.svg' 
+                        // color='#74BBB7' 
                         value='64' 
                         titleValue='K' 
                         title='Total Yang Baca' 
@@ -268,9 +306,11 @@ const Galeri = () => {
                         routePublish = { () => handlePublish("")}
                     />
                     <CardPage 
-                        background='bg-light-danger' 
-                        icon='kotak-kotak-red.svg' 
-                        color='#F65464' 
+                        background='bg-light-danger'
+                        icon="Library.svg"
+                        color='#ffffff' 
+                        // icon='kotak-kotak-red.svg' 
+                        // color='#F65464' 
                         value={galeri && galeri.unpublish != "" ? galeri.unpublish : 0} 
                         titleValue='Galeri' 
                         title='Total Unpublish' 
@@ -287,7 +327,7 @@ const Galeri = () => {
                         <h3 className="card-title font-weight-bolder text-dark">Manajemen Galeri</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/galeri/tambah'>
-                                <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
+                                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
                                     Tambah Galeri
                                 </a>
                             </Link>
@@ -318,7 +358,10 @@ const Galeri = () => {
                                 </div>
                             </div>
                             <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                <div className="col-lg-2 col-xl-2">
+                                    <small className="form-text text-muted">
+                                        Dari Tanggal
+                                    </small>
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={startDate}
@@ -329,11 +372,12 @@ const Galeri = () => {
                                         dateFormat="dd/MM/yyyy"
                                     // minDate={addDays(new Date(), 20)}
                                     />
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
+                                    
                                 </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                <div className="col-lg-2 col-xl-2">
+                                    <small className="form-text text-muted">
+                                        Sampai Tanggal
+                                    </small>
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={endDate}
@@ -345,9 +389,6 @@ const Galeri = () => {
                                         maxDate={addDays(startDate, 20)}
                                         dateFormat="dd/MM/yyyy"
                                     />
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                                     <button
