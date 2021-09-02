@@ -281,7 +281,8 @@ const Berita = () => {
                 <div className="row">
                     <CardPage 
                         background='bg-light-info' 
-                        icon='mail-purple.svg' 
+                        icon="new/open-book.svg"
+                        // icon='mail-purple.svg' 
                         // color='#8A50FC' 
                         color='#ffffff'
                         value={berita && berita.publish != "" ? berita.publish : 0}
@@ -292,7 +293,8 @@ const Berita = () => {
                         />
                     <CardPage 
                         background='bg-light-warning' 
-                        icon='garis-yellow.svg' 
+                        icon="new/mail-white.svg"
+                        // icon='garis-yellow.svg' 
                         // color='#634100' 
                         color="#ffffff"
                         value='64' 
@@ -303,7 +305,8 @@ const Berita = () => {
                         />
                     <CardPage 
                         background='bg-light-success' 
-                        icon='orang-tambah-green.svg' 
+                        icon='user-white.svg' 
+                        // icon='orang-tambah-green.svg' 
                         // color='#74BBB7' 
                         color='#ffffff'
                         value={berita && berita.total_views != "" ? berita.total_views : 0} 
@@ -314,8 +317,10 @@ const Berita = () => {
                         />
                     <CardPage 
                         background='bg-light-danger' 
-                        icon='kotak-kotak-red.svg' 
-                        color='#F65464' 
+                        icon="Library.svg"
+                        // icon='kotak-kotak-red.svg' 
+                        color='#ffffff'
+                        // color='#F65464' 
                         value={berita && berita.unpublish != "" ? berita.unpublish : 0} 
                         titleValue='Berita' 
                         title='Total Belum Publish'
@@ -366,7 +371,10 @@ const Berita = () => {
                                 </div>
                             </div>
                             <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                <div className="col-lg-2 col-xl-2">
+                                    <small className="form-text text-muted">
+                                        Dari Tanggal
+                                    </small>
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={startDate}
@@ -377,11 +385,14 @@ const Berita = () => {
                                         dateFormat="dd/MM/yyyy"
                                     // minDate={addDays(new Date(), 20)}
                                     />
-                                    <small className="form-text text-muted">
+                                    {/* <small className="form-text text-muted">
                                         Dari Tanggal
-                                    </small>
+                                    </small> */}
                                 </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                <div className="col-lg-2 col-xl-2">
+                                    <small className="form-text text-muted">
+                                        Sampai Tanggal
+                                    </small>
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={endDate}
@@ -393,9 +404,9 @@ const Berita = () => {
                                         maxDate={addDays(startDate, 20)}
                                         dateFormat="dd/MM/yyyy"
                                     />
-                                    <small className="form-text text-muted">
+                                    {/* <small className="form-text text-muted">
                                         Sampai Tanggal
-                                    </small>
+                                    </small> */}
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                                 <button

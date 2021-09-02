@@ -114,6 +114,7 @@ const EditBerita = () => {
             }
     
             dispatch(updateBerita(data))
+            console.log("check")
             // console.log(data)
         }
         
