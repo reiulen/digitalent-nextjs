@@ -31159,7 +31159,8 @@ h3 {
 }
 
 .bg-light-danger {
-  background-color: #FFE2E5 !important;
+  background-color: var(--danger) !important;
+  /* background-color: #FFE2E5 !important; */
 }
 
 .bg-light-danger i {
@@ -31178,7 +31179,8 @@ h3 {
 }
 
 .bg-diagonal-light-danger:before {
-  background-color: #FFE2E5 !important;
+  background-color: var(--danger) !important;
+  /* background-color: #FFE2E5 !important; */
 }
 
 .bg-light-light {
