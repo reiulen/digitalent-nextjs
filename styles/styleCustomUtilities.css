@@ -297,6 +297,11 @@ margin-top: 1rem;
 .text-blue-primary{
   color: #215480 !important;
 }
+/* border */
+.border-blue-primary{
+  border: 1px solid #215480 !important;
+
+}
 /* btn rounded-full */
 .btn-rounded-full{
   display: flex;
