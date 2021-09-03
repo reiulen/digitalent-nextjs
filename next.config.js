@@ -9,9 +9,11 @@ module.exports = {
 
     // END_POINT_API: 'http://api.dts.majapahit.id:8002/',
     // END_POINT_API_IMAGE: 'http://api.dts.majapahit.id:8002/storage/',
+    // END_POINT_API_IMAGE_PUBLIKASI:
+    //   "http://dts-publikasi-dev.majapahit.id/storage/",
     END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
     END_POINT_API_IMAGE_PUBLIKASI:
-      "http://dts-publikasi-dev.majapahit.id/storage/",
+      "http://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
     END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
     END_POINT_API_IMAGE_SUBVIT: "http://dts-subvit-dev.majapahit.id/storage/",
