@@ -187,9 +187,9 @@ const Berita = () => {
                 ); 
             }
         }
-      };
+    };
 
-      const handleLimit = (val) => {
+    const handleLimit = (val) => {
         setLimit(val)
         if (search === "") {
             router.push(`${router.pathname}?page=1&limit=${val}`);
@@ -197,40 +197,40 @@ const Berita = () => {
         } else {
             router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
         }
-        
-      };
     
-      const handlePublish = (val) => {
+    };
+    
+    const handlePublish = (val) => {
         if (val !== null || val !== "") {
-          setPublishValue (val)
-    
-          if ( startDate === null && endDate === null && limit === null && search === null){
+            setPublishValue (val)
+
+            if ( startDate === null && endDate === null && limit === null && search === null){
             router.push(`${router.pathname}?publish=${val}`);
-      
-          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-      
-          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-          
-          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-      
-          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
-      
-          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
-          
-          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
-          
-          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-          }
-        }
         
-      }
+            } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+            } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+            
+            } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+        
+            } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+        
+            } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+            
+            } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+            
+            } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+            }
+        }
+    
+    }
 
     return (
         <PageWrapper>
@@ -258,7 +258,7 @@ const Berita = () => {
                     <div className="alert-icon">
                         <i className="flaticon2-checkmark"></i>
                     </div>
-                    <div className="alert-text">Berhasil Menambah Data</div>
+                    <div className="alert-text">Berhasil !</div>
                     <div className="alert-close">
                         <button
                             type="button"
@@ -282,9 +282,9 @@ const Berita = () => {
                     <CardPage 
                         background='bg-light-info' 
                         icon="new/open-book.svg"
+                        color='#ffffff'
                         // icon='mail-purple.svg' 
                         // color='#8A50FC' 
-                        color='#ffffff'
                         value={berita && berita.publish != "" ? berita.publish : 0}
                         titleValue='Berita' 
                         title='Total Publish'
@@ -294,9 +294,9 @@ const Berita = () => {
                     <CardPage 
                         background='bg-light-warning' 
                         icon="new/mail-white.svg"
+                        color="#ffffff"
                         // icon='garis-yellow.svg' 
                         // color='#634100' 
-                        color="#ffffff"
                         value='64' 
                         titleValue='Berita' 
                         title='Total Author'
@@ -306,9 +306,9 @@ const Berita = () => {
                     <CardPage 
                         background='bg-light-success' 
                         icon='user-white.svg' 
+                        color='#ffffff'
                         // icon='orang-tambah-green.svg' 
                         // color='#74BBB7' 
-                        color='#ffffff'
                         value={berita && berita.total_views != "" ? berita.total_views : 0} 
                         titleValue='Orang' 
                         title='Total Yang Baca' 
@@ -318,8 +318,8 @@ const Berita = () => {
                     <CardPage 
                         background='bg-light-danger' 
                         icon="Library.svg"
-                        // icon='kotak-kotak-red.svg' 
                         color='#ffffff'
+                        // icon='kotak-kotak-red.svg' 
                         // color='#F65464' 
                         value={berita && berita.unpublish != "" ? berita.unpublish : 0} 
                         titleValue='Berita' 
@@ -436,7 +436,7 @@ const Berita = () => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>

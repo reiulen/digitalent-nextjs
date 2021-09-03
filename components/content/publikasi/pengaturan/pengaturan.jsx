@@ -14,7 +14,7 @@ const Pengaturan = () => {
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
     const [, forceUpdate] = useState();
     const { loading: allLoading, error: allError, success: allSuccess, setting } = useSelector(state => state.allSettingPublikasi)
-    const { loading: updateLoading, error: updateError, success: updateSuccess } = useSelector(state => state.updateSettingPublikasi)
+    const { loading: updateLoading, error: updateError, success: updateSuccess, isUpdated } = useSelector(state => state.updateSettingPublikasi)
 
     let loading = false
     let error = null
@@ -100,6 +100,10 @@ const Pengaturan = () => {
             {
                 console.log (setting)
             }
+
+            {
+                console.log (isUpdated)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -115,7 +119,8 @@ const Pengaturan = () => {
             {success ?
                 <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                    <div className="alert-text">{updateSuccess}</div>
+                    <div className="alert-text">Pengaturan berhasil diubah</div>
+                    {/* <div className="alert-text">{isUpdated}</div> */}
                     <div className="alert-close">
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
                             <span aria-hidden="true"><i className="ki ki-close"></i></span>
@@ -137,11 +142,12 @@ const Pengaturan = () => {
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Image</label>
                                         <div className="col-sm-5">
-                                            <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} min='0' onBlur={() =>simpleValidator.current.showMessageFor("upload_image")}/> MB
+                                        <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("upload_image")}/> MB
+                                            {/* <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} min='0' onBlur={() =>simpleValidator.current.showMessageFor("upload_image")}/> MB */}
                                             {simpleValidator.current.message(
                                                 "upload_image",
                                                 upload_image,
-                                                "required|numeric|min:0,num",
+                                                "required|numeric|min:1,num",
                                                 { className: "text-danger" }
                                             )}
                                         </div>
@@ -149,11 +155,11 @@ const Pengaturan = () => {
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Imagetron</label>
                                         <div className="col-sm-5">
-                                            <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={upload_imagetron} onChange={(e) => setUploadImagetron(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("upload_imagetron")}/> MB
+                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_imagetron} onChange={(e) => setUploadImagetron(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("upload_imagetron")}/> MB
                                             {simpleValidator.current.message(
                                                 "upload_imagetron",
                                                 upload_imagetron,
-                                                "required|numeric|min:0,num",
+                                                "required|numeric|min:1,num",
                                                 { className: "text-danger" }
                                             )}
                                         </div>
@@ -161,11 +167,11 @@ const Pengaturan = () => {
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Batas Slider</label>
                                         <div className="col-sm-5">
-                                            <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={batas_slider} onChange={(e) => setBatasSlider(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("batas_slider")}/> Page
+                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={batas_slider} onChange={(e) => setBatasSlider(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("batas_slider")}/> Page
                                             {simpleValidator.current.message(
                                                 "batas_slider",
                                                 batas_slider,
-                                                "required|numeric|min:0,num",
+                                                "required|numeric|min:1,num",
                                                 { className: "text-danger" }
                                             )}
                                         </div>
@@ -173,11 +179,11 @@ const Pengaturan = () => {
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Maksimal FAQ</label>
                                         <div className="col-sm-5">
-                                            <input style={{ width: '100px' }} type="number" className="form-control mr-4" value={maxfaq} onChange={(e) => setMaxfaq(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("maxfaq")}/> Page
+                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={maxfaq} onChange={(e) => setMaxfaq(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("maxfaq")}/> Page
                                             {simpleValidator.current.message(
                                                 "maxfaq",
                                                 maxfaq,
-                                                "required|numeric|min:0,num",
+                                                "required|numeric|min:1,num",
                                                 { className: "text-danger" }
                                             )}
                                         </div>
