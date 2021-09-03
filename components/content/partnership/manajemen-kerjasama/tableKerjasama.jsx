@@ -765,7 +765,7 @@ const Table = () => {
                           (items, index) => {
                             return (
                               <tr key={index}>
-                                <td className="text-center align-middle">
+                                <td className="text-left align-middle">
                                   <button
                                     className="btn"
                                     style={{
