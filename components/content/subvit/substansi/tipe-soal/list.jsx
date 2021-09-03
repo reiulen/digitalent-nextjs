@@ -192,18 +192,28 @@ const ListTipeSoal = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+          <div className="card-header border-0 mt-3">
+            <h1
+              className="card-title text-dark mt-2"
+              style={{ fontSize: "24px", lineHeight: "33px" }}
+            >
               Tipe Soal Tes Substansi
-            </h3>
-            <div className="card-toolbar"></div>
+            </h1>
+            <div className="card-toolbar">
+              <Link href="/subvit/substansi/tipe-soal/tambah">
+                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block px-0">
+                  <i className="ri-pencil-fill"></i>
+                  Tambah Tipe Soal
+                </a>
+              </Link>
+            </div>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-7 col-xl-7 col-sm-9">
-                  <div className="input-icon">
+                  {/* <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
@@ -216,26 +226,41 @@ const ListTipeSoal = () => {
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
+                  </div> */}
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                    <input
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
 
-                <div className="col-lg-2 col-xl-2 col-sm-3">
+                {/* <div className="col-lg-2 col-xl-2 col-sm-3">
                   <button
                     className="btn btn-light-primary font-weight-bold"
                     onClick={handleSearch}
                   >
                     Cari
                   </button>
-                </div>
+                </div> */}
 
-                <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto">
-                  <Link href="/subvit/substansi/tipe-soal/tambah">
-                    <a className="btn btn-sm btn-primary px-6 font-weight-bold btn-block px-0">
-                      <i className="flaticon2-notepad"></i>
-                      Tambah Tipe Soal
-                    </a>
-                  </Link>
-                </div>
+                <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto"></div>
               </div>
             </div>
 
@@ -287,29 +312,19 @@ const ListTipeSoal = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`/subvit/substansi/tipe-soal/${row.id}`}
-                                  title="Edit"
-                                />
-                                <button
-                                  onClick={() => handleDelete(row.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
+                              <td className="align-middle d-flex">
+                                <Link
+                                  href={`/subvit/substansi/tipe-soal/${row.id}`}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(row.id)}
+                                >
+                                  <i class="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>

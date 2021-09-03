@@ -3912,6 +3912,7 @@ fieldset:disabled a.btn {
   color: #ffffff !important;
   background-color: var(--primary);
   border-color: var(--primary);
+  font-weight: 600;
   /* background-color: #3699FF; */
   /* border-color: #3699FF; */
   -webkit-box-shadow: none;
@@ -3929,6 +3930,7 @@ fieldset:disabled a.btn {
   background-color: var(--primary-shade);
   border-color: var(--primary-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #1086ff;
   border-color: #037fff; */
 }
@@ -3937,6 +3939,7 @@ fieldset:disabled a.btn {
   background-color: var(--primary-shade);
   border-color: var(--primary-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #1086ff;
   border-color: #037fff; */
   -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
@@ -3947,6 +3950,7 @@ fieldset:disabled a.btn {
   background-color: var(--primary);
   border-color: var(--primary);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #3699FF;
   border-color: #3699FF; */
 }
@@ -3955,6 +3959,7 @@ fieldset:disabled a.btn {
   background-color: var(--primary-shade);
   border-color: var(--primary-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #037fff;
   border-color: #0079f5; */
 }
@@ -3968,6 +3973,7 @@ fieldset:disabled a.btn {
   color: #ffffff !important;
   background-color: var(--secondary);
   border-color: var(--secondary);
+  font-weight: 600;
   /* background-color: #3699FF; */
   /* border-color: #3699FF; */
   -webkit-box-shadow: none;
@@ -3985,6 +3991,7 @@ fieldset:disabled a.btn {
   background-color: var(--secondary-shade);
   border-color: var(--secondary-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #1086ff;
   border-color: #037fff; */
 }
@@ -3993,6 +4000,7 @@ fieldset:disabled a.btn {
   background-color: var(--secondary-shade);
   border-color: var(--secondary-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #1086ff;
   border-color: #037fff; */
   -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
@@ -4003,6 +4011,7 @@ fieldset:disabled a.btn {
   background-color: var(--secondary);
   border-color: var(--secondary);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #3699FF;
   border-color: #3699FF; */
 }
@@ -4011,6 +4020,7 @@ fieldset:disabled a.btn {
   background-color: var(--secondary-shade);
   border-color: var(--secondary-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #037fff;
   border-color: #0079f5; */
 }
@@ -4024,6 +4034,7 @@ fieldset:disabled a.btn {
   color: #ffffff !important;
   background-color: var(--success);
   border-color: var(--success);
+  font-weight: 600;
   /* background-color: #3699FF; */
   /* border-color: #3699FF; */
   -webkit-box-shadow: none;
@@ -4041,6 +4052,7 @@ fieldset:disabled a.btn {
   background-color: var(--success-shade);
   border-color: var(--success-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #1086ff;
   border-color: #037fff; */
 }
@@ -4049,6 +4061,7 @@ fieldset:disabled a.btn {
   background-color: var(--success-shade);
   border-color: var(--success-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #1086ff;
   border-color: #037fff; */
   -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
@@ -4059,6 +4072,7 @@ fieldset:disabled a.btn {
   background-color: var(--success);
   border-color: var(--success);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #3699FF;
   border-color: #3699FF; */
 }
@@ -4067,6 +4081,7 @@ fieldset:disabled a.btn {
   background-color: var(--success-shade);
   border-color: var(--success-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #037fff;
   border-color: #0079f5; */
 }
@@ -4080,6 +4095,7 @@ fieldset:disabled a.btn {
   color: #ffffff !important;
   background-color: var(--warning);
   border-color: var(--warning);
+  font-weight: 600;
   /* background-color: #3699FF; */
   /* border-color: #3699FF; */
   -webkit-box-shadow: none;
@@ -4097,6 +4113,7 @@ fieldset:disabled a.btn {
   background-color: var(--warning-shade);
   border-color: var(--warning-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #1086ff;
   border-color: #037fff; */
 }
@@ -4105,6 +4122,7 @@ fieldset:disabled a.btn {
   background-color: var(--warning-shade);
   border-color: var(--warning-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #1086ff;
   border-color: #037fff; */
   -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
@@ -4115,6 +4133,7 @@ fieldset:disabled a.btn {
   background-color: var(--warning);
   border-color: var(--warning);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #3699FF;
   border-color: #3699FF; */
 }
@@ -4123,6 +4142,7 @@ fieldset:disabled a.btn {
   background-color: var(--warning-shade);
   border-color: var(--warning-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #037fff;
   border-color: #0079f5; */
 }
@@ -4136,6 +4156,7 @@ fieldset:disabled a.btn {
   color: #ffffff !important;
   background-color: var(--danger);
   border-color: var(--danger);
+  font-weight: 600;
   /* background-color: #3699FF; */
   /* border-color: #3699FF; */
   -webkit-box-shadow: none;
@@ -4153,6 +4174,7 @@ fieldset:disabled a.btn {
   background-color: var(--danger-shade);
   border-color: var(--danger-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #1086ff;
   border-color: #037fff; */
 }
@@ -4161,6 +4183,7 @@ fieldset:disabled a.btn {
   background-color: var(--danger-shade);
   border-color: var(--danger-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #1086ff;
   border-color: #037fff; */
   -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
@@ -4171,6 +4194,7 @@ fieldset:disabled a.btn {
   background-color: var(--danger);
   border-color: var(--danger);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #3699FF;
   border-color: #3699FF; */
 }
@@ -4179,10 +4203,72 @@ fieldset:disabled a.btn {
   background-color: var(--danger-shade);
   border-color: var(--danger-shade);
   border-radius: 30px;
+  font-weight: 600;
   /* background-color: #037fff;
   border-color: #0079f5; */
 }
 .btn-danger-rounded-full:not(:disabled):not(.disabled):active:focus, .btn-danger-rounded-full:not(:disabled):not(.disabled).active:focus, .show > .btn-danger-rounded-full.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+  border-radius: 30px;
+}
+
+.btn-light-ghost-rounded-full {
+  color: var(--primary) !important;
+  background-color: var(--light);
+  border-color: var(--light);
+  font-weight: 600;
+  /* background-color: #3699FF; */
+  /* border-color: #3699FF; */
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 30px;
+}
+
+.btn-light-ghost-rounded-full i {
+  color: var(--primary);
+}
+
+
+.btn-light-ghost-rounded-full:hover {
+  color: var(--primary);
+  background-color: var(--gray-shade);
+  border-color: var(--gray-shade);
+  border-radius: 30px;
+  font-weight: 600;
+  /* background-color: #1086ff;
+  border-color: #037fff; */
+}
+.btn-light-ghost-rounded-full:focus, .btn-light-rounded-full.focus {
+  color: var(--primary);
+  background-color: var(--gray-shade);
+  border-color: var(--gray-shade);
+  border-radius: 30px;
+  font-weight: 600;
+  /* background-color: #1086ff;
+  border-color: #037fff; */
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+}
+.btn-light-ghost-rounded-full.disabled, .btn-light-rounded-full:disabled {
+  color: var(--gray-shade);
+  background-color: var(--primary-tint);
+  border-color: var(--primary-tint);
+  border-radius: 30px;
+  font-weight: 600;
+  /* background-color: #3699FF;
+  border-color: #3699FF; */
+}
+.btn-light-ghost-rounded-full:not(:disabled):not(.disabled):active, .btn-light-rounded-full:not(:disabled):not(.disabled).active, .show > .btn-light-rounded-full.dropdown-toggle {
+  color: var(--gray-shade);
+  background-color: var(--primary-tint);
+  border-color: var(--primary-tint);
+  border-radius: 30px;
+  font-weight: 600;
+  /* background-color: #037fff;
+  border-color: #0079f5; */
+}
+.btn-light-ghost-rounded-full:not(:disabled):not(.disabled):active:focus, .btn-light-rounded-full:not(:disabled):not(.disabled).active:focus, .show > .btn-light-rounded-full.dropdown-toggle:focus {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
   box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
   border-radius: 30px;
