@@ -104,9 +104,19 @@ const Tambah = () => {
         dismissOnDestroy: false,
       }).then((result) => {
         if (result.value) {
-          let allDataPart = [{institution_name:institution_name,date:date,title:title,period:period,periodUnit:periodUnit,cooperationC_id:cooperationC_id,AllCooperation:AllCooperation}]
+          let allDataPart = [
+            {
+              institution_name: institution_name,
+              date: date,
+              title: title,
+              period: period,
+              periodUnit: periodUnit,
+              cooperationC_id: cooperationC_id,
+              AllCooperation: AllCooperation,
+            },
+          ];
 
-          sessionStorage.setItem('dataBefore',JSON.stringify(allDataPart));
+          sessionStorage.setItem("dataBefore", JSON.stringify(allDataPart));
 
           router.push({
             pathname: "/partnership/manajemen-kerjasama/submit",
@@ -119,7 +129,6 @@ const Tambah = () => {
             //   cooperationC_id: cooperationC_id,
             //   AllCooperation: JSON.stringify(AllCooperation),
 
-            
             // },
           });
         }
@@ -186,7 +195,122 @@ const Tambah = () => {
           </div>
           <div className="card-body">
             <form onSubmit={submit}>
-              <div className="form-group row">
+
+              <div className="fv-row mb-10">
+                <label className="required fw-bold fs-6 mb-2">
+                      Tanggal
+                    </label>
+
+                  <input
+                    readOnly
+                    value={date}
+                    type="text"
+                    className="form-control mb-3 mb-lg-0"
+                  />
+                  {error.date ? <p className="error-text">{error.date}</p> : ""}
+
+                {/* <input
+                    readOnly
+                      type="text"
+                      value={allMK.email}
+                      name="text_input"
+                      className="form-control form-control-solid mb-3 mb-lg-0"
+                      placeholder="Masukan Alamat E-mail"
+                    /> */}
+
+
+
+              </div>
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2">
+                      Lembaga
+                    </label>
+                    <Select
+                      onFocus={() =>
+                        setError({ ...error, institution_name: "" })
+                      }
+                      className="basic-single"
+                      classNamePrefix="select"
+                      placeholder="Pilih Lembaga"
+                      defaultValue={allMK?.stateListMitra[0]}
+                      isDisabled={false}
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => changeInstitusi(e.label)}
+                      options={allMK?.stateListMitra}
+                    />
+                    {error.institution_name ? (
+                      <p className="error-text">{error.institution_name}</p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="col-12 col-sm-6">
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2">Email</label>
+                    <input
+                    readOnly
+                      type="text"
+                      value={allMK.email}
+                      name="text_input"
+                      className="form-control form-control-solid mb-3 mb-lg-0"
+                      placeholder="Masukan Alamat E-mail"
+                    />
+
+                    {/* <input
+                      readOnly
+                      type="text"
+                      value={allMK.email}
+                      className="form-control"
+                      placeholder="Masukan nama lembaga"
+                    /> */}
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2">Periode Kerjasama</label>
+                    <input
+                    onFocus={() => setError({ ...error, period: "" })}
+                        value={period}
+                      type="text"
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0"
+                      placeholder="Masukkan Lama Kerjasama"
+                      onChange={(e) => onChangePeriod(e)}
+                    />
+                    {error.period ? (
+                        <p className="error-text">{error.period}</p>
+                      ) : (
+                        ""
+                      )}
+                  </div>
+
+                </div>
+                <div className="col-12 col-sm-6">
+                  <div className="fv-row mb-10">
+                    <label className="required fw-bold fs-6 mb-2"></label>
+                    <input
+                    disabled
+                      type="text"
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0 mt-2"
+                      placeholder="Tahun"
+                      
+                    />
+                  </div>
+
+                </div>
+              </div>
+              {/* <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
@@ -194,14 +318,6 @@ const Tambah = () => {
                   Nama Lembaga
                 </label>
                 <div className="col-sm-6">
-                  {/* <select onFocus={()=>setError({...error,institution_name:""})} className="form-control" onChange={(e)=>changeInstitusi(e.target.value)}>
-                    <option value="">Pilih lembaga</option>
-                    {allMK.stateListMitra.length=== 0?"":allMK.stateListMitra.data.map((items,index)=>{
-                      return(
-                        <option key={index} value={items.name}>{items.name}</option>
-                        )
-                    })}
-                  </select> */}
                   <Select
                     onFocus={()=>setError({...error,institution_name:""})}
                     className="basic-single"
@@ -223,8 +339,9 @@ const Tambah = () => {
                     ""
                   )}
                 </div>
-              </div>
-              <div className="form-group row">
+              </div> */}
+
+              {/* <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
@@ -240,63 +357,41 @@ const Tambah = () => {
                     placeholder="Masukan nama lembaga"
                   />
                 </div>
-              </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Tanggal
-                </label>
-                <div className="col-sm-3">
-                  <input
-                    readOnly
-                    value={date}
-                    type="text"
-                    className="form-control"
-                  />
-                  {error.date ? <p className="error-text">{error.date}</p> : ""}
-                </div>
-              </div>
+              </div> */}
 
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Judul kerjasama
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    onFocus={() => setError({ ...error, title: "" })}
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-                  {error.title ? (
+              <div className="fv-row mb-10">
+                <label className="required fw-bold fs-6 mb-2">Judul Kerjasama</label>
+                <input
+                onFocus={() => setError({ ...error, title: "" })}
+                  type="text"
+                  name="text_input"
+                  className="form-control mb-3 mb-lg-0"
+                  placeholder="Masukan judul kerjasama"
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                {error.title ? (
                     <p className="error-text">{error.title}</p>
                   ) : (
                     ""
                   )}
-                </div>
+
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Kategori kerjasama
                 </label>
-                <div className="col-sm-10">
+                <div>
                   <select
                     onFocus={() => setError({ ...error, cooperationC_id: "" })}
                     onChange={(e) => changeSetCooperationC_id(e.target.value)}
                     name=""
                     id=""
                     className="form-control"
-                  >   
+                  >
                     <option value="">Pilih Kategory Kerjasama</option>
                     {allMK.cooperationActiveSelect.length === 0
                       ? ""
@@ -318,7 +413,7 @@ const Tambah = () => {
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
