@@ -409,6 +409,7 @@ const EditMitra = () => {
                         id="inputGroupFile04"
                         accept="image/png,image/jpg"
                         // onChange={onChangeGambar}
+                        
                       />
                       <label
                         className="custom-file-label"
