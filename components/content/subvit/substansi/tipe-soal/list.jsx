@@ -192,11 +192,21 @@ const ListTipeSoal = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+          <div className="card-header border-0 mt-3">
+            <h1
+              className="card-title text-dark mt-2"
+              style={{ fontSize: "24px", lineHeight: "33px" }}
+            >
               Tipe Soal Tes Substansi
-            </h3>
-            <div className="card-toolbar"></div>
+            </h1>
+            <div className="card-toolbar">
+              <Link href="/subvit/substansi/tipe-soal/tambah">
+                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block px-0">
+                  <i className="ri-pencil-fill"></i>
+                  Tambah Tipe Soal
+                </a>
+              </Link>
+            </div>
           </div>
 
           <div className="card-body pt-0">
@@ -228,14 +238,7 @@ const ListTipeSoal = () => {
                   </button>
                 </div>
 
-                <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto">
-                  <Link href="/subvit/substansi/tipe-soal/tambah">
-                    <a className="btn btn-sm btn-primary px-6 font-weight-bold btn-block px-0">
-                      <i className="flaticon2-notepad"></i>
-                      Tambah Tipe Soal
-                    </a>
-                  </Link>
-                </div>
+                <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto"></div>
               </div>
             </div>
 

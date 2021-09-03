@@ -8,15 +8,25 @@ import dynamic from "next/dynamic";
 // import Header from "./header.component";
 // import HeaderMobile from "./header-mobile.component";
 
-const Sidebar = dynamic(() => import("./sidebar.component"));
-const Header = dynamic(() => import("./header.component"));
-const HeaderMobile = dynamic(() => import("./header-mobile.component"));
+const Sidebar = dynamic(() => import("./sidebar.component"), {
+  ssr: false,
+});
+const Header = dynamic(() => import("./header.component"), {
+  ssr: false,
+});
+const HeaderMobile = dynamic(() => import("./header-mobile.component"), {
+  ssr: false,
+});
 // Content
 // import SubHeader from "./subheader.component";
-const SubHeader = dynamic(() => import("./subheader.component"));
+const SubHeader = dynamic(() => import("./subheader.component"), {
+  ssr: false,
+});
 // Wrapper
 // import ContentWrapper from "../wrapper/content.wrapper";
-const ContentWrapper = dynamic(() => import("../wrapper/content.wrapper"));
+const ContentWrapper = dynamic(() => import("../wrapper/content.wrapper"), {
+  ssr: false,
+});
 
 import Footer from "./footer.component";
 import SimpleReactValidator from "simple-react-validator";
