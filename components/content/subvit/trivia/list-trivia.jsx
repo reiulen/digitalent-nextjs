@@ -154,10 +154,13 @@ const ListTrivia = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+          <div className="card-header border-0 mt-3">
+            <h1
+              className="card-title text-dark mt-2"
+              style={{ fontSize: "24px" }}
+            >
               List Trivia
-            </h3>
+            </h1>
             <div className="card-toolbar">
               <Link href="/subvit/trivia/tambah">
                 <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">

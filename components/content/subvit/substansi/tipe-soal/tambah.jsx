@@ -195,11 +195,11 @@ const TambahTipeSoal = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 text-right">
-                  <button className="btn btn-light-primary btn-sm mr-2">
+                  <button className="btn btn-light-ghost-rounded-full mr-2">
                     Simpan & Lanjut
                   </button>
                   <button
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary-rounded-full"
                     onClick={saveDraft}
                     type="button"
                   >
