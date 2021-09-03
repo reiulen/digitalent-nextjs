@@ -55,8 +55,8 @@ a {
 }
 
 .form-control {
-  background: #f3f6f9 !important;
-  border: #f3f6f9 !important;
+  /* background: #f3f6f9 !important;
+  border: #f3f6f9 !important; */
 }
 
 .rti--container {

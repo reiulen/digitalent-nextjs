@@ -6,7 +6,7 @@ import LoadingPage from "../../../components/LoadingPage";
 // import ListSubstansi from '../../../components/content/subvit/substansi/list-substansi'
 const ListSubstansi = dynamic(
   () => import("../../../components/content/subvit/substansi/list-substansi"),
-  { loading: () => <LoadingPage /> }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
 import { getAllSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions";

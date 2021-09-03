@@ -10,7 +10,7 @@ import { wrapper } from "../../../redux/store";
 
 const ListSurvey = dynamic(
   () => import("../../../components/content/subvit/survey/list-survey"),
-  { loading: () => <LoadingPage /> }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
 export default function Survey() {

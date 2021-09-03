@@ -57,8 +57,8 @@ const EditVideo = () => {
     const [isi_video, setIsiVideo] = useState(video.isi_video);
     const [gambar, setGambar] = useState(video.gambar)
     const [url_video, setUrlVideo] = useState(video.url_video)
-    const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
-    // const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
+    // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
+    const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [gambarName, setGambarName] = useState (video.gambar)
     const [kategori_id, setKategoriId] = useState(video.kategori_id) 
     const [users_id, setUserId] = useState(video.users_id)
@@ -80,8 +80,8 @@ const EditVideo = () => {
                 setGambarPreview(reader.result);
             }
             };
-            reader.readAsDataURL(e.target.files[0])
-            // console.log (reader.readAsDataURL(e.target.files[0]))
+            // reader.readAsDataURL(e.target.files[0])
+            console.log (reader.readAsDataURL(e.target.files[0]))
             setGambarName(e.target.files[0].name)
         } 
         else {
@@ -125,7 +125,7 @@ const EditVideo = () => {
         }
 
         dispatch(updateVideo(data))
-        // console.log(data)
+        console.log(data)
     }
 
     const onNewReset = () => {
@@ -134,53 +134,56 @@ const EditVideo = () => {
         })
     }
 
-    const onSetPublish = (e) => {
-        Swal.fire({
-            title: 'Ubah status publikasi?',
-            text: "Status publikasi akan berubah",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Ya !",
-            cancelButtonText: "Batal",
-          })
+    // const onSetPublish = (e) => {
+    //     Swal.fire({
+    //         title: 'Ubah status publikasi?',
+    //         text: "Status publikasi akan berubah",
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Ya !",
+    //         cancelButtonText: "Batal",
+    //       })
           
-          .then((result) => {
-            if (result.isConfirmed) {
-              Swal.fire(
-                'Berhasil',
-                'Status publikasi telah diubah',
-                'success'
-              )
+    //       .then((result) => {
+    //         if (result.isConfirmed) {
+    //           Swal.fire(
+    //             'Berhasil',
+    //             'Status publikasi telah diubah',
+    //             'success'
+    //           )
                 
-              console.log (e)
-              setPublish(e)
+    //         //   console.log (e)
+    //           setPublish(e)
 
-            } else {
-                Swal.fire(
-                    'Batal',
-                    'Status publikasi telah batal diubah',
-                    'info'
-                  )
+    //         } else {
+    //             Swal.fire(
+    //                 'Batal',
+    //                 'Status publikasi telah batal diubah',
+    //                 'info'
+    //               )
 
-                console.log (!e)
-                setPublish(!e)
-            }
-          })
+    //             // console.log (!e)
+    //             setPublish(!e)
+    //         }
+    //       })
           
-        // Swal.fire (
-        //     'Berhasil',
-        //     'Status publikasi telah diubah',
-        //     'success'
-        // )
+    //     // Swal.fire (
+    //     //     'Berhasil',
+    //     //     'Status publikasi telah diubah',
+    //     //     'success'
+    //     // )
 
-        // setPublish(e)
-    }
+    //     // setPublish(e)
+    // }
 
     return (
         <>
             <PageWrapper>
+                {/* {
+                    console.log (video)
+                } */}
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                         <div className="alert-icon"><i className="flaticon-warning"></i></div>

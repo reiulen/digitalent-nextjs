@@ -251,7 +251,7 @@ const Vidio = () => {
                     <div className="alert-icon">
                         <i className="flaticon2-checkmark"></i>
                     </div>
-                    <div className="alert-text">Berhasil Menambah Data</div>
+                    <div className="alert-text">Berhasil !</div>
                     <div className="alert-close">
                         <button
                         type="button"
@@ -273,9 +273,9 @@ const Vidio = () => {
             <div className="col-lg-12 col-md-3">
                 <div className="row">
                     <CardPage 
-                        background='bg-light-info'
+                        background='bg-light-info' 
                         icon="new/open-book.svg"
-                        color='#ffffff' 
+                        color='#ffffff'
                         // icon='mail-purple.svg' 
                         // color='#8A50FC' 
                         value={video && video.publish != "" ? video.publish : 0}
@@ -425,7 +425,7 @@ const Vidio = () => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -560,7 +560,7 @@ const Vidio = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data 120</p>
+                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {video.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''
