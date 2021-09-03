@@ -219,7 +219,7 @@ const Vidio = () => {
                     <div className="alert-icon">
                         <i className="flaticon2-checkmark"></i>
                     </div>
-                    <div className="alert-text">Berhasil Menambah Data</div>
+                    <div className="alert-text">Berhasil !</div>
                     <div className="alert-close">
                         <button
                         type="button"
@@ -242,8 +242,10 @@ const Vidio = () => {
                 <div className="row">
                     <CardPage 
                         background='bg-light-info' 
-                        icon='mail-purple.svg' 
-                        color='#8A50FC' 
+                        icon="new/open-book.svg"
+                        color='#ffffff'
+                        // icon='mail-purple.svg' 
+                        // color='#8A50FC' 
                         value={video && video.publish != "" ? video.publish : 0}
                         titleValue='Video' 
                         title='Total Publish' 
@@ -252,8 +254,10 @@ const Vidio = () => {
                     />
                     <CardPage 
                         background='bg-light-warning' 
-                        icon='garis-yellow.svg' 
-                        color='#634100' 
+                        icon="new/mail-white.svg"
+                        color='#ffffff'
+                        // icon='garis-yellow.svg' 
+                        // color='#634100' 
                         value='64' 
                         titleValue='Video' 
                         title='Total Author' 
@@ -262,8 +266,10 @@ const Vidio = () => {
                     />
                     <CardPage 
                         background='bg-light-success' 
-                        icon='orang-tambah-green.svg' 
-                        color='#74BBB7' 
+                        icon='user-white.svg' 
+                        color='#ffffff'
+                        // icon='orang-tambah-green.svg' 
+                        // color='#74BBB7' 
                         value={video && video.total_views != "" ? video.total_views : 0}  
                         titleValue='Orang' 
                         title='Total Yang Baca' 
@@ -272,8 +278,10 @@ const Vidio = () => {
                     />
                     <CardPage 
                         background='bg-light-danger' 
-                        icon='kotak-kotak-red.svg' 
-                        color='#F65464' 
+                        icon="Library.svg"
+                        color='#ffffff'
+                        // icon='kotak-kotak-red.svg' 
+                        // color='#F65464' 
                         value={video && video.unpublish != "" ? video.unpublish : 0} 
                         titleValue='Video' 
                         title='Total Belum Publish'
@@ -287,10 +295,10 @@ const Vidio = () => {
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Managemen Video</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Manajemen Video</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/video/tambah'>
-                                <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
+                                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
                                     Tambah Video
                                 </a>
                             </Link>
@@ -383,7 +391,7 @@ const Vidio = () => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -518,7 +526,7 @@ const Vidio = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data 120</p>
+                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {video.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''

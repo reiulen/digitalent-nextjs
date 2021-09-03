@@ -258,7 +258,7 @@ const Berita = () => {
                     <div className="alert-icon">
                         <i className="flaticon2-checkmark"></i>
                     </div>
-                    <div className="alert-text">Berhasil Menambah atau Mengedit Data</div>
+                    <div className="alert-text">Berhasil !</div>
                     <div className="alert-close">
                         <button
                             type="button"
@@ -436,7 +436,7 @@ const Berita = () => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
