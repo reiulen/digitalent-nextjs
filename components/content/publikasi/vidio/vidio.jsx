@@ -298,7 +298,7 @@ const Vidio = () => {
                         <h3 className="card-title font-weight-bolder text-dark">Manajemen Video</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/video/tambah'>
-                                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                <a className="btn btn-light-secondary px-6 font-weight-bold btn-block ">
                                     Tambah Video
                                 </a>
                             </Link>
@@ -331,7 +331,10 @@ const Vidio = () => {
                             </div>
 
                             <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                <div className="col-lg-2 col-xl-2">
+                                    <small className="form-text text-muted">
+                                        Dari Tanggal
+                                    </small>
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={startDate}
@@ -342,11 +345,12 @@ const Vidio = () => {
                                         dateFormat="dd/MM/yyyy"
                                     // minDate={addDays(new Date(), 20)}
                                     />
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
+                                    
                                 </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                <div className="col-lg-2 col-xl-2">
+                                    <small className="form-text text-muted">
+                                        Sampai Tanggal
+                                    </small>
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={endDate}
@@ -358,9 +362,7 @@ const Vidio = () => {
                                         maxDate={addDays(startDate, 20)}
                                         dateFormat="dd/MM/yyyy"
                                     />
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
+                                   
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                                     <button

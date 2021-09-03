@@ -165,7 +165,7 @@ const EditArtikel = () => {
             // }
 
             dispatch(updateArtikel(data));
-            // console.log(data)
+            console.log(data)
           }
       });
       

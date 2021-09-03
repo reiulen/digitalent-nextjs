@@ -27,6 +27,7 @@ const EditVideo = () => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+    const [, forceUpdate] = useState();
     const { video } = useSelector(state => state.detailVideo)
     const { error, success, loading } = useSelector(state => state.updatedVideo)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -76,12 +77,13 @@ const EditVideo = () => {
             const reader = new FileReader();
             reader.onload = () => {
             if (reader.readyState === 2) {
+                console.log (reader)
                 setGambar(reader.result);
                 setGambarPreview(reader.result);
             }
             };
-            // reader.readAsDataURL(e.target.files[0])
-            console.log (reader.readAsDataURL(e.target.files[0]))
+            reader.readAsDataURL(e.target.files[0])
+            // console.log (reader.readAsDataURL(e.target.files[0]))
             setGambarName(e.target.files[0].name)
         } 
         else {
@@ -101,31 +103,67 @@ const EditVideo = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (error) {
-            dispatch(clearErrors())
-        }
+        if (simpleValidator.current.allValid()){
+            if (error) {
+                dispatch(clearErrors())
+            }
+    
+            if (success) {
+                dispatch({
+                    type: UPDATE_VIDEO_RESET 
+                })
+            }
+    
+            const data = {
+                judul_video,
+                isi_video,
+                url_video,
+                gambar,
+                kategori_id,
+                users_id,
+                tag,
+                publish,
+                id,
+                _method
+            }
+    
+            // dispatch(updateVideo(data))
+            // console.log(data)
 
-        if (success) {
-            dispatch({
-                type: UPDATE_VIDEO_RESET 
-            })
-        }
 
-        const data = {
-            judul_video,
-            isi_video,
-            url_video,
-            gambar,
-            kategori_id,
-            users_id,
-            tag,
-            publish,
-            id,
-            _method
-        }
-
-        dispatch(updateVideo(data))
-        console.log(data)
+            Swal.fire({
+                title: "Apakah anda yakin ?",
+                text: "Data ini akan diedit !",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Ya !",
+                cancelButtonText: "Batal",
+              })
+                .then((result) => {
+                  if (result.isConfirmed) {
+                    // if (success) {
+                    //   dispatch({
+                    //     // type: NEW_ARTIKEL_RESET
+                    //     type: UPDATE_ARTIKEL_RESET,
+                    //   });
+                    // }
+        
+                    dispatch(updateVideo(data))
+                    // console.log(data)
+                  }
+              });
+        } else {
+            simpleValidator.current.showMessages();
+            forceUpdate(1);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Isi data dengan benar !",
+            });
+          }
+        
     }
 
     const onNewReset = () => {
@@ -336,9 +374,9 @@ const EditVideo = () => {
                                             offstyle='danger'
                                             size='sm'
                                             width={30}
-                                            onChange={(checked) => onSetPublish(checked)}
+                                            // onChange={(checked) => onSetPublish(checked)}
                                             // onClick={(checked) => onSetPublish(checked)}
-                                            // onChange={(checked) => setPublish(checked)}
+                                            onChange={(checked) => setPublish(checked)}
                                         />
                                     </div>
                                 </div>
