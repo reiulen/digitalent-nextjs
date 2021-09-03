@@ -3912,6 +3912,7 @@ fieldset:disabled a.btn {
   color: #ffffff !important;
   background-color: var(--primary);
   border-color: var(--primary);
+  font-weight: 600;
   /* background-color: #3699FF; */
   /* border-color: #3699FF; */
   -webkit-box-shadow: none;

@@ -353,7 +353,7 @@ const Artikel = () => {
             </h3>
             <div className="card-toolbar">
               <Link href="/publikasi/artikel/tambah">
-                <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bold btn-block ">
+                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
                   Tambah Artikel
                 </a>
               </Link>
