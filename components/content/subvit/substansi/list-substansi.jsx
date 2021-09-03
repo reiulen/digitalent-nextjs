@@ -157,7 +157,7 @@ const ListSubstansi = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
+          <div className="card-header border-0 mt-3">
             <h1
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
@@ -190,7 +190,7 @@ const ListSubstansi = () => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-5 col-xl-5">
-                  <div className="input-icon">
+                  {/* <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
@@ -202,17 +202,31 @@ const ListSubstansi = () => {
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
+                  </div> */}
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                    <input
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
 
-                <div className="col-lg-1 col-xl-1">
-                  <button
-                    className="btn btn-sm btn-light-primary btn-block mt-2 font-weight-bold"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
-                </div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
@@ -280,39 +294,31 @@ const ListSubstansi = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
-                                <ButtonAction
-                                  icon="setting.svg"
-                                  link={`/subvit/substansi/report?id=${subtance.id}`}
-                                  title="Report"
-                                />
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`/subvit/substansi/edit?id=${subtance.id}`}
-                                  title="Edit"
-                                />
-                                <ButtonAction
-                                  icon="detail.svg"
-                                  link={`/subvit/substansi/${subtance.id}`}
-                                  title="Detail"
-                                />
-                                <button
-                                  onClick={() => handleDelete(subtance.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
+                              <td className="align-middle d-flex">
+                                <Link
+                                  href={`/subvit/substansi/edit?id=${subtance.id}`}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <Link href={`/subvit/substansi/${subtance.id}`}>
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-eye-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <Link
+                                  href={`/subvit/substansi/report?id=${subtance.id}`}
+                                >
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-todo-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(subtance.id)}
+                                >
+                                  <i class="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>

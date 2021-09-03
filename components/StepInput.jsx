@@ -1,9 +1,9 @@
 import React from "react";
 
 const StepInput = ({ step }) => {
-  let stepBg1 = "bg-light";
-  let stepBg2 = "bg-light";
-  let stepBg3 = "bg-light";
+  let stepBg1 = "bg-neutral";
+  let stepBg2 = "bg-neutral";
+  let stepBg3 = "bg-neutral";
   let stepNumber1 = "text-primary";
   let stepNumber2 = "text-primary";
   let stepNumber3 = "text-primary";
@@ -21,7 +21,7 @@ const StepInput = ({ step }) => {
   return (
     <div className="col-12">
       <div className="row bg-gray-shade">
-        <div className={`col-4 d-flex rounded-top ${stepBg1}`}>
+        <div className={`col-4 d-flex rounded-top ${stepBg1} bg-neutral`} >
           <div className="my-5 mx-3">
             <h1 className={`badge badge-secondary h1 ${stepNumber1}`}>1</h1>
           </div>

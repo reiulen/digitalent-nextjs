@@ -163,48 +163,49 @@ const ListSurvey = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+          <div className="card-header border-0 mt-3">
+            <h1
+              className="card-title text-dark mt-2"
+              style={{ fontSize: "24px" }}
+            >
               List Survey
-            </h3>
-            <div className="card-toolbar"></div>
+            </h1>
+            <div className="card-toolbar">
+              <Link href="/subvit/survey/tambah">
+                <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                  <i className="ri-pencil-fill"></i>
+                  Tambah Soal
+                </a>
+              </Link>
+            </div>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
-                  <div className="input-icon">
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                      style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control mt-2"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      autoComplete="off"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
-                </div>
-                <div className="col-lg-1 col-xl-1">
-                  <button
-                    className="btn btn-sm btn-light-primary btn-block mt-2 font-weight-bold"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
-                </div>
-
-                <div className="col-lg-2 col-xl-2 ml-auto">
-                  <Link href="/subvit/survey/tambah">
-                    <a className="btn btn-sm btn-primary px-6 font-weight-bold btn-block mt-2">
-                      <i className="flaticon2-notepad"></i>
-                      Tambah Soal
-                    </a>
-                  </Link>
                 </div>
               </div>
             </div>
@@ -260,39 +261,29 @@ const ListSurvey = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
-                                <ButtonAction
-                                  icon="setting.svg"
-                                  link={`/subvit/survey/report?id=${row.id}`}
-                                  title="Report"
-                                />
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`/subvit/survey/edit?id=${row.id}`}
-                                  title="Edit"
-                                />
-                                <ButtonAction
-                                  icon="detail.svg"
-                                  link={`/subvit/survey/${row.id}`}
-                                  title="Detail"
-                                />
-                                <button
-                                  onClick={() => handleDelete(row.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
+                              <td className="align-middle d-flex">
+                                <Link href={`/subvit/survey/edit?id=${row.id}`}>
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <Link href={`/subvit/survey/${row.id}`}>
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-eye-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <Link
+                                  href={`/subvit/survey/report?id=${row.id}`}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-todo-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(row.id)}
+                                >
+                                  <i class="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>
