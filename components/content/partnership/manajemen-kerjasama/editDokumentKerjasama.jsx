@@ -319,21 +319,20 @@ const EditDokumentKerjasama = () => {
         />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3 className="card-title font-weight-bolder text-dark" style={{fontSize:"24px"}}>
               Edit Dokumen Kerjasama
             </h3>
           </div>
 
           <div className="card-body">
             <form>
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Tanggal
                 </label>
-                <div className="col-sm-3">
                   <input
                     readOnly
                     type="date"
@@ -341,17 +340,15 @@ const EditDokumentKerjasama = () => {
                     value={date}
                     className="form-control"
                   />
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Judul kerjasama
                 </label>
-                <div className="col-sm-10">
                   <input
                     required
                     value={title}
@@ -360,19 +357,21 @@ const EditDokumentKerjasama = () => {
                     className="form-control"
                     placeholder="Judul Kerjasama"
                   />
-                </div>
               </div>
 
               {/* start list kategory */}
               {allMK.stateListKerjaSama.length === 0 ? (
-                <div className="form-group row">
+                <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-form-label"
                   >
                     Kategori kerjasama
                   </label>
-                  <div className="col-sm-7">
+                  <div className="row">
+
+                  
+                  <div className="col-12 col-sm-9">
                     <select
                       name=""
                       id=""
@@ -386,21 +385,23 @@ const EditDokumentKerjasama = () => {
                   </div>
                   <button
                     type="button"
-                    className="col-sm-3 btn btn-primary btn-sm"
+                    className="col-12 col-sm-3 btn btn-primary btn-sm"
                     onClick={() => dispatch(fetchListSelectCooperation())}
                   >
                     Ubah Kategory
                   </button>
+                  </div>
                 </div>
               ) : (
-                <div className="form-group row">
+                <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-form-label"
                   >
                     Kategori kerjasama
                   </label>
-                  <div className="col-sm-7">
+                  <div className="row">
+                  <div className="col-12 col-sm-9">
                     <select
                       required
                       onChange={(e) => changeSetCooperationC_id(e.target.value)}
@@ -422,24 +423,24 @@ const EditDokumentKerjasama = () => {
                   </div>
                   <button
                     type="button"
-                    className="col-sm-3 btn btn-primary btn-sm"
+                    className="col-12 col-sm-3 btn btn-primary btn-sm"
                     onClick={() => dispatch(cancelChangeCategory())}
                   >
                     Batal Ubah Kategory
                   </button>
+                  </div>
                 </div>
               )}
               {/* end list kategory */}
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Periode
                 </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                  <div className="row">
+                    <div className="col-12 col-sm-6">
                       <input
                         required
                         type="number"
@@ -448,7 +449,7 @@ const EditDokumentKerjasama = () => {
                         value={period}
                       />
                     </div>
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                    <div className="col-12 col-sm-6">
                       {/* {periodUnit === "bulan" ? (
                         <select
                           className="form-control"
@@ -475,19 +476,17 @@ const EditDokumentKerjasama = () => {
                       /> */}
                     </div>
                   </div>
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Periode Kerjasama
                 </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                  <div className="row">
+                    <div className="col-12 col-sm-6">
                       {/* <input
                         required
                         type="date"
@@ -521,7 +520,7 @@ const EditDokumentKerjasama = () => {
                         />
                       </div>
                     </div>
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                    <div className="col-12 col-sm-6">
                       <div className="d-flex align-items-center position-relative datepicker-w">
                         <DatePicker
                           className="form-search-date form-control-sm form-control cursor-pointer"
@@ -555,20 +554,17 @@ const EditDokumentKerjasama = () => {
                       /> */}
                     </div>
                   </div>
-                </div>
               </div>
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Nama Lembaga
                 </label>
-                <div className="col-sm-10">
                   <div aria-readonly disabled className="form-control">
                     {isntitusiName}
                   </div>
-                </div>
               </div>
 
               {/* {allMK.stateListMitra.length === 0 ? (
@@ -626,16 +622,15 @@ const EditDokumentKerjasama = () => {
                 </div>
               )} */}
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Email
                 </label>
-                <div className="col-sm-10">
                   <p className="form-control">{email}</p>
-                </div>
+ 
               </div>
 
               {/* {allMK.email === "-" ? (
@@ -664,14 +659,13 @@ const EditDokumentKerjasama = () => {
                 </div>
               )} */}
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Nomor Perjanjian Lembaga
                 </label>
-                <div className="col-sm-10">
                   {/* <input
                     type="text"
                     className="form-control"
@@ -684,17 +678,15 @@ const EditDokumentKerjasama = () => {
                     value={aggrementNumber}
                     className="form-control"
                   />
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Nomor Perjanjian KemKominfo
                 </label>
-                <div className="col-sm-10">
                   {/* <input
                     type="text"
                     className="form-control"
@@ -707,19 +699,17 @@ const EditDokumentKerjasama = () => {
                     value={aggrementNumberInfo}
                     className="form-control"
                   />
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Tanggal Penandatanganan
                 </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                  <div className="row">
+                    <div className="col-12">
                       {/* <input
                         required
                         onChange={(e) => setSigninDate(e.target.value)}
@@ -751,21 +741,21 @@ const EditDokumentKerjasama = () => {
                         />
                       </div>
                     </div>
-                  </div>
                 </div>
               </div>
 
               {/* start dokument */}
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Dokumen Kerjasama
                 </label>
                 {/* action show and upload */}
                 {/* start action show and upload */}
-                <div className="col-sm-10">
+                <div className="row">
+                <div className="col-sm-12">
                   <button
                     type="button"
                     className="btn btn-primary btn-sm mr-3"
@@ -816,6 +806,7 @@ const EditDokumentKerjasama = () => {
                     </div>
                   )}
                 </div>
+                </div>
                 <div
                   className={`${
                     viewPDF ? "pdf-container w-100" : "pdf-container d-none"
@@ -854,17 +845,16 @@ const EditDokumentKerjasama = () => {
                     return (
                       <div
                         key={i}
-                        className={`form-group row ${
+                        className={`form-group ${
                           allMK.stateListKerjaSama.length !== 0 ? "d-none" : ""
                         }`}
                       >
                         <label
                           htmlFor="staticEmail"
-                          className="col-sm-2 col-form-label"
+                          className="col-form-label"
                         >
                           {items.cooperation_form}
                         </label>
-                        <div className="col-sm-10">
                           <textarea
                             onChange={(e) => changeDataContentDefault(e, i)}
                             value={items.form_content}
@@ -875,7 +865,6 @@ const EditDokumentKerjasama = () => {
                             className="form-control"
                             placeholder="Masukkan Tujuan Kerjasama disini"
                           ></textarea>
-                        </div>
                       </div>
                     );
                   })}
@@ -889,7 +878,7 @@ const EditDokumentKerjasama = () => {
                       return (
                         <div
                           key={index}
-                          className={`form-group row ${
+                          className={`form-group ${
                             allMK.stateListKerjaSama.length === 0
                               ? "d-none"
                               : ""
@@ -897,11 +886,10 @@ const EditDokumentKerjasama = () => {
                         >
                           <label
                             htmlFor="staticEmail"
-                            className="col-sm-2 col-form-label"
+                            className="col-form-label"
                           >
                             {items.cooperation_form}
                           </label>
-                          <div className="col-sm-10">
                             <textarea
                               required
                               onChange={(e) => changeFormCooporation(index, e)}
@@ -912,13 +900,12 @@ const EditDokumentKerjasama = () => {
                               className="form-control"
                               placeholder="Masukan Tujuan Kerjasama"
                             ></textarea>
-                          </div>
                         </div>
                       );
                     }
                   )}
               {/* end looping second */}
-              <div className="form-group row">
+              {/* <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
                   <Link
@@ -937,7 +924,35 @@ const EditDokumentKerjasama = () => {
                     Ubah
                   </button>
                 </div>
+              </div> */}
+
+
+
+              <div className="form-group row">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link href="/partnership/manajemen-kerjasama">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                      Kembali
+                    </a>
+                  </Link>
+                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
+                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
+                      Kembali
+                    </a> */}
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    onClick={() => handleSubmit()}
+                  >
+                    Ubah
+                  </button>
+                  {/* </Link> */}
+                </div>
               </div>
+
+
+
+
             </form>
           </div>
         </div>

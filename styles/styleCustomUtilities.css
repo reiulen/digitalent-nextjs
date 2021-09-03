@@ -191,7 +191,7 @@ input.checkbox-small:checked+.sliders-small:before {
   font-weight: 600;
   color: gray;
   margin: 0;
-  text-align: center;
+  text-align: left;
 
 }
 
@@ -293,6 +293,9 @@ margin-top: 1rem;
 /* text color */
 .text-white{
   color: white !important;
+}
+.text-blue-primary{
+  color: #215480 !important;
 }
 /* btn rounded-full */
 .btn-rounded-full{
