@@ -328,7 +328,7 @@ const ListSubstansi = () => {
 
               <div className="row">
                 {subtance && subtance.perPage < subtance.total && (
-                  <div className="table-pagination">
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                     <Pagination
                       activePage={page}
                       itemsCountPerPage={subtance.perPage}
