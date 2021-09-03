@@ -72,7 +72,9 @@ const EditArtikel = () => {
   const [id, setId] = useState(artikel.id);
   const [judul_artikel, setJudulArtikel] = useState(artikel.judul_artikel);
   const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel);
-  const [gambar, setGambar] = useState(artikel.gambar);
+  const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel.gambar);
+  const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel.gambar);
+  // const [gambar, setGambar] = useState(artikel.gambar);
   // const [gambarPreview, setGambarPreview] = useState(
   //   "/assets/media/default.jpg"
   // ); //belum
@@ -130,44 +132,123 @@ const EditArtikel = () => {
           type: UPDATE_ARTIKEL_RESET,
         });
       }
+
+      if (gambarDB !== gambar) {
+        const data = {
+          judul_artikel,
+          isi_artikel,
+          gambar,
+          kategori_id,
+          users_id,
+          tag,
+          publish,
+          id,
+          _method,
+        };
   
-      const data = {
-        judul_artikel,
-        isi_artikel,
-        gambar,
-        kategori_id,
-        users_id,
-        tag,
-        publish,
-        id,
-        _method,
-      };
+        // dispatch(updateArtikel(data));
+        
+        Swal.fire({
+          title: "Apakah anda yakin ?",
+          text: "Data ini akan diedit !",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Ya !",
+          cancelButtonText: "Batal",
+        })
+          .then((result) => {
+            if (result.isConfirmed) {
+              // if (success) {
+              //   dispatch({
+              //     // type: NEW_ARTIKEL_RESET
+              //     type: UPDATE_ARTIKEL_RESET,
+              //   });
+              // }
+  
+              dispatch(updateArtikel(data));
+              console.log(data)
+            }
+        });
 
-      // dispatch(updateArtikel(data));
+      } else {
+        const data = {
+          judul_artikel,
+          isi_artikel,
+          gambar : "",
+          kategori_id,
+          users_id,
+          tag,
+          publish,
+          id,
+          _method,
+        };
+  
+        // dispatch(updateArtikel(data));
+        
+        Swal.fire({
+          title: "Apakah anda yakin ?",
+          text: "Data ini akan diedit !",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Ya !",
+          cancelButtonText: "Batal",
+        })
+          .then((result) => {
+            if (result.isConfirmed) {
+              // if (success) {
+              //   dispatch({
+              //     // type: NEW_ARTIKEL_RESET
+              //     type: UPDATE_ARTIKEL_RESET,
+              //   });
+              // }
+  
+              dispatch(updateArtikel(data));
+              console.log(data)
+            }
+        });
+      }
+  
+      // const data = {
+      //   judul_artikel,
+      //   isi_artikel,
+      //   gambar,
+      //   kategori_id,
+      //   users_id,
+      //   tag,
+      //   publish,
+      //   id,
+      //   _method,
+      // };
+
+      // // dispatch(updateArtikel(data));
       
-      Swal.fire({
-        title: "Apakah anda yakin ?",
-        text: "Data ini akan diedit !",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Ya !",
-        cancelButtonText: "Batal",
-      })
-        .then((result) => {
-          if (result.isConfirmed) {
-            // if (success) {
-            //   dispatch({
-            //     // type: NEW_ARTIKEL_RESET
-            //     type: UPDATE_ARTIKEL_RESET,
-            //   });
-            // }
+      // Swal.fire({
+      //   title: "Apakah anda yakin ?",
+      //   text: "Data ini akan diedit !",
+      //   icon: "warning",
+      //   showCancelButton: true,
+      //   confirmButtonColor: "#3085d6",
+      //   cancelButtonColor: "#d33",
+      //   confirmButtonText: "Ya !",
+      //   cancelButtonText: "Batal",
+      // })
+      //   .then((result) => {
+      //     if (result.isConfirmed) {
+      //       // if (success) {
+      //       //   dispatch({
+      //       //     // type: NEW_ARTIKEL_RESET
+      //       //     type: UPDATE_ARTIKEL_RESET,
+      //       //   });
+      //       // }
 
-            dispatch(updateArtikel(data));
-            // console.log(data)
-          }
-      });
+      //       dispatch(updateArtikel(data));
+      //       console.log(data)
+      //     }
+      // });
       
     } else {
       simpleValidator.current.showMessages();

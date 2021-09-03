@@ -33,6 +33,8 @@ export default function Substansi() {
   );
 }
 
+Substansi.displayName = "Substansi";
+
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query }) => {

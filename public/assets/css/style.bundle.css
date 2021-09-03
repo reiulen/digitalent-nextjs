@@ -23,6 +23,8 @@
   --primary: #215480;
   --primary-shade: #1A4367;
   --primary-tint: #E9EEF2;
+
+  --neutral:#F2F7FC;
   /* --primary: #3699FF; */
   --secondary: #4299e1;
   --secondary-shade: #4298E1;
@@ -8004,6 +8006,10 @@ a.close.disabled {
 
 .bg-gray-shade{
   background-color: var(--gray-shade) !important;
+}
+
+.bg-neutral{
+  background-color: var(--neutral) !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
