@@ -271,22 +271,21 @@ const [NamePDF, setNamePDF] = useState(null);
       />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Submit Dokumen Kerjasama
+            <h3 className="card-title font-weight-bolder text-dark" style={{fontSize:"24px"}}>
+              Dokumen Kerjasama
             </h3>
           </div>
           <div className="card-body">
             <form onSubmit={submit}>
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Periode Kerjasama
                 </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3">
+                  <div className="row">
+                    <div className="col-12 col-sm-6">
                       {/* <input
                         type="date"
                         className="form-control form-control-sm"
@@ -311,7 +310,7 @@ const [NamePDF, setNamePDF] = useState(null);
                       </div>
                     {error.period_date_start ? <p className="error-text">{error.period_date_start}</p>:"" }
                     </div>
-                    <div className="col-lg-3 col-xl-3">
+                    <div className="col-12 col-sm-6">
                       {/* <input
                         type="date"
                         // class = form-search-date
@@ -344,17 +343,15 @@ const [NamePDF, setNamePDF] = useState(null);
                       /> */}
                     </div>
                   </div>
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Nomer Perjanjian Lembaga
                 </label>
-                <div className="col-sm-10">
                   <input
                   onFocus={()=>setError({...error,agreement_number_partner:""})}
                     onChange={(e) =>
@@ -365,17 +362,16 @@ const [NamePDF, setNamePDF] = useState(null);
                     placeholder="Masukkan Nomor Perjanjian Lembaga"
                   />
                   {error.agreement_number_partner ? <p className="error-text">{error.agreement_number_partner}</p>:"" }
-                </div>
+                
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Nomer Perjanjian Kemkominfo
                 </label>
-                <div className="col-sm-10">
                   <input
                   onFocus={()=>setError({...error,agreement_number_kemkominfo:""})}
                     onChange={(e) =>
@@ -387,20 +383,16 @@ const [NamePDF, setNamePDF] = useState(null);
                   />
                   {error.agreement_number_kemkominfo ? <p className="error-text">{error.agreement_number_kemkominfo}</p>:"" }
                   
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Tanggal Penandantangan
                 </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3">
-                      <div className="d-flex align-items-center position-relative datepicker-w">
+                      <div className="d-flex align-items-center position-relative datepicker-w w-100">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         selected={endDate}
@@ -419,19 +411,16 @@ onFocus={()=>setError({...error,signing_date:""})}
                       <IconCalender className="right-center-absolute" style={{right:"10px"}} />
                       </div>
                       {error.signing_date ? <p className="error-text">{error.signing_date}</p>:"" }
-                    </div>
-                  </div>
-                </div>
+                    
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Upload Dokumen Kerjasama
                 </label>
-                <div className="col-sm-3">
                   <div className="input-group">
                     <div className="custom-file">
                       <input
@@ -473,7 +462,6 @@ onFocus={()=>setError({...error,signing_date:""})}
                     ""
                   )}
                   {error.document ? <p className="error-text">{error.document}</p>:"" }
-                </div>
               </div>
               {pdfFileError && <div>{pdfFileError}</div>}
 
@@ -492,7 +480,7 @@ onFocus={()=>setError({...error,signing_date:""})}
                 {!viewPDF && <>No pdf file selected </>}
               </div>
 
-              <div className="form-group row">
+              {/* <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
                   <Link href="/partnership/manajemen-kerjasama">
@@ -503,18 +491,40 @@ onFocus={()=>setError({...error,signing_date:""})}
                       Batalkan
                     </a>
                   </Link>
-
-                  {/* <Link href="/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"> */}
                   <button
                     type="submit"
                     className="btn btn-primary btn-sm"
-                    // onClick={(e) => submit(e)}
                   >
                     Submit
+                  </button>
+                </div>
+              </div> */}
+
+
+
+              <div className="form-group row">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link href="/partnership/manajemen-kerjasama">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                      Kembali
+                    </a>
+                  </Link>
+                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
+                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
+                      Kembali
+                    </a> */}
+                  <button
+                    type="submit"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    // onClick={(e) => submit(e)}
+                  >
+                    Kirim
                   </button>
                   {/* </Link> */}
                 </div>
               </div>
+
+
             </form>
           </div>
         </div>
