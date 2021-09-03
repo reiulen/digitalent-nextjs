@@ -130,23 +130,55 @@ const Vidio = () => {
             )
             setStartDate (null)
             setEndDate (null)
-
+    
+        } else if (startDate === null && endDate !== null) {
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh kosong',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+        } else if (startDate !== null && endDate === null) {
+            Swal.fire(
+                'Oops !',
+                'Tanggal sesudah tidak boleh kosong',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+    
         } else {
-            if (limit !== null && search === null) {
+            if (limit !== null && search !== null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 );
-
-            } else if (limit !== null && search !== null) {
-                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
-
+    
+            } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                )
+              
+            
+            } else if (limit !== null && search === null && startDate === null && endDate === null) {
+                router.push (
+                    `${router.pathname}?page=1&limit=${limit}`
+                )
+    
+            } else if (limit !== null && search !== null && startDate === null && endDate === null) {
+                router.push(
+                    `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
+                )
+                
             } else {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
                 ); 
             }
         }
-        };
+    };
 
     const handleLimit = (val) => {
         setLimit(val)
@@ -154,7 +186,7 @@ const Vidio = () => {
             router.push(`${router.pathname}?page=1&limit=${val}`);
         
         } else {
-            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
         }
         
     };
@@ -331,7 +363,10 @@ const Vidio = () => {
                             </div>
 
                             <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                <div className="col-lg-2 col-xl-2">
+                                    <small className="form-text text-muted">
+                                        Dari Tanggal
+                                    </small>
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={startDate}
@@ -342,11 +377,12 @@ const Vidio = () => {
                                         dateFormat="dd/MM/yyyy"
                                     // minDate={addDays(new Date(), 20)}
                                     />
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
+                                    
                                 </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
+                                <div className="col-lg-2 col-xl-2">
+                                    <small className="form-text text-muted">
+                                        Sampai Tanggal
+                                    </small>
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={endDate}
@@ -358,9 +394,7 @@ const Vidio = () => {
                                         maxDate={addDays(startDate, 20)}
                                         dateFormat="dd/MM/yyyy"
                                     />
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
+                                    
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                                     <button

@@ -199,7 +199,7 @@ const Artikel = () => {
         router.push(`${router.pathname}?page=1&limit=${val}`);
     
     } else {
-        router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
     }
     
   };
