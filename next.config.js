@@ -1,7 +1,7 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["api.dts.majapahit.id", "dts-publikasi-dev.majapahit.id", ],
+    domains: ["api.dts.majapahit.id", "dts-publikasi-dev.majapahit.id", "dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com"],
   },
   env: {
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
