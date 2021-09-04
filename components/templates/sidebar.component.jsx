@@ -406,14 +406,14 @@ const Sidebar = () => {
                       aria-haspopup="true"
                       data-menu-toggle="hover"
                     >
-                      <a
+                      {/* <a
                         href="javascript:;"
                         className="menu-link menu-toggle"
                         onClick={onSetMenuItemS}
                       >
                         <span className="menu-text">Managemen Admin</span>
                         <i className="menu-arrow"></i>
-                      </a>
+                      </a> */}
                       <div className="menu-submenu">
                         <i className="menu-arrow"></i>
                         <ul className="menu-subnav">

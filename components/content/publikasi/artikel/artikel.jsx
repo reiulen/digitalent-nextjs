@@ -453,9 +453,11 @@ const Artikel = () => {
                     </thead>
                     <tbody>
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
-                        <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
-                        </td>
+                        <tr>
+                          <td className="text-center" colSpan={6}>
+                            Data Masih Kosong
+                          </td>
+                        </tr>
                       ) : (
                         artikel &&
                         // artikel.artikel &&
@@ -534,7 +536,7 @@ const Artikel = () => {
                                 )}
                               </td>
                               <td className="align-middle">Super Admin</td>
-                              <td className="align-middle">
+                              <td className="align-middle d-flex">
                                 {/* conflict nih cuy */}
                                 {/* <ButtonAction icon="setting.svg" />
                                 <ButtonAction
@@ -542,16 +544,23 @@ const Artikel = () => {
                                   link={`/publikasi/artikel/${artikel.id}`}
                                 /> */}
 
-                                <ButtonNewTab
+                                {/* <ButtonNewTab
                                   icon="setting.svg"
                                   link={`/publikasi/artikel/preview/${artikel.id}`}
                                   title="Preview"
-                                />
-                                <ButtonAction
+                                /> */}
+                                <Link
+                                  href={`/publikasi/artikel/${artikel.id}`}
+                                  >
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                {/* <ButtonAction
                                   icon="write.svg"
                                   link={`/publikasi/artikel/${artikel.id}`}
                                   title="Edit"
-                                />
+                                /> */}
                                 <button
                                   onClick={() => handleDelete(artikel.id)}
                                   className="btn mr-1"
