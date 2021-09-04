@@ -24,11 +24,10 @@ const EditTandaTangan = () => {
   // const [nama, setNama] = useState("")
   // const [jabatan, setJabatan] = useState("")
   const signCanvas = useRef({});
-  
+
   // const dispatch = useDispatch();
 
   const clear = () => {
-
     Swal.fire({
       title: "Apakah anda yakin ingin reset tanda tangan ?",
       // text: "Data ini tidak bisa dikembalikan !",
@@ -39,14 +38,12 @@ const EditTandaTangan = () => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then( (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
         signCanvas.current.clear();
         setSignature("");
       }
     });
-
-    
   };
 
   // const editorRef = useRef();
@@ -56,7 +53,7 @@ const EditTandaTangan = () => {
   //   ssr: false,
   // });
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
-  
+
   // const { detailTandaTangan } = useSelector((state) => state.detailTandaTangan);
   // const { error, isUpdated, success } = useSelector(
   //   (state) => state.updateTandaTangan
@@ -106,89 +103,81 @@ const EditTandaTangan = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const submit = async (e) => {
     e.preventDefault();
-if(signCanvas.current.isEmpty()){
+    if (signCanvas.current.isEmpty()) {
+      Swal.fire({
+        title: "Apakah anda yakin ingin simpan ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          try {
+            let sendData = {
+              name: nama,
+              position: jabatan,
+              signature_image: signature !== "" ? signature : "",
+            };
+            let { data } = await axios.put(
+              `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
+              sendData
+            );
 
-
-    Swal.fire({
-      title: "Apakah anda yakin ingin simpan ?",
-      // text: "Data ini tidak bisa dikembalikan !",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        try {
-          let sendData = {
-            name: nama,
-            position: jabatan,
-            signature_image: signature !== "" ? signature : "",
-          };
-          let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
-            sendData
-          );
-
-          router.push({
-            pathname: `/partnership/tanda-tangan`,
-            query: { update: true },
-          });
-        } catch (error) {
-          console.log("error put api ttd", error.response);
+            router.push({
+              pathname: `/partnership/tanda-tangan`,
+              query: { update: true },
+            });
+          } catch (error) {
+            console.log("error put api ttd", error.response);
+          }
         }
-      }
-    })
-
-
-    }else{
-
-      if(signature !== ""){
-        
-    Swal.fire({
-      title: "Apakah anda yakin ingin simpan ?",
-      // text: "Data ini tidak bisa dikembalikan !",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        try {
-          let sendData = {
-            name: nama,
-            position: jabatan,
-            signature_image: signature !== "" ? signature : "",
-          };
-          let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
-            sendData
-          );
-
-          router.push({
-            pathname: `/partnership/tanda-tangan`,
-            query: { update: true },
-          });
-        } catch (error) {
-          console.log("error put api ttd", error.response);
-        }
-      }
-    })
-
-      }else{
-        Swal.fire({
-        icon: "error",
-        title: "Tekan button buat tanda tangan untuk menyimpat update tanda tangan anda",
-        // text: "Berhasil",
       });
+    } else {
+      if (signature !== "") {
+        Swal.fire({
+          title: "Apakah anda yakin ingin simpan ?",
+          // text: "Data ini tidak bisa dikembalikan !",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          cancelButtonText: "Batal",
+          confirmButtonText: "Ya !",
+          dismissOnDestroy: false,
+        }).then(async (result) => {
+          if (result.value) {
+            try {
+              let sendData = {
+                name: nama,
+                position: jabatan,
+                signature_image: signature !== "" ? signature : "",
+              };
+              let { data } = await axios.put(
+                `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
+                sendData
+              );
+
+              router.push({
+                pathname: `/partnership/tanda-tangan`,
+                query: { update: true },
+              });
+            } catch (error) {
+              console.log("error put api ttd", error.response);
+            }
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title:
+            "Tekan button buat tanda tangan untuk menyimpat update tanda tangan anda",
+          // text: "Berhasil",
+        });
       }
-
-
     }
 
     // if (simpleValidator.current.allValid()) {
@@ -328,32 +317,31 @@ if(signCanvas.current.isEmpty()){
         {/* {loading ? <LoadingPage loading={loading} /> : ""} */}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
               Edit Tanda Tangan Digital
             </h3>
           </div>
           <div className="card-body">
             <form>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   Nama
                 </label>
-                <div className="col-sm-10">
-                  <input
-                    required
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nama"
-                    value={nama}
-                    onChange={(e) => setNama(e.target.value)}
-                    // onBlur={() =>
-                    //   simpleValidator.current.showMessageFor("name")
-                    // }
-                  />
-                  {/* {simpleValidator.current.message(
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Nama"
+                  value={nama}
+                  onChange={(e) => setNama(e.target.value)}
+                  // onBlur={() =>
+                  //   simpleValidator.current.showMessageFor("name")
+                  // }
+                />
+                {/* {simpleValidator.current.message(
                     "name",
                     name,
                     "required|max:50",
@@ -361,28 +349,26 @@ if(signCanvas.current.isEmpty()){
                       className: "text-danger",
                     }
                   )} */}
-                </div>
               </div>
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
                 >
                   Jabatan
                 </label>
-                <div className="col-sm-10">
-                  <input
-                    required
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Jabatan"
-                    value={jabatan}
-                    onChange={(e) => setJabatan(e.target.value)}
-                    // onBlur={() =>
-                    // simpleValidator.current.showMessageFor("position")
-                    // }
-                  />
-                  {/* {simpleValidator.current.message(
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Jabatan"
+                  value={jabatan}
+                  onChange={(e) => setJabatan(e.target.value)}
+                  // onBlur={() =>
+                  // simpleValidator.current.showMessageFor("position")
+                  // }
+                />
+                {/* {simpleValidator.current.message(
                     "position",
                     position,
                     "required|max:50",
@@ -390,15 +376,13 @@ if(signCanvas.current.isEmpty()){
                       className: "text-danger",
                     }
                   )} */}
-                </div>
               </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   Buat Tanda Tangan
-                  <div>
+                </label>
+                <div className="row">
+                  {/* <div className="col-sm-2 ">
                     <Image
                       loader={myLoader}
                       src={`${imgSignature}/partnership/images/signatures/${tandaTangan}`}
@@ -406,52 +390,39 @@ if(signCanvas.current.isEmpty()){
                       height={500}
                       alt="imageSignature"
                     />
-                    {/* <Image
-                      src={
-                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                        "partnership/images/signatures/" +
-                        tandaTangan
-                      }
-                      width={300}
-                      height={200}
-                    /> */}
-                  </div>
-                </label>
-                <div className="col-sm-10">
-                  <div
-                    style={{
-                      background: "#FFFFFF",
-                      boxShadow: "inset 10px 10px 40px rgba(0, 0, 0, 0.08)",
-                      borderRadius: "10px",
-                    }}
-                  >
-                    <SignaturePad
-                    
-                      ref={signCanvas}
-                      options={{
-                        minWidth: 1,
-                        maxWidth: 3,
-                        penColor: "rgb(66, 133, 244)",
+                  </div> */}
+                  <div className="col-sm-12">
+                    <div
+                      style={{
+                        background: "#FFFFFF",
+                        boxShadow: "inset 10px 10px 40px rgba(0, 0, 0, 0.08)",
+                        borderRadius: "10px",
                       }}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("tandaTangan")
-                      }
-                    />
-                    {/* {simpleValidator.current.message(
+                    >
+                      <SignaturePad
+                        ref={signCanvas}
+                        options={{
+                          minWidth: 1,
+                          maxWidth: 3,
+                          penColor: "rgb(66, 133, 244)",
+                        }}
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("tandaTangan")
+                        }
+                      />
+                      {/* {simpleValidator.current.message(
                       "tandaTangan",
                       tandaTangan,
                       "required",
                       { className: "text-danger" }
                     )} */}
+                    </div>
                   </div>
-                  <div className="col-sm-10 mt-5">
+                  <div className="d-flex align-items-center mt-5">
                     {/* <Link href="/publikasi/artikel"> */}
                     <a
-                      className="btn btn-outline-primary mr-2 btn-sm"
-                      style={{
-                        backgroundColor: "#C9F7F5",
-                        color: "#1BC5BD",
-                      }}
+                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary text-blue-primary mr-5"
+                      
                       onClick={() => dataTandaTangan()}
                     >
                       Buat Tanda Tangan Baru
@@ -460,11 +431,7 @@ if(signCanvas.current.isEmpty()){
                     <button
                       type="button"
                       onClick={clear}
-                      className="btn btn-sm"
-                      style={{
-                        backgroundColor: "#EDEF80",
-                        color: "#B0B328",
-                      }}
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
                     >
                       Buat Ulang Tanda Tangan
                     </button>
@@ -516,7 +483,7 @@ if(signCanvas.current.isEmpty()){
                   />
                 </div>
               </div> */}
-              <div className="form-group row">
+              {/* <div className="form-group row">
                 <div className="row align-items-right mt-5 ml-auto">
                   <div className="col-sm mr-4">
                     <Link href="/partnership/tanda-tangan">
@@ -524,7 +491,6 @@ if(signCanvas.current.isEmpty()){
                         Kembali
                       </a>
                     </Link>
-                    {/* <Link href="/partnership/tanda-tangan"> */}
                     <button
                       type="button"
                       className="btn btn-primary btn-sm"
@@ -532,10 +498,38 @@ if(signCanvas.current.isEmpty()){
                     >
                       Simpan
                     </button>
-                    {/* </Link> */}
                   </div>
                 </div>
+              </div> */}
+
+              <div className="form-group row">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link href="/partnership/tanda-tangan">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                      Kembali
+                    </a>
+                  </Link>
+                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
+                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
+                      Kembali
+                    </a> */}
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    onClick={(e) => submit(e)}
+                  >
+                    Simpan
+                  </button>
+                  {/* </Link> */}
+                </div>
               </div>
+
+
+              
+
+
+
+
             </form>
           </div>
         </div>

@@ -185,20 +185,19 @@ const Edit = () => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3 className="card-title font-weight-bolder text-dark" style={{fontSize:"24px"}}>
               Edit Master Kategori Kerjasama
             </h3>
           </div>
           <div className="card-body">
             <form>
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Kategori Kerjasama
                 </label>
-                <div className="col-sm-10">
                   <input
                     required
                     type="text"
@@ -207,7 +206,6 @@ const Edit = () => {
                     value={categoryCooporation}
                     onChange={(e) => setCategoryCooporation(e.target.value)}
                   />
-                </div>
               </div>
 
               {/* start loop */}
@@ -216,14 +214,14 @@ const Edit = () => {
                 : stateDataSingle.map((item, index) => {
                     return (
                       <div key={index}>
-                        <div className="form-group row">
+                        <div className="form-group">
                           <label
                             htmlFor="staticEmail"
-                            className="col-sm-2 col-form-label"
+                            className="col-form-label"
                           >
                             {index === 0 ? "Form Kerjasama" : ""}
                           </label>
-                          <div className="col-sm-10 position-relative">
+                          <div className="position-relative">
                             <input
                               type="text"
                               name="name"
@@ -241,12 +239,7 @@ const Edit = () => {
                                 className="btn position-absolute"
                                 style={{ top: "0", right: "10px" }}
                               >
-                                <Image
-                                  src={`/assets/icon/trash.svg`}
-                                  width={18}
-                                  height={18}
-                                  alt="btn-delete"
-                                />
+                                <svg className="position-relative" style={{bottom:"2px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z" fill="#ADB5BD"/></svg>
                               </button>
                             )}
                           </div>
@@ -262,14 +255,13 @@ const Edit = () => {
                 : stateDataSingleOld.map((item, index) => {
                     return (
                       <div key={index} className="d-none">
-                        <div className="form-group row">
+                        <div className="form-group">
                           <label
                             htmlFor="staticEmail"
-                            className="col-sm-2 col-form-label"
+                            className="col-form-label"
                           >
                             {index === 0 ? "Form Kerjasama" : ""}
                           </label>
-                          <div className="col-sm-10">
                             <input
                               required
                               type="text"
@@ -279,7 +271,6 @@ const Edit = () => {
                               value={item.cooperation_form}
                               onChange={(e) => handleChange(e, index)}
                             />
-                          </div>
                         </div>
                       </div>
                     );
@@ -306,17 +297,18 @@ const Edit = () => {
                 </div>
               </div> */}
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 ></label>
 
                 <p
-                  className="btn btn-outline-primary btn-sm ml-4"
+                  className="btn btn-rounded-full bg-blue-primary text-white"
                   style={{
                     backgroundColor: "#40A9FF",
                     color: "#FFFFFF",
+                    width:"max-content"
                   }}
                   onClick={() => handleAddInput()}
                 >
@@ -324,14 +316,15 @@ const Edit = () => {
                 </p>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
-                  Status
+                  Status kerjasama
                 </label>
-                <div className="col-sm-1">
+                <div className="row mt-5">
+                <div className="col-12 d-flex align-items-center">
                   {/* <input
                     required
                       className="checkbox"
@@ -339,7 +332,7 @@ const Edit = () => {
                       type="checkbox"
                       onChange={(e) => handleChangeStatus(e)}
                     /> */}
-                  <label className="switches">
+                  <label className="switches mr-5">
                     <input
                       required
                       className="checkbox"
@@ -352,9 +345,12 @@ const Edit = () => {
                         status ? "text-white" : "pl-2"
                       }`}
                     >
-                      {status ? "Aktif" : "Tidak aktif"}
                     </span>
                   </label>
+                  <p className="position-relative mb-0" style={{bottom:"5px"}}>
+                      {status ? "Aktif" : "Tidak aktif"}
+                  </p>
+                </div>
                 </div>
               </div>
 
@@ -377,7 +373,7 @@ const Edit = () => {
                 </div>
               </div> */}
 
-              <div className="form-group row">
+              {/* <div className="form-group row">
                 <div className="row align-items-right mt-5 ml-auto">
                   <div className="col-sm mr-4">
                     <Link href="/partnership/master-kategori-kerjasama">
@@ -385,13 +381,6 @@ const Edit = () => {
                         Kembali
                       </a>
                     </Link>
-                    {/* <Link href="/partnership/master-kategori-kerjasama"> */}
-                    {/* <button
-                      className="btn btn-primary btn-sm"
-                      onClick={(e) => submit(e)}
-                    >
-                      Simpan
-                    </button> */}
                     <button
                       type="button"
                       className="btn btn-primary btn-sm"
@@ -399,10 +388,53 @@ const Edit = () => {
                     >
                       Simpan
                     </button>
-                    {/* </Link> */}
                   </div>
                 </div>
+              </div> */}
+
+
+              {/* <div className="form-group row">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link href="/partnership/master-kategori-kerjasama">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                      Kembali
+                    </a>
+                  </Link>
+                  <button
+                    type="button"
+                      className="btn btn-primary btn-sm"
+                      onClick={(e) => handleSubmit(e)}
+                    >
+                      Simpan
+                  </button>
+                </div>
+              </div> */}
+
+              <div className="form-group row">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link href="/partnership/master-kategori-kerjasama">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                      Kembali
+                    </a>
+                  </Link>
+                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
+                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
+                      Kembali
+                    </a> */}
+                  <button
+                    type="button"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                      onClick={(e) => handleSubmit(e)}
+                    >
+                      Simpan
+                  </button>
+                  {/* </Link> */}
+                </div>
               </div>
+
+
+
+
             </form>
           </div>
         </div>

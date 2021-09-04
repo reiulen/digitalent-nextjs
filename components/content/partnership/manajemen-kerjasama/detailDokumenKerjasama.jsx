@@ -74,33 +74,31 @@ const DetailDokumenKerjasama = () => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3 className="card-title font-weight-bolder text-dark" style={{fontSize:"24px"}}>
               Detail Dokumen Kerjasama
             </h3>
           </div>
 
           <div className="card-body">
             <form>
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Tanggal
                 </label>
-                <div className="col-sm-3">
                   <input readOnly value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.submission_date} type="date" className="form-control"  />
-                </div>
+               
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Judul kerjasama
                 </label>
-                <div className="col-sm-10">
                   <input
                   readOnly
                   value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.title}
@@ -108,17 +106,15 @@ const DetailDokumenKerjasama = () => {
                     className="form-control"
                     placeholder="Judul Kerjasama"
                   />
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Kategori kerjasama
                 </label>
-                <div className="col-sm-10">
                   <select
                     name=""
                     id=""
@@ -131,19 +127,17 @@ const DetailDokumenKerjasama = () => {
                       
                     </option>
                   </select>
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Periode
                 </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                  <div className="row">
+                    <div className="col-12 col-sm-6">
                       <DatePicker
                         className="form-control-sm form-control"
                         selected={startDate}
@@ -159,7 +153,7 @@ const DetailDokumenKerjasama = () => {
                       />
                       
                     </div>
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                    <div className="col-12 col-sm-6">
                       <DatePicker
                         className="form-control-sm form-control"
                         selected={endDate}
@@ -176,19 +170,17 @@ const DetailDokumenKerjasama = () => {
                       />
                     </div>
                   </div>
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Periode Kerjasama
                 </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                  <div className="row">
+                    <div className="col-12 col-sm-6">
                       {/* <DatePicker
                         className="form-control-sm form-control"
                         selected={startDate}
@@ -204,7 +196,7 @@ const DetailDokumenKerjasama = () => {
                       /> */}
                       <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.period} readOnly className="form-control" />
                     </div>
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                    <div className="col-12 col-sm-6">
                       {/* <DatePicker
                         className="form-control-sm form-control"
                         // selected={endDate}
@@ -222,17 +214,15 @@ const DetailDokumenKerjasama = () => {
                       <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.period_unit} readOnly className="form-control" />
                     </div>
                   </div>
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Nama Lembaga
                 </label>
-                <div className="col-sm-3">
                   {/* <select name="" id="" className="form-control">
                     <option value="Kategori" selected>
                       Dqlab
@@ -241,17 +231,15 @@ const DetailDokumenKerjasama = () => {
                     <option value="Kategori">Google</option>
                   </select> */}
                    <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.institution_name} readOnly className="form-control" />
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Email
                 </label>
-                <div className="col-sm-3">
                   {/* <select name="" id="" className="form-control">
                     <option value="Kategori" selected>
                       info@dqlab.co.id
@@ -260,53 +248,47 @@ const DetailDokumenKerjasama = () => {
                     <option value="Kategori">pengajuan - revisi</option>
                   </select> */}
                   <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.email} readOnly className="form-control" />
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Nomor Perjanjian Lembaga
                 </label>
-                <div className="col-sm-10">
                   {/* <input
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nomor Perjanjian Lembaga"
                   /> */}
                   <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.agreement_number_partner} readOnly className="form-control" />
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Nomor Perjanjian KemKominfo
                 </label>
-                <div className="col-sm-10">
                   {/* <input
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nomor Perjanjian Kemkominfo"
                   /> */}
                   <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.agreement_number_kemkominfo} readOnly className="form-control" />
-                </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Tanggal Penandatanganan
                 </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
+                  <div className="row">
+                    <div className="col-12">
                       <input
                       readOnly
                       value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.signing_date}
@@ -315,27 +297,26 @@ const DetailDokumenKerjasama = () => {
                       />
                     </div>
                   </div>
-                </div>
               </div>
 
 
               
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Dokumen Kerjasama
                 </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-sm-10">
+                  <div className="row">
+
+                    <div className="col-12 col-sm-3">
+
                       <button type="button" onClick={()=>setShowPdf(showPdf?false:true)} className="btn btn-primary btn-sm">
                         {showPdf ? "Tutup dokument" : "Lihat Dokumen"}
                       </button>
                     </div>
-                  </div>
-                </div>
+                    </div>
               </div>
 
               {showPdf ? 
@@ -366,14 +347,13 @@ const DetailDokumenKerjasama = () => {
               {allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.cooperation_category.data_content.cooperation_form === "-"?<h1 className="my-4">Data kerja sama tidak ada</h1>:allMK.cooperationById.data.cooperation_category.data_content.map((items,i)=>{
                 return(
                   
-              <div className="form-group row" key={i}>
+              <div className="form-group" key={i}>
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                    {items.cooperation_form}
                 </label>
-                <div className="col-sm-10">
                   <textarea
                   readOnly
                   value={items.form_content}
@@ -384,14 +364,13 @@ const DetailDokumenKerjasama = () => {
                     className="form-control"
                     placeholder="Masukkan Tujuan Kerjasama disini"
                   ></textarea>
-                </div>
               </div>
 
 
                 )
               })}
 {/* loop end loop*/}
-              <div className="form-group row">
+              {/* <div className="form-group">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
                   <Link href="/partnership/manajemen-kerjasama">
@@ -400,7 +379,28 @@ const DetailDokumenKerjasama = () => {
                     </a>
                   </Link>
                 </div>
+              </div> */}
+
+
+
+              
+<div className="form-group row">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link href="/partnership/manajemen-kerjasama">
+                    <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                      Kembali
+                    </a>
+                  </Link>
+                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
+                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
+                      Kembali
+                    </a> */}
+                  
+                  {/* </Link> */}
+                </div>
               </div>
+
+              
             </form>
           </div>
         </div>
