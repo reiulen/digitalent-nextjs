@@ -275,7 +275,7 @@ const Table = () => {
             </p>
           </div> */}
           <CardPage
-            background="bg-light-success"
+            background="bg-light-success "
             icon="user-white.svg"
             color='#ffffff'
             value={allMK.totalDataActive}
@@ -388,11 +388,6 @@ const Table = () => {
             >
               Kerjasama
             </h1>
-            {/* <Link href="/partnership/manajemen-kerjasama/tambah">
-                <a className="btn btn-primary px-6 font-weight-bold btn-block ">
-                  Tambah Kerjasama Baru
-                </a>
-              </Link> */}
             <Link href="/partnership/manajemen-kerjasama/tambah">
               <a className="btn btn-rounded-full bg-blue-primary text-white">
                 <svg
@@ -438,7 +433,7 @@ const Table = () => {
                       <div className="col-12 col-sm-6">
                         <div className="row">
                           {/* search field */}
-                          <div className="position-relative col-12 col-sm-6">
+                          {/* <div className="position-relative col-12 col-sm-6">
                             <svg
                               className="left-center-absolute"
                               style={{ left: "24px" }}
@@ -461,10 +456,10 @@ const Table = () => {
                                 handleChangeValueSearch(e.target.value)
                               }
                             />
-                          </div>
+                          </div> */}
 
                           {/* btn cari */}
-                          <button
+                          {/* <button
                             type="submit"
                             className="btn bg-light-primary text-primary col-12 col-sm-4"
                             style={{
@@ -474,13 +469,13 @@ const Table = () => {
                             }}
                           >
                             Cari
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                       <div className="col-12 col-sm-6">
                         <div className="d-flex align-items-center justify-content-end">
                           {/* sorotir by modal */}
-                          <button
+                          {/* <button
                             className="avatar item-rtl btn border d-flex align-items-center justify-content-between"
                             data-toggle="modal"
                             data-target="#exampleModalCenter"
@@ -514,7 +509,7 @@ const Table = () => {
                                 fill="#E4E6EF"
                               />
                             </svg>
-                          </button>
+                          </button> */}
                           {/* modal */}
                           <div
                             className="modal fade"
@@ -614,13 +609,13 @@ const Table = () => {
                           {/* end modal */}
 
                           {/* btn export */}
-                          <button
+                          {/* <button
                             className="btn btn-rounded-full bg-blue-secondary text-white ml-4"
                             type="button"
                             onClick={() => dispatch(exportFileCSV())}
                           >
                             Export .xlxs
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </div>
@@ -722,7 +717,7 @@ const Table = () => {
                     <button
                       type="button"
                       onClick={() => dispatch(exportFileCSV())}
-                      className="btn btn-sm btn-primary px-6 font-weight-bold btn-block center-absolute"
+                      className="btn btn-rounded-full bg-blue-secondary text-white w-100 ml-0"
                       style={exportCSV}
                     >
                       Export .csv
@@ -740,20 +735,20 @@ const Table = () => {
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
-                        <th className="text-center">No</th>
-                        <th className="text-center align-middle">Mitra</th>
-                        <th className="text-center align-middle">
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">Mitra</th>
+                        <th className="text-left align-middle">
                           Judul Kerjasama
                         </th>
-                        <th className="text-center align-middle">Periode</th>
-                        <th className="text-center align-middle">
+                        <th className="text-left align-middle">Periode</th>
+                        <th className="text-left align-middle">
                           Tanggal Tanda Tangan
                         </th>
-                        <th className="text-center align-middle">
+                        <th className="text-left align-middle">
                           Tanggal Selesai
                         </th>
-                        <th className="text-center align-middle">Status</th>
-                        <th className="text-center align-middle">Aksi</th>
+                        <th className="text-left align-middle">Status</th>
+                        <th className="text-left align-middle">Aksi</th>
                       </tr>
                     </thead>
 
@@ -770,7 +765,7 @@ const Table = () => {
                           (items, index) => {
                             return (
                               <tr key={index}>
-                                <td className="text-center align-middle">
+                                <td className="text-left align-middle">
                                   <button
                                     className="btn"
                                     style={{
@@ -786,7 +781,7 @@ const Table = () => {
                                     {/* {index+1} */}
                                   </button>
                                 </td>
-                                <td className="align-middle text-center">
+                                <td className="align-middle text-left">
                                   {items.partner === null ? (
                                     "Tidak ada"
                                   ) : (
@@ -795,8 +790,8 @@ const Table = () => {
                                     </p>
                                   )}
                                 </td>
-                                <td className="d-flex justify-content-center">
-                                  <div className="d-flex align-items-center justify-content-center flex-column">
+                                <td className="d-flex justify-content-start">
+                                  <div className="d-flex align-items-start justify-content-center flex-column">
                                     <p className="p-part-t">{items.title}</p>
                                     <p className="p-part-d">
                                       (
@@ -809,12 +804,12 @@ const Table = () => {
                                   </div>
                                   <br />
                                 </td>
-                                <td className="align-middle text-center">
+                                <td className="align-middle text-left">
                                   <p className="p-part-t">
                                     {items.period} {items.period_unit}
                                   </p>{" "}
                                 </td>
-                                <td className="align-middle text-center">
+                                <td className="align-middle text-left">
                                   <p className="p-part-t">
                                     {moment(items.signing_date).format(
                                       "YYYY MMM DD"
@@ -823,14 +818,14 @@ const Table = () => {
                                     {/* H, HHss     */}
                                   </p>
                                 </td>
-                                <td className="align-middle text-center">
+                                <td className="align-middle text-left">
                                   <p className="p-part-t">
                                     {moment(items.period_date_end).format(
                                       "YYYY MMM DD"
                                     )}
                                   </p>
                                 </td>
-                                <td className="align-middle text-center">
+                                <td className="align-middle text-left">
                                   {items.status.name === "aktif" ? (
                                     <div className="position-relative">
                                       <select
@@ -883,7 +878,7 @@ const Table = () => {
                                     </div>
                                   )}
                                 </td>
-                                <td className="align-middle text-center">
+                                <td className="align-middle text-left">
                                   {items.status.name === "aktif" ? (
                                     <div className="d-flex align-items-center">
                                       {/* <button

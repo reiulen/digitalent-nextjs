@@ -40,7 +40,7 @@ const TambahTandaTangan = () => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then( (result) => {
+    }).then((result) => {
       if (result.isConfirmed) {
         signCanvas.current.clear();
         setTandaTangan("");
@@ -230,33 +230,32 @@ const TambahTandaTangan = () => {
         />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
               Tambah Tanda Tangan Digital
             </h3>
           </div>
           <div className="card-body">
             <form onSubmit={submit}>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   Nama
                 </label>
-                <div className="col-sm-10">
-                  <input
-                    onFocus={() => setError({ ...error, nama: "" })}
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nama"
-                    value={nama}
-                    onChange={(e) => setNama(e.target.value)}
-                    // onBlur={() =>
-                    //   simpleValidator.current.showMessageFor("nama")
-                    // }
-                  />
-                  {error.nama ? <p className="error-text">{error.nama}</p> : ""}
-                  {/* {simpleValidator.current.message(
+                <input
+                  onFocus={() => setError({ ...error, nama: "" })}
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Nama"
+                  value={nama}
+                  onChange={(e) => setNama(e.target.value)}
+                  // onBlur={() =>
+                  //   simpleValidator.current.showMessageFor("nama")
+                  // }
+                />
+                {error.nama ? <p className="error-text">{error.nama}</p> : ""}
+                {/* {simpleValidator.current.message(
                     "nama",
                     nama,
                     "required|max:50",
@@ -264,32 +263,27 @@ const TambahTandaTangan = () => {
                       className: "text-danger",
                     }
                   )} */}
-                </div>
               </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   Jabatan
                 </label>
-                <div className="col-sm-10">
-                  <input
-                    onFocus={() => setError({ ...error, jabatan: "" })}
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Jabatan"
-                    onChange={(e) => setJabatan(e.target.value)}
-                    // onBlur={() =>
-                    //   simpleValidator.current.showMessageFor("jabatan")
-                    // }
-                  />
-                  {error.jabatan ? (
-                    <p className="error-text">{error.jabatan}</p>
-                  ) : (
-                    ""
-                  )}
-                  {/* {simpleValidator.current.message(
+                <input
+                  onFocus={() => setError({ ...error, jabatan: "" })}
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Jabatan"
+                  onChange={(e) => setJabatan(e.target.value)}
+                  // onBlur={() =>
+                  //   simpleValidator.current.showMessageFor("jabatan")
+                  // }
+                />
+                {error.jabatan ? (
+                  <p className="error-text">{error.jabatan}</p>
+                ) : (
+                  ""
+                )}
+                {/* {simpleValidator.current.message(
                     "jabatan",
                     jabatan,
                     "required|max:50",
@@ -297,16 +291,12 @@ const TambahTandaTangan = () => {
                       className: "text-danger",
                     }
                   )} */}
-                </div>
               </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   Buat Tanda Tangan
                 </label>
-                <div className="col-sm-10">
+                <div>
                   <div
                     style={{
                       background: "#FFFFFF",
@@ -332,27 +322,20 @@ const TambahTandaTangan = () => {
                       { className: "text-danger" }
                     )}
                   </div>
-                  <div className="col-sm-10 mt-5">
+                  <div className="d-flex align-items-center mt-5">
                     {/* <Link href="/publikasi/artikel"> */}
                     <a
-                      className="btn btn-outline-primary mr-2 btn-sm"
-                      style={{
-                        backgroundColor: "#C9F7F5",
-                        color: "#1BC5BD",
-                      }}
+                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary text-blue-primary mr-5"
                       onClick={() => dataTandaTangan()}
                     >
                       Buat Tanda Tangan
                     </a>
+
                     {/* </Link> */}
                     <button
                       type="button"
                       onClick={clear}
-                      className="btn btn-sm"
-                      style={{
-                        backgroundColor: "#EDEF80",
-                        color: "#B0B328",
-                      }}
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
                     >
                       Buat Ulang Tanda Tangan
                     </button>
@@ -380,7 +363,8 @@ const TambahTandaTangan = () => {
                   />
                 </div>
               </div> */}
-              <div className="form-group row">
+
+              {/* <div className="form-group row">
                 <div className="row align-items-right mt-5 ml-auto">
                   <div className="col-sm mr-4">
                     <Link href="/partnership/tanda-tangan">
@@ -388,16 +372,34 @@ const TambahTandaTangan = () => {
                         Kembali
                       </a>
                     </Link>
-                    {/* <Link href="/partnership/tanda-tangan"> */}
                     <button
                       className="btn btn-primary btn-sm"
-                      // onClick={(e) => onSubmit(e)}
                       type="submit"
                     >
                       Simpan
                     </button>
-                    {/* </Link> */}
                   </div>
+                </div>
+              </div> */}
+
+              <div className="form-group row">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link href="/partnership/tanda-tangan">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                      Kembali
+                    </a>
+                  </Link>
+                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
+                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
+                      Kembali
+                    </a> */}
+                  <button
+                    type="submit"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                  >
+                    Simpan
+                  </button>
+                  {/* </Link> */}
                 </div>
               </div>
             </form>

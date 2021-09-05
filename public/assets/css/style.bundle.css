@@ -3213,6 +3213,8 @@ textarea.form-control {
   }
 }
 
+
+
 .btn {
   display: inline-block;
   font-weight: normal;
@@ -3909,6 +3911,52 @@ fieldset:disabled a.btn {
 .btn-outline-white:not(:disabled):not(.disabled):active:focus, .btn-outline-white:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-white.dropdown-toggle:focus {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
+}
+
+.btn-outline-primary-rounded-full {
+  color: var(--primary);
+  border-color: var(--primary);
+  border-radius: 30px;
+  font-weight: 600;
+  /* color: #ffffff;
+  border-color: #ffffff; */
+}
+.btn-outline-primary-rounded-full:hover {
+  color: var(--white);
+  background-color: var(--primary);
+  border-color: var(--primary);
+  border-radius: 30px;
+  font-weight: 600;
+  /* background-color: #ffffff;
+  border-color: #ffffff; */
+}
+.btn-outline-primary-rounded-full:focus, .btn-outline-primary-rounded-full.focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(54, 153, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(54, 153, 255, 0.5);
+  border-radius: 30px;
+  font-weight: 600;
+}
+.btn-outline-primary-rounded-full.disabled, .btn-outline-primary-rounded-full:disabled {
+  /* color: #ffffff; */
+  color: var(--primary);
+  background-color: transparent;
+  border-radius: 30px;
+  font-weight: 600;
+}
+.btn-outline-primary-rounded-full:not(:disabled):not(.disabled):active, .btn-outline-primary-rounded-full:not(:disabled):not(.disabled).active, .show > .btn-outline-primary-rounded-full.dropdown-toggle {
+  color: var(--white);
+  background-color: var(--primary);
+  border-color: var(--primary);
+  border-radius: 30px;
+  font-weight: 600;
+  /* background-color: #ffffff;
+  border-color: #ffffff; */
+}
+.btn-outline-primary-rounded-full:not(:disabled):not(.disabled):active:focus, .btn-outline-primary-rounded-full:not(:disabled):not(.disabled).active:focus, .show > .btn-outline-primary-rounded-full.dropdown-toggle:focus {
+ -webkit-box-shadow: 0 0 0 0.2rem rgba(54, 153, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(54, 153, 255, 0.5);
+  border-radius: 30px;
+  font-weight: 600;
 }
 
 .btn-primary-rounded-full {
@@ -6267,6 +6315,16 @@ input[type=button].btn-block {
 }
 .breadcrumb-item.active {
   color: #7E8299;
+  font-weight: 600;
+}
+
+.bread-crumb > *{
+  font-weight: normal;
+}
+
+.bread-crumb > *:last-child {
+  font-weight: 700;
+  color: var(--dark);
 }
 
 .pagination {

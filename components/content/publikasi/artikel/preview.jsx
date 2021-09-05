@@ -81,7 +81,7 @@ const Preview = () => {
                                         objectFit="cover"
                                         height= "100%"
                                         width= "100%"
-                                        // height= "50vh"
+                                        // height= "150vh"
                                         // width= "100vh"
                                         // layout="fill"
                                         // style={{height:"50vh", width: "100%"}} 

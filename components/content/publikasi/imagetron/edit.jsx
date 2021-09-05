@@ -67,10 +67,11 @@ const EditImagetron = () => {
     const [id, setId] = useState(imagetron.id);
     const [kategori_id, setKategoriId] = useState(imagetron.kategori_id)
     const [judul, setJudulImagetron] = useState(imagetron.judul)
-    const [gambar, setGambar] = useState(imagetron.gambar)
+    const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + imagetron.gambar);
     // const [gambar, setGambar] = useState('/assets/media/default.jpg')
-    const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
-    // const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + imagetron.gambar);
+    // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
+    const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + imagetron.gambar);
+    const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + imagetron.gambar);
     const [gambarName, setGambarName] = useState (imagetron.gambar)
     const [url_link, setUrlRedirect] = useState(imagetron.url_link)
     const [publish, setPublish] = useState(imagetron.publish)
@@ -92,24 +93,98 @@ const EditImagetron = () => {
     }
 
     const onSubmit = (e) => {
-        e.preventDefault()
-        if (error) {
-            dispatch(clearErrors())
-        }
+        e.preventDefault();
+        if (simpleValidator.current.allValid()) {
+            if (error) {
+                dispatch(clearErrors())
+            }
+            
+            if (success) {
+                dispatch({
+                    // type: NEW_ARTIKEL_RESET
+                    type: UPDATE_IMAGETRON_RESET,
+                });
+            }
 
-        const data = {
-            id,
-            kategori_id,
-            judul,
-            url_link,
-            gambar,
-            publish,
-            users_id,
-            _method
-        }
+            if (gambarDB !== gambar) {
+                const data = {
+                    id,
+                    kategori_id,
+                    judul,
+                    url_link,
+                    gambar,
+                    publish,
+                    users_id,
+                    _method
+                };
 
-        dispatch(updateImagetron(data))
-        console.log(data)
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan diedit !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+        
+                    dispatch(updateImagetron(data));
+                    // console.log(data)
+                    }
+                });
+            } else {
+
+                const data = {
+                    id,
+                    kategori_id,
+                    judul,
+                    url_link,
+                    gambar: "",
+                    publish,
+                    users_id,
+                    _method
+                };
+
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan diedit !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+        
+                    dispatch(updateImagetron(data));
+                    // console.log(data)
+                    }
+                });
+            }
+        }
+        // e.preventDefault()
+        // if (error) {
+        //     dispatch(clearErrors())
+        // }
+
+        // const data = {
+        //     id,
+        //     kategori_id,
+        //     judul,
+        //     url_link,
+        //     gambar,
+        //     publish,
+        //     users_id,
+        //     _method
+        // }
+
+        // dispatch(updateImagetron(data))
+        // console.log(data)
     }
 
     const onNewReset = () => {
@@ -263,11 +338,11 @@ const EditImagetron = () => {
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
-                                <div className="col-sm-10">
+                                <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/imagetron'>
-                                        <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
+                                        <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Simpan</button>
+                                    <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>
@@ -293,7 +368,7 @@ const EditImagetron = () => {
                             />
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         </div>
                     </div>
                 </div>

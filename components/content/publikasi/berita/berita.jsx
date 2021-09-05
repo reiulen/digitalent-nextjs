@@ -202,41 +202,42 @@ const Berita = () => {
     
     const handlePublish = (val) => {
         if (val !== null || val !== "") {
-            setPublishValue (val)
-
-            if ( startDate === null && endDate === null && limit === null && search === null){
-            router.push(`${router.pathname}?publish=${val}`);
-        
-            } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-        
-            } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-            
-            } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-        
-            } else if ( startDate === null && endDate === null && limit !== null && search === null) {
-                router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
-        
-            } else if ( startDate === null && endDate === null && limit === null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
-            
-            } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
-            
-            } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-            }
-        }
+          setPublishValue (val)
     
+          if ( startDate === null && endDate === null && limit === null && search === null){
+            router.push(`${router.pathname}?publish=${val}`);
+      
+          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+      
+          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+          
+          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+      
+          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+      
+          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+          
+          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+          
+          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+          }
+        }
+        
     }
+    
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log (berita)
-            }
+            } */}
             
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -334,7 +335,7 @@ const Berita = () => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Manajemen Berita</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Berita</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/berita/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
@@ -351,7 +352,32 @@ const Berita = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-10 col-xl-10">
+                                <div className="col-lg-7 col-xl-7 col-sm-9">
+                                    <div
+                                        className="position-relative overflow-hidden mt-3"
+                                        style={{ maxWidth: "330px" }}
+                                    >
+                                        <i className="ri-search-line left-center-absolute ml-2"></i>
+                                        <input
+                                        type="text"
+                                        className="form-control pl-10"
+                                        placeholder="Ketik disini untuk Pencarian..."
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        />
+                                        <button
+                                        className="btn bg-blue-primary text-white right-center-absolute"
+                                        style={{
+                                            borderTopLeftRadius: "0",
+                                            borderBottomLeftRadius: "0",
+                                        }}
+                                        onClick={handleSearch}
+                                        >
+                                        Cari
+                                        </button>
+                                    </div>
+
+                                </div>
+                                {/* <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
                                         <input
                                         style={{ background: "#F3F6F9", border: "none" }}
@@ -368,9 +394,9 @@ const Berita = () => {
                                 </div>
                                 <div className="col-lg-2 col-xl-2">
                                     <button type="button" className='btn btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
-                                </div>
+                                </div> */}
                             </div>
-                            <div className="row align-items-right">
+                            {/* <div className="row align-items-right">
                                 <div className="col-lg-2 col-xl-2">
                                     <small className="form-text text-muted">
                                         Dari Tanggal
@@ -385,9 +411,6 @@ const Berita = () => {
                                         dateFormat="dd/MM/yyyy"
                                     // minDate={addDays(new Date(), 20)}
                                     />
-                                    {/* <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small> */}
                                 </div>
                                 <div className="col-lg-2 col-xl-2">
                                     <small className="form-text text-muted">
@@ -404,9 +427,6 @@ const Berita = () => {
                                         maxDate={addDays(startDate, 20)}
                                         dateFormat="dd/MM/yyyy"
                                     />
-                                    {/* <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small> */}
                                 </div>
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                                 <button
@@ -417,7 +437,7 @@ const Berita = () => {
                                     Cari
                                 </button>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="table-page mt-5">
                             <div className="table-responsive">
@@ -498,7 +518,33 @@ const Berita = () => {
 
                                                             </td>
                                                             <td className='align-middle'>Super Admin</td>
-                                                            <td className='align-middle'>
+                                                            <td className="align-middle d-flex">
+
+                                                                <Link
+                                                                href={`/publikasi/berita/preview/${row.id}`}
+                                                                >
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2" target="_blank">
+                                                                    <i className="ri-todo-fill p-0 text-white"></i>
+                                                                </a>
+                                                                </Link>
+
+                                                                <Link
+                                                                href={`/publikasi/berita/${row.id}`}
+                                                                >
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                </a>
+                                                                </Link>
+
+                                                                <button
+                                                                className="btn btn-link-action bg-blue-secondary text-white"
+                                                                onClick={() => handleDelete(row.id)}
+                                                                >
+                                                                <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                                                </button>
+                                                            </td>
+
+                                                            {/* <td className='align-middle'>
                                                                 <ButtonNewTab icon='setting.svg' link={`/publikasi/berita/preview/${row.id}`} title="Preview"/>
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/berita/${row.id}`} title="Edit"/>
                                                                 <button 
@@ -519,7 +565,7 @@ const Berita = () => {
                                                                         height={18} 
                                                                     />
                                                                 </button>
-                                                            </td>
+                                                            </td> */}
                                                         </tr>
 
                                                     })

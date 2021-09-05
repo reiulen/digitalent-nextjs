@@ -189,7 +189,7 @@ const Tambah = () => {
         />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3 className="card-title font-weight-bolder text-dark" style={{fontSize:"24px"}}>
               Tambah Kerjasama
             </h3>
           </div>
@@ -413,7 +413,7 @@ const Tambah = () => {
                 </div>
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label
                   htmlFor="staticEmail"
                   className="col-sm-2 col-form-label"
@@ -436,43 +436,13 @@ const Tambah = () => {
                       ) : (
                         ""
                       )}
-                      {/* <DatePicker
-                        className="form-control-sm form-control"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        selectsStart
-                        startDate={startDate}
-                        endDate={endDate}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Dari Tanggal"
-                        // minDate={addDays(new Date(), 20)}
-                      /> */}
                     </div>
                     <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      {/* <DatePicker
-                        className="form-control-sm form-control"
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        selectsEnd
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={startDate}
-                        maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      /> */}
-
-                      {/* <select onFocus={()=>setError({...error,periodUnit:""})}  className="form-control" onChange={(e)=>setPeriodUnit(e.target.value)}>
-                        <option value="">Pilih periode bulan/tahun</option>
-                        <option value="bulan">Bulan</option>
-                        <option value="tahun">Tahun</option>
-                      </select> */}
                       <div className="form-control">Tahun</div>
-                      {/* {error.periodUnit ? <p className="error-text">{error.periodUnit}</p>:"" } */}
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               {/* looping */}
               {allMK.singleCooporationSelect.length === 0
@@ -480,14 +450,14 @@ const Tambah = () => {
                 : allMK.singleCooporationSelect.data.option.map(
                     (items, index) => {
                       return (
-                        <div className="form-group row" key={index}>
+                        <div className="form-group" key={index}>
                           <label
                             htmlFor="staticEmail"
-                            className="col-sm-2 col-form-label"
+                            className="col-form-label"
                           >
                             {items.cooperation_form}
                           </label>
-                          <div className="col-sm-10">
+                          <div>
                             <textarea
                               onFocus={() =>
                                 setError({ ...error, AllCooperation: "" })
@@ -514,10 +484,9 @@ const Tambah = () => {
                   )}
               {/* end loopingg */}
               <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10">
+                <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/manajemen-kerjasama">
-                    <a className="btn btn-outline-primary mr-2 btn-sm">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
                       Kembali
                     </a>
                   </Link>
@@ -527,7 +496,7 @@ const Tambah = () => {
                     </a> */}
                   <button
                     type="submit"
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                     // onClick={(e) => submit(e)}
                   >
                     Lanjut
