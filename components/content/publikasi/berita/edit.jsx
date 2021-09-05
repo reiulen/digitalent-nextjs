@@ -63,9 +63,11 @@ const EditBerita = () => {
     const [id, setId] = useState(berita.id)
     const [judul_berita, setJudulBerita] = useState(berita.judul_berita)
     const [isi_berita, setIsiBerita] = useState(berita.isi_berita);
-    const [gambar, setGambar] = useState(berita.gambar)
-    const [gambarPreview, setGambarPreview] = useState("/assets/media/default.jpg") 
-    // const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
+    // const [gambar, setGambar] = useState(berita.gambar)
+    const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar)
+    const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
+    // const [gambarPreview, setGambarPreview] = useState("/assets/media/default.jpg") 
+    const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
     const [gambarName, setGambarName] = useState (berita.gambar)
     const [kategori_id, setKategoriId] = useState(berita.kategori_id)
     const [users_id, setUserId] = useState(berita.users_id)
@@ -118,25 +120,69 @@ const EditBerita = () => {
                     // type: NEW_BERITA_RESET
                     type: UPDATE_BERITA_RESET
                 })
+            } 
+
+            if (gambarDB !== gambar) {
+                const data = {
+                    judul_berita,
+                    isi_berita,
+                    gambar,
+                    kategori_id,
+                    users_id,
+                    tag,
+                    publish,
+                    id,
+                    _method
+                }
+
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan diedit !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                })
+                    .then((result) => {
+                      if (result.isConfirmed) {
+                        dispatch(updateBerita(data));
+                        // console.log(data)
+                    }
+                });
+
+            } else {
+                const data = {
+                    judul_berita,
+                    isi_berita,
+                    gambar: "",
+                    kategori_id,
+                    users_id,
+                    tag,
+                    publish,
+                    id,
+                    _method
+                }
+
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan diedit !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                })
+                    .then((result) => {
+                      if (result.isConfirmed) {
+                        dispatch(updateBerita(data));
+                        // console.log(data)
+                    }
+                });
             }
-    
-            const data = {
-                judul_berita,
-                isi_berita,
-                gambar,
-                kategori_id,
-                users_id,
-                tag,
-                publish,
-                id,
-                _method
-            }
-    
-            dispatch(updateBerita(data))
-            console.log("check")
-            // console.log(data)
         }
-        
     }
 
     const onNewReset = () => {
@@ -236,6 +282,7 @@ const EditBerita = () => {
                                     <div className="col-sm-1">
                                         <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
                                             <Image
+                                                loader={() => gambarPreview}
                                                 src={gambarPreview}
                                                 alt='image'
                                                 width={60}
@@ -312,11 +359,11 @@ const EditBerita = () => {
 
                                 <div className="form-group row">
                                     <div className="col-sm-2"></div>
-                                    <div className="col-sm-10">
+                                    <div className="col-sm-10 text-right">
                                         <Link href='/publikasi/berita'>
-                                            <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
+                                            <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                         </Link>
-                                        <button className='btn btn-primary btn-sm'>Simpan</button>
+                                        <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                     </div>
                                 </div>
                             </form>

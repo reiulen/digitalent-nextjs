@@ -56,7 +56,7 @@ const EditVideo = () => {
     const [id, setId] = useState(video.id)
     const [judul_video, setJudulVideo] = useState(video.judul_video)
     const [isi_video, setIsiVideo] = useState(video.isi_video);
-    const [gambar, setGambar] = useState(video.gambar)
+    const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [url_video, setUrlVideo] = useState(video.url_video)
     // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
     const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
@@ -111,7 +111,7 @@ const EditVideo = () => {
           if (success) {
             dispatch({
               // type: NEW_ARTIKEL_RESET
-              type: UPDATE_ARTIKEL_RESET,
+              type: UPDATE_VIDEO_RESET,
             });
           }
     
@@ -358,6 +358,7 @@ const EditVideo = () => {
                                     <div className="col-sm-1">
                                         <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
                                             <Image
+                                                loader={() => gambarPreview}
                                                 src={gambarPreview}
                                                 alt='image'
                                                 width={60}
@@ -461,11 +462,11 @@ const EditVideo = () => {
 
                                 <div className="form-group row">
                                     <div className="col-sm-2"></div>
-                                    <div className="col-sm-10">
+                                    <div className="col-sm-10 text-right">
                                         <Link href='/publikasi/video'>
-                                            <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
+                                            <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                         </Link>
-                                        <button className='btn btn-primary btn-sm'>Simpan</button>
+                                        <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                     </div>
                                 </div>
                             </form>
@@ -491,7 +492,7 @@ const EditVideo = () => {
                                 />
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
                             </div>
                         </div>
                     </div>

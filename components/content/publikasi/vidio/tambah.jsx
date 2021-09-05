@@ -322,11 +322,11 @@ const TambahVidio = () => {
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
-                                <div className="col-sm-10">
+                                <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/video'>
-                                        <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
+                                        <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Simpan</button>
+                                    <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>
@@ -352,7 +352,7 @@ const TambahVidio = () => {
                             />
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         </div>
                     </div>
                 </div>
