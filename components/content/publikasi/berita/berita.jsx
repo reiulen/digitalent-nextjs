@@ -335,7 +335,7 @@ const Berita = () => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Manajemen Berita</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Berita</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/berita/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
