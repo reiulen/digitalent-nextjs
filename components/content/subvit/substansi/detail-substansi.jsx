@@ -130,6 +130,98 @@ const DetailSubstansi = () => {
     }
   };
 
+  const getStartEndAt = (start, end) => {
+    if (!(start || end)) {
+      return "-";
+    }
+    const startAt = new Date(start);
+    var startMonth = startAt.getMonth();
+    const endAt = new Date(end);
+    var tahun = endAt.getFullYear();
+    var bulan = endAt.getMonth();
+    var tanggal = endAt.getDate();
+
+    switch (bulan) {
+      case 0:
+        bulan = "Januari";
+        break;
+      case 1:
+        bulan = "Februari";
+        break;
+      case 2:
+        bulan = "Maret";
+        break;
+      case 3:
+        bulan = "April";
+        break;
+      case 4:
+        bulan = "Mei";
+        break;
+      case 5:
+        bulan = "Juni";
+        break;
+      case 6:
+        bulan = "Juli";
+        break;
+      case 7:
+        bulan = "Agustus";
+        break;
+      case 8:
+        bulan = "September";
+        break;
+      case 9:
+        bulan = "Oktober";
+        break;
+      case 10:
+        bulan = "November";
+        break;
+      case 11:
+        bulan = "Desember";
+        break;
+    }
+
+    switch (startMonth) {
+      case 0:
+        startMonth = "Januari";
+        break;
+      case 1:
+        startMonth = "Februari";
+        break;
+      case 2:
+        startMonth = "Maret";
+        break;
+      case 3:
+        startMonth = "April";
+        break;
+      case 4:
+        startMonth = "Mei";
+        break;
+      case 5:
+        startMonth = "Juni";
+        break;
+      case 6:
+        startMonth = "Juli";
+        break;
+      case 7:
+        startMonth = "Agustus";
+        break;
+      case 8:
+        startMonth = "September";
+        break;
+      case 9:
+        startMonth = "Oktober";
+        break;
+      case 10:
+        startMonth = "November";
+        break;
+      case 11:
+        startMonth = "Desember";
+        break;
+    }
+
+    return `${startAt.getDate()} ${startMonth} - ${tanggal} ${bulan} ${tahun}`;
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -177,40 +269,102 @@ const DetailSubstansi = () => {
 
           <div className="card-body">
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <div className="row">
-                  <div
-                    className="col title-1 font-weight-bold"
-                    style={{ color: "#80808F" }}
-                  >
-                    <p>Akademi</p>
-                    <p>Tema</p>
-                    <p>Pelatihan</p>
-                    <p>Status</p>
-                  </div>
-                  <div className="col value-1">
-                    <p>FGA</p>
-                    <p>Cloude Computing</p>
-                    <p>-</p>
-                    <p>{subtance.status ? "Publish" : "Draft"}</p>
-                  </div>
+                  <table>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">Akademi</p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.academy.name || "-"}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">Tema</p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.theme.name || "-"}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">
+                          Pelatihan
+                        </p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.training.name || "-"}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">Kategori</p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.category || "-"}</p>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <div className="row">
-                  <div
-                    className="col title-1 font-weight-bold"
-                    style={{ color: "#80808F" }}
-                  >
-                    <p>Pelaksanaan</p>
-                    <p>Jumlah Soal</p>
-                    <p>Durasi Tes</p>
-                  </div>
-                  <div className="col value-1">
-                    <p>1 - 5 Juli 2021</p>
-                    <p>{subtance.bank_soal} Soal</p>
-                    <p>{subtance.duration} Menit</p>
-                  </div>
+                  <table>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">
+                          Pelaksanaan
+                        </p>
+                      </td>
+                      <td>
+                        <p className="pl-5">
+                          {getStartEndAt(subtance.start_at, subtance.end_at)}
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">
+                          Jumlah Soal
+                        </p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.bank_soal} Soal</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">
+                          Passing Grade
+                        </p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.passing_grade || "-"}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">
+                          Durasi Tes
+                        </p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.duration} Menit</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">Status</p>
+                      </td>
+                      <td>
+                        <p className="pl-5">
+                          {subtance.status ? "Publish" : "Draft"}
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>
@@ -408,6 +562,7 @@ const DetailSubstansi = () => {
                                   icon="write.svg"
                                   link={`edit-soal-substansi?id=${question.id}`}
                                   title="Edit"
+                                  colorClass="bg-blue-secondary"
                                 />
                                 <button
                                   onClick={() => handleDelete(question.id)}
