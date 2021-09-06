@@ -30,7 +30,7 @@ const Preview = () => {
                 >
             </Image>
             <PageWrapper>
-                <div className="col-lg-12 order-1 px-0 mt-5">
+                <div className="col-lg-12 order-1 px-0 position-relative " style={{marginTop: "-20vh"}} >
                     <div className="card card-custom card-stretch gutter-b">
 
                         <div className="card-body pt-0">

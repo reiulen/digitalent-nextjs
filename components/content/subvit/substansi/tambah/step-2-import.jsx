@@ -383,17 +383,14 @@ const StepTwo = () => {
               </div>
 
               <div className="row">
-                <div className="col-sm-12 col-md-8 pt-0">
+                <div className="col-sm-12 pt-0">
                   <hr />
                   <div className="float-right">
-                    <button
-                      className="btn btn-light-primary btn-sm mr-2"
-                      type="submit"
-                    >
+                    <button className="btn btn-light btn-sm mr-2" type="submit">
                       Simpan & Lanjut
                     </button>
                     <button
-                      className="btn btn-primary btn-sm"
+                      className="btn btn-primary-rounded-full text-white btn-sm"
                       onClick={saveDraft}
                       type="button"
                     >
