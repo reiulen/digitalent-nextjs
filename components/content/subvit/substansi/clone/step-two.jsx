@@ -236,21 +236,20 @@ const StepTwo = () => {
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
 
-                <div className="col-lg-1 col-xl-1">
-                  <button
-                    className="btn btn-light-primary btn-block font-weight-bold"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
-                </div>
+                <div className="col-lg-1 col-xl-1"></div>
 
                 <div className="col-lg-2 col-xl-2 ml-auto">
                   <button
-                    className="btn btn-primary btn-block"
+                    className="btn btn-primary-rounded-full btn-block"
                     onClick={handleModal}
                   >
                     <i className="flaticon2-notepad"></i>Tambah Soal
@@ -423,14 +422,14 @@ const StepTwo = () => {
                 <div className="col-sm-12 col-md-8 pt-0">
                   <div className="float-right">
                     <button
-                      className="btn btn-light-primary btn-sm mr-2"
+                      className="btn btn-light btn-sm mr-2"
                       type="button"
                       onClick={saveLanjut}
                     >
                       Simpan & Lanjut
                     </button>
                     <button
-                      className="btn btn-primary btn-sm"
+                      className="btn btn-primary-rounded-full btn-sm"
                       onClick={saveDraft}
                       type="button"
                     >

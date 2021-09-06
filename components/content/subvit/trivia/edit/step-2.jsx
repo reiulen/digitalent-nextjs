@@ -219,7 +219,10 @@ const StepTwo = () => {
                       }
                     />
                     <div className="input-group-append">
-                      <span className="input-group-text" id="basic-addon2">
+                      <span
+                        className="input-group-text bg-primary text-white"
+                        id="basic-addon2"
+                      >
                         Soal
                       </span>
                     </div>
@@ -252,7 +255,10 @@ const StepTwo = () => {
                       min={1}
                     />
                     <div className="input-group-append bg-sedondary">
-                      <span className="input-group-text" id="basic-addon2">
+                      <span
+                        className="input-group-text bg-primary text-white"
+                        id="basic-addon2"
+                      >
                         Menit
                       </span>
                     </div>
@@ -304,11 +310,11 @@ const StepTwo = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <button className="btn btn-light-primary btn-sm mr-2">
+                  <button className="btn btn-light btn-sm mr-2" type="submit">
                     Simpan & Lanjut
                   </button>
                   <button
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary-rounded-full btn-sm"
                     onClick={saveDraft}
                     type="button"
                   >

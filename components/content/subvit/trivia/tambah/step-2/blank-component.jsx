@@ -166,7 +166,10 @@ const BlankComponent = ({ props_answer, props_duration }) => {
               min={1}
             />
             <div className="input-group-append">
-              <span className="input-group-text" id="basic-addon2">
+              <span
+                className="input-group-text bg-primary text-white"
+                id="basic-addon2"
+              >
                 Detik
               </span>
             </div>

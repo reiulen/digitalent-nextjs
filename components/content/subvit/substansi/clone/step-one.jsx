@@ -12,7 +12,7 @@ import {
 import { NEW_CLONE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../../redux/types/subvit/subtance.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
-import StepInput from "/components/StepInput";
+import StepInput from "/components/StepInputClone";
 import LoadingPage from "../../../../LoadingPage";
 
 const StepOne = () => {
@@ -294,16 +294,13 @@ const StepOne = () => {
 
               <div className="form-group row">
                 <div className="col-sm-2"></div>
-                <div className="col-sm-10 text-right">
-                  <button
-                    type="submit"
-                    className="btn btn-light-primary btn-sm mr-2"
-                  >
+                <div className="col-sm-10 col-md-12 text-right">
+                  <button type="submit" className="btn btn-light btn-sm mr-2">
                     Simpan & Lanjut
                   </button>
                   <button
                     onClick={saveDraft}
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary-rounded-full text-white  btn-sm"
                     type="button"
                   >
                     Simpan Draft
