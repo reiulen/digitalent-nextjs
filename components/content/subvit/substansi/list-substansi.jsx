@@ -76,6 +76,72 @@ const ListSubstansi = () => {
     router.replace("/subvit/substansi", undefined, { shallow: true });
   };
 
+  const getStartAt = (date) => {
+    if (!date) {
+      return "-";
+    }
+    const startAt = new Date(date);
+    var tahun = startAt.getFullYear();
+    var bulan = startAt.getMonth();
+    var tanggal = startAt.getDate();
+
+    switch (bulan) {
+      case 0:
+        bulan = "Januari";
+        break;
+      case 1:
+        bulan = "Februari";
+        break;
+      case 2:
+        bulan = "Maret";
+        break;
+      case 3:
+        bulan = "April";
+        break;
+      case 4:
+        bulan = "Mei";
+        break;
+      case 5:
+        bulan = "Juni";
+        break;
+      case 6:
+        bulan = "Juli";
+        break;
+      case 7:
+        bulan = "Agustus";
+        break;
+      case 8:
+        bulan = "September";
+        break;
+      case 9:
+        bulan = "Oktober";
+        break;
+      case 10:
+        bulan = "November";
+        break;
+      case 11:
+        bulan = "Desember";
+        break;
+    }
+
+    return `${tanggal} ${bulan} ${tahun}`;
+  };
+
+  const isFinish = (date) => {
+    if (!date) {
+      return "Belum Dilaksanakan";
+    }
+    const endAt = new Date(date);
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (endAt > today) {
+      return "Belum Selesai";
+    } else {
+      return "Selesai";
+    }
+  };
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ?",
@@ -242,10 +308,9 @@ const ListSubstansi = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>Akademi</th>
-                        <th>Tema</th>
-                        <th>Bank Soal</th>
+                        <th>Pelatihan</th>
                         <th>Pelaksaan</th>
+                        <th>Bank Soal</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Aksi</th>
@@ -264,21 +329,23 @@ const ListSubstansi = () => {
                           return (
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
+                                <span className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
                               <td className="align-middle">
-                                {subtance.academy.name}
+                                <b>{subtance.academy.name}</b>
+                                <p>
+                                  {subtance.training.name ||
+                                    subtance.theme.name}
+                                </p>
                               </td>
                               <td className="align-middle">
-                                {subtance.theme.name}
+                                <b>{getStartAt(subtance.start_at)}</b>
+                                <p>{isFinish(subtance.end_at)}</p>
                               </td>
                               <td className="align-middle">
                                 {subtance.bank_soal} Soal
-                              </td>
-                              <td className="align-middle">
-                                {subtance.start_at}
                               </td>
                               <td className="align-middle">
                                 {subtance.category}
