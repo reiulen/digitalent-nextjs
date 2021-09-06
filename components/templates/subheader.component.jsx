@@ -5,8 +5,9 @@ import Link from "next/link";
 
 const convertBreadcrumb = (string) => {
   return (
-    // "/" + string.charAt(0).toUpperCase() + string.slice(1).split("?")[0] 
-    string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
+    // "/ " + string.charAt(0).toUpperCase() + string.slice(1).split("?")[0] 
+    string.charAt(0).toUpperCase() + string.slice(1).split("?")[0] + " / "   
+    // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
   );
 };
 
@@ -48,13 +49,17 @@ const SubHeader = () => {
               {
                 console.log(breadcrumb);
               }
+
+              {
+                console.log(convertBreadcrumb(breadcrumb.breadcrumb)[breadcrumb.breadcrumb.length]);
+              }
               return (
                 <Link href={breadcrumb.href} key={i}>
                   <a>
                     <p className="text-default mt-2 mb-2">
                       {
-                        i == breadcrumbs.length - 1 ?
-                          (convertBreadcrumb(breadcrumb.breadcrumb)).slice(0, -1)
+                        (i == (breadcrumbs.length - 1)) && (convertBreadcrumb(breadcrumb.breadcrumb)[breadcrumb.breadcrumb.length]) === " " ?
+                          (convertBreadcrumb(breadcrumb.breadcrumb)).slice(0, breadcrumb.breadcrumb.length)
                         :
                           (convertBreadcrumb(breadcrumb.breadcrumb))
                       } 
