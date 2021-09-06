@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import Link from "next/link";
 import dynamic from "next/dynamic";
-import Image from "next/image";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getAllSubtanceQuestionBanksType } from "../../../../../redux/actions/subvit/subtance-question-type.actions";
 import {
   newSubtanceQuestionDetail,
   clearErrors,
@@ -406,19 +403,14 @@ const StepTwo = () => {
                           Input Gambar (Opsional)
                         </span>
                       </div>
-                      <div className="col-sm-12 col-md-1">
+                      <div className="col-sm-12 col-md-1 pr-0 mr-0 justify-content-center">
                         {answer.length !== 1 && x.key !== "A" ? (
                           <button
-                            className="btn mr-1"
+                            className="btn btn-link-action bg-danger text-white"
                             type="button"
                             onClick={() => handleRemoveClick(i)}
                           >
-                            <Image
-                              alt="button-action"
-                              src="/assets/icon/trash-red.svg"
-                              width={18}
-                              height={18}
-                            />
+                            <i class="ri-delete-bin-fill p-0 text-white"></i>
                           </button>
                         ) : (
                           ""
@@ -430,7 +422,7 @@ const StepTwo = () => {
                           onlabel=" "
                           onstyle="primary"
                           offlabel=" "
-                          offstyle="danger"
+                          offstyle="secondary"
                           size="sm"
                           width={20}
                           height={10}
@@ -450,10 +442,10 @@ const StepTwo = () => {
                   {answer.length < 6 ? (
                     <button
                       type="button"
-                      className="btn btn-primary-rounded-full"
+                      className="btn btn-rounded-full bg-blue-secondary text-white"
                       onClick={() => handleAddClick()}
                     >
-                      Tambah Jawaban
+                      <i className="ri-add-fill text-white"></i> Tambah Jawaban
                     </button>
                   ) : (
                     ""
@@ -494,11 +486,14 @@ const StepTwo = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <button className="btn btn-light btn-sm mr-2" type="submit">
+                  <button
+                    className="btn btn-light-ghost-rounded-full mr-2"
+                    type="submit"
+                  >
                     Simpan & Lanjut
                   </button>
                   <button
-                    className="btn btn-primary-rounded-full btn-sm"
+                    className="btn btn-primary-rounded-full"
                     onClick={saveDraft}
                     type="button"
                   >

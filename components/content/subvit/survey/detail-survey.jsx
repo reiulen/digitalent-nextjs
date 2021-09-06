@@ -10,6 +10,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
 
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   deleteSurveyQuestionDetail,
   clearErrors,
@@ -144,7 +145,8 @@ const DetailSurvey = () => {
             </h3>
             <div className="card-toolbar">
               <Link href={`/subvit/survey/edit?id=${id}`}>
-                <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
+                <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                  <i className="ri-pencil-fill"></i>
                   Edit
                 </a>
               </Link>
@@ -157,7 +159,7 @@ const DetailSurvey = () => {
                 <div className="row">
                   <div
                     className="col title-1 font-weight-bold"
-                    style={{ color: "#80808F" }}
+                    style={{ color: "#000000" }}
                   >
                     <p>Akademi</p>
                     <p>Tema</p>
@@ -167,7 +169,7 @@ const DetailSurvey = () => {
                   <div className="col value-1">
                     <p>{survey.academy.name}</p>
                     <p>{survey.theme.name}</p>
-                    <p>{survey.training.name}</p>
+                    {/* <p>{survey.training.name}</p> */}
                     <p>{survey.status ? "Publish" : "Draft"}</p>
                   </div>
                 </div>
@@ -176,7 +178,7 @@ const DetailSurvey = () => {
                 <div className="row">
                   <div
                     className="col title-1 font-weight-bold"
-                    style={{ color: "#80808F" }}
+                    style={{ color: "#000000" }}
                   >
                     <p>Pelaksanaan</p>
                     <p>Jumlah Soal</p>
@@ -205,9 +207,10 @@ const DetailSurvey = () => {
             </div>
             <div className="card-toolbar">
               <a
-                className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block "
+                className="btn btn-primary-rounded-full px-y font-weight-bold btn-block "
                 onClick={handleModal}
               >
+                <i className="ri-pencil-fill"></i>
                 Tambah Soal
               </a>
             </div>
@@ -216,30 +219,29 @@ const DetailSurvey = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="input-icon">
-                    <input
-                      style={{ background: "#F3F6F9", border: "none" }}
-                      type="text"
-                      className="form-control mt-2"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      onChange={(e) => setSearch(e.target.value)}
-                      autoComplete="off"
-                    />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="col-lg-2 col-xl-2">
-                  <button
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block mt-2"
-                    onClick={handleSearch}
+                <div className="col-lg-8 col-xl-8">
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
                   >
-                    Cari
-                  </button>
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                    <input
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -253,7 +255,7 @@ const DetailSurvey = () => {
                       <th>ID Soal</th>
                       <th>Soal</th>
                       <th>Status</th>
-                      <th className="text-center">Aksi</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -289,29 +291,19 @@ const DetailSurvey = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`edit-soal-survey?id=${question.id}`}
-                                  title="Edit"
-                                />
-                                <button
-                                  onClick={() => handleDelete(question.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
+                              <td className="align-middle d-flex">
+                                <Link
+                                  href={`edit-soal-survey?id=${question.id}`}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(question.id)}
+                                >
+                                  <i class="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>

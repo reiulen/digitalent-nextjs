@@ -96,16 +96,11 @@ const ObjectiveComponent = ({ props_answer }) => {
               <div className="col-sm-12 col-md-1">
                 {answer.length !== 1 && x.key !== "A" ? (
                   <button
-                    className="btn mr-1"
+                    className="btn btn-link-action bg-danger text-white"
                     type="button"
                     onClick={() => handleRemoveClick(i)}
                   >
-                    <Image
-                      alt="button-action"
-                      src="/assets/icon/trash-red.svg"
-                      width={18}
-                      height={18}
-                    />
+                    <i class="ri-delete-bin-fill p-0 text-white"></i>
                   </button>
                 ) : (
                   ""
@@ -122,10 +117,10 @@ const ObjectiveComponent = ({ props_answer }) => {
           {answer.length < 6 ? (
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-rounded-full bg-blue-secondary text-white"
               onClick={() => handleAddClick()}
             >
-              Tambah Jawaban
+              <i className="ri-add-fill text-white"></i> Tambah Jawaban
             </button>
           ) : (
             ""

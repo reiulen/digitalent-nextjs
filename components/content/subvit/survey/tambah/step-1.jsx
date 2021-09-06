@@ -297,12 +297,15 @@ const TambahSurveyStepOne = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <button type="submit" className="btn btn-light btn-sm mr-2">
+                  <button
+                    type="submit"
+                    className="btn btn-light-ghost-rounded-full mr-2"
+                  >
                     Simpan & Lanjut
                   </button>
                   <button
                     onClick={saveDraft}
-                    className="btn btn-primary-rounded-full text-white  btn-sm"
+                    className="btn btn-primary-rounded-full text-white"
                     type="button"
                   >
                     Simpan Draft

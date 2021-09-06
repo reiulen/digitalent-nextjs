@@ -5,8 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
+import { Modal } from "react-bootstrap";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
@@ -54,6 +53,7 @@ const DetailSubstansi = () => {
   const [pelatihan, setPelatihan] = useState(null);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?id=${id}&page=${pageNumber}`;
@@ -167,7 +167,8 @@ const DetailSubstansi = () => {
             </h3>
             <div className="card-toolbar">
               <Link href={`/subvit/substansi/edit?id=${id}`}>
-                <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
+                <a className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block">
+                  <i className="ri-pencil-fill"></i>
                   Edit
                 </a>
               </Link>
@@ -228,9 +229,10 @@ const DetailSubstansi = () => {
             </div>
             <div className="card-toolbar">
               <a
-                className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block"
+                className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block"
                 onClick={handleModal}
               >
+                <i className="ri-pencil-fill"></i>
                 Tambah Soal
               </a>
             </div>
@@ -239,34 +241,50 @@ const DetailSubstansi = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="input-icon">
+                <div className="col-lg-8 col-xl-8">
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                      style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control mt-2"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
-                      autoComplete="off"
                     />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
-
-                <div className="col-lg-2 col-xl-2">
+                <div className="col-lg-4 col-xl-4">
                   <button
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block mt-2"
-                    onClick={handleSearch}
+                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    style={{
+                      minWidth: "280px",
+                      color: "#bdbdbd",
+                      float: "right",
+                    }}
+                    onClick={() => setShowModal(true)}
                   >
-                    Cari
+                    <div className="d-flex align-items-center">
+                      <i className="ri-filter-fill mr-3"></i>
+                      Pilih Filter
+                    </div>
+                    <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
               </div>
 
-              <div className="row align-items-center my-5">
+              {/* <div className="row align-items-center my-5">
                 <div className="col-lg-3 col-xl-3 ">
                   <div className="form-group mb-0">
                     <small className="text-muted p-0">
@@ -334,7 +352,7 @@ const DetailSubstansi = () => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="table-page mt-5">
@@ -487,6 +505,80 @@ const DetailSubstansi = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Filter</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group mb-5">
+            <label className="p-0">Pelatihan</label>
+            <select className="form-control">
+              <option>Semua</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Status</label>
+            <select
+              className="form-control"
+              onChange={(e) => setStatus(e.target.value)}
+              onBlur={(e) => setStatus(e.target.value)}
+              value={status}
+            >
+              <option value="" selected>
+                Semua
+              </option>
+              <option value={true}>Publish</option>
+              <option value={false}>Draft</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className=" p-0">Kategori</label>
+            <select
+              className="form-control"
+              onChange={(e) => setKategori(e.target.value)}
+              onBlur={(e) => setKategori(e.target.value)}
+              value={kategori}
+            >
+              <option value="">Semua</option>
+              {!subtance_question_type ||
+              (subtance_question_type &&
+                subtance_question_type.list_types.length === 0) ? (
+                <option value="">Data kosong</option>
+              ) : (
+                subtance_question_type &&
+                subtance_question_type.list_types.map((row) => {
+                  return (
+                    <option key={row.id} value={row.id}>
+                      {row.name}
+                    </option>
+                  );
+                })
+              )}
+            </select>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-light-ghost-rounded-full mr-2"
+            type="reset"
+          >
+            Reset
+          </button>
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={handleFilter}
+          >
+            Terapkan
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };
