@@ -10,6 +10,8 @@ import LoadingTable from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { Modal } from "react-bootstrap";
+
 import {
   getAllSubtanceQuestionBanks,
   clearErrors,
@@ -30,6 +32,7 @@ const ListSubstansi = () => {
   const [pelatihan, setPelatihan] = useState(null);
   const [nilai, setNilai] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   let { page = 1, id } = router.query;
   page = Number(page);
@@ -90,6 +93,12 @@ const ListSubstansi = () => {
     router.push(link);
   };
 
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -107,6 +116,7 @@ const ListSubstansi = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -124,7 +134,7 @@ const ListSubstansi = () => {
             background="bg-primary"
             icon="new/add-user.svg"
             color="#FFFFFF"
-            value={subtance.data.total_peserta}
+            value={subtance ? subtance.data.total_peserta : 0}
             titleValue=""
             title="Total Peserta"
             publishedVal=""
@@ -134,7 +144,7 @@ const ListSubstansi = () => {
             background="bg-secondary"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={subtance.data.sudah_mengerjakan}
+            value={subtance ? subtance.data.sudah_mengerjakan : 0}
             titleValue=""
             title="Sudah Mengerjakan"
             publishedVal="sudah-mengerjakan"
@@ -144,7 +154,7 @@ const ListSubstansi = () => {
             background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={subtance.data.sedang_mengerjakan}
+            value={subtance ? subtance.data.sedang_mengerjakan : 0}
             titleValue=""
             title="Sedang Mengerjakan"
             publishedVal="sedang-mengerjakan"
@@ -154,7 +164,7 @@ const ListSubstansi = () => {
             background="bg-warning"
             icon="new/mail-white.svg"
             color="#FFFFFF"
-            value={subtance.data.belum_mengerjakan}
+            value={subtance ? subtance.data.belum_mengerjakan : 0}
             titleValue=""
             title="Belum Mengerjakan"
             publishedVal="belum-mengerjakan"
@@ -164,7 +174,7 @@ const ListSubstansi = () => {
             background="bg-danger"
             icon="new/block-white.svg"
             color="#FFFFFF"
-            value={subtance.data.gagal_test}
+            value={subtance ? subtance.data.gagal_test : 0}
             titleValue=""
             title="Gagal Test"
             publishedVal="gagal-test"
@@ -188,49 +198,74 @@ const ListSubstansi = () => {
               </h3>
               <p className="text-muted">FGA - Cloud Computing</p>
             </div>
-            <div className="col-lg-2 col-xl-2">
-              <button
-                className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
-                type="button"
-                onClick={handleExportReport}
-              >
-                Export .CSV
-              </button>
-            </div>
+            <div className="col-lg-2 col-xl-2"></div>
             <div className="card-toolbar"></div>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="input-icon">
+                <div className="col-md-5">
+                  <div className="position-relative overflow-hidden mt-2">
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                      style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      autoComplete="off"
+                      className="form-control pl-10 mt-2"
+                      placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute mt-1"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
 
-                <div className="col-lg-2 col-xl-2">
+                <div className="col-md-1"></div>
+
+                <div className="col-md-4">
                   <button
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                    onClick={handleSearch}
+                    className="btn border d-flex align-items-center justify-content-between mt-2 btn-block"
+                    style={{
+                      color: "#bdbdbd",
+                      float: "right",
+                    }}
+                    onClick={() => setShowModal(true)}
                   >
-                    Cari
+                    <div className="d-flex align-items-center">
+                      <i className="ri-filter-fill mr-3"></i>
+                      Pilih Filter
+                    </div>
+                    <i className="ri-arrow-down-s-line"></i>
+                  </button>
+                </div>
+
+                <div className="col-md-2">
+                  {/* <button
+                    className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
+                    type="button"
+                    onClick={handleExportReport}
+                  >
+                    Export .CSV
+                  </button> */}
+                  <button
+                    className="btn btn-rounded-full bg-blue-secondary text-white mt-2"
+                    type="button"
+                    onClick={handleExportReport}
+                  >
+                    Export
+                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
                   </button>
                 </div>
               </div>
 
-              <div className="row align-items-center my-5">
+              {/* <div className="row align-items-center my-5">
                 <div className="col-lg-3 col-xl-3 ">
                   <div className="form-group mb-0">
                     <small className="text-muted p-0">
@@ -299,7 +334,7 @@ const ListSubstansi = () => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="table-page mt-5">
@@ -458,6 +493,75 @@ const ListSubstansi = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Filter</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group mb-5">
+            <label className="p-0">Pelatihan</label>
+            <select className="form-control">
+              <option>Semua</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Status</label>
+            <select
+              className="form-control mb-1"
+              onChange={(e) => setStatus(e.target.value)}
+              onBlur={(e) => setStatus(e.target.value)}
+              value={status}
+            >
+              <option value="" selected>
+                Semua
+              </option>
+              <option value={1}>Diterima</option>
+              <option value={0}>Ditolak</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className=" p-0">Nilai</label>
+            <select
+              className="form-control mb-1"
+              onChange={(e) => setNilai(e.target.value)}
+              onBlur={(e) => setNilai(e.target.value)}
+              value={nilai}
+            >
+              <option value="" selected>
+                Semua
+              </option>
+              {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((loop, i) => {
+                return (
+                  <option key={i} value={loop}>
+                    {loop}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-light-ghost-rounded-full mr-2"
+            type="reset"
+          >
+            Reset
+          </button>
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={handleFilter}
+          >
+            Terapkan
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };
