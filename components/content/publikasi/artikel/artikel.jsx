@@ -238,7 +238,7 @@ const Artikel = () => {
 
   return (
     <PageWrapper>
-      {console.log(artikel)}
+      {/* {console.log(artikel)} */}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -349,7 +349,7 @@ const Artikel = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Manajemen Artikel
+              Artikel
             </h3>
             <div className="card-toolbar">
               <Link href="/publikasi/artikel/tambah">
@@ -363,7 +363,32 @@ const Artikel = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
+                <div className="col-lg-7 col-xl-7 col-sm-9">
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                    <input
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
+                  </div>
+
+                </div>
+                {/* <div className="col-lg-10 col-xl-10">
                   <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
@@ -377,8 +402,8 @@ const Artikel = () => {
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
                   </div>
-                </div>
-                <div className="col-lg-2 col-xl-2">
+                </div> */}
+                {/* <div className="col-lg-2 col-xl-2">
                   <button
                     type="button"
                     className="btn btn-light-primary btn-block"
@@ -386,9 +411,9 @@ const Artikel = () => {
                   >
                     Cari
                   </button>
-                </div>
+                </div> */}
               </div>
-              <div className="row align-items-right">
+              {/* <div className="row align-items-right">
                 <div className="col-lg-2 col-xl-2">
                   <small className="form-text text-muted">Dari Tanggal</small>
                   <DatePicker
@@ -426,7 +451,7 @@ const Artikel = () => {
                     Cari
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
             {/* {
               console.log (artikel)
@@ -453,9 +478,11 @@ const Artikel = () => {
                     </thead>
                     <tbody>
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
-                        <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
-                        </td>
+                        <tr>
+                          <td className="text-center" colSpan={6}>
+                            Data Masih Kosong
+                          </td>
+                        </tr>
                       ) : (
                         artikel &&
                         // artikel.artikel &&
@@ -534,25 +561,44 @@ const Artikel = () => {
                                 )}
                               </td>
                               <td className="align-middle">Super Admin</td>
-                              <td className="align-middle">
-                                {/* conflict nih cuy */}
-                                {/* <ButtonAction icon="setting.svg" />
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`/publikasi/artikel/${artikel.id}`}
-                                /> */}
+                              <td className="align-middle d-flex">
 
-                                <ButtonNewTab
+                                <Link
+                                  href={`/publikasi/artikel/preview/${artikel.id}`}
+                                >
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2" target="_blank">
+                                    <i className="ri-todo-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+
+                                <Link
+                                  href={`/publikasi/artikel/${artikel.id}`}
+                                  >
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(artikel.id)}
+                                >
+                                  <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                </button>
+
+                                 {/* <ButtonNewTab
                                   icon="setting.svg"
                                   link={`/publikasi/artikel/preview/${artikel.id}`}
                                   title="Preview"
-                                />
-                                <ButtonAction
+                                /> */}
+
+                                {/* <ButtonAction
                                   icon="write.svg"
                                   link={`/publikasi/artikel/${artikel.id}`}
                                   title="Edit"
-                                />
-                                <button
+                                /> */}
+                                
+                                {/* <button
                                   onClick={() => handleDelete(artikel.id)}
                                   className="btn mr-1"
                                   style={{
@@ -569,7 +615,7 @@ const Artikel = () => {
                                     width={18}
                                     height={18}
                                   />
-                                </button>
+                                </button> */}
                               </td>
                             </tr>
                           );

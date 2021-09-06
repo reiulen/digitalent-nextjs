@@ -226,9 +226,7 @@ const ListSubstansi = () => {
                     </button>
                   </div>
                 </div>
-
                 <div className="col-md-1"></div>
-
                 <div className="col-md-4">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-2 btn-block"
@@ -247,13 +245,6 @@ const ListSubstansi = () => {
                 </div>
 
                 <div className="col-md-2">
-                  {/* <button
-                    className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    Export .CSV
-                  </button> */}
                   <button
                     className="btn btn-rounded-full bg-blue-secondary text-white mt-2"
                     type="button"
@@ -264,77 +255,6 @@ const ListSubstansi = () => {
                   </button>
                 </div>
               </div>
-
-              {/* <div className="row align-items-center my-5">
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted p-0">
-                      Filter by Pelatihan
-                    </small>
-                    <select className="form-control mb-1">
-                      <option>Semua</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Status
-                    </small>
-                    <select
-                      className="form-control mb-1"
-                      onChange={(e) => setStatus(e.target.value)}
-                      onBlur={(e) => setStatus(e.target.value)}
-                      value={status}
-                    >
-                      <option value="" selected>
-                        Semua
-                      </option>
-                      <option value={1}>Diterima</option>
-                      <option value={0}>Ditolak</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted mt-1 p-0">
-                      Filter by nilai
-                    </small>
-                    <select
-                      className="form-control mb-1"
-                      onChange={(e) => setNilai(e.target.value)}
-                      onBlur={(e) => setNilai(e.target.value)}
-                      value={nilai}
-                    >
-                      <option value="" selected>
-                        Semua
-                      </option>
-                      {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map(
-                        (loop, i) => {
-                          return (
-                            <option key={i} value={loop}>
-                              {loop}
-                            </option>
-                          );
-                        }
-                      )}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="mt-4">
-                    <button
-                      className="btn btn-light-primary"
-                      onClick={handleFilter}
-                    >
-                      Filter
-                    </button>
-                  </div>
-                </div>
-              </div> */}
             </div>
 
             <div className="table-page mt-5">

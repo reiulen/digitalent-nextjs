@@ -209,11 +209,14 @@ const StepOne = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <button className="btn btn-light-primary btn-sm mr-2">
+                  <button
+                    className="btn btn-light-ghost-rounded-full mr-2"
+                    type="submit"
+                  >
                     Simpan & Lanjut
                   </button>
                   <button
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary-rounded-full"
                     onClick={saveDraft}
                     type="button"
                   >

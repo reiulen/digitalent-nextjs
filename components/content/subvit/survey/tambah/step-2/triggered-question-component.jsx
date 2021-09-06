@@ -301,16 +301,11 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                 <div className="col-sm-12 col-md-1">
                   {answer.length !== 1 && x.key !== "A" ? (
                     <button
-                      className="btn mr-1"
+                      className="btn btn-link-action bg-danger text-white"
                       type="button"
                       onClick={() => handleRemoveClick(null, null, i)}
                     >
-                      <Image
-                        alt="button-action"
-                        src="/assets/icon/trash-red.svg"
-                        width={18}
-                        height={18}
-                      />
+                      <i class="ri-delete-bin-fill p-0 text-white"></i>
                     </button>
                   ) : (
                     ""
@@ -322,7 +317,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                     onlabel=" "
                     onstyle="primary"
                     offlabel=" "
-                    offstyle="danger"
+                    offstyle="secondary"
                     size="sm"
                     width={20}
                     height={10}
@@ -380,16 +375,11 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                           <div className="col-sm-12 col-md-1">
                             {j !== 0 ? (
                               <button
-                                className="btn mr-1"
+                                className="btn btn-link-action bg-danger text-white"
                                 type="button"
                                 onClick={() => handleRemoveClick(null, i, j)}
                               >
-                                <Image
-                                  alt="button-action"
-                                  src="/assets/icon/trash-red.svg"
-                                  width={18}
-                                  height={18}
-                                />
+                                <i class="ri-delete-bin-fill p-0 text-white"></i>
                               </button>
                             ) : (
                               ""
@@ -403,7 +393,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                   onlabel=" "
                                   onstyle="primary"
                                   offlabel=" "
-                                  offstyle="danger"
+                                  offstyle="secondary"
                                   size="sm"
                                   width={20}
                                   height={10}
@@ -499,18 +489,13 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
 
                                         <div className="col-sm-12 col-md-1">
                                           <button
-                                            className="btn mr-1"
+                                            className="btn btn-link-action bg-danger text-white"
                                             type="button"
                                             onClick={() =>
                                               handleRemoveClick(i, j, k)
                                             }
                                           >
-                                            <Image
-                                              alt="button-action"
-                                              src="/assets/icon/trash-red.svg"
-                                              width={18}
-                                              height={18}
-                                            />
+                                            <i class="ri-delete-bin-fill p-0 text-white"></i>
                                           </button>
                                         </div>
                                         <div className="col-sm-12 col-md-4"></div>

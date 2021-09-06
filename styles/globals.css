@@ -3,10 +3,9 @@ body {
   padding: 0;
   margin: 0;
   font-weight: 400 !important;
-  font-family: -apple-system,Poppins, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: -apple-system, Poppins, BlinkMacSystemFont, Segoe UI, Roboto,
+    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
-
 
 a {
   color: inherit;
@@ -94,15 +93,6 @@ a {
 .form-search-date {
   background: #ffffff !important;
   border: 1px solid #d9d9d9 !important;
-}
-
-.custom-file-label {
-  background: #f3f6f9 !important;
-  border: #f3f6f9 !important;
-}
-
-.custom-file-label:after {
-  background: #d6d6e0;
 }
 
 .bg-accent-info {

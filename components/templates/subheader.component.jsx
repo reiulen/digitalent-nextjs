@@ -5,7 +5,9 @@ import Link from "next/link";
 
 const convertBreadcrumb = (string) => {
   return (
-    string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
+    // "/ " + string.charAt(0).toUpperCase() + string.slice(1).split("?")[0] 
+    string.charAt(0).toUpperCase() + string.slice(1).split("?")[0] + " / "   
+    // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
   );
 };
 
@@ -28,6 +30,8 @@ const SubHeader = () => {
       });
 
       console.log(pathArray);
+
+      // setBreadcrumbs(pathArray.splice(-1));
       setBreadcrumbs(pathArray);
     }
   }, [router]);
@@ -40,16 +44,25 @@ const SubHeader = () => {
     <>
       <div className="subheader py-2 py-lg-4 subheader-solid" id="kt_subheader">
         <div className="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
-          <div className="d-flex align-items-center flex-wrap mr-2">
+          <div className="d-flex align-items-center flex-wrap mr-2 bread-crumb">
             {breadcrumbs.map((breadcrumb, i) => {
               {
                 console.log(breadcrumb);
               }
+
+              {
+                console.log(convertBreadcrumb(breadcrumb.breadcrumb)[breadcrumb.breadcrumb.length]);
+              }
               return (
                 <Link href={breadcrumb.href} key={i}>
                   <a>
-                    <p className="text-default mt-2 mb-2 font-weight-bold">
-                      {convertBreadcrumb(breadcrumb.breadcrumb)}
+                    <p className="text-default mt-2 mb-2">
+                      {
+                        (i == (breadcrumbs.length - 1)) && (convertBreadcrumb(breadcrumb.breadcrumb)[breadcrumb.breadcrumb.length]) === " " ?
+                          (convertBreadcrumb(breadcrumb.breadcrumb)).slice(0, breadcrumb.breadcrumb.length)
+                        :
+                          (convertBreadcrumb(breadcrumb.breadcrumb))
+                      } 
                     </p>
                   </a>
                 </Link>

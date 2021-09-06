@@ -380,19 +380,160 @@ const StepTwo = () => {
                   </button>
                 </div>
               </div>
+              <div className="table-page" style={{ marginTop: "20px" }}>
+                <div className="table-responsive">
+                  <LoadingTable loading={loading} />
+
+                  {loading === false ? (
+                    <table className="table table-separate table-head-custom table-checkable">
+                      <thead style={{ background: "#F3F6F9" }}>
+                        <tr>
+                          <th className="text-center">No</th>
+                          <th>ID Soal</th>
+                          <th>Soal</th>
+                          <th>Status</th>
+                          <th>Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {survey_question_detail &&
+                        survey_question_detail.list_questions &&
+                        survey_question_detail.list_questions.length === 0 ? (
+                          <td className="align-middle text-center" colSpan={6}>
+                            Data Masih Kosong
+                          </td>
+                        ) : (
+                          survey_question_detail &&
+                          survey_question_detail.list_questions &&
+                          survey_question_detail.list_questions.map(
+                            (question, i) => {
+                              return (
+                                <tr key={question.id}>
+                                  <td className="align-middle text-center">
+                                    <span className="badge badge-secondary text-muted">
+                                      {i + 1 * (page * 5 || limit) - 4}
+                                    </span>
+                                  </td>
+                                  <td className="align-middle">
+                                    {question.trivia_question_bank_id}
+                                  </td>
+                                  <td className="align-middle">
+                                    {question.question}
+                                  </td>
+                                  <td className="align-middle">
+                                    {question.status === true ? (
+                                      <span className="label label-inline label-light-success font-weight-bold">
+                                        Publish
+                                      </span>
+                                    ) : (
+                                      <span className="label label-inline label-light-warning font-weight-bold">
+                                        Draft
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="align-middle">
+                                    <ButtonAction
+                                      icon="write.svg"
+                                      link={`edit-soal-survey?id=${question.id}`}
+                                      title="Edit"
+                                    />
+                                    <button
+                                      onClick={() => handleDelete(question.id)}
+                                      className="btn mr-1"
+                                      style={{
+                                        background: "#F3F6F9",
+                                        borderRadius: "6px",
+                                      }}
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Hapus"
+                                    >
+                                      <Image
+                                        alt="button-action"
+                                        src={`/assets/icon/trash.svg`}
+                                        width={18}
+                                        height={18}
+                                      />
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            }
+                          )
+                        )}
+                      </tbody>
+                    </table>
+                  ) : (
+                    ""
+                  )}
+                </div>
+
+                <div className="row">
+                  <div className="table-pagination">
+                    {survey_question_detail && (
+                      <Pagination
+                        activePage={page}
+                        itemsCountPerPage={survey_question_detail.perPage}
+                        totalItemsCount={survey_question_detail.total}
+                        pageRangeDisplayed={3}
+                        onChange={handlePagination}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClassName="page-item"
+                        linkClassName="page-link"
+                      />
+                    )}
+                  </div>
+
+                  <div className="table-total ml-auto">
+                    {survey_question_detail &&
+                      survey_question_detail.list_questions && (
+                        <div className="row">
+                          <div className="col-4 mr-0 p-0">
+                            <select
+                              className="form-control"
+                              id="exampleFormControlSelect2"
+                              style={{
+                                width: "65px",
+                                background: "#F3F6F9",
+                                borderColor: "#F3F6F9",
+                                color: "#9E9E9E",
+                              }}
+                              onChange={(e) => handleLimit(e.target.value)}
+                              onBlur={(e) => handleLimit(e.target.value)}
+                            >
+                              <option value="5">5</option>
+                              <option value="10">10</option>
+                              <option value="15">15</option>
+                              <option value="20">20</option>
+                              <option value="30">30</option>
+                            </select>
+                          </div>
+                          <div className="col-8 my-auto">
+                            <p
+                              className="align-middle mt-3"
+                              style={{ color: "#B5B5C3" }}
+                            >
+                              Total Data {survey_question_detail.total}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+                  </div>
+                </div>
+              </div>
 
               <div className="row">
-                <div className="col-sm-12 col-md-8 pt-0">
+                <div className="col-sm-12 pt-0">
                   <hr />
                   <div className="float-right">
-                    <button
-                      className="btn btn-light-primary btn-sm mr-2"
-                      type="submit"
-                    >
+                    <button className="btn btn-light btn-sm mr-2" type="submit">
                       Simpan & Lanjut
                     </button>
                     <button
-                      className="btn btn-primary btn-sm"
+                      className="btn btn-primary-rounded-full text-white btn-sm"
                       onClick={saveDraft}
                       type="button"
                     >
@@ -402,151 +543,6 @@ const StepTwo = () => {
                 </div>
               </div>
             </form>
-
-            <div className="table-page" style={{ marginTop: "20px" }}>
-              <div className="table-responsive">
-                <LoadingTable loading={loading} />
-
-                {loading === false ? (
-                  <table className="table table-separate table-head-custom table-checkable">
-                    <thead style={{ background: "#F3F6F9" }}>
-                      <tr>
-                        <th className="text-center">No</th>
-                        <th>ID Soal</th>
-                        <th>Soal</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {survey_question_detail &&
-                      survey_question_detail.list_questions &&
-                      survey_question_detail.list_questions.length === 0 ? (
-                        <td className="align-middle text-center" colSpan={6}>
-                          Data Masih Kosong
-                        </td>
-                      ) : (
-                        survey_question_detail &&
-                        survey_question_detail.list_questions &&
-                        survey_question_detail.list_questions.map(
-                          (question, i) => {
-                            return (
-                              <tr key={question.id}>
-                                <td className="align-middle text-center">
-                                  <span className="badge badge-secondary text-muted">
-                                    {i + 1 * (page * 5 || limit) - 4}
-                                  </span>
-                                </td>
-                                <td className="align-middle">
-                                  {question.trivia_question_bank_id}
-                                </td>
-                                <td className="align-middle">
-                                  {question.question}
-                                </td>
-                                <td className="align-middle">
-                                  {question.status === true ? (
-                                    <span className="label label-inline label-light-success font-weight-bold">
-                                      Publish
-                                    </span>
-                                  ) : (
-                                    <span className="label label-inline label-light-warning font-weight-bold">
-                                      Draft
-                                    </span>
-                                  )}
-                                </td>
-                                <td className="align-middle">
-                                  <ButtonAction
-                                    icon="write.svg"
-                                    link={`edit-soal-survey?id=${question.id}`}
-                                    title="Edit"
-                                  />
-                                  <button
-                                    onClick={() => handleDelete(question.id)}
-                                    className="btn mr-1"
-                                    style={{
-                                      background: "#F3F6F9",
-                                      borderRadius: "6px",
-                                    }}
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Hapus"
-                                  >
-                                    <Image
-                                      alt="button-action"
-                                      src={`/assets/icon/trash.svg`}
-                                      width={18}
-                                      height={18}
-                                    />
-                                  </button>
-                                </td>
-                              </tr>
-                            );
-                          }
-                        )
-                      )}
-                    </tbody>
-                  </table>
-                ) : (
-                  ""
-                )}
-              </div>
-
-              <div className="row">
-                <div className="table-pagination">
-                  {survey_question_detail && (
-                    <Pagination
-                      activePage={page}
-                      itemsCountPerPage={survey_question_detail.perPage}
-                      totalItemsCount={survey_question_detail.total}
-                      pageRangeDisplayed={3}
-                      onChange={handlePagination}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClassName="page-item"
-                      linkClassName="page-link"
-                    />
-                  )}
-                </div>
-
-                <div className="table-total ml-auto">
-                  {survey_question_detail &&
-                    survey_question_detail.list_questions && (
-                      <div className="row">
-                        <div className="col-4 mr-0 p-0">
-                          <select
-                            className="form-control"
-                            id="exampleFormControlSelect2"
-                            style={{
-                              width: "65px",
-                              background: "#F3F6F9",
-                              borderColor: "#F3F6F9",
-                              color: "#9E9E9E",
-                            }}
-                            onChange={(e) => handleLimit(e.target.value)}
-                            onBlur={(e) => handleLimit(e.target.value)}
-                          >
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                          </select>
-                        </div>
-                        <div className="col-8 my-auto">
-                          <p
-                            className="align-middle mt-3"
-                            style={{ color: "#B5B5C3" }}
-                          >
-                            Total Data {survey_question_detail.total}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

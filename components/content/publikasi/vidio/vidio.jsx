@@ -341,7 +341,32 @@ const Vidio = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-10 col-xl-10">
+                                <div className="col-lg-7 col-xl-7 col-sm-9">
+                                    <div
+                                        className="position-relative overflow-hidden mt-3"
+                                        style={{ maxWidth: "330px" }}
+                                    >
+                                        <i className="ri-search-line left-center-absolute ml-2"></i>
+                                        <input
+                                        type="text"
+                                        className="form-control pl-10"
+                                        placeholder="Ketik disini untuk Pencarian..."
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        />
+                                        <button
+                                        className="btn bg-blue-primary text-white right-center-absolute"
+                                        style={{
+                                            borderTopLeftRadius: "0",
+                                            borderBottomLeftRadius: "0",
+                                        }}
+                                        onClick={handleSearch}
+                                        >
+                                        Cari
+                                        </button>
+                                    </div>
+
+                                </div>
+                                {/* <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
                                         <input
                                         style={{ background: "#F3F6F9", border: "none" }}
@@ -359,10 +384,10 @@ const Vidio = () => {
 
                                 <div className="col-lg-2 col-xl-2">
                                     <button type="button" className='btn btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
-                                </div>
+                                </div> */}
                             </div>
 
-                            <div className="row align-items-right">
+                            {/* <div className="row align-items-right">
                                 <div className="col-lg-2 col-xl-2">
                                     <small className="form-text text-muted">
                                         Dari Tanggal
@@ -405,7 +430,7 @@ const Vidio = () => {
                                         Cari
                                     </button>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="table-page mt-5">
@@ -489,8 +514,35 @@ const Vidio = () => {
 
                                                             </td>
                                                             <td className='align-middle'>Super Admin</td>
-                                                            <td className='align-middle'>
-                                                                {/* <ButtonAction icon='setting.svg'/> */}
+                                                            <td className="align-middle d-flex">
+
+                                                                <button
+                                                                    onClick={() => handlePreview(row.url_video)} 
+                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                    data-target="#exampleModalCenter" 
+                                                                    data-toggle="modal"
+                                                                >
+                                                                    <i class="ri-todo-fill p-0 text-white"></i>
+                                                                </button>
+
+                                                                <Link
+                                                                href={`/publikasi/video/${row.id}`}
+                                                                >
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                </a>
+                                                                </Link>
+
+                                                                <button
+                                                                className="btn btn-link-action bg-blue-secondary text-white"
+                                                                onClick={() => handleDelete(row.id)}
+                                                                >
+                                                                <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                                                </button>
+
+                                                            </td>
+
+                                                            {/* <td className='align-middle'>
                                                                 <button 
                                                                     onClick={() => handlePreview(row.url_video)}
                                                                     // onClick={() => setUrlVideo(row.url_video)} 
@@ -511,7 +563,7 @@ const Vidio = () => {
                                                                 >
                                                                     <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
                                                                 </button>
-                                                            </td>
+                                                            </td> */}
                                                         </tr>
                                                     })
                                             }

@@ -166,10 +166,10 @@ const StepThree = () => {
           <div className="card-body">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
-                <div className="col-sm-6 col-md-2">
-                  <span>Pelaksanaan dari</span>
+                <div className="col-sm-12 col-md-6">
+                  <p>Pelaksanaan dari</p>
                   <DatePicker
-                    className="form-control"
+                    className="form-control w-100"
                     name="start_date"
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
@@ -181,10 +181,9 @@ const StepThree = () => {
                     endDate={endDate}
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
+                    placeholderText="Silahkan Pilih Tanggal Dari"
                   />
-                  <small className="text-muted">
-                    Silahkan Pilih Tanggal Dari
-                  </small>
+
                   {simpleValidator.current.message(
                     "tanggal mulai",
                     startDate,
@@ -193,10 +192,10 @@ const StepThree = () => {
                   )}
                 </div>
 
-                <div className="col-sm-6 col-md-2">
-                  <span>Sampai</span>
+                <div className="col-sm-12 col-md-6">
+                  <p>Sampai</p>
                   <DatePicker
-                    className="form-control"
+                    className="form-control w-100"
                     selected={endDate}
                     onChange={(date) => setEndDate(date)}
                     onBlur={() =>
@@ -208,10 +207,8 @@ const StepThree = () => {
                     minDate={startDate}
                     dateFormat="dd/MM/yyyy"
                     autoComplete="off"
+                    placeholderText="Silahkan Pilih Tanggal Sampai"
                   />
-                  <small className="text-muted">
-                    Silahkan Pilih Tanggal Sampai
-                  </small>
                   {simpleValidator.current.message(
                     "tanggal sampai",
                     endDate,
@@ -222,7 +219,7 @@ const StepThree = () => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-12 col-md-6">
                   <span>Jumlah Soal</span>
                   <div className="input-group">
                     <input
@@ -237,14 +234,14 @@ const StepThree = () => {
                       min={1}
                     />
                     <div className="input-group-append">
-                      <span className="input-group-text" id="basic-addon2">
+                      <span
+                        className="input-group-text bg-primary text-white"
+                        id="basic-addon2"
+                      >
                         Soal
                       </span>
                     </div>
                   </div>
-                  <small className="text-muted">
-                    Silahkan Input Jumlah Soal
-                  </small>
                   {simpleValidator.current.message(
                     "jumlah soal",
                     jumlah_soal,
@@ -252,10 +249,8 @@ const StepThree = () => {
                     { className: "text-danger" }
                   )}
                 </div>
-              </div>
 
-              <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-12 col-md-6">
                   <span>Durasi Test</span>
                   <div className="input-group">
                     <input
@@ -270,14 +265,14 @@ const StepThree = () => {
                       min={1}
                     />
                     <div className="input-group-append bg-sedondary">
-                      <span className="input-group-text" id="basic-addon2">
+                      <span
+                        className="input-group-text bg-primary text-white"
+                        id="basic-addon2"
+                      >
                         Menit
                       </span>
                     </div>
                   </div>
-                  <small className="text-muted">
-                    Silahkan Input Durasi Test
-                  </small>
                   {simpleValidator.current.message(
                     "durasi",
                     duration,
@@ -288,7 +283,7 @@ const StepThree = () => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
+                <div className="col-md-12">
                   <span>Passing Grade</span>
                   <div className="input-group">
                     <input
@@ -302,14 +297,14 @@ const StepThree = () => {
                       }
                     />
                     <div className="input-group-append">
-                      <span className="input-group-text" id="basic-addon2">
+                      <span
+                        className="input-group-text bg-primary text-white"
+                        id="basic-addon2"
+                      >
                         Nilai
                       </span>
                     </div>
                   </div>
-                  <small className="text-muted">
-                    Silahkan Input Passing Grade
-                  </small>
                   {simpleValidator.current.message(
                     "passing grade",
                     passing_grade,
@@ -320,7 +315,7 @@ const StepThree = () => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-12 col-md-8">
+                <div className="col-md-12">
                   <span>Status</span>
                   <select
                     name="status"
@@ -354,11 +349,14 @@ const StepThree = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <button className="btn btn-light-primary btn-sm mr-2">
+                  <button
+                    className="btn btn-light-ghost-rounded-full mr-2"
+                    type="submit"
+                  >
                     Simpan & Lanjut
                   </button>
                   <button
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary-rounded-full"
                     onClick={saveDraft}
                     type="button"
                   >
