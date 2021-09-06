@@ -12,6 +12,7 @@ const TandaTangan = dynamic(
 );
 
 // import { getAllTandaTangan } from "../../../redux/actions/partnership/tandaTangan.actions";
+
 // import { wrapper } from "../../../redux/store";
 
 export default function TandaTanganPage() {
