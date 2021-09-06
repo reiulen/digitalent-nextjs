@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -13,8 +12,6 @@ import {
   cancelChangeNamaLembaga,
   changeCooperationSelectByID,
   fetchListCooperationSelectById,
-  fetchListSelectMitra,
-  getEmail,
   setNameLembaga,
   fetchDataEmail,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
@@ -30,12 +27,7 @@ const EditDokumentKerjasama = () => {
   const router = useRouter();
 
   const allMK = useSelector((state) => state.allMK);
-  //
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  //
   // state onchange form data
-  let singleproduct = useSelector((state) => state.allMK);
   const [isntitusiName, setIsntitusiName] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -171,11 +163,6 @@ const EditDokumentKerjasama = () => {
             formData
           );
 
-          //           Swal.fire(
-          //   'Berhasil update data!',
-          //   'success'
-          // )
-
           router.push({
             pathname: "/partnership/manajemen-kerjasama/",
             query: { update: true },
@@ -247,16 +234,10 @@ const EditDokumentKerjasama = () => {
 
   // onchange textarea default cooperationID
   const changeDataContentDefault = (event, i) => {
-    // console.log("object")
     
     let dataCoopertaion = { ...cooperationID };
     dataCoopertaion.data_content[i].form_content = event.target.value;
     setCooperationID(dataCoopertaion);
-  };
-
-  const changeInstitusi = (value) => {
-    setIsntitusiName(value);
-    dispatch(setNameLembaga(value));
   };
 
   const notify = (value) =>
@@ -300,8 +281,6 @@ const EditDokumentKerjasama = () => {
       }
     }
     periodCheck()
-
-    // checkPeriod(moment(date).format('YYYY-MM-DD'))
   }, [period, date,periodUnit]);
   return (
     <PageWrapper>
@@ -375,21 +354,23 @@ const EditDokumentKerjasama = () => {
                     <select
                       name=""
                       id=""
-                      className="form-control"
+                      className="form-control mt-2"
                       disabled
                       value={cooperationID.id}
-                      // onChange={(e) => setKategoriId(e.target.value)}
                     >
                       <option>{cooperationID.name}</option>
                     </select>
                   </div>
+                  <div className="col-12 col-sm-3">
+
                   <button
                     type="button"
-                    className="col-12 col-sm-3 btn btn-primary btn-sm"
+                    className="btn btn-primary btn-sm w-100 mt-3"
                     onClick={() => dispatch(fetchListSelectCooperation())}
-                  >
+                    >
                     Ubah Kategory
                   </button>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -450,30 +431,7 @@ const EditDokumentKerjasama = () => {
                       />
                     </div>
                     <div className="col-12 col-sm-6">
-                      {/* {periodUnit === "bulan" ? (
-                        <select
-                          className="form-control"
-                          onChange={(e) => setPeriodUnit(e.target.value)}
-                        >
-                          <option value="bulan">Bulan</option>
-                          <option value="tahun">Tahun</option>
-                        </select>
-                      ) : (
-                        <select
-                          className="form-control"
-                          onChange={(e) => setPeriodUnit(e.target.value)}
-                        >
-                          <option value="tahun">Tahun</option>
-                          <option value="bulan">Bulan</option>
-                        </select>
-                      )} */}
                       <div className="form-control">Tahun</div>
-                      {/* <input
-                      required
-                        type="text"
-                        className="form-control"
-                        value={periodUnit}
-                      /> */}
                     </div>
                   </div>
               </div>
@@ -487,15 +445,8 @@ const EditDokumentKerjasama = () => {
                 </label>
                   <div className="row">
                     <div className="col-12 col-sm-6">
-                      {/* <input
-                        required
-                        type="date"
-                        onChange={(e) => setPeriodDateStart(e.target.value)}
-                        value={periodDateStart}
-                        className="form-control"
-                      /> */}
 
-                      <div className="d-flex align-items-center position-relative datepicker-w">
+                      <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                         <DatePicker
                           className="form-search-date form-control-sm form-control cursor-pointer"
                           // selected={periodDateStart}
@@ -521,7 +472,7 @@ const EditDokumentKerjasama = () => {
                       </div>
                     </div>
                     <div className="col-12 col-sm-6">
-                      <div className="d-flex align-items-center position-relative datepicker-w">
+                      <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                         <DatePicker
                           className="form-search-date form-control-sm form-control cursor-pointer"
                           readOnly
@@ -544,85 +495,23 @@ const EditDokumentKerjasama = () => {
                           style={{ right: "10px" }}
                         />
                       </div>
-                      {/* 
-                      <input
-                        required
-                        onChange={(e) => setPeriodDateEnd(e.target.value)}
-                        type="date"
-                        value={periodDateEnd}
-                        className="form-control"
-                      /> */}
                     </div>
                   </div>
               </div>
-              <div className="form-group">
+
+<div className="row">
+                <div className="col-12 col-sm-6"><div className="form-group">
                 <label
                   htmlFor="staticEmail"
                   className="col-form-label"
                 >
-                  Nama Lembaga
+                  Lembaga
                 </label>
                   <div aria-readonly disabled className="form-control">
                     {isntitusiName}
                   </div>
-              </div>
-
-              {/* {allMK.stateListMitra.length === 0 ? (
-                <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Nama Lembaga
-                  </label>
-                  <div className="col-sm-7">
-                    <select aria-readonly disabled className="form-control">
-                      <option value={isntitusiName}>{isntitusiName}</option>
-                    </select>
-                  </div>
-                  <button
-                    type="button"
-                    className="col-sm-3 btn btn-primary btn-sm"
-                    onClick={() => dispatch(fetchListSelectMitra())}
-                  >
-                    Ubah Nama Lembaga
-                  </button>
-                </div>
-              ) : (
-                <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Nama Lembaga
-                  </label>
-                  <div className="col-sm-7">
-                    <select
-                      required
-                      className="form-control"
-                      onChange={(e) => changeInstitusi(e.target.value)}
-                    >
-                      <option value="">Pilih lembaga</option>
-                      {allMK.stateListMitra.length === 0
-                        ? ""
-                        : allMK.stateListMitra.data.map((items, index) => {
-                            return (
-                              <option value={items.name}>{items.name}</option>
-                            );
-                          })}
-                    </select>
-                  </div>
-                  <button
-                    type="button"
-                    className="col-sm-3 btn btn-primary btn-sm"
-                    onClick={() => dispatch(cancelChangeNamaLembaga())}
-                  >
-                    Batal Ubah
-                  </button>
-                </div>
-              )} */}
-
-              <div className="form-group">
+              </div></div>
+                <div className="col-12 col-sm-6"><div className="form-group">
                 <label
                   htmlFor="staticEmail"
                   className="col-form-label"
@@ -630,34 +519,8 @@ const EditDokumentKerjasama = () => {
                   Email
                 </label>
                   <p className="form-control">{email}</p>
- 
+              </div></div>
               </div>
-
-              {/* {allMK.email === "-" ? (
-                <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Email
-                  </label>
-                  <div className="col-sm-3">
-                    <p className="form-control">{email}</p>
-                  </div>
-                </div>
-              ) : (
-                <div className="form-group row">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Email
-                  </label>
-                  <div className="col-sm-3">
-                    <p className="form-control">{allMK.email}</p>
-                  </div>
-                </div>
-              )} */}
 
               <div className="form-group">
                 <label
@@ -666,11 +529,6 @@ const EditDokumentKerjasama = () => {
                 >
                   Nomor Perjanjian Lembaga
                 </label>
-                  {/* <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nomor Perjanjian Lembaga"
-                  /> */}
                   <input
                     required
                     onChange={(e) => setAggrementNumber(e.target.value)}
@@ -687,11 +545,6 @@ const EditDokumentKerjasama = () => {
                 >
                   Nomor Perjanjian KemKominfo
                 </label>
-                  {/* <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nomor Perjanjian Kemkominfo"
-                  /> */}
                   <input
                     required
                     type="text"
@@ -710,13 +563,6 @@ const EditDokumentKerjasama = () => {
                 </label>
                   <div className="row">
                     <div className="col-12">
-                      {/* <input
-                        required
-                        onChange={(e) => setSigninDate(e.target.value)}
-                        value={signinDate}
-                        type="date"
-                        className="form-control form-control-sm"
-                      /> */}
 
                       <div className="d-flex align-items-center position-relative datepicker-w">
                         <DatePicker
@@ -904,31 +750,6 @@ const EditDokumentKerjasama = () => {
                       );
                     }
                   )}
-              {/* end looping second */}
-              {/* <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10">
-                  <Link
-                    href="/partnership/manajemen-kerjasama"
-                    className="mr-2"
-                  >
-                    <a className="btn btn-outline-primary mr-2 btn-sm">
-                      Kembali
-                    </a>
-                  </Link>
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-sm"
-                    onClick={() => handleSubmit()}
-                  >
-                    Ubah
-                  </button>
-                </div>
-              </div> */}
-
-              
-
-
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
@@ -937,10 +758,6 @@ const EditDokumentKerjasama = () => {
                       Kembali
                     </a>
                   </Link>
-                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
-                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
-                      Kembali
-                    </a> */}
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
@@ -948,12 +765,8 @@ const EditDokumentKerjasama = () => {
                   >
                     Ubah
                   </button>
-                  {/* </Link> */}
                 </div>
               </div>
-
-
-
 
             </form>
           </div>
