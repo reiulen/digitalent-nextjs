@@ -99,6 +99,57 @@ const ListSubstansi = () => {
     }
   };
 
+  const getStartAt = (date) => {
+    if (!date) {
+      return "-";
+    }
+    const startAt = new Date(date);
+    var tahun = startAt.getFullYear();
+    var bulan = startAt.getMonth();
+    var tanggal = startAt.getDate();
+
+    switch (bulan) {
+      case 0:
+        bulan = "Januari";
+        break;
+      case 1:
+        bulan = "Februari";
+        break;
+      case 2:
+        bulan = "Maret";
+        break;
+      case 3:
+        bulan = "April";
+        break;
+      case 4:
+        bulan = "Mei";
+        break;
+      case 5:
+        bulan = "Juni";
+        break;
+      case 6:
+        bulan = "Juli";
+        break;
+      case 7:
+        bulan = "Agustus";
+        break;
+      case 8:
+        bulan = "September";
+        break;
+      case 9:
+        bulan = "Oktober";
+        break;
+      case 10:
+        bulan = "November";
+        break;
+      case 11:
+        bulan = "Desember";
+        break;
+    }
+
+    return `${tanggal} ${bulan} ${tahun}`;
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -246,7 +297,7 @@ const ListSubstansi = () => {
 
                 <div className="col-md-2">
                   <button
-                    className="btn btn-rounded-full bg-blue-secondary text-white mt-2"
+                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
                     type="button"
                     onClick={handleExportReport}
                   >
@@ -293,23 +344,30 @@ const ListSubstansi = () => {
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 font-weight-bold">
+                                  <b className="my-0 font-weight-bold">
                                     {row.name}
-                                  </p>
+                                  </b>
                                   <p className="my-0">{row.email}</p>
-                                  <p className="my-0">{row.no_telp}</p>
+                                  <p className="my-0">{row.nik}</p>
                                 </div>
                               </td>
                               <td className="align-middle">
-                                <p className="font-weight-bold">
-                                  {row.training.name}
+                                <b className="font-weight-bold">
+                                  {
+                                    ["VSGA", "FGA", "GTA"][
+                                      Math.floor(Math.random() * 3)
+                                    ]
+                                  }
+                                </b>
+                                <p className="">
+                                  {row.training.name || row.theme.name}
                                 </p>
                               </td>
                               <td className="align-middle">{row.score}</td>
                               <td className="align-middle">
                                 <div>
                                   <p className="my-0 font-weight-bold">
-                                    {row.total_workmanship_date}
+                                    {getStartAt(row.total_workmanship_date)}
                                   </p>
                                   <p className="my-0">
                                     {row.total_workmanship_time}
@@ -319,13 +377,13 @@ const ListSubstansi = () => {
                               <td className="align-middle">
                                 <div>
                                   <p className="my-0">
-                                    Benar: {row.jawaban_benar} Jawaban
+                                    Benar: {row.right_answer} Jawaban
                                   </p>
                                   <p className="my-0">
-                                    Salah: {row.jawaban_salah} Jawaban
+                                    Salah: {row.wrong_answer} Jawaban
                                   </p>
                                   <p className="my-0">
-                                    Jumlah: {row.jumlah_soal} Jawaban
+                                    Jumlah: {row.total_questions} Jawaban
                                   </p>
                                 </div>
                               </td>
