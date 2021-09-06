@@ -94,24 +94,42 @@ const Berita = () => {
     }
 
     const handlePagination = (pageNumber) => {
-        if (limit !== null  && search === "" && startDate === null && endDate === null) {
+        if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-        
-        } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+    
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
     
-        } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
     
-        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     
-        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
         
-        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
         
+        } else if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
+          
+        } else if (limit !== null  && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
+    
+        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
+    
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
         }
@@ -523,7 +541,7 @@ const Berita = () => {
                                                                 <Link
                                                                 href={`/publikasi/berita/preview/${row.id}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2" target="_blank">
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5" target="_blank">
                                                                     <i className="ri-todo-fill p-0 text-white"></i>
                                                                 </a>
                                                                 </Link>
@@ -531,13 +549,13 @@ const Berita = () => {
                                                                 <Link
                                                                 href={`/publikasi/berita/${row.id}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5">
                                                                     <i className="ri-pencil-fill p-0 text-white"></i>
                                                                 </a>
                                                                 </Link>
 
                                                                 <button
-                                                                className="btn btn-link-action bg-blue-secondary text-white"
+                                                                className="btn btn-link-action bg-blue-secondary text-white my-5"
                                                                 onClick={() => handleDelete(row.id)}
                                                                 >
                                                                 <i class="ri-delete-bin-fill p-0 text-white"></i>

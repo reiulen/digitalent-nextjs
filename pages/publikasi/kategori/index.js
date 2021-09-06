@@ -1,14 +1,23 @@
+import dynamic from "next/dynamic";
+
 import Layout from "../../../components/templates/layout.component";
-import Kategori from "../../../components/content/publikasi/kategori/kategori";
+// import Kategori from "../../../components/content/publikasi/kategori/kategori";
 
 import { getAllKategori, paginationKategori } from '../../../redux/actions/publikasi/kategori.actions'
 import { wrapper } from '../../../redux/store'
+
+import LoadingPage from "../../../components/LoadingPage";
+
+const Kategori = dynamic(
+    () => import("../../../components/content/publikasi/kategori/kategori"),
+    { loading: () => <LoadingPage />, ssr: false }
+);
 
 export default function KategoriPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Managemen Kategori'>
+                <Layout title='Kategori'>
                     <Kategori />
                 </Layout>
             </div>

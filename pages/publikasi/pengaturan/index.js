@@ -1,8 +1,17 @@
+import dynamic from "next/dynamic";
+
 import Layout from "../../../components/templates/layout.component";
-import PengaturanPublikasi from "../../../components/content/publikasi/pengaturan/pengaturan";
+// import PengaturanPublikasi from "../../../components/content/publikasi/pengaturan/pengaturan";
 
 import { getSettingPublikasi } from '../../../redux/actions/publikasi/setting.actions'
 import { wrapper } from '../../../redux/store'
+
+import LoadingPage from "../../../components/LoadingPage";
+
+const PengaturanPublikasi = dynamic(
+    () => import("../../../components/content/publikasi/pengaturan/pengaturan"),
+    { loading: () => <LoadingPage />, ssr: false }
+);
 
 export default function PengaturanPublikasiPage() {
     return (
