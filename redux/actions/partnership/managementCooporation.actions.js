@@ -45,6 +45,7 @@ import {
   CANCEL_CHANGE_CATEGORY,
   CANCEL_CHANGE_EMAIL,
   RELOAD_TABLE,
+  RESET_VALUE_SORTIR,
 } from "../../types/partnership/management_cooporation.type";
 import axios from "axios";
 import router from "next/router";
@@ -534,6 +535,7 @@ export const exportFileCSV = () => {
     }
   };
 };
+
 // fetch select
 // export const fetchCooperationActive = () =>{
 // }

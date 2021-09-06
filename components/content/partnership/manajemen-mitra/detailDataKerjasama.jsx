@@ -4,12 +4,19 @@ import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
+import Tables from "../../../Table/Table";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Image from "next/image";
-
+import IconSearch from "../../../assets/icon/Search";
 import Swal from "sweetalert2";
+import IconEye from "../../../assets/icon/Eye";
+import IconDelete from "../../../assets/icon/Delete";
+import IconPencil from "../../../assets/icon/Pencil";
+import IconAdd from "../../../assets/icon/Add";
+import IconClose from "../../../assets/icon/Close";
+import IconFilter from "../../../assets/icon/Filter";
 
 import {
   getSingleValue,
@@ -23,11 +30,13 @@ import {
   changeValueKerjaSama,
   deleteCooperation,
   reloadTable,
-  changeStatusList
+  changeStatusList,
 } from "../../../../redux/actions/partnership/mitra.actions";
 import IconArrow from "../../../assets/icon/Arrow";
 import IconCalender from "../../../assets/icon/Calender";
-import LoadingTable from '../../../LoadingTable'
+import LoadingTable from "../../../LoadingTable";
+
+import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/mitra.type";
 
 const DetailDataKerjasama = () => {
   const dispatch = useDispatch();
@@ -50,20 +59,19 @@ const DetailDataKerjasama = () => {
     dispatch(changeValueKerjaSama(valueKerjaSama));
   };
 
-  // const getDataSingleAll =(id)=>{
-  //   if(id){
-  //     dispatch(getSingleValue(id))
-  //     dispatch(fetchListSelectCooperation());
-  //     dispatch(fetchListSelectStatus());
-  //   }
-  // }
+  const resetValueSort = () => {
+    document.getElementById("list-kerjasama").selectedIndex = 0;
+    document.getElementById("list-status").selectedIndex = 0;
+    dispatch({
+      type: RESET_VALUE_SORTIR,
+    });
+  };
+
   const [deleteBar, setDeleteBar] = useState(false);
   const onNewReset = () => {
-    router.replace(
-      `/partnership/manajemen-mitra/detail/${router.query.id}`
-    );
+    router.replace(`/partnership/manajemen-mitra/detail/${router.query.id}`);
     setDeleteBar(false);
-    setBarStatus(false)
+    setBarStatus(false);
   };
   const cooperationDelete = (id) => {
     Swal.fire({
@@ -79,15 +87,15 @@ const DetailDataKerjasama = () => {
       if (result.value) {
         dispatch(deleteCooperation(id));
         setDeleteBar(true);
-        setBarStatus(false)
+        setBarStatus(false);
       } else {
         dispatch(reloadTable());
       }
     });
   };
 
-  const [barStatus, setBarStatus] = useState(false)
-  const changeListStatus = (value,id) =>{
+  const [barStatus, setBarStatus] = useState(false);
+  const changeListStatus = (value, id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin merubah status ?",
       icon: "warning",
@@ -99,13 +107,13 @@ const DetailDataKerjasama = () => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(changeStatusList(value,id))
-        setBarStatus(true)  
-      }else{
-        dispatch(reloadTable())
+        dispatch(changeStatusList(value, id));
+        setBarStatus(true);
+      } else {
+        dispatch(reloadTable());
       }
-    })
-  }
+    });
+  };
 
   const [getId, setgetId] = useState("");
   useEffect(() => {
@@ -228,8 +236,11 @@ const DetailDataKerjasama = () => {
         )}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Kerjasama{" "}
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
+              Kerjasama &nbsp;
               {
                 mitraDetailAll?.mitraDetailAll?.data
                   ?.list_cooperation_categories[0]?.partner?.user?.name
@@ -239,475 +250,409 @@ const DetailDataKerjasama = () => {
 
           <div className="card-body pt-0">
             <form onSubmit={handleSubmit}>
-              <div className="table-filter">
-                <div className="row align-items-center">
-                  <div className="col-lg-10 col-xl-10">
-                    <div className="input-icon">
-                      <input
-                        style={{ background: "#F3F6F9", border: "none" }}
-                        type="text"
-                        className="form-control"
-                        placeholder="Search..."
-                        id="kt_datatable_search_query"
-                        onChange={(e) => setKeyWord(e.target.value)}
-                      />
-                      <span>
-                        <i className="flaticon2-search-1 text-muted"></i>
-                      </span>
-                    </div>
-                  </div>
-                  <div className="col-lg-2 col-xl-2">
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div className="position-relative overflow-hidden w-100 mt-2">
+                    <IconSearch
+                      style={{ left: "10" }}
+                      className="left-center-absolute"
+                    />
+                    <input
+                      id="kt_datatable_search_query"
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
+                      id="kt_datatable_search_query"
+                      onChange={(e) => setKeyWord(e.target.value)}
+                    />
                     <button
                       type="submit"
-                      className="btn btn-light-primary btn-block"
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
                     >
                       Cari
+                    </button>
+                  </div>
+                </div>
+                <div className="col-12 col-sm-6">
+                  <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                    {/* disini sortir modal */}
+                    <button
+                      className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                      style={{ color: "#464646", minWidth: "230px" }}
+                    >
+                      <div className="d-flex align-items-center">
+                        <IconFilter className="mr-3" />
+                        Pilih Filter
+                      </div>
+                      <IconArrow fill="#E4E6EF" width="11" height="11" />
+                    </button>
+                    {/* modal */}
+                    <form
+                      // id="kt_docs_formvalidation_text"
+                      className="form text-left"
+                      // action="#"
+                      // autoComplete="off"
+                      // onSubmit={handleSubmitSearchMany}
+                    >
+                      <div
+                        className="modal fade"
+                        id="exampleModalCenter"
+                        tabIndex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true"
+                      >
+                        <div
+                          className="modal-dialog modal-dialog-centered"
+                          role="document"
+                        >
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="exampleModalLongTitle"
+                              >
+                                Filter
+                              </h5>
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <IconClose />
+                              </button>
+                            </div>
+
+                            <div
+                              className="modal-body text-left"
+                              style={{ height: "400px" }}
+                            >
+                              <div className="fv-row mb-10">
+                                <label className="required fw-bold fs-6 mb-2">
+                                  Kerjasama
+                                </label>
+                                <select
+                                  onChange={(e) =>
+                                    setValueKerjaSama(e.target.value)
+                                  }
+                                  id="list-kerjasama"
+                                  className="form-select form-control"
+                                  aria-label="Select example"
+                                >
+                                  <option value="">Semua</option>
+                                  {mitraDetailAll.stateListKerjaSama.length ===
+                                  0
+                                    ? ""
+                                    : mitraDetailAll.stateListKerjaSama.data.map(
+                                        (items, i) => {
+                                          return (
+                                            <option
+                                              key={i}
+                                              value={
+                                                items.cooperation_categories
+                                              }
+                                            >
+                                              {items.cooperation_categories}
+                                            </option>
+                                          );
+                                        }
+                                      )}
+                                </select>
+                              </div>
+                              <div className="fv-row mb-10">
+                                <label className="required fw-bold fs-6 mb-2">
+                                  Status
+                                </label>
+                                <select
+                                  id="list-status"
+                                  onChange={(e) =>
+                                    setValueStatus(e.target.value)
+                                  }
+                                  className="form-select form-control"
+                                  aria-label="Select example"
+                                >
+                                  <option value="">Semua</option>
+                                  {mitraDetailAll.stateListStatus.length === 0
+                                    ? ""
+                                    : mitraDetailAll.stateListStatus.data.map(
+                                        (items, i) => {
+                                          return (
+                                            <option
+                                              key={i}
+                                              value={items.name_en}
+                                            >
+                                              {items.name}
+                                            </option>
+                                          );
+                                        }
+                                      )}
+                                </select>
+                              </div>
+                            </div>
+                            <div className="modal-footer">
+                              <div className="d-flex justify-content-end align-items-center">
+                                {/* <Link href="/compoenent">
+                                        <a className="btn btn-white">Reset</a>
+                                      </Link> */}
+                                <button
+                                  className="btn btn-white"
+                                  type="button"
+                                  onClick={() => resetValueSort()}
+                                >
+                                  Reset
+                                </button>
+                                <button
+                                  className="btn btn-primary ml-4"
+                                  type="button"
+                                  onClick={(e) => handleSubmitSearchMany(e)}
+                                >
+                                  Terapkan
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    {/* end modal */}
+
+                    {/* btn export */}
+
+                    <button
+                      type="button"
+                      onClick={() => dispatch(exportFileCSVDetail(getId))}
+                      className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
+                      style={{ width: "max-content" }}
+                    >
+                      Export . xlxs
                     </button>
                   </div>
                 </div>
               </div>
             </form>
 
-            <div className="table-filter">
-              <form onSubmit={handleSubmitSearchMany}>
-                <div className="row align-items-right">
-                  <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                    <div className="position-relative d-flex align-items-center cursor-pointer">
-                      <select
-                        onChange={(e) => setValueKerjaSama(e.target.value)}
-                        name=""
-                        id=""
-                        className="form-control remove-icon-default cursor-pointer dropdown-lists"
-                      >
-                        <option value="">Kategori Kerjasama</option>
-                        {mitraDetailAll.stateListKerjaSama.length === 0
-                          ? ""
-                          : mitraDetailAll.stateListKerjaSama.data.map(
-                              (items, i) => {
-                                return (
-                                  <option
-                                    key={i}
-                                    value={items.cooperation_categories}
-                                  >
-                                    {items.cooperation_categories}
-                                  </option>
-                                );
-                              }
-                            )}
-                      </select>
-                      <IconCalender
-                        className="right-center-absolute"
-                        style={{ right: "10px" }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                    <div className="position-relative d-flex align-items-center cursor-pointer">
-                      <select
-                        onChange={(e) => setValueStatus(e.target.value)}
-                        name=""
-                        id=""
-                        className="form-control remove-icon-default cursor-pointer dropdown-lists"
-                      >
-                        <option value="">Status</option>
-                        {mitraDetailAll.stateListStatus.length === 0
-                          ? ""
-                          : mitraDetailAll.stateListStatus.data.map(
-                              (items, i) => {
-                                return (
-                                  <option key={i} value={items.name_en}>
-                                    {items.name}
-                                  </option>
-                                );
-                              }
-                            )}
-                      </select>
-                      <IconCalender
-                        className="right-center-absolute"
-                        style={{ right: "10px" }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
-                    <button
-                      type="submit"
-                      className="btn bg-light-primary text-primary position-relative"
-                      style={{ width: "120px", bottom: "2px" }}
-                    >
-                      Cari
-                    </button>
-                  </div>
-                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
-                    {/* <a
-                    href="#"
-                    className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
-                  >
-                    Export .csv
-                  </a> */}
-                    {/* {console.log("pages",getId)} */}
-                    <button
-                      type="button"
-                      onClick={() => dispatch(exportFileCSVDetail(getId))}
-                      className="btn btn-primary px-6 font-weight-bold btn-block"
-                    >
-                      Export .csv
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
 
-            <div className="table-page mt-5">
-              <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-center align-middle">No</th>
-                      <th className="text-center align-middle">Mitra</th>
-                      <th className="text-center align-middle">
-                        Judul Kerjasama
-                      </th>
-                      <th className="text-center align-middle">Periode</th>
-                      <th className="text-center align-middle">
-                        Tanggal Tanda Tangan
-                      </th>
-                      {/* <th className="text-center align-middle">
-                        Tanggal Selesai
-                      </th> */}
-                      <th className="text-center align-middle">
-                        Tanggal Selesai
-                      </th>
-                      <th className="text-center align-middle">Status</th>
-                      <th className="text-center align-middle">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {mitraDetailAll.status === "success"
-                      ? mitraDetailAll.mitraDetailAll.length === 0
-                        ? <LoadingTable />
-                        : mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map(
-                            (items, index) => {
-                              return (
-                                <tr key={index}>
-                                  <td className="text-center align-middle   ">
-                                    <button
-                                      className="btn mr-1"
-                                      style={{
-                                        background: "#F3F6F9",
-                                        borderRadius: "6px",
-                                      }}
-                                    >
-                                      {mitraDetailAll.pageDetail === 1
-                                        ? index + 1
-                                        : (mitraDetailAll.pageDetail - 1) *
-                                            mitraDetailAll.limitDetail +
-                                          (index + 1)}
-                                    </button>
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {items.partner.user.name}
-                                  </td>
-                                  <td className="d-flex justify-content-center">
-                                    <div className="d-flex align-items-center justify-content-center flex-column">
-                                      <p className="p-part-t">{items.title}</p>
-                                      <p className="p-part-d">
-                                        (
-                                        {items.cooperation_category === null
-                                          ? "tidak ada kategori kerjasama"
-                                          : items.cooperation_category
-                                              .cooperation_categories}
-                                        )
-                                      </p>
-                                    </div>
+            {/* table disini */}
 
-                                    {/* {items.title}
-                        {items.cooperation_category.cooperation_categories} */}
-                                    <br />
-                                    {/* <small style={{ color: "grey" }}>
-                          Memodanrum of Understanding (MoU)
-                        </small> */}
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {items.period} {items.period_unit}
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {items.signing_date}
-                                  </td>
-                                  <td className="align-middle">
-                                    {items.period_date_end}
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {/* <div className="position-relative">
-                                      <select
-                                        name=""
-                                        id=""
-                                        className="form-control remove-icon-default dropdown-arrows"
-                                      >
-                                        <option value="1">
-                                          {items.status.name}
-                                        </option>
-                                        <option value="2">tidak aktif</option>
-                                      </select>
-                                      <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        width="7"
-                                        height="7"
-                                      />
-                                    </div> */}
-                                       {items.status.name === "aktif" ?
-                                  <div className="position-relative"> 
+            {mitraDetailAll.mitraDetailAll.length === 0 ? (
+              <div className="my-12">
+                <LoadingTable />
+              </div>
+            ) : (
+              <Tables
+                tableHead={
+                  <tr>
+                    <th className="text-left align-middle">No</th>
+                    <th className="text-left align-middle">Mitra</th>
+                    <th className="text-left align-middle">Judul Kerjasama</th>
+                    <th className="text-left align-middle">Periode</th>
+                    <th className="text-left align-middle">
+                      Tanggal Tanda Tangan
+                    </th>
+                    <th className="text-left align-middle">Tanggal Selesai</th>
+                    <th className="text-left align-middle">Status</th>
+                    <th className="text-left align-middle">Aksi</th>
+                  </tr>
+                }
+                tableBody={
+                  mitraDetailAll.status === "success" ? (
+                    mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map(
+                      (items, index) => {
+                        return (
+                          <tr key={index}>
+                            <td className="text-left align-middle   ">
+                              <button
+                                className="btn mr-1"
+                                style={{
+                                  background: "#F3F6F9",
+                                  borderRadius: "6px",
+                                }}
+                              >
+                                {mitraDetailAll.pageDetail === 1
+                                  ? index + 1
+                                  : (mitraDetailAll.pageDetail - 1) *
+                                      mitraDetailAll.limitDetail +
+                                    (index + 1)}
+                              </button>
+                            </td>
+                            <td className="align-middle text-left">
+                              {items.partner.user.name}
+                            </td>
+                            <td className="d-flex justify-content-start">
+                              <div className="d-flex align-items-start justify-content-center flex-column">
+                                <p className="p-part-t">{items.title}</p>
+                                <p className="p-part-d">
+                                  (
+                                  {items.cooperation_category === null
+                                    ? "tidak ada kategori kerjasama"
+                                    : items.cooperation_category
+                                        .cooperation_categories}
+                                  )
+                                </p>
+                              </div>
+                            </td>
+                            <td className="align-middle text-left">
+                              {items.period} {items.period_unit}
+                            </td>
+                            <td className="align-middle text-left">
+                              {items.signing_date}
+                            </td>
+                            <td className="align-middle">
+                              {items.period_date_end}
+                            </td>
+                            <td className="align-middle text-left">
+                              {items.status.name === "aktif" ? (
+                                <div className="position-relative">
                                   <select
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows"
                                     key={index}
-                                    onChange={(e)=> changeListStatus(e.target.value,items.id)}
+                                    onChange={(e) =>
+                                      changeListStatus(e.target.value, items.id)
+                                    }
                                   >
                                     <option value="1">
                                       {items.status.name}
-                                    </option> 
-                                    <option value="2">
-                                      tidak aktif
-                                    </option> 
+                                    </option>
+                                    <option value="2">tidak aktif</option>
                                   </select>
-                                  <IconArrow className="right-center-absolute" style={{right:"10px"}} width="7" height="7"/>
-                                  </div>
-                                    : 
-                                    <div className="position-relative">
-                                    <select
+                                  <IconArrow
+                                    className="right-center-absolute"
+                                    style={{ right: "10px" }}
+                                    width="7"
+                                    height="7"
+                                  />
+                                </div>
+                              ) : (
+                                <div className="position-relative">
+                                  <select
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows"
                                     key={index}
-                                    onChange={(e)=> changeListStatus(e.target.value,items.id)}
+                                    onChange={(e) =>
+                                      changeListStatus(e.target.value, items.id)
+                                    }
                                   >
-                                    <option value="2">
-                                      Tidak aktif
-                                    </option> 
-                                    <option value="1">
-                                      aktif
-                                    </option> 
+                                    <option value="2">Tidak aktif</option>
+                                    <option value="1">aktif</option>
                                   </select>
-                                  <IconArrow className="right-center-absolute" style={{right:"10px"}} width="7" height="7"/>
-                                  </div>}
-                               
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {/* <button
-                                      style={{
-                                        background: "#F3F6F9",
-                                        borderRadius: "6px",
-                                        padding: "8px 10px 3px 10px",
-                                      }}
-                                      className="btn position-relative btn-delete"
-                                      onClick={() =>
-                                        router.push({
-                                          pathname: `/partnership/manajemen-mitra/detail/mitra/${items.id}`,
-                                          query: { idDetail: getId },
-                                        })
-                                      }
-                                    >
-                                      <Image
-                                        src={`/assets/icon/detail.JPG`}
-                                        width="18"
-                                        height="16"
-                                        className="btn"
-                                        alt="detail"
-                                      />
-                                      <div className="text-hover-show-hapus">
-                                        Detail
-                                      </div>
-                                    </button>
-                                    <button
-                                      className="btn ml-3 position-relative btn-delete"
-                                      style={{
-                                        background: "#F3F6F9",
-                                        borderRadius: "6px",
-                                        padding: "8px 10px 3px 10px",
-                                      }}
-                                      onClick={() =>
-                                        router.push({
-                                          pathname: `/partnership/manajemen-mitra/edit/mitra/${items.id}`,
-                                          query: { idDetail: getId },
-                                        })
-                                      }
-                                    >
-                                      <Image
-                                        width="14"
-                                        height="14"
-                                        src={`/assets/icon/write.svg`}
-                                        alt="write"
-                                      />
-                                      <div className="text-hover-show-hapus">
-                                        Edit
-                                      </div>
-                                    </button>
-                                    <button
-                                      style={{
-                                        background: "#F3F6F9",
-                                        borderRadius: "6px",
-                                        padding: "8px 10px 3px 10px",
-                                      }}
-                                      className="ml-3 btn position-relative btn-delete"
-                                      onClick={() =>
-                                        cooperationDelete(items.id)
-                                      }
-                                    >
-                                      <Image
-                                        width="14"
-                                        height="14"
-                                        src={`/assets/icon/trash.svg`}
-                                        alt="trash"
-                                      />
-                                      <div className="text-hover-show-hapus">
-                                        Hapus
-                                      </div>
-                                    </button>
-                                  
-                                   */}
-                                  
-                                  
-                                  
-
-                                  {items.status.name === "aktif" ? (
-                                    <div>
-                                      <button
-                                        className="btn position-relative btn-delete"
-                                        style={{
-                                          background: "#F3F6F9",
-                                          borderRadius: "6px",
-                                          padding: "8px 10px 3px 10px",
-                                        }}
-                                        onClick={() =>
-                                        router.push({
-                                          pathname: `/partnership/manajemen-mitra/detail/mitra/${items.id}`,
-                                          query: { idDetail: getId },
-                                        })
-                                      }
-                                      >
-                                        <Image
-                                          src={`/assets/icon/detail.JPG`}
-                                          width="18"
-                                          height="16"
-                                          alt="detail"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Detail
-                                        </div>
-                                      </button>
-                                      <button
-                                        className="btn ml-3 position-relative btn-delete"
-                                        style={{
-                                          background: "#F3F6F9",
-                                          borderRadius: "6px",
-                                          padding: "8px 10px 3px 10px",
-                                        }}
-                                        onClick={() =>
-                                        router.push({
-                                          pathname: `/partnership/manajemen-mitra/edit/mitra/${items.id}`,
-                                          query: { idDetail: getId },
-                                        })
-                                      }
-                                      >
-                                        <Image
-                                          width="14"
-                                          height="14"
-                                          src={`/assets/icon/write.svg`}
-                                          alt="write"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Edit
-                                        </div>
-                                      </button>
+                                  <IconArrow
+                                    className="right-center-absolute"
+                                    style={{ right: "10px" }}
+                                    width="7"
+                                    height="7"
+                                  />
+                                </div>
+                              )}
+                            </td>
+                            <td className="align-middle text-left">
+                              {items.status.name === "aktif" ? (
+                                <div>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary btn-delete"
+                                    onClick={() =>
+                                      router.push({
+                                        pathname: `/partnership/manajemen-mitra/detail/mitra/${items.id}`,
+                                        query: { idDetail: getId },
+                                      })
+                                    }
+                                  >
+                                    <IconEye
+                                      width="14"
+                                      height="12"
+                                      fill="rgba(255,255,255,1)"
+                                    />
+                                    <div className="text-hover-show-hapus">
+                                      Detail
                                     </div>
-                                  ) : (
-                                    <div>
-                                      <button
-                                        style={{
-                                          background: "#F3F6F9",
-                                          borderRadius: "6px",
-                                          padding: "8px 10px 3px 10px",
-                                        }}
-                                        className="btn position-relative btn-delete"
-                                        onClick={() =>
-                                        router.push({
-                                          pathname: `/partnership/manajemen-mitra/detail/mitra/${items.id}`,
-                                          query: { idDetail: getId },
-                                        })
-                                      }
-                                      >
-                                        <Image
-                                          src={`/assets/icon/detail.JPG`}
-                                          width="18"
-                                          height="16"
-                                          className="btn"
-                                          alt="detail"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Detail
-                                        </div>
-                                      </button>
-                                      <button
-                                        className="btn ml-3 position-relative btn-delete"
-                                        style={{
-                                          background: "#F3F6F9",
-                                          borderRadius: "6px",
-                                          padding: "8px 10px 3px 10px",
-                                        }}
-                                        onClick={() =>
-                                        router.push({
-                                          pathname: `/partnership/manajemen-mitra/edit/mitra/${items.id}`,
-                                          query: { idDetail: getId },
-                                        })
-                                      }
-                                      >
-                                        <Image
-                                          width="14"
-                                          height="14"
-                                          src={`/assets/icon/write.svg`}
-                                          alt="write"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Edit
-                                        </div>
-                                      </button>
-                                      <button
-                                        style={{
-                                          background: "#F3F6F9",
-                                          borderRadius: "6px",
-                                          padding: "8px 10px 3px 10px",
-                                        }}
-                                        className="ml-3 btn position-relative btn-delete"
-                                        onClick={() =>
-                                        cooperationDelete(items.id)
-                                      }
-                                      >
-                                        <Image
-                                          width="14"
-                                          height="14"
-                                          src={`/assets/icon/trash.svg`}
-                                          alt="trash"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Hapus
-                                        </div>
-                                      </button>
+                                  </button>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push({
+                                        pathname: `/partnership/manajemen-mitra/edit/mitra/${items.id}`,
+                                        query: { idDetail: getId },
+                                      })
+                                    }
+                                  >
+                                    <IconEye
+                                      width="14"
+                                      height="12"
+                                      fill="rgba(255,255,255,1)"
+                                    />
+                                    <div className="text-hover-show-hapus">
+                                      Edit
                                     </div>
-                                  )}
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )
-                      : <LoadingTable />}
-                    {mitraDetailAll?.mitraDetailAll?.data?.list_cooperation_categories.length === 0 ?"Tidak ada data kerjasama" :""}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="row">
-                <div className="table-pagination">
+                                  </button>
+                                </div>
+                              ) : (
+                                <div className="d-flex align-items-center">
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary btn-delete"
+                                    onClick={() =>
+                                      router.push({
+                                        pathname: `/partnership/manajemen-mitra/detail/mitra/${items.id}`,
+                                        query: { idDetail: getId },
+                                      })
+                                    }
+                                  >
+                                    <IconEye
+                                      width="14"
+                                      height="12"
+                                      fill="rgba(255,255,255,1)"
+                                    />
+                                    <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
+                                  </button>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push({
+                                        pathname: `/partnership/manajemen-mitra/edit/mitra/${items.id}`,
+                                        query: { idDetail: getId },
+                                      })
+                                    }
+                                  >
+                                    <IconPencil />
+                                    <div className="text-hover-show-hapus">
+                                      Edit
+                                    </div>
+                                  </button>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() => cooperationDelete(items.id)}
+                                  >
+                                    <IconDelete />
+                                    <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
+                                  </button>
+                                </div>
+                              )}
+                            </td>
+                          </tr>
+                        );
+                      }
+                    )
+                  ) : (
+                    <tr>
+                      <td colSpan="8">
+                        <LoadingTable />
+                      </td>
+                    </tr>
+                  )
+                }
+                pagination={
                   <Pagination
                     activePage={mitraDetailAll.pageDetail}
                     itemsCountPerPage={
@@ -725,44 +670,14 @@ const DetailDataKerjasama = () => {
                     itemClass="page-item"
                     linkClass="page-link"
                   />
-                </div>
-                <div className="table-total ml-auto">
-                  <div className="row">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) =>
-                          dispatch(setLimitDetail(e.target.value))
-                        }
-                      >
-                        <option>5</option>
-                        <option>10</option>
-                        <option>30</option>
-                        <option>40</option>
-                        <option>50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data{" "}
-                        {mitraDetailAll.mitraDetailAll &&
-                          mitraDetailAll.totalDataDetail}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                }
+                onChangeLimit={(e) => dispatch(setLimitDetail(e.target.value))}
+                totalData={
+                  mitraDetailAll.mitraDetailAll &&
+                  mitraDetailAll.totalDataDetail
+                }
+              />
+            )}
           </div>
         </div>
       </div>

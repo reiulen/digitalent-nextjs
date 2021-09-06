@@ -9,72 +9,69 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getSingleCooperation } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
-
 const DetailDokumenKerjasama = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  let { success } = router.query
+  let { success } = router.query;
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const allMK = useSelector(state => state.allMK)
-
+  const allMK = useSelector((state) => state.allMK);
 
   const [pdfFIle, setPdfFIle] = useState("");
-  const [showPdf, setShowPdf] = useState(false)
+  const [showPdf, setShowPdf] = useState(false);
 
   const getSingleValue = async (id) => {
     try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
       );
-      setPdfFIle(data.data.document_file)
+      setPdfFIle(data.data.document_file);
     } catch (error) {
       console.log("action getSingleValue gagal", error);
     }
-
-  }
-
+  };
 
   useEffect(() => {
-    getSingleValue(router.query.id)
+    getSingleValue(router.query.id);
     dispatch(getSingleCooperation(router.query.id));
-    
-  }, [dispatch,router.query.id]);
+  }, [dispatch, router.query.id]);
 
   return (
     <PageWrapper>
-
       {success ? (
-                <div
-                    className="alert alert-custom alert-light-success fade show mb-5"
-                    role="alert"
-                >
-                    <div className="alert-icon">
-                        <i className="flaticon2-checkmark"></i>
-                    </div>
-                    <div className="alert-text">Berhasil Menyimpan Data</div>
-                    <div className="alert-close">
-                        <button
-                            type="button"
-                            className="close"
-                            data-dismiss="alert"
-                            aria-label="Close"
-                            // onClick={onNewReset}
-                        >
-                            <span aria-hidden="true">
-                                <i className="ki ki-close"></i>
-                            </span>
-                        </button>
-                    </div>
-                </div>
-            ) : (
-                ""
-            )}
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              // onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
 
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark" style={{fontSize:"24px"}}>
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
               Detail Dokumen Kerjasama
             </h3>
           </div>
@@ -82,106 +79,110 @@ const DetailDokumenKerjasama = () => {
           <div className="card-body">
             <form>
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal
                 </label>
-                  <input readOnly value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.submission_date} type="date" className="form-control"  />
-               
+                <input
+                  readOnly
+                  value={
+                    allMK.cooperationById.length === 0
+                      ? ""
+                      : allMK.cooperationById.data.submission_date
+                  }
+                  type="date"
+                  className="form-control"
+                />
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Judul kerjasama
                 </label>
-                  <input
+                <input
                   readOnly
-                  value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.title}
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
+                  value={
+                    allMK.cooperationById.length === 0
+                      ? ""
+                      : allMK.cooperationById.data.title
+                  }
+                  type="text"
+                  className="form-control"
+                  placeholder="Judul Kerjasama"
+                />
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Kategori kerjasama
                 </label>
-                  <select
-                    name=""
-                    id=""
-                    className="form-control"
-                    disabled
-                    // onChange={(e) => setKategoriId(e.target.value)}
-                  >
-                    <option value="Kategori" selected>
-                    {allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.cooperation_category.name}
-                      
-                    </option>
-                  </select>
+                <select
+                  name=""
+                  id=""
+                  className="form-control"
+                  disabled
+                >
+                  <option value="Kategori" selected>
+                    {allMK.cooperationById.length === 0
+                      ? ""
+                      : allMK.cooperationById.data.cooperation_category.name}
+                  </option>
+                </select>
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Periode
                 </label>
-                  <div className="row">
-                    <div className="col-12 col-sm-6">
-                      <DatePicker
-                        className="form-control-sm form-control"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        selectsStart
-                        readOnly
-                        // startDate={startDate}
-                        // endDate={endDate}
-                         value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.period_date_start}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Dari Tanggal"
-                        // minDate={addDays(new Date(), 20)}
-                      />
-                      
-                    </div>
-                    <div className="col-12 col-sm-6">
-                      <DatePicker
-                        className="form-control-sm form-control"
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        selectsEnd
-                        value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.period_date_end}
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        minDate={startDate}
-                        readOnly
-                        maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      />
-                    </div>
+                <div className="row">
+                  <div className="col-12 col-sm-6">
+                    <DatePicker
+                      className="form-control-sm form-control"
+                      selected={startDate}
+                      onChange={(date) => setStartDate(date)}
+                      selectsStart
+                      readOnly
+                      // startDate={startDate}
+                      // endDate={endDate}
+                      value={
+                        allMK.cooperationById.length === 0
+                          ? ""
+                          : allMK.cooperationById.data.period_date_start
+                      }
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="Dari Tanggal"
+                      // minDate={addDays(new Date(), 20)}
+                    />
                   </div>
+                  <div className="col-12 col-sm-6">
+                    <DatePicker
+                      className="form-control-sm form-control"
+                      selected={endDate}
+                      onChange={(date) => setEndDate(date)}
+                      selectsEnd
+                      value={
+                        allMK.cooperationById.length === 0
+                          ? ""
+                          : allMK.cooperationById.data.period_date_end
+                      }
+                      // startDate={startDate}
+                      // endDate={endDate}
+                      minDate={startDate}
+                      readOnly
+                      maxDate={addDays(startDate, 20)}
+                      dateFormat="dd/MM/yyyy"
+                      placeholderText="Sampai Tanggal"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Periode Kerjasama
                 </label>
-                  <div className="row">
-                    <div className="col-12 col-sm-6">
-                      {/* <DatePicker
+                <div className="row">
+                  <div className="col-12 col-sm-6">
+                    {/* <DatePicker
                         className="form-control-sm form-control"
                         selected={startDate}
                         onChange={(date) => setStartDate(date)}
@@ -194,10 +195,19 @@ const DetailDokumenKerjasama = () => {
                         placeholderText="Dari Tanggal"
                         // minDate={addDays(new Date(), 20)}
                       /> */}
-                      <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.period} readOnly className="form-control" />
-                    </div>
-                    <div className="col-12 col-sm-6">
-                      {/* <DatePicker
+                    <input
+                      type="text"
+                      value={
+                        allMK.cooperationById.length === 0
+                          ? ""
+                          : allMK.cooperationById.data.period
+                      }
+                      readOnly
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="col-12 col-sm-6">
+                    {/* <DatePicker
                         className="form-control-sm form-control"
                         // selected={endDate}
                         readOnly
@@ -211,119 +221,157 @@ const DetailDokumenKerjasama = () => {
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       /> */}
-                      <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.period_unit} readOnly className="form-control" />
-                    </div>
+                    <input
+                      type="text"
+                      value={
+                        allMK.cooperationById.length === 0
+                          ? ""
+                          : allMK.cooperationById.data.period_unit
+                      }
+                      readOnly
+                      className="form-control"
+                    />
                   </div>
+                </div>
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Nama Lembaga
                 </label>
-                  {/* <select name="" id="" className="form-control">
+                {/* <select name="" id="" className="form-control">
                     <option value="Kategori" selected>
                       Dqlab
                     </option>
                     <option value="Kategori">Microsoft</option>
                     <option value="Kategori">Google</option>
                   </select> */}
-                   <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.institution_name} readOnly className="form-control" />
+                <input
+                  type="text"
+                  value={
+                    allMK.cooperationById.length === 0
+                      ? ""
+                      : allMK.cooperationById.data.institution_name
+                  }
+                  readOnly
+                  className="form-control"
+                />
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Email
                 </label>
-                  {/* <select name="" id="" className="form-control">
+                {/* <select name="" id="" className="form-control">
                     <option value="Kategori" selected>
                       info@dqlab.co.id
                     </option>
                     <option value="Kategori">pengajuan - pembahasan</option>
                     <option value="Kategori">pengajuan - revisi</option>
                   </select> */}
-                  <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.email} readOnly className="form-control" />
+                <input
+                  type="text"
+                  value={
+                    allMK.cooperationById.length === 0
+                      ? ""
+                      : allMK.cooperationById.data.email
+                  }
+                  readOnly
+                  className="form-control"
+                />
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Nomor Perjanjian Lembaga
                 </label>
-                  {/* <input
+                {/* <input
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nomor Perjanjian Lembaga"
                   /> */}
-                  <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.agreement_number_partner} readOnly className="form-control" />
+                <input
+                  type="text"
+                  value={
+                    allMK.cooperationById.length === 0
+                      ? ""
+                      : allMK.cooperationById.data.agreement_number_partner
+                  }
+                  readOnly
+                  className="form-control"
+                />
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Nomor Perjanjian KemKominfo
                 </label>
-                  {/* <input
+                {/* <input
                     type="text"
                     className="form-control"
                     placeholder="Masukkan Nomor Perjanjian Kemkominfo"
                   /> */}
-                  <input type="text" value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.agreement_number_kemkominfo} readOnly className="form-control" />
+                <input
+                  type="text"
+                  value={
+                    allMK.cooperationById.length === 0
+                      ? ""
+                      : allMK.cooperationById.data.agreement_number_kemkominfo
+                  }
+                  readOnly
+                  className="form-control"
+                />
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal Penandatanganan
                 </label>
-                  <div className="row">
-                    <div className="col-12">
-                      <input
+                <div className="row">
+                  <div className="col-12">
+                    <input
                       readOnly
-                      value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.signing_date}
-                        type="date"
-                        className="form-control form-control-sm"
-                      />
-                    </div>
+                      value={
+                        allMK.cooperationById.length === 0
+                          ? ""
+                          : allMK.cooperationById.data.signing_date
+                      }
+                      type="date"
+                      className="form-control form-control-sm"
+                    />
                   </div>
+                </div>
               </div>
 
-
-              
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Dokumen Kerjasama
                 </label>
-                  <div className="row">
-
-                    <div className="col-12 col-sm-3">
-
-                      <button type="button" onClick={()=>setShowPdf(showPdf?false:true)} className="btn btn-primary btn-sm">
-                        {showPdf ? "Tutup dokument" : "Lihat Dokumen"}
-                      </button>
-                    </div>
-                    </div>
+                <div className="row">
+                  <div className="col-12 col-sm-3">
+                    <button
+                      type="button"
+                      onClick={() => setShowPdf(showPdf ? false : true)}
+                      className="btn btn-primary btn-sm"
+                    >
+                      {showPdf ? "Tutup dokument" : "Lihat Dokumen"}
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              {showPdf ? 
-
-<iframe className="mb-4 border" src={`http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${pdfFIle}`} frameBorder="0" scrolling="auto" height={"500px"} width="100%" ></iframe>
-
-:""}
+              {showPdf ? (
+                <iframe
+                  className="mb-4 border"
+                  src={`http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${pdfFIle}`}
+                  frameBorder="0"
+                  scrolling="auto"
+                  height={"500px"}
+                  width="100%"
+                ></iframe>
+              ) : (
+                ""
+              )}
               {/* <div className="form-group row">
                 <label
                   htmlFor="staticEmail"
@@ -344,32 +392,35 @@ const DetailDokumenKerjasama = () => {
 
               {/* start loop */}
 
-              {allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.cooperation_category.data_content.cooperation_form === "-"?<h1 className="my-4">Data kerja sama tidak ada</h1>:allMK.cooperationById.data.cooperation_category.data_content.map((items,i)=>{
-                return(
-                  
-              <div className="form-group" key={i}>
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
-                   {items.cooperation_form}
-                </label>
-                  <textarea
-                  readOnly
-                  value={items.form_content}
-                    name=""
-                    id=""
-                    cols="30"
-                    rows="5"
-                    className="form-control"
-                    placeholder="Masukkan Tujuan Kerjasama disini"
-                  ></textarea>
-              </div>
-
-
+              {allMK.cooperationById.length === 0 ? (
+                ""
+              ) : allMK.cooperationById.data.cooperation_category.data_content
+                  .cooperation_form === "-" ? (
+                <h1 className="my-4">Data kerja sama tidak ada</h1>
+              ) : (
+                allMK.cooperationById.data.cooperation_category.data_content.map(
+                  (items, i) => {
+                    return (
+                      <div className="form-group" key={i}>
+                        <label htmlFor="staticEmail" className="col-form-label">
+                          {items.cooperation_form}
+                        </label>
+                        <textarea
+                          readOnly
+                          value={items.form_content}
+                          name=""
+                          id=""
+                          cols="30"
+                          rows="5"
+                          className="form-control"
+                          placeholder="Masukkan Tujuan Kerjasama disini"
+                        ></textarea>
+                      </div>
+                    );
+                  }
                 )
-              })}
-{/* loop end loop*/}
+              )}
+              {/* loop end loop*/}
               {/* <div className="form-group">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
@@ -381,26 +432,15 @@ const DetailDokumenKerjasama = () => {
                 </div>
               </div> */}
 
-
-
-              
-<div className="form-group row">
+              <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/manajemen-kerjasama">
                     <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
                       Kembali
                     </a>
                   </Link>
-                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
-                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
-                      Kembali
-                    </a> */}
-                  
-                  {/* </Link> */}
                 </div>
               </div>
-
-              
             </form>
           </div>
         </div>

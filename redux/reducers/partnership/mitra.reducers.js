@@ -21,6 +21,7 @@ import {
   RELOAD_TABLE_DETAIL,
   SUCCESS_DELETE_COOPERATION_M_DETAIL,
   CHANGE_STATUS_LIST_M_DETAIL,
+  RESET_VALUE_SORTIR,
 } from "../../types/partnership/mitra.type";
 
 const statuslist = {
@@ -178,6 +179,15 @@ export const allMitraReducer = (state = initialState, action) => {
       return {
         ...state,
         statusDetail: action.value,
+      };
+    case RESET_VALUE_SORTIR:
+      return {
+        ...state,
+        pageDetail: 1,
+        limitDetail: 5,
+        keywordDetail: "",
+        categories_cooporation: "",
+        statusDetail: "",
       };
 
     case SUCCESS_DELETE_COOPERATION_M_DETAIL:

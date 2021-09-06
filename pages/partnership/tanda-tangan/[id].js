@@ -1,8 +1,15 @@
 import Layout from "../../../components/templates/layout.component";
-import EditTandaTangan from "../../../components/content/partnership/tanda-tangan/edit";
+// import EditTandaTangan from "../../../components/content/partnership/tanda-tangan/edit";
 
-import { getDetailTandaTangan } from "../../../redux/actions/partnership/tandaTangan.actions";
-import { wrapper } from "../../../redux/store";
+import dynamic from "next/dynamic";
+import LoadingPage from "../../../components/LoadingPage";
+
+const EditTandaTangan = dynamic(
+  () => import("../../../components/content/partnership/tanda-tangan/edit"),
+  { loading: () => <LoadingPage />, ssr: false }
+);
+// import { getDetailTandaTangan } from "../../../redux/actions/partnership/tandaTangan.actions";
+// import { wrapper } from "../../../redux/store";
 
 export default function EditTandaTanganPage() {
   return (
@@ -15,3 +22,5 @@ export default function EditTandaTanganPage() {
     </>
   );
 }
+
+EditTandaTanganPage.displayName = "EditTandaTanganPage";

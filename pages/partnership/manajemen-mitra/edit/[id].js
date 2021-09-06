@@ -1,5 +1,14 @@
 import Layout from "../../../../components/templates/layout.component";
-import EditMitra from "../../../../components/content/partnership/manajemen-mitra/edit";
+// import EditMitra from "../../../../components/content/partnership/manajemen-mitra/edit";
+
+import dynamic from "next/dynamic";
+import LoadingPage from "../../../../components/LoadingPage";
+
+const EditMitra = dynamic(
+  () =>
+    import("../../../../components/content/partnership/manajemen-mitra/edit"),
+  { loading: () => <LoadingPage />, ssr: false }
+);
 
 export default function EditMitraPage() {
   return (
@@ -12,3 +21,5 @@ export default function EditMitraPage() {
     </>
   );
 }
+
+EditMitraPage.displayName = "EditMitraPage";

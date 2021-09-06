@@ -1,15 +1,24 @@
+import dynamic from "next/dynamic";
+
 import Layout from "../../../components/templates/layout.component";
-import Faq from "../../../components/content/publikasi/faq/faq";
+// import Faq from "../../../components/content/publikasi/faq/faq";
 
 import { getAllFaq, getAllFaqPagination } from '../../../redux/actions/publikasi/faq.actions'
 import { wrapper } from '../../../redux/store'
+
+import LoadingPage from "../../../components/LoadingPage";
+
+const FAQ = dynamic(
+    () => import("../../../components/content/publikasi/faq/faq"),
+    { loading: () => <LoadingPage />, ssr: false }
+);
 
 export default function FaqPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Managemen FAQ'>
-                    <Faq />
+                <Layout title='FAQ'>
+                    <FAQ />
                 </Layout>
             </div>
         </>
