@@ -14,7 +14,7 @@ import {
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Select from 'react-select';
+import Select from "react-select";
 
 const EditMitra = () => {
   const router = useRouter();
@@ -102,14 +102,12 @@ const EditMitra = () => {
     setIndonesia_provinces_id(defaultValueProvinceID);
   };
   const [statuLoadCities, setStatuLoadCities] = useState(false);
-  const changeValueProvinces = async() => {
+  const changeValueProvinces = async () => {
     setIndonesia_cities_id("");
     setIndonesia_provinces_id("");
     setStatuLoadCities(true);
 
     dispatch(getProvinces());
-
-
   };
 
   const [showImage, setShowImage] = useState(false);
@@ -316,153 +314,135 @@ const EditMitra = () => {
           <div className="card-body">
             <form>
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Nama Lembaga
                 </label>
-                  <input
-                    onFocus={() => setError({ ...error, institution_name: "" })}
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nama Lembaga"
-                    value={institution_name}
-                    onChange={(e) => setInstitution_name(e.target.value)}
-                  />
-                  {error.institution_name ? (
-                    <p className="error-text">{error.institution_name}</p>
-                  ) : (
-                    ""
-                  )}
+                <input
+                  onFocus={() => setError({ ...error, institution_name: "" })}
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Nama Lembaga"
+                  value={institution_name}
+                  onChange={(e) => setInstitution_name(e.target.value)}
+                />
+                {error.institution_name ? (
+                  <p className="error-text">{error.institution_name}</p>
+                ) : (
+                  ""
+                )}
               </div>
-             
+
               <div className="row">
                 <div className="col-12 col-sm-6">
-
                   <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
-                  Website
-                </label>
-                  <input
-                    onFocus={() => setError({ ...error, website: "" })}
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Website"
-                    value={website}
-                    onChange={(e) => setWesite(e.target.value)}
-                  />
-                  {error.website ? (
-                    <p className="error-text">{error.website}</p>
-                  ) : (
-                    ""
-                  )}
-              </div>
-
+                    <label htmlFor="staticEmail" className="col-form-label">
+                      Website
+                    </label>
+                    <input
+                      onFocus={() => setError({ ...error, website: "" })}
+                      type="text"
+                      className="form-control"
+                      placeholder="Masukkan Website"
+                      value={website}
+                      onChange={(e) => setWesite(e.target.value)}
+                    />
+                    {error.website ? (
+                      <p className="error-text">{error.website}</p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
                 <div className="col-12 col-sm-6">
-
                   <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
-                  Email (read only)
-                </label>
-                  <input
-                    onFocus={() => setError({ ...error, email: "" })}
-                    type="email"
-                    readOnly
-                    className="form-control"
-                    placeholder="Masukkan Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  {error.email ? (
-                    <p className="error-text">{error.email}</p>
-                  ) : (
-                    ""
-                  )}
-              </div>
-
+                    <label htmlFor="staticEmail" className="col-form-label">
+                      Email (read only)
+                    </label>
+                    <input
+                      onFocus={() => setError({ ...error, email: "" })}
+                      type="email"
+                      readOnly
+                      className="form-control"
+                      placeholder="Masukkan Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                    {error.email ? (
+                      <p className="error-text">{error.email}</p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
               </div>
 
-               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   Gambar Logo
                 </label>
-                  <div className="input-group">
-                    <div className="custom-file">
-                      <input
-                        onFocus={() => setError({ ...error, agency_logo: "" })}
-                        onChange={(e) => onChangeImage(e)}
-                        type="file"
-                        name="logo"
-                        className="custom-file-input cursor-pointer"
-                        id="inputGroupFile04"
-                        accept="image/png,image/jpg"
-                        // onChange={onChangeGambar}
-                        
-                      />
-                      <label
-                        className="custom-file-label"
-                        htmlFor="inputGroupFile04"
-                      >
-                        {NamePDF ? NamePDF : "Unggah gambar baru"}
-                      </label>
+                <div className="input-group">
+                  <div className="custom-file">
+                    <input
+                      onFocus={() => setError({ ...error, agency_logo: "" })}
+                      onChange={(e) => onChangeImage(e)}
+                      type="file"
+                      name="logo"
+                      className="custom-file-input cursor-pointer"
+                      id="inputGroupFile04"
+                      accept="image/png,image/jpg"
+                      // onChange={onChangeGambar}
+                    />
+                    <label
+                      className="custom-file-label"
+                      htmlFor="inputGroupFile04"
+                    >
+                      {NamePDF ? NamePDF : "Unggah gambar baru"}
+                    </label>
                   </div>
-                  
                 </div>
-                  <div className="d-flex align-items-center">
-                    {NamePDF ? (
-                      <button
-                        className="btn btn-primary btn-sm my-3 mr-3"
-                        type="button"
-                        onClick={() => hideImage()}
-                      >
-                        {showImage ? "Tutup" : "Buka"}
-                      </button>
-                    ) : (
-                      ""
-                    )}
-
-                    {agency_logo ? (
-                      <button
-                        className="btn btn-primary btn-sm my-3"
-                        type="button"
-                        onClick={() => cancelChangeImage()}
-                      >
-                        {/* {showImage?"Tutup":"Buka"} */}
-                        Batal ubah gambar menjadi default
-                      </button>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                {!NamePDF ? (
-                    <div className="border my-3">
-                      <Image
-                        unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                        src={
-                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                          "partnership/images/profile-images/" +
-                          imageview
-                        }
-                        width={500}
-                        height={500}
-                        alt="logo"
-                      />
-                    </div>
+                <div className="d-flex align-items-center">
+                  {NamePDF ? (
+                    <button
+                      className="btn btn-primary btn-sm my-3 mr-3"
+                      type="button"
+                      onClick={() => hideImage()}
+                    >
+                      {showImage ? "Tutup" : "Buka"}
+                    </button>
                   ) : (
                     ""
                   )}
+
+                  {agency_logo ? (
+                    <button
+                      className="btn btn-primary btn-sm my-3"
+                      type="button"
+                      onClick={() => cancelChangeImage()}
+                    >
+                      {/* {showImage?"Tutup":"Buka"} */}
+                      Batal ubah gambar menjadi default
+                    </button>
+                  ) : (
+                    ""
+                  )}
+                </div>
+                {!NamePDF ? (
+                  <div className="border my-3">
+                    <Image
+                      unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                      src={
+                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        "partnership/images/profile-images/" +
+                        imageview
+                      }
+                      width={500}
+                      height={500}
+                      alt="logo"
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
                 {showImage ? (
                   <div
                     className={`${
@@ -487,65 +467,47 @@ const EditMitra = () => {
                 )}
               </div>
 
-
-              
-
-              
-
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Masukan Alamat Lengkap
                 </label>
-                  <input
-                    onFocus={() => setError({ ...error, address: "" })}
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Alamat"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                  />
+                <input
+                  onFocus={() => setError({ ...error, address: "" })}
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Alamat"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                />
               </div>
 
               {allMitra.provinces.length === 0 ? (
                 <div className="form-group">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-form-label"
-                  >
+                  <label htmlFor="staticEmail" className="col-form-label">
                     Provinsi
                   </label>
                   <div className="row">
                     <div className="col-12 col-sm-9">
-                    <select
-                      onFocus={() =>
-                        setError({ ...error, indonesia_provinces_id: "" })
-                      }
-                      className="form-control"
-                      disabled
-                    >
-                      <option value={indonesia_provinces_id}>
-                        {defaultValueProvince}
-                      </option>
-                    </select>
-
+                      <select
+                        onFocus={() =>
+                          setError({ ...error, indonesia_provinces_id: "" })
+                        }
+                        className="form-control mt-2"
+                        disabled
+                      >
+                        <option value={indonesia_provinces_id}>
+                          {defaultValueProvince}
+                        </option>
+                      </select>
                     </div>
                     <div className="col-12 col-sm-3">
-
-                  {/* <button
-                    type="button"
-                    className="btn btn-primary btn-sm w-100"
-                    
-                  >
-                    Ubah Provinsi
-                  </button> */}
-
-                  <button type="button" className="btn btn-rounded-full bg-blue-secondary text-white w-100 d-flex justify-content-center" onClick={() => changeValueProvinces()}>
-        Ubah Provinsi
-      </button>
-
+                      <button
+                        type="button"
+                        className="btn btn-rounded-full bg-blue-secondary text-white w-100 d-flex justify-content-center mt-2"
+                        onClick={() => changeValueProvinces()}
+                      >
+                        Ubah Provinsi
+                      </button>
                     </div>
                   </div>
                   {error.indonesia_provinces_id ? (
@@ -556,42 +518,40 @@ const EditMitra = () => {
                 </div>
               ) : (
                 <div className="form-group">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-form-label"
-                  >
+                  <label htmlFor="staticEmail" className="col-form-label">
                     Provinsi
                   </label>
 
                   <div className="row">
                     <div className="col-12 col-sm-9">
-                    <Select
-              onFocus={() =>
-                        setError({ ...error, indonesia_provinces_id: "" })
-                      }
-          className="basic-single w-100"
-          classNamePrefix="select"
-          placeholder="Pilih data Kab/Kota"
-          defaultValue={allMitra?.provinces[0]}
-          isDisabled={false}
-          isLoading={false}
-          isClearable={false}
-          isRtl={false}
-          isSearchable={true}
-          name="color"
-          onChange={(e)=>changeProvinces(e)}
-          options={allMitra?.provinces}
-          />
-
+                      <Select
+                        onFocus={() =>
+                          setError({ ...error, indonesia_provinces_id: "" })
+                        }
+                        className="basic-single w-100"
+                        classNamePrefix="select"
+                        placeholder="Pilih data Kab/Kota"
+                        defaultValue={allMitra?.provinces[0]}
+                        isDisabled={false}
+                        isLoading={false}
+                        isClearable={false}
+                        isRtl={false}
+                        isSearchable={true}
+                        name="color"
+                        onChange={(e) => changeProvinces(e)}
+                        options={allMitra?.provinces}
+                      />
                     </div>
                     <div className="col-12 col-sm-3">
-
-<button type="button" className="btn btn-rounded-full bg-blue-secondary text-white w-100 d-flex justify-content-center" onClick={() => cancelProvincesChange()}>
-Batal Ubah Provinsi
-</button>
+                      <button
+                        type="button"
+                        className="btn btn-rounded-full bg-blue-secondary text-white w-100 d-flex justify-content-center"
+                        onClick={() => cancelProvincesChange()}
+                      >
+                        Batal Ubah Provinsi
+                      </button>
                     </div>
                   </div>
-
 
                   {/* <button
                     type="button"
@@ -600,8 +560,6 @@ Batal Ubah Provinsi
                   >
                     Batal Ubah Provinsi
                   </button> */}
-
-
 
                   {error.indonesia_provinces_id ? (
                     <p className="error-text">{error.indonesia_provinces_id}</p>
@@ -612,23 +570,20 @@ Batal Ubah Provinsi
               )}
               {allMitra.provinces.length === 0 ? (
                 <div className="form-group">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-form-label"
-                  >
+                  <label htmlFor="staticEmail" className="col-form-label">
                     Kota / Kabupaten
                   </label>
-                    <select
-                      onFocus={() =>
-                        setError({ ...error, indonesia_cities_id: "" })
-                      }
-                      disabled
-                      className="form-control"
-                    >
-                      <option value={indonesia_cities_id}>
-                        {defaultValueCitie}
-                      </option>
-                    </select>
+                  <select
+                    onFocus={() =>
+                      setError({ ...error, indonesia_cities_id: "" })
+                    }
+                    disabled
+                    className="form-control"
+                  >
+                    <option value={indonesia_cities_id}>
+                      {defaultValueCitie}
+                    </option>
+                  </select>
                   {error.indonesia_cities_id ? (
                     <p className="error-text">{error.indonesia_cities_id}</p>
                   ) : (
@@ -637,13 +592,10 @@ Batal Ubah Provinsi
                 </div>
               ) : (
                 <div className="form-group">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-form-label"
-                  >
+                  <label htmlFor="staticEmail" className="col-form-label">
                     Kota / Kabupaten
                   </label>
-                    {/* <select
+                  {/* <select
                       onFocus={() =>
                         setError({ ...error, indonesia_cities_id: "" })
                       }
@@ -664,7 +616,7 @@ Batal Ubah Provinsi
                       })}
                     </select> */}
 
-                    <Select
+                  <Select
                     onFocus={() =>
                       setError({ ...error, indonesia_cities_id: "" })
                     }
@@ -691,93 +643,79 @@ Batal Ubah Provinsi
               )}
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Kode Pos
                 </label>
-                  <input
-                    onFocus={() => setError({ ...error, postal_code: "" })}
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Kode Pos"
-                    value={postal_code}
-                    onChange={(e) => setPostal_code(e.target.value)}
-                  />
-                  {error.postal_code ? (
-                    <p className="error-text">{error.postal_code}</p>
-                  ) : (
-                    ""
-                  )}
+                <input
+                  onFocus={() => setError({ ...error, postal_code: "" })}
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Kode Pos"
+                  value={postal_code}
+                  onChange={(e) => setPostal_code(e.target.value)}
+                />
+                {error.postal_code ? (
+                  <p className="error-text">{error.postal_code}</p>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Nama Person In Charge (PIC)
                 </label>
-                  <input
-                    onFocus={() => setError({ ...error, pic_name: "" })}
-                    type="text"
-                    onChange={(e) => setPic_name(e.target.value)}
-                    className="form-control"
-                    placeholder="Masukkan Nama"
-                    value={pic_name}
-                  />
-                  {error.pic_name ? (
-                    <p className="error-text">{error.pic_name}</p>
-                  ) : (
-                    ""
-                  )}
+                <input
+                  onFocus={() => setError({ ...error, pic_name: "" })}
+                  type="text"
+                  onChange={(e) => setPic_name(e.target.value)}
+                  className="form-control"
+                  placeholder="Masukkan Nama"
+                  value={pic_name}
+                />
+                {error.pic_name ? (
+                  <p className="error-text">{error.pic_name}</p>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Nomor Handphone Person In Charge (PIC)
                 </label>
-                  <input
-                    onFocus={() =>
-                      setError({ ...error, pic_contact_number: "" })
-                    }
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan NO. Kontak"
-                    value={pic_contact_number}
-                    onChange={(e) => setPic_contact_number(e.target.value)}
-                  />
-                  {error.pic_contact_number ? (
-                    <p className="error-text">{error.pic_contact_number}</p>
-                  ) : (
-                    ""
-                  )}
+                <input
+                  onFocus={() => setError({ ...error, pic_contact_number: "" })}
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan NO. Kontak"
+                  value={pic_contact_number}
+                  onChange={(e) => setPic_contact_number(e.target.value)}
+                />
+                {error.pic_contact_number ? (
+                  <p className="error-text">{error.pic_contact_number}</p>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   E-mail Person In Charge (PIC)
                 </label>
-                  <input
-                    onFocus={() => setError({ ...error, pic_email: "" })}
-                    type="email"
-                    className="form-control"
-                    placeholder="Masukkan Email"
-                    value={pic_email}
-                    onChange={(e) => setPic_email(e.target.value)}
-                  />
-                  {error.pic_email ? (
-                    <p className="error-text">{error.pic_email}</p>
-                  ) : (
-                    ""
-                  )}
+                <input
+                  onFocus={() => setError({ ...error, pic_email: "" })}
+                  type="email"
+                  className="form-control"
+                  placeholder="Masukkan Email"
+                  value={pic_email}
+                  onChange={(e) => setPic_email(e.target.value)}
+                />
+                {error.pic_email ? (
+                  <p className="error-text">{error.pic_email}</p>
+                ) : (
+                  ""
+                )}
               </div>
 
               {/* <div className="form-group row">
@@ -799,7 +737,6 @@ Batal Ubah Provinsi
                 </div>
               </div> */}
 
-
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/manajemen-mitra">
@@ -816,10 +753,6 @@ Batal Ubah Provinsi
                   </button>
                 </div>
               </div>
-
-
-
-
             </form>
           </div>
         </div>

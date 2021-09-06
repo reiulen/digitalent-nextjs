@@ -34,6 +34,7 @@ import {
   CANCEL_CHANGE_CATEGORY,
   CANCEL_CHANGE_EMAIL,
   RELOAD_TABLE,
+  RESET_VALUE_SORTIR,
 } from "../../types/partnership/management_cooporation.type";
 
 const statuslist = {
@@ -127,6 +128,17 @@ export const allMCooporationReducerMK = (state = initialState, action) => {
         ...state,
         status: action.value,
         card: "",
+      };
+    case RESET_VALUE_SORTIR:
+      return {
+        ...state,
+        status: "",
+        partner: "",
+        page: 1,
+        limit: 5,
+        categories_cooporation: "",
+        card: "",
+        keyword: "",
       };
     case SET_VALUE_CARD_M:
       return {
