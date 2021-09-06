@@ -305,7 +305,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                       type="button"
                       onClick={() => handleRemoveClick(null, null, i)}
                     >
-                      <i class="ri-delete-bin-fill p-0 text-white"></i>
+                      <i className="ri-delete-bin-fill p-0 text-white"></i>
                     </button>
                   ) : (
                     ""
@@ -379,7 +379,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                 type="button"
                                 onClick={() => handleRemoveClick(null, i, j)}
                               >
-                                <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                <i className="ri-delete-bin-fill p-0 text-white"></i>
                               </button>
                             ) : (
                               ""
@@ -495,7 +495,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                               handleRemoveClick(i, j, k)
                                             }
                                           >
-                                            <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
                                           </button>
                                         </div>
                                         <div className="col-sm-12 col-md-4"></div>

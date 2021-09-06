@@ -302,7 +302,7 @@ const DetailTrivia = () => {
                                   className="btn btn-link-action bg-blue-secondary text-white"
                                   onClick={() => handleDelete(question.id)}
                                 >
-                                  <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>
