@@ -424,7 +424,7 @@ const SubmitKerjasama = () => {
                       type="button"
                       onClick={() => showDocument()}
                     >
-                      {viewPDF ? "Tutup Dokument" : "Tampilkan dokumen"}
+                      {viewPDF ? "Tutup Dokumen" : "Tampilkan dokumen"}
                     </button>
                   </div>
                 ) : (

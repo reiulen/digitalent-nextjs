@@ -330,13 +330,15 @@ const EditDokumentKerjasamaById = () => {
                         <option>{cooperationID.name}</option>
                       </select>
                     </div>
+                    <div className="col-12 col-sm-3">
                     <button
                       type="button"
-                      className="col-12 col-sm-3 btn btn-primary btn-sm"
+                      className="col-12 col-sm-3 btn btn-primary btn-sm  mt-3"
                       onClick={() => dispatch(fetchListSelectCooperation())}
                     >
                       Ubah Kategory
                     </button>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -367,6 +369,7 @@ const EditDokumentKerjasamaById = () => {
                             })}
                       </select>
                     </div>
+                    <div className="col-12 col-sm-3">
                     <button
                       type="button"
                       className="col-12 col-sm-3 btn btn-primary btn-sm"
@@ -374,6 +377,7 @@ const EditDokumentKerjasamaById = () => {
                     >
                       Batal Ubah Kategory
                     </button>
+                  </div>
                   </div>
                 </div>
               )}
@@ -412,7 +416,7 @@ const EditDokumentKerjasamaById = () => {
                         className="form-control"
                       /> */}
 
-                    <div className="d-flex align-items-center position-relative datepicker-w">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         // selected={periodDateStart}
@@ -436,7 +440,7 @@ const EditDokumentKerjasamaById = () => {
                     </div>
                   </div>
                   <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         // selected={periodDateStart}
@@ -564,7 +568,7 @@ const EditDokumentKerjasamaById = () => {
                       onClick={() => showDocument()}
                       >
                       {viewPDF || showDokument
-                        ? "Tutup dokument"
+                        ? "Tutup dokumen"
                         : "Lihat dokumen"}
                     </button>
                     {" "}

@@ -244,7 +244,7 @@ const EditDokumentKerjasamaById = () => {
                       required
                       readOnly
                       type="number"
-                      className="form-control"
+                      className="form-control mt-2"
                       onChange={(e) => setPeriod(e.target.value)}
                       value={period}
                     />
@@ -267,7 +267,7 @@ const EditDokumentKerjasamaById = () => {
                           <option value="bulan">Bulan</option>
                         </select>
                       )} */}
-                    <div className="form-control">Tahun</div>
+                    <div className="form-control mt-2">Tahun</div>
                     {/* <input
                       required
                         type="text"
@@ -284,7 +284,7 @@ const EditDokumentKerjasamaById = () => {
                 </label>
                 <div className="row">
                   <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
                         readOnly
                         className="form-search-date form-control-sm form-control cursor-pointer"
@@ -309,7 +309,7 @@ const EditDokumentKerjasamaById = () => {
                     </div>
                   </div>
                   <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
                         readOnly
                         className="form-search-date form-control-sm form-control cursor-pointer"
@@ -445,7 +445,7 @@ const EditDokumentKerjasamaById = () => {
                       onClick={() => showDocument()}
                     >
                       {viewPDF || showDokument
-                        ? "Tutup dokument"
+                        ? "Tutup dokumen"
                         : "Lihat dokumen"}
                     </button>
                   </div>

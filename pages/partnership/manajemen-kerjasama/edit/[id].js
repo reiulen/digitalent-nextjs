@@ -1,5 +1,15 @@
 import Layout from "../../../../components/templates/layout.component";
-import EditDetailKerjasama from "../../../../components/content/partnership/manajemen-kerjasama/editDokumentKerjasama";
+// import EditDetailKerjasama from "../../../../components/content/partnership/manajemen-kerjasama/editDokumentKerjasama";
+import dynamic from "next/dynamic";
+import LoadingPage from "../../../../components/LoadingPage";
+
+const EditDetailKerjasama = dynamic(
+  () =>
+    import(
+      "../../../../components/content/partnership/manajemen-kerjasama/editDokumentKerjasama"
+    ),
+  { loading: () => <LoadingPage />, ssr: false }
+);
 
 export default function editDokumenKerjasama() {
   return (
@@ -12,3 +22,5 @@ export default function editDokumenKerjasama() {
     </>
   );
 }
+
+editDokumenKerjasama.displayName = "editDokumenKerjasama";

@@ -1,6 +1,16 @@
 import Layout from "../../../components/templates/layout.component";
-import Table from "../../../components/content/partnership/manajemen-mitra/tableMitra";
+// import Table from "../../../components/content/partnership/manajemen-mitra/tableMitra";
 
+import dynamic from "next/dynamic";
+import LoadingPage from "../../../components/LoadingPage";
+
+const Table = dynamic(
+  () =>
+    import(
+      "../../../components/content/partnership/manajemen-mitra/tableMitra"
+    ),
+  { loading: () => <LoadingPage />, ssr: false }
+);
 export default function MitraPage() {
   return (
     <>
@@ -12,3 +22,5 @@ export default function MitraPage() {
     </>
   );
 }
+
+MitraPage.displayName = "MitraPage";
