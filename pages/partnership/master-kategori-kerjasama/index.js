@@ -24,7 +24,7 @@ export default function KategoriKerjasama() {
   );
 }
 
-KategoriKerjasama.displayName = "KategoriKerjasama";
+// KategoriKerjasama.displayName = "KategoriKerjasama";
 
 // export const getServerSideProps = wrapper.getServerSideProps(
 //   (store) =>

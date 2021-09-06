@@ -22,4 +22,4 @@ export default function DetailDataKerjasamaPage() {
   );
 }
 
-DetailDataKerjasamaPage.displayName = "DetailDataKerjasamaPage";
+// DetailDataKerjasamaPage.displayName = "DetailDataKerjasamaPage";

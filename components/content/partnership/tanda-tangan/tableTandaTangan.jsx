@@ -253,7 +253,6 @@ const Table = () => {
           type="text"
           className="form-control pl-10"
           placeholder="Ketik disini untuk Pencarian..."
-          id="kt_datatable_search_query"
                         onChange={(e) => setKeyWord(e.target.value)}
         />
         <button
