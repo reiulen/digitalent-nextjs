@@ -493,11 +493,12 @@ const EditMitra = () => {
                           setError({ ...error, indonesia_provinces_id: "" })
                         }
                         className="form-control mt-2"
+                        
                         disabled
                       >
                         <option value={indonesia_provinces_id}>
                           {defaultValueProvince}
-                          
+
                         </option>
                       </select>
                     </div>
