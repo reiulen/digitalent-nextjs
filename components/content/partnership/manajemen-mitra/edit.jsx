@@ -493,6 +493,7 @@ const EditMitra = () => {
                           setError({ ...error, indonesia_provinces_id: "" })
                         }
                         className="form-control mt-2"
+
                         
                         disabled
                       >
