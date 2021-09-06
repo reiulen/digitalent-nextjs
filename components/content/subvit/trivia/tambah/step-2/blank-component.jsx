@@ -117,7 +117,7 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                     type="button"
                     onClick={() => handleRemoveClick(i)}
                   >
-                    <i class="ri-delete-bin-fill p-0 text-white"></i>
+                    <i className="ri-delete-bin-fill p-0 text-white"></i>
                   </button>
                 ) : (
                   ""
