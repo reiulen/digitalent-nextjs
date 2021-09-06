@@ -402,6 +402,7 @@ const EditDokumentKerjasama = () => {
                           })}
                     </select>
                   </div>
+                  <div className="col-12 col-sm-3">
                   <button
                     type="button"
                     className="col-12 col-sm-3 btn btn-primary btn-sm"
@@ -409,6 +410,7 @@ const EditDokumentKerjasama = () => {
                   >
                     Batal Ubah Kategory
                   </button>
+                  </div>
                   </div>
                 </div>
               )}
@@ -608,7 +610,7 @@ const EditDokumentKerjasama = () => {
                     onClick={() => showDocument()}
                   >
                     {viewPDF || showDokument
-                      ? "Tutup dokument"
+                      ? "Tutup dokumen"
                       : "Lihat dokumen"}
                   </button>
                   <button

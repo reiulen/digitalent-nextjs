@@ -14,6 +14,9 @@ import Swal from "sweetalert2";
 import IconEye from "../../../assets/icon/Eye";
 import IconDelete from "../../../assets/icon/Delete";
 import IconPencil from "../../../assets/icon/Pencil";
+import IconAdd from "../../../assets/icon/Add";
+import IconClose from "../../../assets/icon/Close";
+import IconFilter from "../../../assets/icon/Filter";
 
 import {
   getSingleValue,
@@ -32,6 +35,8 @@ import {
 import IconArrow from "../../../assets/icon/Arrow";
 import IconCalender from "../../../assets/icon/Calender";
 import LoadingTable from "../../../LoadingTable";
+
+import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/mitra.type";
 
 const DetailDataKerjasama = () => {
   const dispatch = useDispatch();
@@ -54,13 +59,14 @@ const DetailDataKerjasama = () => {
     dispatch(changeValueKerjaSama(valueKerjaSama));
   };
 
-  // const getDataSingleAll =(id)=>{
-  //   if(id){
-  //     dispatch(getSingleValue(id))
-  //     dispatch(fetchListSelectCooperation());
-  //     dispatch(fetchListSelectStatus());
-  //   }
-  // }
+  const resetValueSort = () => {
+    document.getElementById("list-kerjasama").selectedIndex = 0;
+    document.getElementById("list-status").selectedIndex = 0;
+    dispatch({
+      type: RESET_VALUE_SORTIR,
+    });
+  };
+
   const [deleteBar, setDeleteBar] = useState(false);
   const onNewReset = () => {
     router.replace(`/partnership/manajemen-mitra/detail/${router.query.id}`);
@@ -234,7 +240,7 @@ const DetailDataKerjasama = () => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Kerjasama
+              Kerjasama &nbsp;
               {
                 mitraDetailAll?.mitraDetailAll?.data
                   ?.list_cooperation_categories[0]?.partner?.user?.name
@@ -244,139 +250,194 @@ const DetailDataKerjasama = () => {
 
           <div className="card-body pt-0">
             <form onSubmit={handleSubmit}>
-              <div className="table-filter">
-                <div className="row w-100">
-                  <div className="col-12 col-sm-6">
-                    <div className="position-relative overflow-hidden w-100">
-                      <IconSearch
-                        style={{ left: "10" }}
-                        className="left-center-absolute"
-                      />
-                      <input
-                        id="kt_datatable_search_query"
-                        type="text"
-                        className="form-control pl-10"
-                        placeholder="Ketik disini untuk Pencarian..."
-                        id="kt_datatable_search_query"
-                        onChange={(e) => setKeyWord(e.target.value)}
-                      />
-                      <button
-                        type="submit"
-                        className="btn bg-blue-primary text-white right-center-absolute"
-                        style={{
-                          borderTopLeftRadius: "0",
-                          borderBottomLeftRadius: "0",
-                        }}
-                      >
-                        Cari
-                      </button>
-                    </div>
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div className="position-relative overflow-hidden w-100 mt-2">
+                    <IconSearch
+                      style={{ left: "10" }}
+                      className="left-center-absolute"
+                    />
+                    <input
+                      id="kt_datatable_search_query"
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
+                      id="kt_datatable_search_query"
+                      onChange={(e) => setKeyWord(e.target.value)}
+                    />
+                    <button
+                      type="submit"
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                    >
+                      Cari
+                    </button>
                   </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center justify-content-end">
-                      {/* disini sortir modal */}
-                      <button
-                        type="button"
-                        onClick={() => dispatch(exportFileCSVDetail(getId))}
-                        className="btn btn-rounded-full bg-blue-secondary text-white ml-0"
-                        style={{ width: "max-content" }}
+                </div>
+                <div className="col-12 col-sm-6">
+                  <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                    {/* disini sortir modal */}
+                    <button
+                      className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                      style={{ color: "#464646", minWidth: "230px" }}
+                    >
+                      <div className="d-flex align-items-center">
+                        <IconFilter className="mr-3" />
+                        Pilih Filter
+                      </div>
+                      <IconArrow fill="#E4E6EF" width="11" height="11" />
+                    </button>
+                    {/* modal */}
+                    <form
+                      // id="kt_docs_formvalidation_text"
+                      className="form text-left"
+                      // action="#"
+                      // autoComplete="off"
+                      // onSubmit={handleSubmitSearchMany}
+                    >
+                      <div
+                        className="modal fade"
+                        id="exampleModalCenter"
+                        tabIndex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true"
                       >
-                        Export .csv
-                      </button>
-                    </div>
+                        <div
+                          className="modal-dialog modal-dialog-centered"
+                          role="document"
+                        >
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title"
+                                id="exampleModalLongTitle"
+                              >
+                                Filter
+                              </h5>
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                              >
+                                <IconClose />
+                              </button>
+                            </div>
+
+                            <div
+                              className="modal-body text-left"
+                              style={{ height: "400px" }}
+                            >
+                              <div className="fv-row mb-10">
+                                <label className="required fw-bold fs-6 mb-2">
+                                  Kerjasama
+                                </label>
+                                <select
+                                  onChange={(e) =>
+                                    setValueKerjaSama(e.target.value)
+                                  }
+                                  id="list-kerjasama"
+                                  className="form-select form-control"
+                                  aria-label="Select example"
+                                >
+                                  <option value="">Semua</option>
+                                  {mitraDetailAll.stateListKerjaSama.length ===
+                                  0
+                                    ? ""
+                                    : mitraDetailAll.stateListKerjaSama.data.map(
+                                        (items, i) => {
+                                          return (
+                                            <option
+                                              key={i}
+                                              value={
+                                                items.cooperation_categories
+                                              }
+                                            >
+                                              {items.cooperation_categories}
+                                            </option>
+                                          );
+                                        }
+                                      )}
+                                </select>
+                              </div>
+                              <div className="fv-row mb-10">
+                                <label className="required fw-bold fs-6 mb-2">
+                                  Status
+                                </label>
+                                <select
+                                  id="list-status"
+                                  onChange={(e) =>
+                                    setValueStatus(e.target.value)
+                                  }
+                                  className="form-select form-control"
+                                  aria-label="Select example"
+                                >
+                                  <option value="">Semua</option>
+                                  {mitraDetailAll.stateListStatus.length === 0
+                                    ? ""
+                                    : mitraDetailAll.stateListStatus.data.map(
+                                        (items, i) => {
+                                          return (
+                                            <option
+                                              key={i}
+                                              value={items.name_en}
+                                            >
+                                              {items.name}
+                                            </option>
+                                          );
+                                        }
+                                      )}
+                                </select>
+                              </div>
+                            </div>
+                            <div className="modal-footer">
+                              <div className="d-flex justify-content-end align-items-center">
+                                {/* <Link href="/compoenent">
+                                        <a className="btn btn-white">Reset</a>
+                                      </Link> */}
+                                <button
+                                  className="btn btn-white"
+                                  type="button"
+                                  onClick={() => resetValueSort()}
+                                >
+                                  Reset
+                                </button>
+                                <button
+                                  className="btn btn-primary ml-4"
+                                  type="button"
+                                  onClick={(e) => handleSubmitSearchMany(e)}
+                                >
+                                  Terapkan
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                    {/* end modal */}
+
+                    {/* btn export */}
+
+                    <button
+                      type="button"
+                      onClick={() => dispatch(exportFileCSVDetail(getId))}
+                      className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
+                      style={{ width: "max-content" }}
+                    >
+                      Export . xlxs
+                    </button>
                   </div>
                 </div>
               </div>
             </form>
 
-            <div className="table-filter">
-              <form onSubmit={handleSubmitSearchMany}>
-                <div className="row align-items-right">
-                  <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                    <div className="position-relative d-flex align-items-center cursor-pointer">
-                      <select
-                        onChange={(e) => setValueKerjaSama(e.target.value)}
-                        name=""
-                        id=""
-                        className="form-control remove-icon-default cursor-pointer dropdown-lists"
-                      >
-                        <option value="">Kategori Kerjasama</option>
-                        {mitraDetailAll.stateListKerjaSama.length === 0
-                          ? ""
-                          : mitraDetailAll.stateListKerjaSama.data.map(
-                              (items, i) => {
-                                return (
-                                  <option
-                                    key={i}
-                                    value={items.cooperation_categories}
-                                  >
-                                    {items.cooperation_categories}
-                                  </option>
-                                );
-                              }
-                            )}
-                      </select>
-                      <IconCalender
-                        className="right-center-absolute"
-                        style={{ right: "10px" }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                    <div className="position-relative d-flex align-items-center cursor-pointer">
-                      <select
-                        onChange={(e) => setValueStatus(e.target.value)}
-                        name=""
-                        id=""
-                        className="form-control remove-icon-default cursor-pointer dropdown-lists"
-                      >
-                        <option value="">Status</option>
-                        {mitraDetailAll.stateListStatus.length === 0
-                          ? ""
-                          : mitraDetailAll.stateListStatus.data.map(
-                              (items, i) => {
-                                return (
-                                  <option key={i} value={items.name_en}>
-                                    {items.name}
-                                  </option>
-                                );
-                              }
-                            )}
-                      </select>
-                      <IconCalender
-                        className="right-center-absolute"
-                        style={{ right: "10px" }}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-lg-1 col-xl-1 mt-5 mt-lg-5 p-0 mx-2 py-1">
-                    <button
-                      type="submit"
-                      className="btn bg-light-primary text-primary position-relative"
-                      style={{ width: "120px", bottom: "2px" }}
-                    >
-                      Cari
-                    </button>
-                  </div>
-                  <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto">
-                    {/* <a
-                    href="#"
-                    className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
-                  >
-                    Export .csv
-                  </a> */}
-                    {/* {console.log("pages",getId)} */}
-                    {/* <button
-                      type="button"
-                      onClick={() => dispatch(exportFileCSVDetail(getId))}
-                      className="btn btn-primary px-6 font-weight-bold btn-block"
-                    >
-                      Export .csv
-                    </button> */}
-                  </div>
-                </div>
-              </form>
-            </div>
 
             {/* table disini */}
 

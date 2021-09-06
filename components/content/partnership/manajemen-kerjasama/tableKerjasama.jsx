@@ -350,7 +350,7 @@ const Table = () => {
                         </div>
                       </div>
                       <div className="col-12 col-sm-6">
-                        <div className="d-flex flex-wrap align-items-center justify-content-end">
+                        <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                           {/* sorotir by modal */}
                           <button
                             className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
