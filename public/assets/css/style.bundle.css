@@ -25,6 +25,7 @@
   --primary-tint: #E9EEF2;
 
   --neutral:#F2F7FC;
+  --neutral-shade: #D7E1EA;
   /* --primary: #3699FF; */
   --secondary: #4299e1;
   --secondary-shade: #4298E1;
@@ -6454,6 +6455,12 @@ a.badge:hover, a.badge:focus {
   color: #ffffff;
   background-color: #3699FF;
 }
+
+.badge-neutral-shade {
+  color: #ffffff;
+  background-color: #D7E1EA;
+}
+
 a.badge-primary:hover, a.badge-primary:focus {
   color: #ffffff;
   background-color: #037fff;
@@ -8068,6 +8075,10 @@ a.close.disabled {
 
 .bg-neutral{
   background-color: var(--neutral) !important;
+}
+
+.bg-neutral-shade{
+  background-color: var(--neutral-shade) !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
@@ -27900,6 +27911,14 @@ button.bg-white:focus {
 
 .text-primary {
   color: #3699FF !important;
+}
+
+.text-neutral {
+  color:  var(--neutral) !important;
+}
+
+.text-neutral-shade {
+  color:  var(--neutral-shade) !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {
