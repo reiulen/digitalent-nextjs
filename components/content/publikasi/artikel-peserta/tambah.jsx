@@ -10,11 +10,11 @@ import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 
 import {
-  newArtikel,
+  newArtikelPeserta,
   clearErrors,
-} from "../../../../redux/actions/publikasi/artikel.actions";
+} from "../../../../redux/actions/publikasi/artikel-peserta.actions";
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
-import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.type";
+import { NEW_ARTIKEL_PESERTA_RESET } from "../../../../redux/types/publikasi/artikel-peserta.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
@@ -33,7 +33,7 @@ const TambahArtikel = () => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const { loading, error, success } = useSelector((state) => state.newArtikel);
+  const { loading, error, success } = useSelector((state) => state.newArtikelPeserta);
   const {
     loading: allLoading,
     error: allError,
@@ -52,7 +52,7 @@ const TambahArtikel = () => {
     setEditorLoaded(true);
     if (success) {
       router.push({
-        pathname: `/publikasi/artikel`,
+        pathname: `/publikasi/artikel-peserta`,
         query: { success: true },
       });
     }
@@ -66,9 +66,9 @@ const TambahArtikel = () => {
   );
   const [gambarName, setGambarName] = useState (null)
   const [kategori_id, setKategoriId] = useState("");
-  const [users_id, setUserId] = useState(3);
+  const [users_id, setUserId] = useState(8);
   const [tag, setTag] = useState([]);
-  const [publish, setPublish] = useState(false);
+  const [publish, setPublish] = useState(0);
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -117,6 +117,10 @@ const TambahArtikel = () => {
         });
       }
 
+      if (publish === true) {
+        setPublish(1)
+      }
+
       const data = {
         judul_artikel,
         isi_artikel,
@@ -139,14 +143,8 @@ const TambahArtikel = () => {
       })
         .then((result) => {
           if (result.isConfirmed) {
-            // if (success) {
-            //   dispatch({
-            //     type: NEW_ARTIKEL_RESET,
-            //   });
-            // }
 
-            dispatch(newArtikel(data));
-
+            dispatch(newArtikelPeserta(data));
             console.log(data);
           }
       });
@@ -196,7 +194,7 @@ const TambahArtikel = () => {
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header border-0">
               <h3 className="card-title font-weight-bolder text-dark">
-                Tambah Artikel
+                Tambah Artikel Peserta
               </h3>
             </div>
             <div className="card-body">
@@ -419,7 +417,7 @@ const TambahArtikel = () => {
                 <div className="form-group row">
                   <div className="col-sm-2"></div>
                   <div className="col-sm-10 text-right">
-                    <Link href="/publikasi/artikel">
+                    <Link href="/publikasi/artikel-peserta">
                       <a className="btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm">
                         Kembali
                       </a>
