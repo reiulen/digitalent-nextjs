@@ -690,7 +690,7 @@ const Table = () => {
                                   {items.status.name === "aktif" ? (
                                     <div className="d-flex align-items-center">
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary"
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
                                           router.push(
                                             `/partnership/manajemen-kerjasama/view/${items.id}`
@@ -698,10 +698,13 @@ const Table = () => {
                                         }
                                       >
                                          <IconEye width="16" height="16" fill="rgba(255,255,255,1)"/>
+                                         <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
                                       </button>
 
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary mx-3"
+                                        className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                         onClick={() =>
                                           router.push(
                                             `/partnership/manajemen-kerjasama/edit/${items.id}`
@@ -709,13 +712,16 @@ const Table = () => {
                                         }
                                       >
                                         <IconPencil width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
                                       </button>
                                     </div>
                                   ) : (
                                     <div className="d-flex align-items-center">
                                      
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary"
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
                                           router.push(
                                             `/partnership/manajemen-kerjasama/view/${items.id}`
@@ -723,9 +729,12 @@ const Table = () => {
                                         }
                                       >
                                         <IconEye width="16" height="16" fill="rgba(255,255,255,1)"/>
+                                        <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
                                       </button>
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary mx-3"
+                                        className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                         onClick={() =>
                                           router.push(
                                             `/partnership/manajemen-kerjasama/edit/${items.id}`
@@ -733,14 +742,20 @@ const Table = () => {
                                         }
                                       >
                                         <IconPencil width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
                                       </button>
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary"
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
                                           cooperationDelete(items.id)
                                         }
                                       >
                                         <IconDelete width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
                                       </button>{" "}
                                     </div>
                                   )}

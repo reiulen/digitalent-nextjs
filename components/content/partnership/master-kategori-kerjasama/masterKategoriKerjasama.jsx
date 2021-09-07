@@ -279,13 +279,16 @@ const Table = () => {
                                 <td className="text-left align-middle">
                                   <div className="d-flex align-items-center">
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary"
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                     >
                                       <IconEye width="16" height="16" fill="rgba(255,255,255,1)"/>
+                                      <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
                                     </button>
 
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary mx-3"
+                                      className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                       onClick={() =>
                                         router.push(
                                           `/partnership/master-kategori-kerjasama/${cooperation_categorie.id}`
@@ -293,10 +296,13 @@ const Table = () => {
                                       }
                                     >
                                       <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
                                     </button>
 
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary"
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                       onClick={() =>
                                         cooperationDelete(
                                           cooperation_categorie.id
@@ -304,6 +310,9 @@ const Table = () => {
                                       }
                                     >
                                       <IconDelete width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
                                     </button>
                                   </div>
                                 </td>
