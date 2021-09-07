@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { getProvinces } from "../../../../redux/actions/partnership/mitra.actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";

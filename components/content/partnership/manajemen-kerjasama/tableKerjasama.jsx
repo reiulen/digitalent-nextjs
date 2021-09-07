@@ -5,19 +5,11 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 
 import Pagination from "react-js-pagination";
-import DatePicker from "react-datepicker";
-
 import Swal from "sweetalert2";
 import Tables from "../../../Table/Table";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
-import ButtonAction from "../../../ButtonAction";
 import IconSearch from "../../../assets/icon/Search";
-
-import Image from "next/image";
-import { CSVLink } from "react-csv";
-
-import IconCalender from "../../../assets/icon/Calender";
 import IconArrow from "../../../assets/icon/Arrow";
 import IconAdd from "../../../assets/icon/Add";
 import IconClose from "../../../assets/icon/Close";
@@ -45,7 +37,6 @@ import {
   changeStatusList,
   exportFileCSV,
   reloadTable,
-  sortValueReset
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/management_cooporation.type";
@@ -56,13 +47,8 @@ const Table = () => {
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
-  const exportCSV = {
-    width: "77%",
-    marginLeft: "2rem",
-  };
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
-  console.log("valueMitra",valueMitra)
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
   const handleChangeValueSearch = (value) => {
@@ -75,7 +61,6 @@ const Table = () => {
     dispatch(changeValueKerjaSama(valueKerjaSama));
   };
   const resetValueSort = () =>{
-    // dispatch(sortValueReset())
     document.getElementById('list-mitra').selectedIndex = 0
     document.getElementById('list-kerjasama').selectedIndex = 0
     document.getElementById('list-status').selectedIndex = 0
@@ -102,6 +87,7 @@ const Table = () => {
       if (result.value) {
         dispatch(changeStatusList(value, id));
         setIsStatusBar(true);
+        setDeleteBar(false)
       } else {
         dispatch(reloadTable());
       }
@@ -122,6 +108,9 @@ const Table = () => {
       if (result.value) {
         dispatch(deleteCooperation(id));
         setDeleteBar(true);
+        setIsStatusBar(false)
+        router.replace("/partnership/manajemen-kerjasama");
+
       } else {
         dispatch(reloadTable());
       }
@@ -129,6 +118,8 @@ const Table = () => {
   };
   const [isStatusBar, setIsStatusBar] = useState(false);
   const [deleteBar, setDeleteBar] = useState(false);
+  console.log("deleteBar",deleteBar)
+  console.log("isStatusBar",isStatusBar)
   const onNewReset = () => {
     router.replace("/partnership/manajemen-kerjasama");
     setDeleteBar(false);
@@ -155,8 +146,6 @@ const Table = () => {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`
       );
-      // router.push(urlExport.config.url);
-
       setSumWillExpire(data.data.total);
     } catch (error) {
       console.log("object", error);
@@ -573,9 +562,11 @@ const Table = () => {
                       {allMK.m_cooporation.data &&
                       allMK.m_cooporation.data.list_cooperations.length ===
                         0 ? (
-                        <div className="d-flex justify-content-center py-5 ">
-                          <h4>Data tidak ditemukan</h4>
-                        </div>
+                        <tr>
+                          <td colSpan="8" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
                       ) : (
                         allMK.m_cooporation.data &&
                         allMK.m_cooporation.data.list_cooperations.map(
@@ -810,7 +801,6 @@ const Table = () => {
                         Total Data{" "}
                         {allMK.m_cooporation.data &&
                           allMK.m_cooporation.data.total}
-                        {/* {process.env.END_POINT_API_PARTNERSHIP} */}
                       </p>
                     </div>
                   </div>

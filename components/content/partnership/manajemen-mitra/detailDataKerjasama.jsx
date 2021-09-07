@@ -252,7 +252,7 @@ const DetailDataKerjasama = () => {
             <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="position-relative overflow-hidden w-100 mt-2">
+                  <div className="position-relative overflow-hidden w-100 mt-3">
                     <IconSearch
                       style={{ left: "10" }}
                       className="left-center-absolute"
@@ -437,10 +437,9 @@ const DetailDataKerjasama = () => {
               </div>
             </form>
 
-
             {/* table disini */}
 
-            {mitraDetailAll.mitraDetailAll.length === 0 ? (
+            {mitraDetailAll.status === "process" ? (
               <div className="my-12">
                 <LoadingTable />
               </div>
@@ -461,8 +460,16 @@ const DetailDataKerjasama = () => {
                   </tr>
                 }
                 tableBody={
-                  mitraDetailAll.status === "success" ? (
-                    mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map(
+                  mitraDetailAll.mitraDetailAll.data &&
+                  mitraDetailAll.mitraDetailAll.data.list_cooperation_categories
+                    .length === 0 ? (
+                    <tr>
+                      <td colSpan="8" className="text-center">
+                        <h4>Data tidak ditemukan</h4>
+                      </td>
+                    </tr>
+                  ) : (
+                    mitraDetailAll.mitraDetailAll.data && mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map(
                       (items, index) => {
                         return (
                           <tr key={index}>
@@ -643,12 +650,6 @@ const DetailDataKerjasama = () => {
                         );
                       }
                     )
-                  ) : (
-                    <tr>
-                      <td colSpan="8">
-                        <LoadingTable />
-                      </td>
-                    </tr>
                   )
                 }
                 pagination={

@@ -7,18 +7,10 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Tambah = () => {
-  const dispatch = useDispatch();
-  let history = useHistory();
-  const importSwitch = () => import("bootstrap-switch-button-react");
-  const SwitchButton = dynamic(importSwitch, {
-    ssr: false,
-  });
-
   const [valueCreateCooporations, setValueCreateCooporations] = useState([""]);
 
   const router = useRouter();
@@ -48,7 +40,7 @@ const Tambah = () => {
     setValueCreateCooporations([...valueCreateCooporations, ""]);
   };
 
-  const handleSubmit =  (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     Swal.fire({
@@ -61,41 +53,32 @@ const Tambah = () => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then(async (result) => { 
-
-      if(result){
-
-
+    }).then(async (result) => {
+      if (result) {
         let statusPro = status ? 1 : 0;
 
-    let formData = new FormData();
-    formData.append("cooperation_categories", categoryCooporation);
-    formData.append("status", statusPro);
+        let formData = new FormData();
+        formData.append("cooperation_categories", categoryCooporation);
+        formData.append("status", statusPro);
 
-    valueCreateCooporations.forEach((item, i) => {
-      formData.append(`cooperation_form[${i}]`, item);
-    });
-    try {
-      let { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/create`,
-        formData
-      );
+        valueCreateCooporations.forEach((item, i) => {
+          formData.append(`cooperation_form[${i}]`, item);
+        });
+        try {
+          let { data } = await axios.post(
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/create`,
+            formData
+          );
 
-      router.push({
-        pathname: `/partnership/master-kategori-kerjasama`,
-        query: { success: true },
-      });
-    } catch (error) {
-      notify(error.response.data.message);
-    }
-
-
-
-
+          router.push({
+            pathname: `/partnership/master-kategori-kerjasama`,
+            query: { success: true },
+          });
+        } catch (error) {
+          notify(error.response.data.message);
+        }
       }
-    })
-
-    
+    });
   };
 
   const notify = (value) =>
@@ -125,37 +108,34 @@ const Tambah = () => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark" style={{fontSize:"24px"}}>
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
               Tambah Master Kategori Kerjasama
             </h3>
           </div>
           <form>
             <div className="card-body">
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Kategori Kerjasama
                 </label>
-                  <input
-                    required
-                    placeholder="Masukkan Kategori Lembaga"
-                    type="text"
-                    name="category_cooperation"
-                    className="form-control"
-                    onChange={(e) => setCategoryCooporation(e.target.value)}
-                  />
+                <input
+                  required
+                  placeholder="Masukkan Kategori Lembaga"
+                  type="text"
+                  name="category_cooperation"
+                  className="form-control"
+                  onChange={(e) => setCategoryCooporation(e.target.value)}
+                />
               </div>
 
               {/*  */}
               {valueCreateCooporations.map((valueCreateCooporation, index) => {
                 return (
                   <div className="form-group" key={index}>
-                    <label
-                      htmlFor="staticEmail"
-                      className="col-form-label"
-                    >
+                    <label htmlFor="staticEmail" className="col-form-label">
                       {index === 0 ? "Form Kerjasama" : ""}
                     </label>
                     <div className="position-relative">
@@ -179,27 +159,37 @@ const Tambah = () => {
                           className="btn position-absolute"
                           style={{ top: "0", right: "3px" }}
                         >
-                          <svg className="position-relative" style={{bottom:"2px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z" fill="#ADB5BD"/></svg>
+                          <svg
+                            className="position-relative"
+                            style={{ bottom: "2px" }}
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            width="24"
+                            height="24"
+                          >
+                            <path fill="none" d="M0 0h24v24H0z" />
+                            <path
+                              d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"
+                              fill="#ADB5BD"
+                            />
+                          </svg>
                         </button>
                       )}
-                      </div>
+                    </div>
                   </div>
                 );
               })}
 
               {/*  */}
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                ></label>
+                <label htmlFor="staticEmail" className="col-form-label"></label>
 
                 <p
                   className="btn btn-rounded-full bg-blue-primary text-white"
                   style={{
                     backgroundColor: "#40A9FF",
                     color: "#FFFFFF",
-                    width:"max-content"
+                    width: "max-content",
                   }}
                   onClick={() => handleAddInput()}
                 >
@@ -208,70 +198,35 @@ const Tambah = () => {
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Status kerjasama
                 </label>
-                  {/* <SwitchButton
-                    checked={false}
-                    onlabel=" "
-                    onstyle="primary"
-                    offlabel=" "
-                    offstyle="danger"
-                    size="sm"
-                  /> */}
-                  {/* <input
-                  type="checkbox"
-                  checked={status}
-                  onChange={(e) => handleChangeStatus(e)}
-                /> */}
                 <div className="row mt-5">
                   <div className="col-12 d-flex align-items-center">
-                  <label className="switches mr-5">
-                    <input
-                      required
-                      className="checkbox"
-                      checked={status}
-                      type="checkbox"
-                      onChange={(e) => handleChangeStatus(e)}
-                    />
-                    <span
-                      className={`sliders round ${
-                        status ? "text-white" : "pl-2"
-                      }`}
+                    <label className="switches mr-5">
+                      <input
+                        required
+                        className="checkbox"
+                        checked={status}
+                        type="checkbox"
+                        onChange={(e) => handleChangeStatus(e)}
+                      />
+                      <span
+                        className={`sliders round ${
+                          status ? "text-white" : "pl-2"
+                        }`}
+                      >
+                      </span>
+                    </label>
+                    <p
+                      className="position-relative mb-0"
+                      style={{ bottom: "5px" }}
                     >
-                      {/* {status ? "Aktif" : "Tidak aktif"} */}
-                    </span>
-                  </label>
-                  <p className="position-relative mb-0" style={{bottom:"5px"}}>
                       {status ? "Aktif" : "Tidak aktif"}
-                  </p>
-                  </div>
-                  </div>
-              </div>
-
-              {/* <div className="form-group row">
-                <div className="row align-items-right mt-5 ml-auto">
-                  <div className="col-sm mr-4">
-                    <Link href="/partnership/master-kategori-kerjasama">
-                      <a className="btn btn-outline-primary btn-sm mr-3">
-                        Kembali
-                      </a>
-                    </Link>
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-sm"
-                      onClick={(e) => handleSubmit(e)}
-                    >
-                      Simpan
-                    </button>
+                    </p>
                   </div>
                 </div>
-              </div> */}
-
-
+              </div>
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
@@ -280,24 +235,15 @@ const Tambah = () => {
                       Kembali
                     </a>
                   </Link>
-                  {/* <Link href="/partnership/manajemen-kerjasama/submit "> */}
-                  {/* <a className="btn btn-outline-primary mr-2 btn-sm">
-                      Kembali
-                    </a> */}
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    // onClick={(e) => submit(e)}
                     onClick={(e) => handleSubmit(e)}
                   >
                     Simpan
                   </button>
-                  {/* </Link> */}
                 </div>
               </div>
-
-
-
             </div>
           </form>
         </div>

@@ -8,7 +8,7 @@ import LoadingPage from "../../../components/LoadingPage";
 const MasterKategoriKerjasama = dynamic(
   () =>
     import(
-      "../../../components/content/partnership/manajemen-kerjasama/tableKerjasama"
+      "../../../components/content/partnership/master-kategori-kerjasama/masterKategoriKerjasama"
     ),
   { loading: () => <LoadingPage />, ssr: false }
 );
