@@ -177,39 +177,43 @@ const DetailSubstansi = () => {
 
           <div className="card-body">
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <div className="row">
                   <div
-                    className="col title-1 font-weight-bold"
-                    style={{ color: "#80808F" }}
+                    className="col col-lg-3 title-1 font-weight-bold"
+                    style={{ color: "#000000" }}
                   >
                     <p>Akademi</p>
                     <p>Tema</p>
                     <p>Pelatihan</p>
-                    <p>Status</p>
+                    <p>Kategori</p>
                   </div>
                   <div className="col value-1">
-                    <p>FGA</p>
-                    <p>Cloude Computing</p>
-                    <p>-</p>
-                    <p>{subtance.status ? "Publish" : "Draft"}</p>
+                    <p>{subtance.academy.name}</p>
+                    <p>{subtance.theme.name}</p>
+                    <p>{subtance.training.name}</p>
+                    <p>{subtance.category}</p>
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <div className="row">
                   <div
-                    className="col title-1 font-weight-bold"
-                    style={{ color: "#80808F" }}
+                    className="col col-lg-3 title-1 font-weight-bold"
+                    style={{ color: "#000000" }}
                   >
                     <p>Pelaksanaan</p>
                     <p>Jumlah Soal</p>
+                    <p>Passing Grade</p>
                     <p>Durasi Tes</p>
+                    <p>Status</p>
                   </div>
                   <div className="col value-1">
                     <p>1 - 5 Juli 2021</p>
                     <p>{subtance.bank_soal} Soal</p>
+                    <p>{subtance.passing_grade}</p>
                     <p>{subtance.duration} Menit</p>
+                    <p>{subtance.status ? "Publish" : "Draft"}</p>
                   </div>
                 </div>
               </div>
@@ -366,7 +370,7 @@ const DetailSubstansi = () => {
                       <th>Kategori</th>
                       <th>Bobot</th>
                       <th>Status</th>
-                      <th className="text-center">Aksi</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -378,7 +382,7 @@ const DetailSubstansi = () => {
                           return (
                             <tr key={question.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
+                                <span className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
@@ -390,7 +394,7 @@ const DetailSubstansi = () => {
                                 {question.type.name}
                               </td>
                               <td className="align-middle">
-                                {question.type.value}
+                                {question.type.value} Poin
                               </td>
                               <td className="align-middle">
                                 {question.status === true ? (
@@ -403,29 +407,19 @@ const DetailSubstansi = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`edit-soal-substansi?id=${question.id}`}
-                                  title="Edit"
-                                />
-                                <button
-                                  onClick={() => handleDelete(question.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
+                              <td className="align-middle d-flex">
+                                <Link
+                                  href={`edit-soal-substansi?id=${question.id}`}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(question.id)}
+                                >
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>
