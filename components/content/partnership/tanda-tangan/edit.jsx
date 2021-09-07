@@ -222,13 +222,21 @@ const EditTandaTangan = () => {
                 </label>
                 <div className="row">
                   <div className="col-sm-2 ">
-                    <Image
-                      loader={myLoader}
-                      src={`${imgSignature}/partnership/images/signatures/${tandaTangan}`}
-                      width={500}
-                      height={500}
-                      alt="imageSignature"
-                    />
+                    {/* <Image
+                              unoptimized={
+                                process.env.ENVIRONMENT !== "PRODUCTION"
+                              }
+
+                              
+                              src={
+                                process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                                "partnership/images/signatures/" +
+                                tandaTangan
+                              }
+                              width={60}
+                              height={60}
+                              alt="logo"
+                            /> */}
                   </div>
                   <div className="col-sm-12">
                     <div

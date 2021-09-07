@@ -14,7 +14,6 @@ import IconAdd from "../../../assets/icon/Add";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
-import ButtonAction from "../../../ButtonAction";
 import {
   fetchMitra,
   searchByKey,
@@ -310,7 +309,7 @@ const Table = () => {
                           <td className="align-middle text-left">
                             <div className="d-flex align-items-center">
                               <button
-                                className="btn btn-link-action bg-blue-secondary"
+                                className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                 onClick={() =>
                                   router.push(
                                     `/partnership/manajemen-mitra/detail/${item.id}`
@@ -322,10 +321,13 @@ const Table = () => {
                                   height="12"
                                   fill="rgba(255,255,255,1)"
                                 />
+                                <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
                               </button>
 
                               <button
-                                className="btn btn-link-action bg-blue-secondary mx-3"
+                                className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                 onClick={() =>
                                   router.push(
                                     {
@@ -337,13 +339,19 @@ const Table = () => {
                                 }
                               >
                                 <IconPencil />
+                                <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
                               </button>
 
                               <button
-                                className="btn btn-link-action bg-blue-secondary"
+                                className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                 onClick={() => handleDelete(item.id)}
                               >
                                 <IconDelete />
+                                <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
                               </button>
                             </div>
                           </td>
