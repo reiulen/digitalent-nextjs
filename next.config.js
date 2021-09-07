@@ -1,7 +1,12 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ["api.dts.majapahit.id", "dts-publikasi-dev.majapahit.id", "dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com"],
+    domains: [
+      "api.dts.majapahit.id",
+      "dts-publikasi-dev.majapahit.id",
+      "dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com",
+      "dts-partnership-dev.s3.ap-southeast-1.amazonaws.com",
+    ],
   },
   env: {
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
@@ -21,7 +26,7 @@ module.exports = {
     // partnership
     END_POINT_API_PARTNERSHIP: "http://dts-partnership-dev.majapahit.id",
     END_POINT_API_IMAGE_PARTNERSHIP:
-      "http://dts-partnership-dev.majapahit.id/storage/",
+      "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
     END_POINT_TOKEN_API:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImlzcyI6InNuSzEyd3hLQ1hRSzRYdHU2azBLV29QaVN6U1hTUmxNIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Im5hbWEgZHV1ZHUiLCJleHAiOjE2MjcxMjk5Mzd9.f8dRFus2HnsJ22_KDnwvlvJ_k3efz_8bdJ2JCbET8uA",
     END_POINT_KEY_AUTH: "12131231231210923123",

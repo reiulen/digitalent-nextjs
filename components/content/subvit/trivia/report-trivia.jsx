@@ -8,14 +8,9 @@ import Pagination from "react-js-pagination";
 import LoadingTable from "../../../LoadingTable";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
-import ButtonAction from "../../../ButtonAction";
 import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAllSubtanceQuestionBanks,
-  clearErrors,
-} from "/redux/actions/subvit/subtance.actions";
 
 const ReportTrivia = () => {
   const dispatch = useDispatch();
@@ -99,9 +94,9 @@ const ReportTrivia = () => {
       <div className="col-lg-12 col-md-12">
         <div className="row">
           <CardPage
-            background="bg-light-info"
-            icon="orang-tambah-purple.svg"
-            color="#8A50FC"
+            background="bg-primary"
+            icon="new/add-user.svg"
+            color="#FFFFFF"
             value={trivia.data.total_peserta}
             titleValue=""
             title="Total Peserta"
@@ -109,9 +104,9 @@ const ReportTrivia = () => {
             routePublish={() => handlePublish("")}
           />
           <CardPage
-            background="bg-light-success"
-            icon="done-circle.svg"
-            color="#0BB783"
+            background="bg-secondary"
+            icon="new/done-circle.svg"
+            color="#FFFFFF"
             value={trivia.data.sudah_mengerjakan}
             titleValue=""
             title="Sudah Mengerjakan"
@@ -119,9 +114,9 @@ const ReportTrivia = () => {
             routePublish={() => handlePublish("sudah-mengerjakan")}
           />
           <CardPage
-            background="bg-light-warning"
-            icon="book-open.svg"
-            color="#634100"
+            background="bg-success"
+            icon="new/open-book.svg"
+            color="#FFFFFF"
             value={trivia.data.sedang_mengerjakan}
             titleValue=""
             title="Sedang Mengerjakan"
@@ -129,9 +124,9 @@ const ReportTrivia = () => {
             routePublish={() => handlePublish("sedang-mengerjakan")}
           />
           <CardPage
-            background="bg-accent-info"
-            icon="mail-purple.svg"
-            color="#663259"
+            background="bg-warning"
+            icon="new/mail-white.svg"
+            color="#FFFFFF"
             value={trivia.data.belum_mengerjakan}
             titleValue=""
             title="Belum Mengerjakan"
@@ -156,43 +151,44 @@ const ReportTrivia = () => {
               </h3>
               <p className="text-muted">FGA - Cloud Computing</p>
             </div>
-            <div className="col-lg-2 col-xl-2">
-              <button
-                className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block "
-                onClick={handleExportReport}
-              >
-                Export .CSV
-              </button>
-            </div>
             <div className="card-toolbar"></div>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter mb-5">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="input-icon">
+                <div className="col-md-5">
+                  <div className="position-relative overflow-hidden mt-2">
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                      style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      autoComplete="off"
+                      className="form-control pl-10 mt-2"
+                      placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute mt-1"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
+                <div className="col-md-1"></div>
+                <div className="col-md-4"></div>
 
-                <div className="col-lg-2 col-xl-2">
+                <div className="col-md-2">
                   <button
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                    onClick={handleSearch}
+                    className="btn btn-rounded-full bg-blue-secondary text-white mt-2"
+                    type="button"
+                    onClick={handleExportReport}
                   >
-                    Cari
+                    Export
+                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
                   </button>
                 </div>
               </div>

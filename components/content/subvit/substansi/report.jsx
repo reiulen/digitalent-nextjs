@@ -10,6 +10,8 @@ import LoadingTable from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { Modal } from "react-bootstrap";
+
 import {
   getAllSubtanceQuestionBanks,
   clearErrors,
@@ -30,6 +32,7 @@ const ListSubstansi = () => {
   const [pelatihan, setPelatihan] = useState(null);
   const [nilai, setNilai] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   let { page = 1, id } = router.query;
   page = Number(page);
@@ -90,6 +93,63 @@ const ListSubstansi = () => {
     router.push(link);
   };
 
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
+  const getStartAt = (date) => {
+    if (!date) {
+      return "-";
+    }
+    const startAt = new Date(date);
+    var tahun = startAt.getFullYear();
+    var bulan = startAt.getMonth();
+    var tanggal = startAt.getDate();
+
+    switch (bulan) {
+      case 0:
+        bulan = "Januari";
+        break;
+      case 1:
+        bulan = "Februari";
+        break;
+      case 2:
+        bulan = "Maret";
+        break;
+      case 3:
+        bulan = "April";
+        break;
+      case 4:
+        bulan = "Mei";
+        break;
+      case 5:
+        bulan = "Juni";
+        break;
+      case 6:
+        bulan = "Juli";
+        break;
+      case 7:
+        bulan = "Agustus";
+        break;
+      case 8:
+        bulan = "September";
+        break;
+      case 9:
+        bulan = "Oktober";
+        break;
+      case 10:
+        bulan = "November";
+        break;
+      case 11:
+        bulan = "Desember";
+        break;
+    }
+
+    return `${tanggal} ${bulan} ${tahun}`;
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -107,6 +167,7 @@ const ListSubstansi = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -124,7 +185,7 @@ const ListSubstansi = () => {
             background="bg-primary"
             icon="new/add-user.svg"
             color="#FFFFFF"
-            value={subtance.data.total_peserta}
+            value={subtance ? subtance.data.total_peserta : 0}
             titleValue=""
             title="Total Peserta"
             publishedVal=""
@@ -134,7 +195,7 @@ const ListSubstansi = () => {
             background="bg-secondary"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={subtance.data.sudah_mengerjakan}
+            value={subtance ? subtance.data.sudah_mengerjakan : 0}
             titleValue=""
             title="Sudah Mengerjakan"
             publishedVal="sudah-mengerjakan"
@@ -144,7 +205,7 @@ const ListSubstansi = () => {
             background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={subtance.data.sedang_mengerjakan}
+            value={subtance ? subtance.data.sedang_mengerjakan : 0}
             titleValue=""
             title="Sedang Mengerjakan"
             publishedVal="sedang-mengerjakan"
@@ -154,7 +215,7 @@ const ListSubstansi = () => {
             background="bg-warning"
             icon="new/mail-white.svg"
             color="#FFFFFF"
-            value={subtance.data.belum_mengerjakan}
+            value={subtance ? subtance.data.belum_mengerjakan : 0}
             titleValue=""
             title="Belum Mengerjakan"
             publishedVal="belum-mengerjakan"
@@ -164,7 +225,7 @@ const ListSubstansi = () => {
             background="bg-danger"
             icon="new/block-white.svg"
             color="#FFFFFF"
-            value={subtance.data.gagal_test}
+            value={subtance ? subtance.data.gagal_test : 0}
             titleValue=""
             title="Gagal Test"
             publishedVal="gagal-test"
@@ -188,116 +249,61 @@ const ListSubstansi = () => {
               </h3>
               <p className="text-muted">FGA - Cloud Computing</p>
             </div>
-            <div className="col-lg-2 col-xl-2">
-              <button
-                className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
-                type="button"
-                onClick={handleExportReport}
-              >
-                Export .CSV
-              </button>
-            </div>
+            <div className="col-lg-2 col-xl-2"></div>
             <div className="card-toolbar"></div>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="input-icon">
+                <div className="col-md-5">
+                  <div className="position-relative overflow-hidden mt-2">
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                      style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      autoComplete="off"
+                      className="form-control pl-10 mt-2"
+                      placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="col-lg-2 col-xl-2">
-                  <button
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
-                </div>
-              </div>
-
-              <div className="row align-items-center my-5">
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted p-0">
-                      Filter by Pelatihan
-                    </small>
-                    <select className="form-control mb-1">
-                      <option>Semua</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted mt-1 p-0">
-                      Filter by Status
-                    </small>
-                    <select
-                      className="form-control mb-1"
-                      onChange={(e) => setStatus(e.target.value)}
-                      onBlur={(e) => setStatus(e.target.value)}
-                      value={status}
-                    >
-                      <option value="" selected>
-                        Semua
-                      </option>
-                      <option value={1}>Diterima</option>
-                      <option value={0}>Ditolak</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted mt-1 p-0">
-                      Filter by nilai
-                    </small>
-                    <select
-                      className="form-control mb-1"
-                      onChange={(e) => setNilai(e.target.value)}
-                      onBlur={(e) => setNilai(e.target.value)}
-                      value={nilai}
-                    >
-                      <option value="" selected>
-                        Semua
-                      </option>
-                      {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map(
-                        (loop, i) => {
-                          return (
-                            <option key={i} value={loop}>
-                              {loop}
-                            </option>
-                          );
-                        }
-                      )}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="mt-4">
                     <button
-                      className="btn btn-light-primary"
-                      onClick={handleFilter}
+                      className="btn bg-blue-primary text-white right-center-absolute mt-1"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
                     >
-                      Filter
+                      Cari
                     </button>
                   </div>
+                </div>
+                <div className="col-md-1"></div>
+                <div className="col-md-4">
+                  <button
+                    className="btn border d-flex align-items-center justify-content-between mt-2 btn-block"
+                    style={{
+                      color: "#bdbdbd",
+                      float: "right",
+                    }}
+                    onClick={() => setShowModal(true)}
+                  >
+                    <div className="d-flex align-items-center">
+                      <i className="ri-filter-fill mr-3"></i>
+                      Pilih Filter
+                    </div>
+                    <i className="ri-arrow-down-s-line"></i>
+                  </button>
+                </div>
+
+                <div className="col-md-2">
+                  <button
+                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
+                    type="button"
+                    onClick={handleExportReport}
+                  >
+                    Export
+                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -338,23 +344,30 @@ const ListSubstansi = () => {
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 font-weight-bold">
+                                  <b className="my-0 font-weight-bold">
                                     {row.name}
-                                  </p>
+                                  </b>
                                   <p className="my-0">{row.email}</p>
-                                  <p className="my-0">{row.no_telp}</p>
+                                  <p className="my-0">{row.nik}</p>
                                 </div>
                               </td>
                               <td className="align-middle">
-                                <p className="font-weight-bold">
-                                  {row.training.name}
+                                <b className="font-weight-bold">
+                                  {
+                                    ["VSGA", "FGA", "GTA"][
+                                      Math.floor(Math.random() * 3)
+                                    ]
+                                  }
+                                </b>
+                                <p className="">
+                                  {row.training.name || row.theme.name}
                                 </p>
                               </td>
                               <td className="align-middle">{row.score}</td>
                               <td className="align-middle">
                                 <div>
                                   <p className="my-0 font-weight-bold">
-                                    {row.total_workmanship_date}
+                                    {getStartAt(row.total_workmanship_date)}
                                   </p>
                                   <p className="my-0">
                                     {row.total_workmanship_time}
@@ -364,13 +377,13 @@ const ListSubstansi = () => {
                               <td className="align-middle">
                                 <div>
                                   <p className="my-0">
-                                    Benar: {row.jawaban_benar} Jawaban
+                                    Benar: {row.right_answer} Jawaban
                                   </p>
                                   <p className="my-0">
-                                    Salah: {row.jawaban_salah} Jawaban
+                                    Salah: {row.wrong_answer} Jawaban
                                   </p>
                                   <p className="my-0">
-                                    Jumlah: {row.jumlah_soal} Jawaban
+                                    Jumlah: {row.total_questions} Jawaban
                                   </p>
                                 </div>
                               </td>
@@ -458,6 +471,75 @@ const ListSubstansi = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Filter</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group mb-5">
+            <label className="p-0">Pelatihan</label>
+            <select className="form-control">
+              <option>Semua</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Status</label>
+            <select
+              className="form-control mb-1"
+              onChange={(e) => setStatus(e.target.value)}
+              onBlur={(e) => setStatus(e.target.value)}
+              value={status}
+            >
+              <option value="" selected>
+                Semua
+              </option>
+              <option value={1}>Diterima</option>
+              <option value={0}>Ditolak</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className=" p-0">Nilai</label>
+            <select
+              className="form-control mb-1"
+              onChange={(e) => setNilai(e.target.value)}
+              onBlur={(e) => setNilai(e.target.value)}
+              value={nilai}
+            >
+              <option value="" selected>
+                Semua
+              </option>
+              {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map((loop, i) => {
+                return (
+                  <option key={i} value={loop}>
+                    {loop}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-light-ghost-rounded-full mr-2"
+            type="reset"
+          >
+            Reset
+          </button>
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={handleFilter}
+          >
+            Terapkan
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };

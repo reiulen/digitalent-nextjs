@@ -348,7 +348,7 @@ const DetailDokumenKerjasama = () => {
               {showPdf ? (
                 <iframe
                   className="mb-4 border"
-                  src={`http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${pdfFIle}`}
+                  src={`https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`}
                   frameBorder="0"
                   scrolling="auto"
                   height={"500px"}

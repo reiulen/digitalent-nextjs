@@ -501,13 +501,13 @@ const StepTwo = () => {
                   <hr />
                   <div className="buttoon float-right">
                     <button
-                      className="btn btn-light-primary btn-sm mr-2"
+                      className="btn btn-light-ghost-rounded-full mr-2"
                       type="submit"
                     >
                       Simpan & Lanjut
                     </button>
                     <button
-                      className="btn btn-primary btn-sm"
+                      className="btn btn-primary-rounded-full"
                       onClick={saveDraft}
                       type="button"
                     >
