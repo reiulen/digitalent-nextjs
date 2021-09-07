@@ -7,7 +7,7 @@ import LoadingPage from "../../../components/LoadingPage";
 const Edit = dynamic(
   () =>
     import(
-      "../../../components/content/partnership/manajemen-kerjasama/tableKerjasama"
+      "../../../components/content/partnership/master-kategori-kerjasama/edit"
     ),
   { loading: () => <LoadingPage />, ssr: false }
 );
@@ -24,4 +24,4 @@ export default function TambahPage() {
   );
 }
 
-TambahPage.displayName = "TambahPage";
+// TambahPage.displayName = "TambahPage";

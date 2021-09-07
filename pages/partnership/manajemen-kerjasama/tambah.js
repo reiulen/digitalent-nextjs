@@ -23,4 +23,4 @@ export default function TambahPage() {
   );
 }
 
-TambahPage.displayName = "TambahPage";
+// TambahPage.displayName = "TambahPage";

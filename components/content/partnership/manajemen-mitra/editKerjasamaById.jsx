@@ -231,6 +231,27 @@ const EditDokumentKerjasamaById = () => {
     setCooperationID(dataCoopertaion);
   };
 
+  const onChangePeriodeDateStart = (date) => {
+    setPeriodDateStart(moment(date).format("YYYY-MM-DD"));
+    checkPeriod(moment(date).format("YYYY-MM-DD"));
+  };
+
+  const checkPeriod = (dateNow) => {
+    if (periodUnit === "bulan") {
+      let futureMonth = moment(dateNow)
+        .add(parseInt(period), "M")
+        .format("YYYY-MM-DD");
+      setPeriodDateEnd(futureMonth);
+    }
+    // jika tahun
+    else {
+      let futureYear = moment(dateNow)
+        .add(parseInt(period), "y")
+        .format("YYYY-MM-DD");
+      setPeriodDateEnd(futureYear);
+    }
+  };
+
   const changeInstitusi = (value) => {
     setIsntitusiName(value);
     dispatch(setNameLembaga(value));
@@ -258,6 +279,26 @@ const EditDokumentKerjasamaById = () => {
   useEffect(() => {
     dispatch(fetchDataEmail());
   }, [dispatch, allMK.institution_name, allMK.stateListMitra]);
+
+  useEffect(() => {
+    function periodCheck(date) {
+      setPeriodDateStart(moment(date).format("YYYY-MM-DD"));
+      if (periodUnit === "bulan") {
+        let futureMonth = moment(date)
+          .add(parseInt(period), "M")
+          .format("YYYY-MM-DD");
+        setPeriodDateEnd(futureMonth);
+      }
+      // jika tahun
+      else {
+        let futureYear = moment(date)
+          .add(parseInt(period), "y")
+          .format("YYYY-MM-DD");
+        setPeriodDateEnd(futureYear);
+      }
+    }
+    periodCheck();
+  }, [period, date, periodUnit]);
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -322,7 +363,7 @@ const EditDokumentKerjasamaById = () => {
                       <select
                         name=""
                         id=""
-                        className="form-control"
+                        className="form-control mt-3"
                         disabled
                         value={cooperationID.id}
                         // onChange={(e) => setKategoriId(e.target.value)}
@@ -333,7 +374,7 @@ const EditDokumentKerjasamaById = () => {
                     <div className="col-12 col-sm-3">
                     <button
                       type="button"
-                      className="col-12 col-sm-3 btn btn-primary btn-sm  mt-3"
+                      className="w-100 btn btn-primary btn-sm  mt-3"
                       onClick={() => dispatch(fetchListSelectCooperation())}
                     >
                       Ubah Kategory
@@ -355,7 +396,7 @@ const EditDokumentKerjasamaById = () => {
                         }
                         name=""
                         id=""
-                        className="form-control"
+                        className="form-control mt-3"
                       >
                         <option value="">Pilih Kategory Kerjasama</option>
                         {allMK.stateListKerjaSama.length === 0
@@ -372,7 +413,7 @@ const EditDokumentKerjasamaById = () => {
                     <div className="col-12 col-sm-3">
                     <button
                       type="button"
-                      className="col-12 col-sm-3 btn btn-primary btn-sm"
+                      className="w-100 btn btn-primary btn-sm  mt-3"
                       onClick={() => dispatch(cancelChangeCategory())}
                     >
                       Batal Ubah Kategory
@@ -420,9 +461,10 @@ const EditDokumentKerjasamaById = () => {
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         // selected={periodDateStart}
-                        onChange={(date) =>
-                          setPeriodDateStart(moment(date).format("YYYY-MM-DD"))
-                        }
+                        // onChange={(date) =>
+                        //   setPeriodDateStart(moment(date).format("YYYY-MM-DD"))
+                        // }
+                        onChange={(date) => onChangePeriodeDateStart(date)}
                         value={periodDateStart}
                         // selectsEnd
                         // startDate={startDate}
