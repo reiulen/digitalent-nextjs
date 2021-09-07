@@ -562,9 +562,9 @@ const DetailDataKerjasama = () => {
                             </td>
                             <td className="align-middle text-left">
                               {items.status.name === "aktif" ? (
-                                <div>
+                                <div className="d-flex align-items-center">
                                   <button
-                                    className="btn btn-link-action bg-blue-secondary btn-delete"
+                                    className="btn btn-link-action bg-blue-secondary btn-delete mr-2 position-relative"
                                     onClick={() =>
                                       router.push({
                                         pathname: `/partnership/manajemen-mitra/detail/mitra/${items.id}`,
@@ -590,7 +590,7 @@ const DetailDataKerjasama = () => {
                                       })
                                     }
                                   >
-                                    <IconEye
+                                    <IconPencil
                                       width="14"
                                       height="12"
                                       fill="rgba(255,255,255,1)"
@@ -603,7 +603,7 @@ const DetailDataKerjasama = () => {
                               ) : (
                                 <div className="d-flex align-items-center">
                                   <button
-                                    className="btn btn-link-action bg-blue-secondary btn-delete"
+                                    className="btn btn-link-action bg-blue-secondary btn-delete position-relative"
                                     onClick={() =>
                                       router.push({
                                         pathname: `/partnership/manajemen-mitra/detail/mitra/${items.id}`,
