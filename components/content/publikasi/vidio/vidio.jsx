@@ -536,26 +536,35 @@ const Vidio = () => {
 
                                                                 <button
                                                                     onClick={() => handlePreview(row.url_video)} 
-                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5"
+                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
                                                                     data-target="#exampleModalCenter" 
                                                                     data-toggle="modal"
                                                                 >
                                                                     <i class="ri-todo-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Pratinjau
+                                                                    </div>
                                                                 </button>
 
                                                                 <Link
                                                                 href={`/publikasi/video/${row.id}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5">
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
                                                                     <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Ubah
+                                                                    </div>
                                                                 </a>
                                                                 </Link>
 
                                                                 <button
-                                                                className="btn btn-link-action bg-blue-secondary text-white my-5"
-                                                                onClick={() => handleDelete(row.id)}
+                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                    onClick={() => handleDelete(row.id)}
                                                                 >
-                                                                <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                                                    <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Hapus
+                                                                    </div>
                                                                 </button>
 
                                                             </td>

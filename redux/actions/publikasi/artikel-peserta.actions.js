@@ -78,11 +78,11 @@ export const newArtikelPeserta = (artikelPesertaData) => async (dispatch) => {
       //         'apikey': process.env.END_POINT_KEY_AUTH
       //     }
       // }
+
+      let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel`
+    //   let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${role}`
   
-      const { data } = await axios.post(
-        process.env.END_POINT_API_PUBLIKASI + `api/artikel/${artikelPesertaData.role}`,
-        artikelPesertaData
-      );
+      const { data } = await axios.post( link, artikelPesertaData );
   
       dispatch({
         type: NEW_ARTIKEL_PESERTA_SUCCESS,
@@ -96,3 +96,11 @@ export const newArtikelPeserta = (artikelPesertaData) => async (dispatch) => {
       });
     }
 };
+
+// Clear Error
+export const clearErrors = () => async (dispatch) => {
+    dispatch({
+      type: CLEAR_ERRORS,
+    });
+};
+  

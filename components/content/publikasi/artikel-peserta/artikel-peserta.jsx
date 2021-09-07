@@ -238,6 +238,9 @@ const ArtikelPeserta = () => {
     
     return (
         <PageWrapper>
+            {
+                console.log (artikel_peserta)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -444,10 +447,18 @@ const ArtikelPeserta = () => {
                                                                     height={50}
                                                                 />
                                                             </td>
-                                                            <td className='align-middle'>{row.jenis_kategori}</td>
+                                                            <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.judul_artikel}</td>
-                                                            <td className='align-middle'>{row.created_at}</td>
-                                                            <td className='align-middle'>{row.users_id}</td>
+                                                            <td className="align-middle">
+                                                                {artikel_peserta.publish === 1 ? (
+                                                                artikel_peserta.tanggal_publish
+                                                                ) : (
+                                                                <span className="label label-inline label-light-danger font-weight-bold">
+                                                                    Belum dipublish
+                                                                </span>
+                                                                )}
+                                                            </td>
+                                                            <td className='align-middle'>{row.dibuat}</td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
                                                                     <span className="label label-inline label-light-success font-weight-bold">
@@ -465,24 +476,33 @@ const ArtikelPeserta = () => {
                                                                 <Link
                                                                     href={`/publikasi/artikel/preview/${row.id}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5" target="_blank">
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
                                                                     <i className="ri-todo-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Pratinjau
+                                                                    </div> 
                                                                 </a>
                                                                 </Link>
 
                                                                 <Link
                                                                     href={`/publikasi/artikel/${row.id}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5">
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
                                                                     <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Ubah
+                                                                    </div> 
                                                                 </a>
                                                                 </Link>
 
                                                                 <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5"
+                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
                                                                     onClick={() => handleDelete(row.id)}
                                                                 >
                                                                 <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                                                <div className="text-hover-show-hapus">
+                                                                    Hapus
+                                                                </div> 
                                                                 </button>
                                                             
                                                             </td>
