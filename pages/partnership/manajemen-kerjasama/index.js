@@ -23,4 +23,4 @@ export default function KerjaSamaPage() {
   );
 }
 
-KerjaSamaPage.displayName = "KerjaSamaPage";
+// KerjaSamaPage.displayName = "KerjaSamaPage";

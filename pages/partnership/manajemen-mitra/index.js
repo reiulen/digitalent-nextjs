@@ -23,4 +23,4 @@ export default function MitraPage() {
   );
 }
 
-MitraPage.displayName = "MitraPage";
+// MitraPage.displayName = "MitraPage";
