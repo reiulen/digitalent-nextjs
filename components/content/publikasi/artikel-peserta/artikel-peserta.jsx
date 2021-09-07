@@ -476,24 +476,33 @@ const ArtikelPeserta = () => {
                                                                 <Link
                                                                     href={`/publikasi/artikel/preview/${row.id}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5" target="_blank">
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
                                                                     <i className="ri-todo-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Pratinjau
+                                                                    </div> 
                                                                 </a>
                                                                 </Link>
 
                                                                 <Link
                                                                     href={`/publikasi/artikel/${row.id}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5">
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
                                                                     <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Ubah
+                                                                    </div> 
                                                                 </a>
                                                                 </Link>
 
                                                                 <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5"
+                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
                                                                     onClick={() => handleDelete(row.id)}
                                                                 >
                                                                 <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                                                <div className="text-hover-show-hapus">
+                                                                    Hapus
+                                                                </div> 
                                                                 </button>
                                                             
                                                             </td>

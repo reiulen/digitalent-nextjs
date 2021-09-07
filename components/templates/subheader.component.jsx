@@ -22,7 +22,8 @@ const SubHeader = () => {
   useEffect(() => {
     if (router) {
       const linkPath = router.asPath.split("/");
-      linkPath.shift();
+      linkPath.splice(0, 2);
+      // linkPath.shift();
 
       const pathArray = linkPath.map((path, i) => {
         return {
@@ -32,8 +33,6 @@ const SubHeader = () => {
       });
 
       console.log(pathArray);
-
-      // setBreadcrumbs(pathArray.splice(-1));
       setBreadcrumbs(pathArray);
     }
   }, [router]);
