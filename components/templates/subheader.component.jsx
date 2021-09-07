@@ -5,8 +5,7 @@ import Link from "next/link";
 
 const convertBreadcrumb = (string) => {
   return (
-    // "/ " + string.charAt(0).toUpperCase() + string.slice(1).split("?")[0] 
-    string.charAt(0).toUpperCase() + string.slice(1).split("?")[0] + " /"   
+    ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /`
     // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
   );
 };
@@ -46,17 +45,6 @@ const SubHeader = () => {
         <div className="container-fluid d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
           <div className="d-flex align-items-center flex-wrap mr-2 bread-crumb">
             {breadcrumbs.map((breadcrumb, i) => {
-              // {
-              //   console.log(breadcrumb);
-              // }
-
-              {
-                  console.log(convertBreadcrumb(breadcrumb.breadcrumb))
-              }
-
-              {
-                console.log(convertBreadcrumb(breadcrumb.breadcrumb)[breadcrumb.breadcrumb.length + 1]);
-              }
               return (
                 <Link href={breadcrumb.href} key={i}>
                   <a>
@@ -66,28 +54,11 @@ const SubHeader = () => {
                       } */}
 
                       {
-                        (i == (breadcrumbs.length - 1)) && (convertBreadcrumb(breadcrumb.breadcrumb)[breadcrumb.breadcrumb.length + 1]) === "/" ?
-                          (convertBreadcrumb(breadcrumb.breadcrumb)).slice(0, breadcrumb.breadcrumb.length)
+                        (i == (breadcrumbs.length - 1)) ?
+                          (convertBreadcrumb(breadcrumb.breadcrumb)).slice(0, -1)
                         :
                           (convertBreadcrumb(breadcrumb.breadcrumb))
                       } 
-
-                      {/* {
-                        (i == (breadcrumbs.length - 1)) && (convertBreadcrumb(breadcrumb.breadcrumb)[breadcrumb.breadcrumb.length]) === " " ?
-                          (i == (breadcrumbs.length - 1)) && (convertBreadcrumb(breadcrumb.breadcrumb)[breadcrumb.breadcrumb.length]) === "/" ?
-                              (convertBreadcrumb(breadcrumb.breadcrumb)).slice(0, -1)
-
-                            :
-                              
-                              (convertBreadcrumb(breadcrumb.breadcrumb))
-
-                          :
-
-                            (convertBreadcrumb(breadcrumb.breadcrumb))
-                        //   (convertBreadcrumb(breadcrumb.breadcrumb)).slice(0, -1)
-                        // :
-                        //   (convertBreadcrumb(breadcrumb.breadcrumb))
-                      }  */}
                     </p>
                   </a>
                 </Link>

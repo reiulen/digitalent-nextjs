@@ -54,6 +54,7 @@ const DetailDokumenKerjasama = () => {
               data-dismiss="alert"
               aria-label="Close"
               // onClick={onNewReset}
+              
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -115,12 +116,7 @@ const DetailDokumenKerjasama = () => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Kategori kerjasama
                 </label>
-                <select
-                  name=""
-                  id=""
-                  className="form-control"
-                  disabled
-                >
+                <select name="" id="" className="form-control" disabled>
                   <option value="Kategori" selected>
                     {allMK.cooperationById.length === 0
                       ? ""
@@ -285,11 +281,6 @@ const DetailDokumenKerjasama = () => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nomor Perjanjian Lembaga
                 </label>
-                {/* <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nomor Perjanjian Lembaga"
-                  /> */}
                 <input
                   type="text"
                   value={
@@ -306,11 +297,6 @@ const DetailDokumenKerjasama = () => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nomor Perjanjian KemKominfo
                 </label>
-                {/* <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nomor Perjanjian Kemkominfo"
-                  /> */}
                 <input
                   type="text"
                   value={
@@ -363,7 +349,7 @@ const DetailDokumenKerjasama = () => {
               {showPdf ? (
                 <iframe
                   className="mb-4 border"
-                  src={`http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${pdfFIle}`}
+                  src={`https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`}
                   frameBorder="0"
                   scrolling="auto"
                   height={"500px"}
@@ -372,23 +358,6 @@ const DetailDokumenKerjasama = () => {
               ) : (
                 ""
               )}
-              {/* <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Dokumen Penandatangan Virtual
-                </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-sm-10">
-                      <button className="btn btn-primary btn-sm">
-                        Lihat Dokumen
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
 
               {/* start loop */}
 
@@ -421,16 +390,6 @@ const DetailDokumenKerjasama = () => {
                 )
               )}
               {/* loop end loop*/}
-              {/* <div className="form-group">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10">
-                  <Link href="/partnership/manajemen-kerjasama">
-                    <a className="btn btn-outline-primary mr-2 btn-sm">
-                      Kembali
-                    </a>
-                  </Link>
-                </div>
-              </div> */}
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">

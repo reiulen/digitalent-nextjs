@@ -14,7 +14,6 @@ import IconAdd from "../../../assets/icon/Add";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
-import ButtonAction from "../../../ButtonAction";
 import {
   fetchMitra,
   searchByKey,
@@ -189,7 +188,12 @@ const Table = () => {
             </h1>
             <Link href="/partnership/manajemen-mitra/tambah">
               <a className="btn btn-rounded-full bg-blue-primary text-white">
-                <IconAdd className="mr-3" width="16" height="16" fill="rgba(255,255,255,1)" />
+                <IconAdd
+                  className="mr-3"
+                  width="16"
+                  height="16"
+                  fill="rgba(255,255,255,1)"
+                />
                 Tambah Mitra Baru
               </a>
             </Link>
@@ -200,7 +204,7 @@ const Table = () => {
             <form onSubmit={handleSubmit}>
               <div className="row w-100">
                 <div className="col-12 col-sm-6">
-                  <div className="position-relative overflow-hidden w-100 mt-2">
+                  <div className="position-relative overflow-hidden w-100 mt-3">
                     <IconSearch
                       style={{ left: "10" }}
                       className="left-center-absolute"
@@ -210,7 +214,6 @@ const Table = () => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      id="kt_datatable_search_query"
                       onChange={(e) => setKeyWord(e.target.value)}
                     />
                     <button
@@ -242,24 +245,32 @@ const Table = () => {
                 </div>
               </div>
             </form>
-            <Tables
-              tableHead={
-                <tr>
-                  <th className="text-left">No</th>
-                  <th className="text-left align-middle">Logo</th>
-                  <th className="text-left align-middle">Mitra</th>
-                  <th className="text-left align-middle">
-                    Website Website Website
-                  </th>
-                  <th className="text-left align-middle">Kerjasama</th>
-                  <th className="text-left align-middle">Aksi</th>
-                </tr>
-              }
-              tableBody={
-                allMitra.status === "success" ? (
-                  allMitra.mitraAll.length === 0 ? (
-                    <LoadingTable />
+            {allMitra.status === "process" ? (
+              <LoadingTable />
+            ) : (
+              <Tables
+                tableHead={
+                  <tr>
+                    <th className="text-left">No</th>
+                    <th className="text-left align-middle">Logo</th>
+                    <th className="text-left align-middle">Mitra</th>
+                    <th className="text-left align-middle">
+                      Website Website Website
+                    </th>
+                    <th className="text-left align-middle">Kerjasama</th>
+                    <th className="text-left align-middle">Aksi</th>
+                  </tr>
+                }
+                tableBody={
+                  allMitra.mitraAll.data &&
+                  allMitra.mitraAll.data.list_mitras.length === 0 ? (
+                    <tr>
+                      <td colSpan="6" className="text-center">
+                        <h4>Data tidak ditemukan</h4>
+                      </td>
+                    </tr>
                   ) : (
+                    allMitra.mitraAll.data &&
                     allMitra.mitraAll.data.list_mitras.map((item, index) => {
                       return (
                         <tr key={index}>
@@ -298,7 +309,7 @@ const Table = () => {
                           <td className="align-middle text-left">
                             <div className="d-flex align-items-center">
                               <button
-                                className="btn btn-link-action bg-blue-secondary"
+                                className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                 onClick={() =>
                                   router.push(
                                     `/partnership/manajemen-mitra/detail/${item.id}`
@@ -310,10 +321,13 @@ const Table = () => {
                                   height="12"
                                   fill="rgba(255,255,255,1)"
                                 />
+                                <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
                               </button>
 
                               <button
-                                className="btn btn-link-action bg-blue-secondary mx-3"
+                                className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                 onClick={() =>
                                   router.push(
                                     {
@@ -325,13 +339,19 @@ const Table = () => {
                                 }
                               >
                                 <IconPencil />
+                                <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
                               </button>
 
                               <button
-                                className="btn btn-link-action bg-blue-secondary"
+                                className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                 onClick={() => handleDelete(item.id)}
                               >
                                 <IconDelete />
+                                <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
                               </button>
                             </div>
                           </td>
@@ -339,28 +359,26 @@ const Table = () => {
                       );
                     })
                   )
-                ) : (
-                  <LoadingTable />
-                )
-              }
-              pagination={
-                <Pagination
-                  activePage={allMitra.page}
-                  itemsCountPerPage={allMitra?.mitraAll?.data?.perPage}
-                  totalItemsCount={allMitra?.mitraAll?.data?.total}
-                  pageRangeDisplayed={3}
-                  onChange={(page) => dispatch(setPage(page))}
-                  nextPageText={">"}
-                  prevPageText={"<"}
-                  firstPageText={"<<"}
-                  lastPageText={">>"}
-                  itemClass="page-item"
-                  linkClass="page-link"
-                />
-              }
-              onChangeLimit={(e) => dispatch(setLimit(e.target.value))}
-              totalData={allMitra.totalDataMitra}
-            />
+                }
+                pagination={
+                  <Pagination
+                    activePage={allMitra.page}
+                    itemsCountPerPage={allMitra?.mitraAll?.data?.perPage}
+                    totalItemsCount={allMitra?.mitraAll?.data?.total}
+                    pageRangeDisplayed={3}
+                    onChange={(page) => dispatch(setPage(page))}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                }
+                onChangeLimit={(e) => dispatch(setLimit(e.target.value))}
+                totalData={allMitra.totalDataMitra}
+              />
+            )}
           </div>
         </div>
       </div>

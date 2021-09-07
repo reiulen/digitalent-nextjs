@@ -252,7 +252,7 @@ const DetailDataKerjasama = () => {
             <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="position-relative overflow-hidden w-100 mt-2">
+                  <div className="position-relative overflow-hidden w-100 mt-3">
                     <IconSearch
                       style={{ left: "10" }}
                       className="left-center-absolute"
@@ -262,7 +262,6 @@ const DetailDataKerjasama = () => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      id="kt_datatable_search_query"
                       onChange={(e) => setKeyWord(e.target.value)}
                     />
                     <button
@@ -438,10 +437,9 @@ const DetailDataKerjasama = () => {
               </div>
             </form>
 
-
             {/* table disini */}
 
-            {mitraDetailAll.mitraDetailAll.length === 0 ? (
+            {mitraDetailAll.status === "process" ? (
               <div className="my-12">
                 <LoadingTable />
               </div>
@@ -462,8 +460,16 @@ const DetailDataKerjasama = () => {
                   </tr>
                 }
                 tableBody={
-                  mitraDetailAll.status === "success" ? (
-                    mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map(
+                  mitraDetailAll.mitraDetailAll.data &&
+                  mitraDetailAll.mitraDetailAll.data.list_cooperation_categories
+                    .length === 0 ? (
+                    <tr>
+                      <td colSpan="8" className="text-center">
+                        <h4>Data tidak ditemukan</h4>
+                      </td>
+                    </tr>
+                  ) : (
+                    mitraDetailAll.mitraDetailAll.data && mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map(
                       (items, index) => {
                         return (
                           <tr key={index}>
@@ -556,9 +562,9 @@ const DetailDataKerjasama = () => {
                             </td>
                             <td className="align-middle text-left">
                               {items.status.name === "aktif" ? (
-                                <div>
+                                <div className="d-flex align-items-center">
                                   <button
-                                    className="btn btn-link-action bg-blue-secondary btn-delete"
+                                    className="btn btn-link-action bg-blue-secondary btn-delete mr-2 position-relative"
                                     onClick={() =>
                                       router.push({
                                         pathname: `/partnership/manajemen-mitra/detail/mitra/${items.id}`,
@@ -584,7 +590,7 @@ const DetailDataKerjasama = () => {
                                       })
                                     }
                                   >
-                                    <IconEye
+                                    <IconPencil
                                       width="14"
                                       height="12"
                                       fill="rgba(255,255,255,1)"
@@ -597,7 +603,7 @@ const DetailDataKerjasama = () => {
                               ) : (
                                 <div className="d-flex align-items-center">
                                   <button
-                                    className="btn btn-link-action bg-blue-secondary btn-delete"
+                                    className="btn btn-link-action bg-blue-secondary btn-delete position-relative"
                                     onClick={() =>
                                       router.push({
                                         pathname: `/partnership/manajemen-mitra/detail/mitra/${items.id}`,
@@ -644,12 +650,6 @@ const DetailDataKerjasama = () => {
                         );
                       }
                     )
-                  ) : (
-                    <tr>
-                      <td colSpan="8">
-                        <LoadingTable />
-                      </td>
-                    </tr>
                   )
                 }
                 pagination={

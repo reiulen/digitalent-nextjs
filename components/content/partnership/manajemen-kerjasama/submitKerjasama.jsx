@@ -218,7 +218,6 @@ const SubmitKerjasama = () => {
 
   useEffect(() => {
     let datas = JSON.parse(sessionStorage.getItem("dataBefore"));
-    // console.log("datas[0].institution_name", datas[0].institution_name);
 
     setInstituion_name(datas[0].institution_name);
     setDate(datas[0].date);

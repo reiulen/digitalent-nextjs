@@ -23,4 +23,4 @@ export default function detailDokumenKerjasama() {
   );
 }
 
-detailDokumenKerjasama.displayName = "detailDokumenKerjasama";
+// detailDokumenKerjasama.displayName = "detailDokumenKerjasama";

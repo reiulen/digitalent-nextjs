@@ -99,6 +99,57 @@ const ListSubstansi = () => {
     }
   };
 
+  const getStartAt = (date) => {
+    if (!date) {
+      return "-";
+    }
+    const startAt = new Date(date);
+    var tahun = startAt.getFullYear();
+    var bulan = startAt.getMonth();
+    var tanggal = startAt.getDate();
+
+    switch (bulan) {
+      case 0:
+        bulan = "Januari";
+        break;
+      case 1:
+        bulan = "Februari";
+        break;
+      case 2:
+        bulan = "Maret";
+        break;
+      case 3:
+        bulan = "April";
+        break;
+      case 4:
+        bulan = "Mei";
+        break;
+      case 5:
+        bulan = "Juni";
+        break;
+      case 6:
+        bulan = "Juli";
+        break;
+      case 7:
+        bulan = "Agustus";
+        break;
+      case 8:
+        bulan = "September";
+        break;
+      case 9:
+        bulan = "Oktober";
+        break;
+      case 10:
+        bulan = "November";
+        break;
+      case 11:
+        bulan = "Desember";
+        break;
+    }
+
+    return `${tanggal} ${bulan} ${tahun}`;
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -246,7 +297,7 @@ const ListSubstansi = () => {
 
                 <div className="col-md-2">
                   <button
-                    className="btn btn-rounded-full bg-blue-secondary text-white mt-2"
+                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
                     type="button"
                     onClick={handleExportReport}
                   >

@@ -1,23 +1,27 @@
 import React from "react"
-import ContentLoader from "react-content-loader"
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
-const LoadingSkeleton = (props) => (
-  <ContentLoader 
-    speed={2}
-    width={1000}
-    height={1500}
-    viewBox="0 0 1000 1500"
-    backgroundColor="#ffffff"
-    foregroundColor="#ffffff"
-    {...props}
-  >
-    {/* <rect x="50" y="250" rx="0" ry="0" width="1000" height="50" />  */}
-    <rect x="50" y="20" rx="30" ry="30" width="200" height="150" /> 
-    <rect x="300" y="20" rx="30" ry="30" width="200" height="150" /> 
-    <rect x="550" y="20" rx="30" ry="30" width="200" height="150" /> 
-    <rect x="800" y="20" rx="30" ry="30" width="200" height="150" /> 
-    <rect x="50" y="200" rx="0" ry="0" width="1000" height="550" />
-  </ContentLoader>
-)
+const LoadingSkeleton = () => {
+  return (
+    <div className="container">
+      <SkeletonTheme 
+        color="#a1a1a1" 
+        highlightColor="#ffffff"
+      >  
+        <div className="row d-flex justify-content-between">
+          <Skeleton width={200} height={150} />
+          <Skeleton width={200} height={150} />
+          <Skeleton width={200} height={150} />
+          <Skeleton width={200} height={150} />
+        </div>
+
+        <div className="row mt-2">
+          <Skeleton width={990} height={550} />
+        </div>
+        
+      </SkeletonTheme>
+    </div>
+  )
+}
 
 export default LoadingSkeleton

@@ -23,4 +23,4 @@ export default function EditTandaTanganPage() {
   );
 }
 
-EditTandaTanganPage.displayName = "EditTandaTanganPage";
+// EditTandaTanganPage.displayName = "EditTandaTanganPage";
