@@ -226,6 +226,8 @@ const EditTandaTangan = () => {
                               unoptimized={
                                 process.env.ENVIRONMENT !== "PRODUCTION"
                               }
+
+                              
                               src={
                                 process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                                 "partnership/images/signatures/" +
