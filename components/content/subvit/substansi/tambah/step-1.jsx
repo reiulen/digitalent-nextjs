@@ -160,7 +160,10 @@ const StepOne = () => {
           <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
               <div className="form-group mb-2">
-                <label htmlFor="staticEmail" className=" col-form-label ">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold"
+                >
                   Akademi
                 </label>
                 <select
@@ -190,7 +193,10 @@ const StepOne = () => {
               </div>
 
               <div className="form-group mb-2">
-                <label htmlFor="staticEmail" className=" col-form-label ">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold"
+                >
                   Tema
                 </label>
                 <select
@@ -219,7 +225,10 @@ const StepOne = () => {
               </div>
 
               <div className="form-group mb-2">
-                <label htmlFor="staticEmail" className=" col-form-label ">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold"
+                >
                   Pelatihan
                 </label>
                 <select
@@ -239,7 +248,10 @@ const StepOne = () => {
               </div>
 
               <div className="form-group mb-2">
-                <label htmlFor="staticEmail" className=" col-form-label ">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold"
+                >
                   Kategori
                 </label>
                 <select
@@ -268,7 +280,10 @@ const StepOne = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="staticEmail" className=" col-form-label ">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold"
+                >
                   Metode
                 </label>
                 <div className="">

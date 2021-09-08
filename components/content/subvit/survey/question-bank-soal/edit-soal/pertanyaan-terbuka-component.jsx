@@ -6,7 +6,7 @@ const PertanyaanTerbukaComponent = ({ propsStatus, sendPropsStatus }) => {
   return (
     <>
       <div className="form-group row">
-        <div className="col-sm-12 col-md-5">
+        <div className="col-sm-12 col-md-12">
           <span>Status</span>
           <select
             name="training_id"

@@ -316,9 +316,9 @@ const StepTwo = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h2 className="card-title h2 text-dark">
               Soal {subtance.bank_soal + 1}
-            </h3>
+            </h2>
           </div>
           <div className="card-body pt-0">
             <form onSubmit={onSubmit}>

@@ -147,16 +147,20 @@ const StepTwo = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInputPublish step="2"></StepInputPublish>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Publish Soal Cloning
-            </h3>
+            <h2 className="card-title h2 text-dark">Publish Soal Cloning</h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
-                <div className="col-sm-6 col-md-2">
-                  <span>Pelaksanaan dari</span>
+                <div className="col-sm-12 col-md-6">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Pelaksanaan Dari
+                  </p>
                   <DatePicker
+                    wrapperClassName="datepicker"
                     className="form-control"
                     name="start_date"
                     selected={startDate}
@@ -171,9 +175,7 @@ const StepTwo = () => {
                     autoComplete="off"
                     value={startDate}
                   />
-                  <small className="text-muted">
-                    Silahkan Pilih Tanggal Dari
-                  </small>
+
                   {simpleValidator.current.message(
                     "tanggal mulai",
                     startDate,
@@ -182,9 +184,15 @@ const StepTwo = () => {
                   )}
                 </div>
 
-                <div className="col-sm-6 col-md-2">
-                  <span>Sampai</span>
+                <div className="col-sm-12 col-md-6">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Sampai
+                  </p>
                   <DatePicker
+                    wrapperClassName="datepicker"
                     className="form-control"
                     selected={endDate}
                     onChange={(date) => setEndDate(date)}
@@ -199,9 +207,7 @@ const StepTwo = () => {
                     autoComplete="off"
                     value={endDate}
                   />
-                  <small className="text-muted">
-                    Silahkan Pilih Tanggal Sampai
-                  </small>
+
                   {simpleValidator.current.message(
                     "tanggal sampai",
                     endDate,
@@ -212,8 +218,13 @@ const StepTwo = () => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
-                  <span>Jumlah Soal</span>
+                <div className="col-sm-12 col-md-6">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Jumlah Soal
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -234,9 +245,7 @@ const StepTwo = () => {
                       </span>
                     </div>
                   </div>
-                  <small className="text-muted">
-                    Silahkan Input Jumlah Soal
-                  </small>
+
                   {simpleValidator.current.message(
                     "jumlah soal",
                     jumlah_soal,
@@ -244,11 +253,13 @@ const StepTwo = () => {
                     { className: "text-danger" }
                   )}
                 </div>
-              </div>
-
-              <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
-                  <span>Durasi Test</span>
+                <div className="col-sm-12 col-md-6">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Durasi Tes
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -270,9 +281,6 @@ const StepTwo = () => {
                       </span>
                     </div>
                   </div>
-                  <small className="text-muted">
-                    Silahkan Input Durasi Test
-                  </small>
                   {simpleValidator.current.message(
                     "durasi",
                     duration,
@@ -283,8 +291,13 @@ const StepTwo = () => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-12 col-md-8">
-                  <span>Status</span>
+                <div className="col-sm-12 col-md-12">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Status
+                  </p>
                   <select
                     name="status"
                     id=""
@@ -302,9 +315,6 @@ const StepTwo = () => {
                     <option value={true}> Publish </option>
                     <option value={false}> Draft </option>
                   </select>
-                  <span className="text-muted">
-                    Silahkan Pilih Status Publish
-                  </span>
                   {simpleValidator.current.message(
                     "status",
                     status,

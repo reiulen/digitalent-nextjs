@@ -230,7 +230,12 @@ const StepThree = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">
-                  <span>Jumlah Soal</span>
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Jumlah Soal
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -261,7 +266,12 @@ const StepThree = () => {
                 </div>
 
                 <div className="col-sm-12 col-md-6">
-                  <span>Durasi Test</span>
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Durasi Test
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -294,7 +304,12 @@ const StepThree = () => {
 
               <div className="form-group row">
                 <div className="col-md-12">
-                  <span>Passing Grade</span>
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Passing Grade
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -326,7 +341,12 @@ const StepThree = () => {
 
               <div className="form-group row">
                 <div className="col-md-12">
-                  <span>Status</span>
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Status
+                  </p>
                   <select
                     name="status"
                     id=""
@@ -344,9 +364,6 @@ const StepThree = () => {
                     <option value={true}> Publish </option>
                     <option value={false}> Draft </option>
                   </select>
-                  <span className="text-muted">
-                    Silahkan Pilih Status Publish
-                  </span>
                   {simpleValidator.current.message(
                     "status",
                     passing_grade,

@@ -253,10 +253,10 @@ const DetailSubstansi = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header">
-            <h3 className="card-title font-weight-bolder text-dark">
+          <div className="card-header border-0">
+            <h2 className="card-title h2 text-dark">
               Substansi FGA - Cloud Computing
-            </h3>
+            </h2>
             <div className="card-toolbar">
               <Link href={`/subvit/substansi/edit?id=${id}`}>
                 <a className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block">
@@ -376,9 +376,7 @@ const DetailSubstansi = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <div className="card-toolbar">
-              <h3 className="card-title font-weight-bolder text-dark">
-                Bank Soal
-              </h3>
+              <h2 className="card-title h2 text-dark">Bank Soal</h2>
               {/* <label htmlFor=""></label> */}
             </div>
             <div className="card-toolbar">

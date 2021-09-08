@@ -96,6 +96,72 @@ const ListTrivia = () => {
     }
   };
 
+  const getStartAt = (date) => {
+    if (!date) {
+      return "-";
+    }
+    const startAt = new Date(date);
+    var tahun = startAt.getFullYear();
+    var bulan = startAt.getMonth();
+    var tanggal = startAt.getDate();
+
+    switch (bulan) {
+      case 0:
+        bulan = "Januari";
+        break;
+      case 1:
+        bulan = "Februari";
+        break;
+      case 2:
+        bulan = "Maret";
+        break;
+      case 3:
+        bulan = "April";
+        break;
+      case 4:
+        bulan = "Mei";
+        break;
+      case 5:
+        bulan = "Juni";
+        break;
+      case 6:
+        bulan = "Juli";
+        break;
+      case 7:
+        bulan = "Agustus";
+        break;
+      case 8:
+        bulan = "September";
+        break;
+      case 9:
+        bulan = "Oktober";
+        break;
+      case 10:
+        bulan = "November";
+        break;
+      case 11:
+        bulan = "Desember";
+        break;
+    }
+
+    return `${tanggal} ${bulan} ${tahun}`;
+  };
+
+  const isFinish = (date) => {
+    if (!date) {
+      return "Belum Dilaksanakan";
+    }
+    const endAt = new Date(date);
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (endAt > today) {
+      return "Belum Selesai";
+    } else {
+      return "Selesai";
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -212,10 +278,9 @@ const ListTrivia = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>Akademi</th>
-                        <th>Tema</th>
+                        <th>Pelatihan</th>
+                        <th>Pelaksanaan</th>
                         <th>Bank Soal</th>
-                        <th>Pelaksaan</th>
                         <th>Status</th>
                         <th>Aksi</th>
                       </tr>
@@ -231,21 +296,25 @@ const ListTrivia = () => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
+                                <span className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
                               <td className="align-middle">
-                                {row.academy.name}
+                                <b>{row.academy.name}</b>
+                                <p>
+                                  {row.training !== null
+                                    ? row.training.name
+                                    : row.theme.name}
+                                </p>
                               </td>
                               <td className="align-middle">
-                                question
-                                {row.theme.name}
+                                <b>{getStartAt(row.start_at)}</b>
+                                <p>{isFinish(row.end_at)}</p>
                               </td>
                               <td className="align-middle">
                                 {row.bank_soal} Soal
                               </td>
-                              <td className="align-middle">{row.start_at}</td>
                               <td className="align-middle">
                                 {row.status ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
