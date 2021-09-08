@@ -353,6 +353,7 @@ const EditDokumentKerjasamaById = () => {
               </div>
 
               {/* start list kategory */}
+              
               {allMK.stateListKerjaSama.length === 0 ? (
                 <div className="form-group">
                   <label htmlFor="staticEmail" className="col-form-label">
