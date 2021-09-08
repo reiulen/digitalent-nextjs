@@ -5,11 +5,8 @@ import Link from "next/link";
 
 const convertBreadcrumb = (string) => {
   return (
-    string !== "artikel-peserta" ?
-      ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /`
-      // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
-    :
-      ` Artikel-Peserta /`
+    ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /`
+    // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
   );
 };
 

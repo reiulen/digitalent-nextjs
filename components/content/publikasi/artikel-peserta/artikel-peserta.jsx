@@ -12,65 +12,81 @@ import moment from "moment";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
-import LoadingTable from "../../../LoadingTable";
+import LoadingTable from "../../../LoadingTable"
+import IconSearch from "../../../assets/icon/Search";
+import IconArrow from "../../../assets/icon/Arrow";
+import IconAdd from "../../../assets/icon/Add";
+import IconClose from "../../../assets/icon/Close";
+import IconFilter from "../../../assets/icon/Filter";
 import ButtonAction from '../../../ButtonAction'
 
 import { useDispatch, useSelector } from 'react-redux'
-// import { getAllArtikel, deleteArtikel, clearErrors } from '../../../../redux/actions/publikasi/artikel.actions'
+import { deleteArtikelPeserta, clearErrors } from '../../../../redux/actions/publikasi/artikel-peserta.actions'
+import { DELETE_ARTIKEL_PESERTA_RESET } from "../../../../redux/types/publikasi/artikel-peserta.type";
 
 const ArtikelPeserta = () => {
 
     const dispatch = useDispatch()
     const router = useRouter()
 
-    const { loading, error, artikel_peserta } = useSelector(state => state.allArtikelPeserta)
-    // const { error: deleteError, isDeleted } = useSelector(state => state.deleteArtikel)
+    const { loading: allLoading, error, artikel_peserta } = useSelector(state => state.allArtikelPeserta)
+    const {
+        loading: deleteLoading,
+        error: deleteError,
+        isDeleted,
+    } = useSelector((state) => state.deleteArtikelPeserta);
+
     const [search, setSearch] = useState("");
     const [limit, setLimit] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [publishValue, setPublishValue] = useState(null);
 
-    // let loading = false;
+    let loading = false;
     let { page = 1, keyword, success } = router.query;
-    page = Number(page)
+    if (allLoading) {
+        loading = allLoading;
+    } else if (deleteLoading) {
+        loading = deleteLoading;
+    }
+    page = Number(page);
 
-    // useEffect(() => {
-    //     // if (limit) {
-    //     //   router.push(`${router.pathname}?page=1&limit=${limit}`);
-    //     // }
+    useEffect(() => {
+        // if (limit) {
+        //   router.push(`${router.pathname}?page=1&limit=${limit}`);
+        // }
     
-    //     // if (isDeleted) {
-    //     //   Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-    //     //     (result) => {
-    //     //       if (result.isConfirmed) {
-    //     //         window.location.reload();
-    //     //       }
-    //     //     }
-    //     //   );
-    //     //   dispatch({
-    //     //     type: DELETE_ARTIKEL_RESET,
-    //     //   });
-    //     // }
+        if (isDeleted) {
+          Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+            (result) => {
+              if (result.isConfirmed) {
+                window.location.reload();
+              }
+            }
+          );
+          dispatch({
+            type: DELETE_ARTIKEL_PESERTA_RESET,
+          });
+        }
     
-    // }, [limit, isDeleted, publishValue, dispatch, search]);
+    }, [limit, isDeleted, publishValue, dispatch, search]);
 
-    // const handleDelete = (id) => {
-    //     Swal.fire({
-    //       title: "Apakah anda yakin ?",
-    //       text: "Data ini tidak bisa dikembalikan !",
-    //       icon: "warning",
-    //       showCancelButton: true,
-    //       confirmButtonColor: "#3085d6",
-    //       cancelButtonColor: "#d33",
-    //       confirmButtonText: "Ya !",
-    //       cancelButtonText: "Batal",
-    //     }).then((result) => {
-    //       if (result.isConfirmed) {
-    //         dispatch(deleteArtikel(id));
-    //       }
-    //     });
-    // };
+    const handleDelete = (id) => {
+        Swal.fire({
+          title: "Apakah anda yakin ?",
+          text: "Data ini tidak bisa dikembalikan !",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Ya !",
+          cancelButtonText: "Batal",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            dispatch(deleteArtikelPeserta(id));
+          }
+        });
+    };
     
     // const override = css`margin: 0 auto;`;
 
@@ -358,6 +374,186 @@ const ArtikelPeserta = () => {
                                     </div>
                                 </div>
                             </div>
+                            <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                                {/* sorotir by modal */}
+                                <button
+                                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                                    data-toggle="modal"
+                                    data-target="#exampleModalCenter"
+                                    style={{ color: "#464646", minWidth: "230px" }}
+                                >
+                                    <div className="d-flex align-items-center">
+                                    <IconFilter className="mr-3" />
+                                    Pilih Filter
+                                    </div>
+                                    <IconArrow fill="#E4E6EF" width="11" height="11"/>
+                                </button>
+                                {/* modal */}
+                                <form
+                                    // id="kt_docs_formvalidation_text"
+                                    className="form text-left"
+                                    // action="#"
+                                    // autoComplete="off"
+                                    // onSubmit={handleSubmitSearchMany}
+                                >
+                                    <div
+                                    className="modal fade"
+                                    id="exampleModalCenter"
+                                    tabIndex="-1"
+                                    role="dialog"
+                                    aria-labelledby="exampleModalCenterTitle"
+                                    aria-hidden="true"
+                                    >
+                                    <div
+                                        className="modal-dialog modal-dialog-centered"
+                                        role="document"
+                                    >
+                                        <div className="modal-content">
+                                        <div className="modal-header">
+                                            <h5
+                                            className="modal-title"
+                                            id="exampleModalLongTitle"
+                                            >
+                                            Filter
+                                            </h5>
+                                            <button
+                                            type="button"
+                                            className="close"
+                                            data-dismiss="modal"
+                                            aria-label="Close"
+                                            >
+                                            <IconClose />
+                                            </button>
+                                        </div>
+
+                                        <div
+                                            className="modal-body text-left"
+                                            style={{ height: "400px" }}
+                                        >
+                                            <div className="fv-row mb-10">
+                                            <label className="required fw-bold fs-6 mb-2">
+                                                Mitra
+                                            </label>
+
+                                            {/* <select
+                                                onChange={(e) =>
+                                                setValueMitra(e.target.value)
+                                                }
+                                                id="list-mitra"
+                                                className="form-select form-control"
+                                                aria-label="Select example"
+                                            >
+                                                <option value="">Semua</option>
+                                                {allMK.stateListMitra.length === 0
+                                                ? ""
+                                                : allMK.stateListMitra
+                                                    .slice(
+                                                        1,
+                                                        allMK.stateListMitra.length
+                                                    )
+                                                    .map((items, i) => {
+                                                        return (
+                                                        <option
+                                                            key={i}
+                                                            value={items.name}
+                                                        >
+                                                            {items.name}
+                                                        </option>
+                                                        );
+                                                    })}
+                                            </select>
+                                            </div>
+                                            <div className="fv-row mb-10">
+                                            <label className="required fw-bold fs-6 mb-2">
+                                                Kerjasama
+                                            </label>
+                                            <select
+                                                onChange={(e) =>
+                                                setValueKerjaSama(e.target.value)
+                                                }
+                                                id="list-kerjasama"
+                                                className="form-select form-control"
+                                                aria-label="Select example"
+                                            >
+                                                <option value="">Semua</option>
+                                                {allMK.stateListKerjaSama.length === 0
+                                                ? ""
+                                                : allMK.stateListKerjaSama.data.map(
+                                                    (items, i) => {
+                                                        return (
+                                                        <option
+                                                            key={i}
+                                                            value={
+                                                            items.cooperation_categories
+                                                            }
+                                                        >
+                                                            {
+                                                            items.cooperation_categories
+                                                            }
+                                                        </option>
+                                                        );
+                                                    }
+                                                    )}
+                                            </select>
+                                            </div>
+                                            <div className="fv-row mb-10">
+                                            <label className="required fw-bold fs-6 mb-2">
+                                                Status
+                                            </label>
+                                            <select
+                                            id="list-status"
+                                                onChange={(e) =>
+                                                setValueStatus(e.target.value)
+                                                }
+                                                className="form-select form-control"
+                                                aria-label="Select example"
+                                            >
+                                                <option value="">Semua</option>
+                                                {allMK.stateListStatus.length === 0
+                                                ? ""
+                                                : allMK.stateListStatus.data.map(
+                                                    (items, i) => {
+                                                        return (
+                                                        <option
+                                                            key={i}
+                                                            value={items.name_en}
+                                                        >
+                                                            {items.name}
+                                                        </option>
+                                                        );
+                                                    }
+                                                    )}
+                                            </select> */}
+                                            </div>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <div className="d-flex justify-content-end align-items-center">
+                                            {/* <Link href="/compoenent">
+                                                <a className="btn btn-white">Reset</a>
+                                            </Link> */}
+                                            <button
+                                                className="btn btn-white"
+                                                type="button"
+                                                onClick={() => resetValueSort()}
+                                            >
+                                                Reset
+                                            </button>
+                                            <button
+                                                className="btn btn-primary ml-4"
+                                                type="button"
+                                                onClick={(e) => handleSubmitSearchMany(e)}
+                                            >
+                                                Terapkan
+                                            </button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </form>
+                                {/* end modal */}
+
+                            </div>
                             {/* <div className="row align-items-right">
                                 <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
                                     <DatePicker
@@ -416,7 +612,7 @@ const ArtikelPeserta = () => {
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>
-                                                <th>Action</th>
+                                                <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -442,7 +638,7 @@ const ArtikelPeserta = () => {
                                                                 <Image
                                                                     alt={row.judul_artikel}
                                                                     unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                                                                    src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'artikel/' + artikel_peserta.gambar}
+                                                                    src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + row.gambar}
                                                                     width={80}
                                                                     height={50}
                                                                 />
@@ -474,7 +670,7 @@ const ArtikelPeserta = () => {
                                                             <td className='align-middle'>Peserta</td>
                                                             <td className='align-middle d-flex'>
                                                                 <Link
-                                                                    href={`/publikasi/artikel/preview/${row.id}`}
+                                                                    href={`/publikasi/artikel-peserta/preview/${row.id}`}
                                                                 >
                                                                 <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
                                                                     <i className="ri-todo-fill p-0 text-white"></i>
@@ -485,7 +681,7 @@ const ArtikelPeserta = () => {
                                                                 </Link>
 
                                                                 <Link
-                                                                    href={`/publikasi/artikel/${row.id}`}
+                                                                    href={`/publikasi/artikel-peserta/${row.id}`}
                                                                 >
                                                                 <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
                                                                     <i className="ri-pencil-fill p-0 text-white"></i>
