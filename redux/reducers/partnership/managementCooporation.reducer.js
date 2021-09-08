@@ -193,7 +193,9 @@ export const allMCooporationReducerMK = (state = initialState, action) => {
     case CANCEL_CHANGE_CATEGORY:
       return {
         ...state,
-        stateListKerjaSama: [],
+        cooperationActiveSelect: [],
+        singleCooporationSelect: [],
+        idCooporationSelect: "",
       };
     case CANCEL_CHANGE_EMAIL:
       return {
