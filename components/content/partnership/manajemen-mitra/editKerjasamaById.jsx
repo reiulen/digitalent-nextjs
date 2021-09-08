@@ -363,7 +363,7 @@ const EditDokumentKerjasamaById = () => {
                       <select
                         name=""
                         id=""
-                        className="form-control mt-3"
+                        className="form-control mt-2"
                         disabled
                         value={cooperationID.id}
                         // onChange={(e) => setKategoriId(e.target.value)}
@@ -428,7 +428,7 @@ const EditDokumentKerjasamaById = () => {
                   Periode
                 </label>
                 <div className="row">
-                  <div className="col-12 col-sm-9">
+                  <div className="col-12 col-sm-6">
                     <input
                       required
                       type="number"
@@ -437,7 +437,7 @@ const EditDokumentKerjasamaById = () => {
                       value={period}
                     />
                   </div>
-                  <div className="col-12 col-sm-3">
+                  <div className="col-12 col-sm-6">
                     <div className="form-control">Tahun</div>
                   </div>
                 </div>

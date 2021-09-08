@@ -17,6 +17,7 @@ import IconPencil from "../../../assets/icon/Pencil";
 import IconAdd from "../../../assets/icon/Add";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import Select from "react-select";
 
 import {
   getSingleValue,
@@ -44,6 +45,9 @@ const DetailDataKerjasama = () => {
   let { update } = router.query;
   const mitraDetailAll = useSelector((state) => state.allMitra);
 
+  let selectRefKerjasama = null;
+  let selectRefStatus = null;
+
   const [keyWord, setKeyWord] = useState("");
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
@@ -60,8 +64,10 @@ const DetailDataKerjasama = () => {
   };
 
   const resetValueSort = () => {
-    document.getElementById("list-kerjasama").selectedIndex = 0;
-    document.getElementById("list-status").selectedIndex = 0;
+    // document.getElementById("list-kerjasama").selectedIndex = 0;
+    // document.getElementById("list-status").selectedIndex = 0;
+    selectRefKerjasama.select.clearValue();
+    selectRefStatus.select.clearValue();
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
@@ -252,7 +258,7 @@ const DetailDataKerjasama = () => {
             <form onSubmit={handleSubmit}>
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="position-relative overflow-hidden w-100 mt-3">
+                  <div className="position-relative overflow-hidden w-100 mt-5">
                     <IconSearch
                       style={{ left: "10" }}
                       className="left-center-absolute"
@@ -337,7 +343,7 @@ const DetailDataKerjasama = () => {
                                 <label className="required fw-bold fs-6 mb-2">
                                   Kerjasama
                                 </label>
-                                <select
+                                {/* <select
                                   onChange={(e) =>
                                     setValueKerjaSama(e.target.value)
                                   }
@@ -363,13 +369,31 @@ const DetailDataKerjasama = () => {
                                           );
                                         }
                                       )}
-                                </select>
+                                </select> */}
+                                <Select
+                                        ref={(ref) => (selectRefKerjasama = ref)}
+                                        className="basic-single"
+                                        classNamePrefix="select"
+                                        placeholder="Semua"
+                                        defaultValue={mitraDetailAll.stateListKerjaSama[0]}
+                                        isDisabled={false}
+                                        isLoading={false}
+                                        isClearable={false}
+                                        isRtl={false}
+                                        isSearchable={true}
+                                        name="color"
+                                        // onChange={(e) => setValueKerjaSama(e?.cooperation_categories )}
+                                        onChange={(e) =>
+                                    setValueKerjaSama(e?.cooperation_categories)
+                                  }
+                                        options={mitraDetailAll.stateListKerjaSama}
+                                      />
                               </div>
                               <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
                                   Status
                                 </label>
-                                <select
+                                {/* <select
                                   id="list-status"
                                   onChange={(e) =>
                                     setValueStatus(e.target.value)
@@ -392,7 +416,22 @@ const DetailDataKerjasama = () => {
                                           );
                                         }
                                       )}
-                                </select>
+                                </select> */}
+                                <Select
+                                        ref={(ref) => (selectRefStatus = ref)}
+                                        className="basic-single"
+                                        classNamePrefix="select"
+                                        placeholder="Semua"
+                                        defaultValue={mitraDetailAll.stateListStatus[0]}
+                                        isDisabled={false}
+                                        isLoading={false}
+                                        isClearable={false}
+                                        isRtl={false}
+                                        isSearchable={true}
+                                        name="color"
+                                        onChange={(e) => setValueStatus(e?.name_en )}
+                                        options={mitraDetailAll.stateListStatus}
+                                      />
                               </div>
                             </div>
                             <div className="modal-footer">
@@ -515,11 +554,11 @@ const DetailDataKerjasama = () => {
                             </td>
                             <td className="align-middle text-left">
                               {items.status.name === "aktif" ? (
-                                <div className="position-relative">
+                                <div className="position-relative w-max-content">
                                   <select
                                     name=""
                                     id=""
-                                    className="form-control remove-icon-default dropdown-arrows"
+                                    className="form-control remove-icon-default dropdown-arrows-green"
                                     key={index}
                                     onChange={(e) =>
                                       changeListStatus(e.target.value, items.id)
@@ -528,7 +567,7 @@ const DetailDataKerjasama = () => {
                                     <option value="1">
                                       {items.status.name}
                                     </option>
-                                    <option value="2">tidak aktif</option>
+                                    <option value="2">Nonaktif</option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"
@@ -537,19 +576,19 @@ const DetailDataKerjasama = () => {
                                     height="7"
                                   />
                                 </div>
-                              ) : (
-                                <div className="position-relative">
+                              ) : items.status.name === "tidak aktif" ? (
+                                <div className="position-relative w-max-content">
                                   <select
                                     name=""
                                     id=""
-                                    className="form-control remove-icon-default dropdown-arrows"
+                                    className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
                                     key={index}
                                     onChange={(e) =>
                                       changeListStatus(e.target.value, items.id)
                                     }
                                   >
-                                    <option value="2">Tidak aktif</option>
-                                    <option value="1">aktif</option>
+                                    <option value="2">Nonaktif</option>
+                                        <option value="1">Aktif</option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"
@@ -558,7 +597,127 @@ const DetailDataKerjasama = () => {
                                     height="7"
                                   />
                                 </div>
-                              )}
+                              ) : items.status.name === "pengajuan-review" ? (
+                                <div className="position-relative w-max-content">
+                                  <select
+                                  disabled
+                                    name=""
+                                    id=""
+                                    className="form-control remove-icon-default dropdown-arrows-blue"
+                                    // key={index}
+                                    // onChange={(e) =>
+                                    //   changeListStatus(e.target.value, items.id)
+                                    // }
+                                  >
+                                    <option value="">
+                                          Pengajuan - Review
+                                        </option>
+                                  </select>
+                                  <IconArrow
+                                    className="right-center-absolute"
+                                    style={{ right: "10px" }}
+                                    width="7"
+                                    height="7"
+                                  />
+                                </div>
+                              ) : items.status.name === "pengajuan-revisi" ? (
+                                <div className="position-relative w-max-content">
+                                  <select
+                                  disabled
+                                    name=""
+                                    id=""
+                                    className="form-control remove-icon-default dropdown-arrows-yellow"
+                                    // key={index}
+                                    // onChange={(e) =>
+                                    //   changeListStatus(e.target.value, items.id)
+                                    // }
+                                  >
+                                    <option value="">
+                                          Pengajuan - Revisi
+                                        </option>
+                                  </select>
+                                  <IconArrow
+                                    className="right-center-absolute"
+                                    style={{ right: "10px" }}
+                                    width="7"
+                                    height="7"
+                                  />
+                                </div>
+                              ) :  items.status.name === "pengajuan-pembahasan" ? (
+                                <div className="position-relative w-max-content">
+                                  <select
+                                    name=""
+                                    id=""
+                                    className="form-control remove-icon-default dropdown-arrows-blue pr-10"
+                                    // key={index}
+                                    // onChange={(e) =>
+                                    //   changeListStatus(e.target.value, items.id)
+                                    // }
+                                  >
+                                    <option value="6">
+                                          Pengajuan-Selesai
+                                        </option>
+                                        <option value="5">
+                                          Pengajuan-Pembahasan
+                                        </option>
+                                  </select>
+                                  <IconArrow
+                                    className="right-center-absolute"
+                                    style={{ right: "10px" }}
+                                    width="7"
+                                    height="7"
+                                  />
+                                </div>
+                              ):  items.status.name === "pengajuan-selesai" ? (
+                                <div className="position-relative w-max-content">
+                                  <select
+                                  disabled
+                                    name=""
+                                    id=""
+                                    className="form-control remove-icon-default dropdown-arrows-blue"
+                                    // key={index}
+                                    // onChange={(e) =>
+                                    //   changeListStatus(e.target.value, items.id)
+                                    // }
+                                  >
+                                    <option value="">
+                                          Pengajuan - Selesai
+                                        </option>
+                                  </select>
+                                </div>
+                              ):  items.status.name === "pengajuan-document" ? (
+                                <div className="position-relative w-max-content">
+                                  <select
+                                  disabled
+                                    name=""
+                                    id=""
+                                    className="form-control remove-icon-default dropdown-arrows-blue"
+                                    // key={index}
+                                    // onChange={(e) =>
+                                    //   changeListStatus(e.target.value, items.id)
+                                    // }
+                                  >
+                                    <option value="">
+                                          Pengajuan - Dokumen
+                                        </option>
+                                  </select>
+                                </div>
+                              ):  
+                                <div className="position-relative w-max-content">
+                                  <select
+                                  disabled
+                                    name=""
+                                    id=""
+                                    className="form-control remove-icon-default dropdown-arrows-red-primary"
+                                    // key={index}
+                                    // onChange={(e) =>
+                                    //   changeListStatus(e.target.value, items.id)
+                                    // }
+                                  >
+                                    <option value="">Ditolak</option>
+                                  </select>
+                                </div>
+                              }
                             </td>
                             <td className="align-middle text-left">
                               {items.status.name === "aktif" ? (

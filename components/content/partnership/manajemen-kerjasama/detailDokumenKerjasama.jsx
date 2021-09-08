@@ -54,7 +54,6 @@ const DetailDokumenKerjasama = () => {
               data-dismiss="alert"
               aria-label="Close"
               // onClick={onNewReset}
-              
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -130,9 +129,9 @@ const DetailDokumenKerjasama = () => {
                   Periode
                 </label>
                 <div className="row">
-                  <div className="col-12 col-sm-6">
+                  <div className="col-12 col-sm-6 form-date-picker">
                     <DatePicker
-                      className="form-control-sm form-control"
+                      className="form-control w-100"
                       selected={startDate}
                       onChange={(date) => setStartDate(date)}
                       selectsStart
@@ -149,9 +148,9 @@ const DetailDokumenKerjasama = () => {
                       // minDate={addDays(new Date(), 20)}
                     />
                   </div>
-                  <div className="col-12 col-sm-6">
+                  <div className="col-12 col-sm-6 form-date-picker">
                     <DatePicker
-                      className="form-control-sm form-control"
+                      className="form-control"
                       selected={endDate}
                       onChange={(date) => setEndDate(date)}
                       selectsEnd
@@ -231,17 +230,10 @@ const DetailDokumenKerjasama = () => {
                 </div>
               </div>
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Lembaga
                 </label>
-                {/* <select name="" id="" className="form-control">
-                    <option value="Kategori" selected>
-                      Dqlab
-                    </option>
-                    <option value="Kategori">Microsoft</option>
-                    <option value="Kategori">Google</option>
-                  </select> */}
                 <input
                   type="text"
                   value={
@@ -252,19 +244,12 @@ const DetailDokumenKerjasama = () => {
                   readOnly
                   className="form-control"
                 />
-              </div>
+              </div> */}
 
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Email
                 </label>
-                {/* <select name="" id="" className="form-control">
-                    <option value="Kategori" selected>
-                      info@dqlab.co.id
-                    </option>
-                    <option value="Kategori">pengajuan - pembahasan</option>
-                    <option value="Kategori">pengajuan - revisi</option>
-                  </select> */}
                 <input
                   type="text"
                   value={
@@ -275,7 +260,7 @@ const DetailDokumenKerjasama = () => {
                   readOnly
                   className="form-control"
                 />
-              </div>
+              </div> */}
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -309,27 +294,65 @@ const DetailDokumenKerjasama = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal Penandatanganan
-                </label>
-                <div className="row">
-                  <div className="col-12">
-                    <input
-                      readOnly
-                      value={
-                        allMK.cooperationById.length === 0
-                          ? ""
-                          : allMK.cooperationById.data.signing_date
-                      }
-                      type="date"
-                      className="form-control form-control-sm"
-                    />
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className="col-form-label">
+                      Tanggal Penandatanganan
+                    </label>
+                        <input
+                          readOnly
+                          value={
+                            allMK.cooperationById.length === 0
+                              ? ""
+                              : allMK.cooperationById.data.signing_date
+                          }
+                          type="date"
+                          className="form-control"
+                        />
+                  </div>
+                </div>
+                <div className="col-12 col-sm-6">
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className="col-form-label">
+                      Dokumen Kerjasama
+                    </label>
+                        <div className="position-relative overflow-hidden w-100 ">
+                          {/* <IconSearch
+                            style={{ left: "10" }}
+                            className="left-center-absolute"
+                          /> */}
+                          <input
+                            // id="kt_datatable_search_query"
+                            disabled
+                            type="text"
+                            className="form-control"
+                            placeholder={`${pdfFIle}`}
+                            // onChange={(e) =>
+                            //   handleChangeValueSearch(e.target.value)
+                            // }
+                          />
+                          <button
+                            type="submit"
+                            className="btn right-center-absolute"
+                            style={{
+                              borderTopLeftRadius: "0",
+                              borderBottomLeftRadius: "0",
+                              backgroundColor:"#D7E1EA",
+                              color:"#6C6C6C"
+                            }}
+                            onClick={()=>window.open(`https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`)}
+                          >
+                            Buka File
+                          </button>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <div className="form-group">
+              {/* ------------- jangan dihapus !! */}
+
+              {/* <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Dokumen Kerjasama
                 </label>
@@ -357,7 +380,7 @@ const DetailDokumenKerjasama = () => {
                 ></iframe>
               ) : (
                 ""
-              )}
+              )} */}
 
               {/* start loop */}
 
