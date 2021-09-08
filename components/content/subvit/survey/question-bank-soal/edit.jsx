@@ -267,11 +267,7 @@ const EditSoalTrivia = () => {
               <h3 className="card-title font-weight-bolder text-dark">
                 Soal {survey_question_detail.bank_soal + 1}
               </h3>
-              <div className="card-toolbar ml-auto">
-                <button className="btn btn-sm btn-primary px-6 font-weight-bold ">
-                  Simpan
-                </button>
-              </div>
+              <div className="card-toolbar ml-auto"></div>
             </div>
 
             <div className="card-body pt-0">
@@ -317,8 +313,8 @@ const EditSoalTrivia = () => {
                 </div>
               </div>
 
-              <div>Jenis Pertanyaan</div>
-              <div className="form-group row mt-4 ml-1 mb-3">
+              <div className="font-weight-bold mt-2">Jenis Pertanyaan</div>
+              <div className="form-group row mt-4 mb-3">
                 <div className="col-sm-12 col-md-8">
                   <div className="form-check form-check-inline">
                     <input
@@ -378,25 +374,22 @@ const EditSoalTrivia = () => {
                   </div>
                 </div>
               </div>
-              <div className="">
-                <span className="text-muted">
-                  Silahkan Pilih Metode Edit Survey
-                </span>
-              </div>
 
               {handleMethodeInput()}
 
-              <div className="col-md-10 pb-0 mb-0">
-                <hr />
-              </div>
-
-              <div className="button-back">
+              <div className="button-back float-right p-5">
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="btn btn-sm btn-light-danger font-weight-bold"
+                  className="btn btn-light-ghost-rounded-full mr-2"
                 >
                   Kembali
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary-rounded-full text-white"
+                >
+                  Simpan
                 </button>
               </div>
             </div>

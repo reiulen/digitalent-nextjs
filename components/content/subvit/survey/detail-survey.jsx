@@ -139,10 +139,10 @@ const DetailSurvey = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header">
-            <h3 className="card-title font-weight-bolder text-dark">
+          <div className="card-header border-0">
+            <h2 className="card-title h2 text-dark">
               Survey FGA - Cloud Computing
-            </h3>
+            </h2>
             <div className="card-toolbar">
               <Link href={`/subvit/survey/edit?id=${id}`}>
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
@@ -155,7 +155,7 @@ const DetailSurvey = () => {
 
           <div className="card-body">
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-5">
                 <div className="row">
                   <div
                     className="col title-1 font-weight-bold"
@@ -169,12 +169,12 @@ const DetailSurvey = () => {
                   <div className="col value-1">
                     <p>{survey.academy.name}</p>
                     <p>{survey.theme.name}</p>
-                    {/* <p>{survey.training.name}</p> */}
+                    <p>{survey.training.name}</p>
                     <p>{survey.status ? "Publish" : "Draft"}</p>
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-5">
                 <div className="row">
                   <div
                     className="col title-1 font-weight-bold"
@@ -200,10 +200,8 @@ const DetailSurvey = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <div className="card-toolbar">
-              <h3 className="card-title font-weight-bolder text-dark">
-                Bank Soal
-              </h3>
-              {/* <label htmlFor=""></label> */}
+              <h2 className="card-title h2 text-dark">Bank Soal</h2>
+              {/* <span>200 Bank Soal | 150 Ingatan | 50 Analitik</span> */}
             </div>
             <div className="card-toolbar">
               <a
@@ -272,11 +270,13 @@ const DetailSurvey = () => {
                           return (
                             <tr key={question.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
+                                <span className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
-                              <td className="align-middle">CC{question.id}</td>
+                              <td className="align-middle font-weight-bold">
+                                CC{question.id}
+                              </td>
                               <td className="align-middle">
                                 {question.question}
                               </td>
@@ -286,7 +286,7 @@ const DetailSurvey = () => {
                                     Publish
                                   </span>
                                 ) : (
-                                  <span className="label label-inline label-light-danger font-weight-bold">
+                                  <span className="label label-inline label-light-warning font-weight-bold">
                                     Draft
                                   </span>
                                 )}

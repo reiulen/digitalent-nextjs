@@ -138,10 +138,10 @@ const DetailTrivia = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header">
-            <h3 className="card-title font-weight-bolder text-dark">
+          <div className="card-header border-0">
+            <h2 className="card-title h2 text-dark">
               Substansi FGA - Cloud Computing
-            </h3>
+            </h2>
             <div className="card-toolbar">
               <Link href={`/subvit/trivia/edit?id=${id}`}>
                 <a className="btn btn-primary-rounded-full px-7 font-weight-bold btn-block ">
@@ -154,7 +154,7 @@ const DetailTrivia = () => {
 
           <div className="card-body">
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-5">
                 <div className="row">
                   <div
                     className="col title-1 font-weight-bold"
@@ -163,17 +163,17 @@ const DetailTrivia = () => {
                     <p>Akademi</p>
                     <p>Tema</p>
                     <p>Pelatihan</p>
-                    <p>Status</p>
                   </div>
                   <div className="col value-1">
-                    <p>FGA</p>
-                    <p>Cloude Computing</p>
-                    <p>-</p>
-                    <p>Publish</p>
+                    <p>{trivia.academy.name}</p>
+                    <p>{trivia.theme.name}</p>
+                    <p>
+                      {trivia.training != null ? trivia.training.name : "-"}
+                    </p>
                   </div>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-5">
                 <div className="row">
                   <div
                     className="col title-1 font-weight-bold"
@@ -182,11 +182,13 @@ const DetailTrivia = () => {
                     <p>Pelaksanaan</p>
                     <p>Jumlah Soal</p>
                     <p>Durasi Tes</p>
+                    <p>Status</p>
                   </div>
                   <div className="col value-1">
                     <p>1 - 5 Juli 2021</p>
-                    <p>40 Soal</p>
-                    <p>60 Menit</p>
+                    <p>{trivia.questions_to_share} Soal</p>
+                    <p>{trivia.duration} Menit</p>
+                    <p>{trivia.status ? "Publish" : "Daft"}</p>
                   </div>
                 </div>
               </div>
@@ -199,9 +201,7 @@ const DetailTrivia = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <div className="card-toolbar">
-              <h3 className="card-title font-weight-bolder text-dark">
-                Bank Soal
-              </h3>
+              <h2 className="card-title h2 text-dark">Bank Soal</h2>
               {/* <label htmlFor=""></label> */}
             </div>
             <div className="card-toolbar">
@@ -271,7 +271,7 @@ const DetailTrivia = () => {
                           return (
                             <tr key={question.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
+                                <span className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>

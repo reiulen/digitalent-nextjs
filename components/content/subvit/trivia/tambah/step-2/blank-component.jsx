@@ -56,20 +56,10 @@ const BlankComponent = ({ props_answer, props_duration }) => {
   return (
     <>
       <div className="form-group row mt-5">
-        <div className="col-md-1 col-sm-12">
-          <p>Nilai</p>
-        </div>
-        <div className="col-md-3 col-sm-12">
-          <p>Tipe Jawaban</p>
-        </div>
-        <div className="col-md-8 col-sm-12">
-          <p>Jawaban</p>
-        </div>
-
         {answer.map((x, i) => {
           return (
             <>
-              <div className="col-sm-12 col-md-1">
+              {/* <div className="col-sm-12 col-md-1">
                 <input
                   type="number"
                   className="form-control"
@@ -79,8 +69,14 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                   autoComplete="off"
                 />
                 <span className="text-muted">Isi Nilai</span>
-              </div>
-              <div className="col-sm-12 col-md-3">
+              </div> */}
+              <div className="col-sm-12 col-md-4">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold pb-0"
+                >
+                  Pilih Tipe
+                </label>
                 <select
                   name="type"
                   className="form-control"
@@ -95,9 +91,14 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                   <option value="Mengandung">Mengandung</option>
                   <option value="Sama Dengan">Sama Dengan</option>
                 </select>
-                <span className="text-muted">Silahkan Pilihan Tipe</span>
               </div>
               <div className="col-sm-12 col-md-4">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold pb-0"
+                >
+                  Jawaban {x.key}
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -107,13 +108,28 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                   onChange={(e) => handleInputChange(e, i)}
                   autoComplete="off"
                 />
-                <span className="text-muted">Silahkan Pilihan {x.key}</span>
               </div>
 
-              <div className="col-sm-12 col-md-1">
+              <div className="col-sm-12 col-md-4 d-flex align-items-end">
+                <div className="form-group col-md-3 mb-0">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Nilai
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control pb-0 my-0"
+                    name="value"
+                    value={x.value}
+                    onChange={(e) => handleInputChange(e, i)}
+                    autoComplete="off"
+                  />
+                </div>
                 {answer.length !== 1 && x.key !== "A" ? (
                   <button
-                    className="btn btn-link-action bg-danger text-white"
+                    className="btn btn-link-action bg-danger text-white ml-2 mt-2"
                     type="button"
                     onClick={() => handleRemoveClick(i)}
                   >
@@ -123,7 +139,6 @@ const BlankComponent = ({ props_answer, props_duration }) => {
                   ""
                 )}
               </div>
-              <div className="col-sm-12 col-md-3"></div>
             </>
           );
         })}
@@ -145,9 +160,14 @@ const BlankComponent = ({ props_answer, props_duration }) => {
         </div>
       </div>
 
-      <div className="form-group row">
-        <div className="col-sm-6 col-md-3">
-          <p>Durasi Soal</p>
+      <div className="form-group">
+        <div className="col-sm-12 col-md-12">
+          <label
+            htmlFor="staticEmail"
+            className=" col-form-label font-weight-bold pb-0"
+          >
+            Durasi Soal
+          </label>
           <div className="input-group">
             <input
               type="number"
@@ -169,7 +189,6 @@ const BlankComponent = ({ props_answer, props_duration }) => {
               </span>
             </div>
           </div>
-          <span className="text-muted">Silahkan input durasi soal</span>
         </div>
       </div>
     </>

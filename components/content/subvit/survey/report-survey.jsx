@@ -253,9 +253,9 @@ const ReportSurvey = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>Peserta Test</th>
+                        <th>Nama Peserta</th>
                         <th>Pelatihan</th>
-                        <th>Total Pengerjaan</th>
+                        <th>Pelaksanaan</th>
                         <th>Jawaban</th>
                         <th>Status</th>
                       </tr>
@@ -273,13 +273,13 @@ const ReportSurvey = () => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <p className="badge badge-secondary text-muted">
+                                <p className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </p>
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 font-weight-bold">
+                                  <p className="my-0 font-weight-bold h6">
                                     {row.name}
                                   </p>
                                   <p className="my-0">{row.email}</p>
@@ -287,13 +287,16 @@ const ReportSurvey = () => {
                                 </div>
                               </td>
                               <td className="align-middle">
-                                <p className="font-weight-bold">
-                                  {row.training.name}
-                                </p>
+                                <div className="">
+                                  {/* <p className="font-weight-bold my-0 h6">
+                                    {row.training.theme.academy.name}
+                                  </p> */}
+                                  <p className="my-0">{row.training.name}</p>
+                                </div>
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 font-weight-bold">
+                                  <p className="my-0 font-weight-bold h6">
                                     {row.total_workmanship_date}
                                   </p>
                                   <p className="my-0">
