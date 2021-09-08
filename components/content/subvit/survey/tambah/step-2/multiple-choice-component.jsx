@@ -55,18 +55,16 @@ const MultipleChoiceComponent = ({ props_answer }) => {
   return (
     <>
       <div className="form-group row mt-5">
-        <div className="col-4">
-          <p>Jawaban</p>
-        </div>
-        <div className="col-4">
-          <p>Input Gambar (Opsional)</p>
-        </div>
-        <div className="col-4"></div>
-
         {answer.map((x, i) => {
           return (
             <>
-              <div className="col-sm-12 col-md-4">
+              <div className="col-sm-12 col-md-5">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold"
+                >
+                  Jawaban {x.key}
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -76,9 +74,14 @@ const MultipleChoiceComponent = ({ props_answer }) => {
                   onChange={(e) => handleInputChange(e, i)}
                   autoComplete="off"
                 />
-                <span className="text-muted">Silahkan Pilihan {x.key}</span>
               </div>
-              <div className="col-sm-12 col-md-3">
+              <div className="col-sm-12 col-md-6">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold"
+                >
+                  Input Gambar (Optional)
+                </label>
                 <div className="custom-file">
                   <input
                     type="file"
@@ -91,9 +94,8 @@ const MultipleChoiceComponent = ({ props_answer }) => {
                     Choose file
                   </label>
                 </div>
-                <span className="text-muted">Input Gambar (Opsional)</span>
               </div>
-              <div className="col-sm-12 col-md-1">
+              <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
                 {answer.length !== 1 && x.key !== "A" ? (
                   <button
                     className="btn btn-link-action bg-danger text-white"
@@ -106,7 +108,6 @@ const MultipleChoiceComponent = ({ props_answer }) => {
                   ""
                 )}
               </div>
-              <div className="col-md-4 col-sm-12"></div>
             </>
           );
         })}

@@ -316,30 +316,40 @@ const StepTwo = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h2 className="card-title h2 text-dark">
               Soal {subtance.bank_soal + 1}
-            </h3>
+            </h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
-              <div className="form-group row">
-                <div className="col-sm-12 col-md-8">
-                  <span>Pertanyaan</span>
+              <div className="form-group mb-2 row">
+                <div className=" col-md-12">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold"
+                  >
+                    Pertanyaan
+                  </label>
                   <input
                     type="text"
                     className="form-control"
+                    placeholder="Isi Pertanyaan"
                     value={question}
                     onChange={(e) => setSoal(e.target.value)}
                     autoComplete="off"
                   />
-                  <span className="text-muted">Silahkan Input Pertanyaan</span>
                 </div>
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-12 col-md-8">
+                <div className=" col-md-12">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold"
+                  >
+                    Gambar Pertanyaan (Optional)
+                  </label>
                   <div className="custom-file">
-                    <span>Gambar Pertanyaan (Opsional)</span>
                     <input
                       type="file"
                       className="custom-file-input"
@@ -351,39 +361,40 @@ const StepTwo = () => {
                       Choose file
                     </label>
                   </div>
-                  <span className="text-muted">Silahkan Input Pertanyaan</span>
+                  <span className="text-muted">
+                    (Maksimal ukuran file 5 mb)
+                  </span>
                 </div>
               </div>
 
               <div className="form-group row">
-                <div className="col-4">
-                  <p>Jawaban</p>
-                </div>
-                <div className="col-4">
-                  <p>Input Gambar (Opsional)</p>
-                </div>
-                <div className="col-4">
-                  <p>Kunci Jawaban Yang Benar</p>
-                </div>
-
                 {answer.map((x, i) => {
                   return (
                     <>
                       <div className="col-sm-12 col-md-4">
+                        <label
+                          htmlFor="staticEmail"
+                          className=" col-form-label font-weight-bold"
+                        >
+                          Jawaban {x.key}
+                        </label>
                         <input
                           type="text"
                           className="form-control"
                           name="option"
                           value={x.option}
-                          placeholder={x.key}
+                          placeholder={`Isi Jawaban ` + x.key}
                           onChange={(e) => handleInputChange(e, i)}
                           autoComplete="off"
                         />
-                        <span className="text-muted">
-                          Silahkan Pilihan {x.key}
-                        </span>
                       </div>
-                      <div className="col-sm-12 col-md-3">
+                      <div className="col-sm-12 col-md-4">
+                        <label
+                          htmlFor="staticEmail"
+                          className=" col-form-label font-weight-bold"
+                        >
+                          Input Gambar (Optional)
+                        </label>
                         <div className="custom-file">
                           <input
                             type="file"
@@ -399,11 +410,8 @@ const StepTwo = () => {
                             Choose file
                           </label>
                         </div>
-                        <span className="text-muted">
-                          Input Gambar (Opsional)
-                        </span>
                       </div>
-                      <div className="col-sm-12 col-md-1 pr-0 mr-0 justify-content-center">
+                      <div className="col-sm-12 col-md-4 pr-0 mr-0 d-flex align-items-end mt-2">
                         {answer.length !== 1 && x.key !== "A" ? (
                           <button
                             className="btn btn-link-action bg-danger text-white"
@@ -413,25 +421,34 @@ const StepTwo = () => {
                             <i className="ri-delete-bin-fill p-0 text-white"></i>
                           </button>
                         ) : (
+                          <button
+                            className="btn btn-link-action bg-danger text-white invisible"
+                            type="button"
+                          >
+                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                          </button>
+                        )}
+                        <div className="ml-4">
+                          <SwitchButton
+                            checked={x.is_right}
+                            onlabel=" "
+                            onstyle="primary"
+                            offlabel=" "
+                            offstyle="secondary"
+                            size="sm"
+                            width={20}
+                            height={10}
+                            onChange={(checked) => handleAnswer(checked, i)}
+                          />
+                        </div>
+                        {x.is_right ? (
+                          <span className="ml-2">Pilihan Kunci yang benar</span>
+                        ) : (
                           ""
                         )}
                       </div>
-                      <div className="col-sm-12 col-md-4">
-                        <SwitchButton
-                          checked={x.is_right}
-                          onlabel=" "
-                          onstyle="primary"
-                          offlabel=" "
-                          offstyle="secondary"
-                          size="sm"
-                          width={20}
-                          height={10}
-                          onChange={(checked) => handleAnswer(checked, i)}
-                        />
-                        <span className="text-muted">
-                          Silahkan pilih kunci jawaban yang benar
-                        </span>
-                      </div>
+                      {/* <div className="col-sm-12 col-md-4 d-flex align-items-end">
+                      </div> */}
                     </>
                   );
                 })}
@@ -455,7 +472,12 @@ const StepTwo = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 col-md-8">
-                  <span>Tipe Soal</span>
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold"
+                  >
+                    Tipe Soal
+                  </label>
                   <select
                     name="training_id"
                     id=""
@@ -479,7 +501,6 @@ const StepTwo = () => {
                       <option disabled>Tipe soal masih kosong</option>
                     )}
                   </select>
-                  <span className="text-muted">Silahkan Pilih Tipe Soal</span>
                 </div>
               </div>
 

@@ -85,7 +85,7 @@ const CheckboxComponent = ({
                   ) : (
                     ""
                   )}
-                  <div className="col-md-8 pt-2">
+                  <div className="col-md-7 pt-2">
                     <input
                       type="text"
                       name="option"
@@ -108,9 +108,9 @@ const CheckboxComponent = ({
                       </label>
                     </div>
                   </div>
-                  <div className="col-md-3 d-flex justify-content-start my-auto">
-                    <div className="col-md-4 mb-5 pr-0">
-                      <span className="text-muted">Nilai</span>
+                  <div className="col-md-3 d-flex align-items-end mb-3">
+                    <div className="col-md-4 mb-0">
+                      <span className="font-weight-bold">Nilai</span>
                       <input
                         type="number"
                         min={0}
@@ -122,24 +122,19 @@ const CheckboxComponent = ({
                       />
                     </div>
                     <button
-                      className="btn pt-5"
+                      className="btn btn-link-action bg-danger text-white"
                       type="button"
                       onClick={() => handleRemoveClick(i)}
                     >
-                      <Image
-                        alt="button-action"
-                        src="/assets/icon/trash-red.svg"
-                        width={20}
-                        height={30}
-                      />
+                      <i className="ri-delete-bin-fill p-0 text-white"></i>
                     </button>
-                    <div className="" style={{ marginTop: "23px" }}>
+                    <div className="ml-3">
                       <SwitchButton
                         checked={row.is_right}
                         onlabel=" "
                         onstyle="primary"
                         offlabel=" "
-                        offstyle="danger"
+                        offstyle="secondary"
                         size="sm"
                         width={10}
                         height={10}
@@ -157,19 +152,19 @@ const CheckboxComponent = ({
         <div className="button-add my-4">
           <button
             type="button"
-            className="btn btn-sm btn-light-success font-weight-bold"
+            className="btn btn-rounded-full bg-blue-secondary text-white btn-sm"
             onClick={() => handleAddClick()}
           >
-            Tambah Jawaban
+            <i className="ri-add-fill text-white"></i> Tambah Jawaban
           </button>
         </div>
       ) : (
         ""
       )}
 
-      <div className="form-group row">
-        <div className="col-sm-12 col-md-4">
-          <span>Durasi (Detik)</span>
+      <div className="form-group">
+        <div className="col-sm-12 col-md-12">
+          <span className="font-weight-bold">Durasi (Detik)</span>
           <input
             type="number"
             min={0}
@@ -180,10 +175,9 @@ const CheckboxComponent = ({
             }}
             className="form-control"
           />
-          <span className="text-muted">Silahkan Isi Durasi</span>
         </div>
-        <div className="col-sm-12 col-md-4">
-          <span>Status</span>
+        <div className="col-sm-12 col-md-12 mt-3">
+          <span className="font-weight-bold">Status</span>
           <select
             name="training_id"
             className="form-control"
@@ -203,7 +197,6 @@ const CheckboxComponent = ({
             <option value={1}>Publish</option>
             <option value={0}>Draft</option>
           </select>
-          <span className="text-muted">Silahkan Pilih Status</span>
         </div>
       </div>
     </>

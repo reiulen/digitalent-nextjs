@@ -77,51 +77,38 @@ const CheckboxComponent = ({
 
   return (
     <>
-      <div className="form-group row mt-5">
-        <div className="col-md-1 col-sm-12">
-          <p>Nilai</p>
-        </div>
-        <div className="col-md-3 col-sm-12">
-          <p>Jawaban</p>
-        </div>
-        <div className="col-md-4 col-sm-12">
-          <p>Input Gambar (Opsional)</p>
-        </div>
-        <div className="col-md-4 col-sm-12">
-          <p>Kunci Jawaban Yang Benar</p>
-        </div>
-
+      <div className="form-group row">
         {answer.map((x, i) => {
           return (
             <>
-              <div className="col-sm-12 col-md-1">
-                <input
-                  type="number"
-                  className="form-control"
-                  name="value"
-                  value={x.value}
-                  onChange={(e) => handleInputChange(e, i)}
-                  autoComplete="off"
-                />
-                <span className="text-muted">Isi Nilai</span>
-              </div>
-              <div className="col-sm-12 col-md-3">
+              <div className="col-sm-12 col-md-4 ">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold pb-0"
+                >
+                  Jawaban {x.key}
+                </label>
                 <input
                   type="text"
-                  className="form-control"
+                  className="form-control pb-0 my-0"
                   name="option"
                   value={x.option}
                   placeholder={x.key}
                   onChange={(e) => handleInputChange(e, i)}
                   autoComplete="off"
                 />
-                <span className="text-muted">Silahkan Pilihan {x.key}</span>
               </div>
-              <div className="col-sm-12 col-md-3">
+              <div className="col-sm-12 col-md-4 ">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold pb-0"
+                >
+                  Gambar Pertanyaan (Optional)
+                </label>
                 <div className="custom-file">
                   <input
                     type="file"
-                    className="custom-file-input"
+                    className="custom-file-input pb-0 my-0"
                     name="image"
                     onChange={(e) => handleInputChange(e, i)}
                   />
@@ -129,9 +116,25 @@ const CheckboxComponent = ({
                     Choose file
                   </label>
                 </div>
-                <span className="text-muted">Input Gambar (Opsional)</span>
               </div>
-              <div className="col-sm-12 col-md-1">
+              <div className="col-sm-12 col-md-4 d-flex align-items-end my-0 py-0">
+                <div className="form-group col-md-3 mb-0">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Nilai
+                  </label>
+                  <input
+                    type="number"
+                    className="form-control pb-0 my-0"
+                    name="value"
+                    value={x.value}
+                    onChange={(e) => handleInputChange(e, i)}
+                    autoComplete="off"
+                  />
+                </div>
+
                 {answer.length !== 1 && x.key !== "A" ? (
                   <button
                     className="btn btn-link-action bg-danger text-white"
@@ -141,24 +144,26 @@ const CheckboxComponent = ({
                     <i className="ri-delete-bin-fill p-0 text-white"></i>
                   </button>
                 ) : (
-                  ""
+                  <button
+                    className="btn btn-link-action bg-danger text-white invisible"
+                    type="button"
+                  >
+                    <i className="ri-delete-bin-fill p-0 text-white"></i>
+                  </button>
                 )}
-              </div>
-              <div className="col-sm-12 col-md-4">
-                <SwitchButton
-                  checked={x.is_right}
-                  onlabel=" "
-                  onstyle="primary"
-                  offlabel=" "
-                  offstyle="secondary"
-                  size="sm"
-                  width={20}
-                  height={10}
-                  onChange={(checked) => handleAnswer(checked, i)}
-                />
-                <span className="text-muted">
-                  Silahkan pilih kunci jawaban yang benar
-                </span>
+                <div className="ml-2">
+                  <SwitchButton
+                    checked={x.is_right}
+                    onlabel=" "
+                    onstyle="primary"
+                    offlabel=" "
+                    offstyle="secondary"
+                    size="sm"
+                    width={20}
+                    height={10}
+                    onChange={(checked) => handleAnswer(checked, i)}
+                  />
+                </div>
               </div>
             </>
           );
@@ -181,9 +186,14 @@ const CheckboxComponent = ({
         </div>
       </div>
 
-      <div className="form-group row">
-        <div className="col-sm-6 col-md-3">
-          <p>Durasi Soal</p>
+      <div className="form-group">
+        <div className="col-sm-12 col-md-12">
+          <label
+            htmlFor="staticEmail"
+            className=" col-form-label font-weight-bold pb-0"
+          >
+            Durasi Soal
+          </label>
           <div className="input-group">
             <input
               type="number"
@@ -205,7 +215,6 @@ const CheckboxComponent = ({
               </span>
             </div>
           </div>
-          <span className="text-muted">Silahkan input durasi soal</span>
         </div>
       </div>
     </>

@@ -154,20 +154,18 @@ const StepOne = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="1"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Tambah Test Subtansi
-            </h3>
+            <h2 className="card-title h2 text-dark">Clone Test Subtansi</h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
-              <div className="form-group row">
+              <div className="form-group mb-3">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold pb-0"
                 >
                   Akademi
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="academy_id"
                     id=""
@@ -186,7 +184,6 @@ const StepOne = () => {
                     <option value="1"> Computer Scientist </option>
                     <option value="2"> Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Akademi</span>
                   {simpleValidator.current.message(
                     "academy_id",
                     academy_id,
@@ -196,14 +193,14 @@ const StepOne = () => {
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group mb-3">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold pb-0"
                 >
                   Tema
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="the_id"
                     id=""
@@ -221,7 +218,6 @@ const StepOne = () => {
                     <option value="1"> Cloud Computing </option>
                     <option value="2"> UI/UX Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Tema</span>
                   {simpleValidator.current.message(
                     "theme_id",
                     theme_id,
@@ -231,14 +227,14 @@ const StepOne = () => {
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group mb-3">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold pb-0"
                 >
                   Pelatihan
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="training_id"
                     id=""
@@ -253,18 +249,17 @@ const StepOne = () => {
                     <option value="1"> Google Cloud Computing </option>
                     <option value="1"> Adobe UI/UX Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Pelatihan</span>
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group mb-3">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold pb-0"
                 >
                   Kategori
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="category"
                     id=""
@@ -282,7 +277,6 @@ const StepOne = () => {
                     <option value="Test Substansi"> Tes Substansi </option>
                     <option value="Mid Test"> Mid Tes </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Kategori</span>
                   {simpleValidator.current.message(
                     "category",
                     category,
@@ -292,9 +286,9 @@ const StepOne = () => {
                 </div>
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 col-md-12 text-right">
+              <div className="form-group mb-3">
+                <div className=""></div>
+                <div className=" col-md-12 text-right">
                   <button
                     type="submit"
                     className="btn btn-light-ghost-rounded-full mr-2"

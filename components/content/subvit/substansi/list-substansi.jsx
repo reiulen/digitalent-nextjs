@@ -336,8 +336,9 @@ const ListSubstansi = () => {
                               <td className="align-middle">
                                 <b>{subtance.academy.name}</b>
                                 <p>
-                                  {subtance.training.name ||
-                                    subtance.theme.name}
+                                  {subtance.training !== null
+                                    ? subtance.training.name
+                                    : subtance.theme.name}
                                 </p>
                               </td>
                               <td className="align-middle">

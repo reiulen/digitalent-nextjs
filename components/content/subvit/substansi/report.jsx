@@ -317,10 +317,10 @@ const ListSubstansi = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>Peserta Test</th>
+                        <th>Nama Peserta</th>
                         <th>Pelatihan</th>
                         <th>Nilai</th>
-                        <th>Total Pengerjaan</th>
+                        <th>Pelaksanaan</th>
                         <th>Jawaban</th>
                         <th>Status</th>
                       </tr>
@@ -338,36 +338,32 @@ const ListSubstansi = () => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <p className="badge badge-secondary text-muted">
+                                <p className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </p>
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <b className="my-0 font-weight-bold">
+                                  <p className="my-0 font-weight-bold h6">
                                     {row.name}
-                                  </b>
+                                  </p>
                                   <p className="my-0">{row.email}</p>
                                   <p className="my-0">{row.nik}</p>
                                 </div>
                               </td>
                               <td className="align-middle">
-                                <b className="font-weight-bold">
-                                  {
-                                    ["VSGA", "FGA", "GTA"][
-                                      Math.floor(Math.random() * 3)
-                                    ]
-                                  }
-                                </b>
-                                <p className="">
-                                  {row.training.name || row.theme.name}
-                                </p>
+                                <div className="">
+                                  <p className="font-weight-bold my-0 h6">
+                                    {row.training.theme.academy.name}
+                                  </p>
+                                  <p className="my-0">{row.training.name}</p>
+                                </div>
                               </td>
                               <td className="align-middle">{row.score}</td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 font-weight-bold">
-                                    {getStartAt(row.total_workmanship_date)}
+                                  <p className="my-0 font-weight-bold h6">
+                                    {row.total_workmanship_date}
                                   </p>
                                   <p className="my-0">
                                     {row.total_workmanship_time}

@@ -253,10 +253,10 @@ const DetailSubstansi = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header">
-            <h3 className="card-title font-weight-bolder text-dark">
+          <div className="card-header border-0">
+            <h2 className="card-title h2 text-dark">
               Substansi FGA - Cloud Computing
-            </h3>
+            </h2>
             <div className="card-toolbar">
               <Link href={`/subvit/substansi/edit?id=${id}`}>
                 <a className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block">
@@ -376,9 +376,7 @@ const DetailSubstansi = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <div className="card-toolbar">
-              <h3 className="card-title font-weight-bolder text-dark">
-                Bank Soal
-              </h3>
+              <h2 className="card-title h2 text-dark">Bank Soal</h2>
               {/* <label htmlFor=""></label> */}
             </div>
             <div className="card-toolbar">
@@ -437,76 +435,6 @@ const DetailSubstansi = () => {
                   </button>
                 </div>
               </div>
-
-              {/* <div className="row align-items-center my-5">
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted p-0">
-                      Filter by Pelatihan
-                    </small>
-                    <select className="form-control mb-1">
-                      <option>Semua</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted p-0">Filter by Status</small>
-                    <select
-                      className="form-control mb-1"
-                      onChange={(e) => setStatus(e.target.value)}
-                      onBlur={(e) => setStatus(e.target.value)}
-                      value={status}
-                    >
-                      <option value="" selected>
-                        Semua
-                      </option>
-                      <option value={true}>Publish</option>
-                      <option value={false}>Draft</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted p-0">Filter by Kategori</small>
-                    <select
-                      className="form-control mb-1"
-                      onChange={(e) => setKategori(e.target.value)}
-                      onBlur={(e) => setKategori(e.target.value)}
-                      value={kategori}
-                    >
-                      <option value="">Semua</option>
-                      {!subtance_question_type ||
-                      (subtance_question_type &&
-                        subtance_question_type.list_types.length === 0) ? (
-                        <option value="">Data kosong</option>
-                      ) : (
-                        subtance_question_type &&
-                        subtance_question_type.list_types.map((row) => {
-                          return (
-                            <option key={row.id} value={row.id}>
-                              {row.name}
-                            </option>
-                          );
-                        })
-                      )}
-                    </select>
-                  </div>
-                </div>
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="text-muted mt-5 p-0"> </div>
-                  <div className="">
-                    <button
-                      className="btn btn-light-primary"
-                      onClick={handleFilter}
-                    >
-                      Filter
-                    </button>
-                  </div>
-                </div>
-              </div> */}
             </div>
 
             <div className="table-page mt-5">
@@ -520,7 +448,7 @@ const DetailSubstansi = () => {
                       <th>Kategori</th>
                       <th>Bobot</th>
                       <th>Status</th>
-                      <th className="text-center">Aksi</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -532,7 +460,7 @@ const DetailSubstansi = () => {
                           return (
                             <tr key={question.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
+                                <span className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
@@ -544,7 +472,7 @@ const DetailSubstansi = () => {
                                 {question.type.name}
                               </td>
                               <td className="align-middle">
-                                {question.type.value}
+                                {question.type.value} Poin
                               </td>
                               <td className="align-middle">
                                 {question.status === true ? (
@@ -557,30 +485,19 @@ const DetailSubstansi = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`edit-soal-substansi?id=${question.id}`}
-                                  title="Edit"
-                                  colorClass="bg-blue-secondary"
-                                />
-                                <button
-                                  onClick={() => handleDelete(question.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
+                              <td className="align-middle d-flex">
+                                <Link
+                                  href={`edit-soal-substansi?id=${question.id}`}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(question.id)}
+                                >
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>

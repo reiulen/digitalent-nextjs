@@ -214,7 +214,7 @@ const TriggeredQuestionComponent = ({
                           height={90}
                         />
                       </div>
-                      <div className="col-md-7 pt-2">
+                      <div className="col-md-6 pt-2">
                         <input
                           type="text"
                           name="option"
@@ -242,7 +242,7 @@ const TriggeredQuestionComponent = ({
                     </>
                   ) : (
                     <>
-                      <div className="col-md-9 pt-2">
+                      <div className="col-md-8 pt-2">
                         <input
                           type="text"
                           name="option"
@@ -256,25 +256,19 @@ const TriggeredQuestionComponent = ({
                     </>
                   )}
 
-                  <div className="col-md-3 d-flex justify-content-start my-auto">
+                  <div className="col-md-4 d-flex justify-content-start my-auto">
                     {i !== 0 ? (
                       <button
-                        className="btn pt-0 mr-3 mt-5"
+                        className="btn btn-link-action bg-danger text-white"
                         type="button"
                         onClick={() => handleRemoveClick(null, null, i)}
                       >
-                        <Image
-                          alt="button-action"
-                          src="/assets/icon/trash-red.svg"
-                          width={20}
-                          height={30}
-                        />
+                        <i className="ri-delete-bin-fill p-0 text-white"></i>
                       </button>
                     ) : (
                       ""
                     )}
-                    <div className="">
-                      <span className="text-muted">pertanyaan selanjutnya</span>
+                    <div className="d-flex ml-5">
                       <SwitchButton
                         checked={row.is_next}
                         onlabel=" "
@@ -286,13 +280,20 @@ const TriggeredQuestionComponent = ({
                         height={10}
                         onChange={(checked) => handleNext(checked, null, i)}
                       />
+                      {row.is_next ? (
+                        <span className="ml-2 font-weight-bold">
+                          pertanyaan selanjutnya
+                        </span>
+                      ) : (
+                        ""
+                      )}
                     </div>
                   </div>
                   {row.sub.length != 0
                     ? row.sub.map((rowY, j) => {
                         return (
                           <>
-                            <div className="col-md-2"></div>
+                            <div className="col-md-1"></div>
                             <div className="col-md-2 p-0 pl-3" key={j}>
                               <Image
                                 src="/assets/media/Gambar.svg"
@@ -328,29 +329,21 @@ const TriggeredQuestionComponent = ({
                                 </label>
                               </div>
                             </div>
-                            <div className="col-md-3 d-flex justify-content-start my-auto">
+                            <div className="col-md-4 d-flex justify-content-start my-auto">
                               {j !== 0 ? (
                                 <button
-                                  className="btn pt-0 mr-3 mt-5"
+                                  className="btn btn-link-action bg-danger text-white"
                                   type="button"
                                   onClick={() => handleRemoveClick(null, i, j)}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src="/assets/icon/trash-red.svg"
-                                    width={20}
-                                    height={30}
-                                  />
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               ) : (
                                 ""
                               )}
-                              <div className="">
+                              <div className="d-flex ml-4">
                                 {j < 4 ? (
                                   <>
-                                    <span className="text-muted">
-                                      pertanyaan selanjutnya
-                                    </span>
                                     <SwitchButton
                                       checked={rowY.is_next}
                                       onlabel=" "
@@ -364,6 +357,9 @@ const TriggeredQuestionComponent = ({
                                         handleNext(checked, i, j)
                                       }
                                     />
+                                    <span className="font-weight-bold ml-2">
+                                      pertanyaan selanjutnya
+                                    </span>
                                   </>
                                 ) : (
                                   ""
@@ -374,7 +370,7 @@ const TriggeredQuestionComponent = ({
                               ? rowY.answer.map((rowX, k) => {
                                   return (
                                     <>
-                                      <div className="col-md-3"></div>
+                                      <div className="col-md-2"></div>
                                       {rowX.type === "choose" ? (
                                         <>
                                           <div
@@ -420,7 +416,7 @@ const TriggeredQuestionComponent = ({
                                         </>
                                       ) : (
                                         <>
-                                          <div className="col-md-6 pt-2">
+                                          <div className="col-md-8 pt-2">
                                             <input
                                               type="text"
                                               name="option"
@@ -433,21 +429,16 @@ const TriggeredQuestionComponent = ({
                                           </div>
                                         </>
                                       )}
-                                      <div className="col-md-3 d-flex justify-content-start my-auto">
+                                      <div className="col-md-4 d-flex justify-content-start my-auto">
                                         {k !== 0 ? (
                                           <button
-                                            className="btn pt-0 mr-3"
+                                            className="btn btn-link-action bg-danger text-white"
                                             type="button"
                                             onClick={() =>
                                               handleRemoveClick(i, j, k)
                                             }
                                           >
-                                            <Image
-                                              alt="button-action"
-                                              src="/assets/icon/trash-red.svg"
-                                              width={20}
-                                              height={30}
-                                            />
+                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
                                           </button>
                                         ) : (
                                           ""
@@ -457,28 +448,30 @@ const TriggeredQuestionComponent = ({
                                   );
                                 })
                               : ""}
-                            <div className="col-md-3 col-sm-3"></div>
-                            <div className="col-sm-9 col-md-9 d-flex">
+                            <div className="col-md-2 col-sm-2"></div>
+                            <div className="col-sm-10 col-md-10 d-flex">
                               {rowY.answer.length < 6 ? (
                                 <>
                                   <button
                                     type="button"
-                                    className="btn btn-light-success font-weight-bold btn-sm mr-2 my-3"
+                                    className="btn btn-rounded-full bg-blue-secondary text-white btn-sm mr-2 my-3"
                                     onClick={() =>
                                       handleAddClick("choose", i, j)
                                     }
                                   >
+                                    <i className="ri-add-fill text-white"></i>
                                     Tambah Jawaban
                                   </button>
                                   {rowY.answer.length > 2 ? (
                                     <>
                                       <button
                                         type="button"
-                                        className="btn btn-light-success font-weight-bold btn-sm my-3"
+                                        className="btn btn-rounded-full bg-blue-secondary text-white btn-sm my-3"
                                         onClick={() =>
                                           handleAddClick("empty", i, j)
                                         }
                                       >
+                                        <i className="ri-add-fill text-white"></i>
                                         Tambah Jawaban Lain
                                       </button>
                                     </>
@@ -501,34 +494,32 @@ const TriggeredQuestionComponent = ({
       </div>
 
       {answer.length < 6 ? (
-        <>
+        <div className="d-flex my-3">
           <button
             type="button"
-            className="btn btn-light-success font-weight-bold mr-2 my-3"
+            className="btn btn-rounded-full bg-blue-secondary text-white btn-sm mr-2"
             onClick={() => handleAddClick("choose", null, null)}
           >
-            Tambah Jawaban
+            <i className="ri-add-fill text-white"></i>Tambah Jawaban
           </button>
           {answer.length > 2 ? (
-            <>
-              <button
-                type="button"
-                className="btn btn-light-success font-weight-bold"
-                onClick={() => handleAddClick("empty", null, null)}
-              >
-                Tambah Jawaban Lain
-              </button>
-            </>
+            <button
+              type="button"
+              className="btn btn-rounded-full bg-blue-secondary text-white btn-sm"
+              onClick={() => handleAddClick("empty", null, null)}
+            >
+              <i className="ri-add-fill text-white"></i>Tambah Jawaban Lain
+            </button>
           ) : (
             ""
           )}
-        </>
+        </div>
       ) : (
         ""
       )}
 
       <div className="form-group row">
-        <div className="col-sm-12 col-md-5">
+        <div className="col-sm-12 col-md-12">
           <span>Status</span>
           <select
             name="training_id"
@@ -549,7 +540,6 @@ const TriggeredQuestionComponent = ({
             <option value={1}>Publish</option>
             <option value={0}>Draft</option>
           </select>
-          <span className="text-muted">Silahkan Pilih Status</span>
         </div>
       </div>
     </>

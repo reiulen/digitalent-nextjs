@@ -72,7 +72,7 @@ const ObjectiveComponent = ({
                   ) : (
                     ""
                   )}
-                  <div className="col-md-8 pt-2">
+                  <div className="col-md-9 pt-2">
                     <input
                       type="text"
                       name="option"
@@ -94,18 +94,13 @@ const ObjectiveComponent = ({
                       </label>
                     </div>
                   </div>
-                  <div className="col-md-2 d-flex justify-content-start my-auto">
+                  <div className="col-md-1 d-flex justify-content-end my-auto">
                     <button
-                      className="btn pt-0 mr-3"
+                      className="btn btn-link-action bg-danger text-white"
                       type="button"
                       onClick={() => handleRemoveClick(i)}
                     >
-                      <Image
-                        alt="button-action"
-                        src="/assets/icon/trash-red.svg"
-                        width={20}
-                        height={30}
-                      />
+                      <i className="ri-delete-bin-fill p-0 text-white"></i>
                     </button>
                   </div>
                 </div>
@@ -118,10 +113,10 @@ const ObjectiveComponent = ({
         <div className="button-add my-4">
           <button
             type="button"
-            className="btn btn-sm btn-light-success font-weight-bold"
+            className="btn btn-rounded-full bg-blue-secondary text-white btn-sm"
             onClick={() => handleAddClick()}
           >
-            Tambah Jawaban
+            <i className="ri-add-fill text-white"></i> Tambah Jawaban
           </button>
         </div>
       ) : (
@@ -129,7 +124,7 @@ const ObjectiveComponent = ({
       )}
 
       <div className="form-group row">
-        <div className="col-sm-12 col-md-5">
+        <div className="col-sm-12 col-md-12">
           <span>Status</span>
           <select
             name="training_id"

@@ -321,7 +321,7 @@ const StepTwo = () => {
                                   />
                                 </td>
                                 <td className="align-middle">
-                                  <span className="badge badge-secondary text-muted">
+                                  <span className="">
                                     {i + 1 * (page * 5 || limit) - 4}
                                   </span>
                                 </td>
