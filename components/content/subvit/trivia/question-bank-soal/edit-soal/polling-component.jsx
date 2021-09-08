@@ -93,16 +93,11 @@ const PollingComponent = ({
                   </div>
                   <div className="col-md-2 d-flex justify-content-start my-auto">
                     <button
-                      className="btn pt-0 mr-3"
+                      className="btn btn-link-action bg-danger text-white my-2"
                       type="button"
                       onClick={() => handleRemoveClick(i)}
                     >
-                      <Image
-                        alt="button-action"
-                        src="/assets/icon/trash-red.svg"
-                        width={20}
-                        height={30}
-                      />
+                      <i className="ri-delete-bin-fill p-0 text-white"></i>
                     </button>
                   </div>
                 </div>
@@ -115,10 +110,10 @@ const PollingComponent = ({
         <div className="button-add my-4">
           <button
             type="button"
-            className="btn btn-sm btn-light-success font-weight-bold"
+            className="btn btn-rounded-full bg-blue-secondary text-white btn-sm"
             onClick={() => handleAddClick()}
           >
-            Tambah Jawaban
+            <i className="ri-add-fill text-white"></i> Tambah Jawaban
           </button>
         </div>
       ) : (
@@ -126,8 +121,13 @@ const PollingComponent = ({
       )}
 
       <div className="form-group row">
-        <div className="col-sm-12 col-md-5">
-          <span>Status</span>
+        <div className="col-sm-12 col-md-12">
+          <label
+            htmlFor="staticEmail"
+            className=" col-form-label font-weight-bold pb-0"
+          >
+            Status
+          </label>
           <select
             name="training_id"
             className="form-control"
@@ -147,7 +147,6 @@ const PollingComponent = ({
             <option value={1}>Publish</option>
             <option value={0}>Draft</option>
           </select>
-          <span className="text-muted">Silahkan Pilih Status</span>
         </div>
       </div>
     </>

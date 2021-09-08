@@ -194,6 +194,7 @@ const TambahMitra = () => {
         return { ...items, label: items.name, value: items.id };
       });
       dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
+      console.log("dataNewProvinces",dataNewProvinces)
       setAllProvinces(dataNewProvinces);
     } catch (error) {
       console.log("gagal get province", error);

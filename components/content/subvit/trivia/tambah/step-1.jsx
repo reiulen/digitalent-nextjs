@@ -152,20 +152,18 @@ const TambahTriviaStepOne = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="1"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Tambah Test Trivia
-            </h3>
+            <h2 className="card-title h2 text-dark">Tambah Test Trivia</h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
-              <div className="form-group row">
+              <div className="form-group my-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Akademi
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="academy_id"
                     id=""
@@ -184,7 +182,6 @@ const TambahTriviaStepOne = () => {
                     <option value="1"> Computer Scientist </option>
                     <option value="2"> Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Akademi</span>
                   {simpleValidator.current.message(
                     "academy_id",
                     academy_id,
@@ -194,14 +191,14 @@ const TambahTriviaStepOne = () => {
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group my-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Tema
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="the_id"
                     id=""
@@ -219,7 +216,6 @@ const TambahTriviaStepOne = () => {
                     <option value="1"> Cloud Computing </option>
                     <option value="2"> UI/UX Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Tema</span>
                   {simpleValidator.current.message(
                     "theme_id",
                     theme_id,
@@ -229,14 +225,14 @@ const TambahTriviaStepOne = () => {
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Pelatihan
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="training_id"
                     id=""
@@ -251,18 +247,17 @@ const TambahTriviaStepOne = () => {
                     <option value="1"> Google Cloud Computing </option>
                     <option value="1"> Adobe UI/UX Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Pelatihan</span>
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group ">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Metode
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <div className="form-check form-check-inline">
                     <input
                       className="form-check-input"
@@ -285,18 +280,12 @@ const TambahTriviaStepOne = () => {
                     />
                     <label className="form-check-label">Import .csv/.xls</label>
                   </div>
-
-                  <div>
-                    <span className="text-muted">
-                      Silahkan Pilih Metode Tambah Test Substansi
-                    </span>
-                  </div>
                 </div>
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 text-right">
+              <div className="form-group">
+                <div className=""></div>
+                <div className=" text-right">
                   <button
                     type="submit"
                     className="btn btn-light-ghost-rounded-full mr-2"

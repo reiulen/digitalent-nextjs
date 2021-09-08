@@ -477,30 +477,40 @@ const StepTwo = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h2 className="card-title h2 text-dark">
               Soal {survey.bank_soal + 1}
-            </h3>
+            </h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
-              <div className="form-group row">
-                <div className="col-sm-12 col-md-8">
-                  <span>Pertanyaan</span>
+              <div className="form-group row mb-0">
+                <div className="col-sm-12 col-md-12">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold "
+                  >
+                    Pertanyaan
+                  </label>
                   <input
                     type="text"
                     className="form-control"
+                    placeholder="Isi Pertanyaan"
                     value={question}
                     onChange={(e) => setSoal(e.target.value)}
                     autoComplete="off"
                   />
-                  <span className="text-muted">Silahkan Input Pertanyaan</span>
                 </div>
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-12 col-md-8">
+                <div className="col-sm-12 col-md-12">
+                  <label
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold "
+                  >
+                    Gambar Pertanyaan (Optional)
+                  </label>
                   <div className="custom-file">
-                    <span>Gambar Pertanyaan (Opsional)</span>
                     <input
                       type="file"
                       className="custom-file-input"
@@ -512,12 +522,14 @@ const StepTwo = () => {
                       Choose file
                     </label>
                   </div>
-                  <span className="text-muted">Silahkan Input Pertanyaan</span>
+                  <span className="text-muted">
+                    (Maksimal ukuran file 5 MB)
+                  </span>
                 </div>
               </div>
 
               <div>Jenis Pertanyaan</div>
-              <div className="form-group row mt-4 ml-1 mb-3">
+              <div className="form-group row mt-4 mb-3">
                 <div className="col-sm-12 col-md-8">
                   <div className="form-check form-check-inline">
                     <input
@@ -576,11 +588,6 @@ const StepTwo = () => {
                     </label>
                   </div>
                 </div>
-              </div>
-              <div className="">
-                <span className="text-muted">
-                  Silahkan Pilih Metode Tambah Survey
-                </span>
               </div>
 
               {handleMethodeInput()}

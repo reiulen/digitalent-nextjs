@@ -106,15 +106,13 @@ const EditTipeSoal = () => {
         {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Edit Tipe Soal
-            </h3>
+            <h2 className="card-title h2 text-dark">Edit Tipe Soal</h2>
           </div>
           <div className="card-body">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12">
-                  <span>Tipe Soal</span>
+                  <span className="font-weight-bold">Tipe Soal</span>
                   <input
                     type="text"
                     className="form-control"
@@ -125,7 +123,6 @@ const EditTipeSoal = () => {
                       simpleValidator.current.showMessageFor("tipe soal")
                     }
                   />
-                  <span className="text-muted">Silahkan Input Tipe Soal</span>
                   {simpleValidator.current.message(
                     "tipe soal",
                     name,
@@ -137,7 +134,7 @@ const EditTipeSoal = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12">
-                  <span>Bobot Nilai</span>
+                  <span className="font-weight-bold">Bobot Nilai</span>
                   <input
                     type="number"
                     className="form-control"
@@ -148,7 +145,6 @@ const EditTipeSoal = () => {
                       simpleValidator.current.showMessageFor("bobot nilai")
                     }
                   />
-                  <span className="text-muted">Silahkan Input Bobot Nilai</span>
                   {simpleValidator.current.message(
                     "bobot nilai",
                     value,
@@ -160,7 +156,7 @@ const EditTipeSoal = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12">
-                  <span>Status</span>
+                  <span className="font-weight-bold">Status</span>
                   <select
                     name="status"
                     id=""
@@ -185,13 +181,9 @@ const EditTipeSoal = () => {
                       </>
                     )}
                   </select>
-                  <span className="text-muted">
-                    Silahkan Pilih Status Publish
-                  </span>
                 </div>
               </div>
 
-              {/* disini akan di ubah */}
               <div className="form-group row">
                 <div className="col-sm-12 text-right">
                   <button

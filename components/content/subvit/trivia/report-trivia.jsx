@@ -222,23 +222,30 @@ const ReportTrivia = () => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <p className="badge badge-secondary text-muted">
+                                <p className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </p>
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 h6">{row.name}</p>
+                                  <p className="my-0 font-weight-bold h6">
+                                    {row.name}
+                                  </p>
                                   <p className="my-0">{row.email}</p>
-                                  <p className="my-0">{row.no_telp}</p>
+                                  <p className="my-0">{row.nik}</p>
                                 </div>
                               </td>
                               <td className="align-middle">
-                                <p className="h6">{row.training.name}</p>
+                                <div className="">
+                                  {/* <p className="font-weight-bold my-0 h6">
+                                    {row.training.theme.academy.name}
+                                  </p> */}
+                                  <p className="my-0">{row.training.name}</p>
+                                </div>
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 h6">
+                                  <p className="my-0 font-weight-bold h6">
                                     {row.total_workmanship_date}
                                   </p>
                                   <p className="my-0">

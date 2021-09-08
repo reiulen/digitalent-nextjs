@@ -159,17 +159,21 @@ const StepThree = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="3"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Publish Soal
-            </h3>
+            <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">
-                  <p>Pelaksanaan dari</p>
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Pelaksanaan Dari
+                  </p>
                   <DatePicker
-                    className="form-control w-100"
+                    wrapperClassName="datepicker"
+                    className="form-control w-100 d-block"
                     name="start_date"
                     selected={startDate}
                     onChange={(date) => setStartDate(date)}
@@ -193,8 +197,14 @@ const StepThree = () => {
                 </div>
 
                 <div className="col-sm-12 col-md-6">
-                  <p>Sampai</p>
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Sampai
+                  </p>
                   <DatePicker
+                    wrapperClassName="datepicker"
                     className="form-control w-100"
                     selected={endDate}
                     onChange={(date) => setEndDate(date)}
@@ -220,7 +230,12 @@ const StepThree = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">
-                  <span>Jumlah Soal</span>
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Jumlah Soal
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -251,7 +266,12 @@ const StepThree = () => {
                 </div>
 
                 <div className="col-sm-12 col-md-6">
-                  <span>Durasi Test</span>
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Durasi Test
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -284,7 +304,12 @@ const StepThree = () => {
 
               <div className="form-group row">
                 <div className="col-md-12">
-                  <span>Passing Grade</span>
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Passing Grade
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -316,7 +341,12 @@ const StepThree = () => {
 
               <div className="form-group row">
                 <div className="col-md-12">
-                  <span>Status</span>
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Status
+                  </p>
                   <select
                     name="status"
                     id=""
@@ -334,9 +364,6 @@ const StepThree = () => {
                     <option value={true}> Publish </option>
                     <option value={false}> Draft </option>
                   </select>
-                  <span className="text-muted">
-                    Silahkan Pilih Status Publish
-                  </span>
                   {simpleValidator.current.message(
                     "status",
                     passing_grade,
