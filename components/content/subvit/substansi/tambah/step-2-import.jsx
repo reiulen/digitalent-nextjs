@@ -425,7 +425,7 @@ const StepTwo = () => {
                                       {i + 1 * (page * 5 || limit) - 4}
                                     </span>
                                   </td>
-                                  <td className="align-middle">
+                                  <td className="align-middle font-weight-bold">
                                     CC{question.id}
                                   </td>
                                   <td className="align-middle">
@@ -459,6 +459,7 @@ const StepTwo = () => {
                                     <button
                                       className="btn btn-link-action bg-blue-secondary text-white"
                                       onClick={() => handleDelete(question.id)}
+                                      type="button"
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                                     </button>
@@ -475,61 +476,67 @@ const StepTwo = () => {
                   )}
                 </div>
 
-                <div className="row">
-                  <div className="table-pagination">
-                    {subtance_question_detail && (
-                      <Pagination
-                        activePage={page}
-                        itemsCountPerPage={subtance_question_detail.perPage}
-                        totalItemsCount={subtance_question_detail.total}
-                        pageRangeDisplayed={3}
-                        onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    )}
-                  </div>
-
-                  <div className="table-total ml-auto">
-                    {subtance_question_detail &&
-                      subtance_question_detail.list_questions && (
-                        <div className="row">
-                          <div className="col-4 mr-0 p-0">
-                            <select
-                              className="form-control"
-                              id="exampleFormControlSelect2"
-                              style={{
-                                width: "65px",
-                                background: "#F3F6F9",
-                                borderColor: "#F3F6F9",
-                                color: "#9E9E9E",
-                              }}
-                              onChange={(e) => handleLimit(e.target.value)}
-                              onBlur={(e) => handleLimit(e.target.value)}
-                            >
-                              <option value="5">5</option>
-                              <option value="10">10</option>
-                              <option value="15">15</option>
-                              <option value="20">20</option>
-                              <option value="30">30</option>
-                            </select>
-                          </div>
-                          <div className="col-8 my-auto">
-                            <p
-                              className="align-middle mt-3"
-                              style={{ color: "#B5B5C3" }}
-                            >
-                              Total Data {subtance_question_detail.total}
-                            </p>
-                          </div>
-                        </div>
+                {subtance_question_detail &&
+                subtance_question_detail.list_questions &&
+                subtance_question_detail.list_questions.length > 0 ? (
+                  <div className="row">
+                    <div className="table-pagination">
+                      {subtance_question_detail && (
+                        <Pagination
+                          activePage={page}
+                          itemsCountPerPage={subtance_question_detail.perPage}
+                          totalItemsCount={subtance_question_detail.total}
+                          pageRangeDisplayed={3}
+                          onChange={handlePagination}
+                          nextPageText={">"}
+                          prevPageText={"<"}
+                          firstPageText={"<<"}
+                          lastPageText={">>"}
+                          itemClass="page-item"
+                          linkClass="page-link"
+                        />
                       )}
+                    </div>
+
+                    <div className="table-total ml-auto">
+                      {subtance_question_detail &&
+                        subtance_question_detail.list_questions && (
+                          <div className="row">
+                            <div className="col-4 mr-0 p-0">
+                              <select
+                                className="form-control"
+                                id="exampleFormControlSelect2"
+                                style={{
+                                  width: "65px",
+                                  background: "#F3F6F9",
+                                  borderColor: "#F3F6F9",
+                                  color: "#9E9E9E",
+                                }}
+                                onChange={(e) => handleLimit(e.target.value)}
+                                onBlur={(e) => handleLimit(e.target.value)}
+                              >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                              </select>
+                            </div>
+                            <div className="col-8 my-auto">
+                              <p
+                                className="align-middle mt-3"
+                                style={{ color: "#B5B5C3" }}
+                              >
+                                Total Data {subtance_question_detail.total}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="row">

@@ -169,7 +169,7 @@ const StepThree = () => {
           <div className="card-header border-0">
             <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
                 <div className="col-sm-12 col-md-6">

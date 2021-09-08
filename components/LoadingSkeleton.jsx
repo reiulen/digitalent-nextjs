@@ -10,19 +10,12 @@ const LoadingSkeleton = () => {
         // color="#a1a1a1" 
         // highlightColor="#ffffff"
       >  
-        {/* <div className="row d-flex justify-content-between">
-          <Skeleton width={200} height={150} />
-          <Skeleton width={200} height={150} />
-          <Skeleton width={200} height={150} />
-          <Skeleton width={200} height={150} />
-        </div> */}
-        
         <div className="row">
-          <Skeleton width={950} height={150} />
+          <Skeleton width={1200} height={150} />
         </div>
 
         <div className="row mt-3">
-          <Skeleton width={950} height={550} />
+          <Skeleton width={1200} height={550} />
         </div>
         
       </SkeletonTheme>

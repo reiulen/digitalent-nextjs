@@ -6,6 +6,7 @@ import Layout from "../../../components/templates/layout.component";
 import { getAllArtikelPeserta } from '../../../redux/actions/publikasi/artikel-peserta.actions'
 import { wrapper } from '../../../redux/store'
 
+import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const ArtikelPeserta = dynamic(
