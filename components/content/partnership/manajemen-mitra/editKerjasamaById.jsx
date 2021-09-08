@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
-  fetchListSelectCooperation,
+  fetchListCooperationSelect,
   cancelChangeCategory,
   cancelChangeNamaLembaga,
   changeCooperationSelectByID,
@@ -353,8 +353,8 @@ const EditDokumentKerjasamaById = () => {
               </div>
 
               {/* start list kategory */}
-              
-              {allMK.stateListKerjaSama.length === 0 ? (
+
+              {allMK.cooperationActiveSelect.length === 0 ? (
                 <div className="form-group">
                   <label htmlFor="staticEmail" className="col-form-label">
                     Kategori kerjasama
@@ -376,7 +376,7 @@ const EditDokumentKerjasamaById = () => {
                     <button
                       type="button"
                       className="w-100 btn btn-primary btn-sm  mt-3"
-                      onClick={() => dispatch(fetchListSelectCooperation())}
+                      onClick={() => dispatch(fetchListCooperationSelect())}
                     >
                       Ubah Kategory
                     </button>
@@ -397,12 +397,12 @@ const EditDokumentKerjasamaById = () => {
                         }
                         name=""
                         id=""
-                        className="form-control mt-3"
+                        className="form-control mt-2"
                       >
                         <option value="">Pilih Kategory Kerjasama</option>
-                        {allMK.stateListKerjaSama.length === 0
+                        {allMK.cooperationActiveSelect.length === 0
                           ? ""
-                          : allMK.stateListKerjaSama.data.map((items, i) => {
+                          : allMK.cooperationActiveSelect.data.map((items, i) => {
                               return (
                                 <option key={i} value={items.id}>
                                   {items.cooperation_categories}
@@ -696,7 +696,7 @@ const EditDokumentKerjasamaById = () => {
                       <div
                         key={i}
                         className={`form-group ${
-                          allMK.stateListKerjaSama.length !== 0 ? "d-none" : ""
+                          allMK.cooperationActiveSelect.length !== 0 ? "d-none" : ""
                         }`}
                       >
                         <label
@@ -729,7 +729,7 @@ const EditDokumentKerjasamaById = () => {
                         <div
                           key={index}
                           className={`form-group ${
-                            allMK.stateListKerjaSama.length === 0
+                            allMK.cooperationActiveSelect.length === 0
                               ? "d-none"
                               : ""
                           }`}
