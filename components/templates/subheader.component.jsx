@@ -5,8 +5,11 @@ import Link from "next/link";
 
 const convertBreadcrumb = (string) => {
   return (
-    ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /`
-    // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
+    string !== "artikel-peserta" ?
+      ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /`
+      // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
+    :
+      ` Artikel-Peserta /`
   );
 };
 
@@ -19,7 +22,8 @@ const SubHeader = () => {
   useEffect(() => {
     if (router) {
       const linkPath = router.asPath.split("/");
-      linkPath.shift();
+      linkPath.splice(0, 2);
+      // linkPath.shift();
 
       const pathArray = linkPath.map((path, i) => {
         return {
@@ -29,8 +33,6 @@ const SubHeader = () => {
       });
 
       console.log(pathArray);
-
-      // setBreadcrumbs(pathArray.splice(-1));
       setBreadcrumbs(pathArray);
     }
   }, [router]);

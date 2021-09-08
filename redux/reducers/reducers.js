@@ -9,6 +9,13 @@ import {
   updateArtikelReducer,
 } from "./publikasi/artikel.reducers";
 import {
+  allArtikelPesertaReducer,
+  newArtikelPesertaReducer,
+  deleteArtikelPesertaReducer,
+  detailArtikelPesertaReducer,
+  updateArtikelPesertaReducer,
+} from "./publikasi/artikel-peserta.reducers";
+import {
   allBeritaReducer,
   newBeritaReducer,
   deleteBeritaReducer,
@@ -156,6 +163,12 @@ const reducer = combineReducers({
   deleteArtikel: deleteArtikelReducer,
   detailArtikel: detailArtikelReducer,
   updatedArtikel: updateArtikelReducer,
+
+  allArtikelPeserta: allArtikelPesertaReducer,
+  newArtikelPeserta: newArtikelPesertaReducer,
+  deleteArtikelPeserta: deleteArtikelPesertaReducer,
+  detailArtikelPeserta: detailArtikelPesertaReducer,
+  updatedArtikelPeserta: updateArtikelPesertaReducer,
 
   allBerita: allBeritaReducer,
   newBerita: newBeritaReducer,
