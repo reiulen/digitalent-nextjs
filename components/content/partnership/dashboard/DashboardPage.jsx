@@ -8,6 +8,7 @@ export default function DashboardPage() {
   return (
     <PageWrapper>
       {/* head content */}
+      
       <div className="position-relative br-12 bg-neutral py-10 px-6 overflow-hidden" style={{height:"197px",maxHeight:"197px"}}>
         <img src="/assets/media/logos/hero1.png"  alt="imagehero" className="right-center-absolute" />
         <img src="/assets/media/logos/Plants1.png"  alt="imagehero" className="left-bottom-absolute" />
