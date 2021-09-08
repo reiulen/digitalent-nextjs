@@ -367,6 +367,13 @@ margin-top: 1rem;
   width: max-content;
 }
 
+/* shadow icon*/
+.icon-plus {
+  margin-left:-30px; 
+  margin-top:-30px;
+  cursor:pointer;
+}
+
 
 
 

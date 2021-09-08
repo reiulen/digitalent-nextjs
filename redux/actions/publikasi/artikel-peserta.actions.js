@@ -65,6 +65,24 @@ export const getAllArtikelPeserta =
     }
 };
 
+export const getDetailArtikelPeserta = (id) => async (dispatch) => {
+  try {
+    let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`;
+
+    const { data } = await axios.get(link);
+
+    dispatch({
+      type: DETAIL_ARTIKEL_PESERTA_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DETAIL_ARTIKEL_PESERTA_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
 export const newArtikelPeserta = (artikelPesertaData) => async (dispatch) => {
     try {
       dispatch({
@@ -95,6 +113,48 @@ export const newArtikelPeserta = (artikelPesertaData) => async (dispatch) => {
         payload: error.response.data.message,
       });
     }
+};
+
+export const updateArtikelPeserta = (artikelPesertaData) => async (dispatch) => {
+  try {
+    dispatch({ type: UPDATE_ARTIKEL_PESERTA_REQUEST });
+
+    let link =
+      process.env.END_POINT_API_PUBLIKASI + `api/artikel/${artikelPesertaData.id}`;
+
+    const { data } = await axios.post(link, artikelPesertaData);
+
+    dispatch({
+      type: UPDATE_ARTIKEL_PESERTA_SUCCESS,
+      payload: data,
+    });
+    
+  } catch (error) {
+    dispatch({
+      type: UPDATE_ARTIKEL_PESERTA_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const deleteArtikelPeserta = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_ARTIKEL_PESERTA_REQUEST });
+
+    const { data } = await axios.delete(
+      process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
+    );
+
+    dispatch({
+      type: DELETE_ARTIKEL_PESERTA_SUCCESS,
+      payload: data.status,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_ARTIKEL_PESERTA_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };
 
 // Clear Error
