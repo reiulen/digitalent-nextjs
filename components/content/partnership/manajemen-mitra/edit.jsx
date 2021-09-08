@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import IconClose from "../../../assets/icon/Close";
 
 import {
   getProvinces,
@@ -380,6 +381,131 @@ const EditMitra = () => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Gambar Logo
                 </label>
+                {/* ketika ada upload gambar baru */}
+                {!agency_logo ? (
+                  ""
+                ) : (
+                  <div
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    className="shadow-image-form cursor-pointer"
+                    style={{
+                      maxWidth: "168px",
+                      maxHeight: "168px",
+                      width: "168px",
+                      height: "168px",
+                    }}
+                  >
+                    <img
+                      src={agency_logo}
+                      className="w-100 h-100"
+                      alt="images"
+                      style={{ padding: "6px" }}
+                    />
+                  </div>
+                )}
+                {/* read gambar yg ada from api */}
+                {agency_logo ? "" : 
+                !imageview ? (
+                  ""
+                ) : (
+                <div
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    className="shadow-image-form cursor-pointer"
+                    style={{
+                      maxWidth: "168px",
+                      maxHeight: "168px",
+                      width: "168px",
+                      height: "168px",
+                    }}
+                  >
+                    <img
+                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        "partnership/images/profile-images/" +
+                        imageview}
+                      
+                      className="w-100 h-100"
+                      alt="images"
+                      style={{ padding: "6px" }}
+                    />
+                  </div>
+                  )
+                  }
+
+                  {agency_logo ? (
+                    <button
+                      className="btn btn-primary btn-sm my-3 mr-3"
+                      type="button"
+                      onClick={() => setAgency_logo("")}
+                    >
+                      Batal ubah
+                    </button>
+                  ) : (
+                    ""
+                  )}
+
+                  {/* modal view image */}
+                  <div
+                className="modal fade"
+                id="exampleModalCenter"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true"
+              >
+                <div
+                  className="modal-dialog modal-dialog-centered"
+                  role="document"
+                >
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalLongTitle">
+                        Gambar Logo
+                      </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <IconClose />
+                      </button>
+                    </div>
+
+                    <div
+                      className="modal-body text-left p-0"
+                      style={{ height: "400px" }}
+                    >
+                      
+                      {agency_logo ?
+
+<img
+                      src={agency_logo}
+                      className="w-100 h-100"
+                      alt="images"
+                      style={{ padding: "6px" }}
+                      />
+                    :
+                    <img
+                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        "partnership/images/profile-images/" +
+                        imageview}
+                      className="w-100 h-100"
+                      alt="images"
+                      style={{ padding: "6px" }}
+                      />
+                    }
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
                 <div className="input-group">
                   <div className="custom-file">
                     <input
@@ -400,7 +526,7 @@ const EditMitra = () => {
                     </label>
                   </div>
                 </div>
-                <div className="d-flex align-items-center">
+                {/* <div className="d-flex align-items-center">
                   {NamePDF ? (
                     <button
                       className="btn btn-primary btn-sm my-3 mr-3"
@@ -419,14 +545,13 @@ const EditMitra = () => {
                       type="button"
                       onClick={() => cancelChangeImage()}
                     >
-                      {/* {showImage?"Tutup":"Buka"} */}
                       Batal ubah gambar menjadi default
                     </button>
                   ) : (
                     ""
                   )}
-                </div>
-                {!NamePDF ? (
+                </div> */}
+                {/* {!NamePDF ? (
                   <div className="border my-3">
                     <Image
                       unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
@@ -442,8 +567,8 @@ const EditMitra = () => {
                   </div>
                 ) : (
                   ""
-                )}
-                {showImage ? (
+                )} */}
+                {/* {showImage ? (
                   <div
                     className={`${
                       agency_logo ? "pdf-container w-100 border my-3" : "d-none"
@@ -459,7 +584,7 @@ const EditMitra = () => {
                   </div>
                 ) : (
                   ""
-                )}
+                )} */}
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (
@@ -493,13 +618,10 @@ const EditMitra = () => {
                           setError({ ...error, indonesia_provinces_id: "" })
                         }
                         className="form-control mt-2"
-
-                        
                         disabled
                       >
                         <option value={indonesia_provinces_id}>
                           {defaultValueProvince}
-
                         </option>
                       </select>
                     </div>

@@ -389,12 +389,12 @@ const EditDokumentKerjasamaById = () => {
                 />
               </div>
 
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal Penandatanganan
-                </label>
-                <div className="row align-items-right">
-                  <div className="col-12">
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className="col-form-label">
+                      Tanggal Penandatanganan
+                    </label>
                     {/* <input
                         required
                         onChange={(e) => setSigninDate(e.target.value)}
@@ -428,16 +428,50 @@ const EditDokumentKerjasamaById = () => {
                     </div>
                   </div>
                 </div>
+                <div className="col-12 col-sm-6">
+                  {/* start dokument */}
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className="col-form-label">
+                      Dokumen Kerjasama
+                    </label>
+                    <div className="position-relative overflow-hidden w-100 ">
+                      
+                    <input
+                      // id="kt_datatable_search_query"
+                      disabled
+                      type="text"
+                      className="form-control"
+                      placeholder={`${document}`}
+                      // onChange={(e) =>
+                      //   handleChangeValueSearch(e.target.value)
+                      // }
+                    />
+                    <button
+                      type="button"
+                      className="btn right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                        backgroundColor: "#D7E1EA",
+                        color: "#6C6C6C",
+                      }}
+                      onClick={() =>
+                        window.open(
+                          `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${document}`
+                        )
+                      }
+                    >
+                      Buka File
+                    </button>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* start dokument */}
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Dokumen Kerjasama
-                </label>
-                {/* action show and upload */}
-                {/* start action show and upload */}
-                <div className="row">
+              {/* action show and upload */}
+              {/* start action show and upload */}
+
+              {/* <div className="row">
                   <div className="col-12 col-sm-3">
                     <button
                       type="button"
@@ -449,9 +483,9 @@ const EditDokumentKerjasamaById = () => {
                         : "Lihat dokumen"}
                     </button>
                   </div>
-                </div>
+                </div> */}
 
-                {changeDokumen && !viewPDF ? (
+              {/* {changeDokumen && !viewPDF ? (
                   <div className="input-group mt-3">
                     <div className="custom-file">
                       <input
@@ -472,18 +506,18 @@ const EditDokumentKerjasamaById = () => {
                   </div>
                 ) : (
                   ""
-                )}
+                )} */}
 
-                {pdfFileError && (
+              {/* {pdfFileError && (
                   <div
                     className="mt-3"
                     style={{ color: "red", fontWeight: "bold" }}
                   >
                     {pdfFileError}
                   </div>
-                )}
-              </div>
-              <div
+                )} */}
+
+              {/* <div
                 className={`${
                   viewPDF ? "pdf-container w-100" : "pdf-container d-none"
                 }`}
@@ -496,8 +530,8 @@ const EditDokumentKerjasamaById = () => {
                   width="100%"
                 ></iframe>
                 {!viewPDF && <>No pdf file selected </>}
-              </div>
-              {showDokument ? (
+              </div> */}
+              {/* {showDokument ? (
                 <iframe
                   className="my-4 border"
                   src={`http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${document}`}
@@ -508,7 +542,7 @@ const EditDokumentKerjasamaById = () => {
                 ></iframe>
               ) : (
                 ""
-              )}
+              )} */}
               {/* start action show and upload */}
 
               {/* end dokument */}
@@ -525,23 +559,20 @@ const EditDokumentKerjasamaById = () => {
                           allMK.stateListKerjaSama.length !== 0 ? "d-none" : ""
                         }`}
                       >
-                        <label
-                          htmlFor="staticEmail"
-                          className="col-form-label"
-                        >
+                        <label htmlFor="staticEmail" className="col-form-label">
                           {items.cooperation_form}
                         </label>
-                          <textarea
-                            readOnly
-                            onChange={(e) => changeDataContentDefault(e, i)}
-                            value={items.form_content}
-                            name=""
-                            id={i}
-                            cols="30"
-                            rows="5"
-                            className="form-control"
-                            placeholder="Masukkan Tujuan Kerjasama disini"
-                          ></textarea>
+                        <textarea
+                          readOnly
+                          onChange={(e) => changeDataContentDefault(e, i)}
+                          value={items.form_content}
+                          name=""
+                          id={i}
+                          cols="30"
+                          rows="5"
+                          className="form-control"
+                          placeholder="Masukkan Tujuan Kerjasama disini"
+                        ></textarea>
                       </div>
                     );
                   })}

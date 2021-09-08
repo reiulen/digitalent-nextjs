@@ -241,7 +241,14 @@ export const fetchListSelectCooperation = () => {
   return async (dispatch, getState) => {
     try {
       const { data } = await getCooperation();
-      dispatch(successFetchListSelectCooperation(data));
+      let dataNewKerjasama = data.data.map((items) => {
+        return {
+          ...items,
+          label: items.cooperation_categories,
+          value: items.id,
+        };
+      });
+      dispatch(successFetchListSelectCooperation(dataNewKerjasama));
     } catch (error) {
       console.log("eror get list cooperation", error);
     }
@@ -257,7 +264,14 @@ export const fetchListSelectStatus = () => {
   return async (dispatch, getState) => {
     try {
       const { data } = await getStatus();
-      dispatch(successFetchListSelectStatus(data));
+      let dataNewStateus = data.data.map((items) => {
+        return {
+          ...items,
+          label: items.name,
+          value: items.id,
+        };
+      });
+      dispatch(successFetchListSelectStatus(dataNewStateus));
     } catch (error) {
       console.log("eror get list status", error);
     }
