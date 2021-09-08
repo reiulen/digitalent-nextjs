@@ -154,7 +154,7 @@ const StepOne = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="1"></StepInput>
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">Tambah Test Subtansi</h2>
+            <h2 className="card-title h2 text-dark">Clone Test Subtansi</h2>
           </div>
           <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
