@@ -12,7 +12,12 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const Artikel = dynamic(
     () => import("../../../components/content/publikasi/artikel/artikel"),
-    { loading: () => <LoadingSkeleton />, ssr: false}
+    { 
+        // suspense: true,
+        // loading: () => <LoadingSkeleton />, 
+        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        ssr: false
+    }
 );
 
 export default function ArtikelPage() {

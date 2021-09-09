@@ -13,9 +13,7 @@ import moment from "moment";
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import LoadingTable from "../../../LoadingTable"
-import IconSearch from "../../../assets/icon/Search";
 import IconArrow from "../../../assets/icon/Arrow";
-import IconAdd from "../../../assets/icon/Add";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 import ButtonAction from '../../../ButtonAction'
@@ -206,6 +204,9 @@ const ArtikelPeserta = () => {
                 ); 
             }
         }
+
+        setStartDate(null)
+        setEndDate(null)
     };
 
     const handleLimit = (val) => {
@@ -251,6 +252,11 @@ const ArtikelPeserta = () => {
         
     }
 
+    const resetValueSort = () => {
+        setStartDate(null)
+        setEndDate(null)
+    }
+
     
     return (
         <PageWrapper>
@@ -278,7 +284,7 @@ const ArtikelPeserta = () => {
                     <div className="alert-icon">
                         <i className="flaticon2-checkmark"></i>
                     </div>
-                    <div className="alert-text">Berhasil !</div>
+                    <div className="alert-text">Berhasil Menyimpan Data !</div>
                     <div className="alert-close">
                         <button
                         type="button"
@@ -324,9 +330,6 @@ const ArtikelPeserta = () => {
                         publishedVal="0"
                         routePublish={() => handlePublish("0")}
                     />
-
-                    {/* <CardPage background='bg-light-info' icon='mail-purple.svg' color='#8A50FC' value='90' titleValue='Artikel' title='Total Publish' /> */}
-                    {/* <CardPage background='bg-light-danger' icon='kotak-kotak-red.svg' color='#F65464' value='64' titleValue='Artikel' title='Total Unpublish' /> */}
                 </div>
             </div>
 
@@ -336,11 +339,11 @@ const ArtikelPeserta = () => {
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">Artikel Peserta</h3>
                         <div className="card-toolbar">
-                        <Link href="/publikasi/artikel-peserta/tambah">
+                        {/* <Link href="/publikasi/artikel-peserta/tambah">
                             <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
                             Tambah Artikel Peserta
                             </a>
-                        </Link>
+                        </Link> */}
 
                         </div>
                     </div>
@@ -349,7 +352,7 @@ const ArtikelPeserta = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-7 col-xl-7 col-sm-9">
+                                <div className="col-lg-6 col-xl-6 col-sm-9">
                                     <div
                                         className="position-relative overflow-hidden mt-3"
                                         style={{ maxWidth: "330px" }}
@@ -373,232 +376,142 @@ const ArtikelPeserta = () => {
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
-                                {/* sorotir by modal */}
-                                <button
-                                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
-                                    data-toggle="modal"
-                                    data-target="#exampleModalCenter"
-                                    style={{ color: "#464646", minWidth: "230px" }}
-                                >
-                                    <div className="d-flex align-items-center">
-                                    <IconFilter className="mr-3" />
-                                    Pilih Filter
-                                    </div>
-                                    <IconArrow fill="#E4E6EF" width="11" height="11"/>
-                                </button>
-                                {/* modal */}
-                                <form
-                                    // id="kt_docs_formvalidation_text"
-                                    className="form text-left"
-                                    // action="#"
-                                    // autoComplete="off"
-                                    // onSubmit={handleSubmitSearchMany}
-                                >
-                                    <div
-                                    className="modal fade"
-                                    id="exampleModalCenter"
-                                    tabIndex="-1"
-                                    role="dialog"
-                                    aria-labelledby="exampleModalCenterTitle"
-                                    aria-hidden="true"
-                                    >
-                                    <div
-                                        className="modal-dialog modal-dialog-centered"
-                                        role="document"
-                                    >
-                                        <div className="modal-content">
-                                        <div className="modal-header">
-                                            <h5
-                                            className="modal-title"
-                                            id="exampleModalLongTitle"
-                                            >
-                                            Filter
-                                            </h5>
-                                            <button
-                                            type="button"
-                                            className="close"
-                                            data-dismiss="modal"
-                                            aria-label="Close"
-                                            >
-                                            <IconClose />
-                                            </button>
-                                        </div>
-
-                                        <div
-                                            className="modal-body text-left"
-                                            style={{ height: "400px" }}
+                                <div className="col-lg-6 col-xl-6 col-sm-9">
+                                    <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                                        {/* sortir by modal */}
+                                        <button
+                                            className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                                            data-toggle="modal"
+                                            data-target="#exampleModalCenter"
+                                            style={{ color: "#464646", minWidth: "230px" }}
                                         >
-                                            <div className="fv-row mb-10">
-                                            <label className="required fw-bold fs-6 mb-2">
-                                                Mitra
-                                            </label>
+                                            <div className="d-flex align-items-center">
+                                            <IconFilter className="mr-3" />
+                                            Pilih Filter
+                                            </div>
+                                            <IconArrow fill="#E4E6EF" width="11" height="11"/>
+                                        </button>
 
-                                            {/* <select
-                                                onChange={(e) =>
-                                                setValueMitra(e.target.value)
-                                                }
-                                                id="list-mitra"
-                                                className="form-select form-control"
-                                                aria-label="Select example"
+                                        {/* modal */}
+                                        <form
+                                            // id="kt_docs_formvalidation_text"
+                                            className="form text-left"
+                                            // action="#"
+                                            // autoComplete="off"
+                                            // onSubmit={handleSubmitSearchMany}
+                                        >
+                                            <div
+                                            className="modal fade"
+                                            id="exampleModalCenter"
+                                            tabIndex="-1"
+                                            role="dialog"
+                                            aria-labelledby="exampleModalCenterTitle"
+                                            aria-hidden="true"
                                             >
-                                                <option value="">Semua</option>
-                                                {allMK.stateListMitra.length === 0
-                                                ? ""
-                                                : allMK.stateListMitra
-                                                    .slice(
-                                                        1,
-                                                        allMK.stateListMitra.length
-                                                    )
-                                                    .map((items, i) => {
-                                                        return (
-                                                        <option
-                                                            key={i}
-                                                            value={items.name}
-                                                        >
-                                                            {items.name}
-                                                        </option>
-                                                        );
-                                                    })}
-                                            </select>
-                                            </div>
-                                            <div className="fv-row mb-10">
-                                            <label className="required fw-bold fs-6 mb-2">
-                                                Kerjasama
-                                            </label>
-                                            <select
-                                                onChange={(e) =>
-                                                setValueKerjaSama(e.target.value)
-                                                }
-                                                id="list-kerjasama"
-                                                className="form-select form-control"
-                                                aria-label="Select example"
-                                            >
-                                                <option value="">Semua</option>
-                                                {allMK.stateListKerjaSama.length === 0
-                                                ? ""
-                                                : allMK.stateListKerjaSama.data.map(
-                                                    (items, i) => {
-                                                        return (
-                                                        <option
-                                                            key={i}
-                                                            value={
-                                                            items.cooperation_categories
-                                                            }
-                                                        >
-                                                            {
-                                                            items.cooperation_categories
-                                                            }
-                                                        </option>
-                                                        );
-                                                    }
-                                                    )}
-                                            </select>
-                                            </div>
-                                            <div className="fv-row mb-10">
-                                            <label className="required fw-bold fs-6 mb-2">
-                                                Status
-                                            </label>
-                                            <select
-                                            id="list-status"
-                                                onChange={(e) =>
-                                                setValueStatus(e.target.value)
-                                                }
-                                                className="form-select form-control"
-                                                aria-label="Select example"
-                                            >
-                                                <option value="">Semua</option>
-                                                {allMK.stateListStatus.length === 0
-                                                ? ""
-                                                : allMK.stateListStatus.data.map(
-                                                    (items, i) => {
-                                                        return (
-                                                        <option
-                                                            key={i}
-                                                            value={items.name_en}
-                                                        >
-                                                            {items.name}
-                                                        </option>
-                                                        );
-                                                    }
-                                                    )}
-                                            </select> */}
-                                            </div>
-                                        </div>
-                                        <div className="modal-footer">
-                                            <div className="d-flex justify-content-end align-items-center">
-                                            {/* <Link href="/compoenent">
-                                                <a className="btn btn-white">Reset</a>
-                                            </Link> */}
-                                            <button
-                                                className="btn btn-white"
-                                                type="button"
-                                                onClick={() => resetValueSort()}
-                                            >
-                                                Reset
-                                            </button>
-                                            <button
-                                                className="btn btn-primary ml-4"
-                                                type="button"
-                                                onClick={(e) => handleSubmitSearchMany(e)}
-                                            >
-                                                Terapkan
-                                            </button>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </form>
-                                {/* end modal */}
+                                                <div
+                                                    className="modal-dialog modal-dialog-centered"
+                                                    role="document"
+                                                >
+                                                    <div className="modal-content">
+                                                        <div className="modal-header">
+                                                            <h5
+                                                            className="modal-title font-weight-bold"
+                                                            id="exampleModalLongTitle"
+                                                            >
+                                                            Filter
+                                                            </h5>
+                                                            <button
+                                                            type="button"
+                                                            className="close"
+                                                            data-dismiss="modal"
+                                                            aria-label="Close"
+                                                            onClick={() => resetValueSort()}
+                                                            >
+                                                            <IconClose />
+                                                            </button>
+                                                        </div>
 
+                                                        <div
+                                                            className="modal-body text-left"
+                                                            style={{ height: "200px" }}
+                                                        >
+                                                            <div className="mb-10 col-12">
+                                                                <label className="required fw-bold fs-6 mb-2">
+                                                                    Tanggal
+                                                                </label>
+
+                                                                <div>
+                                                                    <DatePicker
+                                                                        className="form-search-date form-control-sm form-control"
+                                                                        selected={startDate}
+                                                                        onChange={(date) => setStartDate(date)}
+                                                                        selectsStart
+                                                                        startDate={startDate}
+                                                                        endDate={endDate}
+                                                                        dateFormat="dd/MM/yyyy"
+                                                                        placeholderText="Silahkan Isi Tanggal Dari"
+                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                    // minDate={addDays(new Date(), 20)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="mb-10 col-12">
+                                                                <label className="required fw-bold fs-6 mb-2">
+                                                                    Tanggal
+                                                                </label>
+                                    
+                                                                <div>
+                                                                    <DatePicker
+                                                                        className="form-search-date form-control-sm form-control"
+                                                                        selected={endDate}
+                                                                        onChange={(date) => setEndDate(date)}
+                                                                        selectsEnd
+                                                                        startDate={startDate}
+                                                                        endDate={endDate}
+                                                                        dateFormat="dd/MM/yyyy"
+                                                                        minDate={startDate}
+                                                                        maxDate={addDays(startDate, 20)}
+                                                                        placeholderText="Silahkan Isi Tanggal Sampai"
+                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                    // minDate={addDays(new Date(), 20)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="modal-footer">
+                                                            <div className="d-flex justify-content-end align-items-center">
+                                                                <button
+                                                                    className="btn btn-white-ghost-rounded-full"
+                                                                    type="button"
+                                                                    onClick={() => resetValueSort()}
+                                                                >
+                                                                    Reset
+                                                                </button>
+                                                                <button
+                                                                    className="btn btn-primary-rounded-full ml-4"
+                                                                    type="button"
+                                                                    data-dismiss="modal"
+                                                                    onClick={() => handleSearchDate()}
+                                                                >
+                                                                    Terapkan
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        {/* end modal */}
+
+                                    </div>
+                                </div>
                             </div>
-                            {/* <div className="row align-items-right">
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={startDate}
-                                        onChange={(date) => setStartDate(date)}
-                                        selectsStart
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
-                                    <small className="form-text text-muted">
-                                        Dari Tanggal
-                                    </small>
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={endDate}
-                                        onChange={(date) => setEndDate(date)}
-                                        selectsEnd
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        minDate={startDate}
-                                        maxDate={addDays(startDate, 20)}
-                                        dateFormat="dd/MM/yyyy"
-                                    />
-                                    <small className="form-text text-muted">
-                                        Sampai Tanggal
-                                    </small>
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block">Cari</a>
-                                </div>
-                            </div> */}
                         </div>
 
                         <div className="table-page mt-5">
                             <div className="table-responsive">
                                 <LoadingTable loading={loading} />
-
-                                {/* <div className="loading text-center justify-content-center">
-                                    <BeatLoader color='#3699FF' loading={loading} css={override} size={10} />
-                                </div> */}
 
                                 {loading === false ?
                                     <table className='table table-separate table-head-custom table-checkable'>
@@ -646,8 +559,8 @@ const ArtikelPeserta = () => {
                                                             <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.judul_artikel}</td>
                                                             <td className="align-middle">
-                                                                {artikel_peserta.publish === 1 ? (
-                                                                artikel_peserta.tanggal_publish
+                                                                {row.publish === 1 ? (
+                                                                row.tanggal_publish
                                                                 ) : (
                                                                 <span className="label label-inline label-light-danger font-weight-bold">
                                                                     Belum dipublish
@@ -695,7 +608,7 @@ const ArtikelPeserta = () => {
                                                                     className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
                                                                     onClick={() => handleDelete(row.id)}
                                                                 >
-                                                                <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                                                <i className="ri-delete-bin-fill p-0 text-white"></i>
                                                                 <div className="text-hover-show-hapus">
                                                                     Hapus
                                                                 </div> 
@@ -719,7 +632,7 @@ const ArtikelPeserta = () => {
                                             itemsCountPerPage={artikel_peserta.perPage}
                                             totalItemsCount={artikel_peserta.total}
                                             pageRangeDisplayed={3}
-                                            // onChange={handlePagination}
+                                            onChange={handlePagination}
                                             nextPageText={'>'}
                                             prevPageText={'<'}
                                             firstPageText={'<<'}
