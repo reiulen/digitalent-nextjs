@@ -1,4 +1,4 @@
-import DashbardPublikasi from '../../components/content/publikasi/dashboard/dashboard-publikasi'
+import DashbardPublikasi from '../../components/content/publikasi/dashboard/dashboard'
 import Layout from '../../components/templates/layout.component'
 
 export default function Home() {
