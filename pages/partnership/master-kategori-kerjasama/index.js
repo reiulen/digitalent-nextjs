@@ -5,13 +5,15 @@ import LoadingPage from "../../../components/LoadingPage";
 
 // import { fetchAllMKCooporation } from "../../../redux/actions/partnership/mk_cooporation.actions";
 // import { wrapper } from "../../../redux/store";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const MasterKategoriKerjasama = dynamic(
   () =>
     import(
       "../../../components/content/partnership/master-kategori-kerjasama/masterKategoriKerjasama"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
+
 export default function KategoriKerjasama() {
   return (
     <>
