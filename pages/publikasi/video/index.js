@@ -7,17 +7,23 @@ import { getAllVideo } from '../../../redux/actions/publikasi/video.actions'
 import { wrapper } from '../../../redux/store'
 
 import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const Vidio = dynamic(
     () => import("../../../components/content/publikasi/vidio/vidio"),
-    { loading: () => <LoadingPage />, ssr: false }
+    { 
+        // suspense: true,
+        // loading: () => <LoadingSkeleton />, 
+        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        ssr: false
+    }
 );
 
 export default function VidioPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Managemen Video'>
+                <Layout title='Video'>
                     <Vidio />
                 </Layout>
             </div>
