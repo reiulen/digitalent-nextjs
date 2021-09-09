@@ -8,7 +8,7 @@ export default function EditBeritaPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Update Berita'>
+                <Layout title='Ubah Berita'>
                     <EditBerita />
                 </Layout>
             </div>

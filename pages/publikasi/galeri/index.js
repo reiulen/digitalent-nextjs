@@ -7,10 +7,16 @@ import { getAllGaleri } from '../../../redux/actions/publikasi/galeri.actions'
 import { wrapper } from '../../../redux/store'
 
 import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const Galeri = dynamic(
     () => import("../../../components/content/publikasi/galeri/galeri"),
-    { loading: () => <LoadingPage />, ssr: false }
+    { 
+        // suspense: true,
+        // loading: () => <LoadingSkeleton />, 
+        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        ssr: false
+    }
 );
 
 export default function GaleriPage() {

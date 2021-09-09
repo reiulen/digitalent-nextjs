@@ -151,6 +151,11 @@ const EditGaleri = () => {
   const [publish, setPublish] = useState(galeri.publish === 1 ? true : false);
   const [_method, setMethod] = useState("put");
 
+  const handleChangePublish = (e) => {
+    setPublish(e.target.checked);
+    // console.log (e.target.checked)
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (error) {
@@ -266,28 +271,28 @@ const EditGaleri = () => {
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Update Galeri</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Ubah Galeri</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} />
                                 </div>
                             </div>
 
-                            <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi Foto</label>
-                                <div className="col-sm-10">
+                            <div className="form-group">
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi Galeri</label>
+                                <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri}></textarea>
                                     <small className='text-danger'>*Maksimal 160 Karakter</small>
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Gambar</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
                                         <p className='text-center my-auto'>Seret gambar ke sini atau klik untuk memilih.</p>
@@ -299,9 +304,9 @@ const EditGaleri = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                         <option selected disabled value=''>-- Kategori --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
@@ -325,9 +330,9 @@ const EditGaleri = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
                                         onChange={setTag}
@@ -340,6 +345,35 @@ const EditGaleri = () => {
                             </div>
 
                             <div className="form-group row">
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="ml-5 pl-4 "
+                                >
+                                    Publish 
+                                </label>
+                                <div className="col-sm-1 ml-4">
+                                    <div className="">
+                                    <label className="switches">
+                                        <input
+                                        // required
+                                        className="checkbox"
+                                        checked={publish}
+                                        type="checkbox"
+                                        // onChange={(checked) => setPublish(checked)}
+                                        onChange={(e) => handleChangePublish(e)}
+                                        />
+                                        <span
+                                        className={`sliders round ${
+                                            publish ? "text-white" : "pl-2"
+                                        }`}
+                                        >
+                                        </span>
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
@@ -353,7 +387,7 @@ const EditGaleri = () => {
                                         onChange={(checked) => setPublish(checked)}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>

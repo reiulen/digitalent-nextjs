@@ -307,7 +307,7 @@ const EditArtikel = () => {
           <div className="card card-custom card-stretch gutter-b">
             <div className="card-header border-0">
               <h3 className="card-title font-weight-bolder text-dark">
-                Update Artikel
+                Ubah Artikel
               </h3>
             </div>
             <div className="card-body">
@@ -623,7 +623,7 @@ const EditArtikel = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">
-                  Image Preview
+                  Pratinjau Gambar
                 </h5>
                 <button
                   type="button"
