@@ -80,6 +80,9 @@ const TambahBerita = () => {
     const [publish, setPublish] = useState(false)
     const [tag, setTag] = useState([])
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
+    const [iconPlus, setIconPlus] = useState(
+        "/assets/icon/Add.svg"
+    );
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -114,17 +117,31 @@ const TambahBerita = () => {
         }
       };
 
+    const handleChangePublish = (e) => {
+        setPublish(e.target.checked);
+        // console.log (e.target.checked)
+    };
+
     const onSubmit = (e) => {
         e.preventDefault()
         if (simpleValidator.current.allValid()) {
             if (error) {
                 dispatch(clearErrors())
             }
+
             if (success) {
                 dispatch({
                     type: NEW_BERITA_RESET
                 })
             }
+
+            if (publish === true) {
+                setPublish(1)
+              
+              } else if (publish === false) {
+                setPublish(0)
+                
+              }
     
             const data = {
                 kategori_id,
@@ -216,16 +233,22 @@ const TambahBerita = () => {
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
-                                <div className="col-sm-10">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} />
+                                <div className="col-sm-12">
+                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_berita")}/>
+                                    {simpleValidator.current.message(
+                                        "judul_berita",
+                                        judul_berita,
+                                        "required|min:5|max:50",
+                                        { className: "text-danger" }
+                                    )}
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Isi Berita</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <div className="ckeditor">
                                         {editorLoaded ? <CKEditor
                                             editor={ClassicEditor}
@@ -255,7 +278,71 @@ const TambahBerita = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="col-sm-2 col-form-label"
+                                >
+                                    Upload Thumbnail
+                                </label>
+                                <div className="ml-3 row">
+                                    <figure
+                                    className="avatar item-rtl"
+                                    data-toggle="modal"
+                                    data-target="#exampleModalCenter"
+                                    >
+                                    <Image
+                                        src={gambarPreview}
+                                        alt="image"
+                                        width={160}
+                                        height={160}
+                                        objectFit="cover"
+                                    />
+                                    </figure>
+                                    <div>
+                                    <label htmlFor="inputGroupFile04" className="icon-plus">
+                                        <Image
+                                        src={iconPlus}
+                                        alt="plus"
+                                        width={60}
+                                        height={60} 
+                                        />
+                                    </label>
+                                    
+                                    <input
+                                        type="file"
+                                        name="gambar"
+                                        className="custom-file-input"
+                                        id="inputGroupFile04"
+                                        onChange={onChangeGambar}
+                                        accept="image/*"
+                                        onBlur={() =>
+                                        simpleValidator.current.showMessageFor("gambar")
+                                        }
+                                        style={{display: "none"}}
+                                    />
+                                    </div>
+                                    
+                                </div>
+
+                                <div className="ml-3">
+                                    {simpleValidator.current.message(
+                                    "gambar",
+                                    gambar,
+                                    "required",
+                                    { className: "text-danger" }
+                                    )}
+                                    {
+                                    gambarName !== null ?
+                                        <small className="text-danger">{gambarName}</small>
+                                    :
+                                        null
+                                    }
+                                </div>
+                                
+                            </div>
+
+                            {/* <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Thumbnail</label>
                                 <div className="col-sm-1">
                                     <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
@@ -281,11 +368,11 @@ const TambahBerita = () => {
                                             null
                                     }
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                         <option selected disabled value=''>-- Kategori --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
@@ -308,9 +395,9 @@ const TambahBerita = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
                                         onChange={setTag}
@@ -322,18 +409,31 @@ const TambahBerita = () => {
                             </div>
 
                             <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish </label>
-                                <div className="col-sm-1">
-                                    <SwitchButton
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="ml-5 pl-4 "
+                                >
+                                    Publish 
+                                </label>
+                                <div className="col-sm-1 ml-4">
+                                    <div className="">
+                                    <label className="switches">
+                                        <input
+                                        // required
+                                        className="checkbox"
                                         checked={publish}
-                                        onlabel=' '
-                                        onstyle='primary'
-                                        offlabel=' '
-                                        offstyle='danger'
-                                        size='sm'
-                                        width={30}
-                                        onChange={(checked) => setPublish(checked)}
-                                    />
+                                        type="checkbox"
+                                        // onChange={(checked) => setPublish(checked)}
+                                        onChange={(e) => handleChangePublish(e)}
+                                        />
+                                        <span
+                                        className={`sliders round ${
+                                            publish ? "text-white" : "pl-2"
+                                        }`}
+                                        >
+                                        </span>
+                                    </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -355,7 +455,7 @@ const TambahBerita = () => {
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Image Preview</h5>
+                            <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -369,7 +469,7 @@ const TambahBerita = () => {
                             />
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
                         </div>
                     </div>
                 </div>

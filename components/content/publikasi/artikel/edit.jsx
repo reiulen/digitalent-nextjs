@@ -122,6 +122,11 @@ const EditArtikel = () => {
     }
   };
 
+  const handleChangePublish = (e) => {
+    setPublish(e.target.checked);
+    // console.log (e.target.checked)
+  };
+
   const onSubmit = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
@@ -241,7 +246,7 @@ const EditArtikel = () => {
   return (
     <>
       <PageWrapper>
-        {/* {console.log (artikel.users_id)} */}
+        {console.log (artikel.tag)}
         {
           console.log (kategori)
         }

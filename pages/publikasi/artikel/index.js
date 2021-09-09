@@ -15,7 +15,7 @@ const Artikel = dynamic(
     { 
         // suspense: true,
         // loading: () => <LoadingSkeleton />, 
-        loading: function LoadingNow () {return <LoadingSkeleton /> }, 
+        loading: function loadingNow () {return <LoadingSkeleton /> }, 
         ssr: false
     }
 );
