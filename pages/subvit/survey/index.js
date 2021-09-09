@@ -3,14 +3,15 @@ import dynamic from "next/dynamic";
 
 // import ListSurvey from '../../../components/content/subvit/survey/list-survey'
 import Layout from "../../../components/templates/layout.component";
-import LoadingPage from "../../../components/LoadingPage";
+// import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 import { getAllSurveyQuestionBanks } from "../../../redux/actions/subvit/survey-question.actions";
 import { wrapper } from "../../../redux/store";
 
 const ListSurvey = dynamic(
   () => import("../../../components/content/subvit/survey/list-survey"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { suspense: true, loading: () => <LoadingSkeleton /> }
 );
 
 export default function Survey() {
