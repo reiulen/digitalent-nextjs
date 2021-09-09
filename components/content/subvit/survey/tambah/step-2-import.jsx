@@ -296,33 +296,29 @@ const StepTwo = () => {
       <div className="col-lg-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="2"></StepInput>
+          <div className="card-header border-0">
+            <h2 className="card-title h2 text-dark">Metode Import .csv/.xls</h2>
+          </div>
           <div className="card-body">
             <div className="mb-5">
+              <p className="mb-1">Unduh Template Soal</p>
               <div className="row">
                 <div className="col">
-                  <p className="text-dark">Metode Import .csv/.xls</p>
-                </div>
-                <div className="col">
-                  <div className="float-right">
-                    <span className="mr-2">Unduh Template Soal</span>
-                    <button
-                      type="button"
-                      onClick={handleDownloadTemplate}
-                      className="btn btn-outline-light btn-sm"
-                      style={{ border: "1px solid #DADADA" }}
-                    >
-                      {" "}
-                      <i className="flaticon-download"></i> Click to Download
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={handleDownloadTemplate}
+                    className="btn btn-rounded-full bg-blue-secondary btn-sm text-white"
+                  >
+                    <i className="ri-download-2-fill text-white"></i> Unduh
+                  </button>
                 </div>
               </div>
             </div>
             <form onSubmit={onSubmit} id="form-upload">
-              <div className="form-group row">
-                <div className="col-sm-8 col-md-8">
+              <div className="form-group row pt-3">
+                <div className="col-sm-10 col-md-10">
+                  <span>File Soal</span>
                   <div className="custom-file">
-                    <span>Gambar Pertanyaan (Opsional)</span>
                     <input
                       type="file"
                       className="custom-file-input"
@@ -338,22 +334,22 @@ const StepTwo = () => {
                     Silahkan File berformat .csv / .xls
                   </span>
                 </div>
-                <div className="col-md-4 col-sm-4">
+                <div className="col-md-2 col-sm-2 d-flex align-items-center">
                   <button
                     type="button"
-                    className="btn btn-light-primary"
+                    className="btn btn-rounded-full btn-light-success btn-sm py-3"
                     onClick={handleImportFile}
                     disabled={successFile ? true : false}
                   >
-                    Import
+                    Import File
                   </button>
                 </div>
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-8 col-md-8">
+                <div className="col-sm-10 col-md-10">
+                  <span>File Gambar</span>
                   <div className="custom-file">
-                    <span>Gambar Pertanyaan (Opsional)</span>
                     <input
                       type="file"
                       className="custom-file-input"
@@ -369,30 +365,178 @@ const StepTwo = () => {
                     Silahkan File berformat .zip
                   </span>
                 </div>
-                <div className="col-md-4 col-sm-4">
+                <div className="col-md-2 col-sm-2 d-flex align-items-center">
                   <button
                     type="button"
-                    className="btn btn-light-primary"
+                    className="btn btn-rounded-full btn-light-success btn-sm py-3"
                     onClick={handleImportImage}
                     disabled={successImages ? true : false}
                   >
-                    Import
+                    Import File
                   </button>
                 </div>
               </div>
+              <div className="table-page" style={{ marginTop: "20px" }}>
+                {successFile ? (
+                  <div className="mb-5">
+                    <h2 className="text-success">Sukses Import Soal</h2>
+                    <span className="text-muted">200 Bank Soal</span>
+                  </div>
+                ) : (
+                  ""
+                )}
+                <div className="table-responsive">
+                  <LoadingTable loading={loading} />
+
+                  {loading === false ? (
+                    <table className="table table-separate table-head-custom table-checkable">
+                      <thead style={{ background: "#F3F6F9" }}>
+                        <tr>
+                          <th className="text-center">No</th>
+                          <th>ID Soal</th>
+                          <th>Soal</th>
+                          <th>Status</th>
+                          <th>Aksi</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {survey_question_detail &&
+                        survey_question_detail.list_questions &&
+                        survey_question_detail.list_questions.length === 0 ? (
+                          <td className="align-middle text-center" colSpan={6}>
+                            Data Masih Kosong
+                          </td>
+                        ) : (
+                          survey_question_detail &&
+                          survey_question_detail.list_questions &&
+                          survey_question_detail.list_questions.map(
+                            (question, i) => {
+                              return (
+                                <tr key={question.id}>
+                                  <td className="align-middle text-center">
+                                    <span className="badge badge-secondary text-muted">
+                                      {i + 1 * (page * 5 || limit) - 4}
+                                    </span>
+                                  </td>
+                                  <td className="align-middle font-weight-bold">
+                                    CC{question.id}
+                                  </td>
+                                  <td className="align-middle">
+                                    {question.question}
+                                  </td>
+                                  <td className="align-middle">
+                                    {question.status ? (
+                                      <span className="label label-inline label-light-success font-weight-bold">
+                                        Publish
+                                      </span>
+                                    ) : (
+                                      <span className="label label-inline label-light-warning font-weight-bold">
+                                        Draft
+                                      </span>
+                                    )}
+                                  </td>
+                                  <td className="align-middle d-flex">
+                                    <Link
+                                      href={`edit-soal-survey?id=${question.id}`}
+                                    >
+                                      <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                      </a>
+                                    </Link>
+                                    <button
+                                      className="btn btn-link-action bg-blue-secondary text-white"
+                                      onClick={() => handleDelete(question.id)}
+                                      type="button"
+                                    >
+                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            }
+                          )
+                        )}
+                      </tbody>
+                    </table>
+                  ) : (
+                    ""
+                  )}
+                </div>
+
+                {survey_question_detail &&
+                survey_question_detail.list_questions &&
+                survey_question_detail.list_questions.length > 0 ? (
+                  <div className="row">
+                    <div className="table-pagination">
+                      {survey_question_detail && (
+                        <Pagination
+                          activePage={page}
+                          itemsCountPerPage={survey_question_detail.perPage}
+                          totalItemsCount={survey_question_detail.total}
+                          pageRangeDisplayed={3}
+                          onChange={handlePagination}
+                          nextPageText={">"}
+                          prevPageText={"<"}
+                          firstPageText={"<<"}
+                          lastPageText={">>"}
+                          itemClass="page-item"
+                          linkClass="page-link"
+                        />
+                      )}
+                    </div>
+
+                    <div className="table-total ml-auto">
+                      {survey_question_detail &&
+                        survey_question_detail.list_questions && (
+                          <div className="row">
+                            <div className="col-4 mr-0 p-0">
+                              <select
+                                className="form-control"
+                                id="exampleFormControlSelect2"
+                                style={{
+                                  width: "65px",
+                                  background: "#F3F6F9",
+                                  borderColor: "#F3F6F9",
+                                  color: "#9E9E9E",
+                                }}
+                                onChange={(e) => handleLimit(e.target.value)}
+                                onBlur={(e) => handleLimit(e.target.value)}
+                              >
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                              </select>
+                            </div>
+                            <div className="col-8 my-auto">
+                              <p
+                                className="align-middle mt-3"
+                                style={{ color: "#B5B5C3" }}
+                              >
+                                Total Data {survey_question_detail.total}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
 
               <div className="row">
-                <div className="col-sm-12 col-md-8 pt-0">
-                  <hr />
+                <div className="col-sm-12 pt-3">
                   <div className="float-right">
                     <button
-                      className="btn btn-light-primary btn-sm mr-2"
+                      className="btn btn-light-ghost-rounded-full font-weight-bold mr-2"
                       type="submit"
                     >
                       Simpan & Lanjut
                     </button>
                     <button
-                      className="btn btn-primary btn-sm"
+                      className="btn btn-primary-rounded-full text-white"
                       onClick={saveDraft}
                       type="button"
                     >
@@ -402,151 +546,6 @@ const StepTwo = () => {
                 </div>
               </div>
             </form>
-
-            <div className="table-page" style={{ marginTop: "20px" }}>
-              <div className="table-responsive">
-                <LoadingTable loading={loading} />
-
-                {loading === false ? (
-                  <table className="table table-separate table-head-custom table-checkable">
-                    <thead style={{ background: "#F3F6F9" }}>
-                      <tr>
-                        <th className="text-center">No</th>
-                        <th>ID Soal</th>
-                        <th>Soal</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {survey_question_detail &&
-                      survey_question_detail.list_questions &&
-                      survey_question_detail.list_questions.length === 0 ? (
-                        <td className="align-middle text-center" colSpan={6}>
-                          Data Masih Kosong
-                        </td>
-                      ) : (
-                        survey_question_detail &&
-                        survey_question_detail.list_questions &&
-                        survey_question_detail.list_questions.map(
-                          (question, i) => {
-                            return (
-                              <tr key={question.id}>
-                                <td className="align-middle text-center">
-                                  <span className="badge badge-secondary text-muted">
-                                    {i + 1 * (page * 5 || limit) - 4}
-                                  </span>
-                                </td>
-                                <td className="align-middle">
-                                  {question.trivia_question_bank_id}
-                                </td>
-                                <td className="align-middle">
-                                  {question.question}
-                                </td>
-                                <td className="align-middle">
-                                  {question.status === true ? (
-                                    <span className="label label-inline label-light-success font-weight-bold">
-                                      Publish
-                                    </span>
-                                  ) : (
-                                    <span className="label label-inline label-light-warning font-weight-bold">
-                                      Draft
-                                    </span>
-                                  )}
-                                </td>
-                                <td className="align-middle">
-                                  <ButtonAction
-                                    icon="write.svg"
-                                    link={`edit-soal-survey?id=${question.id}`}
-                                    title="Edit"
-                                  />
-                                  <button
-                                    onClick={() => handleDelete(question.id)}
-                                    className="btn mr-1"
-                                    style={{
-                                      background: "#F3F6F9",
-                                      borderRadius: "6px",
-                                    }}
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Hapus"
-                                  >
-                                    <Image
-                                      alt="button-action"
-                                      src={`/assets/icon/trash.svg`}
-                                      width={18}
-                                      height={18}
-                                    />
-                                  </button>
-                                </td>
-                              </tr>
-                            );
-                          }
-                        )
-                      )}
-                    </tbody>
-                  </table>
-                ) : (
-                  ""
-                )}
-              </div>
-
-              <div className="row">
-                <div className="table-pagination">
-                  {survey_question_detail && (
-                    <Pagination
-                      activePage={page}
-                      itemsCountPerPage={survey_question_detail.perPage}
-                      totalItemsCount={survey_question_detail.total}
-                      pageRangeDisplayed={3}
-                      onChange={handlePagination}
-                      nextPageText={">"}
-                      prevPageText={"<"}
-                      firstPageText={"<<"}
-                      lastPageText={">>"}
-                      itemClassName="page-item"
-                      linkClassName="page-link"
-                    />
-                  )}
-                </div>
-
-                <div className="table-total ml-auto">
-                  {survey_question_detail &&
-                    survey_question_detail.list_questions && (
-                      <div className="row">
-                        <div className="col-4 mr-0 p-0">
-                          <select
-                            className="form-control"
-                            id="exampleFormControlSelect2"
-                            style={{
-                              width: "65px",
-                              background: "#F3F6F9",
-                              borderColor: "#F3F6F9",
-                              color: "#9E9E9E",
-                            }}
-                            onChange={(e) => handleLimit(e.target.value)}
-                            onBlur={(e) => handleLimit(e.target.value)}
-                          >
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                          </select>
-                        </div>
-                        <div className="col-8 my-auto">
-                          <p
-                            className="align-middle mt-3"
-                            style={{ color: "#B5B5C3" }}
-                          >
-                            Total Data {survey_question_detail.total}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>

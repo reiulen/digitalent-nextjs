@@ -1,5 +1,16 @@
 import Layout from "../../../components/templates/layout.component";
-import SubmitKerjasama from "../../../components/content/partnership/manajemen-kerjasama/submitKerjasama";
+// import SubmitKerjasama from "../../../components/content/partnership/manajemen-kerjasama/submitKerjasama";
+
+import dynamic from "next/dynamic";
+import LoadingPage from "../../../components/LoadingPage";
+
+const SubmitKerjasama = dynamic(
+  () =>
+    import(
+      "../../../components/content/partnership/manajemen-kerjasama/submitKerjasama"
+    ),
+  { loading: () => <LoadingPage />, ssr: false }
+);
 
 export default function Submit() {
   return (
@@ -12,3 +23,5 @@ export default function Submit() {
     </>
   );
 }
+
+// Submit.displayName = "Submit";

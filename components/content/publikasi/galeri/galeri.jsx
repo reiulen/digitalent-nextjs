@@ -95,28 +95,46 @@ const Galeri = () => {
     };
 
     const handlePagination = (pageNumber) => {
-        if (limit !== null  && search === "" && startDate === null && endDate === null) {
+        if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-        
-        } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+    
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
     
-        } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
     
-        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     
-        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
         
-        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
         
+        } else if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
+          
+        } else if (limit !== null  && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
+    
+        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
+    
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
         }
-      }
+    }
 
     const handleSearch = () => {
         if (limit != null && startDate === null && endDate === null) {
@@ -238,9 +256,9 @@ const Galeri = () => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log (galeri)
-            }
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -257,7 +275,7 @@ const Galeri = () => {
             {success ?
                     <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                    <div className="alert-text">Berhasil Menambah atau Mengedit Data</div>
+                    <div className="alert-text">Berhasil !</div>
                     <div className="alert-close">
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
                         <span aria-hidden="true"><i className="ki ki-close"></i></span>
@@ -324,7 +342,7 @@ const Galeri = () => {
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
-                        <h3 className="card-title font-weight-bolder text-dark">Manajemen Galeri</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Galeri</h3>
                         <div className="card-toolbar">
                             <Link href='/publikasi/galeri/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
@@ -338,7 +356,32 @@ const Galeri = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-10 col-xl-10">
+                                <div className="col-lg-7 col-xl-7 col-sm-9">
+                                    <div
+                                        className="position-relative overflow-hidden mt-3"
+                                        style={{ maxWidth: "330px" }}
+                                    >
+                                        <i className="ri-search-line left-center-absolute ml-2"></i>
+                                        <input
+                                        type="text"
+                                        className="form-control pl-10"
+                                        placeholder="Ketik disini untuk Pencarian..."
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        />
+                                        <button
+                                        className="btn bg-blue-primary text-white right-center-absolute"
+                                        style={{
+                                            borderTopLeftRadius: "0",
+                                            borderBottomLeftRadius: "0",
+                                        }}
+                                        onClick={handleSearch}
+                                        >
+                                        Cari
+                                        </button>
+                                    </div>
+
+                                </div>
+                                {/* <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
                                         <input
                                         style={{ background: "#F3F6F9", border: "none" }}
@@ -355,9 +398,9 @@ const Galeri = () => {
                                 </div>
                                 <div className="col-lg-2 col-xl-2">
                                     <button type="button" className='btn btn-light-primary btn-block' onClick={handleSearch}>Cari</button>
-                                </div>
+                                </div> */}
                             </div>
-                            <div className="row align-items-right">
+                            {/* <div className="row align-items-right">
                                 <div className="col-lg-2 col-xl-2">
                                     <small className="form-text text-muted">
                                         Dari Tanggal
@@ -399,7 +442,7 @@ const Galeri = () => {
                                         Cari
                                     </button>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="table-page mt-5">
@@ -422,9 +465,7 @@ const Galeri = () => {
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        {/* {
-                                            console.log (galeri)
-                                        } */}
+
                                         <tbody>
                                             {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
@@ -486,8 +527,44 @@ const Galeri = () => {
                                                                 )}
                                                             </td>
                                                             <td className='align-middle'>Super Admin</td>
-                                                            <td className='align-middle'>
-                                                                {/* <ButtonAction icon='setting.svg' data-toggle="modal" data-target="#exampleModalCenter"/> */}
+                                                            <td className="align-middle d-flex">
+
+                                                                <button
+                                                                    onClick={() => handleIndexGallery(i)} 
+                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
+                                                                    data-target="#exampleModalCenter" 
+                                                                    data-toggle="modal"
+                                                                >
+                                                                    <i class="ri-todo-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Pratinjau
+                                                                    </div> 
+                                                                </button>
+
+                                                                <Link
+                                                                href={`/publikasi/galeri/${row.id_gallery}`}
+                                                                >
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Ubah
+                                                                    </div> 
+                                                                </a>
+                                                                </Link>
+
+                                                                <button
+                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                    onClick={() => handleDelete(row.id_gallery)}
+                                                                >
+                                                                    <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Hapus
+                                                                    </div> 
+                                                                </button>
+
+                                                            </td>
+                                                            {/* <td className='align-middle'>
+                    
                                                                 <button
                                                                     className='btn mr-1' 
                                                                     style={{ background: '#F3F6F9', borderRadius: '6px' }} 
@@ -503,7 +580,9 @@ const Galeri = () => {
                                                                         height={18}
                                                                     />
                                                                 </button>
+
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/galeri/${row.id_gallery}`} title="Edit"/>
+                                                                
                                                                 <button
                                                                     onClick={() => handleDelete(row.id_gallery)}
                                                                     className="btn mr-1"
@@ -522,7 +601,7 @@ const Galeri = () => {
                                                                         height={18}
                                                                     />
                                                                 </button>
-                                                            </td>
+                                                            </td> */}
                                                         </tr>
 
                                                     })

@@ -96,6 +96,72 @@ const ListTrivia = () => {
     }
   };
 
+  const getStartAt = (date) => {
+    if (!date) {
+      return "-";
+    }
+    const startAt = new Date(date);
+    var tahun = startAt.getFullYear();
+    var bulan = startAt.getMonth();
+    var tanggal = startAt.getDate();
+
+    switch (bulan) {
+      case 0:
+        bulan = "Januari";
+        break;
+      case 1:
+        bulan = "Februari";
+        break;
+      case 2:
+        bulan = "Maret";
+        break;
+      case 3:
+        bulan = "April";
+        break;
+      case 4:
+        bulan = "Mei";
+        break;
+      case 5:
+        bulan = "Juni";
+        break;
+      case 6:
+        bulan = "Juli";
+        break;
+      case 7:
+        bulan = "Agustus";
+        break;
+      case 8:
+        bulan = "September";
+        break;
+      case 9:
+        bulan = "Oktober";
+        break;
+      case 10:
+        bulan = "November";
+        break;
+      case 11:
+        bulan = "Desember";
+        break;
+    }
+
+    return `${tanggal} ${bulan} ${tahun}`;
+  };
+
+  const isFinish = (date) => {
+    if (!date) {
+      return "Belum Dilaksanakan";
+    }
+    const endAt = new Date(date);
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (endAt > today) {
+      return "Belum Selesai";
+    } else {
+      return "Selesai";
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -154,49 +220,52 @@ const ListTrivia = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+          <div className="card-header border-0 mt-3">
+            <h1
+              className="card-title text-dark mt-2"
+              style={{ fontSize: "24px" }}
+            >
               List Trivia
-            </h3>
-            <div className="card-toolbar"></div>
+            </h1>
+            <div className="card-toolbar">
+              <Link href="/subvit/trivia/tambah">
+                <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
+                  <i className="ri-pencil-fill"></i>
+                  Tambah Soal
+                </a>
+              </Link>
+            </div>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
-                  <div className="input-icon">
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                      style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control mt-2"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      autoComplete="off"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
-                <div className="col-lg-1 col-xl-1">
-                  <button
-                    className="btn btn-sm btn-light-primary btn-block font-weight-bold mt-2"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
-                </div>
 
-                <div className="col-lg-3 col-xl-3 ml-auto">
-                  <Link href="/subvit/trivia/tambah">
-                    <a className="btn btn-sm btn-primary px-6 font-weight-bold btn-block mt-2">
-                      <i className="flaticon2-notepad"></i>
-                      Tambah Soal
-                    </a>
-                  </Link>
-                </div>
+                <div className="col-lg-3 col-xl-3 ml-auto"></div>
               </div>
             </div>
 
@@ -209,10 +278,9 @@ const ListTrivia = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>Akademi</th>
-                        <th>Tema</th>
+                        <th>Pelatihan</th>
+                        <th>Pelaksanaan</th>
                         <th>Bank Soal</th>
-                        <th>Pelaksaan</th>
                         <th>Status</th>
                         <th>Aksi</th>
                       </tr>
@@ -228,21 +296,25 @@ const ListTrivia = () => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
+                                <span className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
                               <td className="align-middle">
-                                {row.academy.name}
+                                <b>{row.academy.name}</b>
+                                <p>
+                                  {row.training !== null
+                                    ? row.training.name
+                                    : row.theme.name}
+                                </p>
                               </td>
                               <td className="align-middle">
-                                question
-                                {row.theme.name}
+                                <b>{getStartAt(row.start_at)}</b>
+                                <p>{isFinish(row.end_at)}</p>
                               </td>
                               <td className="align-middle">
                                 {row.bank_soal} Soal
                               </td>
-                              <td className="align-middle">{row.start_at}</td>
                               <td className="align-middle">
                                 {row.status ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
@@ -254,39 +326,29 @@ const ListTrivia = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
-                                <ButtonAction
-                                  icon="setting.svg"
-                                  link={`/subvit/trivia/report?id=${row.id}`}
-                                  title="Report"
-                                />
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`/subvit/trivia/edit?id=${row.id}`}
-                                  title="Edit"
-                                />
-                                <ButtonAction
-                                  icon="detail.svg"
-                                  link={`/subvit/trivia/${row.id}`}
-                                  title="Detail"
-                                />
-                                <button
-                                  onClick={() => handleDelete(row.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
+                              <td className="align-middle d-flex">
+                                <Link href={`/subvit/trivia/edit?id=${row.id}`}>
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <Link href={`/subvit/trivia/${row.id}`}>
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-eye-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <Link
+                                  href={`/subvit/trivia/report?id=${row.id}`}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-todo-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(row.id)}
+                                >
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>

@@ -1,5 +1,15 @@
 import Layout from "../../../components/templates/layout.component";
-import Tambah from "../../../components/content/partnership/manajemen-kerjasama/tambah";
+// import Tambah from "../../../components/content/partnership/manajemen-kerjasama/tambah";
+import LoadingPage from "../../../components/LoadingPage";
+import dynamic from "next/dynamic";
+
+const Tambah = dynamic(
+  () =>
+    import(
+      "../../../components/content/partnership/manajemen-kerjasama/tambah"
+    ),
+  { loading: () => <LoadingPage />, ssr: false }
+);
 
 export default function TambahPage() {
   return (
@@ -12,3 +22,5 @@ export default function TambahPage() {
     </>
   );
 }
+
+// TambahPage.displayName = "TambahPage";

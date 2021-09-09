@@ -109,24 +109,42 @@ const Imagetron = () => {
     };
 
     const handlePagination = (pageNumber) => {
-        if (limit !== null  && search === "" && startDate === null && endDate === null) {
+        if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-        
-        } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+    
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
     
-        } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
     
-        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     
-        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
         
-        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
         
+        } else if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
+          
+        } else if (limit !== null  && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
+    
+        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
+    
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
         }
@@ -269,7 +287,7 @@ const Imagetron = () => {
                 <div className="alert-icon">
                     <i className="flaticon2-checkmark"></i>
                 </div>
-                <div className="alert-text">Berhasil Menambah Data</div>
+                <div className="alert-text">Berhasil !</div>
                 <div className="alert-close">
                     <button
                     type="button"
@@ -328,16 +346,12 @@ const Imagetron = () => {
                     />
                 </div>
             </div>
-            
-            {
-                console.log (imagetron)
-            }
 
             <div className="col-lg-12 order-1 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">
-                        Manajemen Imagetron
+                        Imagetron
                         </h3>
                         <div className="card-toolbar">
                             <Link href="/publikasi/imagetron/tambah">
@@ -352,7 +366,32 @@ const Imagetron = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-10 col-xl-10">
+                                <div className="col-lg-7 col-xl-7 col-sm-9">
+                                    <div
+                                        className="position-relative overflow-hidden mt-3"
+                                        style={{ maxWidth: "330px" }}
+                                    >
+                                        <i className="ri-search-line left-center-absolute ml-2"></i>
+                                        <input
+                                        type="text"
+                                        className="form-control pl-10"
+                                        placeholder="Ketik disini untuk Pencarian..."
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        />
+                                        <button
+                                        className="btn bg-blue-primary text-white right-center-absolute"
+                                        style={{
+                                            borderTopLeftRadius: "0",
+                                            borderBottomLeftRadius: "0",
+                                        }}
+                                        onClick={handleSearch}
+                                        >
+                                        Cari
+                                        </button>
+                                    </div>
+
+                                </div>
+                                {/* <div className="col-lg-10 col-xl-10">
                                     <div className="input-icon">
                                         <input
                                         style={{ background: "#F3F6F9", border: "none" }}
@@ -375,9 +414,9 @@ const Imagetron = () => {
                                     >
                                         Cari
                                     </button>
-                                </div>
+                                </div> */}
                             </div>
-                            <div className="row align-items-right">
+                            {/* <div className="row align-items-right">
                                 <div className="col-lg-2 col-xl-2">
                                     <small className="form-text text-muted">
                                         Dari Tanggal
@@ -420,7 +459,7 @@ const Imagetron = () => {
                                         Cari
                                     </button>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="table-page mt-5">
@@ -511,8 +550,31 @@ const Imagetron = () => {
                                                                 )}
                                                             </td>
                                                             <td className='align-middle'>Super Admin</td>
-                                                            <td className='align-middle'>
-                                                                {/* <ButtonAction icon='setting.svg' /> */}
+                                                            <td className="align-middle d-flex justify-content-center">
+
+                                                                <Link
+                                                                href={`/publikasi/imagetron/${row.id}`}
+                                                                >
+                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Ubah
+                                                                    </div> 
+                                                                </a>
+                                                                </Link>
+
+                                                                <button
+                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                    onClick={() => handleDelete(row.id)}
+                                                                >
+                                                                    <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Hapus
+                                                                    </div> 
+                                                                </button>
+
+                                                            </td>
+                                                            {/* <td className='align-middle'>
                                                                 <ButtonAction icon='write.svg' link={`/publikasi/imagetron/${row.id}`} title="Edit"/>
                                                                 <button
                                                                     onClick={() => handleDelete(row.id)}
@@ -532,7 +594,7 @@ const Imagetron = () => {
                                                                         height={18}
                                                                     />
                                                                 </button>
-                                                            </td>
+                                                            </td> */}
                                                         </tr>
 
                                                     })
@@ -543,12 +605,12 @@ const Imagetron = () => {
                             </div>
 
                             <div className="row">
-                                {imagetron && imagetron.perPage < imagetron.total &&
+                                {imagetron && parseInt(imagetron.data.perPage) < imagetron.data.total &&
                                     <div className="table-pagination">
                                         <Pagination
                                             activePage={page}
-                                            itemsCountPerPage={imagetron.perPage}
-                                            totalItemsCount={imagetron.total}
+                                            itemsCountPerPage={parseInt(imagetron.data.perPage)}
+                                            totalItemsCount={imagetron.data.total}
                                             pageRangeDisplayed={3}
                                             onChange={handlePagination}
                                             nextPageText={'>'}

@@ -22,20 +22,9 @@ import {
   SET_NAME_LEMBAGA,
   SUCCESS_GET_EMAIL,
   FAIL_GET_EMAIL,
-  COOPERATION_ACTIVE_REQUEST,
-  COOPERATION_ACTIVE_SUCCESS,
-  COOPERATION_ACTIVE_FAIL,
-  COOPERATION_PENGAJUAN_REQUEST,
-  COOPERATION_PENGAJUAN_SUCCESS,
-  COOPERATION_PENGAJUAN_FAIL,
-  COOPERATION_NONAKTIF_REQUEST,
-  COOPERATION_NONAKTIF_SUCCESS,
-  COOPERATION_NONAKTIF_FAIL,
-  GET_COOPERTAION_ACTIVE_SELECT,
   FAIL_COOPERTAION_ACTIVE_SELECT,
   SUCCESS_COOPERTAION_ACTIVE_SELECT,
   SET_VALUE_CARD_M,
-  GET_COOPERTAION_ACTIVE_SELECT_BY_ID,
   SUCCESS_COOPERTAION_ACTIVE_SELECT_BY_ID,
   FAIL_COOPERTAION_ACTIVE_SELECT_BY_ID,
   CHANGE_COOPERTAION_ACTIVE_SELECT_BY_ID,
@@ -182,7 +171,9 @@ export const fetchAllMK = (keyword) => {
       // get total data status !-- aktif && tidak aktif
       let resultDataAnother = dataSortirAll.data.data.list_cooperations.filter(
         (items) =>
-          items.status.name !== "tidak aktif" && items.status.name !== "aktif"
+          items.status.name !== "tidak aktif" &&
+          items.status.name !== "aktif" &&
+          items.status.name !== "dibatalkan"
       );
 
       dispatch(
@@ -210,7 +201,7 @@ export const fetchListSelectMitra = () => {
       let dataNewLembaga = data.data.map((items) => {
         return { ...items, label: items.name, value: items.id };
       });
-      dataNewLembaga.splice(0, 0, { label: "Pilih Lembaga", value: "" });
+      dataNewLembaga.splice(0, 0, { label: "Semua", value: "" });
 
       dispatch(successFetchListSelectMitra(dataNewLembaga));
     } catch (error) {
@@ -234,7 +225,14 @@ export const fetchListSelectCooperation = () => {
     dispatch({ type: LIST_COOPERATION_REQUEST });
     try {
       const { data } = await getCooperation();
-      dispatch(successFetchListSelectCooperation(data));
+      let dataNewKerjasama = data.data.map((items) => {
+        return {
+          ...items,
+          label: items.cooperation_categories,
+          value: items.id,
+        };
+      });
+      dispatch(successFetchListSelectCooperation(dataNewKerjasama));
     } catch (error) {
       dispatch(errorFetchListSelectCooperation());
     }
@@ -252,6 +250,7 @@ export const fetchListCooperationSelect = () => {
     // dispatch({ type: GET_COOPERTAION_ACTIVE_SELECT });
     try {
       const { data } = await getCooperationActiveSelect();
+
       dispatch(successFetchListCooperationSelect(data));
     } catch (error) {
       dispatch(errorFetchListCooperationSelect());
@@ -276,6 +275,7 @@ export const fetchListCooperationSelectById = (id) => {
     // dispatch({ type: GET_COOPERTAION_ACTIVE_SELECT });
     try {
       const { data } = await getCooperationActiveSelectById(id);
+
       dispatch(successFetchListCooperationSelectByID(data));
     } catch (error) {
       dispatch(errorFetchListCooperationSelectByID());
@@ -310,7 +310,14 @@ export const fetchListSelectStatus = () => {
     dispatch({ type: LIST_STATUS_REQUEST });
     try {
       const { data } = await getStatus();
-      dispatch(successFetchListSelectStatus(data));
+      let dataNewStateus = data.data.map((items) => {
+        return {
+          ...items,
+          label: items.name,
+          value: items.id,
+        };
+      });
+      dispatch(successFetchListSelectStatus(dataNewStateus));
     } catch (error) {
       dispatch(errorFetchListSelectStatus());
     }
@@ -534,6 +541,7 @@ export const exportFileCSV = () => {
     }
   };
 };
+
 // fetch select
 // export const fetchCooperationActive = () =>{
 // }

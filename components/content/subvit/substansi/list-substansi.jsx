@@ -76,6 +76,72 @@ const ListSubstansi = () => {
     router.replace("/subvit/substansi", undefined, { shallow: true });
   };
 
+  const getStartAt = (date) => {
+    if (!date) {
+      return "-";
+    }
+    const startAt = new Date(date);
+    var tahun = startAt.getFullYear();
+    var bulan = startAt.getMonth();
+    var tanggal = startAt.getDate();
+
+    switch (bulan) {
+      case 0:
+        bulan = "Januari";
+        break;
+      case 1:
+        bulan = "Februari";
+        break;
+      case 2:
+        bulan = "Maret";
+        break;
+      case 3:
+        bulan = "April";
+        break;
+      case 4:
+        bulan = "Mei";
+        break;
+      case 5:
+        bulan = "Juni";
+        break;
+      case 6:
+        bulan = "Juli";
+        break;
+      case 7:
+        bulan = "Agustus";
+        break;
+      case 8:
+        bulan = "September";
+        break;
+      case 9:
+        bulan = "Oktober";
+        break;
+      case 10:
+        bulan = "November";
+        break;
+      case 11:
+        bulan = "Desember";
+        break;
+    }
+
+    return `${tanggal} ${bulan} ${tahun}`;
+  };
+
+  const isFinish = (date) => {
+    if (!date) {
+      return "Belum Dilaksanakan";
+    }
+    const endAt = new Date(date);
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (endAt > today) {
+      return "Belum Selesai";
+    } else {
+      return "Selesai";
+    }
+  };
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ?",
@@ -157,7 +223,7 @@ const ListSubstansi = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
+          <div className="card-header border-0 mt-3">
             <h1
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
@@ -190,7 +256,7 @@ const ListSubstansi = () => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-5 col-xl-5">
-                  <div className="input-icon">
+                  {/* <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
@@ -202,17 +268,31 @@ const ListSubstansi = () => {
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
+                  </div> */}
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                    <input
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
 
-                <div className="col-lg-1 col-xl-1">
-                  <button
-                    className="btn btn-sm btn-light-primary btn-block mt-2 font-weight-bold"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
-                </div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
                 <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
@@ -228,10 +308,9 @@ const ListSubstansi = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>Akademi</th>
-                        <th>Tema</th>
-                        <th>Bank Soal</th>
+                        <th>Pelatihan</th>
                         <th>Pelaksaan</th>
+                        <th>Bank Soal</th>
                         <th>Kategori</th>
                         <th>Status</th>
                         <th>Aksi</th>
@@ -250,21 +329,24 @@ const ListSubstansi = () => {
                           return (
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
+                                <span className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
                               <td className="align-middle">
-                                {subtance.academy.name}
+                                <b>{subtance.academy.name}</b>
+                                <p>
+                                  {subtance.training !== null
+                                    ? subtance.training.name
+                                    : subtance.theme.name}
+                                </p>
                               </td>
                               <td className="align-middle">
-                                {subtance.theme.name}
+                                <b>{getStartAt(subtance.start_at)}</b>
+                                <p>{isFinish(subtance.end_at)}</p>
                               </td>
                               <td className="align-middle">
                                 {subtance.bank_soal} Soal
-                              </td>
-                              <td className="align-middle">
-                                {subtance.start_at}
                               </td>
                               <td className="align-middle">
                                 {subtance.category}
@@ -280,39 +362,31 @@ const ListSubstansi = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
-                                <ButtonAction
-                                  icon="setting.svg"
-                                  link={`/subvit/substansi/report?id=${subtance.id}`}
-                                  title="Report"
-                                />
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`/subvit/substansi/edit?id=${subtance.id}`}
-                                  title="Edit"
-                                />
-                                <ButtonAction
-                                  icon="detail.svg"
-                                  link={`/subvit/substansi/${subtance.id}`}
-                                  title="Detail"
-                                />
-                                <button
-                                  onClick={() => handleDelete(subtance.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
+                              <td className="align-middle d-flex">
+                                <Link
+                                  href={`/subvit/substansi/edit?id=${subtance.id}`}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <Link href={`/subvit/substansi/${subtance.id}`}>
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-eye-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <Link
+                                  href={`/subvit/substansi/report?id=${subtance.id}`}
+                                >
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-todo-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(subtance.id)}
+                                >
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>

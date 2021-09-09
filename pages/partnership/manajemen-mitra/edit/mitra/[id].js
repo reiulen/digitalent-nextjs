@@ -1,6 +1,16 @@
 import Layout from "../../../../../components/templates/layout.component";
-import DetailDataKerjasamaById from "../../../../../components/content/partnership/manajemen-mitra/editKerjasamaById";
+// import DetailDataKerjasamaById from "../../../../../components/content/partnership/manajemen-mitra/editKerjasamaById";
 
+import dynamic from "next/dynamic";
+import LoadingPage from "../../../../../components/LoadingPage";
+
+const DetailDataKerjasamaById = dynamic(
+  () =>
+    import(
+      "../../../../../components/content/partnership/manajemen-mitra/editKerjasamaById"
+    ),
+  { loading: () => <LoadingPage />, ssr: false }
+);
 export default function DetailDataKerjasamaPage() {
   return (
     <>
@@ -12,3 +22,5 @@ export default function DetailDataKerjasamaPage() {
     </>
   );
 }
+
+// DetailDataKerjasamaPage.displayName = "DetailDataKerjasamaPage";

@@ -8,25 +8,15 @@ import {
   LIMIT_CONFIGURATION_M,
   SET_VALUE_STATUS_M,
   SET_VALUE_KERJA_SAMA_M,
-  LIST_MITRA_REQUEST,
   LIST_MITRA_SUCCESS,
-  LIST_MITRA_FAIL,
-  LIST_STATUS_REQUEST,
   LIST_STATUS_SUCCESS,
-  LIST_STATUS_FAIL,
-  LIST_COOPERATION_REQUEST,
   LIST_COOPERATION_SUCCESS,
-  LIST_COOPERATION_FAIL,
   SET_NAME_LEMBAGA,
   SUCCESS_GET_EMAIL,
   FAIL_GET_EMAIL,
-  GET_COOPERTAION_ACTIVE_SELECT,
-  FAIL_COOPERTAION_ACTIVE_SELECT,
   SUCCESS_COOPERTAION_ACTIVE_SELECT,
   SET_VALUE_CARD_M,
-  GET_COOPERTAION_ACTIVE_SELECT_BY_ID,
   SUCCESS_COOPERTAION_ACTIVE_SELECT_BY_ID,
-  FAIL_COOPERTAION_ACTIVE_SELECT_BY_ID,
   CHANGE_COOPERTAION_ACTIVE_SELECT_BY_ID,
   SUCCESS_DELETE_COOPERATION_M,
   SUCCESS_GET_SINGLE_COOPERATION_M,
@@ -34,6 +24,7 @@ import {
   CANCEL_CHANGE_CATEGORY,
   CANCEL_CHANGE_EMAIL,
   RELOAD_TABLE,
+  RESET_VALUE_SORTIR,
 } from "../../types/partnership/management_cooporation.type";
 
 const statuslist = {
@@ -128,6 +119,17 @@ export const allMCooporationReducerMK = (state = initialState, action) => {
         status: action.value,
         card: "",
       };
+    case RESET_VALUE_SORTIR:
+      return {
+        ...state,
+        status: "",
+        partner: "",
+        page: 1,
+        limit: 5,
+        categories_cooporation: "",
+        card: "",
+        keyword: "",
+      };
     case SET_VALUE_CARD_M:
       return {
         ...state,
@@ -191,7 +193,9 @@ export const allMCooporationReducerMK = (state = initialState, action) => {
     case CANCEL_CHANGE_CATEGORY:
       return {
         ...state,
-        stateListKerjaSama: [],
+        cooperationActiveSelect: [],
+        singleCooporationSelect: [],
+        idCooporationSelect: "",
       };
     case CANCEL_CHANGE_EMAIL:
       return {

@@ -114,20 +114,18 @@ const StepOne = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInputPublish step="1"></StepInputPublish>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Edit Test Substansi
-            </h3>
+            <h2 className="card-title h2 text-dark">Edit Test Substansi</h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
-              <div className="form-group row">
+              <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Akademi
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="academy_id"
                     id=""
@@ -141,18 +139,17 @@ const StepOne = () => {
                     </option>
                     <option value="2"> Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Akademi</span>
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Tema
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="the_id"
                     id=""
@@ -166,18 +163,17 @@ const StepOne = () => {
                     </option>
                     <option value="2"> UI/UX Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Tema</span>
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Pelatihan
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="training_id"
                     id=""
@@ -191,18 +187,17 @@ const StepOne = () => {
                     </option>
                     <option value="2"> Adobe UI/UX Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Pelatihan</span>
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group ">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Kategori
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="category"
                     id=""
@@ -216,18 +211,17 @@ const StepOne = () => {
                     </option>
                     <option value="mid_tes"> Mid Tes </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Kategori</span>
                 </div>
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 text-right">
-                  <button className="btn btn-light-primary btn-sm mr-2">
+              <div className="form-group ">
+                <div className=""></div>
+                <div className=" text-right">
+                  <button className="btn btn-light-rounded-full mr-2 font-weight-bold">
                     Simpan & Lanjut
                   </button>
                   <button
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary-rounded-full"
                     onClick={saveDraft}
                     type="button"
                   >

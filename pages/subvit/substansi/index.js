@@ -2,25 +2,18 @@ import React, { useEffect, useState } from "react";
 
 import dynamic from "next/dynamic";
 import Layout from "../../../components/templates/layout.component";
-import LoadingPage from "../../../components/LoadingPage";
+// import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 // import ListSubstansi from '../../../components/content/subvit/substansi/list-substansi'
 const ListSubstansi = dynamic(
   () => import("../../../components/content/subvit/substansi/list-substansi"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { suspense: true, loading: () => <LoadingSkeleton /> }
 );
 
 import { getAllSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../redux/store";
 
 export default function Substansi() {
-  //   const [loader, setLoader] = useState(true);
-
-  //   useEffect(() => {
-  //     setTimeout(() => {
-  //       setLoader(false);
-  //     }, 2000);
-  //   }, [setLoader]);
-
   return (
     <>
       <div className="d-flex flex-column flex-root">

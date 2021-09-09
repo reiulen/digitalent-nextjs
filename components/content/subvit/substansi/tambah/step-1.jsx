@@ -155,152 +155,138 @@ const StepOne = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="1"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Tambah Test Subtansi
-            </h3>
+            <h2 className="card-title text-dark h2">Tambah Test Subtansi</h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
-              <div className="form-group row">
+              <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Akademi
                 </label>
-                <div className="col-sm-10">
-                  <select
-                    name="academy_id"
-                    id=""
-                    value={academy_id}
-                    onChange={(e) => setAcademyId(e.target.value)}
-                    onBlur={(e) => {
-                      setAcademyId(e.target.value);
-                      simpleValidator.current.showMessageFor("academy_id");
-                    }}
-                    className="form-control"
-                  >
-                    <option selected disabled value="">
-                      {" "}
-                      -Pilih Akademi -
-                    </option>
-                    <option value="1"> Computer Scientist </option>
-                    <option value="2"> Designer </option>
-                  </select>
-                  <span className="text-muted">Silahkan Pilih Akademi</span>
-                  {simpleValidator.current.message(
-                    "academy_id",
-                    academy_id,
-                    "required",
-                    { className: "text-danger" }
-                  )}
-                </div>
+                <select
+                  name="academy_id"
+                  id=""
+                  value={academy_id}
+                  onChange={(e) => setAcademyId(e.target.value)}
+                  onBlur={(e) => {
+                    setAcademyId(e.target.value);
+                    simpleValidator.current.showMessageFor("academy_id");
+                  }}
+                  className="form-control"
+                >
+                  <option selected disabled value="">
+                    {" "}
+                    -Pilih Akademi -
+                  </option>
+                  <option value="1"> Computer Scientist </option>
+                  <option value="2"> Designer </option>
+                </select>
+                {simpleValidator.current.message(
+                  "academy_id",
+                  academy_id,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
 
-              <div className="form-group row">
+              <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Tema
                 </label>
-                <div className="col-sm-10">
-                  <select
-                    name="the_id"
-                    id=""
-                    onChange={(e) => setThemeId(e.target.value)}
-                    onBlur={(e) => {
-                      setThemeId(e.target.value);
-                      simpleValidator.current.showMessageFor("theme_id");
-                    }}
-                    className="form-control"
-                  >
-                    <option selected disabled value="">
-                      {" "}
-                      -Pilih Tema-
-                    </option>
-                    <option value="1"> Cloud Computing </option>
-                    <option value="2"> UI/UX Designer </option>
-                  </select>
-                  <span className="text-muted">Silahkan Pilih Tema</span>
-                  {simpleValidator.current.message(
-                    "theme_id",
-                    theme_id,
-                    "required",
-                    { className: "text-danger" }
-                  )}
-                </div>
+                <select
+                  name="the_id"
+                  id=""
+                  onChange={(e) => setThemeId(e.target.value)}
+                  onBlur={(e) => {
+                    setThemeId(e.target.value);
+                    simpleValidator.current.showMessageFor("theme_id");
+                  }}
+                  className="form-control"
+                >
+                  <option selected disabled value="">
+                    {" "}
+                    -Pilih Tema-
+                  </option>
+                  <option value="1"> Cloud Computing </option>
+                  <option value="2"> UI/UX Designer </option>
+                </select>
+                {simpleValidator.current.message(
+                  "theme_id",
+                  theme_id,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
 
-              <div className="form-group row">
+              <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Pelatihan
                 </label>
-                <div className="col-sm-10">
-                  <select
-                    name="training_id"
-                    id=""
-                    onChange={(e) => setTrainingId(e.target.value)}
-                    onBlur={(e) => setTrainingId(e.target.value)}
-                    className="form-control"
-                  >
-                    <option selected disabled>
-                      {" "}
-                      -Pilih Pelatihan-
-                    </option>
-                    <option value="1"> Google Cloud Computing </option>
-                    <option value="1"> Adobe UI/UX Designer </option>
-                  </select>
-                  <span className="text-muted">Silahkan Pilih Pelatihan</span>
-                </div>
+                <select
+                  name="training_id"
+                  id=""
+                  onChange={(e) => setTrainingId(e.target.value)}
+                  onBlur={(e) => setTrainingId(e.target.value)}
+                  className="form-control"
+                >
+                  <option selected disabled>
+                    {" "}
+                    -Pilih Pelatihan-
+                  </option>
+                  <option value="1"> Google Cloud Computing </option>
+                  <option value="1"> Adobe UI/UX Designer </option>
+                </select>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Kategori
                 </label>
-                <div className="col-sm-10">
-                  <select
-                    name="category"
-                    id=""
-                    onChange={(e) => setCategory(e.target.value)}
-                    onBlur={(e) => {
-                      setCategory(e.target.value);
-                      simpleValidator.current.showMessageFor("category");
-                    }}
-                    className="form-control"
-                  >
-                    <option selected disabled>
-                      {" "}
-                      -Pilih Kategori-
-                    </option>
-                    <option value="Test Substansi"> Tes Substansi </option>
-                    <option value="Mid Test"> Mid Tes </option>
-                  </select>
-                  <span className="text-muted">Silahkan Pilih Kategori</span>
-                  {simpleValidator.current.message(
-                    "category",
-                    category,
-                    "required",
-                    { className: "text-danger" }
-                  )}
-                </div>
+                <select
+                  name="category"
+                  id=""
+                  onChange={(e) => setCategory(e.target.value)}
+                  onBlur={(e) => {
+                    setCategory(e.target.value);
+                    simpleValidator.current.showMessageFor("category");
+                  }}
+                  className="form-control"
+                >
+                  <option selected disabled>
+                    {" "}
+                    -Pilih Kategori-
+                  </option>
+                  <option value="Test Substansi"> Tes Substansi </option>
+                  <option value="Mid Test"> Mid Tes </option>
+                </select>
+                {simpleValidator.current.message(
+                  "category",
+                  category,
+                  "required",
+                  { className: "text-danger" }
+                )}
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Metode
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <div className="form-check form-check-inline">
                     <input
                       className="form-check-input"
@@ -323,27 +309,21 @@ const StepOne = () => {
                     />
                     <label className="form-check-label">Import .csv/.xls</label>
                   </div>
-
-                  <div>
-                    <span className="text-muted">
-                      Silahkan Pilih Metode Tambah Test Substansi
-                    </span>
-                  </div>
                 </div>
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 text-right">
+              <div className="form-group">
+                <div className=""></div>
+                <div className=" text-right">
                   <button
                     type="submit"
-                    className="btn btn-light-primary btn-sm mr-2"
+                    className="btn btn-light-ghost-rounded-full mr-2"
                   >
                     Simpan & Lanjut
                   </button>
                   <button
                     onClick={saveDraft}
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary-rounded-full text-white "
                     type="button"
                   >
                     Simpan Draft

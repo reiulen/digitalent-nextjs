@@ -5,8 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
+import { Modal } from "react-bootstrap";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
@@ -54,6 +53,7 @@ const DetailSubstansi = () => {
   const [pelatihan, setPelatihan] = useState(null);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?id=${id}&page=${pageNumber}`;
@@ -130,6 +130,98 @@ const DetailSubstansi = () => {
     }
   };
 
+  const getStartEndAt = (start, end) => {
+    if (!(start || end)) {
+      return "-";
+    }
+    const startAt = new Date(start);
+    var startMonth = startAt.getMonth();
+    const endAt = new Date(end);
+    var tahun = endAt.getFullYear();
+    var bulan = endAt.getMonth();
+    var tanggal = endAt.getDate();
+
+    switch (bulan) {
+      case 0:
+        bulan = "Januari";
+        break;
+      case 1:
+        bulan = "Februari";
+        break;
+      case 2:
+        bulan = "Maret";
+        break;
+      case 3:
+        bulan = "April";
+        break;
+      case 4:
+        bulan = "Mei";
+        break;
+      case 5:
+        bulan = "Juni";
+        break;
+      case 6:
+        bulan = "Juli";
+        break;
+      case 7:
+        bulan = "Agustus";
+        break;
+      case 8:
+        bulan = "September";
+        break;
+      case 9:
+        bulan = "Oktober";
+        break;
+      case 10:
+        bulan = "November";
+        break;
+      case 11:
+        bulan = "Desember";
+        break;
+    }
+
+    switch (startMonth) {
+      case 0:
+        startMonth = "Januari";
+        break;
+      case 1:
+        startMonth = "Februari";
+        break;
+      case 2:
+        startMonth = "Maret";
+        break;
+      case 3:
+        startMonth = "April";
+        break;
+      case 4:
+        startMonth = "Mei";
+        break;
+      case 5:
+        startMonth = "Juni";
+        break;
+      case 6:
+        startMonth = "Juli";
+        break;
+      case 7:
+        startMonth = "Agustus";
+        break;
+      case 8:
+        startMonth = "September";
+        break;
+      case 9:
+        startMonth = "Oktober";
+        break;
+      case 10:
+        startMonth = "November";
+        break;
+      case 11:
+        startMonth = "Desember";
+        break;
+    }
+
+    return `${startAt.getDate()} ${startMonth} - ${tanggal} ${bulan} ${tahun}`;
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -161,13 +253,14 @@ const DetailSubstansi = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header">
-            <h3 className="card-title font-weight-bolder text-dark">
+          <div className="card-header border-0">
+            <h2 className="card-title h2 text-dark">
               Substansi FGA - Cloud Computing
-            </h3>
+            </h2>
             <div className="card-toolbar">
               <Link href={`/subvit/substansi/edit?id=${id}`}>
-                <a className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block ">
+                <a className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block">
+                  <i className="ri-pencil-fill"></i>
                   Edit
                 </a>
               </Link>
@@ -176,40 +269,102 @@ const DetailSubstansi = () => {
 
           <div className="card-body">
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <div className="row">
-                  <div
-                    className="col title-1 font-weight-bold"
-                    style={{ color: "#80808F" }}
-                  >
-                    <p>Akademi</p>
-                    <p>Tema</p>
-                    <p>Pelatihan</p>
-                    <p>Status</p>
-                  </div>
-                  <div className="col value-1">
-                    <p>FGA</p>
-                    <p>Cloude Computing</p>
-                    <p>-</p>
-                    <p>{subtance.status ? "Publish" : "Draft"}</p>
-                  </div>
+                  <table>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">Akademi</p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.academy.name || "-"}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">Tema</p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.theme.name || "-"}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">
+                          Pelatihan
+                        </p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.training.name || "-"}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">Kategori</p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.category || "-"}</p>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
               </div>
-              <div className="col-md-4">
+              <div className="col-md-6">
                 <div className="row">
-                  <div
-                    className="col title-1 font-weight-bold"
-                    style={{ color: "#80808F" }}
-                  >
-                    <p>Pelaksanaan</p>
-                    <p>Jumlah Soal</p>
-                    <p>Durasi Tes</p>
-                  </div>
-                  <div className="col value-1">
-                    <p>1 - 5 Juli 2021</p>
-                    <p>{subtance.bank_soal} Soal</p>
-                    <p>{subtance.duration} Menit</p>
-                  </div>
+                  <table>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">
+                          Pelaksanaan
+                        </p>
+                      </td>
+                      <td>
+                        <p className="pl-5">
+                          {getStartEndAt(subtance.start_at, subtance.end_at)}
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">
+                          Jumlah Soal
+                        </p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.bank_soal} Soal</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">
+                          Passing Grade
+                        </p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.passing_grade || "-"}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">
+                          Durasi Tes
+                        </p>
+                      </td>
+                      <td>
+                        <p className="pl-5">{subtance.duration} Menit</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <p className="font-weight-bolder text-dark">Status</p>
+                      </td>
+                      <td>
+                        <p className="pl-5">
+                          {subtance.status ? "Publish" : "Draft"}
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>
@@ -221,16 +376,15 @@ const DetailSubstansi = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <div className="card-toolbar">
-              <h3 className="card-title font-weight-bolder text-dark">
-                Bank Soal
-              </h3>
+              <h2 className="card-title h2 text-dark">Bank Soal</h2>
               {/* <label htmlFor=""></label> */}
             </div>
             <div className="card-toolbar">
               <a
-                className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block"
+                className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block"
                 onClick={handleModal}
               >
+                <i className="ri-pencil-fill"></i>
                 Tambah Soal
               </a>
             </div>
@@ -239,100 +393,46 @@ const DetailSubstansi = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="input-icon">
-                    <input
-                      style={{ background: "#F3F6F9", border: "none" }}
-                      type="text"
-                      className="form-control mt-2"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      onChange={(e) => setSearch(e.target.value)}
-                      autoComplete="off"
-                    />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="col-lg-2 col-xl-2">
-                  <button
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block mt-2"
-                    onClick={handleSearch}
+                <div className="col-lg-8 col-xl-8">
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
                   >
-                    Cari
-                  </button>
-                </div>
-              </div>
-
-              <div className="row align-items-center my-5">
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted p-0">
-                      Filter by Pelatihan
-                    </small>
-                    <select className="form-control mb-1">
-                      <option>Semua</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted p-0">Filter by Status</small>
-                    <select
-                      className="form-control mb-1"
-                      onChange={(e) => setStatus(e.target.value)}
-                      onBlur={(e) => setStatus(e.target.value)}
-                      value={status}
-                    >
-                      <option value="" selected>
-                        Semua
-                      </option>
-                      <option value={true}>Publish</option>
-                      <option value={false}>Draft</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted p-0">Filter by Kategori</small>
-                    <select
-                      className="form-control mb-1"
-                      onChange={(e) => setKategori(e.target.value)}
-                      onBlur={(e) => setKategori(e.target.value)}
-                      value={kategori}
-                    >
-                      <option value="">Semua</option>
-                      {!subtance_question_type ||
-                      (subtance_question_type &&
-                        subtance_question_type.list_types.length === 0) ? (
-                        <option value="">Data kosong</option>
-                      ) : (
-                        subtance_question_type &&
-                        subtance_question_type.list_types.map((row) => {
-                          return (
-                            <option key={row.id} value={row.id}>
-                              {row.name}
-                            </option>
-                          );
-                        })
-                      )}
-                    </select>
-                  </div>
-                </div>
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="text-muted mt-5 p-0"> </div>
-                  <div className="">
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                    <input
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
                     <button
-                      className="btn btn-light-primary"
-                      onClick={handleFilter}
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
                     >
-                      Filter
+                      Cari
                     </button>
                   </div>
+                </div>
+                <div className="col-lg-4 col-xl-4">
+                  <button
+                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    style={{
+                      minWidth: "280px",
+                      color: "#bdbdbd",
+                      float: "right",
+                    }}
+                    onClick={() => setShowModal(true)}
+                  >
+                    <div className="d-flex align-items-center">
+                      <i className="ri-filter-fill mr-3"></i>
+                      Pilih Filter
+                    </div>
+                    <i className="ri-arrow-down-s-line"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -348,7 +448,7 @@ const DetailSubstansi = () => {
                       <th>Kategori</th>
                       <th>Bobot</th>
                       <th>Status</th>
-                      <th className="text-center">Aksi</th>
+                      <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -360,7 +460,7 @@ const DetailSubstansi = () => {
                           return (
                             <tr key={question.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
+                                <span className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
@@ -372,7 +472,7 @@ const DetailSubstansi = () => {
                                 {question.type.name}
                               </td>
                               <td className="align-middle">
-                                {question.type.value}
+                                {question.type.value} Poin
                               </td>
                               <td className="align-middle">
                                 {question.status === true ? (
@@ -385,29 +485,19 @@ const DetailSubstansi = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`edit-soal-substansi?id=${question.id}`}
-                                  title="Edit"
-                                />
-                                <button
-                                  onClick={() => handleDelete(question.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
+                              <td className="align-middle d-flex">
+                                <Link
+                                  href={`edit-soal-substansi?id=${question.id}`}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(question.id)}
+                                >
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>
@@ -487,6 +577,80 @@ const DetailSubstansi = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Filter</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group mb-5">
+            <label className="p-0">Pelatihan</label>
+            <select className="form-control">
+              <option>Semua</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Status</label>
+            <select
+              className="form-control"
+              onChange={(e) => setStatus(e.target.value)}
+              onBlur={(e) => setStatus(e.target.value)}
+              value={status}
+            >
+              <option value="" selected>
+                Semua
+              </option>
+              <option value={true}>Publish</option>
+              <option value={false}>Draft</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className=" p-0">Kategori</label>
+            <select
+              className="form-control"
+              onChange={(e) => setKategori(e.target.value)}
+              onBlur={(e) => setKategori(e.target.value)}
+              value={kategori}
+            >
+              <option value="">Semua</option>
+              {!subtance_question_type ||
+              (subtance_question_type &&
+                subtance_question_type.list_types.length === 0) ? (
+                <option value="">Data kosong</option>
+              ) : (
+                subtance_question_type &&
+                subtance_question_type.list_types.map((row) => {
+                  return (
+                    <option key={row.id} value={row.id}>
+                      {row.name}
+                    </option>
+                  );
+                })
+              )}
+            </select>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-light-ghost-rounded-full mr-2"
+            type="reset"
+          >
+            Reset
+          </button>
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={handleFilter}
+          >
+            Terapkan
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };

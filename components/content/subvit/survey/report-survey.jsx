@@ -12,6 +12,7 @@ import ButtonAction from "../../../ButtonAction";
 import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
+import { Modal } from "react-bootstrap";
 
 const ReportSurvey = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const ReportSurvey = () => {
   const [status, setStatus] = useState("");
   const [pelatihan, setPelatihan] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (limit) {
@@ -174,91 +176,75 @@ const ReportSurvey = () => {
               </h3>
               <p className="text-muted">FGA - Cloud Computing</p>
             </div>
-            <div className="col-lg-2 col-xl-2">
-              <button
-                className="btn btn-sm btn-light-success px-6 font-weight-bold btn-block"
-                onClick={handleExportReport}
-              >
-                Export .CSV
-              </button>
-            </div>
             <div className="card-toolbar"></div>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="input-icon">
+                <div className="col-md-5">
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                      style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control mt-2"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      autoComplete="off"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
                     />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="col-lg-2 col-xl-2">
-                  <button
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block mt-2"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
-                </div>
-              </div>
-
-              <div className="row align-items-center my-5">
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted p-0">
-                      Filter by Pelatihan
-                    </small>
-                    <select className="form-control mb-1">
-                      <option>Semua</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="form-group mb-0">
-                    <small className="text-muted p-0">Filter by Status</small>
-                    <select
-                      className="form-control mb-1"
-                      onChange={(e) => setStatus(e.target.value)}
-                      onBlur={(e) => setStatus(e.target.value)}
-                      value={status}
-                    >
-                      <option value="" selected>
-                        Semua
-                      </option>
-                      <option value={1}>Diterima</option>
-                      <option value={0}>Ditolak</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="col-lg-3 col-xl-3 ">
-                  <div className="mt-4">
                     <button
-                      className="btn btn-light-primary"
-                      onClick={handleFilter}
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
                     >
-                      Filter
+                      Cari
                     </button>
                   </div>
+                </div>
+                <div className="col-md-1"></div>
+                <div className="col-md-4">
+                  <button
+                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    style={{
+                      minWidth: "280px",
+                      color: "#bdbdbd",
+                      float: "right",
+                    }}
+                    onClick={() => setShowModal(true)}
+                  >
+                    <div className="d-flex align-items-center">
+                      <i className="ri-filter-fill mr-3"></i>
+                      Pilih Filter
+                    </div>
+                    <i className="ri-arrow-down-s-line"></i>
+                  </button>
+                </div>
+                <div className="col-md-2">
+                  {/* <button
+                    className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
+                    type="button"
+                    onClick={handleExportReport}
+                  >
+                    Export .CSV
+                  </button> */}
+                  <button
+                    className="btn btn-rounded-full bg-blue-secondary text-white mt-2"
+                    type="button"
+                    onClick={handleExportReport}
+                  >
+                    Export
+                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
+                  </button>
                 </div>
               </div>
             </div>
 
-            <div className="table-page">
+            <div className="table-page mt-5">
               <div className="table-responsive">
                 <LoadingTable loading={loading} />
 
@@ -267,9 +253,9 @@ const ReportSurvey = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>Peserta Test</th>
+                        <th>Nama Peserta</th>
                         <th>Pelatihan</th>
-                        <th>Total Pengerjaan</th>
+                        <th>Pelaksanaan</th>
                         <th>Jawaban</th>
                         <th>Status</th>
                       </tr>
@@ -287,13 +273,13 @@ const ReportSurvey = () => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <p className="badge badge-secondary text-muted">
+                                <p className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </p>
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 font-weight-bold">
+                                  <p className="my-0 font-weight-bold h6">
                                     {row.name}
                                   </p>
                                   <p className="my-0">{row.email}</p>
@@ -301,13 +287,16 @@ const ReportSurvey = () => {
                                 </div>
                               </td>
                               <td className="align-middle">
-                                <p className="font-weight-bold">
-                                  {row.training.name}
-                                </p>
+                                <div className="">
+                                  {/* <p className="font-weight-bold my-0 h6">
+                                    {row.training.theme.academy.name}
+                                  </p> */}
+                                  <p className="my-0">{row.training.name}</p>
+                                </div>
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0 font-weight-bold">
+                                  <p className="my-0 font-weight-bold h6">
                                     {row.total_workmanship_date}
                                   </p>
                                   <p className="my-0">
@@ -410,6 +399,54 @@ const ReportSurvey = () => {
           </div>
         </div>
       </div>
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Filter</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group mb-5">
+            <label className="p-0">Pelatihan</label>
+            <select className="form-control">
+              <option>Semua</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Status</label>
+            <select
+              className="form-control mb-1"
+              onChange={(e) => setStatus(e.target.value)}
+              onBlur={(e) => setStatus(e.target.value)}
+              value={status}
+            >
+              <option value="" selected>
+                Semua
+              </option>
+              <option value={1}>Diterima</option>
+              <option value={0}>Ditolak</option>
+            </select>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-light-ghost-rounded-full mr-2"
+            type="reset"
+          >
+            Reset
+          </button>
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={handleFilter}
+          >
+            Terapkan
+          </button>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };

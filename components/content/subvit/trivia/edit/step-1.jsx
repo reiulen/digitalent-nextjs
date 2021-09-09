@@ -7,8 +7,8 @@ import { useRouter } from "next/router";
 import {
   updatewTriviaQuestionBanks,
   clearErrors,
-} from '../../../../../redux/actions/subvit/trivia-question.actions';
-import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from '../../../../../redux/types/subvit/trivia-question.type';
+} from "../../../../../redux/actions/subvit/trivia-question.actions";
+import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../redux/types/subvit/trivia-question.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
@@ -19,13 +19,17 @@ const StepOne = () => {
   const router = useRouter();
 
   let { id } = router.query;
-  const { error: detailData, trivia } = useSelector((state) => state.detailTriviaQuestionBanks)
-  const { loading, error, isUpdated } = useSelector((state) => state.updateTriviaQuestion)
+  const { error: detailData, trivia } = useSelector(
+    (state) => state.detailTriviaQuestionBanks
+  );
+  const { loading, error, isUpdated } = useSelector(
+    (state) => state.updateTriviaQuestion
+  );
 
-  const [typeSave, setTypeSave] = useState('lanjut')
-  const [academy_id, setAcademyId] = useState(trivia.academy_id)
-  const [theme_id, setThemeId] = useState(trivia.theme_id)
-  const [training_id, setTrainingId] = useState(trivia.training_id)
+  const [typeSave, setTypeSave] = useState("lanjut");
+  const [academy_id, setAcademyId] = useState(trivia.academy_id);
+  const [theme_id, setThemeId] = useState(trivia.theme_id);
+  const [training_id, setTrainingId] = useState(trivia.training_id);
 
   useEffect(() => {
     // if (error) {
@@ -36,12 +40,12 @@ const StepOne = () => {
       dispatch({
         type: UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
       });
-      if (typeSave === 'lanjut') {
+      if (typeSave === "lanjut") {
         router.push({
           pathname: `/subvit/trivia/edit/step-2`,
-          query: { id }
-        })
-      } else if (typeSave === 'draft') {
+          query: { id },
+        });
+      } else if (typeSave === "draft") {
         router.push({
           pathname: `/subvit/trivia`,
           query: { success: true },
@@ -55,31 +59,35 @@ const StepOne = () => {
   // };
 
   const saveDraft = () => {
-    setTypeSave('draft')
+    setTypeSave("draft");
     const data = {
       academy_id,
       theme_id,
       training_id,
-      _method: 'put'
-    }
+      _method: "put",
+    };
 
-    dispatch(updatewTriviaQuestionBanks(id, data))
+    dispatch(updatewTriviaQuestionBanks(id, data));
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    setTypeSave('lanjut')
+    setTypeSave("lanjut");
 
     const data = {
       academy_id,
       theme_id,
       training_id,
-      _method: 'put'
+      _method: "put",
+    };
+
+    dispatch(updatewTriviaQuestionBanks(id, data));
+  };
+
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
     }
-
-    dispatch(updatewTriviaQuestionBanks(id, data))
-
-    console.log(data)
   };
 
   return (
@@ -99,6 +107,7 @@ const StepOne = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -110,28 +119,22 @@ const StepOne = () => {
         ""
       )}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-        {
-          loading ?
-            <LoadingPage loading={loading} />
-            : ''
-        }
+        {loading ? <LoadingPage loading={loading} /> : ""}
         <div className="card card-custom card-stretch gutter-b">
           <StepInputPublish step="1"></StepInputPublish>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Publish Soal
-            </h3>
+            <h2 className="card-title h2 text-dark">Publish Soal</h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
-              <div className="form-group row">
+              <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Akademi
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="academy_id"
                     id=""
@@ -139,21 +142,23 @@ const StepOne = () => {
                     className="form-control"
                   >
                     <option> -Pilih Akademi -</option>
-                    <option value="1" selected> Computer Scientist </option>
+                    <option value="1" selected>
+                      {" "}
+                      Computer Scientist{" "}
+                    </option>
                     <option value="2"> Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Akademi</span>
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group mb-2">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Tema
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="the_id"
                     id=""
@@ -161,21 +166,23 @@ const StepOne = () => {
                     className="form-control"
                   >
                     <option> -Pilih Tema-</option>
-                    <option value="1" selected> Cloud Computing </option>
+                    <option value="1" selected>
+                      {" "}
+                      Cloud Computing{" "}
+                    </option>
                     <option value="2"> UI/UX Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Tema</span>
                 </div>
               </div>
 
-              <div className="form-group row">
+              <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label "
+                  className=" col-form-label font-weight-bold"
                 >
                   Pelatihan
                 </label>
-                <div className="col-sm-10">
+                <div className="">
                   <select
                     name="training_id"
                     id=""
@@ -183,25 +190,25 @@ const StepOne = () => {
                     className="form-control"
                   >
                     <option> -Pilih Pelatihan-</option>
-                    <option value="1" selected> Google Cloud Computing </option>
+                    <option value="1" selected>
+                      {" "}
+                      Google Cloud Computing{" "}
+                    </option>
                     <option value="2"> Adobe UI/UX Designer </option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Pelatihan</span>
                 </div>
               </div>
 
-              <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10 text-right">
-                  <button
-                    className="btn btn-light-primary btn-sm mr-2"
-                  >
+              <div className="form-group">
+                <div className=""></div>
+                <div className=" text-right">
+                  <button className="btn btn-light-ghost-rounded-full mr-2">
                     Simpan & Lanjut
                   </button>
                   <button
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary-rounded-full text-white"
                     onClick={saveDraft}
-                    type='button'
+                    type="button"
                   >
                     Simpan Draft
                   </button>

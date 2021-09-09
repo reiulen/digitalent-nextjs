@@ -151,16 +151,20 @@ const StepTwo = () => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="3"></StepInput>
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Publish Soal Cloning
-            </h3>
+            <h2 className="card-title h2 text-dark">Publish Soal Cloning</h2>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
               <div className="form-group row">
-                <div className="col-sm-6 col-md-2">
-                  <span>Pelaksanaan dari</span>
+                <div className="col-sm-12 col-md-6">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Pelaksanaan Dari
+                  </p>
                   <DatePicker
+                    wrapperClassName="datepicker"
                     className="form-control"
                     name="start_date"
                     selected={startDate}
@@ -175,9 +179,7 @@ const StepTwo = () => {
                     autoComplete="off"
                     value={startDate}
                   />
-                  <small className="text-muted">
-                    Silahkan Pilih Tanggal Dari
-                  </small>
+
                   {simpleValidator.current.message(
                     "tanggal mulai",
                     startDate,
@@ -186,9 +188,15 @@ const StepTwo = () => {
                   )}
                 </div>
 
-                <div className="col-sm-6 col-md-2">
-                  <span>Sampai</span>
+                <div className="col-sm-12 col-md-6">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Sampai
+                  </p>
                   <DatePicker
+                    wrapperClassName="datepicker"
                     className="form-control"
                     selected={endDate}
                     onChange={(date) => setEndDate(date)}
@@ -203,9 +211,7 @@ const StepTwo = () => {
                     autoComplete="off"
                     value={endDate}
                   />
-                  <small className="text-muted">
-                    Silahkan Pilih Tanggal Sampai
-                  </small>
+
                   {simpleValidator.current.message(
                     "tanggal sampai",
                     endDate,
@@ -216,8 +222,13 @@ const StepTwo = () => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
-                  <span>Jumlah Soal</span>
+                <div className="col-sm-12 col-md-6">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Jumlah Soal
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -231,14 +242,15 @@ const StepTwo = () => {
                       min={1}
                     />
                     <div className="input-group-append">
-                      <span className="input-group-text" id="basic-addon2">
+                      <span
+                        className="input-group-text bg-primary text-white"
+                        id="basic-addon2"
+                      >
                         Soal
                       </span>
                     </div>
                   </div>
-                  <small className="text-muted">
-                    Silahkan Input Jumlah Soal
-                  </small>
+
                   {simpleValidator.current.message(
                     "jumlah soal",
                     jumlah_soal,
@@ -246,11 +258,13 @@ const StepTwo = () => {
                     { className: "text-danger" }
                   )}
                 </div>
-              </div>
-
-              <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
-                  <span>Durasi Test</span>
+                <div className="col-sm-12 col-md-6">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Durasi Test
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -264,14 +278,15 @@ const StepTwo = () => {
                       min={1}
                     />
                     <div className="input-group-append bg-sedondary">
-                      <span className="input-group-text" id="basic-addon2">
+                      <span
+                        className="input-group-text bg-primary text-white"
+                        id="basic-addon2"
+                      >
                         Menit
                       </span>
                     </div>
                   </div>
-                  <small className="text-muted">
-                    Silahkan Input Durasi Test
-                  </small>
+
                   {simpleValidator.current.message(
                     "durasi",
                     duration,
@@ -282,8 +297,13 @@ const StepTwo = () => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
-                  <span>Passing Grade</span>
+                <div className="col-sm-12 col-md-12">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Passing Grade
+                  </p>
                   <div className="input-group">
                     <input
                       type="number"
@@ -296,14 +316,15 @@ const StepTwo = () => {
                       }
                     />
                     <div className="input-group-append">
-                      <span className="input-group-text" id="basic-addon2">
+                      <span
+                        className="input-group-text bg-primary text-white"
+                        id="basic-addon2"
+                      >
                         Nilai
                       </span>
                     </div>
                   </div>
-                  <small className="text-muted">
-                    Silahkan Input Passing Grade
-                  </small>
+
                   {simpleValidator.current.message(
                     "passing grade",
                     passing_grade,
@@ -314,8 +335,13 @@ const StepTwo = () => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-12 col-md-8">
-                  <span>Status</span>
+                <div className="col-sm-12 col-md-12">
+                  <p
+                    htmlFor="staticEmail"
+                    className=" col-form-label font-weight-bold pb-0"
+                  >
+                    Status
+                  </p>
                   <select
                     name="status"
                     id=""
@@ -333,9 +359,6 @@ const StepTwo = () => {
                     <option value={true}> Publish </option>
                     <option value={false}> Draft </option>
                   </select>
-                  <span className="text-muted">
-                    Silahkan Pilih Status Publish
-                  </span>
                   {simpleValidator.current.message(
                     "status",
                     passing_grade,
@@ -348,11 +371,14 @@ const StepTwo = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
-                  <button className="btn btn-light-primary btn-sm mr-2">
+                  <button
+                    className="btn btn-light-ghost-rounded-full mr-2"
+                    type="submit"
+                  >
                     Simpan & Lanjut
                   </button>
                   <button
-                    className="btn btn-primary btn-sm"
+                    className="btn btn-primary-rounded-full"
                     onClick={saveDraft}
                     type="button"
                   >

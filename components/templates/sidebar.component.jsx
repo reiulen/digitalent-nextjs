@@ -406,14 +406,14 @@ const Sidebar = () => {
                       aria-haspopup="true"
                       data-menu-toggle="hover"
                     >
-                      <a
+                      {/* <a
                         href="javascript:;"
                         className="menu-link menu-toggle"
                         onClick={onSetMenuItemS}
                       >
                         <span className="menu-text">Managemen Admin</span>
                         <i className="menu-arrow"></i>
-                      </a>
+                      </a> */}
                       <div className="menu-submenu">
                         <i className="menu-arrow"></i>
                         <ul className="menu-subnav">
@@ -472,6 +472,13 @@ const Sidebar = () => {
                       <span className="menu-link">
                         <span className="menu-text">Partnership</span>
                       </span>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/dashboard">
+                        <a className="menu-link">
+                          <span className="menu-text">Dashboard</span>
+                        </a>
+                      </Link>
                     </li>
                     <li className="menu-item" aria-haspopup="true">
                       <Link href="/partnership/manajemen-kerjasama">

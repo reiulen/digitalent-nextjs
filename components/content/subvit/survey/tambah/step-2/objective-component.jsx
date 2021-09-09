@@ -55,18 +55,16 @@ const ObjectiveComponent = ({ props_answer }) => {
   return (
     <>
       <div className="form-group row mt-5">
-        <div className="col-4">
-          <p>Jawaban</p>
-        </div>
-        <div className="col-4">
-          <p>Input Gambar (Opsional)</p>
-        </div>
-        <div className="col-4"></div>
-
         {answer.map((x, i) => {
           return (
             <>
-              <div className="col-sm-12 col-md-4">
+              <div className="col-sm-12 col-md-5">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold"
+                >
+                  Jawaban {x.key}
+                </label>
                 <input
                   type="text"
                   className="form-control"
@@ -76,9 +74,14 @@ const ObjectiveComponent = ({ props_answer }) => {
                   onChange={(e) => handleInputChange(e, i)}
                   autoComplete="off"
                 />
-                <span className="text-muted">Silahkan Pilihan {x.key}</span>
               </div>
-              <div className="col-sm-12 col-md-3">
+              <div className="col-sm-12 col-md-6">
+                <label
+                  htmlFor="staticEmail"
+                  className=" col-form-label font-weight-bold"
+                >
+                  Input Gambar (Optional)
+                </label>
                 <div className="custom-file">
                   <input
                     type="file"
@@ -91,27 +94,20 @@ const ObjectiveComponent = ({ props_answer }) => {
                     Choose file
                   </label>
                 </div>
-                <span className="text-muted">Input Gambar (Opsional)</span>
               </div>
-              <div className="col-sm-12 col-md-1">
+              <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
                 {answer.length !== 1 && x.key !== "A" ? (
                   <button
-                    className="btn mr-1"
+                    className="btn btn-link-action bg-danger text-white"
                     type="button"
                     onClick={() => handleRemoveClick(i)}
                   >
-                    <Image
-                      alt="button-action"
-                      src="/assets/icon/trash-red.svg"
-                      width={18}
-                      height={18}
-                    />
+                    <i className="ri-delete-bin-fill p-0 text-white"></i>
                   </button>
                 ) : (
                   ""
                 )}
               </div>
-              <div className="col-md-4 col-sm-12"></div>
             </>
           );
         })}
@@ -122,10 +118,10 @@ const ObjectiveComponent = ({ props_answer }) => {
           {answer.length < 6 ? (
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-rounded-full bg-blue-secondary text-white"
               onClick={() => handleAddClick()}
             >
-              Tambah Jawaban
+              <i className="ri-add-fill text-white"></i> Tambah Jawaban
             </button>
           ) : (
             ""

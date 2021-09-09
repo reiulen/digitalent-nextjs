@@ -213,7 +213,7 @@ const ListTipeSoal = () => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-7 col-xl-7 col-sm-9">
-                  <div className="input-icon">
+                  {/* <div className="input-icon">
                     <input
                       style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
@@ -226,17 +226,39 @@ const ListTipeSoal = () => {
                     <span>
                       <i className="flaticon2-search-1 text-muted"></i>
                     </span>
+                  </div> */}
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                    <input
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
+                      onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
 
-                <div className="col-lg-2 col-xl-2 col-sm-3">
+                {/* <div className="col-lg-2 col-xl-2 col-sm-3">
                   <button
                     className="btn btn-light-primary font-weight-bold"
                     onClick={handleSearch}
                   >
                     Cari
                   </button>
-                </div>
+                </div> */}
 
                 <div className="col-lg-3 col-xl-3 col-sm-12 ml-auto"></div>
               </div>
@@ -251,7 +273,6 @@ const ListTipeSoal = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>ID</th>
                         <th>Tipe Soal</th>
                         <th>Bobot Nilai</th>
                         <th>Status</th>
@@ -272,11 +293,10 @@ const ListTipeSoal = () => {
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="badge badge-secondary text-muted">
+                                <span className="">
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td>
-                              <td className="align-middle">CC{row.id}</td>
                               <td className="align-middle">{row.name}</td>
                               <td className="align-middle">{row.value}</td>
                               <td className="align-middle">
@@ -290,29 +310,19 @@ const ListTipeSoal = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`/subvit/substansi/tipe-soal/${row.id}`}
-                                  title="Edit"
-                                />
-                                <button
-                                  onClick={() => handleDelete(row.id)}
-                                  className="btn mr-1"
-                                  style={{
-                                    background: "#F3F6F9",
-                                    borderRadius: "6px",
-                                  }}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Hapus"
+                              <td className="align-middle d-flex">
+                                <Link
+                                  href={`/subvit/substansi/tipe-soal/${row.id}`}
                                 >
-                                  <Image
-                                    alt="button-action"
-                                    src={`/assets/icon/trash.svg`}
-                                    width={18}
-                                    height={18}
-                                  />
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(row.id)}
+                                >
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
                                 </button>
                               </td>
                             </tr>

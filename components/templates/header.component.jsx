@@ -1,16 +1,49 @@
-import React, { useState } from "react";
-import { Offcanvas } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { Breadcrumb } from "react-bootstrap";
+// import { Offcanvas } from "react-bootstrap";
 
 const Header = () => {
-  const [show, setShow] = useState(false);
+    const router = useRouter();
+    const [breadcrumbs, setBreadcrumbs] = useState(null);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true);
-  };
+    const convertBreadcrumb = (string) => {
+        return (
+            string.charAt(0).toUpperCase() + string.slice(1)
+        );
+    };
+
+    useEffect(() => {
+        if (router) {
+            const linkPath = router.asPath.split("/");
+            linkPath.slice(0, 1);
+            // linkPath.shift();
+      
+            const pathArray = linkPath.map((path, i) => {
+              return {
+                breadcrumb: path,
+                href: "/" + linkPath.slice(0, i + 1).join("/"),
+              };
+            });
+      
+            console.log(pathArray);
+            setBreadcrumbs(pathArray);
+        }
+        
+    }, [router])
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => {
+        setShow(true);
+    };
 
   return (
     <>
+        {
+            console.log (breadcrumbs)
+        }
       {/* <!--begin::Header--> */}
       <div id="kt_header" className="header header-fixed">
         {/* <!--begin::Container--> */}
@@ -33,7 +66,15 @@ const Header = () => {
                   aria-haspopup="true"
                 >
                   <a href="javascript:;" className="menu-link menu-toggle">
-                    <span className="menu-text">Dashboard</span>
+                    {/* <span className="menu-text">Dashboard</span> */}
+                    {
+                        breadcrumbs ?
+                            <span className="menu-text">
+                                {convertBreadcrumb(breadcrumbs[1].breadcrumb)}
+                            </span>
+                        :
+                            <span className="menu-text">Dashboard</span>
+                    }       
                     <i className="menu-arrow"></i>
                   </a>
                 </li>

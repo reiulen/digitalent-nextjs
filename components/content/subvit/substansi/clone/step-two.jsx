@@ -223,34 +223,35 @@ const StepTwo = () => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-5 col-xl-5">
-                  <div className="input-icon">
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                      style={{ background: "#F3F6F9", border: "none" }}
                       type="text"
-                      className="form-control"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
                       onChange={(e) => setSearch(e.target.value)}
-                      autoComplete="off"
                     />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
 
-                <div className="col-lg-1 col-xl-1">
-                  <button
-                    className="btn btn-light-primary btn-block font-weight-bold"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
-                </div>
+                <div className="col-lg-1 col-xl-1"></div>
 
                 <div className="col-lg-2 col-xl-2 ml-auto">
                   <button
-                    className="btn btn-primary btn-block"
+                    className="btn btn-primary-rounded-full btn-block mt-2"
                     onClick={handleModal}
                   >
                     <i className="flaticon2-notepad"></i>Tambah Soal
@@ -320,7 +321,7 @@ const StepTwo = () => {
                                   />
                                 </td>
                                 <td className="align-middle">
-                                  <span className="badge badge-secondary text-muted">
+                                  <span className="">
                                     {i + 1 * (page * 5 || limit) - 4}
                                   </span>
                                 </td>
@@ -348,11 +349,13 @@ const StepTwo = () => {
                                   )}
                                 </td>
                                 <td className="align-middle">
-                                  <ButtonAction
-                                    icon="write.svg"
-                                    title="Edit"
-                                    link={`/subvit/substansi/edit-soal-substansi?id=${question.id}`}
-                                  />
+                                  <Link
+                                    href={`/subvit/substansi/edit-soal-substansi?id=${question.id}`}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                      <i className="ri-pencil-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
                                 </td>
                               </tr>
                             );
@@ -423,14 +426,14 @@ const StepTwo = () => {
                 <div className="col-sm-12 col-md-8 pt-0">
                   <div className="float-right">
                     <button
-                      className="btn btn-light-primary btn-sm mr-2"
+                      className="btn btn-light-ghost-rounded-full mr-2"
                       type="button"
                       onClick={saveLanjut}
                     >
                       Simpan & Lanjut
                     </button>
                     <button
-                      className="btn btn-primary btn-sm"
+                      className="btn btn-primary-rounded-full"
                       onClick={saveDraft}
                       type="button"
                     >

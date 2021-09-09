@@ -230,17 +230,6 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
   return (
     <>
       <div className="form-group row mt-5">
-        <div className="col-md-3 col-sm-12">
-          <p>Jawaban</p>
-        </div>
-        <div className="col-md-4 col-sm-12">
-          <p>Input Gambar (Opsional)</p>
-        </div>
-        <div className="col-md-4 col-sm-12">
-          <p>Pertanyaan Selanjutnya ?</p>
-        </div>
-        <div className="col-md-1 col-sm-12"></div>
-
         {answer.map((x, i) => {
           return (
             <div className="col-12" key={i}>
@@ -248,6 +237,12 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                 {x.type === "choose" ? (
                   <>
                     <div className="col-sm-12 col-md-3">
+                      <label
+                        htmlFor="staticEmail"
+                        className=" col-form-label font-weight-bold"
+                      >
+                        Jawaban {x.key}
+                      </label>
                       <input
                         type="text"
                         className="form-control"
@@ -257,11 +252,14 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                         onChange={(e) => handleInputChange(e, null, null, i)}
                         autoComplete="off"
                       />
-                      <span className="text-muted">
-                        Silahkan Pilihan {x.key}
-                      </span>
                     </div>
                     <div className="col-sm-12 col-md-3">
+                      <label
+                        htmlFor="staticEmail"
+                        className=" col-form-label font-weight-bold"
+                      >
+                        Input Gambar (Optional)
+                      </label>
                       <div className="custom-file">
                         <input
                           type="file"
@@ -277,14 +275,17 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                           Choose file
                         </label>
                       </div>
-                      <span className="text-muted">
-                        Input Gambar (Opsional)
-                      </span>
                     </div>
                   </>
                 ) : (
                   <>
                     <div className="col-sm-12 col-md-6">
+                      <label
+                        htmlFor="staticEmail"
+                        className=" col-form-label font-weight-bold"
+                      >
+                        Jawaban Lain {x.key}
+                      </label>
                       <input
                         type="text"
                         className="form-control"
@@ -294,45 +295,42 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                         placeholder={`Jawaban Lain ${x.key}`}
                         disabled
                       />
-                      <span className="text-muted">Jawaban lain {x.key}</span>
                     </div>
                   </>
                 )}
-                <div className="col-sm-12 col-md-1">
+                <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
                   {answer.length !== 1 && x.key !== "A" ? (
                     <button
-                      className="btn mr-1"
+                      className="btn btn-link-action bg-danger text-white"
                       type="button"
                       onClick={() => handleRemoveClick(null, null, i)}
                     >
-                      <Image
-                        alt="button-action"
-                        src="/assets/icon/trash-red.svg"
-                        width={18}
-                        height={18}
-                      />
+                      <i className="ri-delete-bin-fill p-0 text-white"></i>
                     </button>
                   ) : (
                     ""
                   )}
                 </div>
-                <div className="col-sm-12 col-md-4">
+                <div className="col-sm-12 col-md-5 d-flex align-items-end mt-2">
                   <SwitchButton
                     checked={x.is_next}
                     onlabel=" "
                     onstyle="primary"
                     offlabel=" "
-                    offstyle="danger"
+                    offstyle="secondary"
                     size="sm"
                     width={20}
                     height={10}
                     onChange={(checked) => handleNext(checked, null, i)}
                   />
-                  <span className="text-muted">
-                    Silahkan pilih jika ada pertanyaan selanjutnya
-                  </span>
+                  {x.is_next ? (
+                    <span className="font-weight-bold ml-2">
+                      Ada Pertanyaan Selanjutnya ?
+                    </span>
+                  ) : (
+                    ""
+                  )}
                 </div>
-                <div className="col-sm-12 col-md-1"></div>
                 {x.sub.length != 0
                   ? x.sub.map((sub_question, j) => {
                       return (
@@ -342,6 +340,12 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                             key={j}
                             style={{ marginLeft: "20px" }}
                           >
+                            <label
+                              htmlFor="staticEmail"
+                              className=" col-form-label font-weight-bold"
+                            >
+                              Isi Pertanyaan
+                            </label>
                             <input
                               type="text"
                               className="form-control"
@@ -351,11 +355,14 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                               onChange={(e) => handleInputChange(e, null, i, j)}
                               autoComplete="off"
                             />
-                            <span className="text-muted">
-                              Silahkan Isi Pertanyaan
-                            </span>
                           </div>
                           <div className="col-sm-12 col-md-3">
+                            <label
+                              htmlFor="staticEmail"
+                              className=" col-form-label font-weight-bold"
+                            >
+                              Input Gambar (Optional)
+                            </label>
                             <div className="custom-file">
                               <input
                                 type="file"
@@ -373,29 +380,21 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                 Choose file
                               </label>
                             </div>
-                            <span className="text-muted">
-                              Input Gambar (Opsional)
-                            </span>
                           </div>
-                          <div className="col-sm-12 col-md-1">
+                          <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
                             {j !== 0 ? (
                               <button
-                                className="btn mr-1"
+                                className="btn btn-link-action bg-danger text-white"
                                 type="button"
                                 onClick={() => handleRemoveClick(null, i, j)}
                               >
-                                <Image
-                                  alt="button-action"
-                                  src="/assets/icon/trash-red.svg"
-                                  width={18}
-                                  height={18}
-                                />
+                                <i className="ri-delete-bin-fill p-0 text-white"></i>
                               </button>
                             ) : (
                               ""
                             )}
                           </div>
-                          <div className="col-sm-12 col-md-4">
+                          <div className="col-sm-12 col-md-4 d-flex align-items-end mt-2">
                             {j < 4 ? (
                               <>
                                 <SwitchButton
@@ -403,7 +402,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                   onlabel=" "
                                   onstyle="primary"
                                   offlabel=" "
-                                  offstyle="danger"
+                                  offstyle="secondary"
                                   size="sm"
                                   width={20}
                                   height={10}
@@ -411,9 +410,13 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                     handleNext(checked, i, j)
                                   }
                                 />
-                                <span className="text-muted">
-                                  Silahkan pilih jika ada pertanyaan selanjutnya
-                                </span>
+                                {sub_question.is_next ? (
+                                  <span className="font-weight-bold ml-2">
+                                    Ada Pertanyaan Selanjutnya ?
+                                  </span>
+                                ) : (
+                                  ""
+                                )}
                               </>
                             ) : (
                               ""
@@ -431,6 +434,12 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                               className="col-sm-12 col-md-3"
                                               style={{ marginLeft: "40px" }}
                                             >
+                                              <label
+                                                htmlFor="staticEmail"
+                                                className=" col-form-label font-weight-bold"
+                                              >
+                                                Jawaban {sub_answer.key}
+                                              </label>
                                               <input
                                                 type="text"
                                                 className="form-control"
@@ -442,12 +451,14 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                                 }
                                                 autoComplete="off"
                                               />
-                                              <span className="text-muted">
-                                                Silahkan Pilihan{" "}
-                                                {sub_answer.key}
-                                              </span>
                                             </div>
                                             <div className="col-sm-12 col-md-3">
+                                              <label
+                                                htmlFor="staticEmail"
+                                                className=" col-form-label font-weight-bold"
+                                              >
+                                                Input Gambar (Optional)
+                                              </label>
                                               <div className="custom-file">
                                                 <input
                                                   type="file"
@@ -470,9 +481,6 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                                   Choose file
                                                 </label>
                                               </div>
-                                              <span className="text-muted">
-                                                Input Gambar (Opsional)
-                                              </span>
                                             </div>
                                           </>
                                         ) : (
@@ -481,6 +489,12 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                               className="col-sm-12 col-md-6"
                                               style={{ marginLeft: "40px" }}
                                             >
+                                              <label
+                                                htmlFor="staticEmail"
+                                                className=" col-form-label font-weight-bold"
+                                              >
+                                                Jawaban Lain {sub_answer.key}
+                                              </label>
                                               <input
                                                 type="text"
                                                 className="form-control"
@@ -490,27 +504,19 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                                 placeholder={`Jawaban Lain ${sub_answer.key}`}
                                                 disabled
                                               />
-                                              <span className="text-muted">
-                                                Jawaban lain {sub_answer.key}
-                                              </span>
                                             </div>
                                           </>
                                         )}
 
-                                        <div className="col-sm-12 col-md-1">
+                                        <div className="col-sm-12 col-md-1 d-flex align-items-end mt-2">
                                           <button
-                                            className="btn mr-1"
+                                            className="btn btn-link-action bg-danger text-white"
                                             type="button"
                                             onClick={() =>
                                               handleRemoveClick(i, j, k)
                                             }
                                           >
-                                            <Image
-                                              alt="button-action"
-                                              src="/assets/icon/trash-red.svg"
-                                              width={18}
-                                              height={18}
-                                            />
+                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
                                           </button>
                                         </div>
                                         <div className="col-sm-12 col-md-4"></div>
@@ -522,7 +528,7 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
                                 className="form-group row"
                                 style={{ marginLeft: "40px" }}
                               >
-                                <div className="col-sm-12 col-md-12 d-flex">
+                                <div className="col-sm-12 col-md-12 d-flex mt-2">
                                   {sub_question.answer.length < 6 ? (
                                     <>
                                       <button

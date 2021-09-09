@@ -76,7 +76,7 @@ export default function index() {
       {/* btn action */}
       {/* eye */}
 
-      <button className="btn btn-link-action bg-red-primary mt-1 mb-1">
+      <button className="btn btn-link-action bg-secondary mt-1 mb-1">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"

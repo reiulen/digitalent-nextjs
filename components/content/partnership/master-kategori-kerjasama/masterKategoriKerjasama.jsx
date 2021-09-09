@@ -3,23 +3,26 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import ButtonAction from "../../../ButtonAction";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllMKCooporation,
   searchCooporation,
   limitCooporation,
   deleteCooporation,
-  changeStatusList,
   setPage,
 } from "../../../../redux/actions/partnership/mk_cooporation.actions";
-import Image from "next/image";
-import LoadingTable from '../../../LoadingTable'
+import LoadingTable from "../../../LoadingTable";
+import IconEye from "../../../assets/icon/Eye";
+import IconPencil from "../../../assets/icon/Pencil";
+import IconDelete from "../../../assets/icon/Delete";
+import IconAdd from "../../../assets/icon/Add";
+
+import IconSearch from "../../../assets/icon/Search";
 
 const Table = () => {
   let dispatch = useDispatch();
   const router = useRouter();
-  let { success,update } = router.query;
+  let { success, update } = router.query;
   const [valueSearch, setValueSearch] = useState("");
   const allMKCooporation = useSelector((state) => state.allMKCooporation);
   const handleChangeValueSearch = (value) => {
@@ -84,9 +87,15 @@ const Table = () => {
           style={{ backgroundColor: success ? "#C9F7F5" : "#f7c9c9" }}
         >
           <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{color:success?"#1BC5BD":"#c51b1b"}}></i>
+            <i
+              className="flaticon2-checkmark"
+              style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
+            ></i>
           </div>
-          <div className="alert-text" style={{color:success?"#1BC5BD":"#c51b1b"}}>
+          <div
+            className="alert-text"
+            style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
+          >
             {successDelete
               ? "Berhasil menghapus data"
               : "Berhasil menyimpan data"}
@@ -115,9 +124,9 @@ const Table = () => {
           style={{ backgroundColor: "#C9F7F5" }}
         >
           <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{color:"#1BC5BD"}}></i>
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
-          <div className="alert-text" style={{color:"#1BC5BD"}}>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
             Berhasil mengupdate data
           </div>
           <div className="alert-close">
@@ -140,12 +149,16 @@ const Table = () => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
               Master Kategori Kerjasama
             </h3>
             <div className="card-toolbar">
               <Link href="/partnership/master-kategori-kerjasama/tambah">
-                <a className="btn btn-primary px-6 font-weight-bold btn-block ">
+                <a className="btn btn-rounded-full bg-blue-primary text-white">
+                  <IconAdd  className="mr-3" width="14" height="14" />
                   Tambah Kategori Kerjasama
                 </a>
               </Link>
@@ -160,28 +173,35 @@ const Table = () => {
                     onSubmit={handleSubmit}
                     className="d-flex align-items-center w-100"
                   >
-                    <div className="input-icon w-100">
-                      <input
-                        style={{ background: "#F3F6F9", border: "none" }}
-                        type="text"
-                        className="form-control"
-                        placeholder="Cari..."
-                        id="kt_datatable_search_query"
-                        onChange={(e) =>
-                          handleChangeValueSearch(e.target.value)
-                        }
-                      />
-                      <span>
-                        <i className="flaticon2-search-1 text-muted"></i>
-                      </span>
+                    <div className="row w-100">
+                      <div className="col-12 col-sm-6">
+                        <div className="position-relative overflow-hidden w-100">
+                          <IconSearch
+                            style={{ left: "10" }}
+                            className="left-center-absolute"
+                          />
+                          <input
+                            id="kt_datatable_search_query"
+                            type="text"
+                            className="form-control pl-10"
+                            placeholder="Ketik disini untuk Pencarian..."
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
+                          />
+                          <button
+                            type="submit"
+                            className="btn bg-blue-primary text-white right-center-absolute"
+                            style={{
+                              borderTopLeftRadius: "0",
+                              borderBottomLeftRadius: "0",
+                            }}
+                          >
+                            Cari
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <button
-                      type="submit"
-                      className="btn bg-light-primary text-primary ml-4"
-                      style={{ width: "120px" }}
-                    >
-                      Cari
-                    </button>
                   </form>
                 </div>
               </div>
@@ -194,147 +214,113 @@ const Table = () => {
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
-                        <th className="text-center align-middle">No</th>
-                        <th className="align-baseline">Kategori Kerjasama</th>
-                        <th className="align-baseline">Status</th>
-                        <th className="text-center align-middle">Action</th>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">
+                          Kategori Kerjasama
+                        </th>
+                        <th className="text-left align-middle">Status</th>
+                        <th className="text-left align-middle">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {allMKCooporation.mk_cooporation.data === undefined
-                        ? <LoadingTable />
-                        : allMKCooporation.mk_cooporation.data.list_cooperation_categories.map(
-                            (cooperation_categorie, index) => {
-                              return (
-                                <tr key={index}>
-                                  <td className="text-center align-middle">
-                                    <button
-                                      className="btn"
-                                      style={{
-                                        background: "#F3F6F9",
-                                        borderRadius: "6px",
-                                      }}
+                      {allMKCooporation.mk_cooporation.data && allMKCooporation.mk_cooporation.data.list_cooperation_categories.length === 0  ? (
+                        <tr>
+                          <td colSpan="4" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        allMKCooporation.mk_cooporation.data && allMKCooporation.mk_cooporation.data.list_cooperation_categories.map(
+                          (cooperation_categorie, index) => {
+                            return (
+                              <tr key={index}>
+                                <td className="align-middle text-left">
+                                  <button
+                                    className="btn"
+                                    style={{
+                                      background: "#F3F6F9",
+                                      borderRadius: "6px",
+                                    }}
+                                  >
+                                    {allMKCooporation.page === 1
+                                      ? index + 1
+                                      : (allMKCooporation.page - 1) *
+                                          allMKCooporation.limit +
+                                        (index + 1)}
+                                    {/* {index + 1} */}
+                                  </button>
+                                </td>
+                                <td className="align-middle text-left">
+                                  {cooperation_categorie.cooperation_categories}
+                                </td>
+                                <td className="align-middle text-left">
+                                  {allMKCooporation.mk_cooporation.length ===
+                                  0 ? (
+                                    ""
+                                  ) : (
+                                    <div
+                                      name=""
+                                      id=""
+                                      className="cursor-pointer"
                                     >
-                                      {allMKCooporation.page === 1
-                                        ? index + 1
-                                        : (allMKCooporation.page - 1) *
-                                            allMKCooporation.limit +
-                                          (index + 1)}
-                                      {/* {index + 1} */}
-                                    </button>
-                                  </td>
-                                  <td className="align-middle">
-                                    {
-                                      cooperation_categorie.cooperation_categories
-                                    }
-                                  </td>
-                                  <td className="align-middle position-relative">
-                                    {allMKCooporation.mk_cooporation.length ===
-                                    0 ? (
-                                      ""
-                                    ) : (
-                                      <div
-                                        // onChange={(e) =>
-                                        //   dispatch(
-                                        //     changeStatusList(
-                                        //       e.target.value,
-                                        //       cooperation_categorie.id,
-                                        //       index
-                                        //     )
-                                        //   )
-                                        // }
-                                        name=""
-                                        id=""
-                                        className="status-div cursor-pointer left-center-absolute"
-                                        // disabled
+                                      <p
+                                        className="status-div"
+                                        style={{ width: "max-content" }}
                                       >
                                         {allMKCooporation.mk_cooporation.data
                                           .list_cooperation_categories[index]
                                           .status === 0
                                           ? "Tidak aktif"
                                           : "Aktif"}
-                                        {/* <option
-                                          value={
-                                            allMKCooporation.mk_cooporation.data
-                                              .list_cooperation_categories[
-                                              index
-                                            ].status
-                                          }
-                                        >
-                                          {
-                                            allMKCooporation.mk_cooporation.data
-                                              .list_cooperation_categories[
-                                              index
-                                            ].status
-                                          }
-                                        </option>
-                                        <option
-                                          value={
-                                            allMKCooporation.mk_cooporation.data
-                                              .list_cooperation_categories[
-                                              index
-                                            ].status === "aktif"
-                                              ? "tidak aktif"
-                                              : "aktif"
-                                          }
-                                        >
-                                          {allMKCooporation.mk_cooporation.data
-                                            .list_cooperation_categories[index]
-                                            .status === "aktif"
-                                            ? "tidak aktif"
-                                            : "aktif"}
-                                        </option> */}
-                                      </div>
-                                    )}
-                                  </td>
-                                  <td className="text-center align-middle">
+                                      </p>
+                                    </div>
+                                  )}
+                                </td>
+                                <td className="text-left align-middle">
+                                  <div className="d-flex align-items-center">
+                                    {/* <button
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    >
+                                      <IconEye width="16" height="16" fill="rgba(255,255,255,1)"/>
+                                      <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
+                                    </button> */}
+
                                     <button
+                                      className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                       onClick={() =>
                                         router.push(
                                           `/partnership/master-kategori-kerjasama/${cooperation_categorie.id}`
                                         )
                                       }
-                                      className="btn mr-1 bg-light position-relative btn-delete"
-                                      style={{
-                                        borderRadius: "6px",
-                                      }}
                                     >
-                                      <Image
-                                        alt="button-action"
-                                        src={`/assets/icon/write.svg`}
-                                        width={18}
-                                        height={18}
-                                      />
+                                      <IconPencil width="16" height="16" />
                                       <div className="text-hover-show-hapus">
-                                        Ubah
-                                      </div>
+                                      Ubah
+                                    </div>
                                     </button>
+
                                     <button
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                       onClick={() =>
                                         cooperationDelete(
                                           cooperation_categorie.id
                                         )
                                       }
-                                      className="btn mr-1 bg-light position-relative btn-edit"
-                                      style={{
-                                        borderRadius: "6px",
-                                      }}
                                     >
-                                      <Image
-                                        alt="button-action"
-                                        src={`/assets/icon/trash.svg`}
-                                        width={18}
-                                        height={18}
-                                      />
-                                      <div className="text-hover-show-edit">
-                                        Hapus
-                                      </div>
+                                      <IconDelete width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
                                     </button>
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )}
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          }
+                        )
+                      )}
                     </tbody>
                   </table>
                 )}

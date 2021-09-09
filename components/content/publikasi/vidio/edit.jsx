@@ -56,9 +56,10 @@ const EditVideo = () => {
     const [id, setId] = useState(video.id)
     const [judul_video, setJudulVideo] = useState(video.judul_video)
     const [isi_video, setIsiVideo] = useState(video.isi_video);
-    const [gambar, setGambar] = useState(video.gambar)
+    const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [url_video, setUrlVideo] = useState(video.url_video)
     // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
+    const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [gambarName, setGambarName] = useState (video.gambar)
     const [kategori_id, setKategoriId] = useState(video.kategori_id) 
@@ -102,69 +103,147 @@ const EditVideo = () => {
     };
 
     const onSubmit = (e) => {
-        e.preventDefault()
-        if (simpleValidator.current.allValid()){
-            if (error) {
-                dispatch(clearErrors())
-            }
-    
-            if (success) {
-                dispatch({
-                    type: UPDATE_VIDEO_RESET 
-                })
-            }
-    
-            const data = {
-                judul_video,
-                isi_video,
-                url_video,
-                gambar,
-                kategori_id,
-                users_id,
-                tag,
-                publish,
-                id,
-                _method
-            }
-    
-            // dispatch(updateVideo(data))
-            // console.log(data)
-
-
-            Swal.fire({
-                title: "Apakah anda yakin ?",
-                text: "Data ini akan diedit !",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya !",
-                cancelButtonText: "Batal",
-              })
-                .then((result) => {
-                  if (result.isConfirmed) {
-                    // if (success) {
-                    //   dispatch({
-                    //     // type: NEW_ARTIKEL_RESET
-                    //     type: UPDATE_ARTIKEL_RESET,
-                    //   });
-                    // }
-        
-                    dispatch(updateVideo(data))
-                    // console.log(data)
-                  }
-              });
-        } else {
-            simpleValidator.current.showMessages();
-            forceUpdate(1);
-            Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Isi data dengan benar !",
+        e.preventDefault();
+        if (simpleValidator.current.allValid()) {
+          if (error) {
+            dispatch(clearErrors());
+          }
+      
+          if (success) {
+            dispatch({
+              // type: NEW_ARTIKEL_RESET
+              type: UPDATE_VIDEO_RESET,
             });
           }
+    
+          if (gambarDB !== gambar) {
+            const data = {
+              judul_video,
+              isi_video,
+              gambar,
+              kategori_id,
+              users_id,
+              tag,
+              publish,
+              id,
+              _method,
+            };
+      
+            // dispatch(updateArtikel(data));
+            
+            Swal.fire({
+              title: "Apakah anda yakin ?",
+              text: "Data ini akan diedit !",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Ya !",
+              cancelButtonText: "Batal",
+            })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  // if (success) {
+                  //   dispatch({
+                  //     // type: NEW_ARTIKEL_RESET
+                  //     type: UPDATE_ARTIKEL_RESET,
+                  //   });
+                  // }
+      
+                  dispatch(updateVideo(data));
+                  console.log(data)
+                }
+            });
+    
+          } else {
+            const data = {
+              judul_video,
+              isi_video,
+              gambar : "",
+              kategori_id,
+              users_id,
+              tag,
+              publish,
+              id,
+              _method,
+            };
+      
+            // dispatch(updateArtikel(data));
+            
+            Swal.fire({
+              title: "Apakah anda yakin ?",
+              text: "Data ini akan diedit !",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Ya !",
+              cancelButtonText: "Batal",
+            })
+              .then((result) => {
+                if (result.isConfirmed) {
+                  // if (success) {
+                  //   dispatch({
+                  //     // type: NEW_ARTIKEL_RESET
+                  //     type: UPDATE_ARTIKEL_RESET,
+                  //   });
+                  // }
+      
+                  dispatch(updateVideo(data));
+                  console.log(data)
+                }
+            });
+          }
+      
+          // const data = {
+          //   judul_artikel,
+          //   isi_artikel,
+          //   gambar,
+          //   kategori_id,
+          //   users_id,
+          //   tag,
+          //   publish,
+          //   id,
+          //   _method,
+          // };
+    
+          // // dispatch(updateArtikel(data));
+          
+          // Swal.fire({
+          //   title: "Apakah anda yakin ?",
+          //   text: "Data ini akan diedit !",
+          //   icon: "warning",
+          //   showCancelButton: true,
+          //   confirmButtonColor: "#3085d6",
+          //   cancelButtonColor: "#d33",
+          //   confirmButtonText: "Ya !",
+          //   cancelButtonText: "Batal",
+          // })
+          //   .then((result) => {
+          //     if (result.isConfirmed) {
+          //       // if (success) {
+          //       //   dispatch({
+          //       //     // type: NEW_ARTIKEL_RESET
+          //       //     type: UPDATE_ARTIKEL_RESET,
+          //       //   });
+          //       // }
+    
+          //       dispatch(updateArtikel(data));
+          //       console.log(data)
+          //     }
+          // });
+          
+        } else {
+          simpleValidator.current.showMessages();
+          forceUpdate(1);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Isi data dengan benar !",
+          });
+        }
         
-    }
+      };
 
     const onNewReset = () => {
         dispatch({ 
@@ -271,7 +350,7 @@ const EditVideo = () => {
                                     <div className="col-sm-10">
                                         <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}/>
                                         {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:50",{ className: "text-danger" })}
-                                        <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small>
+                                        {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                     </div>
                                 </div>
 
@@ -280,6 +359,7 @@ const EditVideo = () => {
                                     <div className="col-sm-1">
                                         <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
                                             <Image
+                                                loader={() => gambarPreview}
                                                 src={gambarPreview}
                                                 alt='image'
                                                 width={60}
@@ -383,11 +463,11 @@ const EditVideo = () => {
 
                                 <div className="form-group row">
                                     <div className="col-sm-2"></div>
-                                    <div className="col-sm-10">
+                                    <div className="col-sm-10 text-right">
                                         <Link href='/publikasi/video'>
-                                            <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
+                                            <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                         </Link>
-                                        <button className='btn btn-primary btn-sm'>Simpan</button>
+                                        <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                     </div>
                                 </div>
                             </form>
@@ -413,7 +493,7 @@ const EditVideo = () => {
                                 />
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
                             </div>
                         </div>
                     </div>

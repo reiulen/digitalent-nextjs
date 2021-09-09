@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
 
@@ -9,12 +8,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   fetchSignature,
-  reloadTable,
   setPage,
   setLimit,
   deleteTandaTangan,
-  searchByKey
+  searchByKey,
 } from "../../../../redux/actions/partnership/tandaTangan.actions";
+import LoadingTable from "../../../LoadingTable";
+
+import IconAdd from "../../../assets/icon/Add";
+import IconSearch from "../../../assets/icon/Search";
+import IconPencil from "../../../assets/icon/Pencil";
+import IconDelete from "../../../assets/icon/Delete";
 
 const Table = () => {
   const dispatch = useDispatch();
@@ -73,15 +77,10 @@ const Table = () => {
           style={{ backgroundColor: "#C9F7F5" }}
         >
           <div className="alert-icon">
-            <i
-              className="flaticon2-checkmark"
-              style={{ color: "#1BC5BD" }}
-            ></i>
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
-          <div
-            className="alert-text"
-            style={{ color: "#1BC5BD" }}
-          >Berhasil menyimpan data
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil menyimpan data
           </div>
           <div className="alert-close">
             <button
@@ -107,15 +106,9 @@ const Table = () => {
           style={{ backgroundColor: "#f7c9c9" }}
         >
           <div className="alert-icon">
-            <i
-              className="flaticon2-checkmark"
-              style={{ color: "#c51b1b" }}
-            ></i>
+            <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
           </div>
-          <div
-            className="alert-text"
-            style={{ color: "#c51b1b" }}
-          >
+          <div className="alert-text" style={{ color: "#c51b1b" }}>
             Berhasil menghapus data Data
           </div>
           <div className="alert-close">
@@ -135,22 +128,17 @@ const Table = () => {
       ) : (
         ""
       )}
-      {update ?(
+      {update ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
           style={{ backgroundColor: "#C9F7F5" }}
         >
           <div className="alert-icon">
-            <i
-              className="flaticon2-checkmark"
-              style={{ color: "#1BC5BD" }}
-            ></i>
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
-          <div
-            className="alert-text"
-            style={{ color: "#1BC5BD" }}
-          >Berhasil mengupdate data
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil mengupdate data
           </div>
           <div className="alert-close">
             <button
@@ -172,12 +160,16 @@ const Table = () => {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
               Tanda Tangan Digital
             </h3>
             <div className="card-toolbar">
               <Link href="/partnership/tanda-tangan/tambah">
-                <a className="btn btn-primary px-6 font-weight-bold btn-block ">
+                <a className="btn btn-rounded-full bg-blue-primary text-white">
+                  <IconAdd  className="mr-3" width="14" height="14" />
                   Tambah Tanda Tangan
                 </a>
               </Link>
@@ -189,27 +181,33 @@ const Table = () => {
               <div className="table-filter">
                 <div className="row align-items-center">
                   <div className="col-lg-10 col-xl-10">
-                    <div className="input-icon">
-                      <input
-                        style={{ background: "#F3F6F9", border: "none" }}
-                        type="text"
-                        className="form-control"
-                        placeholder="Search..."
-                        id="kt_datatable_search_query"
-                        onChange={(e) => setKeyWord(e.target.value)}
-                      />
-                      <span>
-                        <i className="flaticon2-search-1 text-muted"></i>
-                      </span>
+                    <div className="row w-100 my-5">
+                      <div className="col-12 col-sm-6">
+                        <div className="position-relative overflow-hidden w-100">
+                          <IconSearch
+                            style={{ left: "10" }}
+                            className="left-center-absolute"
+                          />
+                          <input
+                            id="kt_datatable_search_query"
+                            type="text"
+                            className="form-control pl-10"
+                            placeholder="Ketik disini untuk Pencarian..."
+                            onChange={(e) => setKeyWord(e.target.value)}
+                          />
+                          <button
+                            type="submit"
+                            className="btn bg-blue-primary text-white right-center-absolute"
+                            style={{
+                              borderTopLeftRadius: "0",
+                              borderBottomLeftRadius: "0",
+                            }}
+                          >
+                            Cari
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="col-lg-2 col-xl-2">
-                    <button
-                      type="submit"
-                      className="btn btn-light-primary btn-block"
-                    >
-                      Cari
-                    </button>
                   </div>
                 </div>
               </div>
@@ -217,102 +215,91 @@ const Table = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-center align-middle">No</th>
-                      <th className="text-center align-middle">Nama</th>
-                      <th className="text-center align-middle">Jabatan</th>
-                      <th className="text-center align-middle">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {allTandaTangan.status === "success"
-                      ? allTandaTangan.tanda_tangan.length === 0
-                        ? "Tidak ada data"
-                        : allTandaTangan.tanda_tangan.data.list_signatures.map(
-                            (items, index) => {
-                              return (
-                                <tr key={index}>
-                                  <td className="text-center align-middle">
+                {allTandaTangan.status === "process" ? (
+                  <LoadingTable />
+                ) : (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">Nama</th>
+                        <th className="text-left align-middle">Jabatan</th>
+                        <th className="text-left align-middle">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allTandaTangan.tanda_tangan.data &&
+                      allTandaTangan.tanda_tangan.data.list_signatures
+                        .length === 0 ? (
+                        <tr>
+                          <td colSpan="4" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        allTandaTangan.tanda_tangan.data &&
+                        allTandaTangan.tanda_tangan.data.list_signatures.map(
+                          (items, index) => {
+                            return (
+                              <tr key={index}>
+                                <td className="align-middle text-left">
+                                  <button
+                                    className="btn"
+                                    style={{
+                                      background: "#F3F6F9",
+                                      borderRadius: "6px",
+                                    }}
+                                  >
+                                    {allTandaTangan.page === 1
+                                      ? index + 1
+                                      : (allTandaTangan.page - 1) *
+                                          allTandaTangan.limit +
+                                        (index + 1)}
+                                  </button>
+                                </td>
+                                <td className="align-middle text-left">
+                                  {items.name}
+                                </td>
+                                <td className="align-middle text-left">
+                                  {items.position}
+                                </td>
+                                <td className="align-middle text-left">
+                                  <div className="d-flex align-items-center">
                                     <button
-                                      className="btn"
-                                      style={{
-                                        background: "#F3F6F9",
-                                        borderRadius: "6px",
-                                      }}
-                                    >
-                                      {allTandaTangan.page === 1
-                                        ? index + 1
-                                        : (allTandaTangan.page - 1) *
-                                            allTandaTangan.limit +
-                                          (index + 1)}
-                                    </button>
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {items.name}
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {items.position}
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    <button
-                                      className="btn ml-3 position-relative btn-delete"
-                                      style={{
-                                        background: "#F3F6F9",
-                                        borderRadius: "6px",
-                                        padding: "8px 10px 3px 10px",
-                                      }}
+                                      className="btn btn-link-action bg-blue-secondary mr-3"
                                       onClick={() =>
                                         router.push(
                                           `/partnership/tanda-tangan/${items.id}`
                                         )
                                       }
                                     >
-                                      <Image
-                                        width="14"
-                                        height="14"
-                                        src={`/assets/icon/write.svg`}
-                                        alt="write"
-                                      />
-                                      <div className="text-hover-show-hapus">
-                                        Edit
-                                      </div>
+                                      <IconPencil width="16" height="16" />
                                     </button>
                                     <button
-                                      style={{
-                                        background: "#F3F6F9",
-                                        borderRadius: "6px",
-                                        padding: "8px 10px 3px 10px",
-                                      }}
-                                      className="ml-3 btn position-relative btn-delete"
+                                      className="btn btn-link-action bg-blue-secondary"
                                       onClick={() => handleDelete(items.id)}
                                     >
-                                      <Image
-                                        width="14"
-                                        height="14"
-                                        src={`/assets/icon/trash.svg`}
-                                        alt="trash"
-                                      />
-                                      <div className="text-hover-show-hapus">
-                                        Hapus
-                                      </div>
+                                      <IconDelete width="16" height="16" />
                                     </button>
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )
-                      : ""}
-                  </tbody>
-                </table>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          }
+                        )
+                      )}
+                    </tbody>
+                  </table>
+                )}
               </div>
 
               <div className="row">
                 <div className="table-pagination">
                   <Pagination
                     activePage={allTandaTangan.page}
-                    itemsCountPerPage={allTandaTangan?.tanda_tangan?.data?.perPage}
+                    itemsCountPerPage={
+                      allTandaTangan?.tanda_tangan?.data?.perPage
+                    }
                     totalItemsCount={allTandaTangan?.tanda_tangan?.data?.total}
                     pageRangeDisplayed={3}
                     onChange={(page) => dispatch(setPage(page))}
@@ -323,7 +310,6 @@ const Table = () => {
                     itemClass="page-item"
                     linkClass="page-link"
                   />
-                  
                 </div>
                 <div className="table-total ml-auto">
                   <div className="row">
@@ -337,9 +323,7 @@ const Table = () => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
-                        onChange={(e) =>
-                          dispatch(setLimit(e.target.value))
-                        }
+                        onChange={(e) => dispatch(setLimit(e.target.value))}
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -360,52 +344,6 @@ const Table = () => {
                   </div>
                 </div>
               </div>
-              {/* <div className="row">
-                <div className="table-pagination">
-                  <Pagination
-                    activePage={5}
-                    itemsCountPerPage={2}
-                    totalItemsCount={5}
-                    pageRangeDisplayed={3}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-                <div className="table-total ml-auto">
-                  <div className="row">
-                    <div className="col-4 mr-0 p-0">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                      >
-                        <option>5</option>
-                        <option>10</option>
-                        <option>30</option>
-                        <option>40</option>
-                        <option>50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data 120
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

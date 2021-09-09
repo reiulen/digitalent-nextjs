@@ -15,6 +15,9 @@ import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 import LoadingTable from "../../../LoadingTable";
 import ButtonNewTab from "../../../ButtonNewTab";
+import IconArrow from "../../../assets/icon/Arrow";
+import IconClose from "../../../assets/icon/Close";
+import IconFilter from "../../../assets/icon/Filter";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -98,24 +101,42 @@ const Artikel = () => {
   };
 
   const handlePagination = (pageNumber) => {
-    if (limit !== null  && search === "" && startDate === null && endDate === null) {
+    if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue === null) {
         router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-    
-    } else if (limit !== null && search !== "" && startDate === null && endDate === null) {
+
+    } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
         router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
 
-    } else if (limit === null && search !== "" && startDate === null && endDate === null) {
+    } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
         router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
 
-    } else if (limit !== null  && search === "" && startDate !== null && endDate !== null) {
-        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue === null) {
+        router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-    } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null) {
+    } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
         router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     
-    } else if (limit === null  && search !== "" && startDate !== null && endDate !== null) {
+    } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
         router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     
+    } else if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
+      
+    } else if (limit !== null  && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
+
+    } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
+
+    } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+    } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+    } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
     } else {
         router.push(`${router.pathname}?page=${pageNumber}`)
     }
@@ -199,7 +220,7 @@ const Artikel = () => {
         router.push(`${router.pathname}?page=1&limit=${val}`);
     
     } else {
-        router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
     }
     
   };
@@ -236,9 +257,14 @@ const Artikel = () => {
     
   }
 
+  const resetValueSort = () => {
+    setStartDate(null)
+    setEndDate(null)
+  }
+
   return (
     <PageWrapper>
-      {console.log(artikel)}
+      {/* {console.log(artikel)} */}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -272,7 +298,7 @@ const Artikel = () => {
           <div className="alert-icon">
             <i className="flaticon2-checkmark"></i>
           </div>
-          <div className="alert-text">Berhasil !</div>
+          <div className="alert-text">Berhasil Menyimpan Data !</div>
           <div className="alert-close">
             <button
               type="button"
@@ -349,7 +375,7 @@ const Artikel = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Manajemen Artikel
+              Artikel
             </h3>
             <div className="card-toolbar">
               <Link href="/publikasi/artikel/tambah">
@@ -363,32 +389,162 @@ const Artikel = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="input-icon">
+                <div className="col-lg-6 col-xl-6 col-sm-9">
+                  <div
+                    className="position-relative overflow-hidden mt-3"
+                    style={{ maxWidth: "330px" }}
+                  >
+                    <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                      style={{ background: "#F3F6F9", border: "none" }}
-                      type="text"
-                      className="form-control"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                      onChange={(e) => setSearch(e.target.value)}
+                    type="text"
+                    className="form-control pl-10"
+                    placeholder="Ketik disini untuk Pencarian..."
+                    onChange={(e) => setSearch(e.target.value)}
                     />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
+                    <button
+                      className="btn bg-blue-primary text-white right-center-absolute"
+                      style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                      }}
+                      onClick={handleSearch}
+                    >
+                      Cari
+                    </button>
                   </div>
                 </div>
-                <div className="col-lg-2 col-xl-2">
-                  <button
-                    type="button"
-                    className="btn btn-light-primary btn-block"
-                    onClick={handleSearch}
-                  >
-                    Cari
-                  </button>
+                <div className="col-lg-6 col-xl-6 col-sm-9">
+                  <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                    {/* sortir by modal */}
+                    <button
+                      className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                      style={{ color: "#464646", minWidth: "230px" }}
+                    >
+                      <div className="d-flex align-items-center">
+                      <IconFilter className="mr-3" />
+                      Pilih Filter
+                      </div>
+                      <IconArrow fill="#E4E6EF" width="11" height="11"/>
+                    </button>
+
+                    {/* modal */}
+                    <form
+                      // id="kt_docs_formvalidation_text"
+                      className="form text-left"
+                      // action="#"
+                      // autoComplete="off"
+                      // onSubmit={handleSubmitSearchMany}
+                    >
+                      <div
+                        className="modal fade"
+                        id="exampleModalCenter"
+                        tabIndex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true"
+                      >
+                        <div
+                          className="modal-dialog modal-dialog-centered"
+                          role="document"
+                        >
+                          <div className="modal-content">
+                            <div className="modal-header">
+                              <h5
+                                className="modal-title font-weight-bold"
+                                id="exampleModalLongTitle"
+                              >
+                              Filter
+                              </h5>
+                              <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={() => resetValueSort()}
+                              >
+                              <IconClose />
+                              </button>
+                            </div>
+
+                            <div
+                              className="modal-body text-left"
+                              style={{ height: "200px" }}
+                            >
+                              <div className="mb-10 col-12">
+                                <label className="required fw-bold fs-6 mb-2">
+                                  Tanggal
+                                </label>
+
+                                <div>
+                                  <DatePicker
+                                    className="form-search-date form-control-sm form-control"
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                    selectsStart
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    dateFormat="dd/MM/yyyy"
+                                    placeholderText="Silahkan Isi Tanggal Dari"
+                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                  // minDate={addDays(new Date(), 20)}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="mb-10 col-12">
+                                <label className="required fw-bold fs-6 mb-2">
+                                  Tanggal
+                                </label>
+                      
+                                <div>
+                                  <DatePicker
+                                    className="form-search-date form-control-sm form-control"
+                                    selected={endDate}
+                                    onChange={(date) => setEndDate(date)}
+                                    selectsEnd
+                                    startDate={startDate}
+                                    endDate={endDate}
+                                    dateFormat="dd/MM/yyyy"
+                                    minDate={startDate}
+                                    maxDate={addDays(startDate, 20)}
+                                    placeholderText="Silahkan Isi Tanggal Sampai"
+                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                  // minDate={addDays(new Date(), 20)}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          <div className="modal-footer">
+                            <div className="d-flex justify-content-end align-items-center">
+                              <button
+                                className="btn btn-white-ghost-rounded-full"
+                                type="button"
+                                onClick={() => resetValueSort()}
+                              >
+                                  Reset
+                              </button>
+                              <button
+                                className="btn btn-primary-rounded-full ml-4"
+                                type="button"
+                                data-dismiss="modal"
+                                onClick={() => handleSearchDate()}
+                              >
+                                  Terapkan
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  {/* end modal */}
+
+                  </div>
                 </div>
               </div>
-              <div className="row align-items-right">
+              {/* <div className="row align-items-right">
                 <div className="col-lg-2 col-xl-2">
                   <small className="form-text text-muted">Dari Tanggal</small>
                   <DatePicker
@@ -426,7 +582,7 @@ const Artikel = () => {
                     Cari
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
             {/* {
               console.log (artikel)
@@ -453,9 +609,11 @@ const Artikel = () => {
                     </thead>
                     <tbody>
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
-                        <td className="align-middle text-center" colSpan={8}>
-                          Data Masih Kosong
-                        </td>
+                        <tr>
+                          <td className="text-center" colSpan={6}>
+                            Data Masih Kosong
+                          </td>
+                        </tr>
                       ) : (
                         artikel &&
                         // artikel.artikel &&
@@ -534,25 +692,53 @@ const Artikel = () => {
                                 )}
                               </td>
                               <td className="align-middle">Super Admin</td>
-                              <td className="align-middle">
-                                {/* conflict nih cuy */}
-                                {/* <ButtonAction icon="setting.svg" />
-                                <ButtonAction
-                                  icon="write.svg"
-                                  link={`/publikasi/artikel/${artikel.id}`}
-                                /> */}
+                              <td className="align-middle d-flex">
+                                
+                                <Link
+                                  href={`/publikasi/artikel/preview/${artikel.id}`}
+                                >
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete" target="_blank">
+                                    <i className="ri-todo-fill p-0 text-white"></i>
+                                    <div className="text-hover-show-hapus">
+                                      Pratinjau
+                                    </div> 
+                                  </a>
+                                </Link>
 
-                                <ButtonNewTab
+                                <Link
+                                  href={`/publikasi/artikel/${artikel.id}`}
+                                  >
+                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                    <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
+                                  </a>
+                                </Link>
+
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                  onClick={() => handleDelete(artikel.id)}
+                                >
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                  <div className="text-hover-show-hapus">
+                                    Hapus
+                                  </div>
+                                </button>
+
+                                 {/* <ButtonNewTab
                                   icon="setting.svg"
                                   link={`/publikasi/artikel/preview/${artikel.id}`}
                                   title="Preview"
-                                />
-                                <ButtonAction
+                                /> */}
+
+                                {/* <ButtonAction
                                   icon="write.svg"
                                   link={`/publikasi/artikel/${artikel.id}`}
                                   title="Edit"
-                                />
-                                <button
+                                /> */}
+                                
+                                {/* <button
                                   onClick={() => handleDelete(artikel.id)}
                                   className="btn mr-1"
                                   style={{
@@ -569,7 +755,7 @@ const Artikel = () => {
                                     width={18}
                                     height={18}
                                   />
-                                </button>
+                                </button> */}
                               </td>
                             </tr>
                           );
