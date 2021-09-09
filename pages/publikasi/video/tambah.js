@@ -5,7 +5,7 @@ export default function TambahPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Tambah Vidio'>
+                <Layout title='Tambah Video'>
                     <Tambah />
                 </Layout>
             </div>

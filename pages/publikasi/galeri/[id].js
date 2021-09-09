@@ -8,7 +8,7 @@ export default function EditArtikelPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Update Galeri">
+        <Layout title="Ubah Galeri">
           <EditGaleri />
         </Layout>
       </div>

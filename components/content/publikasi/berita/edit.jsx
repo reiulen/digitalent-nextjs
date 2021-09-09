@@ -242,7 +242,7 @@ const EditBerita = () => {
                     }
                     <div className="card card-custom card-stretch gutter-b">
                         <div className="card-header border-0">
-                            <h3 className="card-title font-weight-bolder text-dark">Update Berita</h3>
+                            <h3 className="card-title font-weight-bolder text-dark">Ubah Berita</h3>
                         </div>
                         <div className="card-body">
                             <form onSubmit={onSubmit}>

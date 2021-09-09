@@ -8,7 +8,7 @@ export default function EditImagetronPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Update Imagetron">
+        <Layout title="Ubah Imagetron">
           <EditImagetron />
         </Layout>
       </div>

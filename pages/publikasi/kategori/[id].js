@@ -8,7 +8,7 @@ export default function EditKategoriPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title="Update Kategori">
+                <Layout title="Ubah Kategori">
                     <EditKategori />
                 </Layout>
             </div>
