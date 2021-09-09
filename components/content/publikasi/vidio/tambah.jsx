@@ -27,6 +27,7 @@ const TambahVidio = () => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+    const [, forceUpdate] = useState();
 
     const { loading, error, success } = useSelector(state => state.newVideo)
     const {
@@ -74,6 +75,9 @@ const TambahVidio = () => {
     const [gambar, setGambar] = useState('')
     const [tag, setTag] = useState('')
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
+    const [iconPlus, setIconPlus] = useState(
+        "/assets/icon/Add.svg"
+      );
     const [gambarName, setGambarName] = useState (null)
     const [publish, setPublish] = useState(false)
 
@@ -107,6 +111,11 @@ const TambahVidio = () => {
         // }
     }
 
+    const handleChangePublish = (e) => {
+        setPublish(e.target.checked);
+        // console.log (e.target.checked)
+    };
+
     const onSubmit = (e) => {
         e.preventDefault()
         if (simpleValidator.current.allValid()){
@@ -118,6 +127,14 @@ const TambahVidio = () => {
                     type: NEW_VIDEO_RESET
                 })
             }
+
+            if (publish === true) {
+                setPublish(1)
+              
+              } else if (publish === false) {
+                setPublish(0)
+                
+              }
     
             const data = {
                 kategori_id,
@@ -186,53 +203,95 @@ const TambahVidio = () => {
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
-                                <div className="col-sm-10">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)}/>
+                                <div className="col-sm-12">
+                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")}/>
+                                    {simpleValidator.current.message(
+                                        "judul_video",
+                                        judul_video,
+                                        "required|min:5|max:50",
+                                        { className: "text-danger" }
+                                    )}
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi Video</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='isi deskripsi video disini' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
                                     {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:50",{ className: "text-danger" })}
                                     {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>
 
-                            <div className="form-group row">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Thumbnail</label>
-                                <div className="col-sm-1">
-                                    <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
-                                        <Image
-                                            src={gambarPreview}
-                                            alt='image'
-                                            width={60}
-                                            height={60}
-                                        />
+                            <div className="form-group">
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="col-sm-2 col-form-label"
+                                >
+                                    Upload Thumbnail
+                                </label>
+                                <div className="ml-3 row">
+                                    <figure
+                                    className="avatar item-rtl"
+                                    data-toggle="modal"
+                                    data-target="#exampleModalCenter"
+                                    >
+                                    <Image
+                                        src={gambarPreview}
+                                        alt="image"
+                                        width={160}
+                                        height={160}
+                                        objectFit="cover"
+                                    />
                                     </figure>
-                                </div>
-                                <div className="col-sm-9">
-                                    <div className="input-group">
-                                        <div className="custom-file">
-                                            <input type="file" name='gambar' className="custom-file-input" id="inputGroupFile04" accept="image/*" onChange={onChangeGambar} />
-                                            <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih File</label>
-                                        </div>
+                                    <div>
+                                    <label htmlFor="inputGroupFile04" className="icon-plus">
+                                        <Image
+                                        src={iconPlus}
+                                        alt="plus"
+                                        width={60}
+                                        height={60} 
+                                        />
+                                    </label>
+                                    
+                                    <input
+                                        type="file"
+                                        name="gambar"
+                                        className="custom-file-input"
+                                        id="inputGroupFile04"
+                                        onChange={onChangeGambar}
+                                        accept="image/*"
+                                        onBlur={() =>
+                                        simpleValidator.current.showMessageFor("gambar")
+                                        }
+                                        style={{display: "none"}}
+                                    />
                                     </div>
+                                    
+                                </div>
+
+                                <div className="ml-3">
+                                    {simpleValidator.current.message(
+                                    "gambar",
+                                    gambar,
+                                    "required",
+                                    { className: "text-danger" }
+                                    )}
                                     {
-                                        gambarName !== null ?
-                                            <small className="text-danger">{gambarName}</small>
-                                        :
-                                            null
+                                    gambarName !== null ?
+                                        <small className="text-danger">{gambarName}</small>
+                                    :
+                                        null
                                     }
                                 </div>
+                                
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label className='col-sm-2 col-form-label'>Link URL Video</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <div className="input-group">
                                         <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
@@ -242,14 +301,14 @@ const TambahVidio = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"
                                     className="col-sm-2 col-form-label"
                                 >
                                     Kategori
                                 </label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <select
                                     name=""
                                     id=""
@@ -290,9 +349,9 @@ const TambahVidio = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
                                         onChange={setTag}
@@ -303,8 +362,36 @@ const TambahVidio = () => {
                                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                 </div>
                             </div>
-
                             <div className="form-group row">
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="ml-5 pl-4 "
+                                >
+                                    Publish 
+                                </label>
+                                <div className="col-sm-1 ml-4">
+                                    <div className="">
+                                    <label className="switches">
+                                        <input
+                                        // required
+                                        className="checkbox"
+                                        checked={publish}
+                                        type="checkbox"
+                                        // onChange={(checked) => setPublish(checked)}
+                                        onChange={(e) => handleChangePublish(e)}
+                                        />
+                                        <span
+                                        className={`sliders round ${
+                                            publish ? "text-white" : "pl-2"
+                                        }`}
+                                        >
+                                        </span>
+                                    </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
@@ -318,7 +405,7 @@ const TambahVidio = () => {
                                         onChange={(checked) => setPublish(checked)}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>

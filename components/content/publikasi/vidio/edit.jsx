@@ -59,6 +59,9 @@ const EditVideo = () => {
     const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [url_video, setUrlVideo] = useState(video.url_video)
     // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
+    const [iconPlus, setIconPlus] = useState(
+        "/assets/icon/Add.svg"
+      );
     const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [gambarName, setGambarName] = useState (video.gambar)
@@ -114,6 +117,14 @@ const EditVideo = () => {
               // type: NEW_ARTIKEL_RESET
               type: UPDATE_VIDEO_RESET,
             });
+          }
+
+          if (publish === true) {
+            setPublish(1)
+          
+          } else if (publish === false) {
+            setPublish(0)
+    
           }
     
           if (gambarDB !== gambar) {
@@ -338,10 +349,16 @@ const EditVideo = () => {
                         </div>
                         <div className="card-body">
                             <form onSubmit={onSubmit}>
-                                <div className="form-group row">
+                                <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
-                                    <div className="col-sm-10">
-                                        <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} />
+                                    <div className="col-sm-12">
+                                        <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")}/>
+                                        {simpleValidator.current.message(
+                                            "judul_artikel",
+                                            judul_artikel,
+                                            "required||min:5|max:50",
+                                            { className: "text-danger" }
+                                        )}
                                     </div>
                                 </div>
 
@@ -354,32 +371,69 @@ const EditVideo = () => {
                                     </div>
                                 </div>
 
-                                <div className="form-group row">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Thumbnail</label>
-                                    <div className="col-sm-1">
-                                        <figure className='avatar item-rtl' data-toggle="modal" data-target="#exampleModalCenter">
-                                            <Image
-                                                loader={() => gambarPreview}
-                                                src={gambarPreview}
-                                                alt='image'
-                                                width={60}
-                                                height={60}
-                                            />
-                                        </figure>
-                                    </div>
-                                    <div className="col-sm-9">
-                                        <div className="input-group">
-                                            <div className="custom-file">
-                                                <input type="file" name='gambar'accept="image/*" className="custom-file-input" id="inputGroupFile04" onChange={onChangeGambar} />
-                                                <label className="custom-file-label" htmlFor="inputGroupFile04">Pilih file</label>
-                                            </div>
-                                            
-                                        </div>
-                                        <small>{gambarName}</small>
-                                        {/* <div><h5>test</h5></div> */}
-                                    </div>
-                                    
-                                </div>
+                                <div className="form-group">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Upload Thumbnail
+                  </label>
+                  <div className="ml-3 row">
+                    <figure
+                      className="avatar item-rtl"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <Image
+                        src={gambarPreview}
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="cover"
+                      />
+                    </figure>
+                    <div>
+                      <label htmlFor="inputGroupFile04" className="icon-plus">
+                        <Image
+                          src={iconPlus}
+                          alt="plus"
+                          width={60}
+                          height={60} 
+                        />
+                      </label>
+                      
+                      <input
+                        type="file"
+                        name="gambar"
+                        className="custom-file-input"
+                        id="inputGroupFile04"
+                        onChange={onChangeGambar}
+                        accept="image/*"
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("gambar")
+                        }
+                        style={{display: "none"}}
+                      />
+                    </div>
+                    
+                  </div>
+
+                  <div className="ml-3">
+                    {simpleValidator.current.message(
+                      "gambar",
+                      gambar,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                    {
+                      gambarName !== null ?
+                        <small className="text-danger">{gambarName}</small>
+                      :
+                        null
+                    }
+                  </div>
+                  
+                </div>
 
                                 <div className="form-group row">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Link URL Video:</label>

@@ -112,7 +112,7 @@ const TambahKategori = () => {
                                         success ? 
                                             null
                                         :
-                                            simpleValidator.current.message("nama kategori", nama, "required|max:25|string", { className: "text-danger" })
+                                            simpleValidator.current.message("nama kategori", nama, "required|min:5|max:25|string", { className: "text-danger" })
                                     }
                                 </div>
                             </div>
