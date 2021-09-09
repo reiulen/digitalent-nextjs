@@ -13,9 +13,7 @@ import moment from "moment";
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'
 import LoadingTable from "../../../LoadingTable"
-import IconSearch from "../../../assets/icon/Search";
 import IconArrow from "../../../assets/icon/Arrow";
-import IconAdd from "../../../assets/icon/Add";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 import ButtonAction from '../../../ButtonAction'
