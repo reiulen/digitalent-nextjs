@@ -6,10 +6,15 @@ import Image from 'next/image'
 import Swal from 'sweetalert2'
 
 import Pagination from 'react-js-pagination';
+import DatePicker from "react-datepicker";
+import { addDays } from "date-fns";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import ButtonAction from '../../../ButtonAction'
 import LoadingTable from '../../../LoadingTable';
+import IconArrow from "../../../assets/icon/Arrow";
+import IconClose from "../../../assets/icon/Close";
+import IconFilter from "../../../assets/icon/Filter";
 
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteKategori, clearErrors, getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
@@ -29,6 +34,9 @@ const Kategori = () => {
 
     const [limit, setLimit] = useState(null)
     const [search, setSearch] = useState('')
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const [publishValue, setPublishValue] = useState(null);
 
     // useEffect (() => {
     //     dispatch (getAllKategori())
@@ -75,32 +83,119 @@ const Kategori = () => {
         router.replace('/publikasi/kategori', undefined, { shallow: true })
     }
 
-    const handlePagination = (pageNumber) => {
-        if (limit !== null  && search === "") {
-            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-        
-        } else if (limit !== null && search !== "" ) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+    const handleSearchDate = () => {
+        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+        } else if (startDate === null && endDate !== null) {
+            Swal.fire(
+                'Oops !',
+                'Tanggal sebelum tidak boleh kosong',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+        } else if (startDate !== null && endDate === null) {
+            Swal.fire(
+                'Oops !',
+                'Tanggal sesudah tidak boleh kosong',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+    
+    
+        } else {
+            if (limit !== null && search !== null && startDate !== null && endDate !== null) {
+                router.push(
+                    `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                );
+    
+            } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+                )
+              
+            
+            } else if (limit !== null && search === null && startDate === null && endDate === null) {
+                router.push (
+                    `${router.pathname}?page=1&limit=${limit}`
+                )
+    
+            } else if (limit !== null && search !== null && startDate === null && endDate === null) {
+                router.push(
+                    `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
+                )
+                
+            } else {
+                router.push(
+                    `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+                ); 
+            }
+        }
+    };
 
-        } else if (limit === null && search !== "" ) {
+    const handlePagination = (pageNumber) => {
+        if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+    
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
         
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
+          
+        } else if (limit !== null  && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
+    
+        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
+    
+        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
+        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        
+        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
         }
     }
 
     const handleSearch = () => {
-        if (limit != null) {
-            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
-
-        // } else if (limit !== null && keyword !== null ) {
-        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
-
+        if (limit != null && startDate === null && endDate === null) {
+           router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+    
+        } else if (limit !== null && startDate !== null && endDate !== null ) {
+           router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    
         } else {
-            router.push(`${router.pathname}?page=1&keyword=${search}`)
+          router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
-    }
+    
+    };
 
     const handleLimit = (val) => {
         setLimit(val)
@@ -112,6 +207,43 @@ const Kategori = () => {
         }
         
     };
+
+    const handlePublish = (val) => {
+        if (val !== null || val !== "") {
+          setPublishValue (val)
+    
+          if ( startDate === null && endDate === null && limit === null && search === null){
+            router.push(`${router.pathname}?publish=${val}`);
+      
+          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+      
+          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+          
+          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+      
+          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+      
+          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+          
+          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+          
+          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
+              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+          }
+        }
+        
+    }
+
+    const resetValueSort = () => {
+        setStartDate(null)
+        setEndDate(null)
+    }
 
     return (
         <PageWrapper>
@@ -130,7 +262,7 @@ const Kategori = () => {
             {success ?
                 <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                    <div className="alert-text">Berhasil Menyimpan Data</div>
+                    <div className="alert-text">Berhasil Menyimpan Data !</div>
                     <div className="alert-close">
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
                             <span aria-hidden="true"><i className="ki ki-close"></i></span>
@@ -157,80 +289,163 @@ const Kategori = () => {
 
                         <div className="table-filter">
                             <div className="row align-items-center">
-                                <div className="col-lg-7 col-xl-7 col-sm-9">
-                                    <div
-                                        className="position-relative overflow-hidden mt-3"
-                                        style={{ maxWidth: "330px" }}
+                                <div className="col-lg-6 col-xl-6 col-sm-9">
+                                <div
+                                    className="position-relative overflow-hidden mt-3"
+                                    style={{ maxWidth: "330px" }}
+                                >
+                                    <i className="ri-search-line left-center-absolute ml-2"></i>
+                                    <input
+                                    type="text"
+                                    className="form-control pl-10"
+                                    placeholder="Ketik disini untuk Pencarian..."
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    />
+                                    <button
+                                    className="btn bg-blue-primary text-white right-center-absolute"
+                                    style={{
+                                        borderTopLeftRadius: "0",
+                                        borderBottomLeftRadius: "0",
+                                    }}
+                                    onClick={handleSearch}
                                     >
-                                        <i className="ri-search-line left-center-absolute ml-2"></i>
-                                        <input
-                                        type="text"
-                                        className="form-control pl-10"
-                                        placeholder="Ketik disini untuk Pencarian..."
-                                        onChange={(e) => setSearch(e.target.value)}
-                                        />
-                                        <button
-                                        className="btn bg-blue-primary text-white right-center-absolute"
-                                        style={{
-                                            borderTopLeftRadius: "0",
-                                            borderBottomLeftRadius: "0",
-                                        }}
-                                        onClick={handleSearch}
-                                        >
-                                        Cari
-                                        </button>
+                                    Cari
+                                    </button>
+                                </div>
+                                </div>
+                                <div className="col-lg-6 col-xl-6 col-sm-9">
+                                <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                                    {/* sortir by modal */}
+                                    <button
+                                    className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                                    data-toggle="modal"
+                                    data-target="#exampleModalCenter"
+                                    style={{ color: "#464646", minWidth: "230px" }}
+                                    >
+                                    <div className="d-flex align-items-center">
+                                    <IconFilter className="mr-3" />
+                                    Pilih Filter
                                     </div>
+                                    <IconArrow fill="#E4E6EF" width="11" height="11"/>
+                                    </button>
+
+                                    {/* modal */}
+                                    <form
+                                    // id="kt_docs_formvalidation_text"
+                                    className="form text-left"
+                                    // action="#"
+                                    // autoComplete="off"
+                                    // onSubmit={handleSubmitSearchMany}
+                                    >
+                                    <div
+                                        className="modal fade"
+                                        id="exampleModalCenter"
+                                        tabIndex="-1"
+                                        role="dialog"
+                                        aria-labelledby="exampleModalCenterTitle"
+                                        aria-hidden="true"
+                                    >
+                                        <div
+                                        className="modal-dialog modal-dialog-centered"
+                                        role="document"
+                                        >
+                                        <div className="modal-content">
+                                            <div className="modal-header">
+                                            <h5
+                                                className="modal-title font-weight-bold"
+                                                id="exampleModalLongTitle"
+                                            >
+                                            Filter
+                                            </h5>
+                                            <button
+                                                type="button"
+                                                className="close"
+                                                data-dismiss="modal"
+                                                aria-label="Close"
+                                                onClick={() => resetValueSort()}
+                                            >
+                                            <IconClose />
+                                            </button>
+                                            </div>
+
+                                            <div
+                                            className="modal-body text-left"
+                                            style={{ height: "200px" }}
+                                            >
+                                            <div className="mb-10 col-12">
+                                                <label className="required fw-bold fs-6 mb-2">
+                                                Tanggal
+                                                </label>
+
+                                                <div>
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={startDate}
+                                                    onChange={(date) => setStartDate(date)}
+                                                    selectsStart
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    placeholderText="Silahkan Isi Tanggal Dari"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                // minDate={addDays(new Date(), 20)}
+                                                />
+                                                </div>
+                                            </div>
+
+                                            <div className="mb-10 col-12">
+                                                <label className="required fw-bold fs-6 mb-2">
+                                                Tanggal
+                                                </label>
+                                    
+                                                <div>
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={endDate}
+                                                    onChange={(date) => setEndDate(date)}
+                                                    selectsEnd
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    minDate={startDate}
+                                                    maxDate={addDays(startDate, 20)}
+                                                    placeholderText="Silahkan Isi Tanggal Sampai"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                // minDate={addDays(new Date(), 20)}
+                                                />
+                                                </div>
+                                            </div>
+                                            </div>
+                                        <div className="modal-footer">
+                                            <div className="d-flex justify-content-end align-items-center">
+                                            <button
+                                                className="btn btn-white-ghost-rounded-full"
+                                                type="button"
+                                                onClick={() => resetValueSort()}
+                                            >
+                                                Reset
+                                            </button>
+                                            <button
+                                                className="btn btn-primary-rounded-full ml-4"
+                                                type="button"
+                                                data-dismiss="modal"
+                                                onClick={() => handleSearchDate()}
+                                            >
+                                                Terapkan
+                                            </button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </form>
+                                {/* end modal */}
 
                                 </div>
-                                {/* <div className="col-lg-10 col-xl-10">
-                                    <div className="input-icon">
-                                        <input
-                                            style={{ background: "#F3F6F9", border: "none" }}
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Search..."
-                                            id="kt_datatable_search_query"
-                                            onChange={(e) => setSearch(e.target.value)}
-                                        />
-                                        <span>
-                                            <i className="flaticon2-search-1 text-muted"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="col-lg-2 col-xl-2">
-                                    <button
-                                        type="button"
-                                        className="btn btn-light-primary btn-block"
-                                        onClick={handleSearch}
-                                    >
-                                        Cari
-                                    </button>
-                                </div> */}
                             </div>
-                            {/* <div className="row align-items-right">
-                                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                                    <select
-                                        className='form-control form-control-sm form-search-date'
-                                        onChange={e => setSearch(e.target.value)}
-                                        onBlur={e => setSearch(e.target.value)}
-                                    >
-                                        <option value="" selected>-- SEMUA  --</option>
-                                        <option value="Berita">Berita</option>
-                                        <option value="Artikel">Artikel</option>
-                                        <option value="Galeri">Galeri</option>
-                                        <option value="Video">Video</option>
-                                        <option value="Imagetron">Imagetron</option>
-                                        <option value="Faq">Faq</option>
-                                    </select>
-                                    <small className="form-text text-muted">
-                                        Jenis Kategori
-                                    </small>
-                                </div>
-                                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5">
-                                    <a href="#" className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block" onClick={handleSearch}>Filter</a>
-                                </div>
-                            </div> */}
                         </div>
+                        
+                    </div>
 
                         <div className="table-page mt-5">
                             <div className="table-responsive">

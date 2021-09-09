@@ -298,7 +298,7 @@ const Artikel = () => {
           <div className="alert-icon">
             <i className="flaticon2-checkmark"></i>
           </div>
-          <div className="alert-text">Berhasil !</div>
+          <div className="alert-text">Berhasil Menyimpan Data !</div>
           <div className="alert-close">
             <button
               type="button"
@@ -720,7 +720,7 @@ const Artikel = () => {
                                   className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
                                   onClick={() => handleDelete(artikel.id)}
                                 >
-                                  <i class="ri-delete-bin-fill p-0 text-white"></i>
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
                                   <div className="text-hover-show-hapus">
                                     Hapus
                                   </div>

@@ -7,10 +7,16 @@ import { getAllKategori, paginationKategori } from '../../../redux/actions/publi
 import { wrapper } from '../../../redux/store'
 
 import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const Kategori = dynamic(
     () => import("../../../components/content/publikasi/kategori/kategori"),
-    { loading: () => <LoadingPage />, ssr: false }
+    { 
+        // suspense: true,
+        // loading: () => <LoadingSkeleton />, 
+        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        ssr: false
+    }
 );
 
 export default function KategoriPage() {
