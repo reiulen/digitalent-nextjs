@@ -4325,6 +4325,67 @@ fieldset:disabled a.btn {
   border-radius: 30px;
 }
 
+.btn-white-ghost-rounded-full {
+  color: var(--primary) !important;
+  background-color: var(--white);
+  border-color: var(--white);
+  font-weight: 600;
+  /* background-color: #3699FF; */
+  /* border-color: #3699FF; */
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 30px;
+}
+
+.btn-white-ghost-rounded-full i {
+  color: var(--primary);
+}
+
+
+.btn-white-ghost-rounded-full:hover {
+  color: var(--primary);
+  background-color: var(--gray-shade);
+  border-color: var(--gray-shade);
+  border-radius: 30px;
+  font-weight: 600;
+  /* background-color: #1086ff;
+  border-color: #037fff; */
+}
+.btn-white-ghost-rounded-full:focus, .btn-white-rounded-full.focus {
+  color: var(--primary);
+  background-color: var(--gray-shade);
+  border-color: var(--gray-shade);
+  border-radius: 30px;
+  font-weight: 600;
+  /* background-color: #1086ff;
+  border-color: #037fff; */
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+}
+.btn-white-ghost-rounded-full.disabled, .btn-white-rounded-full:disabled {
+  color: var(--gray-shade);
+  background-color: var(--primary-tint);
+  border-color: var(--primary-tint);
+  border-radius: 30px;
+  font-weight: 600;
+  /* background-color: #3699FF;
+  border-color: #3699FF; */
+}
+.btn-white-ghost-rounded-full:not(:disabled):not(.disabled):active, .btn-white-rounded-full:not(:disabled):not(.disabled).active, .show > .btn-white-rounded-full.dropdown-toggle {
+  color: var(--gray-shade);
+  background-color: var(--primary-tint);
+  border-color: var(--primary-tint);
+  border-radius: 30px;
+  font-weight: 600;
+  /* background-color: #037fff;
+  border-color: #0079f5; */
+}
+.btn-white-ghost-rounded-full:not(:disabled):not(.disabled):active:focus, .btn-white-rounded-full:not(:disabled):not(.disabled).active:focus, .show > .btn-white-rounded-full.dropdown-toggle:focus {
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(84, 168, 255, 0.5);
+  border-radius: 30px;
+}
+
 .btn-link {
   font-weight: 400;
   color: var(--primary);

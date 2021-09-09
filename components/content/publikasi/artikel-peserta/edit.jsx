@@ -13,6 +13,7 @@ import {
   updateArtikelPeserta,
   clearErrors,
 } from "../../../../redux/actions/publikasi/artikel-peserta.actions";
+
 import {
   NEW_ARTIKEL_PESERTA_RESET,
   UPDATE_ARTIKEL_PESERTA_RESET,
@@ -38,7 +39,7 @@ const EditArtikel = () => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
   const [, forceUpdate] = useState();
   const { artikel_peserta } = useSelector((state) => state.detailArtikelPeserta);
-  const { error, success, loading } = useSelector(
+  const { error, success, loading, isUpdated } = useSelector(
     (state) => state.updatedArtikelPeserta
   );
   const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -78,6 +79,9 @@ const EditArtikel = () => {
   // const [gambarPreview, setGambarPreview] = useState(
   //   "/assets/media/default.jpg"
   // ); //belum
+  const [iconPlus, setIconPlus] = useState(
+    "/assets/icon/Add.svg"
+  );
   const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel_peserta.gambar);
   const [gambarName, setGambarName] = useState (artikel_peserta.gambar)
   const [kategori_id, setKategoriId] = useState(artikel_peserta.kategori_id); //belum
@@ -119,9 +123,18 @@ const EditArtikel = () => {
     }
   };
 
+  const handleChangePublish = (e) => {
+    setPublish(e.target.checked);
+    // console.log (e.target.checked)
+  };
+
   const onSubmit = (e) => {
+    console.log ("test-0")
+
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
+      console.log ("test")
+
       if (error) {
         dispatch(clearErrors());
       }
@@ -133,7 +146,16 @@ const EditArtikel = () => {
         });
       }
 
+      if (publish === true) {
+        setPublish(1)
+      
+      } else if (publish === false) {
+        setPublish(0)
+      }
+
       if (gambarDB !== gambar) {
+        console.log ("check-1")
+
         const data = {
           judul_artikel,
           isi_artikel,
@@ -145,8 +167,6 @@ const EditArtikel = () => {
           id,
           _method,
         };
-  
-        // dispatch(updateArtikel(data));
         
         Swal.fire({
           title: "Apakah anda yakin ?",
@@ -160,19 +180,17 @@ const EditArtikel = () => {
         })
           .then((result) => {
             if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
-  
+              console.log ("check")
+              
               dispatch(updateArtikelPeserta(data));
-              console.log(data)
+              
+              // console.log(data)
             }
         });
 
       } else {
+        console.log ("check-2")
+
         const data = {
           judul_artikel,
           isi_artikel,
@@ -184,8 +202,6 @@ const EditArtikel = () => {
           id,
           _method,
         };
-  
-        // dispatch(updateArtikel(data));
         
         Swal.fire({
           title: "Apakah anda yakin ?",
@@ -205,50 +221,52 @@ const EditArtikel = () => {
               //     type: UPDATE_ARTIKEL_RESET,
               //   });
               // }
-  
+              // console.log ("check1")
+
               dispatch(updateArtikelPeserta(data));
-              console.log(data)
+              
+              // console.log(data)
             }
         });
       }
   
-      // const data = {
-      //   judul_artikel,
-      //   isi_artikel,
-      //   gambar,
-      //   kategori_id,
-      //   users_id,
-      //   tag,
-      //   publish,
-      //   id,
-      //   _method,
-      // };
+      const data = {
+        judul_artikel,
+        isi_artikel,
+        gambar,
+        kategori_id,
+        users_id,
+        tag,
+        publish,
+        id,
+        _method,
+      };
 
-      // // dispatch(updateArtikel(data));
+      // dispatch(updateArtikel(data));
       
-      // Swal.fire({
-      //   title: "Apakah anda yakin ?",
-      //   text: "Data ini akan diedit !",
-      //   icon: "warning",
-      //   showCancelButton: true,
-      //   confirmButtonColor: "#3085d6",
-      //   cancelButtonColor: "#d33",
-      //   confirmButtonText: "Ya !",
-      //   cancelButtonText: "Batal",
-      // })
-      //   .then((result) => {
-      //     if (result.isConfirmed) {
-      //       // if (success) {
-      //       //   dispatch({
-      //       //     // type: NEW_ARTIKEL_RESET
-      //       //     type: UPDATE_ARTIKEL_RESET,
-      //       //   });
-      //       // }
+      Swal.fire({
+        title: "Apakah anda yakin ?",
+        text: "Data ini akan diedit !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya !",
+        cancelButtonText: "Batal",
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            // if (success) {
+            //   dispatch({
+            //     // type: NEW_ARTIKEL_RESET
+            //     type: UPDATE_ARTIKEL_RESET,
+            //   });
+            // }
 
-      //       dispatch(updateArtikel(data));
-      //       console.log(data)
-      //     }
-      // });
+            dispatch(updateArtikelPeserta(data));
+            // console.log(data)
+          }
+      });
       
     } else {
       simpleValidator.current.showMessages();
@@ -272,10 +290,10 @@ const EditArtikel = () => {
   return (
     <>
       <PageWrapper>
-        {console.log (artikel_peserta)}
+        {/* {console.log (artikel_peserta)}
         {
           console.log (kategori)
-        }
+        } */}
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -338,14 +356,14 @@ const EditArtikel = () => {
             </div>
             <div className="card-body">
               <form onSubmit={onSubmit}>
-                <div className="form-group row">
+                <div className="form-group">
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-2 col-form-label"
                   >
                     Judul
                   </label>
-                  <div className="col-sm-10">
+                  <div className="col-sm-12">
                     <input
                       type="text"
                       className="form-control"
@@ -365,14 +383,14 @@ const EditArtikel = () => {
                   </div>
                 </div>
 
-                <div className="form-group row">
+                <div className="form-group">
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-2 col-form-label"
                   >
-                    Artikel
+                    Isi Artikel
                   </label>
-                  <div className="col-sm-10">
+                  <div className="col-sm-12">
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <CKEditor
@@ -417,7 +435,71 @@ const EditArtikel = () => {
                   </div>
                 </div>
 
-                <div className="form-group row">
+                <div className="form-group">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Upload Thumbnail
+                  </label>
+                  <div className="ml-3 row">
+                    <figure
+                      className="avatar item-rtl"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
+                    >
+                      <Image
+                        src={gambarPreview}
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="cover"
+                      />
+                    </figure>
+                    <div>
+                      <label htmlFor="inputGroupFile04" className="icon-plus">
+                        <Image
+                          src={iconPlus}
+                          alt="plus"
+                          width={60}
+                          height={60} 
+                        />
+                      </label>
+                      
+                      <input
+                        type="file"
+                        name="gambar"
+                        className="custom-file-input"
+                        id="inputGroupFile04"
+                        onChange={onChangeGambar}
+                        accept="image/*"
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("gambar")
+                        }
+                        style={{display: "none"}}
+                      />
+                    </div>
+                    
+                  </div>
+
+                  <div className="ml-3">
+                    {simpleValidator.current.message(
+                      "gambar",
+                      gambar,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                    {
+                      gambarName !== null ?
+                        <small className="text-danger">{gambarName}</small>
+                      :
+                        null
+                    }
+                  </div>
+                  
+                </div>
+
+                {/* <div className="form-group">
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-2 col-form-label"
@@ -460,11 +542,11 @@ const EditArtikel = () => {
                     </div>
                     <small>{gambarName}</small>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="form-group row">
+                <div className="form-group">
                   <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
-                  <div className="col-sm-10">
+                  <div className="col-sm-12">
                       <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                           <option selected disabled value=''>-- Kategori --</option>
                           {!kategori || (kategori && kategori.length === 0) ? (
@@ -488,14 +570,14 @@ const EditArtikel = () => {
                   </div>
                 </div>
 
-                <div className="form-group row">
+                <div className="form-group">
                   <label
                     htmlFor="staticEmail"
                     className="col-sm-2 col-form-label"
                   >
                     Tag
                   </label>
-                  <div className="col-sm-10">
+                  <div className="col-sm-12">
                     <TagsInput
                       value={tag}
                       onChange={setTag}
@@ -510,11 +592,31 @@ const EditArtikel = () => {
                 <div className="form-group row">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="ml-5 pl-4 "
                   >
-                    Publish
+                    Publish 
                   </label>
-                  <div className="col-sm-1">
+                  <div className="col-sm-1 ml-4">
+                    <div className="">
+                      <label className="switches">
+                        <input
+                          // required
+                          className="checkbox"
+                          checked={publish}
+                          type="checkbox"
+                          // onChange={(checked) => setPublish(checked)}
+                          onChange={(e) => handleChangePublish(e)}
+                        />
+                        <span
+                          className={`sliders round ${
+                            publish ? "text-white" : "pl-2"
+                          }`}
+                        >
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                  {/* <div className="col-sm-1">
                     <SwitchButton
                       checked={publish}
                       onlabel=" "
@@ -523,9 +625,10 @@ const EditArtikel = () => {
                       offstyle="danger"
                       size="sm"
                       width={30}
+                      // onChange={(checked) => onSetPublish(checked)}
                       onChange={(checked) => setPublish(checked)}
                     />
-                  </div>
+                  </div> */}
                 </div>
 
                 <div className="form-group row">

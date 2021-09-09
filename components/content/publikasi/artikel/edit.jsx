@@ -272,7 +272,7 @@ const EditArtikel = () => {
   return (
     <>
       <PageWrapper>
-        {console.log (artikel)}
+        {/* {console.log (artikel.users_id)} */}
         {
           console.log (kategori)
         }
