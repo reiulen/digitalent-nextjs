@@ -238,7 +238,7 @@ const TambahArtikel = () => {
                     {simpleValidator.current.message(
                       "judul_artikel",
                       judul_artikel,
-                      "required|max:50",
+                      "required|min:5|max:50",
                       { className: "text-danger" }
                     )}
                   </div>
@@ -455,6 +455,25 @@ const TambahArtikel = () => {
                   </div>
                 </div>
 
+                <div className="form-group">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Tag
+                  </label>
+                  <div className="col-sm-12">
+                    <TagsInput
+                      value={tag}
+                      onChange={setTag}
+                      name="fruits"
+                      placeHolder="Isi Tag disini dan enter."
+                      // onBlur={() => simpleValidator.current.showMessageFor('tag')}
+                    />
+                    {/* {simpleValidator.current.message('tag', tag, 'required', { className: 'text-danger' })} */}
+                  </div>
+                </div>
+
                 <div className="form-group row">
                   <label
                     htmlFor="staticEmail"
@@ -512,7 +531,7 @@ const TambahArtikel = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLongTitle">
-                  Image Preview
+                  Pratinjau Gambar
                 </h5>
                 <button
                   type="button"

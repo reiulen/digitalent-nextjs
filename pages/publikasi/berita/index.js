@@ -7,10 +7,16 @@ import { getAllBerita } from "../../../redux/actions/publikasi/berita.actions"
 import { wrapper } from "../../../redux/store"
 
 import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const Berita = dynamic(
     () => import("../../../components/content/publikasi/berita/berita"),
-    { loading: () => <LoadingPage />, ssr: false }
+    { 
+        // suspense: true,
+        // loading: () => <LoadingSkeleton />, 
+        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        ssr: false
+    }
 );
 
 export default function BeritaPage() {
