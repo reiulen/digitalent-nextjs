@@ -1,8 +1,15 @@
-import ListTrivia from "/components/content/subvit/trivia/list-trivia";
+import dynamic from "next/dynamic";
 import Layout from "/components/templates/layout.component";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
-import { getAllTriviaQuestionBanks } from '../../../redux/actions/subvit/trivia-question.actions'
-import { wrapper } from '../../../redux/store'
+// import ListTrivia from "/components/content/subvit/trivia/list-trivia";
+const ListTrivia = dynamic(
+  () => import("../../../components/content/subvit/trivia/list-trivia"),
+  { suspense: true, loading: () => <LoadingSkeleton /> }
+);
+
+import { getAllTriviaQuestionBanks } from "../../../redux/actions/subvit/trivia-question.actions";
+import { wrapper } from "../../../redux/store";
 
 export default function Trivia() {
   return (
@@ -16,6 +23,11 @@ export default function Trivia() {
   );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-  await store.dispatch(getAllTriviaQuestionBanks(query.page, query.keyword, query.limit))
-})
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query }) => {
+      await store.dispatch(
+        getAllTriviaQuestionBanks(query.page, query.keyword, query.limit)
+      );
+    }
+);
