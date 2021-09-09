@@ -9,23 +9,23 @@ import dynamic from "next/dynamic";
 // import HeaderMobile from "./header-mobile.component";
 
 const Sidebar = dynamic(() => import("./sidebar.component"), {
-  ssr: false,
+  suspense: true,
 });
 const Header = dynamic(() => import("./header.component"), {
-  ssr: false,
+  suspense: true,
 });
 const HeaderMobile = dynamic(() => import("./header-mobile.component"), {
-  ssr: false,
+  suspense: true,
 });
 // Content
 // import SubHeader from "./subheader.component";
 const SubHeader = dynamic(() => import("./subheader.component"), {
-  ssr: false,
+  suspense: true,
 });
 // Wrapper
 // import ContentWrapper from "../wrapper/content.wrapper";
 const ContentWrapper = dynamic(() => import("../wrapper/content.wrapper"), {
-  ssr: false,
+  suspense: true,
 });
 
 import Footer from "./footer.component";
