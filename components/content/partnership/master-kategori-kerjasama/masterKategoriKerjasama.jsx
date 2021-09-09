@@ -278,14 +278,14 @@ const Table = () => {
                                 </td>
                                 <td className="text-left align-middle">
                                   <div className="d-flex align-items-center">
-                                    <button
+                                    {/* <button
                                       className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                     >
                                       <IconEye width="16" height="16" fill="rgba(255,255,255,1)"/>
                                       <div className="text-hover-show-hapus">
                                       Detail
                                     </div>
-                                    </button>
+                                    </button> */}
 
                                     <button
                                       className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"

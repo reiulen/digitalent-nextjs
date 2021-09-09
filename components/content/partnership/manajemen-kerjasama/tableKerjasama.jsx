@@ -316,7 +316,7 @@ const Table = () => {
                   <form onSubmit={handleSubmit}>
                     <div className="row">
                       <div className="col-12 col-sm-6">
-                        <div className="position-relative overflow-hidden w-100 mt-2">
+                        <div className="position-relative overflow-hidden w-100 mt-5">
                           <IconSearch
                             style={{ left: "10" }}
                             className="left-center-absolute"
@@ -735,7 +735,7 @@ const Table = () => {
                                         }
                                       >
                                         <option value="2">Nonaktif</option>
-                                        <option value="1">aktif</option>
+                                        <option value="1">Aktif</option>
                                       </select>
                                       <IconArrow
                                         className="right-center-absolute"
