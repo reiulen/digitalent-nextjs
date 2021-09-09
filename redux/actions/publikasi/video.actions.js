@@ -125,28 +125,28 @@ export const updateVideo= (videoData) => async (dispatch) => {
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${videoData.id}`
 
-        const dataToSend ={
-            users_id: 3,
-            judul_video: videoData.judul_video,
-            isi_video: videoData.isi_video,
-            url_video: "www.youtube.com/watch?v=JxPj3GAYYZ0&ab_channel=Epitaph",
-            gambar: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAPFBMVEUAAAAcEDAcEDAXBiVlPQh4Vwu3sQ2dhwxjPgaRIzvACxv4OUr/bnaBDiGkCxr/o6HmCyHv2sigO1f///8kjhRLAAAAA3RSTlMAQHBaCvrnAAAAAWJLR0QTDLtclgAAAAd0SU1FB+IDBwApN7HUaKQAAAB0SURBVBjTXc5REsIwCARQ0lUrSyHY+x/WtDGNykw+eLOzQWQM5H++BcAP4HZ/ADPY9hVPDMK5K2gbZoPT4UPg4dwqrVqeAnVaWn1ZssPuwUyzzLjgkGT4p6QLGePj3Q+JEejSeuI6HqoOnYGytNNKe0sReQMksgUhPSgEAAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wMy0wNlQyMzo0MTo1NSswMTowMJImYPsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDMtMDZUMjM6NDE6NTUrMDE6MDDje9hHAAAAAElFTkSuQmCC",
-            // gambar: videoData.gambar,
-            tag: ["check"],
-            _method: "put",
-            publish: 1,
-            kategori_id: 76
-        }
+        // const dataToSend ={
+        //     users_id: 3,
+        //     judul_video: videoData.judul_video,
+        //     isi_video: videoData.isi_video,
+        //     url_video: "www.youtube.com/watch?v=JxPj3GAYYZ0&ab_channel=Epitaph",
+        //     gambar: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAPFBMVEUAAAAcEDAcEDAXBiVlPQh4Vwu3sQ2dhwxjPgaRIzvACxv4OUr/bnaBDiGkCxr/o6HmCyHv2sigO1f///8kjhRLAAAAA3RSTlMAQHBaCvrnAAAAAWJLR0QTDLtclgAAAAd0SU1FB+IDBwApN7HUaKQAAAB0SURBVBjTXc5REsIwCARQ0lUrSyHY+x/WtDGNykw+eLOzQWQM5H++BcAP4HZ/ADPY9hVPDMK5K2gbZoPT4UPg4dwqrVqeAnVaWn1ZssPuwUyzzLjgkGT4p6QLGePj3Q+JEejSeuI6HqoOnYGytNNKe0sReQMksgUhPSgEAAAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAxOC0wMy0wNlQyMzo0MTo1NSswMTowMJImYPsAAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTgtMDMtMDZUMjM6NDE6NTUrMDE6MDDje9hHAAAAAElFTkSuQmCC",
+        //     // gambar: videoData.gambar,
+        //     tag: ["check"],
+        //     _method: "put",
+        //     publish: 1,
+        //     kategori_id: 76
+        // }
 
-        const { data } = await axios.post (link, dataToSend)
-        // const { data } = await axios.post (link, videoData)
+        // const { data } = await axios.post (link, dataToSend)
+        const { data } = await axios.post (link, videoData)
 
         dispatch ({
             type: UPDATE_VIDEO_SUCCESS,
             payload: data
         })
         // console.log ("check")
-        // console.log (videoData)
+        console.log (videoData)
 
     } catch (error) {
         dispatch ({

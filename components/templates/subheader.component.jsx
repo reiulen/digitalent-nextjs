@@ -19,8 +19,8 @@ const SubHeader = () => {
   useEffect(() => {
     if (router) {
       const linkPath = router.asPath.split("/");
-      linkPath.splice(0, 2);
-      // linkPath.shift();
+      // linkPath.splice(0, 2);
+      linkPath.shift();
 
       const pathArray = linkPath.map((path, i) => {
         return {
@@ -53,10 +53,13 @@ const SubHeader = () => {
                       } */}
 
                       {
-                        (i == (breadcrumbs.length - 1)) ?
-                          (convertBreadcrumb(breadcrumb.breadcrumb)).slice(0, -1)
+                        i !== 0 ?
+                          (i == (breadcrumbs.length - 1)) ?
+                            (convertBreadcrumb(breadcrumb.breadcrumb)).slice(0, -1)
+                          :
+                            (convertBreadcrumb(breadcrumb.breadcrumb))
                         :
-                          (convertBreadcrumb(breadcrumb.breadcrumb))
+                          null
                       } 
                     </p>
                   </a>
