@@ -333,7 +333,7 @@ const EditArtikel = () => {
                     {simpleValidator.current.message(
                       "judul_artikel",
                       judul_artikel,
-                      "required||min:5|max:50",
+                      "required|min:5|max:50",
                       { className: "text-danger" }
                     )}
                   </div>
