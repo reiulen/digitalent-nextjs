@@ -276,6 +276,20 @@ const Sidebar = () => {
                     </li>
                     <li
                       className={
+                        router.pathname == "/publikasi/dashboard-publikasi"
+                          ? "menu-item menu-item-active"
+                          : "menu-item"
+                      }
+                      aria-haspopup="true"
+                    >
+                      <Link href="/publikasi/dashboard-publikasi">
+                        <a className="menu-link">
+                          <span className="menu-text">Dashboard</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li
+                      className={
                         router.pathname == "/publikasi/artikel"
                           ? "menu-item menu-item-active"
                           : "menu-item"

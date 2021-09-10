@@ -657,7 +657,7 @@ const Vidio = () => {
                                                                 <button
                                                                     onClick={() => handlePreview(row.url_video)} 
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
-                                                                    data-target="#exampleModalCenter" 
+                                                                    data-target="#videoPlayerModal" 
                                                                     data-toggle="modal"
                                                                 >
                                                                     <i class="ri-todo-fill p-0 text-white"></i>
@@ -771,7 +771,7 @@ const Vidio = () => {
             </div>
             
             {/* Modal */}
-            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal fade" id="videoPlayerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
