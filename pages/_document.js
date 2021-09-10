@@ -22,6 +22,10 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap"
           />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Rubik&display=swap"
+            rel="stylesheet"
+          />
           {/* <!--end::Fonts--> */}
 
           {/* <!--begin::Global Theme Styles(used by all pages)--> */}

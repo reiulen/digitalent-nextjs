@@ -79,15 +79,15 @@ a {
 .form-control-auth {
   background: #ffffff !important;
   border-radius: 10px;
-  height: 50px;
+  height: 46px;
   /* width: 400px; */
 }
 
 .form-auth-label {
-  color: #676767 !important;
-  font-size: 18px;
-  font-weight: 500 !important;
-  line-height: 21px !important;
+  color: #ffffff !important;
+  font-size: 16px;
+  font-weight: 400 !important;
+  line-height: 25px !important;
 }
 
 .form-search-date {

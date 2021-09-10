@@ -4,10 +4,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 const convertBreadcrumb = (string) => {
-  return (
-    ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /`
-    // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
-  );
+  return ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /`;
+  // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
 };
 
 const SubHeader = () => {
@@ -28,8 +26,6 @@ const SubHeader = () => {
           href: "/" + linkPath.slice(0, i + 1).join("/"),
         };
       });
-
-      console.log(pathArray);
       setBreadcrumbs(pathArray);
     }
   }, [router]);
@@ -52,12 +48,9 @@ const SubHeader = () => {
                         (convertBreadcrumb(breadcrumb.breadcrumb))
                       } */}
 
-                      {
-                        (i == (breadcrumbs.length - 1)) ?
-                          (convertBreadcrumb(breadcrumb.breadcrumb)).slice(0, -1)
-                        :
-                          (convertBreadcrumb(breadcrumb.breadcrumb))
-                      } 
+                      {i == breadcrumbs.length - 1
+                        ? convertBreadcrumb(breadcrumb.breadcrumb).slice(0, -1)
+                        : convertBreadcrumb(breadcrumb.breadcrumb)}
                     </p>
                   </a>
                 </Link>

@@ -326,30 +326,52 @@ const ListTrivia = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle d-flex">
-                                <Link href={`/subvit/trivia/edit?id=${row.id}`}>
-                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
-                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                  </a>
-                                </Link>
-                                <Link href={`/subvit/trivia/${row.id}`}>
-                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
-                                    <i className="ri-eye-fill p-0 text-white"></i>
-                                  </a>
-                                </Link>
-                                <Link
-                                  href={`/subvit/trivia/report?id=${row.id}`}
-                                >
-                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
-                                    <i className="ri-todo-fill p-0 text-white"></i>
-                                  </a>
-                                </Link>
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary text-white"
-                                  onClick={() => handleDelete(row.id)}
-                                >
-                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                </button>
+                              <td className="align-middle">
+                                <div className="d-flex">
+                                  <Link
+                                    href={`/subvit/trivia/edit?id=${row.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Edit"
+                                    >
+                                      <i className="ri-pencil-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                  <Link href={`/subvit/trivia/${row.id}`}>
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Detail"
+                                    >
+                                      <i className="ri-eye-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                  <Link
+                                    href={`/subvit/trivia/report?id=${row.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Report"
+                                    >
+                                      <i className="ri-todo-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary text-white"
+                                    onClick={() => handleDelete(row.id)}
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Hapus"
+                                  >
+                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                  </button>
+                                </div>
                               </td>
                             </tr>
                           );
