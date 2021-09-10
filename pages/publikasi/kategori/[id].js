@@ -1,8 +1,22 @@
+import dynamic from "next/dynamic";
+
 import Layout from "../../../components/templates/layout.component";
-import EditKategori from "../../../components/content/publikasi/kategori/edit";
+// import EditKategori from "../../../components/content/publikasi/kategori/edit";
 
 import { getDetailKategori } from "../../../redux/actions/publikasi/kategori.actions";
 import { wrapper } from "../../../redux/store";
+
+import LoadingPage from "../../../components/LoadingPage";
+
+const EditKategori = dynamic(
+    () => import("../../../components/content/publikasi/kategori/edit"),
+    { 
+        // suspense: true,
+        // loading: () => <LoadingSkeleton />, 
+        loading: function loadingNow () {return <LoadingPage /> }, 
+        ssr: false
+    }
+  );
 
 export default function EditKategoriPage() {
     return (
