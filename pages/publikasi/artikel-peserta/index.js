@@ -11,7 +11,12 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const ArtikelPeserta = dynamic(
     () => import("../../../components/content/publikasi/artikel-peserta/artikel-peserta"),
-    { loading: () => <LoadingSkeleton />, ssr: false}
+    { 
+        // suspense: true,
+        // loading: () => <LoadingSkeleton />, 
+        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        ssr: false
+    }
 );
 
 export default function ArtikelPesertaPage() {

@@ -128,12 +128,16 @@ export const updateArtikelPeserta = (artikelPesertaData) => async (dispatch) => 
       type: UPDATE_ARTIKEL_PESERTA_SUCCESS,
       payload: data,
     });
+
+    // console.log (data)
     
   } catch (error) {
     dispatch({
       type: UPDATE_ARTIKEL_PESERTA_FAIL,
       payload: error.response.data.message,
     });
+
+    console.log (error)
   }
 };
 

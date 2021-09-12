@@ -608,10 +608,10 @@ const Table = () => {
                         </th>
                         <th className="text-left align-middle">Periode</th>
                         <th className="text-left align-middle">
-                          Tanggal Tanda Tangan
+                          Tanggal Awal Kerjasama
                         </th>
                         <th className="text-left align-middle">
-                          Tanggal Selesai
+                          Tanggal Selesai Kerjasama
                         </th>
                         <th className="text-left align-middle">Status</th>
                         <th className="text-left align-middle">Aksi</th>
@@ -680,16 +680,18 @@ const Table = () => {
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
                                     {moment(items.signing_date).format(
-                                      "YYYY MMM DD"
+                                      "DD MMMM YYYY"
                                     )}
                                     {/* moment().format('MMMM Do YYYY, h:mm:ss a'); */}
                                     {/* H, HHss     */}
+
+                                    
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
                                     {moment(items.period_date_end).format(
-                                      "YYYY MMM DD"
+                                      "DD MMMM YYYY"
                                     )}
                                   </p>
                                 </td>

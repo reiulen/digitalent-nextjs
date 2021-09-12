@@ -97,9 +97,9 @@ const TambahKategori = () => {
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Nama Kategori</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <input
                                         type="text"
                                         className="form-control"
@@ -112,14 +112,14 @@ const TambahKategori = () => {
                                         success ? 
                                             null
                                         :
-                                            simpleValidator.current.message("nama kategori", nama, "required|max:25|string", { className: "text-danger" })
+                                            simpleValidator.current.message("nama kategori", nama, "required|min:5|max:25|string", { className: "text-danger" })
                                     }
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Jenis Kategori</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <select
                                         value={jenis_kategori}
                                         className='form-control'
@@ -145,11 +145,11 @@ const TambahKategori = () => {
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
-                                <div className="col-sm-10">
+                                <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/kategori'>
-                                        <a className='btn btn-outline-primary mr-2 btn-sm'>Kembali</a>
+                                        <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                     </Link>
-                                    <button className='btn btn-primary btn-sm'>Simpan</button>
+                                    <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                 </div>
                             </div>
                         </form>

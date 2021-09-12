@@ -3,13 +3,13 @@ import Layout from "../../../components/templates/layout.component";
 
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../components/LoadingPage";
-
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const Table = dynamic(
   () =>
     import(
       "../../../components/content/partnership/manajemen-mitra/tableMitra"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 export default function MitraPage() {
   return (

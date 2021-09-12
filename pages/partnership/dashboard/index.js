@@ -2,11 +2,11 @@ import dynamic from "next/dynamic";
 import LoadingPage from "../../../components/LoadingPage";
 import Layout from "../../../components/templates/layout.component";
 // import Dashboard from "../../../components/content/partnership/dashboard/DashboardPage";
-
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const Dashboard = dynamic(
   () =>
     import("../../../components/content/partnership/dashboard/DashboardPage"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function KerjaSamaPage() {

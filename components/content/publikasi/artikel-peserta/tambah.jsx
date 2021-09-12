@@ -243,7 +243,7 @@ const TambahArtikel = () => {
                     htmlFor="staticEmail"
                     className="col-sm-2 col-form-label"
                   >
-                    Artikel
+                    Isi Artikel
                   </label>
                   <div className="col-sm-12">
                     <div className="ckeditor">
@@ -338,41 +338,6 @@ const TambahArtikel = () => {
                       }
                     </div>
                   </div>
-                  {/* <div className="col-sm-9">
-                    <div className="input-group">
-                      <div className="custom-file">
-                        <input
-                          type="file"
-                          name="gambar"
-                          className="custom-file-input"
-                          id="inputGroupFile04"
-                          onChange={onChangeGambar}
-                          accept="image/*"
-                          onBlur={() =>
-                            simpleValidator.current.showMessageFor("gambar")
-                          }
-                        />
-                        <label
-                          className="custom-file-label"
-                          htmlFor="inputGroupFile04"
-                        >
-                          Pilih file
-                        </label>
-                      </div>
-                    </div>
-                    {simpleValidator.current.message(
-                      "gambar",
-                      gambar,
-                      "required",
-                      { className: "text-danger" }
-                    )}
-                    {
-                      gambarName !== null ?
-                        <small className="text-danger">{gambarName}</small>
-                      :
-                        null
-                    }
-                  </div> */}
                   
                 </div>
                 <div className="form-group">
