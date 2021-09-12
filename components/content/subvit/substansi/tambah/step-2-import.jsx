@@ -46,6 +46,7 @@ const StepTwo = () => {
     loading: loadingFile,
     error: errorFile,
     success: successFile,
+    subtance_question_file,
   } = useSelector((state) => state.importFileSubtanceQuestionDetail);
   const {
     loading: loadingImages,
@@ -384,7 +385,10 @@ const StepTwo = () => {
                   <div className="mb-5">
                     <h2 className="text-success">Sukses Import Soal</h2>
                     <span className="text-muted">
-                      200 Bank Soal | 150 Ingatan | 50 Analitik
+                      {subtance_question_file.success +
+                        subtance_question_file.failed}{" "}
+                      Total Import | {subtance_question_file.success} Sukses di
+                      Import | {subtance_question_file.failed} Gagal di import
                     </span>
                   </div>
                 ) : (
@@ -452,7 +456,12 @@ const StepTwo = () => {
                                     <Link
                                       href={`edit-soal-substansi?id=${question.id}`}
                                     >
-                                      <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Edit"
+                                      >
                                         <i className="ri-pencil-fill p-0 text-white"></i>
                                       </a>
                                     </Link>
@@ -460,6 +469,9 @@ const StepTwo = () => {
                                       className="btn btn-link-action bg-blue-secondary text-white"
                                       onClick={() => handleDelete(question.id)}
                                       type="button"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Hapus"
                                     >
                                       <i className="ri-delete-bin-fill p-0 text-white"></i>
                                     </button>

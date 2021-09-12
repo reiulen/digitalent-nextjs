@@ -1,4 +1,5 @@
-import LoginAdmin from "../components/content/auth/admin/login"
+import LoginAdmin from "../components/content/auth/admin/login";
+import { getSession } from "next-auth/client";
 
 export default function LoginAdminPage() {
   return (
@@ -7,5 +8,21 @@ export default function LoginAdminPage() {
         <LoginAdmin />
       </div>
     </>
-  )
+  );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession({ req: context.req });
+  if (session) {
+    return {
+      redirect: {
+        destination: "/subvit",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }

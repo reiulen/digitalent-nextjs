@@ -1,49 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { Breadcrumb } from "react-bootstrap";
-// import { Offcanvas } from "react-bootstrap";
 
 const Header = () => {
-    const router = useRouter();
-    const [breadcrumbs, setBreadcrumbs] = useState(null);
+  const router = useRouter();
+  const [breadcrumbs, setBreadcrumbs] = useState(null);
 
-    const convertBreadcrumb = (string) => {
-        return (
-            string.charAt(0).toUpperCase() + string.slice(1)
-        );
-    };
+  const convertBreadcrumb = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
 
-    useEffect(() => {
-        if (router) {
-            const linkPath = router.asPath.split("/");
-            linkPath.slice(0, 1);
-            // linkPath.shift();
-      
-            const pathArray = linkPath.map((path, i) => {
-              return {
-                breadcrumb: path,
-                href: "/" + linkPath.slice(0, i + 1).join("/"),
-              };
-            });
-      
-            console.log(pathArray);
-            setBreadcrumbs(pathArray);
-        }
-        
-    }, [router])
+  useEffect(() => {
+    if (router) {
+      const linkPath = router.asPath.split("/");
+      linkPath.slice(0, 1);
+      // linkPath.shift();
 
-    const [show, setShow] = useState(false);
+      const pathArray = linkPath.map((path, i) => {
+        return {
+          breadcrumb: path,
+          href: "/" + linkPath.slice(0, i + 1).join("/"),
+        };
+      });
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => {
-        setShow(true);
-    };
+      setBreadcrumbs(pathArray);
+    }
+  }, [router]);
 
   return (
     <>
-        {
-            console.log (breadcrumbs)
-        }
       {/* <!--begin::Header--> */}
       <div id="kt_header" className="header header-fixed">
         {/* <!--begin::Container--> */}
@@ -67,14 +51,13 @@ const Header = () => {
                 >
                   <a href="javascript:;" className="menu-link menu-toggle">
                     {/* <span className="menu-text">Dashboard</span> */}
-                    {
-                        breadcrumbs ?
-                            <span className="menu-text">
-                                {convertBreadcrumb(breadcrumbs[1].breadcrumb)}
-                            </span>
-                        :
-                            <span className="menu-text">Dashboard</span>
-                    }       
+                    {breadcrumbs ? (
+                      <span className="menu-text">
+                        {convertBreadcrumb(breadcrumbs[1].breadcrumb)}
+                      </span>
+                    ) : (
+                      <span className="menu-text">Dashboard</span>
+                    )}
                     <i className="menu-arrow"></i>
                   </a>
                 </li>
@@ -242,8 +225,7 @@ const Header = () => {
             <div className="topbar-item">
               <div
                 className="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
-                // id="kt_quick_user_toggle"
-                onClick={handleShow}
+                id="kt_quick_user_toggle"
               >
                 <span className="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">
                   Hi,

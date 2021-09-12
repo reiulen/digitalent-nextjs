@@ -289,7 +289,7 @@ const TriggeredQuestionComponent = ({
                       )}
                     </div>
                   </div>
-                  {row.sub.length != 0
+                  {row.sub && row.sub.length != 0
                     ? row.sub.map((rowY, j) => {
                         return (
                           <>

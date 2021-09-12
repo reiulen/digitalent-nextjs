@@ -47,11 +47,17 @@ const DetailSurvey = () => {
   const [limit, setLimit] = useState(null);
 
   const handlePagination = (pageNumber) => {
-    router.push(`${router.pathname}/${id}?page=${pageNumber}`);
+    router.push({
+      pathname: `${router.pathname}`,
+      query: { id, page: pageNumber },
+    });
   };
 
   const handleLimit = (val) => {
-    router.push(`${router.pathname}/${id}?page=${1}&limit=${val}`);
+    router.push({
+      pathname: `${router.pathname}`,
+      query: { id, page: 1, limit: val },
+    });
   };
 
   const handleDelete = (id) => {
@@ -281,7 +287,7 @@ const DetailSurvey = () => {
                                 {question.question}
                               </td>
                               <td className="align-middle">
-                                {question.status === true ? (
+                                {question.status ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
@@ -291,20 +297,30 @@ const DetailSurvey = () => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle d-flex">
-                                <Link
-                                  href={`edit-soal-survey?id=${question.id}`}
-                                >
-                                  <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
-                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                  </a>
-                                </Link>
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary text-white"
-                                  onClick={() => handleDelete(question.id)}
-                                >
-                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                </button>
+                              <td className="align-middle">
+                                <div className="d-flex">
+                                  <Link
+                                    href={`edit-soal-survey?id=${question.id}`}
+                                  >
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Edit"
+                                    >
+                                      <i className="ri-pencil-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary text-white"
+                                    onClick={() => handleDelete(question.id)}
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Hapus"
+                                  >
+                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                  </button>
+                                </div>
                               </td>
                             </tr>
                           );

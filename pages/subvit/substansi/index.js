@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
-import Layout from "../../../components/templates/layout.component";
+// import Layout from "../../../components/templates/layout.component";
 // import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 // import ListSubstansi from '../../../components/content/subvit/substansi/list-substansi'
+const Layout = dynamic(() =>
+  import("../../../components/templates/layout.component")
+);
 const ListSubstansi = dynamic(
   () => import("../../../components/content/subvit/substansi/list-substansi"),
-  { suspense: true, loading: () => <LoadingSkeleton /> }
+  { loading: () => <LoadingSkeleton /> }
 );
 
 import { getAllSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions";
@@ -18,7 +21,6 @@ export default function Substansi() {
     <>
       <div className="d-flex flex-column flex-root">
         <Layout title="List Test Substansi">
-          {/* {loader ? <LoadingPage loading={true} /> : <ListSubstansi />} */}
           <ListSubstansi />
         </Layout>
       </div>
