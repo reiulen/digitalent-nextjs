@@ -87,6 +87,7 @@ const Sidebar = () => {
   return (
     <>
       {/* <!--begin::Aside--> */}
+
       <div
         className="aside aside-left aside-fixed d-flex flex-column flex-row-auto"
         id="kt_aside"
