@@ -45,6 +45,7 @@ const StepTwo = () => {
     loading: loadingFile,
     error: errorFile,
     success: successFile,
+    trivia_question_file,
   } = useSelector((state) => state.importFileTriviaQuestionDetail);
   const {
     loading: loadingImages,
@@ -371,6 +372,19 @@ const StepTwo = () => {
               </div>
 
               <div className="table-page" style={{ marginTop: "20px" }}>
+                {successFile ? (
+                  <div className="mb-5">
+                    <h2 className="text-success">Sukses Import Soal</h2>
+                    <span className="text-muted">
+                      {trivia_question_file.success +
+                        trivia_question_file.failed}{" "}
+                      Total Import | {trivia_question_file.success} Sukses di
+                      Import | {trivia_question_file.failed} Gagal di import
+                    </span>
+                  </div>
+                ) : (
+                  ""
+                )}
                 <div className="table-responsive">
                   <LoadingTable loading={loading} />
 
@@ -421,21 +435,33 @@ const StepTwo = () => {
                                       </span>
                                     )}
                                   </td>
-                                  <td className="align-middle d-flex">
-                                    <Link
-                                      href={`edit-soal-trivia?id=${question.id}`}
-                                    >
-                                      <a className="btn btn-link-action bg-blue-secondary text-white mr-2">
-                                        <i className="ri-pencil-fill p-0 text-white"></i>
-                                      </a>
-                                    </Link>
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary text-white"
-                                      onClick={() => handleDelete(question.id)}
-                                      type="button"
-                                    >
-                                      <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                    </button>
+                                  <td className="align-middle">
+                                    <div className="d-flex">
+                                      <Link
+                                        href={`edit-soal-trivia?id=${question.id}`}
+                                      >
+                                        <a
+                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                          data-toggle="tooltip"
+                                          data-placement="bottom"
+                                          title="Edit"
+                                        >
+                                          <i className="ri-pencil-fill p-0 text-white"></i>
+                                        </a>
+                                      </Link>
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary text-white"
+                                        onClick={() =>
+                                          handleDelete(question.id)
+                                        }
+                                        type="button"
+                                        data-toggle="tooltip"
+                                        data-placement="bottom"
+                                        title="Hapus"
+                                      >
+                                        <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                      </button>
+                                    </div>
                                   </td>
                                 </tr>
                               );
