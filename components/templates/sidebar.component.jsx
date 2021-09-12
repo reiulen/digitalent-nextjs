@@ -495,14 +495,14 @@ const Sidebar = () => {
                       </Link>
                     </li>
                     <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/manajemen-kerjasama">
+                      <Link href="/partnership/kerjasama">
                         <a className="menu-link">
                           <span className="menu-text">Kerjasama</span>
                         </a>
                       </Link>
                     </li>
                     <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/manajemen-mitra">
+                      <Link href="/partnership/mitra">
                         <a className="menu-link">
                           <span className="menu-text">Master Mitra</span>
                         </a>
