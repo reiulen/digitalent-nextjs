@@ -144,55 +144,15 @@ export const updateBerita = (beritaData) => async (dispatch) => {
 } 
 
 export const deleteBerita = (id) => async (dispatch) => {
+
     try {
-        
         dispatch({ type: DELETE_BERITA_REQUEST })
 
         const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `api/berita/${id}`)
 
-        // dispatch({
-        //     type: DELETE_BERITA_SUCCESS,
-        //     payload: data.success
-        // })
-
-        .then ((res) => {
-            // console.log (res)
-            
-            try {
-                dispatch({ type: BERITA_REQUEST })
-
-                let link = process.env.END_POINT_API_PUBLIKASI + `api/berita?page=${1}&limit=${5}`
-                axios.get (link)
-
-                .then ((res) => {
-                    dispatch({
-                        type: BERITA_SUCCESS,
-                        payload: res.data
-                    })
-                })
-
-                .catch ((err) => {
-                    dispatch({
-                        type: BERITA_FAIL,
-                        payload: err.message
-                    })
-                })
-                
-
-            } catch (error) {
-                dispatch({
-                    type: BERITA_FAIL,
-                    payload: error.message
-                })
-            }
-            
-        })
-
-        .catch ((err) => {
-            dispatch({
-                type: DELETE_BERITA_FAIL,
-                payload: err.response.data.message
-            })
+        dispatch({
+            type: DELETE_BERITA_SUCCESS,
+            payload: data.status
         })
 
     } catch (error) {

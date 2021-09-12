@@ -54,6 +54,16 @@ const TambahFaq = () => {
     const [publish, setPublish] = useState(false)
     const [, forceUpdate] = useState();
 
+    const handleChangePinned = (e) => {
+        setPinnedFaq(e.target.checked);
+        // console.log (e.target.checked)
+    };
+
+    const handleChangePublish = (e) => {
+        setPublish(e.target.checked);
+        // console.log (e.target.checked)
+    };
+
     const onSubmit = (e) => {
         e.preventDefault()
 
@@ -107,9 +117,9 @@ const TambahFaq = () => {
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul Pertanyaan</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <input
                                         type="text"
                                         className="form-control"
@@ -118,13 +128,13 @@ const TambahFaq = () => {
                                         onChange={(e) => setJudulPertanyaan(e.target.value)}
                                         onBlur={() => simpleValidator.current.showMessageFor("judul pertanyaan")}
                                     />
-                                    {simpleValidator.current.message("judul pertanyaan", judul, "required", { className: "text-danger" })}
+                                    {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:50", { className: "text-danger" })}
                                 </div>
                             </div>
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Jawaban</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <textarea
                                         className='form-control'
                                         placeholder='isi deskripsi jawaban disini'
@@ -141,9 +151,9 @@ const TambahFaq = () => {
                                 console.log (kategori)
                             }
 
-                            <div className="form-group row">
+                            <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-12">
                                     <select
                                         className='form-control'
                                         value={kategori_id}
@@ -172,8 +182,66 @@ const TambahFaq = () => {
                                 </div>
                             </div>
 
+                            <div className="form-group row">
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="ml-5 pl-4 "
+                                >
+                                    Pin FAQ
+                                </label>
+                                <div className="col-sm-1 ml-4">
+                                    <div className="">
+                                        <label className="switches">
+                                            <input
+                                            // required
+                                            className="checkbox"
+                                            checked={publish}
+                                            type="checkbox"
+                                            // onChange={(checked) => setPublish(checked)}
+                                            onChange={(e) => handleChangePinned(e)}
+                                            />
+                                            <span
+                                            className={`sliders round ${
+                                                publish ? "text-white" : "pl-2"
+                                            }`}
+                                            >
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
 
                             <div className="form-group row">
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="ml-5 pl-4 "
+                                >
+                                    Publish
+                                </label>
+                                <div className="col-sm-1 ml-4">
+                                    <div className="">
+                                        <label className="switches">
+                                            <input
+                                            // required
+                                            className="checkbox"
+                                            checked={publish}
+                                            type="checkbox"
+                                            // onChange={(checked) => setPublish(checked)}
+                                            onChange={(e) => handleChangePublish(e)}
+                                            />
+                                            <span
+                                            className={`sliders round ${
+                                                publish ? "text-white" : "pl-2"
+                                            }`}
+                                            >
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            {/* <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Pin FAQ</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
@@ -187,9 +255,9 @@ const TambahFaq = () => {
                                         onChange={(checked) => setPinnedFaq(checked)}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="form-group row">
+                            {/* <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
                                     <SwitchButton
@@ -203,7 +271,7 @@ const TambahFaq = () => {
                                         onChange={(checked) => setPublish(checked)}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>

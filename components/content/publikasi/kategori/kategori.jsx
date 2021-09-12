@@ -314,8 +314,8 @@ const Kategori = () => {
                                 </div>
                                 </div>
                                 <div className="col-lg-6 col-xl-6 col-sm-9">
-                                <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
-                                    {/* sortir by modal */}
+                                {/* <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                                    
                                     <button
                                     className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                                     data-toggle="modal"
@@ -329,7 +329,7 @@ const Kategori = () => {
                                     <IconArrow fill="#E4E6EF" width="11" height="11"/>
                                     </button>
 
-                                    {/* modal */}
+                                    
                                     <form
                                     // id="kt_docs_formvalidation_text"
                                     className="form text-left"
@@ -439,9 +439,9 @@ const Kategori = () => {
                                     </div>
                                     </div>
                                 </form>
-                                {/* end modal */}
+                                
 
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                         

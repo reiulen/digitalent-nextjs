@@ -7,10 +7,16 @@ import { getAllFaq, getAllFaqPagination } from '../../../redux/actions/publikasi
 import { wrapper } from '../../../redux/store'
 
 import LoadingPage from "../../../components/LoadingPage";
+import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const FAQ = dynamic(
     () => import("../../../components/content/publikasi/faq/faq"),
-    { loading: () => <LoadingPage />, ssr: false }
+    { 
+        // suspense: true,
+        // loading: () => <LoadingSkeleton />, 
+        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        ssr: false
+    }
 );
 
 export default function FaqPage() {

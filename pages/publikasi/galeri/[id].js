@@ -1,14 +1,28 @@
+import dynamic from "next/dynamic";
+
 import Layout from "../../../components/templates/layout.component";
-import EditGaleri from "../../../components/content/publikasi/galeri/edit";
+// import EditGaleri from "../../../components/content/publikasi/galeri/edit";
 
 import { getDetailGaleri } from "../../../redux/actions/publikasi/galeri.actions";
 import { wrapper } from "../../../redux/store";
 
-export default function EditArtikelPage() {
+import LoadingPage from "../../../components/LoadingPage";
+
+const EditGaleri = dynamic(
+  () => import("../../../components/content/publikasi/artikel/edit"),
+  { 
+      // suspense: true,
+      // loading: () => <LoadingSkeleton />, 
+      loading: function loadingNow () {return <LoadingPage /> }, 
+      ssr: false
+  }
+);
+
+export default function EditGaleriPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Update Galeri">
+        <Layout title="Ubah Galeri">
           <EditGaleri />
         </Layout>
       </div>
