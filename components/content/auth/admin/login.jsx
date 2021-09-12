@@ -19,6 +19,18 @@ const LoginAdmin = () => {
   const [captcha, setCaptcha] = useState("");
   const [, forceUpdate] = useState();
 
+  const [hidePassword, setHidePassword] = useState(true);
+
+  const handlerShowPassword = (value) => {
+    setHidePassword(value);
+    var input = document.getElementById("input-password");
+    if (input.type === "password") {
+      input.type = "text";
+    } else {
+      input.type = "password";
+    }
+  };
+
   const handlerSubmit = async (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
@@ -95,16 +107,32 @@ const LoginAdmin = () => {
                 <div className="form-group">
                   <label className="form-auth-label">Password</label>
                   <a className="float-right text-primary">Lupa Password ?</a>
-                  <input
-                    type="password"
-                    className="form-control form-control-auth"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Placeholder"
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("Password")
-                    }
-                  />
+                  <div className="position-relative">
+                    <input
+                      id="input-password"
+                      type="password"
+                      className="form-control form-control-auth pr-10"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Placeholder"
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("Password")
+                      }
+                    />
+                    {hidePassword === true ? (
+                      <i
+                        className="ri-eye-fill right-center-absolute cursor-pointer"
+                        style={{ right: "10px" }}
+                        onClick={() => handlerShowPassword(false)}
+                      />
+                    ) : (
+                      <i
+                        className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                        style={{ right: "10px" }}
+                        onClick={() => handlerShowPassword(true)}
+                      />
+                    )}
+                  </div>
                   {simpleValidator.current.message(
                     "Password",
                     password,
