@@ -222,7 +222,8 @@ const EditTandaTangan = () => {
                 </label>
                 <div className="row">
                   <div className="col-sm-2 ">
-                    {/* <Image
+                    <div className="border my-3">
+                    <Image
                               unoptimized={
                                 process.env.ENVIRONMENT !== "PRODUCTION"
                               }
@@ -233,10 +234,10 @@ const EditTandaTangan = () => {
                                 "partnership/images/signatures/" +
                                 tandaTangan
                               }
-                              width={60}
-                              height={60}
+                              width={400}
+                              height={400}
                               alt="logo"
-                            /> */}
+                            /></div>
                   </div>
                   <div className="col-sm-12">
                     <div
