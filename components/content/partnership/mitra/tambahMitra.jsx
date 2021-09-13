@@ -672,7 +672,7 @@ const TambahMitra = () => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/mitra">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>

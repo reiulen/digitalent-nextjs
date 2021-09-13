@@ -72,7 +72,7 @@ const DetailDokumenKerjasama = () => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Detail Dokumen Kerjasama
+              Detail Kerjasama
             </h3>
           </div>
 
@@ -417,7 +417,7 @@ const DetailDokumenKerjasama = () => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
                       Kembali
                     </a>
                   </Link>

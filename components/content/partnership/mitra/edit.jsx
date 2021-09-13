@@ -308,7 +308,7 @@ const EditMitra = () => {
 
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3 className="card-title font-weight-bolder text-dark" style={{ fontSize: "24px" }}>
               Ubah Mitra
             </h3>
           </div>
@@ -665,7 +665,7 @@ const EditMitra = () => {
                     <div className="col-12 col-sm-3">
                       <button
                         type="button"
-                        className="btn btn-rounded-full bg-blue-secondary text-white w-100 d-flex justify-content-center mt-2"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white w-100 d-flex justify-content-center mt-2"
                         onClick={() => changeValueProvinces()}
                       >
                         Ubah Provinsi
@@ -707,7 +707,7 @@ const EditMitra = () => {
                     <div className="col-12 col-sm-3">
                       <button
                         type="button"
-                        className="btn btn-rounded-full bg-blue-secondary text-white w-100 d-flex justify-content-center"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white w-100 d-flex justify-content-center"
                         onClick={() => cancelProvincesChange()}
                       >
                         Batal Ubah Provinsi
@@ -902,7 +902,7 @@ const EditMitra = () => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/mitra">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>

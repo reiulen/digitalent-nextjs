@@ -235,20 +235,14 @@ const Table = () => {
                             return (
                               <tr key={index}>
                                 <td className="align-middle text-left">
-                                  <button
-                                    className="btn"
-                                    style={{
-                                      background: "#F3F6F9",
-                                      borderRadius: "6px",
-                                    }}
-                                  >
+                                 
                                     {allMKCooporation.page === 1
                                       ? index + 1
                                       : (allMKCooporation.page - 1) *
                                           allMKCooporation.limit +
                                         (index + 1)}
                                     {/* {index + 1} */}
-                                  </button>
+                                 
                                 </td>
                                 <td className="align-middle text-left">
                                   {cooperation_categorie.cooperation_categories}
@@ -325,6 +319,8 @@ const Table = () => {
                   </table>
                 )}
               </div>
+
+              
 
               <div className="row">
                 <div className="table-pagination paginate-cs">

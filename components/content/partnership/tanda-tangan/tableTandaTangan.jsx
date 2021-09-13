@@ -243,19 +243,13 @@ const Table = () => {
                             return (
                               <tr key={index}>
                                 <td className="align-middle text-left">
-                                  <button
-                                    className="btn"
-                                    style={{
-                                      background: "#F3F6F9",
-                                      borderRadius: "6px",
-                                    }}
-                                  >
+                                  
                                     {allTandaTangan.page === 1
                                       ? index + 1
                                       : (allTandaTangan.page - 1) *
                                           allTandaTangan.limit +
                                         (index + 1)}
-                                  </button>
+                                 
                                 </td>
                                 <td className="align-middle text-left">
                                   {items.name}

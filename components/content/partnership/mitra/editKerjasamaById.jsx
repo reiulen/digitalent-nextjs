@@ -319,7 +319,7 @@ const EditDokumentKerjasamaById = () => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Edit Dokumen Kerjasama
+              Edit Kerjasama
             </h3>
           </div>
 
@@ -375,7 +375,7 @@ const EditDokumentKerjasamaById = () => {
                     <div className="col-12 col-sm-3">
                     <button
                       type="button"
-                      className="w-100 btn btn-primary btn-sm  mt-3"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2 w-100 d-flex justify-content-center"
                       onClick={() => dispatch(fetchListCooperationSelect())}
                     >
                       Ubah Kategory
@@ -414,7 +414,7 @@ const EditDokumentKerjasamaById = () => {
                     <div className="col-12 col-sm-3">
                     <button
                       type="button"
-                      className="w-100 btn btn-primary btn-sm  mt-3"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2 d-flex justify-content-center"
                       onClick={() => dispatch(cancelChangeCategory())}
                     >
                       Batal Ubah Kategory
@@ -605,9 +605,11 @@ const EditDokumentKerjasamaById = () => {
                 <div className="row">
                   <div className="col-12">
 
+                    <div className="d-flex flex-wrap align-items-center">
+
                     <button
                       type="button"
-                      className="btn btn-primary btn-sm mr-3"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
                       onClick={() => showDocument()}
                       >
                       {viewPDF || showDokument
@@ -617,11 +619,12 @@ const EditDokumentKerjasamaById = () => {
                     {" "}
                     <button
                       type="button"
-                      className="btn btn-primary btn-sm mr-3"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white  mt-2 mr-3"
                       onClick={() => setDocumentChange()}
                       >
                       {!changeDokumen ? "Ubah dokumen" : "Batal Ubah"}
                     </button>
+                    </div>
                       </div>
                 </div>
 
