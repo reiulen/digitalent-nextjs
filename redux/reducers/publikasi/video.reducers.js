@@ -22,6 +22,10 @@ import {
     UPDATE_VIDEO_RESET,
     UPDATE_VIDEO_FAIL,
 
+    PLAY_VIDEO_REQUEST,
+    PLAY_VIDEO_SUCCESS,
+    PLAY_VIDEO_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/video.type'
 
