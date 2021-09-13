@@ -440,6 +440,13 @@ const EditVideo = () => {
                                             null
                                         }
                                     </div>
+
+                                    <div className="mt-3 col-sm-3 text-muted">
+                                        <p>
+                                        Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                                        </p>
+                                        
+                                    </div>
                                     
                                 </div>
 
@@ -558,33 +565,33 @@ const EditVideo = () => {
                                     </div>
                                 </div> */}
 
-                            <div className="form-group">
-                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                                <div className="col-sm-12">
-                                    <div className="input-group">
-                                        <DatePicker
-                                            className="form-search-date form-control-sm form-control"
-                                            selected={publishDate}
-                                            onChange={(date) => setPublishDate(date)}
-                                            selectsStart
-                                            startDate={publishDate}
-                                            // endDate={endDate}
-                                            dateFormat="dd/MM/yyyy"
-                                            placeholderText="Silahkan Isi Tanggal Publish"
-                                            wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                            minDate={moment().toDate()}
-                                        // minDate={addDays(new Date(), 20)}
-                                        />
-                                        
+                                <div className="form-group">
+                                    <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                    <div className="col-sm-12">
+                                        <div className="input-group">
+                                            <DatePicker
+                                                className="form-search-date form-control-sm form-control"
+                                                selected={publishDate}
+                                                onChange={(date) => setPublishDate(date)}
+                                                selectsStart
+                                                startDate={publishDate}
+                                                // endDate={endDate}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="Silahkan Isi Tanggal Publish"
+                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                minDate={moment().toDate()}
+                                            // minDate={addDays(new Date(), 20)}
+                                            />
+                                            
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
                                 <div className="form-group row">
                                     <div className="col-sm-2"></div>
                                     <div className="col-sm-10 text-right">
                                         <Link href='/publikasi/video'>
-                                            <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                            <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                         </Link>
                                         <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                     </div>

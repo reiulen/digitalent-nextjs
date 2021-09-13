@@ -128,6 +128,9 @@ const Artikel = () => {
     } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
         router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
 
+    } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+      router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+
     } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
       router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
@@ -790,7 +793,7 @@ const Artikel = () => {
                 {artikel  ? (
                   <div className="table-total ml-auto">
                     <div className="row">
-                      <div className="col-4 mr-0 p-0">
+                      <div className="col-4 mr-0 p-0 mt-3">
                         <select
                           className="form-control"
                           id="exampleFormControlSelect2"
