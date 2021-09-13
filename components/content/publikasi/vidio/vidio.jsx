@@ -120,6 +120,9 @@ const Vidio = () => {
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
     
+        } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+    
         } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
           router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
+import DatePicker from 'react-datepicker'
 
 import {
   newArtikel,
@@ -72,6 +73,7 @@ const TambahArtikel = () => {
   const [users_id, setUserId] = useState(3);
   const [tag, setTag] = useState([]);
   const [publish, setPublish] = useState(false);
+  const [publishDate, setPublishDate] = useState(null);
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -220,7 +222,7 @@ const TambahArtikel = () => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-sm-2 col-form-label font-weight-bolder"
                   >
                     Judul
                   </label>
@@ -247,7 +249,7 @@ const TambahArtikel = () => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-sm-2 col-form-label font-weight-bolder"
                   >
                     Isi Artikel
                   </label>
@@ -288,7 +290,7 @@ const TambahArtikel = () => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-sm-2 col-form-label font-weight-bolder"
                   >
                     Upload Thumbnail
                   </label>
@@ -345,6 +347,13 @@ const TambahArtikel = () => {
                       :
                         null
                     }
+                  </div>
+
+                  <div className="mt-3 col-sm-3 text-muted">
+                    <p>
+                      Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                    </p>
+                      
                   </div>
                   
                 </div>
@@ -410,7 +419,7 @@ const TambahArtikel = () => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-sm-2 col-form-label font-weight-bolder"
                   >
                     Kategori
                   </label>
@@ -458,7 +467,7 @@ const TambahArtikel = () => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-sm-2 col-form-label font-weight-bolder"
                   >
                     Tag
                   </label>
@@ -477,7 +486,7 @@ const TambahArtikel = () => {
                 <div className="form-group row">
                   <label
                     htmlFor="staticEmail"
-                    className="ml-5 pl-4 "
+                    className="ml-5 pl-4 font-weight-bolder"
                   >
                     Publish 
                   </label>
@@ -503,11 +512,32 @@ const TambahArtikel = () => {
                   </div>
                 </div>
 
+                <div className="form-group">
+                  <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                  <div className="col-sm-12">
+                    <div className="input-group">
+                      <DatePicker
+                        className="form-search-date form-control-sm form-control"
+                        selected={publishDate}
+                        onChange={(date) => setPublishDate(date)}
+                        selectsStart
+                        startDate={publishDate}
+                        // endDate={endDate}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Silahkan Isi Tanggal Publish"
+                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                        minDate={moment().toDate()}
+                      // minDate={addDays(new Date(), 20)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="form-group row">
                   <div className="col-sm-2"></div>
                   <div className="col-sm-10 text-right">
                     <Link href="/publikasi/artikel">
-                      <a className="btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm">
+                      <a className="btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm">
                         Kembali
                       </a>
                     </Link>

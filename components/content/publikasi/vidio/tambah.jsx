@@ -288,6 +288,13 @@ const TambahVidio = () => {
                                         null
                                     }
                                 </div>
+
+                                <div className="mt-3 col-sm-3 text-muted">
+                                    <p>
+                                        Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                                    </p>
+                                    
+                                </div>
                                 
                             </div>
 
@@ -442,7 +449,7 @@ const TambahVidio = () => {
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/video'>
-                                        <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                     </Link>
                                     <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                 </div>

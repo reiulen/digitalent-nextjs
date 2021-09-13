@@ -23,7 +23,7 @@ export default function EditFaqPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title="Ubah FAQ">
+                <Layout title="Ubah FAQ - Publikasi">
                     <EditFaq />
                 </Layout>
             </div>
