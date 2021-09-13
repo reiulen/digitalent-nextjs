@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
+import DatePicker from 'react-datepicker'
 
 import { updateVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { NEW_ARTIKEL_RESET, UPDATE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
@@ -65,11 +66,13 @@ const EditVideo = () => {
     const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [gambarName, setGambarName] = useState (video.gambar)
-    const [kategori_id, setKategoriId] = useState(video.kategori_id) 
+    const [kategori_id, setKategoriId] = useState(video.kategori) 
+    // const [kategori_id, setKategoriId] = useState(video.kategori_id) 
     const [users_id, setUserId] = useState(video.users_id)
     const [tag, setTag] = useState(video.tag)
     const [publish, setPublish] = useState(video.publish === 1 ? true : false)
     const [_method, setMethod] = useState("put")
+    const [publishDate, setPublishDate] = useState(new Date (video.tanggal_publish));
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -103,6 +106,11 @@ const EditVideo = () => {
             'error'
             )
         }
+    };
+
+    const handleChangePublish = (e) => {
+        setPublish(e.target.checked)
+        // console.log (e.target.checked)
     };
 
     const onSubmit = (e) => {
@@ -350,7 +358,7 @@ const EditVideo = () => {
                         <div className="card-body">
                             <form onSubmit={onSubmit}>
                                 <div className="form-group">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                     <div className="col-sm-12">
                                         <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")}/>
                                         {simpleValidator.current.message(
@@ -363,10 +371,10 @@ const EditVideo = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
                                     <div className="col-sm-12">
                                         <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}/>
-                                        {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:50",{ className: "text-danger" })}
+                                        {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:5",{ className: "text-danger" })}
                                         {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                     </div>
                                 </div>
@@ -374,7 +382,7 @@ const EditVideo = () => {
                                 <div className="form-group">
                                     <label
                                         htmlFor="staticEmail"
-                                        className="col-sm-2 col-form-label"
+                                        className="col-sm-2 col-form-label font-weight-bolder"
                                     >
                                         Upload Thumbnail
                                     </label>
@@ -436,13 +444,20 @@ const EditVideo = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Link URL Video:</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Link URL Video:</label>
                                     <div className="col-sm-12 input-group">
-                                        <div className="input-group-prepend">
+                                        {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
-                                        </div>
-                                        <input type="text" className="form-control ml-4" placeholder="Example" value={url_video} onChange={(e) => setUrlVideo(e.target.value)}/>
+                                        </div> */}
+                                        <input type="text" className="form-control ml-4" placeholder="Example" value={url_video} onChange={(e) => setUrlVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("url_video")}/>
                                     </div>
+
+                                    {simpleValidator.current.message(
+                                    "url_video",
+                                    url_video,
+                                    "required|url",
+                                    { className: "text-danger" }
+                                    )}
                                     
                                 </div>
 
@@ -451,10 +466,13 @@ const EditVideo = () => {
                                 }
                                 {
                                     console.log (kategori_id)
+                                }
+                                {
+                                    console.log(video)
                                 } */}
 
                                 <div className="form-group">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
                                     <div className="col-sm-12">
                                         <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                             <option selected disabled value=''>-- Kategori --</option>
@@ -480,7 +498,7 @@ const EditVideo = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
                                     <div className="col-sm-12">
                                         <TagsInput
                                             value={tag}
@@ -496,7 +514,7 @@ const EditVideo = () => {
                                 <div className="form-group row">
                                     <label
                                         htmlFor="staticEmail"
-                                        className="ml-5 pl-4 "
+                                        className="ml-5 pl-4 font-weight-bolder"
                                     >
                                         Publish 
                                     </label>
@@ -540,6 +558,28 @@ const EditVideo = () => {
                                     </div>
                                 </div> */}
 
+                            <div className="form-group">
+                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                <div className="col-sm-12">
+                                    <div className="input-group">
+                                        <DatePicker
+                                            className="form-search-date form-control-sm form-control"
+                                            selected={publishDate}
+                                            onChange={(date) => setPublishDate(date)}
+                                            selectsStart
+                                            startDate={publishDate}
+                                            // endDate={endDate}
+                                            dateFormat="dd/MM/yyyy"
+                                            placeholderText="Silahkan Isi Tanggal Publish"
+                                            wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                            minDate={moment().toDate()}
+                                        // minDate={addDays(new Date(), 20)}
+                                        />
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
                                 <div className="form-group row">
                                     <div className="col-sm-2"></div>
                                     <div className="col-sm-10 text-right">
@@ -558,7 +598,7 @@ const EditVideo = () => {
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="exampleModalLongTitle">Image Preview</h5>
+                                <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>

@@ -22,6 +22,10 @@ import {
     UPDATE_VIDEO_RESET,
     UPDATE_VIDEO_FAIL,
 
+    PLAY_VIDEO_REQUEST,
+    PLAY_VIDEO_SUCCESS,
+    PLAY_VIDEO_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/video.type'
 
@@ -171,6 +175,27 @@ export const deleteVideo = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: DELETE_VIDEO_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const playVideo= (videoData) => async (dispatch) => {
+    try {
+        dispatch({ type: PLAY_VIDEO_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${videoData.id}`
+
+        const { data } = await axios.post (link, videoData)
+
+        dispatch ({
+            type: PLAY_VIDEO_SUCCESS,
+            payload: data
+        })
+    
+    } catch (error) {
+        dispatch ({
+            type: PLAY_VIDEO_FAIL,
             payload: error.response.data.message
         })
     }

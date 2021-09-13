@@ -189,3 +189,35 @@ export const updateVideoReducer = (state = {}, action) => {
             return state
     }
 }
+
+export const playVideoReducer = (state = {}, action) => {
+    switch (action.type) {
+        case PLAY_VIDEO_REQUEST:
+            return {
+                loading: true
+            }
+        
+        case PLAY_VIDEO_SUCCESS:
+            return {
+                loading: false,
+                isPlayed: action.payload,
+                success: true
+            }
+
+        case PLAY_VIDEO_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+
+        default:
+            return state
+    }
+}
