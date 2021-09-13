@@ -124,6 +124,9 @@ const Berita = () => {
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
     
+        } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+    
         } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
           router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     
@@ -152,6 +155,8 @@ const Berita = () => {
     };
 
     const handleSearchDate = () => {
+        console.log (startDate)
+
         if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
             Swal.fire(
                 'Oops !',
@@ -179,6 +184,14 @@ const Berita = () => {
             setStartDate (null)
             setEndDate (null)
 
+        } else if (startDate === null && endDate === null) {
+            Swal.fire(
+                'Oops !',
+                'Harap mengisi tanggal terlebih dahulu.',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
 
         } else {
             if (limit !== null && search !== null && startDate !== null && endDate !== null) {
@@ -476,6 +489,7 @@ const Berita = () => {
                                                     dateFormat="dd/MM/yyyy"
                                                     placeholderText="Silahkan Isi Tanggal Dari"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    minDate={moment().toDate()}
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                                 </div>
@@ -495,7 +509,8 @@ const Berita = () => {
                                                     startDate={startDate}
                                                     endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
-                                                    minDate={startDate}
+                                                    // minDate={startDate}
+                                                    minDate={moment().toDate()}
                                                     maxDate={addDays(startDate, 20)}
                                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
@@ -741,7 +756,7 @@ const Berita = () => {
                                 {berita  ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
-                                            <div className="col-4 mr-0 p-0">
+                                            <div className="col-4 mr-0 p-0 mt-3">
                                                 <select 
                                                     className="form-control" 
                                                     id="exampleFormControlSelect2" 

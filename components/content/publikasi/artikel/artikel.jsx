@@ -186,6 +186,14 @@ const Artikel = () => {
         setStartDate (null)
         setEndDate (null)
 
+    } else if (startDate === null && endDate === null) {
+      Swal.fire(
+          'Oops !',
+          'Harap mengisi tanggal terlebih dahulu.',
+          'error'
+      )
+      setStartDate (null)
+      setEndDate (null)
 
     } else {
         if (limit !== null && search !== null && startDate !== null && endDate !== null) {
