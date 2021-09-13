@@ -320,6 +320,8 @@ const Table = () => {
                 )}
               </div>
 
+              
+
               <div className="row">
                 <div className="table-pagination paginate-cs">
                   <Pagination
