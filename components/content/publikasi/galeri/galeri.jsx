@@ -125,6 +125,9 @@ const Galeri = () => {
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
     
+        } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+    
         } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
           router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     
@@ -180,6 +183,14 @@ const Galeri = () => {
             setStartDate (null)
             setEndDate (null)
     
+        } else if (startDate === null && endDate === null) {
+          Swal.fire(
+              'Oops !',
+              'Harap mengisi tanggal terlebih dahulu.',
+              'error'
+          )
+          setStartDate (null)
+          setEndDate (null)
     
         } else {
             if (limit !== null && search !== null && startDate !== null && endDate !== null) {
@@ -464,6 +475,7 @@ const Galeri = () => {
                                                                 dateFormat="dd/MM/yyyy"
                                                                 placeholderText="Silahkan Isi Tanggal Dari"
                                                                 wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                minDate={moment().toDate()}
                                                             // minDate={addDays(new Date(), 20)}
                                                             />
                                                             </div>
@@ -483,7 +495,8 @@ const Galeri = () => {
                                                                 startDate={startDate}
                                                                 endDate={endDate}
                                                                 dateFormat="dd/MM/yyyy"
-                                                                minDate={startDate}
+                                                                // minDate={startDate}
+                                                                minDate={moment().toDate()}
                                                                 maxDate={addDays(startDate, 20)}
                                                                 placeholderText="Silahkan Isi Tanggal Sampai"
                                                                 wrapperClassName="col-12 col-lg-12 col-xl-12"

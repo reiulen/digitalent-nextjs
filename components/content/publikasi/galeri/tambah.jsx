@@ -7,6 +7,7 @@ import { useDropzone } from 'react-dropzone';
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from 'simple-react-validator'
+import DatePicker from 'react-datepicker'
 // import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 
@@ -85,6 +86,7 @@ const TambahGaleri = () => {
                     height= "100%"
                     display="block"
                     objectFit="fill"
+                    unoptimized={true}
                 />
                 {/* <img
                     src={file.preview}
@@ -92,6 +94,10 @@ const TambahGaleri = () => {
                     width= '10vh'
                     height= '10vh'>
                 </img> */}
+
+                {/* {
+                    console.log (file)
+                } */}
             </div>
         </div>
     ));
@@ -140,6 +146,7 @@ const TambahGaleri = () => {
     const [users_id, setUserId] = useState(3)
     const [tag, setTag] = useState([])
     const [publish, setPublish] = useState(false)
+    const [publishDate, setPublishDate] = useState(null);
 
     const handleChangePublish = (e) => {
         setPublish(e.target.checked);
@@ -195,7 +202,7 @@ const TambahGaleri = () => {
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
                                     <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("judul")}/>
                                     {simpleValidator.current.message(
@@ -208,7 +215,7 @@ const TambahGaleri = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi Foto</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
                                 <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() =>simpleValidator.current.showMessageFor("deskripsi")}></textarea>
                                     {simpleValidator.current.message(
@@ -222,7 +229,7 @@ const TambahGaleri = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Gambar</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Upload Gambar</label>
                                 <div className="col-sm-12">
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
@@ -241,7 +248,7 @@ const TambahGaleri = () => {
                             <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="col-sm-2 col-form-label"
+                                    className="col-sm-2 col-form-label font-weight-bolder"
                                 >
                                     Kategori
                                 </label>
@@ -287,7 +294,7 @@ const TambahGaleri = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
@@ -303,7 +310,7 @@ const TambahGaleri = () => {
                             <div className="form-group row">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="ml-5 pl-4 "
+                                    className="ml-5 pl-4 font-weight-bolder"
                                 >
                                     Publish 
                                 </label>
@@ -329,6 +336,27 @@ const TambahGaleri = () => {
                                 </div>
                             </div>
 
+                            <div className="form-group">
+                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                <div className="col-sm-12">
+                                    <div className="input-group">
+                                    <DatePicker
+                                        className="form-search-date form-control-sm form-control"
+                                        selected={publishDate}
+                                        onChange={(date) => setPublishDate(date)}
+                                        selectsStart
+                                        startDate={publishDate}
+                                        // endDate={endDate}
+                                        dateFormat="dd/MM/yyyy"
+                                        placeholderText="Silahkan Isi Tanggal Publish"
+                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                        minDate={moment().toDate()}
+                                    // minDate={addDays(new Date(), 20)}
+                                    />
+                                    </div>
+                                </div>
+                            </div>
+
                             {/* <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>
                                 <div className="col-sm-1">
@@ -349,7 +377,7 @@ const TambahGaleri = () => {
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/galeri'>
-                                        <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                     </Link>
                                     <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                 </div>
