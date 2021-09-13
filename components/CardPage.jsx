@@ -45,7 +45,15 @@ const CardPage = ({
             className={`font-weight-bold font-size-h2 ml-2 my-auto`}
             style={{ color: color }}
           >
-            {value} {titleValue}
+            {value} 
+            {/* {titleValue} */}
+          </p>
+          <p
+            className={`font-weight-bold font-size-h2 ml-2 my-auto`}
+            style={{ color: color }}
+          >
+            {/* {value}  */}
+            {titleValue}
           </p>
         </div>
       </span>

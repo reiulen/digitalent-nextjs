@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator"
 import Swal from 'sweetalert2'
+import DatePicker from 'react-datepicker'
 
 import { newFaq, clearErrors } from '../../../../redux/actions/publikasi/faq.actions'
 import { NEW_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
@@ -52,6 +53,7 @@ const TambahFaq = () => {
     const [users_id, setUsersId] = useState(3)
     const [pinned, setPinnedFaq] = useState(false)
     const [publish, setPublish] = useState(false)
+    const [publishDate, setPublishDate] = useState(null);
     const [, forceUpdate] = useState();
 
     const handleChangePinned = (e) => {
@@ -118,7 +120,7 @@ const TambahFaq = () => {
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul Pertanyaan</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul Pertanyaan</label>
                                 <div className="col-sm-12">
                                     <input
                                         type="text"
@@ -133,7 +135,7 @@ const TambahFaq = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Jawaban</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Jawaban</label>
                                 <div className="col-sm-12">
                                     <textarea
                                         className='form-control'
@@ -152,7 +154,7 @@ const TambahFaq = () => {
                             }
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
                                 <div className="col-sm-12">
                                     <select
                                         className='form-control'
@@ -182,10 +184,60 @@ const TambahFaq = () => {
                                 </div>
                             </div>
 
+                            <div className="form-group row font-weight-bolder font-weight-bolder">
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="ml-5 pl-4 font-weight-bolder"
+                                >
+                                    Publish
+                                </label>
+                                <div className="col-sm-1 ml-4">
+                                    <div className="">
+                                        <label className="switches">
+                                            <input
+                                            // required
+                                            className="checkbox"
+                                            checked={publish}
+                                            type="checkbox"
+                                            // onChange={(checked) => setPublish(checked)}
+                                            onChange={(e) => handleChangePublish(e)}
+                                            />
+                                            <span
+                                            className={`sliders round ${
+                                                publish ? "text-white" : "pl-2"
+                                            }`}
+                                            >
+                                            </span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="form-group">
+                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                <div className="col-sm-12">
+                                    <div className="input-group">
+                                    <DatePicker
+                                        className="form-search-date form-control-sm form-control"
+                                        selected={publishDate}
+                                        onChange={(date) => setPublishDate(date)}
+                                        selectsStart
+                                        startDate={publishDate}
+                                        // endDate={endDate}
+                                        dateFormat="dd/MM/yyyy"
+                                        placeholderText="Silahkan Isi Tanggal Publish"
+                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                        minDate={moment().toDate()}
+                                    // minDate={addDays(new Date(), 20)}
+                                    />
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="form-group row">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="ml-5 pl-4 "
+                                    className="ml-5 pl-4 font-weight-bolder"
                                 >
                                     Pin FAQ
                                 </label>
@@ -211,34 +263,7 @@ const TambahFaq = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group row">
-                                <label
-                                    htmlFor="staticEmail"
-                                    className="ml-5 pl-4 "
-                                >
-                                    Publish
-                                </label>
-                                <div className="col-sm-1 ml-4">
-                                    <div className="">
-                                        <label className="switches">
-                                            <input
-                                            // required
-                                            className="checkbox"
-                                            checked={publish}
-                                            type="checkbox"
-                                            // onChange={(checked) => setPublish(checked)}
-                                            onChange={(e) => handleChangePublish(e)}
-                                            />
-                                            <span
-                                            className={`sliders round ${
-                                                publish ? "text-white" : "pl-2"
-                                            }`}
-                                            >
-                                            </span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                            
 
 
                             {/* <div className="form-group row">
@@ -277,7 +302,7 @@ const TambahFaq = () => {
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/faq'>
-                                        <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                     </Link>
                                     <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                 </div>
