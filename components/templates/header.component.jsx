@@ -1,13 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import {useDispatch,useSelector} from 'react-redux'
+import {IS_SHOW_PROFILE,IS_OVERLAY_PROFILE,IS_ASSIDE_HEADER,IS_OVERLAY_ASSIDE_HEADER} from '../../redux/types/utils/functionals.type'
 
 const Header = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const allFunctionls = useSelector(state => state.allFunctionls)
+  console.log("header page",allFunctionls)
+  
   const [breadcrumbs, setBreadcrumbs] = useState(null);
 
   const convertBreadcrumb = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
+
+  const activeProfileAndOverlay = () =>{
+    dispatch({
+        type: IS_SHOW_PROFILE,
+      });
+      dispatch({
+        type: IS_OVERLAY_PROFILE,
+      });
+  }
+
+  const activeHeaderToSide = () =>{
+    dispatch({
+        type: IS_ASSIDE_HEADER,
+      });
+      dispatch({
+        type: IS_OVERLAY_ASSIDE_HEADER,
+      });
+  }
+
+  
 
   useEffect(() => {
     if (router) {
@@ -34,7 +60,7 @@ const Header = () => {
         <div className="container-fluid d-flex align-items-stretch justify-content-between">
           {/* <!--begin::Header Menu Wrapper--> */}
           <div
-            className="header-menu-wrapper header-menu-wrapper-left"
+            className={`header-menu-wrapper header-menu-wrapper-left ${allFunctionls.isAsideHeader && allFunctionls.isAsideHeader ?"header-menu-wrapper-on" :""}`}
             id="kt_header_menu_wrapper"
           >
             {/* <!--begin::Header Menu--> */}
@@ -66,6 +92,7 @@ const Header = () => {
             </div>
             {/* <!--end::Header Menu--> */}
           </div>
+          {allFunctionls.isAsideHeader && allFunctionls.isAsideHeader ?<div class="header-menu-wrapper-overlay" onClick={()=>activeHeaderToSide()}></div> :""}
           {/* <!--end::Header Menu Wrapper--> */}
           {/* <!--begin::Topbar--> */}
           <div className="topbar">
@@ -222,7 +249,7 @@ const Header = () => {
                         </div> */}
 
             {/* <!--begin::User--> */}
-            <div className="topbar-item">
+            <div className="topbar-item" onClick={() => activeProfileAndOverlay() }>
               <div
                 className="btn btn-icon btn-icon-mobile w-auto btn-clean d-flex align-items-center btn-lg px-2"
                 id="kt_quick_user_toggle"

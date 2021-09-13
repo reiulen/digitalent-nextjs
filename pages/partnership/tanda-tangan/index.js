@@ -1,6 +1,6 @@
 import Layout from "../../../components/templates/layout.component";
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../components/LoadingPage";
+// import LoadingPage from "../../../components/LoadingPage";
 // import TandaTangan from "../../../components/content/partnership/tanda-tangan/tableTandaTangan";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const TandaTangan = dynamic(
@@ -19,7 +19,7 @@ export default function TandaTanganPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Publikasi">
+        <Layout title="Tanda Tangan Digital - Partnership">
           <TandaTangan />
         </Layout>
       </div>

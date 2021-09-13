@@ -15,7 +15,7 @@ export default function DetailDataKerjasamaPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Publikasi">
+        <Layout title="Edit Data Master Mitra Kerjasama - Paretnership">
           <DetailDataKerjasamaById />
         </Layout>
       </div>

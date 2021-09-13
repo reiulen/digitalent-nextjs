@@ -118,7 +118,7 @@ const Table = () => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengupdate data
+            Berhasil merubah data
           </div>
           <div className="alert-close">
             <button
@@ -167,7 +167,7 @@ const Table = () => {
         ""
       )}
 
-      <div className="col-lg-12 col-md-12">
+      {/* <div className="col-lg-12 col-md-12">
         <CardPage
           background="bg-light-success "
           icon="user-blue.svg"
@@ -176,7 +176,7 @@ const Table = () => {
           titleValue="Mitra"
           title="Total Mitra"
         />
-      </div>
+      </div> */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="d-flex flex-wrap align-items-center justify-content-between p-8">
@@ -255,7 +255,7 @@ const Table = () => {
                     <th className="text-left align-middle">Logo</th>
                     <th className="text-left align-middle">Mitra</th>
                     <th className="text-left align-middle">
-                      Website Website Website
+                      Website
                     </th>
                     <th className="text-left align-middle">Kerjasama</th>
                     <th className="text-left align-middle">Aksi</th>

@@ -14,7 +14,7 @@ export default function Submit() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Publikasi">
+        <Layout title="Submit Data Kerjasama - Partnership">
           <SubmitKerjasama />
         </Layout>
       </div>

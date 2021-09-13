@@ -679,7 +679,7 @@ const Table = () => {
                                 </td>
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
-                                    {moment(items.submission_date).format(
+                                    {moment(items.period_date_start).format(
                                       "DD MMMM YYYY"
                                     )}
                                     {/* moment().format('MMMM Do YYYY, h:mm:ss a'); */}
@@ -696,7 +696,32 @@ const Table = () => {
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
-                                  {items.status.name === "aktif" ? (
+                                  {(items.status.name === "aktif") &&  moment(items.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD") ? (<div className="position-relative w-max-content">
+                                      <select
+                                        name=""
+                                        id=""
+                                        disabled
+                                        className="form-control remove-icon-default dropdown-arrows-green"
+                                        key={index}
+                                        onChange={(e) =>
+                                          changeListStatus(
+                                            e.target.value,
+                                            items.id
+                                          )
+                                        }
+                                      >
+                                        <option value="1">
+                                          Disetujui
+                                        </option>
+                                        <option value="2">Tidak Aktif</option>
+                                      </select>
+                                      <IconArrow
+                                        className="right-center-absolute"
+                                        style={{ right: "10px" }}
+                                        width="7"
+                                        height="7"
+                                      />
+                                    </div>) : (items.status.name === "aktif") && moment(items.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ? (
                                     <div className="position-relative w-max-content">
                                       <select
                                         name=""
@@ -713,7 +738,7 @@ const Table = () => {
                                         <option value="1">
                                           {items.status.name}
                                         </option>
-                                        <option value="2">Nonaktif</option>
+                                        <option value="2">Tidak Aktif</option>
                                       </select>
                                       <IconArrow
                                         className="right-center-absolute"
@@ -736,7 +761,7 @@ const Table = () => {
                                           )
                                         }
                                       >
-                                        <option value="2">Nonaktif</option>
+                                        <option value="2">Tidak Aktif</option>
                                         <option value="1">Aktif</option>
                                       </select>
                                       <IconArrow
@@ -880,11 +905,43 @@ const Table = () => {
                                     </div>
                                   )}
                                 </td>
-                                {/* {console.log(moment().format("YYYY MM DD")===moment(items.signing_date).format("YYYY MM DD"))}
-                                {console.log("date signin",moment(items.signing_date).format("YYYY MMMM DD"))}
-                                {console.log("date now",moment().format("YYYY MMMM DD"))} */}
+                                {/* {console.log("date periode_start_date",moment(items.period_date_start).format("YYYY MM DD"))}
+                                {console.log("date now",moment().format("YYYY MM DD"))}
+                                {console.log("date cek",moment(items.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD"))} */}
                                 <td className="align-middle text-left">
-                                  {items.status.name === "aktif" ? (
+                                  {(items.status.name === "aktif") &&  moment(items.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD") ? (<div className="d-flex align-items-center">
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/view/${items.id}`
+                                          )
+                                        }
+                                      >
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/edit/${items.id}`
+                                          )
+                                        }
+                                      >
+                                        <IconPencil width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </button>
+                                    </div>) : (items.status.name === "aktif") && moment(items.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ?  (
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"

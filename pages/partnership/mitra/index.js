@@ -12,7 +12,7 @@ export default function MitraPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Managemen Mitra">
+        <Layout title="Master Mitra - Partnership">
           <Table />
         </Layout>
       </div>

@@ -13,7 +13,7 @@ export default function KerjaSamaPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Kerjasama">
+        <Layout title="Kerjasama - Partnership">
           <Table />
         </Layout>
       </div>

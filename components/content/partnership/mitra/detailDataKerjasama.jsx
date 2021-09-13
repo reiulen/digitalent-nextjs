@@ -189,7 +189,7 @@ const DetailDataKerjasama = () => {
               ></i>
             </div>
             <div className="alert-text" style={{ color: "#1BC5BD" }}>
-              Berhasil mengupdate data
+              Berhasil merubah data
             </div>
             <div className="alert-close">
               <button

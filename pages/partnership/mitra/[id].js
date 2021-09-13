@@ -12,7 +12,7 @@ export default function EditMitraPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Update Artikel">
+        <Layout title="Detail Master Mitra - Paretnership">
           <EditMitra />
         </Layout>
       </div>

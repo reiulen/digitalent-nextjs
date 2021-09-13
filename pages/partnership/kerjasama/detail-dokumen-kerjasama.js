@@ -15,7 +15,7 @@ export default function detailDokumenKerjasama() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Publikasi">
+        <Layout title="Detail Data Kerjasama - Partnership">
           <DetailKerjasama />
         </Layout>
       </div>

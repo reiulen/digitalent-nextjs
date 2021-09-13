@@ -153,8 +153,10 @@ import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
 
 // end Partnership
 
-// utils
+// functional reducer
+
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
+import { reducerFunctionals } from "./utils/functionals.reducer";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -289,6 +291,7 @@ const reducer = combineReducers({
 
   allProvinsi: allProvinsiReducer,
   allKota: allKotaReducer,
+  allFunctionls: reducerFunctionals,
 });
 
 export default reducer;

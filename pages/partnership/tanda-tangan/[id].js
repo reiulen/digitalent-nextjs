@@ -15,7 +15,7 @@ export default function EditTandaTanganPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Update Tanda Tangan">
+        <Layout title="Ubah Tanda Tangan Digital - Partnership">
           <EditTandaTangan />
         </Layout>
       </div>

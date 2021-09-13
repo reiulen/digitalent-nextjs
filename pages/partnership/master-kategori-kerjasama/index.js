@@ -18,7 +18,7 @@ export default function KategoriKerjasama() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Publikasi">
+        <Layout title="Master Kategori Kerjasama - Partnership">
           <MasterKategoriKerjasama />
         </Layout>
       </div>
