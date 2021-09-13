@@ -23,7 +23,7 @@ export default function VidioPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Video'>
+                <Layout title='Video - Publikasi'>
                     <Vidio />
                 </Layout>
             </div>

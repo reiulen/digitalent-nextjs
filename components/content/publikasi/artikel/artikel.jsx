@@ -488,6 +488,7 @@ const Artikel = () => {
                                     dateFormat="dd/MM/yyyy"
                                     placeholderText="Silahkan Isi Tanggal Dari"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                    minDate={moment().toDate()}
                                   // minDate={addDays(new Date(), 20)}
                                   />
                                 </div>
@@ -507,7 +508,8 @@ const Artikel = () => {
                                     startDate={startDate}
                                     endDate={endDate}
                                     dateFormat="dd/MM/yyyy"
-                                    minDate={startDate}
+                                    // minDate={startDate}
+                                    minDate={moment().toDate()}
                                     maxDate={addDays(startDate, 20)}
                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
