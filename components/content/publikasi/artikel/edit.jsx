@@ -88,7 +88,7 @@ const EditArtikel = () => {
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
   const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
-  const [publishDate, setPublishDate] = useState(new Date (artikel.tanggal_publish));
+  const [publishDate, setPublishDate] = useState(artikel.tanggal_publish ? new Date (artikel.tanggal_publish) : null);
   const [_method, setMethod] = useState("put");
 
   const onChangeGambar = (e) => {

@@ -22,7 +22,7 @@ export default function TambahPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Tambah FAQ'>
+                <Layout title='Tambah FAQ - Publikasi'>
                     <Tambah />
                 </Layout>
             </div>
