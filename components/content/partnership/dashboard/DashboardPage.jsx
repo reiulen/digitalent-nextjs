@@ -44,6 +44,8 @@ export default function DashboardPage() {
 
         {/* <img src="/assets/media/logos/Plants1.png"  alt="imagehero" className="left-bottom-absolute" /> */}
 
+        
+
         <h5 className="text-blue-secondary fw-600 fz-18">Hallo Admin A</h5>
         <p className="text-gray-primary fw-600 fz-12">
           Sudah Makan Hari ini?
