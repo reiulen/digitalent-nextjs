@@ -22,6 +22,10 @@ import {
     UPDATE_VIDEO_RESET,
     UPDATE_VIDEO_FAIL,
 
+    PLAY_VIDEO_REQUEST,
+    PLAY_VIDEO_SUCCESS,
+    PLAY_VIDEO_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/video.type'
 
@@ -169,6 +173,38 @@ export const updateVideoReducer = (state = {}, action) => {
             }
 
         case UPDATE_VIDEO_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+
+        default:
+            return state
+    }
+}
+
+export const playVideoReducer = (state = {}, action) => {
+    switch (action.type) {
+        case PLAY_VIDEO_REQUEST:
+            return {
+                loading: true
+            }
+        
+        case PLAY_VIDEO_SUCCESS:
+            return {
+                loading: false,
+                isPlayed: action.payload,
+                success: true
+            }
+
+        case PLAY_VIDEO_FAIL:
             return {
                 loading: false,
                 error: action.payload

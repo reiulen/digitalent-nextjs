@@ -59,6 +59,7 @@ import {
   deleteVideoReducer,
   detailVideoReducer,
   updateVideoReducer,
+  playVideoReducer
 } from "./publikasi/video.reducers";
 
 import {
@@ -203,6 +204,7 @@ const reducer = combineReducers({
   deleteVideo: deleteVideoReducer,
   detailVideo: detailVideoReducer,
   updatedVideo: updateVideoReducer,
+  playedVideo: playVideoReducer,
 
   allKategori: allKategoriReducer,
   paginationKategori: paginationKategoriReducer,
