@@ -92,7 +92,7 @@ const Header = () => {
             </div>
             {/* <!--end::Header Menu--> */}
           </div>
-          {allFunctionls.isAsideHeader && allFunctionls.isAsideHeader ?<div class="header-menu-wrapper-overlay" onClick={()=>activeHeaderToSide()}></div> :""}
+          {allFunctionls.isAsideHeader && allFunctionls.isAsideHeader ?<div className="header-menu-wrapper-overlay" onClick={()=>activeHeaderToSide()}></div> :""}
           {/* <!--end::Header Menu Wrapper--> */}
           {/* <!--begin::Topbar--> */}
           <div className="topbar">

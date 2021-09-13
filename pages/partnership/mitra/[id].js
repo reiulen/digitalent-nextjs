@@ -5,7 +5,7 @@ import LoadingPage from "../../../components/LoadingPage";
 
 const EditMitra = dynamic(
   () => import("../../../components/content/partnership/mitra/edit"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
 export default function EditMitraPage() {

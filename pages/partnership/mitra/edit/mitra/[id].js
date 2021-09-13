@@ -9,7 +9,7 @@ const DetailDataKerjasamaById = dynamic(
     import(
       "../../../../../components/content/partnership/mitra/editKerjasamaById"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 export default function DetailDataKerjasamaPage() {
   return (

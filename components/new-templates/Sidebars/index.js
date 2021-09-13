@@ -158,9 +158,10 @@ const Sidebar = () => {
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
                   <ul className="menu-subnav">
-                    {listMenuPartnership.map((items) => {
+                    {listMenuPartnership.map((items, index) => {
                       return (
                         <li
+                          key={index}
                           className={`menu-item ${
                             items.href === router.pathname
                               ? "menu-item-active"
@@ -202,9 +203,10 @@ const Sidebar = () => {
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
                   <ul className="menu-subnav">
-                    {listMenuPublikasi.map((items) => {
+                    {listMenuPublikasi.map((items, index) => {
                       return (
                         <li
+                          key={index}
                           className={`menu-item ${
                             items.href === router.pathname
                               ? "menu-item-active"

@@ -11,7 +11,7 @@ const MasterKategoriKerjasama = dynamic(
     import(
       "../../../components/content/partnership/master-kategori-kerjasama/masterKategoriKerjasama"
     ),
-  { loading: () => <LoadingSkeleton />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 
 export default function KategoriKerjasama() {

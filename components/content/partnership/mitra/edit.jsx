@@ -396,12 +396,16 @@ const EditMitra = () => {
                       height: "168px",
                     }}
                   >
-                    <img
+                    {/* <img
                       src={agency_logo}
                       className="w-100 h-100"
                       alt="images"
                       style={{ padding: "6px" }}
-                    />
+                    /> */}
+
+                    <Image src={agency_logo} alt="Picture of the author" layout='fill'
+    objectFit='fill' />
+
                   </div>
                 )}
                 {/* read gambar yg ada from api */}
@@ -420,7 +424,17 @@ const EditMitra = () => {
                       height: "168px",
                     }}
                   >
-                    <img
+
+                    <div className="w-100 h-100 position-relative" style={{ padding: "6px" }}>
+
+                      <Image src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        "partnership/images/profile-images/" +
+                        imageview} alt="images" layout='fill'
+    objectFit='fill' />
+
+                    </div>
+
+                    {/* <img
                       src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                         "partnership/images/profile-images/" +
                         imageview}
@@ -428,7 +442,11 @@ const EditMitra = () => {
                       className="w-100 h-100"
                       alt="images"
                       style={{ padding: "6px" }}
-                    />
+                    /> */}
+
+
+
+
                   </div>
                   )
                   }
@@ -480,21 +498,40 @@ const EditMitra = () => {
                       
                       {agency_logo ?
 
-<img
+/* <img
                       src={agency_logo}
                       className="w-100 h-100"
                       alt="images"
                       style={{ padding: "6px" }}
-                      />
+                      /> */
+
+                      <div className="w-100 h-100 position-relative" style={{ padding: "6px" }}>
+
+                      <Image src={agency_logo} alt="images" layout='fill'
+    objectFit='fill' />
+
+                    </div>
+
                     :
-                    <img
-                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+
+                    <div className="w-100 h-100 position-relative" style={{ padding: "6px" }}>
+
+                      <Image src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
                         "partnership/images/profile-images/" +
-                        imageview}
-                      className="w-100 h-100"
-                      alt="images"
-                      style={{ padding: "6px" }}
-                      />
+                        imageview} alt="images" layout='fill'
+    objectFit='fill' />
+
+                      </div>
+
+
+                    // <img
+                    //   src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                    //     "partnership/images/profile-images/" +
+                    //     imageview}
+                    //   className="w-100 h-100"
+                    //   alt="images"
+                    //   style={{ padding: "6px" }}
+                    //   />
                     }
 
 

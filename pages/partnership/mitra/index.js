@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const Table = dynamic(
   () => import("../../../components/content/partnership/mitra/tableMitra"),
-  { loading: () => <LoadingSkeleton />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 export default function MitraPage() {
   return (

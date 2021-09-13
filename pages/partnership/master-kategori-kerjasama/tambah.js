@@ -7,7 +7,7 @@ const Tambah = dynamic(
     import(
       "../../../components/content/partnership/master-kategori-kerjasama/tambah"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 export default function TambahPage() {
   return (

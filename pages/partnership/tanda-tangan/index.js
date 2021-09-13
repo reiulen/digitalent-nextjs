@@ -8,7 +8,7 @@ const TandaTangan = dynamic(
     import(
       "../../../components/content/partnership/tanda-tangan/tableTandaTangan"
     ),
-  { loading: () => <LoadingSkeleton />, ssr: false }
+  { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 
 // import { getAllTandaTangan } from "../../../redux/actions/partnership/tandaTangan.actions";

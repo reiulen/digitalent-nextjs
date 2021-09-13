@@ -250,7 +250,7 @@ const Sidebar = () => {
 
 
   // ------ jangan dihapus
-  
+
   // useEffect(() => {
   //   // partnership
   //   const dataFromLocal = !sessionStorage.getItem("menu")
@@ -540,7 +540,7 @@ const Sidebar = () => {
                       </span>
                     </li>
                     {/* start loop publikasi */}
-                    {listMenuPublikasi.map((items) => {
+                    {listMenuPublikasi.map((items ,index) => {
                       return (
                         // <li
                         //   className={
@@ -562,6 +562,7 @@ const Sidebar = () => {
                               ? "menu-item-active"
                               : ""
                           }`}
+                          key={index}
                           aria-haspopup="true"
                           onClick={() => activeSubItemPublikasi()}
                         >
@@ -673,9 +674,10 @@ const Sidebar = () => {
 
                     {/* start partnership loop */}
 
-                    {listMenuPartnership.map((items) => {
+                    {listMenuPartnership.map((items,index) => {
                       return (
                         <li
+                        key={index}
                           className={`menu-item ${
                             items.href === router.pathname
                               ? "menu-item-active"
@@ -845,7 +847,7 @@ const Sidebar = () => {
 
                     {/* start loop subvit */}
 
-                    {listMenuSubvit.map((items) => {
+                    {listMenuSubvit.map((items,index) => {
                       return (
                         // <li className="menu-item" aria-haspopup="true">
                         //   <Link href="/subvit/substansi">
@@ -855,6 +857,7 @@ const Sidebar = () => {
                         //   </Link>
                         // </li>
                         <li
+                        key={index}
                           className={`menu-item ${
                             items.href === router.pathname
                               ? "menu-item-active"
@@ -1004,7 +1007,7 @@ const Sidebar = () => {
         </div>
         {/* <!--end::Aside Menu--> */}
         {allFunctionls.isOverlayMobileSidebar && allFunctionls.isOverlayMobileSidebar ? 
-        <div class="aside-overlay" style={{zIndex:"1"}} onClick={()=>activeProfileAndOverlay()}></div> :""
+        <div className="aside-overlay" style={{zIndex:"1"}} onClick={()=>activeProfileAndOverlay()}></div> :""
       }
       </div>
       {/* <!--end::Aside--> */}

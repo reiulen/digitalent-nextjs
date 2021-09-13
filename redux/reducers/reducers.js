@@ -59,7 +59,7 @@ import {
   deleteVideoReducer,
   detailVideoReducer,
   updateVideoReducer,
-  playVideoReducer
+  playVideoReducer,
 } from "./publikasi/video.reducers";
 
 import {
@@ -151,7 +151,7 @@ import { allMCooporationReducerMK } from "./partnership/managementCooporation.re
 import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
 // ================== user
 import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
-
+import { dashboardReducer } from "./partnership/dashboard.reducer";
 // end Partnership
 
 // functional reducer
@@ -288,6 +288,9 @@ const reducer = combineReducers({
   allMK: allMCooporationReducerMK,
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,
+  // dashboard
+  allDashboard: dashboardReducer,
+
   // ================================= => user
   allCooperationUser: cooperationUserReducer,
 

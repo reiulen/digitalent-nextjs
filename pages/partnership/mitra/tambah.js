@@ -6,7 +6,7 @@ import LoadingPage from "../../../components/LoadingPage";
 
 const Tambah = dynamic(
   () => import("../../../components/content/partnership/mitra/tambahMitra"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
 export default function TambahPage() {

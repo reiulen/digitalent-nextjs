@@ -142,7 +142,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
       </div>
 
     {allFunctionls.isOverlayProfile && allFunctionls.isOverlayProfile ?
-       <div class="offcanvas-overlay" onClick={() => activeProfileAndOverlay()}></div> :""
+       <div className="offcanvas-overlay" onClick={() => activeProfileAndOverlay()}></div> :""
     }
 
 

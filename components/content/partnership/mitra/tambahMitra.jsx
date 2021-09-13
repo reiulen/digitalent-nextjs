@@ -10,6 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 import IconClose from "../../../assets/icon/Close";
+import Image from 'next/image'
 
 const TambahMitra = () => {
   const router = useRouter();
@@ -322,7 +323,7 @@ const TambahMitra = () => {
                   <div
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
-                    className="shadow-image-form cursor-pointer"
+                    className="shadow-image-form cursor-pointer position-relative"
                     style={{
                       maxWidth: "168px",
                       maxHeight: "168px",
@@ -330,12 +331,19 @@ const TambahMitra = () => {
                       height: "168px",
                     }}
                   >
-                    <img
+                    {/* <img
                       src={agency_logo}
                       className="w-100 h-100"
                       alt="images"
                       style={{ padding: "6px" }}
-                    />
+                    /> */}
+                    {/* <div className="w-100 h-100"> */}
+
+                    {/* <Image src={agency_logo} alt="Picture of the author" className="w-100 h-100" width={170} height={170} /> */}
+
+                    <Image src={agency_logo} alt="Picture of the author" layout='fill'
+    objectFit='fill' />
+                    
                   </div>
                 )}
 
@@ -432,12 +440,14 @@ const TambahMitra = () => {
                       {!agency_logo ? (
                   ""
                 ) : (
-                    <img
-                      src={agency_logo}
-                      className="w-100 h-100"
-                      alt="images"
-                      style={{ padding: "6px" }}
-                    />
+                    // <img
+                    //   src={agency_logo}
+                    //   className="w-100 h-100"
+                    //   alt="images"
+                    //   style={{ padding: "6px" }}
+                    // />
+                    <Image src={agency_logo} alt="Picture of the author" layout='fill'
+    objectFit='fill' />
                 )}
                     </div>
                   </div>

@@ -9,7 +9,7 @@ const Edit = dynamic(
     import(
       "../../../components/content/partnership/master-kategori-kerjasama/edit"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
 export default function TambahPage() {

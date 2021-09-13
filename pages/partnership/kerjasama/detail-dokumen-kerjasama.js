@@ -8,7 +8,7 @@ const DetailKerjasama = dynamic(
     import(
       "../../../components/content/partnership/kerjasama/detailDokumenKerjasama"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
 export default function detailDokumenKerjasama() {

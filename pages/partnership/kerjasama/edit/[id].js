@@ -8,7 +8,7 @@ const EditDetailKerjasama = dynamic(
     import(
       "../../../../components/content/partnership/kerjasama/editDokumentKerjasama"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
 export default function editDokumenKerjasama() {

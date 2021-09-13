@@ -6,7 +6,7 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const Dashboard = dynamic(
   () =>
     import("../../../components/content/partnership/dashboard/DashboardPage"),
-  { loading: () => <LoadingSkeleton />, ssr: false }
+  { loading: () => <LoadingSkeleton /> }
 );
 
 export default function KerjaSamaPage() {

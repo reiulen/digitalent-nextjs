@@ -7,7 +7,7 @@ import LoadingPage from "../../../components/LoadingPage";
 const SubmitKerjasama = dynamic(
   () =>
     import("../../../components/content/partnership/kerjasama/submitKerjasama"),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
 export default function Submit() {

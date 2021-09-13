@@ -9,7 +9,7 @@ const DetailDataKerjasama = dynamic(
     import(
       "../../../../components/content/partnership/mitra/detailDataKerjasama"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
 export default function DetailDataKerjasamaPage() {
