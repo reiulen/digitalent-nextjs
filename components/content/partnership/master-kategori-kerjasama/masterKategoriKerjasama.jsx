@@ -127,7 +127,7 @@ const Table = () => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengupdate data
+            Berhasil merubah data
           </div>
           <div className="alert-close">
             <button
@@ -288,7 +288,7 @@ const Table = () => {
                                     </button> */}
 
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                      className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"
                                       onClick={() =>
                                         router.push(
                                           `/partnership/master-kategori-kerjasama/${cooperation_categorie.id}`

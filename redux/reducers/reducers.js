@@ -59,7 +59,7 @@ import {
   deleteVideoReducer,
   detailVideoReducer,
   updateVideoReducer,
-  playVideoReducer
+  playVideoReducer,
 } from "./publikasi/video.reducers";
 
 import {
@@ -151,11 +151,13 @@ import { allMCooporationReducerMK } from "./partnership/managementCooporation.re
 import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
 // ================== user
 import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
-
+import { dashboardReducer } from "./partnership/dashboard.reducer";
 // end Partnership
 
-// utils
+// functional reducer
+
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
+import { reducerFunctionals } from "./utils/functionals.reducer";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -286,11 +288,15 @@ const reducer = combineReducers({
   allMK: allMCooporationReducerMK,
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,
+  // dashboard
+  allDashboard: dashboardReducer,
+
   // ================================= => user
   allCooperationUser: cooperationUserReducer,
 
   allProvinsi: allProvinsiReducer,
   allKota: allKotaReducer,
+  allFunctionls: reducerFunctionals,
 });
 
 export default reducer;

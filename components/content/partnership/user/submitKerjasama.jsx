@@ -183,7 +183,7 @@ const DetailDokumenKerjasama = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
-                  <Link href="/partnership/manajemen-kerjasama">
+                  <Link href="/partnership/kerjasama">
                     <a className="btn btn-outline-primary mr-2 btn-sm">
                       Kembali
                     </a>

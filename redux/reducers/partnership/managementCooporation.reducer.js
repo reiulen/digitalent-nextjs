@@ -66,6 +66,7 @@ const initialState = {
   //
   cooperationById: [],
   totalData: 0,
+  //
 };
 
 export const allMCooporationReducerMK = (state = initialState, action) => {

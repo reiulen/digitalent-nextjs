@@ -217,7 +217,7 @@ const InputKerjasama = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
-                  <Link href="/partnership/manajemen-kerjasama/review-kerjasama">
+                  <Link href="/partnership/kerjasama/review-kerjasama">
                     <a
                       className="btn bg- mr-2 btn-sm btn-outline-primary"
                       style={{ color: "#40A9FF" }}
@@ -225,7 +225,7 @@ const InputKerjasama = () => {
                       Kembali
                     </a>
                   </Link>
-                  <Link href="/partnership/manajemen-kerjasama/review-kerjasama" passHref>
+                  <Link href="/partnership/kerjasama/review-kerjasama" passHref>
                     <button className="btn btn-primary btn-sm">Submit</button>
                   </Link>
                 </div>
