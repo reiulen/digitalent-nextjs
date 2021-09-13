@@ -355,7 +355,7 @@ const EditDokumentKerjasama = () => {
                     <div className="col-12 col-sm-3">
                       <button
                         type="button"
-                        className="btn btn-primary btn-sm w-100 mt-3"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white w-100 d-flex justify-content-center mt-2"
                         onClick={() => dispatch(fetchListCooperationSelect())}
                       >
                         Ubah Kategory
@@ -394,7 +394,7 @@ const EditDokumentKerjasama = () => {
                     <div className="col-12 col-sm-3">
                       <button
                         type="button"
-                        className="btn btn-primary btn-sm w-100 mt-3"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white w-100 d-flex justify-content-center mt-2"
                         onClick={() => dispatch(cancelChangeCategory())}
                       >
                         Batal Ubah Kategory
@@ -571,9 +571,10 @@ const EditDokumentKerjasama = () => {
                 {/* start action show and upload */}
                 <div className="row">
                   <div className="col-sm-12">
+                    <div className="d-flex flex-wrap align-items-center">
                     <button
                       type="button"
-                      className="btn btn-primary btn-sm mr-3"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
                       onClick={() => showDocument()}
                     >
                       {viewPDF || showDokument
@@ -582,11 +583,12 @@ const EditDokumentKerjasama = () => {
                     </button>
                     <button
                       type="button"
-                      className="btn btn-primary btn-sm mr-3"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
                       onClick={() => setDocumentChange()}
                     >
                       {!changeDokumen ? "Ubah dokumen" : "Batal Ubah"}
                     </button>
+                    </div>
 
                     {changeDokumen && !viewPDF ? (
                       <div className="input-group mt-3">
@@ -720,7 +722,7 @@ const EditDokumentKerjasama = () => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>

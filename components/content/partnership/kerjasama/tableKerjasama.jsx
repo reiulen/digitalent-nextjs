@@ -634,20 +634,12 @@ const Table = () => {
                             return (
                               <tr key={index}>
                                 <td className="text-left align-middle">
-                                  <button
-                                    className="btn"
-                                    style={{
-                                      background: "#F3F6F9",
-                                      borderRadius: "6px",
-                                    }}
-                                  >
                                     {allMK.page === 1
                                       ? index + 1
                                       : (allMK.page - 1) * allMK.limit +
                                         (index + 1)}
 
                                     {/* {index+1} */}
-                                  </button>
                                 </td>
                                 <td className="align-middle text-left">
                                   {items.partner === null ? (

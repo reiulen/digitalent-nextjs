@@ -44,7 +44,7 @@ export default function DashboardPage() {
 
         {/* <img src="/assets/media/logos/Plants1.png"  alt="imagehero" className="left-bottom-absolute" /> */}
 
-        
+
 
         <h5 className="text-blue-secondary fw-600 fz-18">Hallo Admin A</h5>
         <p className="text-gray-primary fw-600 fz-12">
@@ -65,7 +65,7 @@ export default function DashboardPage() {
         <div className="col-12 col-sm-6">
           <div className="br-12 bg-blue-dark p-10 text-white mt-2">
             <IconDoc />
-            <h5 className="mt-4 fw-700 fz-24">700</h5>
+            <h5 className="mt-4 fw-700 fz-24">{allDashboard.data_dashboard.data?.cooperation_non_active}</h5>
             <h5 className="fw-500 fz-14">Total Kerjasama Tidak Aktif</h5>
           </div>
         </div>
@@ -78,7 +78,7 @@ export default function DashboardPage() {
               Berdasarkan Status Pengajuan
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
-              700 Total Pengajuan
+              {allDashboard.data_dashboard.data?.cooperation_submission} Total Pengajuan
             </h5>
             <h1 className="py-14 text-center">Grafik onProgress</h1>
             <div className="row">
@@ -92,7 +92,7 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="ml-4">
-                    <p className="mb-0 fz-16 fw-600 text-blue-primary">200</p>
+                    <p className="mb-0 fz-16 fw-600 text-blue-primary">{allDashboard.data_dashboard.data?.cooperation_active}</p>
                     <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
                       Aktif
                     </p>
@@ -109,9 +109,9 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="ml-4">
-                    <p className="mb-0 fz-16 fw-600 text-blue-primary">200</p>
+                    <p className="mb-0 fz-16 fw-600 text-blue-primary">{allDashboard.data_dashboard.data?.cooperation_approved}</p>
                     <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
-                      Aktif
+                      Disetujui
                     </p>
                   </div>
                 </div>
@@ -126,9 +126,9 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="ml-4">
-                    <p className="mb-0 fz-16 fw-600 text-blue-primary">200</p>
+                    <p className="mb-0 fz-16 fw-600 text-blue-primary">{allDashboard.data_dashboard.data?.cooperation_rejected}</p>
                     <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
-                      Aktif
+                      Ditolak
                     </p>
                   </div>
                 </div>
@@ -142,7 +142,7 @@ export default function DashboardPage() {
               Berdasarkan Pengajuan Disetujui
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
-              200 Total Pengajuan
+              {allDashboard.data_dashboard.data?.cooperation_approved} Total Pengajuan
             </h5>
             <h1 className="py-14 text-center">Grafik onProgress</h1>
             <div className="row">
@@ -158,7 +158,7 @@ export default function DashboardPage() {
                   <div className="ml-4">
                     <p className="mb-0 fz-16 fw-600 text-blue-primary">200</p>
                     <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
-                      Aktif
+                      Berjalan
                     </p>
                   </div>
                 </div>
@@ -175,7 +175,7 @@ export default function DashboardPage() {
                   <div className="ml-4">
                     <p className="mb-0 fz-16 fw-600 text-blue-primary">200</p>
                     <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
-                      Aktif
+                      Akan Berakhir
                     </p>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export default function DashboardPage() {
                   <div className="ml-4">
                     <p className="mb-0 fz-16 fw-600 text-blue-primary">200</p>
                     <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
-                      Aktif
+                      Berakhir
                     </p>
                   </div>
                 </div>

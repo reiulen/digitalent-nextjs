@@ -275,12 +275,12 @@ const Table = () => {
                       return (
                         <tr key={index}>
                           <td className="text-left align-middle">
-                            <p className="mb-0">
+                           
                               {allMitra.page === 1
                                 ? index + 1
                                 : (allMitra.page - 1) * allMitra.limit +
                                   (index + 1)}
-                            </p>
+                           
                           </td>
                           <td className="align-middle text-left">
                             <Image
