@@ -22,7 +22,7 @@ import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
+import { deleteGaleri, viewGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
 
 import {
     DELETE_GALERI_RESET
@@ -36,6 +36,7 @@ const Galeri = () => {
     // const { loading, error, galeri } = useSelector(state => state.allGaleri)
     const { loading: allLoading, error, galeri } = useSelector((state) => state.allGaleri);
     const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteGaleri);
+    const { loading: viewLoading, error: viewError, isViewed } = useSelector((state) => state.viewedGaleri);
 
     const [search, setSearch] = useState('')
     const [limit, setLimit] = useState(null)
@@ -51,7 +52,11 @@ const Galeri = () => {
         loading = allLoading
     } else if (deleteLoading) {
         loading = deleteLoading
+    } else if (viewLoading) {
+        loading = viewLoading
     }
+
+
     page = Number(page);
 
     useEffect(() => {
@@ -265,7 +270,13 @@ const Galeri = () => {
         
     }
 
-    const handleIndexGallery = (i) => {
+    const handlePreview = (i, id) => {
+        const data = {
+            id,
+            _method: "PUT",
+            isview: "1"
+        }
+        dispatch(viewGaleri(data))
         setIndexGalleri(i)
     }
 
@@ -621,7 +632,7 @@ const Galeri = () => {
                                                             <td className="align-middle d-flex">
 
                                                                 <button
-                                                                    onClick={() => handleIndexGallery(i)} 
+                                                                    onClick={() => handlePreview(i, row.id)} 
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
                                                                     data-target="#exampleModalCenter" 
                                                                     data-toggle="modal"

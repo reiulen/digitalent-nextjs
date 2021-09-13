@@ -22,6 +22,10 @@ import {
     UPDATE_GALERI_RESET,
     UPDATE_GALERI_FAIL,
 
+    VIEW_GALERI_REQUEST,
+    VIEW_GALERI_SUCCESS,
+    VIEW_GALERI_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/galeri.type'
 
@@ -169,6 +173,38 @@ export const updateGaleriReducer = (state = {}, action) => {
             }
 
         case UPDATE_GALERI_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+
+        default:
+            return state
+    }
+}
+
+export const viewGaleriReducer = (state = {}, action) => {
+    switch (action.type) {
+        case VIEW_GALERI_REQUEST:
+            return {
+                loading: true
+            }
+        
+        case VIEW_GALERI_SUCCESS:
+            return {
+                loading: false,
+                isViewed: action.payload,
+                success: true
+            }
+
+        case VIEW_GALERI_FAIL:
             return {
                 loading: false,
                 error: action.payload
