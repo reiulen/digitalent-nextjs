@@ -9,14 +9,14 @@ const Edit = dynamic(
     import(
       "../../../components/content/partnership/master-kategori-kerjasama/edit"
     ),
-  { loading: () => <LoadingPage />, ssr: false }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
 export default function TambahPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Partnership">
+        <Layout title="Ubah Master Kategori Kerjasama - Partnership">
           <Edit />
         </Layout>
       </div>

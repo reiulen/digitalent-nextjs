@@ -66,7 +66,7 @@ const Edit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     Swal.fire({
-      title: "Apakah anda yakin ingin update data?",
+      title: "Apakah anda yakin ingin ubah data?",
       // text: "Data ini tidak bisa dikembalikan !",
       icon: "warning",
       showCancelButton: true,
@@ -176,7 +176,7 @@ const Edit = () => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark" style={{fontSize:"24px"}}>
-              Edit Master Kategori Kerjasama
+              Ubah Master Kategori Kerjasama
             </h3>
           </div>
           <div className="card-body">
@@ -320,7 +320,7 @@ const Edit = () => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/master-kategori-kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                    <a className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5">
                       Kembali
                     </a>
                   </Link>

@@ -1,5 +1,9 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import { useDispatch, useSelector } from "react-redux";
 import Script from "next/script";
+import { IS_MINIMIZE_SIDEBAR } from "../redux/actions/utils/functionals.actions";
+import { connect } from "react-redux";
+import React from "react";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -66,7 +70,10 @@ class MyDocument extends Document {
             src="/assets/js/scripts.bundle.js"
           ></script>
         </Head>
-        <body className="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+        <body
+          className={`header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading
+          `}
+        >
           <Main />
           <NextScript />
         </body>
@@ -74,5 +81,4 @@ class MyDocument extends Document {
     );
   }
 }
-
 export default MyDocument;

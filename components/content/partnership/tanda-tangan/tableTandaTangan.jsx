@@ -109,7 +109,7 @@ const Table = () => {
             <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#c51b1b" }}>
-            Berhasil menghapus data Data
+            Berhasil menghapus data 
           </div>
           <div className="alert-close">
             <button
@@ -138,7 +138,7 @@ const Table = () => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengupdate data
+            Berhasil merubah data
           </div>
           <div className="alert-close">
             <button
@@ -224,7 +224,7 @@ const Table = () => {
                         <th className="text-left">No</th>
                         <th className="text-left align-middle">Nama</th>
                         <th className="text-left align-middle">Jabatan</th>
-                        <th className="text-left align-middle">Action</th>
+                        <th className="text-left align-middle">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -243,19 +243,13 @@ const Table = () => {
                             return (
                               <tr key={index}>
                                 <td className="align-middle text-left">
-                                  <button
-                                    className="btn"
-                                    style={{
-                                      background: "#F3F6F9",
-                                      borderRadius: "6px",
-                                    }}
-                                  >
+                                  
                                     {allTandaTangan.page === 1
                                       ? index + 1
                                       : (allTandaTangan.page - 1) *
                                           allTandaTangan.limit +
                                         (index + 1)}
-                                  </button>
+                                 
                                 </td>
                                 <td className="align-middle text-left">
                                   {items.name}
@@ -266,7 +260,7 @@ const Table = () => {
                                 <td className="align-middle text-left">
                                   <div className="d-flex align-items-center">
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary mr-3"
+                                      className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"
                                       onClick={() =>
                                         router.push(
                                           `/partnership/tanda-tangan/${items.id}`
@@ -274,12 +268,18 @@ const Table = () => {
                                       }
                                     >
                                       <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
                                     </button>
                                     <button
-                                      className="btn btn-link-action bg-blue-secondary"
+                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                       onClick={() => handleDelete(items.id)}
                                     >
                                       <IconDelete width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                          Hapus
+                                        </div>
                                     </button>
                                   </div>
                                 </td>

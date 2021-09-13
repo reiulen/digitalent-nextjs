@@ -219,7 +219,7 @@ const TambahTandaTangan = () => {
                   </div>
                   <div className="d-flex align-items-center mt-5">
                     <a
-                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary text-blue-primary mr-5"
+                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
                       onClick={() => dataTandaTangan()}
                     >
                       Buat Tanda Tangan
@@ -238,7 +238,7 @@ const TambahTandaTangan = () => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/tanda-tangan">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>
