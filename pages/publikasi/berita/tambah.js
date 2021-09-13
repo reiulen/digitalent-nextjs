@@ -19,7 +19,7 @@ export default function TambahPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Tambah Berita'>
+                <Layout title='Tambah Berita - Publikasi'>
                     <Tambah />
                 </Layout>
             </div>

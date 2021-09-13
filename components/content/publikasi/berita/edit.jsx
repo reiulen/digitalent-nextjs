@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from "next/router";
 import { TagsInput } from 'react-tag-input-component';
+import DatePicker from 'react-datepicker'
 
 import { updateBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 import { NEW_BERITA_RESET, UPDATE_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
@@ -77,6 +78,9 @@ const EditBerita = () => {
     const [tag, setTag] = useState(berita.tag)
     const [publish, setPublish] = useState(berita.publish === 1 ? true : false)
     const [_method, setMethod] = useState("put")
+    // const [publishDate, setPublishDate] = useState(null);
+    const [publishDate, setPublishDate] = useState(berita.tanggal_publish ? (new Date (berita.tanggal_publish)) : null);
+    
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -247,7 +251,7 @@ const EditBerita = () => {
                         <div className="card-body">
                             <form onSubmit={onSubmit}>
                                 <div className="form-group">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                     <div className="col-sm-12">
                                         <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_berita")}/>
                                         {simpleValidator.current.message(
@@ -260,7 +264,7 @@ const EditBerita = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Berita</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Isi Berita</label>
                                     <div className="col-sm-12">
                                         <div className="ckeditor">
                                             {editorLoaded ? <CKEditor
@@ -294,7 +298,7 @@ const EditBerita = () => {
                                 <div className="form-group">
                                     <label
                                     htmlFor="staticEmail"
-                                    className="col-sm-2 col-form-label"
+                                    className="col-sm-2 col-form-label font-weight-bolder"
                                     >
                                     Upload Thumbnail
                                     </label>
@@ -352,6 +356,13 @@ const EditBerita = () => {
                                         null
                                     }
                                     </div>
+
+                                    <div className="mt-3 col-sm-3 text-muted">
+                                        <p>
+                                        Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                                        </p>
+                                        
+                                    </div>
                                     
                                 </div>
 
@@ -381,7 +392,7 @@ const EditBerita = () => {
                                 
 
                                 <div className="form-group">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
                                     <div className="col-sm-12">
                                         <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                             <option selected disabled value=''>-- Kategori --</option>
@@ -407,7 +418,7 @@ const EditBerita = () => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
+                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
                                     <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
@@ -422,7 +433,7 @@ const EditBerita = () => {
                                 <div className="form-group row">
                                     <label
                                         htmlFor="staticEmail"
-                                        className="ml-5 pl-4 "
+                                        className="ml-5 pl-4 font-weight-bolder"
                                     >
                                         Publish 
                                     </label>
@@ -448,11 +459,32 @@ const EditBerita = () => {
                                     </div>
                                 </div>
 
+                                <div className="form-group">
+                                    <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                    <div className="col-sm-12">
+                                        <div className="input-group">
+                                        <DatePicker
+                                            className="form-search-date form-control-sm form-control"
+                                            selected={publishDate}
+                                            onChange={(date) => setPublishDate(date)}
+                                            selectsStart
+                                            startDate={publishDate}
+                                            // endDate={endDate}
+                                            dateFormat="dd/MM/yyyy"
+                                            placeholderText="Silahkan Isi Tanggal Publish"
+                                            wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                            minDate={moment().toDate()}
+                                        // minDate={addDays(new Date(), 20)}
+                                        />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div className="form-group row">
                                     <div className="col-sm-2"></div>
                                     <div className="col-sm-10 text-right">
                                         <Link href='/publikasi/berita'>
-                                            <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                            <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                         </Link>
                                         <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                     </div>
