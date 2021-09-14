@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
+import DatePicker from 'react-datepicker'
 import { TagsInput } from "react-tag-input-component";
 
 import { updateImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
@@ -80,6 +81,7 @@ const EditImagetron = () => {
     const [publish, setPublish] = useState(imagetron.publish)
     const [users_id, setUserId] = useState(3)
     const [_method, setMethod] = useState("put");
+    const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date (imagetron.tanggal_publish) : null);
 
     const onChangeGambar = (e) => {
         if (e.target.name === 'gambar') {
@@ -94,6 +96,11 @@ const EditImagetron = () => {
             setGambarName(e.target.files[0].name)
         }
     }
+
+    const handleChangePublish = (e) => {
+        setPublish(e.target.checked);
+        // console.log (e.target.checked)
+    };
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -230,57 +237,57 @@ const EditImagetron = () => {
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
-                        <div className="form-group">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
-                  >
-                    Kategori
-                  </label>
-                  <div className="col-sm-12">
-                    <select
-                      name=""
-                      id=""
-                      className="form-control"
-                      value={kategori_id}
-                      onChange={(e) => setKategoriId(e.target.value)}
-                      onBlur={(e) => {
-                        setKategoriId(e.target.value);
-                        simpleValidator.current.showMessageFor("kategori_id");
-                      }}
-                    >
-                      <option selected disabled value="">
-                        -- Kategori --
-                      </option>
-                      {!kategori || (kategori && kategori.length === 0) ? (
-                        <option value="">Data kosong</option>
-                      ) : (
-                        kategori &&
-                        kategori.kategori &&
-                        kategori.kategori.map((row) => {
-                            return (
-                                row.jenis_kategori == "Imagetron" ?
-                                    <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
-                                    {row.nama_kategori}
+                            <div className="form-group">
+                                <label
+                                    htmlFor="staticEmail"
+                                    className="col-sm-2 col-form-label font-weight-bolder"
+                                >
+                                    Kategori
+                                </label>
+                                <div className="col-sm-12">
+                                    <select
+                                    name=""
+                                    id=""
+                                    className="form-control"
+                                    value={kategori_id}
+                                    onChange={(e) => setKategoriId(e.target.value)}
+                                    onBlur={(e) => {
+                                        setKategoriId(e.target.value);
+                                        simpleValidator.current.showMessageFor("kategori_id");
+                                    }}
+                                    >
+                                    <option selected disabled value="">
+                                        -- Kategori --
                                     </option>
-                                :
-                                    null
-                                    // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
-                            )
-                        })
-                      )}
-                    </select>
-                    {simpleValidator.current.message(
-                      "kategori_id",
-                      kategori_id,
-                      "required",
-                      { className: "text-danger" }
-                    )}
-                  </div>
-                </div>
+                                    {!kategori || (kategori && kategori.length === 0) ? (
+                                        <option value="">Data kosong</option>
+                                    ) : (
+                                        kategori &&
+                                        kategori.kategori &&
+                                        kategori.kategori.map((row) => {
+                                            return (
+                                                row.jenis_kategori == "Imagetron" ?
+                                                    <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                                    {row.nama_kategori}
+                                                    </option>
+                                                :
+                                                    null
+                                                    // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
+                                            )
+                                        })
+                                    )}
+                                    </select>
+                                    {simpleValidator.current.message(
+                                    "kategori_id",
+                                    kategori_id,
+                                    "required",
+                                    { className: "text-danger" }
+                                    )}
+                                </div>
+                            </div>
 
                             <div className="form-group ">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
                                     <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul} onChange={(e) => setJudulImagetron(e.target.value) } onBlur={() => simpleValidator.current.showMessageFor("judul")}/>
                                     {simpleValidator.current.message(
@@ -295,7 +302,7 @@ const EditImagetron = () => {
                             <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="col-sm-2 col-form-label"
+                                    className="col-sm-2 col-form-label font-weight-bolder"
                                 >
                                     Upload Thumbnail
                                 </label>
@@ -353,11 +360,18 @@ const EditImagetron = () => {
                                         null
                                     }
                                 </div>
+
+                                <div className="mt-3 col-sm-3 text-muted">
+                                    <p>
+                                    Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                                    </p>
+                                    
+                                </div>
                                 
                             </div>
 
-                            <div className="form-group">
-                                <label className='col-sm-2 col-form-label'>URL Link</label>
+                            {/* <div className="form-group">
+                                <label className='col-sm-2 col-form-label font-weight-bolder'>URL Link</label>
                                 <div className="col-sm-12">
                                     <div className="input-group">
                                         <div className="input-group-prepend">
@@ -366,12 +380,31 @@ const EditImagetron = () => {
                                         <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="Isi Link Disini" />
                                     </div>
                                 </div>
+                            </div> */}
+
+                            <div className="form-group">
+                                <label className='col-sm-2 col-form-label font-weight-bolder'>Link URL</label>
+                                <div className="col-sm-12">
+                                    <div className="input-group">
+                                        {/* <div className="input-group-prepend">
+                                            <div className="input-group-text">https://</div>
+                                        </div> */}
+                                        <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")}/>
+                                        
+                                    </div>
+                                    {simpleValidator.current.message(
+                                    "url_link",
+                                    url_link,
+                                    "required|url",
+                                    { className: "text-danger" }
+                                    )}
+                                </div>
                             </div>
 
                             <div className="form-group row">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="ml-5 pl-4 "
+                                    className="ml-5 pl-4 font-weight-bolder"
                                 >
                                     Publish 
                                 </label>
@@ -397,11 +430,32 @@ const EditImagetron = () => {
                                 </div>
                             </div>
 
+                            <div className="form-group">
+                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                <div className="col-sm-12">
+                                    <div className="input-group">
+                                    <DatePicker
+                                        className="form-search-date form-control-sm form-control"
+                                        selected={publishDate}
+                                        onChange={(date) => setPublishDate(date)}
+                                        selectsStart
+                                        startDate={publishDate}
+                                        // endDate={endDate}
+                                        dateFormat="dd/MM/yyyy"
+                                        placeholderText="Silahkan Isi Tanggal Publish"
+                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                        minDate={moment().toDate()}
+                                    // minDate={addDays(new Date(), 20)}
+                                    />
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/imagetron'>
-                                        <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                     </Link>
                                     <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                 </div>
@@ -415,7 +469,7 @@ const EditImagetron = () => {
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Image Preview</h5>
+                            <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
