@@ -110,9 +110,10 @@ export const setPage = (page) => {
 };
 
 export const setLimit = (value) => {
+  console.log("value", value);
   return {
     type: SET_LIMIT,
-    value,
+    limitValue: value,
   };
 };
 

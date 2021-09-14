@@ -258,7 +258,9 @@ const Table = () => {
                                       className="cursor-pointer"
                                     >
                                       <p
-                                        className="status-div"
+                                        className={`${allMKCooporation.mk_cooporation.data
+                                          .list_cooperation_categories[index]
+                                          .status === 0 ? "status-div-red" :"status-div-green"}`}
                                         style={{ width: "max-content" }}
                                       >
                                         {allMKCooporation.mk_cooporation.data

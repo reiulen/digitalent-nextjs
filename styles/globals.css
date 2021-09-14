@@ -164,3 +164,8 @@ a {
 .datepicker {
   width: 100%;
 }
+.wrapper-chart-pie,
+.wrapper-chart-pie .recharts-wrapper,
+.wrapper-chart-pie .recharts-wrapper .recharts-surface {
+  width: 100% !important;
+}
