@@ -68,6 +68,10 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
+import {
+  allDashboardPublikasiReducer
+} from "./publikasi/dashboard-publikasi.reducers"
+
 // Subvit
 // ============== substansi ===============
 import {
@@ -217,6 +221,8 @@ const reducer = combineReducers({
 
   allSettingPublikasi: allSettingPublikasiReducer,
   updateSettingPublikasi: updateSettingPublikasiReducer,
+
+  allDashboardPublikasi: allDashboardPublikasiReducer,
 
   // Subvit
   // =============== substansi ==================

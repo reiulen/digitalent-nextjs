@@ -3,10 +3,10 @@ import dynamic from "next/dynamic";
 import Layout from "../../../components/templates/layout.component";
 // import Berita from "../../../components/content/publikasi/berita/berita";
 
-// import { getAllBerita } from "../../../redux/actions/publikasi/berita.actions"
+import { getAllDashboardPublikasi } from "../../../redux/actions/publikasi/dashboard-publikasi.actions"
 import { wrapper } from "../../../redux/store"
 
-import LoadingPage from "../../../components/LoadingPage";
+// import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const DashboardPublikasi = dynamic(
@@ -31,6 +31,6 @@ export default function DashboardPage() {
     )
 }
 
-// export const getServerSideProps = wrapper.getServerSideProps (store => async ({ query }) => {
-//     await store.dispatch (getAllBerita (query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
-// })
+export const getServerSideProps = wrapper.getServerSideProps (store => async () => {
+    await store.dispatch (getAllDashboardPublikasi())
+})
