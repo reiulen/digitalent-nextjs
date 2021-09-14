@@ -80,7 +80,9 @@ const StepTwo = () => {
           list[index]["image"] = reader.result;
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
     }
     setSoalList(list);
   };
@@ -93,7 +95,9 @@ const StepTwo = () => {
           setSoalImage(reader.result);
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
     }
   };
 

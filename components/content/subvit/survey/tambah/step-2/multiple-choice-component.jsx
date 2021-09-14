@@ -21,7 +21,9 @@ const MultipleChoiceComponent = ({ props_answer }) => {
           list[index]["image"] = reader.result;
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
     }
     setSoalList(list);
     props_answer(list);
