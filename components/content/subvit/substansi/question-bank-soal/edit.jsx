@@ -77,7 +77,9 @@ const EditSoalSubstansi = () => {
           setQuestionImage(reader.result);
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
     }
   };
 
@@ -110,14 +112,16 @@ const EditSoalSubstansi = () => {
     const { name, value } = e.target;
     const list = [...answer];
     list[index][name] = value;
-    if (name === "image") {
+    if (name === "question_image") {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
           list[index]["image"] = reader.result;
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
     }
     setAnswer(list);
   };
@@ -204,6 +208,12 @@ const EditSoalSubstansi = () => {
     }
   };
 
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -221,6 +231,7 @@ const EditSoalSubstansi = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
+              onClick={handleResetError}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -240,24 +251,29 @@ const EditSoalSubstansi = () => {
               <h3 className="card-title font-weight-bolder text-dark">
                 Soal {subtance_question_detail.bank_soal + 1}
               </h3>
-              <div className="card-toolbar ml-auto">
-                <button className="btn btn-sm btn-primary px-6 font-weight-bold ">
-                  Simpan
-                </button>
-              </div>
+              <div className="card-toolbar ml-auto"></div>
             </div>
 
             <div className="card-body pt-0">
               <div className="title row">
-                <div className="col-md-3">
-                  <Image
-                    src="/assets/logo/logo-2.svg"
-                    alt="logo"
-                    width={204}
-                    height={100}
-                  />
-                </div>
-                <div className="col-md-7 pt-2">
+                {question_image ? (
+                  <div className="col-md-3">
+                    <Image
+                      src={
+                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                        "subtance/images/" +
+                        question_image
+                      }
+                      alt="logo"
+                      width={204}
+                      height={100}
+                      className="soal-image"
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
+                <div className="col-md-9 pt-2">
                   <input
                     type="text"
                     className="form-control"
@@ -279,7 +295,6 @@ const EditSoalSubstansi = () => {
                     </label>
                   </div>
                 </div>
-                <div className="col-md-2"></div>
               </div>
 
               <div className="answer mt-5">
@@ -287,15 +302,34 @@ const EditSoalSubstansi = () => {
                   return (
                     <>
                       <div className="title row">
-                        <div className="col-md-2 p-0 pl-3">
-                          <Image
-                            src="/assets/media/Gambar.svg"
-                            alt="logo"
-                            width={148}
-                            height={90}
-                          />
-                        </div>
-                        <div className="col-md-8 pt-2">
+                        {!row.image.includes("data") && row.image ? (
+                          <div className="col-md-2 p-0 pl-3">
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_SUBVIT +
+                                "subtance/images/" +
+                                row.image
+                              }
+                              alt="logo"
+                              width={148}
+                              height={90}
+                              className="soal-image"
+                            />
+                          </div>
+                        ) : row.image ? (
+                          <div className="col-md-2 p-0 pl-3">
+                            <Image
+                              src={row.image}
+                              alt="logo"
+                              width={148}
+                              height={90}
+                              className="soal-image"
+                            />
+                          </div>
+                        ) : (
+                          ""
+                        )}
+                        <div className="col-md-6 pt-2">
                           <input
                             type="text"
                             name="option"
@@ -312,6 +346,7 @@ const EditSoalSubstansi = () => {
                               className="custom-file-input"
                               name="question_image"
                               accept="image/png, image/gif, image/jpeg , image/jpg"
+                              onChange={(e) => handleInputChange(e, i)}
                             />
                             <label
                               className="custom-file-label"
@@ -321,30 +356,34 @@ const EditSoalSubstansi = () => {
                             </label>
                           </div>
                         </div>
-                        <div className="col-md-2 d-flex justify-content-start my-auto">
+                        <div className="col-md-4 d-flex justify-content-start my-auto pt-3">
                           <button
-                            className="btn pt-0 mr-3"
+                            className="btn btn-link-action bg-danger text-white"
                             type="button"
                             onClick={() => handleRemoveClick(i)}
                           >
-                            <Image
-                              alt="button-action"
-                              src="/assets/icon/trash-red.svg"
-                              width={20}
-                              height={30}
-                            />
+                            <i className="ri-delete-bin-fill p-0 text-white"></i>
                           </button>
-                          <SwitchButton
-                            checked={row.is_right}
-                            onlabel=" "
-                            onstyle="primary"
-                            offlabel=" "
-                            offstyle="danger"
-                            size="sm"
-                            width={20}
-                            height={10}
-                            onChange={(checked) => handleAnswer(checked, i)}
-                          />
+                          <div className="ml-3">
+                            <SwitchButton
+                              checked={row.is_right}
+                              onlabel=" "
+                              onstyle="primary"
+                              offlabel=" "
+                              offstyle="secondary"
+                              size="sm"
+                              width={20}
+                              height={10}
+                              onChange={(checked) => handleAnswer(checked, i)}
+                            />
+                          </div>
+                          {row.is_right ? (
+                            <span className="ml-2">
+                              Pilihan Kunci yang benar
+                            </span>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
                     </>
@@ -356,19 +395,19 @@ const EditSoalSubstansi = () => {
                 <div className="button-add my-4">
                   <button
                     type="button"
-                    className="btn btn-sm btn-light-success font-weight-bold"
+                    className="btn btn-rounded-full bg-blue-secondary text-white btn-sm"
                     onClick={() => handleAddClick()}
                   >
-                    Tambah Jawaban
+                    <i className="ri-add-fill text-white"></i> Tambah Jawaban
                   </button>
                 </div>
               ) : (
                 ""
               )}
 
-              <div className="form-group row">
-                <div className="col-sm-12 col-md-5">
-                  <span>Tipe Soal</span>
+              <div className="form-group">
+                <div className="col-sm-12 col-md-12">
+                  <span className="font-weight-bold">Tipe Soal</span>
                   <select
                     name="training_id"
                     className="form-control"
@@ -387,10 +426,9 @@ const EditSoalSubstansi = () => {
                       );
                     })}
                   </select>
-                  <span className="text-muted">Silahkan Pilih Tipe Soal</span>
                 </div>
-                <div className="col-sm-12 col-md-5">
-                  <span>Status</span>
+                <div className="col-sm-12 col-md-12 mt-3">
+                  <span className="font-weight-bold">Status</span>
                   <select
                     name="training_id"
                     className="form-control"
@@ -404,20 +442,21 @@ const EditSoalSubstansi = () => {
                     <option value={1}>Publish</option>
                     <option value={0}>Draft</option>
                   </select>
-                  <span className="text-muted">Silahkan Pilih Status</span>
                 </div>
               </div>
-              <div className="col-md-10 pb-0 mb-0">
-                <hr />
-              </div>
-
-              <div className="button-back">
+              <div className="button-back float-right p-5">
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="btn btn-sm btn-light-danger font-weight-bold"
+                  className="btn btn-light-ghost-rounded-full mr-2"
                 >
                   Kembali
+                </button>
+                <button
+                  type="submit"
+                  className="btn btn-primary-rounded-full text-white"
+                >
+                  Simpan
                 </button>
               </div>
             </div>

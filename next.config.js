@@ -4,6 +4,7 @@ module.exports = {
     domains: [
       "api.dts.majapahit.id",
       "dts-publikasi-dev.majapahit.id",
+      "dts-subvit-dev.s3.ap-southeast-1.amazonaws.com",
       "dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com",
       "dts-partnership-dev.s3.ap-southeast-1.amazonaws.com",
     ],
@@ -21,7 +22,8 @@ module.exports = {
       "http://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
     END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
-    END_POINT_API_IMAGE_SUBVIT: "http://dts-subvit-dev.majapahit.id/storage/",
+    END_POINT_API_IMAGE_SUBVIT:
+      "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // partnership
     END_POINT_API_PARTNERSHIP: "http://dts-partnership-dev.majapahit.id",
