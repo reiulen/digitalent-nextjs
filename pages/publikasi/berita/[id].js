@@ -22,7 +22,7 @@ export default function EditBeritaPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Ubah Berita'>
+                <Layout title='Ubah Berita - Publikasi'>
                     <EditBerita />
                 </Layout>
             </div>

@@ -43,6 +43,7 @@ import {
   detailGaleriReducer,
   deleteGaleriReducer,
   updateGaleriReducer,
+  viewGaleriReducer,
 } from "./publikasi/galeri.reducers";
 import {
   allFaqReducer,
@@ -59,6 +60,7 @@ import {
   deleteVideoReducer,
   detailVideoReducer,
   updateVideoReducer,
+  playVideoReducer,
 } from "./publikasi/video.reducers";
 
 import {
@@ -150,11 +152,13 @@ import { allMCooporationReducerMK } from "./partnership/managementCooporation.re
 import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
 // ================== user
 import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
-
+import { dashboardReducer } from "./partnership/dashboard.reducer";
 // end Partnership
 
-// utils
+// functional reducer
+
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
+import { reducerFunctionals } from "./utils/functionals.reducer";
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -187,6 +191,7 @@ const reducer = combineReducers({
   detailGaleri: detailGaleriReducer,
   deleteGaleri: deleteGaleriReducer,
   updatedGaleri: updateGaleriReducer,
+  viewedGaleri: viewGaleriReducer,
 
   allFaq: allFaqReducer,
   newFaq: newFaqReducer,
@@ -201,6 +206,7 @@ const reducer = combineReducers({
   deleteVideo: deleteVideoReducer,
   detailVideo: detailVideoReducer,
   updatedVideo: updateVideoReducer,
+  playedVideo: playVideoReducer,
 
   allKategori: allKategoriReducer,
   paginationKategori: paginationKategoriReducer,
@@ -284,11 +290,15 @@ const reducer = combineReducers({
   allMK: allMCooporationReducerMK,
   // tanda tangan
   allTandaTangan: allTandaTanganReducer,
+  // dashboard
+  allDashboard: dashboardReducer,
+
   // ================================= => user
   allCooperationUser: cooperationUserReducer,
 
   allProvinsi: allProvinsiReducer,
   allKota: allKotaReducer,
+  allFunctionls: reducerFunctionals,
 });
 
 export default reducer;

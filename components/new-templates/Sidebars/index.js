@@ -1,95 +1,93 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 const Sidebar = () => {
   const router = useRouter();
+
   const [menuItem1, setMenuItem1] = useState("");
+  console.log("menuItem1", menuItem1);
   const [menuItem2, setMenuItem2] = useState("");
-  const [menuItem3, setMenuItem3] = useState("");
-  const [menuItem4, setMenuItem4] = useState("");
-  const [menuItem5, setMenuItem5] = useState("");
-  const [menuItem6, setMenuItem6] = useState("");
-  const [menuItem7, setMenuItem7] = useState("");
-  const [menuItem8, setMenuItem8] = useState("");
-  const [menuItemS, setMenuItemS] = useState("");
+  console.log("menuItem2", menuItem2);
 
-  const onSetMenuItem1 = () => {
-    if (menuItem1 !== "") {
-      setMenuItem1("");
+  const [listMenuPartnership, setListMenuPartnership] = useState([
+    { id: 1, name: "Kerjasama", href: "/user-templete/partnership/kerjasama" },
+    {
+      id: 2,
+      name: "Profile Lembaga",
+      href: "/user-templete/partnership/profile-lembaga",
+    },
+    {
+      id: 3,
+      name: "Tanda Tangan Digital",
+      href: "/user-templete/partnership/tanda-tangan-digital",
+    },
+  ]);
+  const [listMenuPublikasi, setListMenuPublikasi] = useState([
+    { id: 1, name: "Kerjasama", href: "/user-templete/partnership/kerjasama" },
+    {
+      id: 2,
+      name: "Profile Lembaga",
+      href: "/user-templete/partnership/profile-lembaga",
+    },
+    {
+      id: 3,
+      name: "Tanda Tangan Digital",
+      href: "/user-templete/partnership/tanda-tangan-digital",
+    },
+  ]);
+  //
+  const activeSubItemPartnership = () => {
+    if (localStorage.getItem("menu")) {
+      localStorage.removeItem("menu");
     } else {
-      setMenuItem1("menu-item-open");
+      localStorage.setItem("menu", "menu-item-open");
     }
   };
-
-  const onSetMenuItem2 = () => {
-    if (menuItem2 !== "") {
-      setMenuItem2("");
+  const activeSubItemPublikasi = () => {
+    if (localStorage.getItem("menu2")) {
+      localStorage.removeItem("menu2");
     } else {
-      setMenuItem2("menu-item-open");
+      localStorage.setItem("menu2", "menu-item-open");
     }
   };
-
-  const onSetMenuItem3 = () => {
-    if (menuItem3 !== "") {
-      setMenuItem3("");
+  //
+  const activeMenuPartnership = () => {
+    if (localStorage.getItem("menu")) {
+      localStorage.removeItem("menu");
     } else {
-      setMenuItem3("menu-item-open");
+      localStorage.setItem("menu", "menu-item-open");
     }
+    setMenuItem1(!localStorage.getItem("menu") ? "" : "menu-item-open");
+  };
+  //
+  const activeMenuPublikasi = () => {
+    if (localStorage.getItem("menu2")) {
+      localStorage.removeItem("menu2");
+    } else {
+      localStorage.setItem("menu2", "menu-item-open");
+    }
+    setMenuItem2(!localStorage.getItem("menu2") ? "" : "menu-item-open");
   };
 
-  const onSetMenuItem4 = () => {
-    if (menuItem4 !== "") {
-      setMenuItem4("");
-    } else {
-      setMenuItem4("menu-item-open");
-    }
-  };
-
-  const onSetMenuItem5 = () => {
-    if (menuItem5 !== "") {
-      setMenuItem5("");
-    } else {
-      setMenuItem5("menu-item-open");
-    }
-  };
-
-  const onSetMenuItem6 = () => {
-    if (menuItem6 !== "") {
-      setMenuItem6("");
-    } else {
-      setMenuItem6("menu-item-open");
-    }
-  };
-
-  const onSetMenuItem7 = () => {
-    if (menuItem7 !== "") {
-      setMenuItem7("");
-    } else {
-      setMenuItem7("menu-item-open");
-    }
-  };
-
-  const onSetMenuItem8 = () => {
-    if (menuItem8 !== "") {
-      setMenuItem8("");
-    } else {
-      setMenuItem8("menu-item-open");
-    }
-  };
-
-  const onSetMenuItemS = () => {
-    if (menuItemS !== "") {
-      setMenuItemS("");
-    } else {
-      setMenuItemS("menu-item-open");
-    }
-  };
+  useEffect(() => {
+    //
+    const dataFromLocal = !localStorage.getItem("menu")
+      ? ""
+      : localStorage.getItem("menu");
+    setMenuItem1(dataFromLocal);
+    //
+    const dataFromLocal2 = !localStorage.getItem("menu2")
+      ? ""
+      : localStorage.getItem("menu2");
+    setMenuItem2(dataFromLocal2);
+  }, []);
 
   return (
     <>
       {/* <!--begin::Aside--> */}
+
       <div
         className="aside aside-left aside-fixed d-flex flex-column flex-row-auto"
         id="kt_aside"
@@ -140,11 +138,11 @@ const Sidebar = () => {
             <ul className="menu-nav">
               <li
                 className={`menu-item menu-item-submenu ${menuItem1}`}
-                onClick={onSetMenuItem1}
+                onClick={() => activeMenuPartnership()}
                 aria-haspopup="true"
                 data-menu-toggle="hover"
               >
-                <a href="javascript:;" className="menu-link menu-toggle">
+                <a className="menu-link menu-toggle">
                   <span className="svg-icon menu-icon">
                     <Image
                       alt="icon-sidebar-layers"
@@ -156,40 +154,75 @@ const Sidebar = () => {
                   <span className="menu-text">Partnership</span>
                   <i className="menu-arrow"></i>
                 </a>
+
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
                   <ul className="menu-subnav">
-                    <li
-                      className="menu-item menu-item-parent"
-                      aria-haspopup="true"
-                    >
-                      <span className="menu-link">
-                        <span className="menu-text">Dashboard</span>
-                      </span>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/user-templete/partnership/kerjasama">
-                        <a className="menu-link">
-                          <span className="menu-text">Kerjasama</span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/user-templete/partnership/profile-lembaga">
-                        <a className="menu-link">
-                          <span className="menu-text">Profil Lembaga</span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/user-templete/partnership/tanda-tangan-digital">
-                        <a className="menu-link">
-                          <span className="menu-text">
-                            Tanda Tangan Digital
-                          </span>
-                        </a>
-                      </Link>
-                    </li>
+                    {listMenuPartnership.map((items, index) => {
+                      return (
+                        <li
+                          key={index}
+                          className={`menu-item ${
+                            items.href === router.pathname
+                              ? "menu-item-active"
+                              : ""
+                          }`}
+                          aria-haspopup="true"
+                          onClick={() => activeSubItemPartnership(items.id)}
+                        >
+                          <Link href={`${items.href}`}>
+                            <a className="menu-link">
+                              <span className="menu-text">{items.name}</span>
+                            </a>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </li>
+              <li
+                className={`menu-item menu-item-submenu ${menuItem2}`}
+                onClick={() => activeMenuPublikasi()}
+                aria-haspopup="true"
+                data-menu-toggle="hover"
+              >
+                <a className="menu-link menu-toggle">
+                  <span className="svg-icon menu-icon">
+                    <Image
+                      alt="icon-sidebar-layers"
+                      src="/assets/icon/new/aside/layers-white.svg"
+                      width={24}
+                      height={24}
+                    />
+                  </span>
+                  <span className="menu-text">Publikasi</span>
+                  <i className="menu-arrow"></i>
+                </a>
+
+                <div className="menu-submenu">
+                  <i className="menu-arrow"></i>
+                  <ul className="menu-subnav">
+                    {listMenuPublikasi.map((items, index) => {
+                      return (
+                        <li
+                          key={index}
+                          className={`menu-item ${
+                            items.href === router.pathname
+                              ? "menu-item-active"
+                              : ""
+                          }`}
+                          aria-haspopup="true"
+                          onClick={() => activeSubItemPublikasi(items.id)}
+                        >
+                          <Link href={`${items.href}`}>
+                            <a className="menu-link">
+                              <span className="menu-text">{items.name}</span>
+                            </a>
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </li>

@@ -30,7 +30,7 @@ const SubmitKerjasama = () => {
     }).then((result) => {
       if (result.value) {
         router.push(
-          "/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"
+          "/partnership/kerjasama/detail-dokumen-kerjasama"
         );
       }
     });
@@ -194,7 +194,7 @@ const SubmitKerjasama = () => {
               <div className="form-group row">
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10">
-                  <Link href="/partnership/manajemen-kerjasama">
+                  <Link href="/partnership/kerjasama">
                     <a
                       className="btn bg-light-danger mr-2 btn-sm"
                       style={{ color: "red" }}

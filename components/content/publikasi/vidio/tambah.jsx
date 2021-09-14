@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
+import DatePicker from 'react-datepicker'
 
 import { newVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { NEW_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
@@ -80,6 +81,7 @@ const TambahVidio = () => {
       );
     const [gambarName, setGambarName] = useState (null)
     const [publish, setPublish] = useState(false)
+    const [publishDate, setPublishDate] = useState(null);
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -179,7 +181,7 @@ const TambahVidio = () => {
                 </div>
                 : ''
             }
-            {success ?
+            {/* {success ?
                 <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
                     <div className="alert-text">{success}</div>
@@ -190,7 +192,7 @@ const TambahVidio = () => {
                     </div>
                 </div>
                 : ''
-            }
+            } */}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 {
                     loading ?
@@ -204,7 +206,7 @@ const TambahVidio = () => {
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
                                     <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")}/>
                                     {simpleValidator.current.message(
@@ -217,10 +219,10 @@ const TambahVidio = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Deskripsi Video</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi Video</label>
                                 <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='isi deskripsi video disini' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
-                                    {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:50",{ className: "text-danger" })}
+                                    {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:5",{ className: "text-danger" })}
                                     {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>
@@ -228,7 +230,7 @@ const TambahVidio = () => {
                             <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="col-sm-2 col-form-label"
+                                    className="col-sm-2 col-form-label font-weight-bolder"
                                 >
                                     Upload Thumbnail
                                 </label>
@@ -286,25 +288,39 @@ const TambahVidio = () => {
                                         null
                                     }
                                 </div>
+
+                                <div className="mt-3 col-sm-3 text-muted">
+                                    <p>
+                                        Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                                    </p>
+                                    
+                                </div>
                                 
                             </div>
 
                             <div className="form-group">
-                                <label className='col-sm-2 col-form-label'>Link URL Video</label>
+                                <label className='col-sm-2 col-form-label font-weight-bolder'>Link URL Video</label>
                                 <div className="col-sm-12">
                                     <div className="input-group">
-                                        <div className="input-group-prepend">
+                                        {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
-                                        </div>
-                                        <input type="text" className="form-control" value={url_video} onChange={e => setUrlVideo(e.target.value)} placeholder="example" />
+                                        </div> */}
+                                        <input type="text" className="form-control" value={url_video} onChange={e => setUrlVideo(e.target.value)} placeholder="www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_video")}/>
+                                        
                                     </div>
+                                    {simpleValidator.current.message(
+                                    "url_video",
+                                    url_video,
+                                    "required|url",
+                                    { className: "text-danger" }
+                                    )}
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="col-sm-2 col-form-label"
+                                    className="col-sm-2 col-form-label font-weight-bolder"
                                 >
                                     Kategori
                                 </label>
@@ -350,7 +366,7 @@ const TambahVidio = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Tag</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
@@ -365,7 +381,7 @@ const TambahVidio = () => {
                             <div className="form-group row">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="ml-5 pl-4 "
+                                    className="ml-5 pl-4 font-weight-bolder"
                                 >
                                     Publish 
                                 </label>
@@ -407,11 +423,33 @@ const TambahVidio = () => {
                                 </div>
                             </div> */}
 
+                            <div className="form-group">
+                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                <div className="col-sm-12">
+                                    <div className="input-group">
+                                        <DatePicker
+                                            className="form-search-date form-control-sm form-control"
+                                            selected={publishDate}
+                                            onChange={(date) => setPublishDate(date)}
+                                            selectsStart
+                                            startDate={publishDate}
+                                            // endDate={endDate}
+                                            dateFormat="dd/MM/yyyy"
+                                            placeholderText="Silahkan Isi Tanggal Publish"
+                                            wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                            minDate={moment().toDate()}
+                                        // minDate={addDays(new Date(), 20)}
+                                        />
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/video'>
-                                        <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                     </Link>
                                     <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                 </div>

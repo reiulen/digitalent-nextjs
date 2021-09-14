@@ -22,6 +22,10 @@ import {
     UPDATE_GALERI_RESET,
     UPDATE_GALERI_FAIL,
 
+    VIEW_GALERI_REQUEST,
+    VIEW_GALERI_SUCCESS,
+    VIEW_GALERI_FAIL,
+
     CLEAR_ERRORS,
 } from '../../types/publikasi/galeri.type'
 
@@ -155,6 +159,27 @@ export const deleteGaleri = (id) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: DELETE_GALERI_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+export const viewGaleri= (galeriData) => async (dispatch) => {
+    try {
+        dispatch({ type: VIEW_GALERI_REQUEST })
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/galeri/${galeriData.id}`
+
+        const { data } = await axios.post (link, galeriData)
+
+        dispatch ({
+            type: VIEW_GALERI_SUCCESS,
+            payload: data
+        })
+    
+    } catch (error) {
+        dispatch ({
+            type: VIEW_GALERI_FAIL,
             payload: error.response.data.message
         })
     }

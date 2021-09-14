@@ -182,7 +182,7 @@ const EditTandaTangan = () => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Edit Tanda Tangan Digital
+              Ubah Tanda Tangan Digital
             </h3>
           </div>
           <div className="card-body">
@@ -222,7 +222,8 @@ const EditTandaTangan = () => {
                 </label>
                 <div className="row">
                   <div className="col-sm-2 ">
-                    {/* <Image
+                    <div className="border my-3">
+                    <Image
                               unoptimized={
                                 process.env.ENVIRONMENT !== "PRODUCTION"
                               }
@@ -233,10 +234,10 @@ const EditTandaTangan = () => {
                                 "partnership/images/signatures/" +
                                 tandaTangan
                               }
-                              width={60}
-                              height={60}
+                              width={400}
+                              height={400}
                               alt="logo"
-                            /> */}
+                            /></div>
                   </div>
                   <div className="col-sm-12">
                     <div
@@ -281,7 +282,7 @@ const EditTandaTangan = () => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/tanda-tangan">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>

@@ -1,40 +1,66 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import {useDispatch,useSelector} from 'react-redux'
 import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { signOut } from "next-auth/client";
+import { fetchReducerFunc } from '../../redux/actions/utils/functionals.actions'
+import {IS_SHOW_PROFILE,IS_OVERLAY_PROFILE} from '../../redux/types/utils/functionals.type'
 
 // import Sidebar from "./sidebar.component";
 // import Header from "./header.component";
 // import HeaderMobile from "./header-mobile.component";
 
 const Sidebar = dynamic(() => import("./sidebar.component"), {
-  suspense: true,
+  ssr: false,
 });
 const Header = dynamic(() => import("./header.component"), {
-  suspense: true,
+  ssr: false,
 });
 const HeaderMobile = dynamic(() => import("./header-mobile.component"), {
-  suspense: true,
+  ssr: false,
 });
 // Content
 // import SubHeader from "./subheader.component";
 const SubHeader = dynamic(() => import("./subheader.component"), {
-  suspense: true,
+  ssr: false,
 });
 // Wrapper
 // import ContentWrapper from "../wrapper/content.wrapper";
 const ContentWrapper = dynamic(() => import("../wrapper/content.wrapper"), {
-  suspense: true,
+  ssr: false,
 });
 
 import Footer from "./footer.component";
 
 const Layout = ({ children, title = "Dashboard" }) => {
+  const dispatch = useDispatch();
+  const allFunctionls = useSelector(state => state.allFunctionls)
+  console.log("layout page",allFunctionls)
   const handlerLogout = () => {
     signOut();
   };
+
+  // const sessionStorages = sessionStorage.getItem('isOverlayProfile')
+
+  // const [isProfile, setIsProfile] = useState("");
+  // const [isOverlayProfile, setIsOverlayProfile] = useState("");
+
+  const activeProfileAndOverlay = () =>{
+    dispatch({
+        type: IS_SHOW_PROFILE,
+      });
+      dispatch({
+        type: IS_OVERLAY_PROFILE,
+      });
+  }
+
+  // useEffect(() => {
+
+  //     // dispatch(fetchReducerFunc())
+   
+  // }, [allFunctionls.isOverlayProfile,allFunctionls.isProfile])
+
 
   return (
     <>
@@ -56,14 +82,17 @@ const Layout = ({ children, title = "Dashboard" }) => {
           {/* <Footer /> */}
         </div>
       </div>
-
-      <div id="kt_quick_user" className="offcanvas offcanvas-right p-10">
+      {/* offcanvas-on */}
+      {/* <div class="offcanvas-overlay"></div> */}
+      {/* <div id="kt_quick_user" className="offcanvas offcanvas-right p-10"> */}
+        <div id="kt_quick_user" className={`offcanvas offcanvas-right p-10 ${allFunctionls.isOverlayProfile && allFunctionls.isOverlayProfile ?"offcanvas-on":""}`}>
         <div className="offcanvas-header d-flex align-items-center justify-content-between pb-5">
           <h3 className="font-weight-bold m-0">User Profile</h3>
           <a
             href="#"
             className="btn btn-xs btn-icon btn-light btn-hover-primary"
             id="kt_quick_user_close"
+            onClick={() => activeProfileAndOverlay()}
           >
             <i className="ki ki-close icon-xs text-muted"></i>
           </a>
@@ -111,6 +140,15 @@ const Layout = ({ children, title = "Dashboard" }) => {
           <div className="separator separator-dashed mt-8 mb-5"></div>
         </div>
       </div>
+
+    {allFunctionls.isOverlayProfile && allFunctionls.isOverlayProfile ?
+       <div className="offcanvas-overlay" onClick={() => activeProfileAndOverlay()}></div> :""
+    }
+
+
+
+
+      
 
       <div id="kt_scrolltop" className="scrolltop">
         <span className="svg-icon">

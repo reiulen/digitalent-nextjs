@@ -127,6 +127,9 @@ const Faq = () => {
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
     
+        } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+    
         } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
           router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     
@@ -164,7 +167,7 @@ const Faq = () => {
             )
             setStartDate (null)
             setEndDate (null)
-
+    
         } else if (startDate === null && endDate !== null) {
             Swal.fire(
                 'Oops !',
@@ -173,7 +176,7 @@ const Faq = () => {
             )
             setStartDate (null)
             setEndDate (null)
-
+    
         } else if (startDate !== null && endDate === null) {
             Swal.fire(
                 'Oops !',
@@ -182,8 +185,16 @@ const Faq = () => {
             )
             setStartDate (null)
             setEndDate (null)
-
-
+    
+        } else if (startDate === null && endDate === null) {
+          Swal.fire(
+              'Oops !',
+              'Harap mengisi tanggal terlebih dahulu.',
+              'error'
+          )
+          setStartDate (null)
+          setEndDate (null)
+    
         } else {
             if (limit !== null && search !== null && startDate !== null && endDate !== null) {
                 router.push(
@@ -200,7 +211,7 @@ const Faq = () => {
                 router.push (
                     `${router.pathname}?page=1&limit=${limit}`
                 )
-
+    
             } else if (limit !== null && search !== null && startDate === null && endDate === null) {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
@@ -255,7 +266,7 @@ const Faq = () => {
           }
         }
         
-      }
+    }
 
     const resetValueSort = () => {
         setStartDate(null)
@@ -265,6 +276,9 @@ const Faq = () => {
 
     return (
         <PageWrapper>
+            {/* {
+                console.log (faq)
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -285,7 +299,7 @@ const Faq = () => {
                     <div className="alert-icon">
                         <i className="flaticon2-checkmark"></i>
                     </div>
-                    <div className="alert-text">Berhasil !</div>
+                    <div className="alert-text">Berhasil Menyimpan Data !</div>
                     <div className="alert-close">
                         <button
                             type="button"
@@ -336,7 +350,7 @@ const Faq = () => {
                         color='#ffffff' 
                         // icon='kotak-kotak-red.svg' 
                         // color='#F65464' 
-                        value={faq && faq.publish != "" ? faq.unpublish : 0}  
+                        value={faq && faq.unpublish != "" ? faq.unpublish : 0}  
                         titleValue='FAQ' 
                         title='Total Unpublish' 
                         publishedVal="0"
@@ -464,6 +478,7 @@ const Faq = () => {
                                                     dateFormat="dd/MM/yyyy"
                                                     placeholderText="Silahkan Isi Tanggal Dari"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    minDate={moment().toDate()}
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                                 </div>
@@ -483,7 +498,8 @@ const Faq = () => {
                                                     startDate={startDate}
                                                     endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
-                                                    minDate={startDate}
+                                                    // minDate={startDate}
+                                                    minDate={moment().toDate()}
                                                     maxDate={addDays(startDate, 20)}
                                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
@@ -752,7 +768,7 @@ const Faq = () => {
                                 } */}
                                 <div className="table-total ml-auto">
                                     <div className="row">
-                                        <div className="col-4 mr-0 p-0">
+                                        <div className="col-4 mr-0 p-0 mt-3">
                                             <select
                                                 className="form-control"
                                                 id="exampleFormControlSelect2"

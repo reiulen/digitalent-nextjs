@@ -20,7 +20,7 @@ import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
+import { deleteVideo, playVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { DELETE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
 
 const Vidio = () => {
@@ -30,6 +30,7 @@ const Vidio = () => {
 
     const { loading: allLoading, error, video } = useSelector(state => state.allVideo)
     const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteVideo);
+    const { loading: playLoading, error: playError, isPlayed } = useSelector((state) => state.playedVideo);
 
     const [search, setSearch] = useState('')
     const [limit, setLimit] = useState(null)
@@ -41,11 +42,15 @@ const Vidio = () => {
 
     let loading = false
     let { page = 1, keyword, success } = router.query
+
     if (allLoading) {
         loading = allLoading
     } else if (deleteLoading) {
         loading = deleteLoading
+    } else if (playLoading) {
+        loading = playLoading
     }
+
     page = Number(page)
 
     useEffect(() => {
@@ -114,6 +119,9 @@ const Vidio = () => {
     
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
+    
+        } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
     
         } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
           router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
@@ -244,7 +252,14 @@ const Vidio = () => {
         
     }
 
-    const handlePreview = (url) => {
+    const handlePreview = (url, id) => {
+        const data = {
+            id,
+            _method: "PUT",
+            isplay: "1"
+        }
+
+        dispatch(playVideo(data))
         setVideoPlaying(true)
         setUrlVideo(url) 
     }
@@ -254,8 +269,21 @@ const Vidio = () => {
         setEndDate(null)
     }
 
+    // const handleIsPlayed = (id) => {
+    //     const data = {
+    //         id,
+    //         _method: "PUT",
+    //         isplay: "1"
+    //     }
+
+    //     dispatch(playVideo(data))
+    // }
+
     return (
         <PageWrapper>
+            {
+                console.log (video)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -466,6 +494,7 @@ const Vidio = () => {
                                                     dateFormat="dd/MM/yyyy"
                                                     placeholderText="Silahkan Isi Tanggal Dari"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    minDate={moment().toDate()}
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                                 </div>
@@ -485,10 +514,12 @@ const Vidio = () => {
                                                     startDate={startDate}
                                                     endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
-                                                    minDate={startDate}
+                                                    minDate={moment().toDate()}
+                                                    // minDate={startDate}
                                                     maxDate={addDays(startDate, 20)}
                                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                                 </div>
@@ -624,7 +655,7 @@ const Vidio = () => {
                                                                     height={50}
                                                                 />
                                                             </td>
-                                                            <td className='align-middle'>{row.judul_video}</td>
+                                                            <td className='align-middle'>{row.kategori}</td>
                                                             <td className='align-middle'>{row.judul_video}</td>
                                                             <td className='align-middle'>
                                                                 {
@@ -655,7 +686,7 @@ const Vidio = () => {
                                                             <td className="align-middle d-flex">
 
                                                                 <button
-                                                                    onClick={() => handlePreview(row.url_video)} 
+                                                                    onClick={() => handlePreview(row.url_video, row.id)} 
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
                                                                     data-target="#videoPlayerModal" 
                                                                     data-toggle="modal"
@@ -744,7 +775,7 @@ const Vidio = () => {
                                 {video  ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
-                                            <div className="col-4 mr-0 p-0">
+                                            <div className="col-4 mr-0 p-0 mt-3">
                                                 <select 
                                                     className="form-control" 
                                                     id="exampleFormControlSelect2" 

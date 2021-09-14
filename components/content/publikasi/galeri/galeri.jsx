@@ -22,7 +22,7 @@ import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
+import { deleteGaleri, viewGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
 
 import {
     DELETE_GALERI_RESET
@@ -36,6 +36,7 @@ const Galeri = () => {
     // const { loading, error, galeri } = useSelector(state => state.allGaleri)
     const { loading: allLoading, error, galeri } = useSelector((state) => state.allGaleri);
     const { loading: deleteLoading, error: deleteError, isDeleted } = useSelector((state) => state.deleteGaleri);
+    const { loading: viewLoading, error: viewError, isViewed } = useSelector((state) => state.viewedGaleri);
 
     const [search, setSearch] = useState('')
     const [limit, setLimit] = useState(null)
@@ -51,7 +52,11 @@ const Galeri = () => {
         loading = allLoading
     } else if (deleteLoading) {
         loading = deleteLoading
+    } else if (viewLoading) {
+        loading = viewLoading
     }
+
+
     page = Number(page);
 
     useEffect(() => {
@@ -125,6 +130,9 @@ const Galeri = () => {
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
     
+        } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+    
         } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
           router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
     
@@ -180,6 +188,14 @@ const Galeri = () => {
             setStartDate (null)
             setEndDate (null)
     
+        } else if (startDate === null && endDate === null) {
+          Swal.fire(
+              'Oops !',
+              'Harap mengisi tanggal terlebih dahulu.',
+              'error'
+          )
+          setStartDate (null)
+          setEndDate (null)
     
         } else {
             if (limit !== null && search !== null && startDate !== null && endDate !== null) {
@@ -254,7 +270,13 @@ const Galeri = () => {
         
     }
 
-    const handleIndexGallery = (i) => {
+    const handlePreview = (i, id) => {
+        const data = {
+            id,
+            _method: "PUT",
+            isview: "1"
+        }
+        dispatch(viewGaleri(data))
         setIndexGalleri(i)
     }
 
@@ -464,6 +486,7 @@ const Galeri = () => {
                                                                 dateFormat="dd/MM/yyyy"
                                                                 placeholderText="Silahkan Isi Tanggal Dari"
                                                                 wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                minDate={moment().toDate()}
                                                             // minDate={addDays(new Date(), 20)}
                                                             />
                                                             </div>
@@ -483,7 +506,8 @@ const Galeri = () => {
                                                                 startDate={startDate}
                                                                 endDate={endDate}
                                                                 dateFormat="dd/MM/yyyy"
-                                                                minDate={startDate}
+                                                                // minDate={startDate}
+                                                                minDate={moment().toDate()}
                                                                 maxDate={addDays(startDate, 20)}
                                                                 placeholderText="Silahkan Isi Tanggal Sampai"
                                                                 wrapperClassName="col-12 col-lg-12 col-xl-12"
@@ -608,7 +632,7 @@ const Galeri = () => {
                                                             <td className="align-middle d-flex">
 
                                                                 <button
-                                                                    onClick={() => handleIndexGallery(i)} 
+                                                                    onClick={() => handlePreview(i, row.id)} 
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
                                                                     data-target="#exampleModalCenter" 
                                                                     data-toggle="modal"

@@ -22,7 +22,7 @@ export default function EditArtikelPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Ubah Artikel">
+        <Layout title="Ubah Artikel - Publikasi">
           <EditArtikel />
         </Layout>
       </div>
