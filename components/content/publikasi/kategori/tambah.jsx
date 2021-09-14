@@ -98,7 +98,7 @@ const TambahKategori = () => {
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Nama Kategori</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Nama Kategori</label>
                                 <div className="col-sm-12">
                                     <input
                                         type="text"
@@ -118,7 +118,7 @@ const TambahKategori = () => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Jenis Kategori</label>
+                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Jenis Kategori</label>
                                 <div className="col-sm-12">
                                     <select
                                         value={jenis_kategori}
@@ -147,7 +147,7 @@ const TambahKategori = () => {
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">
                                     <Link href='/publikasi/kategori'>
-                                        <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                                        <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                                     </Link>
                                     <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                                 </div>
