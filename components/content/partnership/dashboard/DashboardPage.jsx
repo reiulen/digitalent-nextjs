@@ -156,7 +156,7 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="ml-4">
-                    <p className="mb-0 fz-16 fw-600 text-blue-primary">200</p>
+                    <p className="mb-0 fz-16 fw-600 text-blue-primary">{allDashboard.data_dashboard.data?.cooperation_active}</p>
                     <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
                       Berjalan
                     </p>
@@ -173,7 +173,7 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="ml-4">
-                    <p className="mb-0 fz-16 fw-600 text-blue-primary">200</p>
+                    <p className="mb-0 fz-16 fw-600 text-blue-primary">{allDashboard.data_dashboard.data?.cooperation_will_expired}</p>
                     <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
                       Akan Berakhir
                     </p>
@@ -190,7 +190,7 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="ml-4">
-                    <p className="mb-0 fz-16 fw-600 text-blue-primary">200</p>
+                    <p className="mb-0 fz-16 fw-600 text-blue-primary">{allDashboard.data_dashboard.data?.cooperation_submission}</p>
                     <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
                       Berakhir
                     </p>
