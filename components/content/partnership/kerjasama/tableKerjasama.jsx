@@ -449,7 +449,7 @@ const Table = () => {
                                     </div>
                                     <div className="fv-row mb-10">
                                       <label className="required fw-bold fs-6 mb-2">
-                                        Kerjasama
+                                        Kategori Kerjasama
                                       </label>
                                       {/* <select
                                         onChange={(e) =>
@@ -561,8 +561,8 @@ const Table = () => {
                                         type="button"
                                         // type="button"
                                       // className="close"
-                                      data-dismiss="modal"
-                                      aria-label="Close"
+                                      // data-dismiss="modal"
+                                      // aria-label="Close"
                                         onClick={(e) =>
                                           handleSubmitSearchMany(e)
                                         }

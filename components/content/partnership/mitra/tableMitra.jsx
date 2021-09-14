@@ -245,25 +245,23 @@ const Table = () => {
                 </div>
               </div>
             </form>
-            {allMitra.status === "process" ? (
-              <LoadingTable />
-            ) : (
+            {
               <Tables
                 tableHead={
                   <tr>
                     <th className="text-left">No</th>
                     <th className="text-left align-middle">Logo</th>
                     <th className="text-left align-middle">Mitra</th>
-                    <th className="text-left align-middle">
-                      Website
-                    </th>
+                    <th className="text-left align-middle">Website</th>
                     <th className="text-left align-middle">Kerjasama</th>
                     <th className="text-left align-middle">Aksi</th>
                   </tr>
                 }
                 tableBody={
-                  allMitra.mitraAll.data &&
-                  allMitra.mitraAll.data.list_mitras.length === 0 ? (
+                  allMitra.status === "process" ? (
+                    <LoadingTable />
+                  ) : allMitra.mitraAll.data &&
+                    allMitra.mitraAll.data.list_mitras.length === 0 ? (
                     <tr>
                       <td colSpan="6" className="text-center">
                         <h4>Data tidak ditemukan</h4>
@@ -275,12 +273,10 @@ const Table = () => {
                       return (
                         <tr key={index}>
                           <td className="text-left align-middle">
-                           
-                              {allMitra.page === 1
-                                ? index + 1
-                                : (allMitra.page - 1) * allMitra.limit +
-                                  (index + 1)}
-                           
+                            {allMitra.page === 1
+                              ? index + 1
+                              : (allMitra.page - 1) * allMitra.limit +
+                                (index + 1)}
                           </td>
                           <td className="align-middle text-left">
                             <Image
@@ -322,8 +318,8 @@ const Table = () => {
                                   fill="rgba(255,255,255,1)"
                                 />
                                 <div className="text-hover-show-hapus">
-                                      Detail
-                                    </div>
+                                  Detail
+                                </div>
                               </button>
 
                               <button
@@ -340,8 +336,8 @@ const Table = () => {
                               >
                                 <IconPencil />
                                 <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
+                                  Ubah
+                                </div>
                               </button>
 
                               <button
@@ -350,8 +346,8 @@ const Table = () => {
                               >
                                 <IconDelete />
                                 <div className="text-hover-show-hapus">
-                                      Hapus
-                                    </div>
+                                  Hapus
+                                </div>
                               </button>
                             </div>
                           </td>
@@ -378,7 +374,7 @@ const Table = () => {
                 onChangeLimit={(e) => dispatch(setLimit(e.target.value))}
                 totalData={allMitra.totalDataMitra}
               />
-            )}
+            }
           </div>
         </div>
       </div>

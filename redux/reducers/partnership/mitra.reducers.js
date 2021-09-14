@@ -126,7 +126,7 @@ export const allMitraReducer = (state = initialState, action) => {
     case SET_LIMIT:
       return {
         ...state,
-        limit: action.value,
+        limit: action.limitValue,
         page: 1,
         card: "",
       };
