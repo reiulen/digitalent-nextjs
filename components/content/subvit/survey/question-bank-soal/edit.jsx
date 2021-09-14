@@ -38,7 +38,7 @@ const EditSoalTrivia = () => {
 
   const [question, setQuestion] = useState(survey_question_detail.question);
   const [question_image, setQuestionImage] = useState(
-    survey_question_detail.image
+    survey_question_detail.question_image
   );
 
   const [answer, setAnswer] = useState(
@@ -67,7 +67,9 @@ const EditSoalTrivia = () => {
           setQuestionImage(reader.result);
         }
       };
-      reader.readAsDataURL(e.target.files[0]);
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
     }
   };
 
@@ -272,14 +274,23 @@ const EditSoalTrivia = () => {
 
             <div className="card-body pt-0">
               <div className="title row">
-                <div className="col-md-3">
-                  <Image
-                    src="/assets/logo/logo-2.svg"
-                    alt="logo"
-                    width={204}
-                    height={100}
-                  />
-                </div>
+                {question_image != "" ? (
+                  <div className="col-md-3">
+                    <Image
+                      src={
+                        process.env.END_POINT_API_IMAGE_SUBVIT +
+                        "survey/images/" +
+                        question_image
+                      }
+                      alt="logo"
+                      width={204}
+                      height={100}
+                      className="soal-image"
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
                 <div className="col-md-7 pt-2">
                   <input
                     type="text"

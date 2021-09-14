@@ -30,7 +30,9 @@ const TriggeredQuestionComponent = ({
             listOption.image = reader.result;
           }
         };
-        reader.readAsDataURL(e.target.files[0]);
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
+        }
       }
     }
 
@@ -44,7 +46,9 @@ const TriggeredQuestionComponent = ({
             listAnswer.image = reader.result;
           }
         };
-        reader.readAsDataURL(e.target.files[0]);
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
+        }
       }
     }
 
@@ -58,7 +62,9 @@ const TriggeredQuestionComponent = ({
             listOption.image = reader.result;
           }
         };
-        reader.readAsDataURL(e.target.files[0]);
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
+        }
       }
     }
     setAnswer(list);
@@ -200,19 +206,24 @@ const TriggeredQuestionComponent = ({
             return (
               <>
                 <div className="title row">
-                  {/* {
-                                        row.image != '' ? ( */}
-                  {/* ) : ''
-                                    } */}
                   {row.type === "choose" ? (
                     <>
                       <div className="col-md-2 p-0 pl-3">
-                        <Image
-                          src="/assets/media/Gambar.svg"
-                          alt="logo"
-                          width={148}
-                          height={90}
-                        />
+                        {row.image ? (
+                          <Image
+                            src={
+                              process.env.END_POINT_API_IMAGE_SUBVIT +
+                              "survey/images/" +
+                              row.image
+                            }
+                            alt="logo"
+                            width={148}
+                            height={90}
+                            className="soal-image"
+                          />
+                        ) : (
+                          ""
+                        )}
                       </div>
                       <div className="col-md-6 pt-2">
                         <input
@@ -295,12 +306,20 @@ const TriggeredQuestionComponent = ({
                           <>
                             <div className="col-md-1"></div>
                             <div className="col-md-2 p-0 pl-3" key={j}>
-                              <Image
-                                src="/assets/media/Gambar.svg"
-                                alt="logo"
-                                width={148}
-                                height={90}
-                              />
+                              {rowY.image != "" ? (
+                                <Image
+                                  src={
+                                    process.env.END_POINT_API_IMAGE_SUBVIT +
+                                    "survey/images/" +
+                                    "7d9b33fa-4078-4f82-a07b-026a68468412.jpeg"
+                                  }
+                                  alt="logo"
+                                  width={148}
+                                  height={90}
+                                />
+                              ) : (
+                                ""
+                              )}
                             </div>
                             <div className="col-md-5 pt-2">
                               <input

@@ -104,6 +104,10 @@ a {
   color: #80808f;
 }
 
+.soal-image {
+  object-fit: cover;
+}
+
 @media only screen and (max-width: 768px) {
   .ilustrator-dashboard {
     visibility: hidden;

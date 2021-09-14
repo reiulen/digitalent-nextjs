@@ -61,7 +61,9 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
             listOption.image = reader.result;
           }
         };
-        reader.readAsDataURL(e.target.files[0]);
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
+        }
       } else {
         listOption.option = value;
       }
@@ -76,7 +78,9 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
             listAnswer.image = reader.result;
           }
         };
-        reader.readAsDataURL(e.target.files[0]);
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
+        }
       } else {
         listAnswer.question = value;
       }
@@ -91,7 +95,9 @@ const TriggeredQuestionComponent = ({ props_answer }) => {
             listOption.image = reader.result;
           }
         };
-        reader.readAsDataURL(e.target.files[0]);
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
+        }
       } else {
         listOption.option = value;
       }
