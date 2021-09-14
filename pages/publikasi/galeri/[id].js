@@ -22,7 +22,7 @@ export default function EditGaleriPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Ubah Galeri">
+        <Layout title="Ubah Galeri - Publikasi">
           <EditGaleri />
         </Layout>
       </div>

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
+import DatePicker from 'react-datepicker'
 
 import { newImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
@@ -69,6 +70,7 @@ const TambahImagetron = () => {
     const [url_link, setUrlRedirect] = useState('')
     const [publish, setPublish] = useState(false)
     const [users_id, setUserId] = useState(3)
+    const [publishDate, setPublishDate] = useState(null);
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -164,7 +166,7 @@ const TambahImagetron = () => {
                 </div>
                 : ''
             }
-            {success ?
+            {/* {success ?
                 <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
                     <div className="alert-text">{success}</div>
@@ -175,7 +177,7 @@ const TambahImagetron = () => {
                     </div>
                 </div>
                 : ''
-            }
+            } */}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
@@ -186,7 +188,7 @@ const TambahImagetron = () => {
                         <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-sm-2 col-form-label font-weight-bolder"
                   >
                     Kategori
                   </label>
@@ -232,7 +234,7 @@ const TambahImagetron = () => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Judul</label>
+                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                     <div className="col-sm-12">
                         <input 
                             type="text" 
@@ -252,71 +254,97 @@ const TambahImagetron = () => {
                 </div>
 
                 <div className="form-group">
-                    <label
-                        htmlFor="staticEmail"
-                        className="col-sm-2 col-form-label"
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-sm-2 col-form-label font-weight-bolder"
+                  >
+                    Upload Thumbnail
+                  </label>
+                  <div className="ml-3 row">
+                    <figure
+                      className="avatar item-rtl"
+                      data-toggle="modal"
+                      data-target="#exampleModalCenter"
                     >
-                        Upload Thumbnail
-                    </label>
-                    <div className="ml-3 row">
-                        <figure
-                        className="avatar item-rtl"
-                        data-toggle="modal"
-                        data-target="#exampleModalCenter"
-                        >
+                      <Image
+                        src={gambarPreview}
+                        alt="image"
+                        width={160}
+                        height={160}
+                        objectFit="cover"
+                      />
+                    </figure>
+                    <div>
+                      <label htmlFor="inputGroupFile04" className="icon-plus">
                         <Image
-                            src={gambarPreview}
-                            alt="image"
-                            width={160}
-                            height={160}
-                            objectFit="cover"
+                          src={iconPlus}
+                          alt="plus"
+                          width={60}
+                          height={60} 
                         />
-                        </figure>
-                        <div>
-                        <label htmlFor="inputGroupFile04" className="icon-plus">
-                            <Image
-                            src={iconPlus}
-                            alt="plus"
-                            width={60}
-                            height={60} 
-                            />
-                        </label>
-                        
-                        <input
-                            type="file"
-                            name="gambar"
-                            className="custom-file-input"
-                            id="inputGroupFile04"
-                            onChange={onChangeGambar}
-                            accept="image/*"
-                            onBlur={() =>
-                            simpleValidator.current.showMessageFor("gambar")
-                            }
-                            style={{display: "none"}}
-                        />
-                        </div>
-                        
-                    </div>
-
-                    <div className="ml-3">
-                        {simpleValidator.current.message(
-                        "gambar",
-                        gambar,
-                        "required",
-                        { className: "text-danger" }
-                        )}
-                        {
-                        gambarName !== null ?
-                            <small className="text-danger">{gambarName}</small>
-                        :
-                            null
+                      </label>
+                      
+                      <input
+                        type="file"
+                        name="gambar"
+                        className="custom-file-input"
+                        id="inputGroupFile04"
+                        onChange={onChangeGambar}
+                        accept="image/*"
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("gambar")
                         }
+                        style={{display: "none"}}
+                      />
                     </div>
                     
+                  </div>
+
+                  <div className="ml-3">
+                    {simpleValidator.current.message(
+                      "gambar",
+                      gambar,
+                      "required",
+                      { className: "text-danger" }
+                    )}
+                    {
+                      gambarName !== null ?
+                        <small className="text-danger">{gambarName}</small>
+                      :
+                        null
+                    }
+                  </div>
+
+                  <div className="mt-3 col-sm-3 text-muted">
+                    <p>
+                      Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                    </p>
+                      
+                  </div>
+                  
                 </div>
 
                 <div className="form-group">
-                    <label className='col-sm-2 col-form-label'>URL Link</label>
+                    <label className='col-sm-2 col-form-label font-weight-bolder'>Link URL</label>
+                    <div className="col-sm-12">
+                        <div className="input-group">
+                            {/* <div className="input-group-prepend">
+                                <div className="input-group-text">https://</div>
+                            </div> */}
+                            <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")}/>
+                            
+                        </div>
+                        {simpleValidator.current.message(
+                        "url_link",
+                        url_link,
+                        "required|url",
+                        { className: "text-danger" }
+                        )}
+                    </div>
+                </div>
+
+                {/* <div className="form-group">
+                    <label className='col-sm-2 col-form-label font-weight-bolder'>URL Link</label>
                     <div className="col-sm-12">
                         <div className="input-group">
                             <div className="input-group-prepend">
@@ -331,12 +359,12 @@ const TambahImagetron = () => {
                             )}
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="form-group row">
                     <label
                         htmlFor="staticEmail"
-                        className="ml-5 pl-4 "
+                        className="ml-5 pl-4 font-weight-bolder"
                     >
                         Publish 
                     </label>
@@ -362,11 +390,32 @@ const TambahImagetron = () => {
                     </div>
                 </div>
 
+                <div className="form-group">
+                  <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                  <div className="col-sm-12">
+                    <div className="input-group">
+                      <DatePicker
+                        className="form-search-date form-control-sm form-control"
+                        selected={publishDate}
+                        onChange={(date) => setPublishDate(date)}
+                        selectsStart
+                        startDate={publishDate}
+                        // endDate={endDate}
+                        dateFormat="dd/MM/yyyy"
+                        placeholderText="Silahkan Isi Tanggal Publish"
+                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                        minDate={moment().toDate()}
+                      // minDate={addDays(new Date(), 20)}
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="form-group row">
                     <div className="col-sm-2"></div>
                     <div className="col-sm-10 text-right">
                         <Link href='/publikasi/imagetron'>
-                            <a className='btn btn-outline-primary-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
+                            <a className='btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-sm'>Kembali</a>
                         </Link>
                         <button className='btn btn-primary-rounded-full rounded-pill btn-sm'>Simpan</button>
                     </div>
@@ -380,7 +429,7 @@ const TambahImagetron = () => {
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Image Preview</h5>
+                            <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
