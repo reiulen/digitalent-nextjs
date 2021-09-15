@@ -64,10 +64,10 @@ const Pengaturan = () => {
     }, [dispatch, error, success]);
 
 
-    const [upload_image, setUploadImage] = useState(parseInt((setting[0].max_size).split(" ")[0]))
-    const [upload_imagetron, setUploadImagetron] = useState(parseInt((setting[1].max_size).split(" ")[0]))
-    const [batas_slider, setBatasSlider] = useState(parseInt((setting[2].max_size)))
-    const [maxfaq, setMaxfaq] = useState(parseInt((setting[3].max_size)))
+    const [upload_image, setUploadImage] = useState( setting ? (parseInt((setting[0].max_size).split(" ")[0])) : null)
+    const [upload_imagetron, setUploadImagetron] = useState(setting ? (parseInt((setting[1].max_size).split(" ")[0])) : null)
+    const [batas_slider, setBatasSlider] = useState( setting ?  (parseInt((setting[2].max_size))) : null)
+    const [maxfaq, setMaxfaq] = useState(setting ? (parseInt((setting[3].max_size))) : null)
 
     const submitImagePublikasi = (e) => {
         e.preventDefault()
@@ -201,7 +201,7 @@ const Pengaturan = () => {
             {success ?
                 <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
-                    <div className="alert-text">Berhasil !</div>
+                    <div className="alert-text">Berhasil Menyimpan Perubahan Data!</div>
                     {/* <div className="alert-text">{isUpdated}</div> */}
                     <div className="alert-close">
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
@@ -216,9 +216,9 @@ const Pengaturan = () => {
                     setting && setting.length !== 0 ?
                         // <LoadingTable loading={loading} />
                         <div className="card card-custom card-stretch gutter-b">
-                            <div className="card-header border-0">
-                                {/* <h3 className="card-title font-weight-bolder text-dark">Pengaturan Publikasi</h3> */}
-                            </div>
+                            {/* <div className="card-header border-0">
+                                <h3 className="card-title font-weight-bolder text-dark">Pengaturan Publikasi</h3>
+                            </div> */}
                             <div className="card-body">
                                 <form>
                                     <div className="form-group row form-inline">
@@ -320,10 +320,12 @@ const Pengaturan = () => {
 
 
                                     <div className="form-group row">
-                                        <div className="col-sm-2"></div>
-                                        <Link href='/publikasi'>
-                                            <a className='btn btn-outline-primary-rounded-full mr-2 btn-sm rounded-pill'>Kembali</a>
-                                        </Link>
+                                        <div className="col-sm-12 text-right">
+                                            <Link href='/publikasi'>
+                                                <a className='btn btn-white-ghost-rounded-full mr-2 btn-sm rounded-pill'>Kembali</a>
+                                            </Link>
+                                        </div>
+                                        
                                     </div>
                                 </form>
                             </div>
