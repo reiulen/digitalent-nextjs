@@ -524,9 +524,9 @@ const Sidebar = () => {
                   {/* <i className="menu-arrow"></i> */}
                   <IconArrow2 className="transition-animate" fill="#ffffff" style={{transform:getStorageMenu2 ? "rotate(90deg)" : "rotate(0)"}}/>
                 </a>
-                <div className="menu-submenu">
+                <div className={`menu-submenu`}>
                   <i className="menu-arrow"></i>
-                  <ul className="menu-subnav">
+                  <ul className={`menu-subnav`}>
                     <li
                       className={
                         router.pathname == "/publikasi"

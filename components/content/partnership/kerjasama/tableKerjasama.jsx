@@ -57,6 +57,7 @@ const Table = () => {
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
+  const [isChangeOption, setIsChangeOption] = useState(false)
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
@@ -82,7 +83,20 @@ const Table = () => {
     dispatch(searchCooporation(valueSearch));
   };
 
-  const changeListStatus = (value, id) => {
+  const changeListStatus = (e, id) => {
+//     var x = (e.target.options[e.target.selectedIndex].innerText)
+//     var warning = `Apakah anda yakin ingin merubah status menjadi ${x} ?`;
+// if (confirm(warning)) {
+//     dispatch(changeStatusList(e.target.value, id));
+//         setIsStatusBar(true);
+//         setDeleteBar(false);
+//         setIsChangeOption(true)
+// }
+// else {
+//     dispatch(reloadTable());
+// }
+
+
     Swal.fire({
       title: "Apakah anda yakin ingin merubah status ?",
       icon: "warning",
@@ -94,14 +108,19 @@ const Table = () => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(changeStatusList(value, id));
+        
+        dispatch(changeStatusList(e.target.value, id));
         setIsStatusBar(true);
         setDeleteBar(false);
+        setIsChangeOption(true)
       } else {
         dispatch(reloadTable());
       }
     });
+
+
   };
+
 
   const cooperationDelete = (id) => {
     Swal.fire({
@@ -158,6 +177,15 @@ const Table = () => {
     }
   };
 
+//   const  test = (a) => {
+//     // var x = (a.value || a.options[a.selectedIndex].value);  //crossbrowser solution =)
+//     // alert(x);
+//     console.log("a",a.target.options)
+// }
+
+
+
+
   useEffect(() => {
     dispatch(fetchListSelectMitra());
     dispatch(fetchListSelectCooperation());
@@ -166,6 +194,15 @@ const Table = () => {
   }, [dispatch]);
   return (
     <PageWrapper>
+
+      {/* <select onChange={(e) => test(e)} id="select_id">
+    <option value="0">-Select-</option>
+    <option value="1">111</option>
+    <option value="2">222</option>
+    <option value="3">333</option>
+</select> */}
+
+
       {update ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
@@ -431,7 +468,7 @@ const Table = () => {
                                                 );
                                               })}
                                       </select> */}
-                                      
+
                                       <Select
                                         ref={(ref) => (selectRefMitra = ref)}
                                         className="basic-single"
@@ -696,12 +733,12 @@ const Table = () => {
                                         disabled
                                         className="form-control remove-icon-default dropdown-arrows-green"
                                         key={index}
-                                        onChange={(e) =>
-                                          changeListStatus(
-                                            e.target.value,
-                                            items.id
-                                          )
-                                        }
+                                        // onChange={(e) =>
+                                        //   changeListStatus(
+                                        //     e.target.value,
+                                        //     items.id
+                                        //   )
+                                        // }
                                       >
                                         <option value="1">
                                           Disetujui
@@ -723,8 +760,9 @@ const Table = () => {
                                         key={index}
                                         onChange={(e) =>
                                           changeListStatus(
-                                            e.target.value,
-                                            items.id
+                                            e,
+                                            items.id,
+                                            items.status.name
                                           )
                                         }
                                       >
@@ -749,8 +787,9 @@ const Table = () => {
                                         key={index}
                                         onChange={(e) =>
                                           changeListStatus(
-                                            e.target.value,
-                                            items.id
+                                            e,
+                                            items.id,
+                                            items.status.name
                                           )
                                         }
                                       >

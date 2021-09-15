@@ -101,8 +101,8 @@ export default function DashboardPage() {
         <div className="col-12 col-sm-6">
           <div className="br-12 bg-blue-dark p-10 text-white mt-2">
             <IconDoc />
-            <h5 className="mt-4 fw-700 fz-24">{allDashboard.data_dashboard.data?.cooperation_non_active}</h5>
-            <h5 className="fw-500 fz-14">Total Kerjasama Tidak Aktif</h5>
+            <h5 className="mt-4 fw-700 fz-24">{allDashboard.data_dashboard.data?.cooperation}</h5>
+            <h5 className="fw-500 fz-14">Total Kerjasama</h5>
           </div>
         </div>
       </div>
@@ -111,12 +111,14 @@ export default function DashboardPage() {
         <div className="col-12 col-sm-6">
           <div className="br-12 bg-white px-10 py-6 mt-2">
             <h5 className="mt-4 fw-600 fz-16 text-blue-thirty">
-              Berdasarkan Status Pengajuan
+              Berdasarkan Pengajuan aktif dan disetujui
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
-              {allDashboard.data_dashboard.data?.mitra} Total Pengajuan
+              {allDashboard.data_dashboard.data?.cooperation_active + allDashboard.data_dashboard.data?.cooperation_approved } Total Aktif dan Disetujui
             </h5>
             <div className="wrapper-chart-pie">
+              <span className="center-absolute fw-700 fz-24">{!allDashboard.data_dashboard.data?.cooperation_active ? 0 :allDashboard.data_dashboard.data?.cooperation_active + allDashboard.data_dashboard.data?.cooperation_approved }</span>
+
               <PieChart width={450} height={350}>
                                         <Pie 
                                             data={dataPieChartStatusPengajuan}
@@ -126,9 +128,12 @@ export default function DashboardPage() {
                                             cy="50%" 
                                             innerRadius={60} 
                                             outerRadius={80} 
+                                            paddingAngle={-10}
+                                            cornerRadius={30}
                                             // cornerRadius={10}
                                             // fill="#215480"
                                         >
+                                          
                                             {
                                                 dataPieChartStatusPengajuan && dataPieChartStatusPengajuan.map ((el, i) => {
                                                     return(
@@ -142,6 +147,7 @@ export default function DashboardPage() {
             </div>
             <div className="row">
               <div className="col-12 col-sm-6">
+                <div className="d-flex align-items-center justify-content-start justify-content-sm-center">
                 <div className="d-flex align-items-center">
                   <div
                     className="br-5 bg-blue-primary d-flex justify-content-center align-items-center"
@@ -156,9 +162,11 @@ export default function DashboardPage() {
                       Aktif
                     </p>
                   </div>
+                  </div>
                 </div>
               </div>
               <div className="col-12 col-sm-6">
+                <div className="d-flex align-items-center justify-content-start justify-content-sm-center">
                 <div className="d-flex align-items-center">
                   <div
                     className="br-5 bg-blue-extras d-flex justify-content-center align-items-center"
@@ -174,36 +182,23 @@ export default function DashboardPage() {
                     </p>
                   </div>
                 </div>
-              </div>
-              {/* <div className="col-12 col-sm-4">
-                <div className="d-flex align-items-center">
-                  <div
-                    className="br-5 bg-blue-secondary d-flex justify-content-center align-items-center"
-                    style={{ minWidth: "44px", height: "44px" }}
-                  >
-                    <Image src={IconFolderLine} alt="IconFoldercheck" />
-                  </div>
-
-                  <div className="ml-4">
-                    <p className="mb-0 fz-16 fw-600 text-blue-primary">{allDashboard.data_dashboard.data?.cooperation_rejected}</p>
-                    <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
-                      Ditolak
-                    </p>
-                  </div>
                 </div>
-              </div> */}
+
+              </div>
             </div>
           </div>
         </div>
         <div className="col-12 col-sm-6">
           <div className="br-12 bg-white px-10 py-6 mt-2">
             <h5 className="mt-4 fw-600 fz-16 text-blue-thirty">
-              Berdasarkan Pengajuan Ditolak & Berakhir  
+              Berdasarkan Pengajuan Akan Berakhir & Ditolak    
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
-              {allDashboard.data_dashboard.data?.cooperation} Total Ditolak & Berakhir
+              {allDashboard.data_dashboard.data?.cooperation_will_expired + allDashboard.data_dashboard.data?.cooperation_rejected} Akan Berakhir & Ditolak
             </h5>
             <div className="wrapper-chart-pie">
+              <span className="center-absolute fw-700 fz-24">{!allDashboard.data_dashboard.data?.cooperation_will_expired ? 0 :allDashboard.data_dashboard.data?.cooperation_will_expired + allDashboard.data_dashboard.data?.cooperation_rejected}</span>
+
               <PieChart width={450} height={350}>
                                         <Pie 
                                             data={dataPieChartPengajuanDisetujui}
@@ -213,6 +208,8 @@ export default function DashboardPage() {
                                             cy="50%" 
                                             innerRadius={60} 
                                             outerRadius={80} 
+                                            paddingAngle={-10}
+                                            cornerRadius={30}
                                             // fill="#215480"
                                         >
                                             {
@@ -228,6 +225,7 @@ export default function DashboardPage() {
                                     </div>
             <div className="row">
               <div className="col-12 col-sm-6">
+                <div className="d-flex align-items-center justify-content-start justify-content-sm-center">
                 <div className="d-flex align-items-center">
                   <div
                     className="br-5 bg-blue-primary d-flex justify-content-center align-items-center"
@@ -243,26 +241,11 @@ export default function DashboardPage() {
                       Akan Berakhir
                     </p>
                   </div>
+                  </div>
                 </div>
               </div>
-              {/* <div className="col-12 col-sm-4">
-                <div className="d-flex align-items-center">
-                  <div
-                    className="br-5 bg-blue-extras d-flex justify-content-center align-items-center"
-                    style={{ minWidth: "44px", height: "44px" }}
-                  >
-                    <Image src={IconWarningCircle} alt="IconWarningCircle" />
-                  </div>
-
-                  <div className="ml-4">
-                    <p className="mb-0 fz-16 fw-600 text-blue-primary">{allDashboard.data_dashboard.data?.cooperation_will_expired}</p>
-                    <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
-                      Akan Berakhir
-                    </p>
-                  </div>
-                </div>
-              </div> */}
               <div className="col-12 col-sm-6">
+                <div className="d-flex align-items-center justify-content-start justify-content-sm-center">
                 <div className="d-flex align-items-center">
                   <div
                     className="br-5 bg-blue-secondary d-flex justify-content-center align-items-center"
@@ -277,6 +260,7 @@ export default function DashboardPage() {
                       Ditolak
                     </p>
                   </div>
+                </div>
                 </div>
               </div>
             </div>
