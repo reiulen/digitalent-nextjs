@@ -1,18 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardDashboardMini from "../../../CardDashboardMini";
 
-import { getSession } from "next-auth/client";
+// import { getSession } from "next-auth/client";
 
 const DashbardSubvit = () => {
-  useEffect(() => {
-    getSession().then((session) => {
-      console.log(session.user.user);
-    });
-  }, [getSession]);
+  // useEffect(() => {
+  //   getSession().then((session) => {
+  //     console.log(session.user.user);
+  //   });
+  // }, [getSession]);
   return (
     <>
       <PageWrapper>

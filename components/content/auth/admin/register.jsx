@@ -10,6 +10,7 @@ const RegisterAdmin = () => {
       <AuthWrapper
         image="ilustrator-2.svg"
         desc="Tagline Digitalen Scholarship Tagline Digitalen Scholarship Tagline Digitalen Scholarship"
+        title="Register"
       >
         <div
           className="col-lg-7 d-flex align-items-center justify-content-center"

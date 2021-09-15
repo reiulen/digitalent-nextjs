@@ -1,10 +1,14 @@
 import React from "react";
 import Image from "next/image";
+import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 
-const AuthWrapper = ({ children, image }) => {
+const AuthWrapper = ({ children, image, title }) => {
   return (
     <>
+      <Head>
+        <title>{title}</title>
+      </Head>
       <div className="authentication-wraper">
         <ToastContainer position="top-right" />
         <div className="row m-0 bg-white" style={{ minHeight: "100vh" }}>
