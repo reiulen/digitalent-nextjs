@@ -68,6 +68,10 @@ const DetailDataKerjasama = () => {
     // document.getElementById("list-status").selectedIndex = 0;
     selectRefKerjasama.select.clearValue();
     selectRefStatus.select.clearValue();
+    setValueKerjaSama("");
+    setValueStatus("");
+    setKeyWord("");
+
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
@@ -246,11 +250,9 @@ const DetailDataKerjasama = () => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
+              {/* nanti diambil key baru dibuat diyar */}
               Kerjasama &nbsp;
-              {
-                mitraDetailAll?.mitraDetailAll?.data
-                  ?.list_cooperation_categories[0]?.partner?.user?.name
-              }
+              {mitraDetailAll?.mitraDetailAll?.data?.title}
             </h3>
           </div>
 
@@ -341,97 +343,50 @@ const DetailDataKerjasama = () => {
                             >
                               <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
-                                  Kerjasama
+                                  Kategori Kerjasama
                                 </label>
-                                {/* <select
-                                  onChange={(e) =>
-                                    setValueKerjaSama(e.target.value)
-                                  }
-                                  id="list-kerjasama"
-                                  className="form-select form-control"
-                                  aria-label="Select example"
-                                >
-                                  <option value="">Semua</option>
-                                  {mitraDetailAll.stateListKerjaSama.length ===
-                                  0
-                                    ? ""
-                                    : mitraDetailAll.stateListKerjaSama.data.map(
-                                        (items, i) => {
-                                          return (
-                                            <option
-                                              key={i}
-                                              value={
-                                                items.cooperation_categories
-                                              }
-                                            >
-                                              {items.cooperation_categories}
-                                            </option>
-                                          );
-                                        }
-                                      )}
-                                </select> */}
                                 <Select
-                                        ref={(ref) => (selectRefKerjasama = ref)}
-                                        className="basic-single"
-                                        classNamePrefix="select"
-                                        placeholder="Semua"
-                                        defaultValue={mitraDetailAll.stateListKerjaSama[0]}
-                                        isDisabled={false}
-                                        isLoading={false}
-                                        isClearable={false}
-                                        isRtl={false}
-                                        isSearchable={true}
-                                        name="color"
-                                        // onChange={(e) => setValueKerjaSama(e?.cooperation_categories )}
-                                        onChange={(e) =>
+                                  ref={(ref) => (selectRefKerjasama = ref)}
+                                  className="basic-single"
+                                  classNamePrefix="select"
+                                  placeholder="Semua"
+                                  defaultValue={
+                                    mitraDetailAll.stateListKerjaSama[0]
+                                  }
+                                  isDisabled={false}
+                                  isLoading={false}
+                                  isClearable={false}
+                                  isRtl={false}
+                                  isSearchable={true}
+                                  name="color"
+                                  // onChange={(e) => setValueKerjaSama(e?.cooperation_categories )}
+                                  onChange={(e) =>
                                     setValueKerjaSama(e?.cooperation_categories)
                                   }
-                                        options={mitraDetailAll.stateListKerjaSama}
-                                      />
+                                  options={mitraDetailAll.stateListKerjaSama}
+                                />
                               </div>
                               <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
                                   Status
                                 </label>
-                                {/* <select
-                                  id="list-status"
-                                  onChange={(e) =>
-                                    setValueStatus(e.target.value)
-                                  }
-                                  className="form-select form-control"
-                                  aria-label="Select example"
-                                >
-                                  <option value="">Semua</option>
-                                  {mitraDetailAll.stateListStatus.length === 0
-                                    ? ""
-                                    : mitraDetailAll.stateListStatus.data.map(
-                                        (items, i) => {
-                                          return (
-                                            <option
-                                              key={i}
-                                              value={items.name_en}
-                                            >
-                                              {items.name}
-                                            </option>
-                                          );
-                                        }
-                                      )}
-                                </select> */}
                                 <Select
-                                        ref={(ref) => (selectRefStatus = ref)}
-                                        className="basic-single"
-                                        classNamePrefix="select"
-                                        placeholder="Semua"
-                                        defaultValue={mitraDetailAll.stateListStatus[0]}
-                                        isDisabled={false}
-                                        isLoading={false}
-                                        isClearable={false}
-                                        isRtl={false}
-                                        isSearchable={true}
-                                        name="color"
-                                        onChange={(e) => setValueStatus(e?.name_en )}
-                                        options={mitraDetailAll.stateListStatus}
-                                      />
+                                  ref={(ref) => (selectRefStatus = ref)}
+                                  className="basic-single"
+                                  classNamePrefix="select"
+                                  placeholder="Semua"
+                                  defaultValue={
+                                    mitraDetailAll.stateListStatus[0]
+                                  }
+                                  isDisabled={false}
+                                  isLoading={false}
+                                  isClearable={false}
+                                  isRtl={false}
+                                  isSearchable={true}
+                                  name="color"
+                                  onChange={(e) => setValueStatus(e?.name_en)}
+                                  options={mitraDetailAll.stateListStatus}
+                                />
                               </div>
                             </div>
                             <div className="modal-footer">
@@ -442,6 +397,8 @@ const DetailDataKerjasama = () => {
                                 <button
                                   className="btn btn-white"
                                   type="button"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
                                   onClick={() => resetValueSort()}
                                 >
                                   Reset
@@ -478,11 +435,7 @@ const DetailDataKerjasama = () => {
 
             {/* table disini */}
 
-            {mitraDetailAll.status === "process" ? (
-              <div className="my-12">
-                <LoadingTable />
-              </div>
-            ) : (
+            {
               <Tables
                 tableHead={
                   <tr>
@@ -491,14 +444,21 @@ const DetailDataKerjasama = () => {
                     <th className="text-left align-middle">Judul Kerjasama</th>
                     <th className="text-left align-middle">Periode</th>
                     <th className="text-left align-middle">
-                      Tanggal Tanda Tangan
+                      Tanggal Awal Kerjasama
                     </th>
-                    <th className="text-left align-middle">Tanggal Selesai</th>
+                    <th className="text-left align-middle">
+                      Tanggal Selesai Kerjasama
+                    </th>
                     <th className="text-left align-middle">Status</th>
                     <th className="text-left align-middle">Aksi</th>
                   </tr>
                 }
                 tableBody={
+                  mitraDetailAll.status === "process" ? (
+              <div className="my-12">
+                <LoadingTable />
+              </div>
+            ) : (
                   mitraDetailAll.mitraDetailAll.data &&
                   mitraDetailAll.mitraDetailAll.data.list_cooperation_categories
                     .length === 0 ? (
@@ -508,24 +468,17 @@ const DetailDataKerjasama = () => {
                       </td>
                     </tr>
                   ) : (
-                    mitraDetailAll.mitraDetailAll.data && mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map(
+                    mitraDetailAll.mitraDetailAll.data &&
+                    mitraDetailAll.mitraDetailAll.data.list_cooperation_categories.map(
                       (items, index) => {
                         return (
                           <tr key={index}>
-                            <td className="text-left align-middle   ">
-                              <button
-                                className="btn mr-1"
-                                style={{
-                                  background: "#F3F6F9",
-                                  borderRadius: "6px",
-                                }}
-                              >
-                                {mitraDetailAll.pageDetail === 1
-                                  ? index + 1
-                                  : (mitraDetailAll.pageDetail - 1) *
-                                      mitraDetailAll.limitDetail +
-                                    (index + 1)}
-                              </button>
+                            <td className="text-left align-middle">
+                              {mitraDetailAll.pageDetail === 1
+                                ? index + 1
+                                : (mitraDetailAll.pageDetail - 1) *
+                                    mitraDetailAll.limitDetail +
+                                  (index + 1)}
                             </td>
                             <td className="align-middle text-left">
                               {items.partner.user.name}
@@ -547,13 +500,47 @@ const DetailDataKerjasama = () => {
                               {items.period} {items.period_unit}
                             </td>
                             <td className="align-middle text-left">
-                              {items.signing_date}
+                              {moment(items.period_date_start).format(
+                                "DD MMMM YYYY"
+                              )}
+                              {/* {items.signing_date} */}
                             </td>
                             <td className="align-middle">
-                              {items.period_date_end}
+                              {moment(items.period_date_end).format(
+                                "DD MMMM YYYY"
+                              )}
+                              {/* {items.period_date_end} */}
                             </td>
                             <td className="align-middle text-left">
-                              {items.status.name === "aktif" ? (
+                              {items.status.name === "aktif" &&
+                              moment(items.period_date_start).format(
+                                "YYYY MM DD"
+                              ) > moment().format("YYYY MM DD") ? (
+                                <div className="position-relative w-max-content">
+                                  <select
+                                    name=""
+                                    id=""
+                                    disabled
+                                    className="form-control remove-icon-default dropdown-arrows-green"
+                                    key={index}
+                                    onChange={(e) =>
+                                      changeListStatus(e.target.value, items.id)
+                                    }
+                                  >
+                                    <option value="1">Disetujui</option>
+                                    <option value="2">Tidak Aktif</option>
+                                  </select>
+                                  <IconArrow
+                                    className="right-center-absolute"
+                                    style={{ right: "10px" }}
+                                    width="7"
+                                    height="7"
+                                  />
+                                </div>
+                              ) : items.status.name === "aktif" &&
+                                moment(items.period_date_start).format(
+                                  "YYYY MM DD"
+                                ) <= moment().format("YYYY MM DD") ? (
                                 <div className="position-relative w-max-content">
                                   <select
                                     name=""
@@ -567,7 +554,7 @@ const DetailDataKerjasama = () => {
                                     <option value="1">
                                       {items.status.name}
                                     </option>
-                                    <option value="2">Nonaktif</option>
+                                    <option value="2">Tidak Aktif</option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"
@@ -587,12 +574,13 @@ const DetailDataKerjasama = () => {
                                       changeListStatus(e.target.value, items.id)
                                     }
                                   >
-                                    <option value="2">Nonaktif</option>
-                                        <option value="1">Aktif</option>
+                                    <option value="2">Tidak Aktif</option>
+                                    <option value="1">Aktif</option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"
                                     style={{ right: "10px" }}
+                                    fill="#F65464"
                                     width="7"
                                     height="7"
                                   />
@@ -600,7 +588,7 @@ const DetailDataKerjasama = () => {
                               ) : items.status.name === "pengajuan-review" ? (
                                 <div className="position-relative w-max-content">
                                   <select
-                                  disabled
+                                    disabled
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue"
@@ -609,9 +597,7 @@ const DetailDataKerjasama = () => {
                                     //   changeListStatus(e.target.value, items.id)
                                     // }
                                   >
-                                    <option value="">
-                                          Pengajuan - Review
-                                        </option>
+                                    <option value="">Pengajuan - Review</option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"
@@ -623,7 +609,7 @@ const DetailDataKerjasama = () => {
                               ) : items.status.name === "pengajuan-revisi" ? (
                                 <div className="position-relative w-max-content">
                                   <select
-                                  disabled
+                                    disabled
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-yellow"
@@ -632,9 +618,7 @@ const DetailDataKerjasama = () => {
                                     //   changeListStatus(e.target.value, items.id)
                                     // }
                                   >
-                                    <option value="">
-                                          Pengajuan - Revisi
-                                        </option>
+                                    <option value="">Pengajuan - Revisi</option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"
@@ -643,7 +627,8 @@ const DetailDataKerjasama = () => {
                                     height="7"
                                   />
                                 </div>
-                              ) :  items.status.name === "pengajuan-pembahasan" ? (
+                              ) : items.status.name ===
+                                "pengajuan-pembahasan" ? (
                                 <div className="position-relative w-max-content">
                                   <select
                                     name=""
@@ -654,12 +639,10 @@ const DetailDataKerjasama = () => {
                                     //   changeListStatus(e.target.value, items.id)
                                     // }
                                   >
-                                    <option value="6">
-                                          Pengajuan-Selesai
-                                        </option>
-                                        <option value="5">
-                                          Pengajuan-Pembahasan
-                                        </option>
+                                    <option value="6">Pengajuan-Selesai</option>
+                                    <option value="5">
+                                      Pengajuan-Pembahasan
+                                    </option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"
@@ -668,10 +651,10 @@ const DetailDataKerjasama = () => {
                                     height="7"
                                   />
                                 </div>
-                              ):  items.status.name === "pengajuan-selesai" ? (
+                              ) : items.status.name === "pengajuan-selesai" ? (
                                 <div className="position-relative w-max-content">
                                   <select
-                                  disabled
+                                    disabled
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue"
@@ -681,14 +664,14 @@ const DetailDataKerjasama = () => {
                                     // }
                                   >
                                     <option value="">
-                                          Pengajuan - Selesai
-                                        </option>
+                                      Pengajuan - Selesai
+                                    </option>
                                   </select>
                                 </div>
-                              ):  items.status.name === "pengajuan-document" ? (
+                              ) : items.status.name === "pengajuan-document" ? (
                                 <div className="position-relative w-max-content">
                                   <select
-                                  disabled
+                                    disabled
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue"
@@ -698,14 +681,14 @@ const DetailDataKerjasama = () => {
                                     // }
                                   >
                                     <option value="">
-                                          Pengajuan - Dokumen
-                                        </option>
+                                      Pengajuan - Dokumen
+                                    </option>
                                   </select>
                                 </div>
-                              ):  
+                              ) : (
                                 <div className="position-relative w-max-content">
                                   <select
-                                  disabled
+                                    disabled
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-red-primary"
@@ -717,7 +700,7 @@ const DetailDataKerjasama = () => {
                                     <option value="">Ditolak</option>
                                   </select>
                                 </div>
-                              }
+                              )}
                             </td>
                             <td className="align-middle text-left">
                               {items.status.name === "aktif" ? (
@@ -755,7 +738,7 @@ const DetailDataKerjasama = () => {
                                       fill="rgba(255,255,255,1)"
                                     />
                                     <div className="text-hover-show-hapus">
-                                      Edit
+                                      Ubah
                                     </div>
                                   </button>
                                 </div>
@@ -790,7 +773,7 @@ const DetailDataKerjasama = () => {
                                   >
                                     <IconPencil />
                                     <div className="text-hover-show-hapus">
-                                      Edit
+                                      Ubah
                                     </div>
                                   </button>
                                   <button
@@ -809,7 +792,7 @@ const DetailDataKerjasama = () => {
                         );
                       }
                     )
-                  )
+                  ))
                 }
                 pagination={
                   <Pagination
@@ -836,7 +819,7 @@ const DetailDataKerjasama = () => {
                   mitraDetailAll.totalDataDetail
                 }
               />
-            )}
+            }
           </div>
         </div>
       </div>

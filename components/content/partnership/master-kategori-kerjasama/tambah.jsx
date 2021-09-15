@@ -231,7 +231,7 @@ const Tambah = () => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/master-kategori-kerjasama">
-                    <a className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>

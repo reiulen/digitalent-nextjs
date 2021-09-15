@@ -111,6 +111,14 @@ const Kategori = () => {
             setStartDate (null)
             setEndDate (null)
     
+        } else if (startDate === null && endDate === null) {
+          Swal.fire(
+              'Oops !',
+              'Harap mengisi tanggal terlebih dahulu.',
+              'error'
+          )
+          setStartDate (null)
+          setEndDate (null)
     
         } else {
             if (limit !== null && search !== null && startDate !== null && endDate !== null) {
@@ -169,6 +177,9 @@ const Kategori = () => {
     
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
+    
+        } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+          router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
     
         } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
           router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
@@ -314,8 +325,8 @@ const Kategori = () => {
                                 </div>
                                 </div>
                                 <div className="col-lg-6 col-xl-6 col-sm-9">
-                                {/* <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
-                                    
+                                <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                                    {/* sortir by modal */}
                                     <button
                                     className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                                     data-toggle="modal"
@@ -329,7 +340,7 @@ const Kategori = () => {
                                     <IconArrow fill="#E4E6EF" width="11" height="11"/>
                                     </button>
 
-                                    
+                                    {/* modal */}
                                     <form
                                     // id="kt_docs_formvalidation_text"
                                     className="form text-left"
@@ -388,6 +399,7 @@ const Kategori = () => {
                                                     dateFormat="dd/MM/yyyy"
                                                     placeholderText="Silahkan Isi Tanggal Dari"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    minDate={moment().toDate()}
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                                 </div>
@@ -407,7 +419,8 @@ const Kategori = () => {
                                                     startDate={startDate}
                                                     endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
-                                                    minDate={startDate}
+                                                    // minDate={startDate}
+                                                    minDate={moment().toDate()}
                                                     maxDate={addDays(startDate, 20)}
                                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
@@ -439,13 +452,12 @@ const Kategori = () => {
                                     </div>
                                     </div>
                                 </form>
-                                
+                                {/* end modal */}
 
-                                </div> */}
+                                </div>
+                                </div>
                             </div>
                         </div>
-                        
-                    </div>
 
                         <div className="table-page mt-5">
                             <div className="table-responsive">
@@ -545,7 +557,7 @@ const Kategori = () => {
                                                 <Pagination
                                                     activePage={page}
                                                     itemsCountPerPage={paginateKategori.perPage}
-                                                    totalItemsCount={kategori.total}
+                                                    totalItemsCount={paginateKategori.total}
                                                     pageRangeDisplayed={3}
                                                     onChange={handlePagination}
                                                     nextPageText={'>'}
@@ -607,7 +619,7 @@ const Kategori = () => {
                                                     </select>
                                                 </div>
                                                 <div className="col-8 my-auto">
-                                                    <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {kategori.total}</p>
+                                                    <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {paginateKategori.total}</p>
                                                 </div>
                                             </div>
                                         </div>
