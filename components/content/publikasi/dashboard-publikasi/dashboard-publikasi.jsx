@@ -309,7 +309,7 @@ const DashbardPublikasi = () => {
                                         {
                                             dataDashboardBerita.top_berita.map ((el, i) => {
                                                 return (
-                                                    <div className="d-flex align-items-center mb-10">
+                                                    <div className="d-flex align-items-center mb-10" key={i}>
                                                         {/* <!--begin::Symbol--> */}
                                                         <div className="symbol symbol-40 symbol-light-success mr-5">
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
@@ -361,7 +361,7 @@ const DashbardPublikasi = () => {
                                         {
                                             dataDashboardArtikel.top_artikel.map ((el, i) => {
                                                 return (
-                                                    <div className="d-flex align-items-center mb-10">
+                                                    <div className="d-flex align-items-center mb-10" key={i}>
                                                         {/* <!--begin::Symbol--> */}
                                                         <div className="symbol symbol-40 symbol-light-success mr-5">
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
@@ -414,7 +414,7 @@ const DashbardPublikasi = () => {
                                                 return (
                                                     <div className="d-flex align-items-center mb-10">
                                                         {/* <!--begin::Symbol--> */}
-                                                        <div className="symbol symbol-40 symbol-light-success mr-5">
+                                                        <div className="symbol symbol-40 symbol-light-success mr-5" key={i}>
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
                                                         </div>
                                                         {/* <!--end::Symbol--> */}
@@ -462,7 +462,7 @@ const DashbardPublikasi = () => {
                                         {
                                             dataDashboardVideo.top_video.map ((el, i) => {
                                                 return (
-                                                    <div className="d-flex align-items-center mb-10">
+                                                    <div className="d-flex align-items-center mb-10" key={i}>
                                                         {/* <!--begin::Symbol--> */}
                                                         <div className="symbol symbol-40 symbol-light-success mr-5">
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
