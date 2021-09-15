@@ -243,6 +243,7 @@ const Pengaturan = () => {
                                                 src={`/assets/icon/save.svg`}
                                                 width={40}
                                                 height={40}
+                                                alt="IconSave"
                                             />
                                         </button>
                                     
@@ -266,6 +267,7 @@ const Pengaturan = () => {
                                                     src={`/assets/icon/save.svg`}
                                                     width={40}
                                                     height={40}
+                                                    alt="IconSave"
                                                 />
                                         </button>
                                     </div>
@@ -288,6 +290,7 @@ const Pengaturan = () => {
                                                 src={`/assets/icon/save.svg`}
                                                 width={40}
                                                 height={40}
+                                                alt="IconSave"
                                             />
                                         </button>
                                     </div>
@@ -310,6 +313,7 @@ const Pengaturan = () => {
                                                 src={`/assets/icon/save.svg`}
                                                 width={40}
                                                 height={40}
+                                                alt="IconSave"
                                             />
                                         </button>
                                     </div>
