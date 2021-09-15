@@ -133,6 +133,7 @@ export default function DashboardPage() {
                                             // cornerRadius={10}
                                             // fill="#215480"
                                         >
+                                          
                                             {
                                                 dataPieChartStatusPengajuan && dataPieChartStatusPengajuan.map ((el, i) => {
                                                     return(
