@@ -168,4 +168,5 @@ a {
 .wrapper-chart-pie .recharts-wrapper,
 .wrapper-chart-pie .recharts-wrapper .recharts-surface {
   width: 100% !important;
+  position: relative;
 }
