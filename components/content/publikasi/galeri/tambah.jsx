@@ -150,9 +150,16 @@ const TambahGaleri = () => {
     const [disablePublishDate, setDisablePublishDate] = useState(true)
 
     const handleChangePublish = (e) => {
-        setPublish(e.target.checked);
+        // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
+    
+        if (e.target.checked === false){
+            setPublishDate (null)
+            setPublish (0)
+        } else {
+            setPublish (1)
+        }
     };
 
     const handlePublishDate = (date) => {

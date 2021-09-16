@@ -366,11 +366,9 @@ const Faq = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/faq/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
                                     Tambah FAQ
                                 </a>
-                                {/* <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
-                                    Tambah FAQ
-                                </a> */}
                             </Link>
                         </div>
                     </div>
@@ -637,16 +635,32 @@ const Faq = () => {
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? 
-                                                                    <SwitchButton
+                                                                    // <SwitchButton
+                                                                    //     checked={row.pinned === 1 ? true : false}
+                                                                    //     onlabel=" "
+                                                                    //     onstyle="primary"
+                                                                    //     offlabel=" "
+                                                                    //     offstyle="secondary"
+                                                                    //     size="sm"
+                                                                    //     width={30}
+                                                                    //     onChange={(checked) => onSetPin(checked, row.id)}
+                                                                    // />
+                                                                    <label className="switches">
+                                                                        <input
+                                                                        // required
+                                                                        className="checkbox"
                                                                         checked={row.pinned === 1 ? true : false}
-                                                                        onlabel=" "
-                                                                        onstyle="primary"
-                                                                        offlabel=" "
-                                                                        offstyle="secondary"
-                                                                        size="sm"
-                                                                        width={30}
+                                                                        type="checkbox"
+                                                                        // onChange={(checked) => setPublish(checked)}
                                                                         onChange={(checked) => onSetPin(checked, row.id)}
-                                                                    />
+                                                                        />
+                                                                        <span
+                                                                        className={`sliders round ${
+                                                                            row.pinned === 1 ?"text-white" : "pl-2"
+                                                                        }`}
+                                                                        >
+                                                                        </span>
+                                                                    </label>
                                                                     :
                                                                     <div className="text-center ml-1"> - </div>
                                                                 }
