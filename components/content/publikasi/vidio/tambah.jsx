@@ -82,6 +82,7 @@ const TambahVidio = () => {
     const [gambarName, setGambarName] = useState (null)
     const [publish, setPublish] = useState(false)
     const [publishDate, setPublishDate] = useState(null);
+    const [disablePublishDate, setDisablePublishDate] = useState(true)
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -114,9 +115,26 @@ const TambahVidio = () => {
     }
 
     const handleChangePublish = (e) => {
-        setPublish(e.target.checked);
+        // setPublish(e.target.checked);
+        setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
+
+        if (e.target.checked === false){
+            setPublishDate (null)
+            setPublish (0)
+        } else {
+            setPublish (1)
+        }
     };
+
+    const handlePublishDate = (date) => {
+        // let result = moment(date).format("YYYY-MM-DD")
+        if (disablePublishDate === false) {
+          // setPublishDate(result)
+          setPublishDate(date)
+          // console.log (result)
+        }
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -146,7 +164,8 @@ const TambahVidio = () => {
                 url_video,
                 gambar,
                 tag,
-                publish
+                publish,
+                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
             }
     
             dispatch(newVideo(data))
@@ -221,7 +240,7 @@ const TambahVidio = () => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi Video</label>
                                 <div className="col-sm-12">
-                                    <textarea className='form-control' placeholder='isi deskripsi video disini' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
+                                    <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
                                     {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:5",{ className: "text-danger" })}
                                     {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                 </div>
@@ -291,7 +310,7 @@ const TambahVidio = () => {
 
                                 <div className="mt-3 col-sm-3 text-muted">
                                     <p>
-                                        Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                                        Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
                                     
                                 </div>
@@ -337,7 +356,7 @@ const TambahVidio = () => {
                                     }}
                                     >
                                     <option selected disabled value="">
-                                        -- Kategori --
+                                        -- Video --
                                     </option>
                                     {!kategori || (kategori && kategori.length === 0) ? (
                                         <option value="">Data kosong</option>
@@ -430,7 +449,8 @@ const TambahVidio = () => {
                                         <DatePicker
                                             className="form-search-date form-control-sm form-control"
                                             selected={publishDate}
-                                            onChange={(date) => setPublishDate(date)}
+                                            onChange={(date) => handlePublishDate(date)}
+                                            // onChange={(date) => setPublishDate(date)}
                                             selectsStart
                                             startDate={publishDate}
                                             // endDate={endDate}
@@ -439,9 +459,16 @@ const TambahVidio = () => {
                                             wrapperClassName="col-12 col-lg-12 col-xl-12"
                                             minDate={moment().toDate()}
                                         // minDate={addDays(new Date(), 20)}
+                                            disabled = {disablePublishDate === true || disablePublishDate === null}
                                         />
                                         
                                     </div>
+                                    {
+                                        disablePublishDate === true ?
+                                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                                        :
+                                            null
+                                    }
                                 </div>
                             </div>
 
