@@ -90,10 +90,10 @@ const DashbardPublikasi = () => {
     // const [ colors, setColors ] = useState (["#215480", "#4299E1"])
     // const [ totalPublish, setTotalPublish ] = useState ()
 
-    const [ dataDashboardBerita, setDataDashboardBerita ] = useState (dashboard_publikasi.berita)
-    const [ dataDashboardArtikel, setDataDashboardArtikel ] = useState (dashboard_publikasi.artikel)
-    const [ dataDashboardGallery, setDataDashboardGallery ] = useState (dashboard_publikasi.gallery)
-    const [ dataDashboardVideo, setDataDashboardVideo ] = useState (dashboard_publikasi.video)
+    const [ dataDashboardBerita, setDataDashboardBerita ] = useState (dashboard_publikasi.berita ? dashboard_publikasi.berita : null)
+    const [ dataDashboardArtikel, setDataDashboardArtikel ] = useState (dashboard_publikasi.artikel ? dashboard_publikasi.artikel : null)
+    const [ dataDashboardGallery, setDataDashboardGallery ] = useState (dashboard_publikasi.gallery ? dashboard_publikasi.gallery: null)
+    const [ dataDashboardVideo, setDataDashboardVideo ] = useState (dashboard_publikasi.video ? dashboard_publikasi.video : null)
 
     
 
@@ -101,7 +101,7 @@ const DashbardPublikasi = () => {
         <>
             <PageWrapper>
                 {console.log (dashboard_publikasi)}
-                {console.log (dataDashboardGallery)}
+                {/* {console.log (dataDashboardGallery)} */}
                 <div className="row">
                     <div className="col-lg-12 col-xxl-12 mt-4">
                         <div className="card card-custom bg-light-primary">

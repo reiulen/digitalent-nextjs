@@ -126,14 +126,17 @@ const EditArtikel = () => {
   };
 
   const handleChangePublish = (e) => {
-    setPublish(e.target.checked);
+    // setPublish(e.target.checked);
     setDisablePublishDate(!disablePublishDate)
     // console.log (e.target.checked)
 
     if (e.target.checked === false){
-      setPublishDate (null)
+        setPublishDate (null)
+        setPublish (0)
+    } else {
+        setPublish (1)
     }
-  };
+};
 
   const handlePublishDate = (date) => {
     // let result = moment(date).format("YYYY-MM-DD")
