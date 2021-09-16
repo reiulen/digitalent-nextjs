@@ -788,7 +788,7 @@ const Faq = () => {
                                             </select>
                                         </div>
                                         <div className="col-8 my-auto">
-                                            <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {faq.total}</p>
+                                            <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {faq.total}</p>
                                         </div>
                                     </div>
                                 </div>

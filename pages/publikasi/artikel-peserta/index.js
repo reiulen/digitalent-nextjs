@@ -23,7 +23,7 @@ export default function ArtikelPesertaPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Artikel Peserta'>
+                <Layout title='Artikel Peserta - Publikasi'>
                     <ArtikelPeserta />
                 </Layout>
             </div>

@@ -251,7 +251,7 @@ const TambahImagetron = () => {
                         <input 
                             type="text" 
                             className="form-control" 
-                            placeholder="Isi Judul disini" 
+                            placeholder="Masukkan Judul Disini" 
                             value={judul} 
                             onChange={(e) => setJudulImagetron(e.target.value)} 
                             onBlur={() => simpleValidator.current.showMessageFor("judul")
