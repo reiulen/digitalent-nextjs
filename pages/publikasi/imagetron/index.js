@@ -23,7 +23,7 @@ export default function ImagetronPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Imagetron'>
+                <Layout title='Imagetron - Publikasi'>
                     <Imagetron />
                 </Layout>
             </div>

@@ -23,7 +23,7 @@ export default function DashboardPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Dashboard Publikasi'>
+                <Layout title='Dashboard Publikasi - Publikasi'>
                     <DashboardPublikasi />
                 </Layout>
             </div>

@@ -374,7 +374,7 @@ const EditVideo = () => {
                             : ''
                     }
                     <div className="card card-custom card-stretch gutter-b">
-                        <div className="card-header border-0">
+                        <div className="card-header">
                             <h3 className="card-title font-weight-bolder text-dark">Ubah Video</h3>
                         </div>
                         <div className="card-body">
