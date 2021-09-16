@@ -451,7 +451,7 @@ const TambahArtikel = () => {
                       }}
                     >
                       <option selected disabled value="">
-                        -- Kategori --
+                        -- Artikel --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
                         <option value="">Data kosong</option>
