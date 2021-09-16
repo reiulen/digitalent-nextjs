@@ -136,7 +136,7 @@ const EditArtikel = () => {
     } else {
         setPublish (1)
     }
-};
+  };
 
   const handlePublishDate = (date) => {
     // let result = moment(date).format("YYYY-MM-DD")
@@ -327,7 +327,7 @@ const EditArtikel = () => {
         <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
           {loading ? <LoadingPage loading={loading} /> : ""}
           <div className="card card-custom card-stretch gutter-b">
-            <div className="card-header border-0">
+            <div className="card-header">
               <h3 className="card-title font-weight-bolder text-dark">
                 Ubah Artikel
               </h3>

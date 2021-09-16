@@ -24,7 +24,7 @@ export default function ArtikelPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Artikel'>
+                <Layout title='Artikel - Publikasi'>
                     <Artikel />
                 </Layout>
             </div>

@@ -23,7 +23,7 @@ export default function BeritaPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Berita'>
+                <Layout title='Berita - Publikasi'>
                     <Berita />
                 </Layout>
             </div>

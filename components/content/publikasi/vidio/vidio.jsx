@@ -397,6 +397,7 @@ const Vidio = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/video/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
                                     Tambah Video
                                 </a>
                             </Link>

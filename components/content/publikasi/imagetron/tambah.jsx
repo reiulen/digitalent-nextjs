@@ -71,6 +71,7 @@ const TambahImagetron = () => {
     const [publish, setPublish] = useState(false)
     const [users_id, setUserId] = useState(3)
     const [publishDate, setPublishDate] = useState(null);
+    const [disablePublishDate, setDisablePublishDate] = useState(true)
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -107,8 +108,18 @@ const TambahImagetron = () => {
     
     const handleChangePublish = (e) => {
         setPublish(e.target.checked);
+        setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
     };
+
+    const handlePublishDate = (date) => {
+      // let result = moment(date).format("YYYY-MM-DD")
+      if (disablePublishDate === false) {
+        // setPublishDate(result)
+        setPublishDate(date)
+        // console.log (result)
+      }
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -131,11 +142,12 @@ const TambahImagetron = () => {
                 url_link,
                 gambar,
                 publish,
-                users_id
+                users_id,
+                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
             }
     
             dispatch(newImagetron(data))
-            console.log(data)
+            // console.log(data)
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
@@ -180,7 +192,7 @@ const TambahImagetron = () => {
             } */}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
+                    <div className="card-header">
                         <h3 className="card-title font-weight-bolder text-dark">Tambah Imagetron</h3>
                     </div>
                     <div className="card-body">
@@ -205,7 +217,7 @@ const TambahImagetron = () => {
                       }}
                     >
                       <option selected disabled value="">
-                        -- Kategori --
+                        -- Imagetron --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
                         <option value="">Data kosong</option>
@@ -317,7 +329,7 @@ const TambahImagetron = () => {
 
                   <div className="mt-3 col-sm-3 text-muted">
                     <p>
-                      Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                      Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                     </p>
                       
                   </div>
@@ -397,7 +409,8 @@ const TambahImagetron = () => {
                       <DatePicker
                         className="form-search-date form-control-sm form-control"
                         selected={publishDate}
-                        onChange={(date) => setPublishDate(date)}
+                        onChange={(date) => handlePublishDate(date)}
+                        // onChange={(date) => setPublishDate(date)}
                         selectsStart
                         startDate={publishDate}
                         // endDate={endDate}
@@ -405,9 +418,16 @@ const TambahImagetron = () => {
                         placeholderText="Silahkan Isi Tanggal Publish"
                         wrapperClassName="col-12 col-lg-12 col-xl-12"
                         minDate={moment().toDate()}
-                      // minDate={addDays(new Date(), 20)}
+                        // minDate={addDays(new Date(), 20)}
+                        disabled = {disablePublishDate === true || disablePublishDate === null}
                       />
                     </div>
+                    {
+                      disablePublishDate === true ?
+                        <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                      :
+                        null
+                    }
                   </div>
                 </div>
 
