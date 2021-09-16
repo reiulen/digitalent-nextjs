@@ -252,7 +252,7 @@ const TambahBerita = () => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_berita")}/>
+                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_berita")}/>
                                     {simpleValidator.current.message(
                                         "judul_berita",
                                         judul_berita,

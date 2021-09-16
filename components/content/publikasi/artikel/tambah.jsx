@@ -243,7 +243,7 @@ const TambahArtikel = () => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Isi Judul disini"
+                      placeholder="Masukkan Judul Disini"
                       value={judul_artikel}
                       onChange={(e) => setJudulArtikel(e.target.value)}
                       onBlur={() =>

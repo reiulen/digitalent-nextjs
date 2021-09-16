@@ -778,7 +778,7 @@ const Berita = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {berita.total}</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {berita.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''
