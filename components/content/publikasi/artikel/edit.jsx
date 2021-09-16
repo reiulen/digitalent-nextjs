@@ -474,7 +474,7 @@ const EditArtikel = () => {
 
                   <div className="mt-3 col-sm-3 text-muted">
                     <p>
-                      Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                      Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                     </p>
                       
                   </div>
@@ -530,7 +530,7 @@ const EditArtikel = () => {
                   <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
                   <div className="col-sm-12">
                       <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
-                          <option selected disabled value=''>-- Kategori --</option>
+                          <option selected disabled value=''>-- Artikel --</option>
                           {!kategori || (kategori && kategori.length === 0) ? (
                               <option value="">Data kosong</option>
                           ) : (
