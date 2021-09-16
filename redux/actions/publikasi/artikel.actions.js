@@ -101,6 +101,8 @@ export const newArtikel = (artikelData) => async (dispatch) => {
       type: NEW_ARTIKEL_SUCCESS,
       payload: data,
     });
+
+    // console.log(artikelData)
   } catch (error) {
     dispatch({
       type: NEW_ARTIKEL_FAIL,
