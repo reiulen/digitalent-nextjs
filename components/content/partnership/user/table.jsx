@@ -16,7 +16,6 @@ import CardPage from "../../../CardPage";
 import ButtonAction from "../../../ButtonAction";
 
 import IconCalender from "../../../assets/icon/Calender";
-import IconArrow from "../../../assets/icon/Arrow";
 import axios from "axios";
 
 import {
@@ -24,6 +23,17 @@ import {
   setPage,
 } from "../../../../redux/actions/partnership/user/cooperation.actions";
 import LoadingTable from '../../../LoadingTable'
+
+// icon
+import IconSearch from "../../../assets/icon/Search";
+import IconReview from "../../../assets/icon/Review";
+import IconArrow from "../../../assets/icon/Arrow";
+import IconAdd from "../../../assets/icon/Add";
+import IconClose from "../../../assets/icon/Close";
+import IconFilter from "../../../assets/icon/Filter";
+import IconEye from "../../../assets/icon/Eye";
+import IconPencil from "../../../assets/icon/Pencil";
+import IconDelete from "../../../assets/icon/Delete";
 
 const Table = () => {
   // const exportCSV = {
@@ -35,20 +45,21 @@ const Table = () => {
   const router = useRouter();
 
   const allCooperationUser = useSelector((state) => state.allCooperationUser);
+  console.log("allCooperationUser",allCooperationUser)
  
 
   useEffect(() => {
-    dispatch(reqCooperationUser());
+    // dispatch(reqCooperationUser());
   }, [dispatch]);
 
   return (
     <PageWrapper>
-      <div className="col-lg-10 col-md-10">
+      <div className="col-lg-12 col-md-12">
         <div className="row">
           <CardPage
             background="bg-light-success"
             icon="user-blue.svg"
-            color="#74BBB7"
+            color="#ffffff"
             value="12"
             titleValue="Kerjasama"
             title="Kerjasama Aktif"
@@ -56,7 +67,7 @@ const Table = () => {
           <CardPage
             background="bg-light-warning"
             icon="user-orange.svg"
-            color="#634100"
+            color="#ffffff"
             value="2"
             titleValue="Kerjasama"
             title="Pengajuan Kerjasama"
@@ -64,7 +75,7 @@ const Table = () => {
           <CardPage
             background="bg-light-danger"
             icon="info-danger.svg"
-            color="#F65464"
+            color="#ffffff"
             value="32"
             titleValue="Kerjasama"
             title="Kerjasama akan Habis"
@@ -74,187 +85,264 @@ const Table = () => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
-              Manajemen Kerjasama
-            </h3>
-            <div className="card-toolbar">
-              <Link href="/partnership/user/submit-kerjasama">
-                <a className="btn btn-primary px-6 font-weight-bold btn-block ">
-                  Tambah Kerjasama Baru
-                </a>
-              </Link>
-            </div>
+
+          <div className="d-flex flex-wrap align-items-center justify-content-between p-8">
+            <h1
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
+              Kerjasama
+            </h1>
+            <Link href="/partnership/kerjasama/tambah">
+              <a className="btn btn-rounded-full bg-blue-primary text-white">
+                <IconAdd className="mr-3" width="18" height="16" />
+                Tambah kerjasama
+              </a>
+            </Link>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
+
               <div className="row align-items-center">
-                <div className="col-lg-10 col-xl-10">
-                  <div className="input-icon">
-                    <input
-                      style={{ background: "#F3F6F9", border: "none" }}
-                      type="text"
-                      className="form-control"
-                      placeholder="Search..."
-                      id="kt_datatable_search_query"
-                    />
-                    <span>
-                      <i className="flaticon2-search-1 text-muted"></i>
-                    </span>
-                  </div>
-                </div>
-                <div className="col-lg-2 col-xl-2">
-                  <button
-                    type="button"
-                    className="btn btn-light-primary btn-block"
-                  >
-                    Cari
-                  </button>
+                <div className="col-lg-12 col-xl-12">
+                  <form>
+                    <div className="row">
+                      <div className="col-12 col-sm-6">
+                        <div className="position-relative overflow-hidden w-100 mt-5">
+                          <IconSearch
+                            style={{ left: "10" }}
+                            className="left-center-absolute"
+                          />
+                          <input
+                            id="kt_datatable_search_query"
+                            type="text"
+                            className="form-control pl-10"
+                            placeholder="Ketik disini untuk Pencarian..."
+                            // onChange={(e) =>
+                            //   handleChangeValueSearch(e.target.value)
+                            // }
+                          />
+                          <button
+                            type="submit"
+                            className="btn bg-blue-primary text-white right-center-absolute"
+                            style={{
+                              borderTopLeftRadius: "0",
+                              borderBottomLeftRadius: "0",
+                            }}
+                          >
+                            Cari
+                          </button>
+                        </div>
+                      </div>
+                      <div className="col-12 col-sm-6">
+                        <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
+                          {/* sorotir by modal */}
+                          <button
+                            className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                            data-toggle="modal"
+                            data-target="#exampleModalCenter"
+                            style={{ color: "#464646", minWidth: "230px" }}
+                          >
+                            <div className="d-flex align-items-center">
+                              <IconFilter className="mr-3" />
+                              Pilih Filter
+                            </div>
+                            <IconArrow fill="#E4E6EF" width="11" height="11" />
+                          </button>
+                          {/* modal */}
+                          <form
+                            className="form text-left"
+                          >
+                            <div
+                              className="modal fade"
+                              id="exampleModalCenter"
+                              tabIndex="-1"
+                              role="dialog"
+                              aria-labelledby="exampleModalCenterTitle"
+                              aria-hidden="true"
+                            >
+                              <div
+                                className="modal-dialog modal-dialog-centered"
+                                role="document"
+                              >
+                                <div className="modal-content">
+                                  <div className="modal-header">
+                                    <h5
+                                      className="modal-title"
+                                      id="exampleModalLongTitle"
+                                    >
+                                      Filter
+                                    </h5>
+                                    <button
+                                      type="button"
+                                      className="close"
+                                      data-dismiss="modal"
+                                      aria-label="Close"
+                                    >
+                                      <IconClose />
+                                    </button>
+                                  </div>
+
+                                  <div
+                                    className="modal-body text-left"
+                                    style={{ height: "400px" }}
+                                  >
+                                    <div className="fv-row mb-10">
+                                      <label className="required fw-bold fs-6 mb-2">
+                                        Mitra
+                                      </label>
+
+                                      {/* <Select
+                                        ref={(ref) => (selectRefMitra = ref)}
+                                        className="basic-single"
+                                        classNamePrefix="select"
+                                        placeholder="Semua"
+                                        defaultValue={allMK.stateListMitra[0]}
+                                        isDisabled={false}
+                                        isLoading={false}
+                                        isClearable={false}
+                                        isRtl={false}
+                                        isSearchable={true}
+                                        name="color"
+                                        onChange={(e) => setValueMitra(e?.name )}
+                                        options={allMK.stateListMitra}
+                                      /> */}
+                                    </div>
+                                    <div className="fv-row mb-10">
+                                      <label className="required fw-bold fs-6 mb-2">
+                                        Kategori Kerjasama
+                                      </label>
+                                      {/* <Select
+                                        ref={(ref) => (selectRefKerjasama = ref)}
+                                        className="basic-single"
+                                        classNamePrefix="select"
+                                        placeholder="Semua"
+                                        defaultValue={allMK.stateListKerjaSama[0]}
+                                        isDisabled={false}
+                                        isLoading={false}
+                                        isClearable={false}
+                                        isRtl={false}
+                                        isSearchable={true}
+                                        name="color"
+                                        onChange={(e) => setValueKerjaSama(e?.cooperation_categories )}
+                                        options={allMK.stateListKerjaSama}
+                                      /> */}
+                                    </div>
+                                    <div className="fv-row mb-10">
+                                      <label className="required fw-bold fs-6 mb-2">
+                                        Status
+                                      </label>
+                                      {/* <Select
+                                        ref={(ref) => (selectRefStatus = ref)}
+                                        className="basic-single"
+                                        classNamePrefix="select"
+                                        placeholder="Semua"
+                                        defaultValue={allMK.stateListStatus[0]}
+                                        isDisabled={false}
+                                        isLoading={false}
+                                        isClearable={false}
+                                        isRtl={false}
+                                        isSearchable={true}
+                                        name="color"
+                                        onChange={(e) => setValueStatus(e?.name_en )}
+                                        options={allMK.stateListStatus}
+                                      /> */}
+                                    </div>
+                                  </div>
+                                  <div className="modal-footer">
+                                    <div className="d-flex justify-content-end align-items-center">
+                                      <button
+                                        className="btn btn-white"
+                                        type="button"
+                                      data-dismiss="modal"
+                                      aria-label="Close"
+                                        // onClick={() => resetValueSort()}
+                                      >
+                                        Reset
+                                      </button>
+                                      <button
+                                        className="btn btn-primary ml-4"
+                                        type="button"
+                                        // onClick={(e) =>
+                                        //   handleSubmitSearchMany(e)
+                                        // }
+                                      >
+                                        Terapkan
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </form>
+                          {/* end modal */}
+
+                          {/* btn export */}
+                          <button
+                            className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
+                            type="button"
+                            // onClick={() => dispatch(exportFileCSV())}
+                          >
+                            Export .xlxs
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
 
-              <div className="row align-items-right">
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 d-flex flex-column justify-content-start">
-                  <p>Filter by Kerjasama</p>
-                  <input
-                    type="date"
-                    placeholder="Dari Tanggal"
-                    className="form-control"
-                  />
-                  <p>Silahkan Pilih Tanggal Dari</p>
-                </div>
-                <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5 d-flex flex-column justify-content-start">
-                  <p>Filter by Kerjasama</p>
-                  <input
-                    type="date"
-                    placeholder="Sampai Tanggal"
-                    className="form-control"
-                  />
-                  <p>Silahkan Pilih Tanggal Dari</p>
-                </div>
-
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 p-0 mx-2 py-1 d-flex align-items-center">
-                  <a
-                    href="#"
-                    className="btn btn-sm btn-light-primary px-6 font-weight-bold btn-block"
-                  >
-                    Cari
-                  </a>
-                </div>
-                <div className="col-lg-2 col-xl-2 mt-5 mt-lg-5 ml-auto d-flex align-items-center">
-                  <a
-                    href="#"
-                    className="btn btn-sm btn-primary px-6 font-weight-bold btn-block"
-                    // style={exportCSV}
-                    
-                  >
-                    Export .csv
-                  </a>
-                </div>
-              </div>
             </div>
 
             <div className="table-page mt-5">
+
+              
               <div className="table-responsive">
-                {allCooperationUser.cooperationMitra.length === 0 ? (
-                  <LoadingTable />
-                ) : (
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
-                        <th className="text-center">No</th>
-                        <th className="text-center align-middle">Mitra</th>
-                        <th className="text-center align-middle">
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">Mitra</th>
+                        <th className="text-left align-middle">
                           Judul Kerjasama
                         </th>
-                        <th className="text-center align-middle">Periode</th>
-                        <th className="text-center align-middle">
-                          Tanggal Tanda Tangan
+                        <th className="text-left align-middle">Periode</th>
+                        <th className="text-left align-middle">
+                          Tanggal Awal Kerjasama
                         </th>
-                        <th className="text-center align-middle">
-                          Tanggal Selesai
+                        <th className="text-left align-middle">
+                          Tanggal Selesai Kerjasama
                         </th>
-                        <th className="text-center align-middle">Status</th>
-                        <th className="text-center align-middle">Action</th>
+                        <th className="text-left align-middle">Status</th>
+                        <th className="text-left align-middle">Aksi</th>
                       </tr>
                     </thead>
+
                     <tbody>
-                      {allCooperationUser.cooperationMitra.statusLoad ===
-                      "error"
-                        ? "data error"
-                        : allCooperationUser.cooperationMitra.data.list_cooperations.map(
-                            (items, index) => {
-                              return (
-                                <tr key={index}>
-                                  <td className="text-center align-middle">
-                                    <button
-                                      className="btn"
-                                      style={{
-                                        background: "#F3F6F9",
-                                        borderRadius: "6px",
-                                      }}
-                                    >
-                                      {allCooperationUser.page === 1
-                                        ? index + 1
-                                        : (allCooperationUser.page - 1) *
-                                            allCooperationUser.limit +
-                                          (index + 1)}
-                                    </button>
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    DQ Lab
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {items.title}
-                                    <br />
-                                    <small style={{ color: "grey" }}>
-                                      {items.cooperation_category === null
-                                        ? "tidak ada kategori kerjasama"
-                                        : items.cooperation_category
-                                            .cooperation_categories}
-                                    </small>
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {items.period} {items.period_unit}
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {items.signing_date}
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {items.period_date_end}
-                                  </td>
-                                  <td className="align-middle text-center">
-                                    {/* <select name="" id="" className="form-control">
-                          <option value="2">Aktif</option>
-                        </select> */}
-                                    {items.status.name}
-                                  </td>
-                                  <td
-                                    className="align-middle text-center "
-                                    // style={{ border: "1px solid black" }}
-                                  >
-                                    <ButtonAction icon="trash.svg" />
-                                    <ButtonAction icon="trash.svg" />
-                                  </td>
-                                </tr>
-                              );
-                            }
-                          )}
-                    </tbody>
+
+                      <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                      </tr>
+                      
+                      
+                      
+                        </tbody>
                   </table>
-                )}
               </div>
               <div className="row">
                 <div className="table-pagination">
-                  <Pagination
-                    activePage={allCooperationUser.page}
-                    itemsCountPerPage={
-                      allCooperationUser.cooperationMitra?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allCooperationUser.cooperationMitra?.data?.total
-                    }
+                  {/* <Pagination
+                    activePage={allMK.page}
+                    itemsCountPerPage={allMK?.m_cooporation?.data?.perPage}
+                    totalItemsCount={allMK?.m_cooporation?.data?.total}
                     pageRangeDisplayed={3}
                     onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
@@ -263,10 +351,10 @@ const Table = () => {
                     lastPageText={">>"}
                     itemClass="page-item"
                     linkClass="page-link"
-                  />
+                  /> */}
                 </div>
                 <div className="table-total ml-auto">
-                  <div className="row">
+                  <div className="row mt-4">
                     <div className="col-4 mr-0 p-0">
                       <select
                         className="form-control"
@@ -277,27 +365,41 @@ const Table = () => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        // onChange={(e) =>
+                        //   dispatch(limitCooporation(e.target.value))
+                        // }
                       >
-                        <option>5</option>
-                        <option>10</option>
-                        <option>30</option>
-                        <option>40</option>
-                        <option>50</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
                       </select>
                     </div>
                     <div className="col-8 my-auto">
                       <p
-                        className="align-middle mt-3 ml-3"
+                        className="align-middle mt-3"
                         style={{ color: "#B5B5C3" }}
                       >
                         Total Data{" "}
-                        {allCooperationUser.cooperationMitra?.data?.total}
+                        {/* {allMK.m_cooporation.data &&
+                          allMK.m_cooporation.data.total} */}
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            
+            
+            
+
+
+
+              
+              
+              
+              
+                 </div>
           </div>
         </div>
       </div>

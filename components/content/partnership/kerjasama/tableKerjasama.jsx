@@ -745,12 +745,12 @@ const Table = () => {
                                         </option>
                                         <option value="2">Tidak Aktif</option>
                                       </select>
-                                      <IconArrow
+                                      {/* <IconArrow
                                         className="right-center-absolute"
                                         style={{ right: "10px" }}
                                         width="7"
                                         height="7"
-                                      />
+                                      /> */}
                                     </div>) : (items.status.name === "aktif") && moment(items.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ? (
                                     <div className="position-relative w-max-content">
                                       <select

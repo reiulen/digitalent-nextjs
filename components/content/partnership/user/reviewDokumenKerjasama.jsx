@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import Style from "../../../../styles/progressbar.module.css";
 
-function ReviewKerjasama() {
+function ReviewDokumenKerjasama() {
   const headText = {
     "font-weight": "bold",
     "line-height": "124.5%",
@@ -27,7 +27,7 @@ function ReviewKerjasama() {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title fz-20 fw-500 text-dark">
-              Review Kerjasama
+              Review Dokumen Kerjasama
             </h3>
           </div>
           <div className="card-body pb-28">
@@ -42,24 +42,24 @@ function ReviewKerjasama() {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress">Review Kerjasama</span>
                   </div>
                 </div>
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress">Pembahasan</span>
                   </div>
                 </div>
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress">
                       Submit Dokumen Kerjasama
                     </span>
@@ -68,8 +68,8 @@ function ReviewKerjasama() {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress">
                       Review Dokumen Kerjasama
                     </span>
@@ -97,23 +97,23 @@ function ReviewKerjasama() {
               </div>
               <div className="col-12 col-sm-6">
                 <div className="d-flex flex-column align-items-start justify-content-center h-100">
-                  <h1 className="fz-40 fw-700" style={{color:"#6C6C6C"}}>Terima Kasih</h1>
-                  <p className="mt-5 fz-16">Kamu telah berhasil melakukan pengajuan kerjasama dengan kami</p>
-                  <p className="fz-16">Dibutuhkan beberapa waktu untuk melakukan proses review pada pengajuanmu.</p>
+                  <h1 className="fz-40 fw-700" style={{color:"#6C6C6C"}}>Dokumen Kerjasama Anda Telah Diterima</h1>
+                  <p className="mt-5 fz-16">Terima Kasih telah Melakukan Pengajuan Kerjasama Dengan Kami.</p>
+                  <p className="fz-16">Mohon tunggu beberapa saat untuk proses review berkas yang anda submit</p>
                 </div>
 
                 <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/partnership/kerjasama">
+                  {/* <Link href="/partnership/kerjasama">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
-                  </Link>
+                  </Link> */}
                   <button
                     type="submit"
-                    className="btn btn-sm btn-rounded-full bg-red-primary text-white "
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                   >
-                    Batalkan Kerjasama
+                    Selesai
                   </button>
                 </div>
               </div>
@@ -131,4 +131,4 @@ function ReviewKerjasama() {
   );
 }
 
-export default ReviewKerjasama;
+export default ReviewDokumenKerjasama;
