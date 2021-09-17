@@ -49,6 +49,7 @@ const Artikel = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
+  const [disableEndDate, setDisableEndDate] = useState (true)
 
   let loading = false;
   let { page = 1, keyword, success } = router.query;
@@ -271,7 +272,22 @@ const Artikel = () => {
   const resetValueSort = () => {
     setStartDate(null)
     setEndDate(null)
+    setDisableEndDate (true)
   }
+
+  const handleStartDate = (date) => {
+    setStartDate (date)
+    setDisableEndDate (false)
+  }
+
+  // const handleEndDate = (date) => {
+  //   if (startDate === null) {
+  //     setDisableEndDate (true)
+      
+  //   } else {
+  //     setEndDate (date)
+  //   }
+  // }
 
   return (
     <PageWrapper>
@@ -493,14 +509,14 @@ const Artikel = () => {
                                   <DatePicker
                                     className="form-search-date form-control-sm form-control"
                                     selected={startDate}
-                                    onChange={(date) => setStartDate(date)}
+                                    onChange={(date) => handleStartDate(date)}
                                     selectsStart
                                     startDate={startDate}
                                     endDate={endDate}
                                     dateFormat="dd/MM/yyyy"
                                     placeholderText="Silahkan Isi Tanggal Dari"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                    minDate={moment().toDate()}
+                                    // minDate={moment().toDate()}
                                   // minDate={addDays(new Date(), 20)}
                                   />
                                 </div>
@@ -520,14 +536,23 @@ const Artikel = () => {
                                     startDate={startDate}
                                     endDate={endDate}
                                     dateFormat="dd/MM/yyyy"
-                                    // minDate={startDate}
-                                    minDate={moment().toDate()}
+                                    minDate={startDate}
+                                    // minDate={moment().toDate()}
                                     maxDate={addDays(startDate, 20)}
                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                    disabled = {disableEndDate === true || disableEndDate === null}
                                   // minDate={addDays(new Date(), 20)}
                                   />
                                 </div>
+                                {
+                                  disableEndDate === true || disableEndDate === null ?
+                                    <small className="text-muted">
+                                      Mohon isi Tanggal Dari terlebih dahulu
+                                    </small>
+                                  :
+                                    null
+                                }
                               </div>
                             </div>
                           <div className="modal-footer">
