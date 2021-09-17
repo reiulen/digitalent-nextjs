@@ -8,8 +8,6 @@ import { addDays } from "date-fns";
 import Style from "../../../../styles/progressbar.module.css";
 
 const reviewDokKerjasama = () => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">

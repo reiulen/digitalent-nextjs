@@ -177,7 +177,7 @@ const DetailDokumenKerjasama = () => {
     dispatch(fetchListCooperationSelect());
     dispatch(fetchListCooperationSelectById(cooperationC_id));
     setDate(moment(new Date()).format("YYYY-MM-DD"));
-  }, [cooperationC_id]);
+  }, [dispatch,cooperationC_id]);
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
