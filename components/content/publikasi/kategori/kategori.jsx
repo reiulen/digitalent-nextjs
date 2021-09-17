@@ -290,6 +290,7 @@ const Kategori = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/kategori/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
                                     Tambah Kategori
                                 </a>
                             </Link>
@@ -599,7 +600,7 @@ const Kategori = () => {
                                         } */}
                                         <div className="table-total ml-auto">
                                             <div className="row">
-                                                <div className="col-4 mr-0 p-0">
+                                                <div className="col-4 mr-0 p-0 mt-3">
                                                     <select
                                                         className="form-control"
                                                         id="exampleFormControlSelect2"
@@ -619,7 +620,7 @@ const Kategori = () => {
                                                     </select>
                                                 </div>
                                                 <div className="col-8 my-auto">
-                                                    <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {paginateKategori.total}</p>
+                                                    <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {paginateKategori.total}</p>
                                                 </div>
                                             </div>
                                         </div>

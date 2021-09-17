@@ -378,6 +378,7 @@ const Berita = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/berita/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
                                     Tambah Berita
                                 </a>
                                 {/* <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
@@ -777,7 +778,7 @@ const Berita = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {berita.total}</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {berita.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''

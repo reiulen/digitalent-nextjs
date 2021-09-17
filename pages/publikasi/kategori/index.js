@@ -23,7 +23,7 @@ export default function KategoriPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Kategori'>
+                <Layout title='Kategori - Publikasi'>
                     <Kategori />
                 </Layout>
             </div>

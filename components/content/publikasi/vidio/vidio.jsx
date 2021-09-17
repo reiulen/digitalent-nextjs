@@ -39,6 +39,7 @@ const Vidio = () => {
     const [url_video, setUrlVideo] = useState("")
     const [video_playing, setVideoPlaying] = useState(false)
     const [publishValue, setPublishValue] = useState(null)
+    const [idVideo, setIdVideo] = useState (null)
 
     let loading = false
     let { page = 1, keyword, success } = router.query
@@ -253,15 +254,26 @@ const Vidio = () => {
     }
 
     const handlePreview = (url, id) => {
+        // const data = {
+        //     id,
+        //     _method: "PUT",
+        //     isplay: "1"
+        // }
+
+        // dispatch(playVideo(data))
+        setIdVideo(id)
+        setVideoPlaying(true)
+        setUrlVideo(url) 
+    }
+
+    const handleIsPlayed =() => {
         const data = {
-            id,
+            id: idVideo,
             _method: "PUT",
             isplay: "1"
         }
 
         dispatch(playVideo(data))
-        setVideoPlaying(true)
-        setUrlVideo(url) 
     }
 
     const resetValueSort = () => {
@@ -385,6 +397,7 @@ const Vidio = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/video/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
                                     Tambah Video
                                 </a>
                             </Link>
@@ -750,10 +763,6 @@ const Vidio = () => {
                                 }
                             </div>
 
-                            {
-                                console.log (video)
-                            }
-
                             <div className="row">
                                 {video && video.perPage < video.total &&
                                     <div className="table-pagination">
@@ -790,7 +799,7 @@ const Vidio = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {video.total}</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {video.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''
@@ -812,7 +821,7 @@ const Vidio = () => {
                             </button>
                         </div>
                         <div className="modal-body d-flex justify-content-center" style={{ height: '400px' }}>
-                            <ReactPlayer url={url_video} controls width="700px" playing={video_playing}/>
+                            <ReactPlayer url={url_video} controls width="700px" playing={video_playing} onPlay={handleIsPlayed}/>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => setVideoPlaying(false)}>Tutup</button>

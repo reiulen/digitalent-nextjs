@@ -23,7 +23,7 @@ export default function FaqPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='FAQ'>
+                <Layout title='FAQ - Publikasi'>
                     <FAQ />
                 </Layout>
             </div>

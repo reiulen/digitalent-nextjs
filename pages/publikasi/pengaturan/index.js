@@ -17,7 +17,7 @@ export default function PengaturanPublikasiPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Pengaturan Publikasi'>
+                <Layout title='Pengaturan - Publikasi'>
                     <PengaturanPublikasi />
                 </Layout>
             </div>

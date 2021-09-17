@@ -9,7 +9,7 @@ import { wrapper } from "../../../redux/store";
 import LoadingPage from "../../../components/LoadingPage";
 
 const EditGaleri = dynamic(
-  () => import("../../../components/content/publikasi/artikel/edit"),
+  () => import("../../../components/content/publikasi/galeri/edit"),
   { 
       // suspense: true,
       // loading: () => <LoadingSkeleton />, 

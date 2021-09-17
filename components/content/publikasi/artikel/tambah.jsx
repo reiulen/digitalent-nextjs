@@ -74,6 +74,8 @@ const TambahArtikel = () => {
   const [tag, setTag] = useState([]);
   const [publish, setPublish] = useState(false);
   const [publishDate, setPublishDate] = useState(null);
+  const [disablePublishDate, setDisablePublishDate] = useState(true)
+  // const [disablePublishDate, setDisablePublishDate] = useState(null)
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -109,9 +111,26 @@ const TambahArtikel = () => {
   };
 
   const handleChangePublish = (e) => {
-    setPublish(e.target.checked);
+    // setPublish(e.target.checked);
+    setDisablePublishDate(!disablePublishDate)
     // console.log (e.target.checked)
+
+    if (e.target.checked === false){
+        setPublishDate (null)
+        setPublish (0)
+    } else {
+        setPublish (1)
+    }
   };
+
+  const handlePublishDate = (date) => {
+    // let result = moment(date).format("YYYY-MM-DD")
+    if (disablePublishDate === false) {
+      // setPublishDate(result)
+      setPublishDate(date)
+      // console.log (result)
+    }
+  }
 
   const onSubmit = (e) => {
 
@@ -143,6 +162,7 @@ const TambahArtikel = () => {
         users_id,
         tag,
         publish,
+        tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
       };
 
       Swal.fire({
@@ -212,7 +232,7 @@ const TambahArtikel = () => {
         <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
           {loading ? <LoadingPage loading={loading} /> : ""}
           <div className="card card-custom card-stretch gutter-b">
-            <div className="card-header border-0">
+            <div className="card-header">
               <h3 className="card-title font-weight-bolder text-dark">
                 Tambah Artikel
               </h3>
@@ -230,7 +250,7 @@ const TambahArtikel = () => {
                     <input
                       type="text"
                       className="form-control"
-                      placeholder="Isi Judul disini"
+                      placeholder="Masukkan Judul Disini"
                       value={judul_artikel}
                       onChange={(e) => setJudulArtikel(e.target.value)}
                       onBlur={() =>
@@ -273,6 +293,8 @@ const TambahArtikel = () => {
                               "isi_artikel"
                             )
                           }
+                          config ={{placeholder: "Tulis Deskripsi"}}
+
                         />
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -351,7 +373,7 @@ const TambahArtikel = () => {
 
                   <div className="mt-3 col-sm-3 text-muted">
                     <p>
-                      Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                      Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
                     </p>
                       
                   </div>
@@ -436,7 +458,7 @@ const TambahArtikel = () => {
                       }}
                     >
                       <option selected disabled value="">
-                        -- Kategori --
+                        -- Artikel --
                       </option>
                       {!kategori || (kategori && kategori.length === 0) ? (
                         <option value="">Data kosong</option>
@@ -519,7 +541,8 @@ const TambahArtikel = () => {
                       <DatePicker
                         className="form-search-date form-control-sm form-control"
                         selected={publishDate}
-                        onChange={(date) => setPublishDate(date)}
+                        onChange={(date) => handlePublishDate(date)}
+                        // onChange={(date) => setPublishDate(date)}
                         selectsStart
                         startDate={publishDate}
                         // endDate={endDate}
@@ -528,8 +551,15 @@ const TambahArtikel = () => {
                         wrapperClassName="col-12 col-lg-12 col-xl-12"
                         minDate={moment().toDate()}
                       // minDate={addDays(new Date(), 20)}
+                        disabled = {disablePublishDate === true || disablePublishDate === null}
                       />
                     </div>
+                    {
+                      disablePublishDate === true ?
+                        <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                      :
+                        null
+                    }
                   </div>
                 </div>
 

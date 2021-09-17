@@ -90,10 +90,10 @@ const DashbardPublikasi = () => {
     // const [ colors, setColors ] = useState (["#215480", "#4299E1"])
     // const [ totalPublish, setTotalPublish ] = useState ()
 
-    const [ dataDashboardBerita, setDataDashboardBerita ] = useState (dashboard_publikasi.berita)
-    const [ dataDashboardArtikel, setDataDashboardArtikel ] = useState (dashboard_publikasi.artikel)
-    const [ dataDashboardGallery, setDataDashboardGallery ] = useState (dashboard_publikasi.gallery)
-    const [ dataDashboardVideo, setDataDashboardVideo ] = useState (dashboard_publikasi.video)
+    const [ dataDashboardBerita, setDataDashboardBerita ] = useState (dashboard_publikasi.berita ? dashboard_publikasi.berita : null)
+    const [ dataDashboardArtikel, setDataDashboardArtikel ] = useState (dashboard_publikasi.artikel ? dashboard_publikasi.artikel : null)
+    const [ dataDashboardGallery, setDataDashboardGallery ] = useState (dashboard_publikasi.gallery ? dashboard_publikasi.gallery: null)
+    const [ dataDashboardVideo, setDataDashboardVideo ] = useState (dashboard_publikasi.video ? dashboard_publikasi.video : null)
 
     
 
@@ -101,6 +101,7 @@ const DashbardPublikasi = () => {
         <>
             <PageWrapper>
                 {console.log (dashboard_publikasi)}
+                {/* {console.log (dataDashboardGallery)} */}
                 <div className="row">
                     <div className="col-lg-12 col-xxl-12 mt-4">
                         <div className="card card-custom bg-light-primary">
@@ -296,7 +297,7 @@ const DashbardPublikasi = () => {
                         {/* <!--begin::List Widget 3--> */}
 
                         {
-                            dataDashboardBerita ?
+                            dataDashboardBerita.top_berita ?
                                 <div className="card card-custom card-stretch gutter-b">
                                     {/* <!--begin::Header--> */}
                                     <div className="card-header border-0">
@@ -348,7 +349,7 @@ const DashbardPublikasi = () => {
                     <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
                         {/* <!--begin::List Widget 3--> */}
                         {
-                            dataDashboardArtikel ?
+                            dataDashboardArtikel.top_artikel ?
                                 <div className="card card-custom card-stretch gutter-b">
                                     {/* <!--begin::Header--> */}
                                     <div className="card-header border-0">
@@ -399,7 +400,7 @@ const DashbardPublikasi = () => {
                     <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
                         {/* <!--begin::List Widget 3--> */}
                         {
-                            dataDashboardGallery ?
+                            dataDashboardGallery.top_gallery ?
                                 <div className="card card-custom card-stretch gutter-b">
                                     {/* <!--begin::Header--> */}
                                     <div className="card-header border-0">
@@ -412,7 +413,7 @@ const DashbardPublikasi = () => {
                                         {
                                             dataDashboardGallery.top_gallery.map ((el, i) => {
                                                 return (
-                                                    <div className="d-flex align-items-center mb-10">
+                                                    <div className="d-flex align-items-center mb-10" key={i}>
                                                         {/* <!--begin::Symbol--> */}
                                                         <div className="symbol symbol-40 symbol-light-success mr-5" key={i}>
                                                             <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
@@ -449,7 +450,7 @@ const DashbardPublikasi = () => {
                     <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
                         {/* <!--begin::List Widget 3--> */}
                         {
-                            dataDashboardVideo ?
+                            dataDashboardVideo.top_video?
                                 <div className="card card-custom card-stretch gutter-b">
                                     {/* <!--begin::Header--> */}
                                     <div className="card-header border-0">

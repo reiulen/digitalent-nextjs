@@ -115,6 +115,8 @@ export const newVideo = (videoData) => async (dispatch) => {
             payload: data
         })
 
+        console.log (videoData)
+
     } catch (error) {
         dispatch({
             type: NEW_VIDEO_FAIL,

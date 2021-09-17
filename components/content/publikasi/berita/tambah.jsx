@@ -87,6 +87,7 @@ const TambahBerita = () => {
         "/assets/icon/Add.svg"
     );
     const [publishDate, setPublishDate] = useState(null);
+    const [disablePublishDate, setDisablePublishDate] = useState(true)
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -122,9 +123,26 @@ const TambahBerita = () => {
       };
 
     const handleChangePublish = (e) => {
-        setPublish(e.target.checked);
+        // setPublish(e.target.checked);
+        setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
+
+        if (e.target.checked === false){
+            setPublishDate (null)
+            setPublish (0)
+        } else {
+            setPublish (1)
+        }
     };
+
+    const handlePublishDate = (date) => {
+        // let result = moment(date).format("YYYY-MM-DD")
+        if (disablePublishDate === false) {
+          // setPublishDate(result)
+          setPublishDate(date)
+          // console.log (result)
+        }
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -154,7 +172,8 @@ const TambahBerita = () => {
                 isi_berita,
                 gambar,
                 publish,
-                tag
+                tag,
+                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
             }
 
             Swal.fire({
@@ -232,7 +251,7 @@ const TambahBerita = () => {
                         : ''
                 }
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
+                    <div className="card-header">
                         <h3 className="card-title font-weight-bolder text-dark">Tambah Berita</h3>
                     </div>
                     <div className="card-body">
@@ -240,7 +259,7 @@ const TambahBerita = () => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_berita")}/>
+                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_berita")}/>
                                     {simpleValidator.current.message(
                                         "judul_berita",
                                         judul_berita,
@@ -271,6 +290,7 @@ const TambahBerita = () => {
                                                     "isi_berita"
                                                 )
                                             }
+                                            config ={{placeholder: "Tulis Deskripsi"}}
                                         /> : <p>Tunggu Sebentar</p>}
                                         {simpleValidator.current.message(
                                             "isi_berita",
@@ -346,7 +366,7 @@ const TambahBerita = () => {
 
                                 <div className="mt-3 col-sm-3 text-muted">
                                     <p>
-                                    Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                                    Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
                                     
                                 </div>
@@ -385,7 +405,7 @@ const TambahBerita = () => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
                                 <div className="col-sm-12">
                                     <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
-                                        <option selected disabled value=''>-- Kategori --</option>
+                                        <option selected disabled value=''>-- Berita --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
                                             <option value="">Data kosong</option>
                                         ) : (
@@ -455,7 +475,8 @@ const TambahBerita = () => {
                                     <DatePicker
                                         className="form-search-date form-control-sm form-control"
                                         selected={publishDate}
-                                        onChange={(date) => setPublishDate(date)}
+                                        onChange={(date) => handlePublishDate(date)}
+                                        // onChange={(date) => setPublishDate(date)}
                                         selectsStart
                                         startDate={publishDate}
                                         // endDate={endDate}
@@ -463,9 +484,16 @@ const TambahBerita = () => {
                                         placeholderText="Silahkan Isi Tanggal Publish"
                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
                                         minDate={moment().toDate()}
+                                        disabled = {disablePublishDate === true || disablePublishDate === null}
                                     // minDate={addDays(new Date(), 20)}
                                     />
                                     </div>
+                                    {
+                                        disablePublishDate === true ?
+                                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                                        :
+                                            null
+                                    }
                                 </div>
                             </div>
 
