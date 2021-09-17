@@ -1,5 +1,5 @@
 import Layout from "../../../components/templates/layout.component";
-import ReviewKerjasama from "../../../components/content/partnership/manajemen-kerjasama/reviewKerjasama";
+import ReviewKerjasama from "../../../components/content/partnership/kerjasama/reviewKerjasama";
 
 export default function ReviewKerjasamaPage() {
   return (
