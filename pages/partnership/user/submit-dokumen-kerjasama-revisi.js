@@ -1,12 +1,12 @@
 import Layout from "../../../components/templates/layout.component";
-import ReviewDokumenKerjasama from "../../../components/content/partnership/user/reviewDokumenKerjasama";
+import ReviewDokKerjasama from "../../../components/content/partnership/user/reviewDokKerjasama";
 
-export default function PembahasanPage() {
+export default function ReviewDokKerjasamaPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
         <Layout title="Dashboard Publikasi">
-          <ReviewDokumenKerjasama />
+          <ReviewDokKerjasama />
         </Layout>
       </div>
     </>

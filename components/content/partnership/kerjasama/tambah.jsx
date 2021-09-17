@@ -20,8 +20,8 @@ import Select from "react-select";
 
 const Tambah = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const allMK = useSelector((state) => state.allMK);
-  const [pagees, setPagees] = useState(false);
   // state form data 1
   const [institution_name, setInstitution_name] = useState("");
   const changeInstitusi = (value) => {
@@ -41,11 +41,7 @@ const Tambah = () => {
   const [title, setTitle] = useState("");
   const [period, setPeriod] = useState("");
   const [periodUnit, setPeriodUnit] = useState("tahun");
-  const [cooperationC_id, setCooperationC_id] = useState("");
-  const changeSetCooperationC_id = (value) => {
-    setCooperationC_id(value);
-    dispatch(changeCooperationSelectByID(value));
-  };
+
   const [AllCooperation, setAllCooperation] = useState("");
   const changeFormCooporation = (index, e) => {
     let dataaa = [...allMK.singleCooporationSelect.data.option];
@@ -53,7 +49,7 @@ const Tambah = () => {
     setAllCooperation(dataaa);
   };
 
-  const router = useRouter();
+  
 
   const submit = (e) => {
     e.preventDefault();
@@ -145,9 +141,16 @@ const Tambah = () => {
       progress: undefined,
     });
 
+  const [cooperationC_id, setCooperationC_id] = useState("");
+  const changeSetCooperationC_id = (value) => {
+    setCooperationC_id(value);
+    dispatch(changeCooperationSelectByID(value));
+  };
+
   useEffect(() => {
     dispatch(fetchDataEmail());
     dispatch(fetchListSelectCooperation());
+    // get cooperation active select
     dispatch(fetchListCooperationSelect());
     dispatch(fetchListCooperationSelectById(cooperationC_id));
     dispatch(fetchListSelectMitra());
@@ -174,25 +177,24 @@ const Tambah = () => {
         />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark" style={{fontSize:"24px"}}>
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
               Tambah Kerjasama
             </h3>
           </div>
           <div className="card-body">
             <form onSubmit={submit}>
-
               <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">
-                      Tanggal
-                    </label>
-
-                  <input
-                    readOnly
-                    value={date}
-                    type="text"
-                    className="form-control mb-3 mb-lg-0"
-                  />
-                  {error.date ? <p className="error-text">{error.date}</p> : ""}
+                <label className="required fw-bold fs-6 mb-2">Tanggal</label>
+                <input
+                  readOnly
+                  value={date}
+                  type="text"
+                  className="form-control mb-3 mb-lg-0"
+                />
+                {error.date ? <p className="error-text">{error.date}</p> : ""}
               </div>
               <div className="row">
                 <div className="col-12 col-sm-6">
@@ -228,7 +230,7 @@ const Tambah = () => {
                   <div className="fv-row mb-10">
                     <label className="required fw-bold fs-6 mb-2">Email</label>
                     <input
-                    readOnly
+                      readOnly
                       type="text"
                       value={allMK.email}
                       name="text_input"
@@ -242,10 +244,12 @@ const Tambah = () => {
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">Periode Kerjasama</label>
+                    <label className="required fw-bold fs-6 mb-2">
+                      Periode Kerjasama
+                    </label>
                     <input
-                    onFocus={() => setError({ ...error, period: "" })}
-                        value={period}
+                      onFocus={() => setError({ ...error, period: "" })}
+                      value={period}
                       type="text"
                       name="text_input"
                       className="form-control mb-3 mb-lg-0"
@@ -253,60 +257,49 @@ const Tambah = () => {
                       onChange={(e) => onChangePeriod(e)}
                     />
                     {error.period ? (
-                        <p className="error-text">{error.period}</p>
-                      ) : (
-                        ""
-                      )}
+                      <p className="error-text">{error.period}</p>
+                    ) : (
+                      ""
+                    )}
                   </div>
-
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="fv-row mb-10">
                     <label className="required fw-bold fs-6 mb-2"></label>
                     <input
-                    disabled
+                      disabled
                       type="text"
                       name="text_input"
                       className="form-control mb-3 mb-lg-0 mt-2"
                       placeholder="Tahun"
-                      
                     />
                   </div>
-
                 </div>
               </div>
 
               <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">Judul Kerjasama</label>
+                <label className="required fw-bold fs-6 mb-2">
+                  Judul Kerjasama
+                </label>
                 <input
-                onFocus={() => setError({ ...error, title: "" })}
+                  onFocus={() => setError({ ...error, title: "" })}
                   type="text"
                   name="text_input"
                   className="form-control mb-3 mb-lg-0"
                   placeholder="Masukan judul kerjasama"
                   onChange={(e) => setTitle(e.target.value)}
                 />
-                {error.title ? (
-                    <p className="error-text">{error.title}</p>
-                  ) : (
-                    ""
-                  )}
-
+                {error.title ? <p className="error-text">{error.title}</p> : ""}
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Kategori kerjasama
                 </label>
                 <div>
                   <select
                     onFocus={() => setError({ ...error, cooperationC_id: "" })}
                     onChange={(e) => changeSetCooperationC_id(e.target.value)}
-                    name=""
-                    id=""
                     className="form-control"
                   >
                     <option value="">Pilih Kategory Kerjasama</option>

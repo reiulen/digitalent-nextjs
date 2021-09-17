@@ -1,217 +1,200 @@
 import React, { useState, useRef, useEffect } from "react";
+
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
-import { useRouter } from "next/router";
-import Swal from "sweetalert2";
 
 import Style from "../../../../styles/progressbar.module.css";
 
 const SubmitKerjasama = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
-  const router = useRouter();
-  const Swal = require("sweetalert2");
-
-  const submit = (e) => {
-    e.preventDefault();
-    Swal.fire({
-      title: "Apakah anda yakin ?",
-      // text: "Data ini tidak bisa dikembalikan !",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then((result) => {
-      if (result.value) {
-        router.push(
-          "/partnership/kerjasama/detail-dokumen-kerjasama"
-        );
-      }
-    });
-  };
-
-  const [step, useStep] = useState(0);
-
   return (
     <PageWrapper>
-      <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+      <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3 className="card-title fz-20 fw-500 text-dark">
               Submit Dokumen Kerjasama
             </h3>
           </div>
-          <div className={`card-body ${Style.refreshZindex}`}>
-            <div className={Style.containerProggres}>
-              <ul className={Style.progressbar}>
-                <li className={Style.active}>Submit Kerjasama</li>
-                <li className={Style.active}>Review Kerjasama</li>
-                <li className={Style.active}>Pembahasan</li>
-                <li className={Style.active}>Dokumen Kerjasama</li>
-                <li>Review Dokumen </li>
-                <li>Selesai</li>
-              </ul>
+
+          <div className="card-body">
+            <div className="row mt-8 mb-10">
+              <div className="col-2 p-0">
+                <div className="progress-items">
+                  {/* <div className="line-progress"></div> */}
+                  <div className="circle-progress active-circle">
+                    <span className="title-progress">Submit Kerjasama</span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="progress-items">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
+                    <span className="title-progress">Review Kerjasama</span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="progress-items">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
+                    <span className="title-progress">Pembahasan</span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="progress-items">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
+                    <span className="title-progress">
+                      Submit Dokumen Kerjasama
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="progress-items">
+                  <div className="line-progress"></div>
+                  <div className="circle-progress">
+                    <span className="title-progress">
+                      Review Dokumen Kerjasama
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="progress-items">
+                  <div className="line-progress"></div>
+                  <div className="circle-progress">
+                    <span className="title-progress">Hasil</span>
+                  </div>
+                </div>
+              </div>
             </div>
+
             <form>
-              <div className={`row form-group ${Style.clearRow}`}>
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Periode Kerjasama
-                </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      {/* <input
-                        type="date"
-                        className="form-control form-control-sm"
-                      /> */}
-                      <DatePicker
-                        className="form-search-date form-control-sm form-control"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        selectsStart
-                        startDate={startDate}
-                        endDate={endDate}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Dari Tanggal"
-                        // minDate={addDays(new Date(), 20)}
-                      />
-                    </div>
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      {/* <input
-                        type="date"
-                        // class = form-search-date
-                        className="form-control form-control-sm"
-                      /> */}
-                      <DatePicker
-                        className="form-search-date form-control-sm form-control"
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        selectsEnd
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={startDate}
-                        maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Nomer Perjanjian Lembaga
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nomor Perjanjian Lembaga"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Nomer Perjanjian Kemkominfo
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nomor Perjanjian Kemkominfo"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Tanggal Penandantangan
-                </label>
-                <div className="col-sm-10">
-                  <div className="row align-items-right">
-                    <div className="col-lg-3 col-xl-3 mt-5 mt-lg-5">
-                      <DatePicker
-                        className="form-search-date form-control-sm form-control"
-                        selected={endDate}
-                        onChange={(date) => setEndDate(date)}
-                        selectsEnd
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={startDate}
-                        maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Dari Tanggal"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Upload Dokumen Kerjasama
-                </label>
-                <div className="col-sm-3">
-                  <div className="input-group">
-                    <div className="custom-file">
+              '
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  {/* tanggal apakah diambil date now atau otomatis date sekarang */}
+                  <div className="form-group mb-10">
+                    <label className="required mb-2">Periode Kerjasama</label>
+                    <div className="position-relative">
                       <input
-                        type="file"
-                        name="gambar"
-                        className="custom-file-input"
-                        id="inputGroupFile04"
+                        placeholder="Pilih Tanggal"
+                        // readOnly
+                        // value={date}
+                        type="date"
+                        className="form-control mb-3 mb-lg-0"
                       />
-                      <label className="custom-file-label" htmlFor="inputGroupFile04">
-                        Cari Dokumen
-                      </label>
+                      {/* icon calender */}
                     </div>
+                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
+                  </div>
+                </div>
+                <div className="col-12 col-sm-6">
+                  {/* tanggal apakah diambil date now atau otomatis date sekarang */}
+                  <div className="form-group mb-10">
+                    <label className="required mb-2"></label>
+                    <div className="position-relative">
+                      <input
+                        placeholder="Pilih Tanggal"
+                        // readOnly
+                        // value={date}
+                        type="date"
+                        className="form-control mb-3 mb-lg-0 mt-2"
+                      />
+                      {/* icon calender */}
+                    </div>
+                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div className="form-group mb-10">
+                    <label className="required mb-2">Nomor Perjanjian Lembaga</label>
+                    <input
+                      placeholder="Masukan Nomor Perjanjian Lembaga"
+                      // readOnly
+                      // value={date}
+                      type="number"
+                      className="form-control mb-3 mb-lg-0"
+                    />
+                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div className="form-group mb-10">
+                    <label className="required mb-2">Nomor Perjanjian Kemkominfo</label>
+                    <input
+                      placeholder="Masukan Nomor Perjanjian Kemkominfo"
+                      // readOnly
+                      // value={date}
+                      type="number"
+                      className="form-control mb-3 mb-lg-0"
+                    />
+                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  {/* tanggal apakah diambil date now atau otomatis date sekarang */}
+                  <div className="form-group mb-10">
+                    <label className="required mb-2">Tanggal Penandatanganan</label>
+                    <div className="position-relative">
+                      <input
+                        placeholder="Pilih Tanggal"
+                        // readOnly
+                        // value={date}
+                        type="date"
+                        className="form-control mb-3 mb-lg-0"
+                      />
+                      {/* icon calender */}
+                    </div>
+                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
+                  </div>
+                </div>
+                <div className="col-12 col-sm-6">
+                  {/* tanggal apakah diambil date now atau otomatis date sekarang */}
+                  <div className="form-group mb-10">
+                    <label className="required mb-2">Upload Dokumen Kerjasama</label>
+                    <div className="position-relative">
+                      <input
+                        placeholder="Pilih FIle"
+                        // readOnly
+                        // value={date}
+                        type="file"
+                        className="form-control mb-3 mb-lg-0"
+                      />
+                      {/* icon calender */}
+                    </div>
+                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10">
+                <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/kerjasama">
-                    <a
-                      className="btn bg-light-danger mr-2 btn-sm"
-                      style={{ color: "red" }}
-                    >
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Batalkan
                     </a>
                   </Link>
-
-                  {/* <Link href="/partnership/manajemen-kerjasama/detail-dokumen-kerjasama"> */}
                   <button
-                    type="button"
-                    className="btn btn-primary btn-sm"
-                    onClick={(e) => submit(e)}
+                    type="submit"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                   >
-                    Submit
+                    Simpan
                   </button>
-                  {/* </Link> */}
                 </div>
               </div>
             </form>
