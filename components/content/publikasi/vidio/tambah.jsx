@@ -118,14 +118,14 @@ const TambahVidio = () => {
         // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
-
+    
         if (e.target.checked === false){
             setPublishDate (null)
             setPublish (0)
         } else {
             setPublish (1)
         }
-    };
+      };
 
     const handlePublishDate = (date) => {
         // let result = moment(date).format("YYYY-MM-DD")
@@ -219,7 +219,7 @@ const TambahVidio = () => {
                         : ''
                 }
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
+                    <div className="card-header">
                         <h3 className="card-title font-weight-bolder text-dark">Tambah Video</h3>
                     </div>
                     <div className="card-body">
@@ -227,7 +227,7 @@ const TambahVidio = () => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")}/>
+                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")}/>
                                     {simpleValidator.current.message(
                                         "judul_video",
                                         judul_video,
@@ -442,35 +442,42 @@ const TambahVidio = () => {
                                 </div>
                             </div> */}
 
-                            <div className="form-group">
-                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                                <div className="col-sm-12">
-                                    <div className="input-group">
-                                        <DatePicker
-                                            className="form-search-date form-control-sm form-control"
-                                            selected={publishDate}
-                                            onChange={(date) => handlePublishDate(date)}
-                                            // onChange={(date) => setPublishDate(date)}
-                                            selectsStart
-                                            startDate={publishDate}
-                                            // endDate={endDate}
-                                            dateFormat="dd/MM/yyyy"
-                                            placeholderText="Silahkan Isi Tanggal Publish"
-                                            wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                            minDate={moment().toDate()}
-                                        // minDate={addDays(new Date(), 20)}
-                                            disabled = {disablePublishDate === true || disablePublishDate === null}
-                                        />
-                                        
+                            {
+                                disablePublishDate === false ?
+                                    <div className="form-group">
+                                        <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                        <div className="col-sm-12">
+                                            <div className="input-group">
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={publishDate}
+                                                    onChange={(date) => handlePublishDate(date)}
+                                                    // onChange={(date) => setPublishDate(date)}
+                                                    selectsStart
+                                                    startDate={publishDate}
+                                                    // endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    placeholderText="Silahkan Isi Tanggal Publish"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    // minDate={moment().toDate()}
+                                                // minDate={addDays(new Date(), 20)}
+                                                    disabled = {disablePublishDate === true || disablePublishDate === null}
+                                                />
+                                                
+                                            </div>
+                                            {/* {
+                                                disablePublishDate === true ?
+                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                                                :
+                                                    null
+                                            } */}
+                                        </div>
                                     </div>
-                                    {
-                                        disablePublishDate === true ?
-                                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                        :
-                                            null
-                                    }
-                                </div>
-                            </div>
+                                :
+                                    null
+                            }
+
+                            
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>

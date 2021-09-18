@@ -44,21 +44,27 @@ const Tambah = () => {
 
   const submit = (e) => {
     e.preventDefault();
-    if (agency_logo === "") {
+    if (institution_name === "") {
       setError({
         ...error,
-        agency_logo: "Harus isi gambar logo dengan format png/jpg",
+        institution_name: "Harus isi nama lembaga",
       });
-      notify("Harus isi gambar logo dengan format png");
-    } else if (institution_name === "") {
-      setError({ ...error, institution_name: "Harus isi nama lembaga" });
       notify("Harus isi nama lembaga");
+    } else if (wesite === "") {
+      // setError({ ...error, agency_logo: "Harus isi gambar logo dengan format png" });
+      // notify("Harus isi gambar logo dengan format png");
+
+      setError({ ...error, wesite: "Harus isi nama website" });
+      notify("Harus isi nama website");
     } else if (email === "") {
       setError({ ...error, email: "Harus isi email" });
       notify("Harus isi email");
-    } else if (wesite === "") {
-      setError({ ...error, wesite: "Harus isi nama website" });
-      notify("Harus isi nama website");
+    } else if (agency_logo === "") {
+      setError({
+        ...error,
+        agency_logo: "Harus isi gambar logo dengan format png",
+      });
+      notify("Harus isi gambar logo dengan format png");
     } else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
       notify("Harus isi alamat");
@@ -93,9 +99,8 @@ const Tambah = () => {
     } else if (pic_email === "") {
       setError({ ...error, pic_email: "Harus isi Email PIC" });
       notify("Harus isi Email PIC");
-    } else { 
-
-      // 
+    } else {
+      //
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -106,10 +111,11 @@ const Tambah = () => {
         cancelButtonText: "Batal",
         confirmButtonText: "Ya !",
         dismissOnDestroy: false,
-      }).then(async(result) => {
+      }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
           formData.append("institution_name", institution_name);
+          formData.append("_method", "PUT");
           formData.append("email", email);
           formData.append("agency_logo", agency_logo);
           formData.append("website", wesite);
@@ -124,16 +130,21 @@ const Tambah = () => {
           try {
             let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP}/api/profiles`,
-              formData
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMTY5MjYxNywiZXhwIjoxNjMxNzc5MDE3LCJuYmYiOjE2MzE2OTI2MTcsImp0aSI6Ik5Jdm1UODU3OHJFTnk5U1YiLCJzdWIiOjEzLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwidXNlciI6eyJpZCI6MTMsIm5hbWUiOiJSYWhtYXQgSGlkYXlhdHVsbGFoIiwiZW1haWwiOiJyYWhtYXRoaWRheWF0dWxsYWg5OTZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjQzOjEyLjAwMDAwMFoiLCJyZW1lbWJlcl90b2tlbiI6IjIxNTkxMCIsInJvbGVzIjoiW21pdHJhXSIsImNyZWF0ZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjM3OjQyLjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMS0wOS0xNVQwNzo0MzoxMi4wMDAwMDBaIn19.Kzw6Z1v33Q4AezE5F-G-9I95NpxO3SmNAysL0QkkYZQ`,
+                },
+              }
             );
-            router.push({
-              pathname: "/partnership/user/profile-lembaga/input-profil",
-              query: { success: true },
-            });
+            console.log("data", data);
+            // router.push({
+            //   pathname: "/partnership/user/profile-lembaga/input-profil",
+            //   query: { success: true },
+            // });
           } catch (error) {
             notify(error.response.data.message);
           }
-
         }
       });
     }
@@ -182,11 +193,10 @@ const Tambah = () => {
       progress: undefined,
     });
 
-    const onChangeProvinces = (e) => {
+  const onChangeProvinces = (e) => {
     setIndonesia_provinces_id(e.id);
   };
 
-  
   // pertama kali load provinces set kesini
   const [allProvinces, setAllProvinces] = useState([]);
   // ketika load cities state ini save data
@@ -201,8 +211,26 @@ const Tambah = () => {
         return { ...items, label: items.name, value: items.id };
       });
       dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-      console.log("dataNewProvinces",dataNewProvinces)
+      console.log("dataNewProvinces", dataNewProvinces);
       setAllProvinces(dataNewProvinces);
+    } catch (error) {
+      console.log("gagal get province", error);
+    }
+  };
+
+  const getProfiles = async () => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/profiles`,
+        {
+          headers: {
+            authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMTY5MjYxNywiZXhwIjoxNjMxNzc5MDE3LCJuYmYiOjE2MzE2OTI2MTcsImp0aSI6Ik5Jdm1UODU3OHJFTnk5U1YiLCJzdWIiOjEzLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwidXNlciI6eyJpZCI6MTMsIm5hbWUiOiJSYWhtYXQgSGlkYXlhdHVsbGFoIiwiZW1haWwiOiJyYWhtYXRoaWRheWF0dWxsYWg5OTZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjQzOjEyLjAwMDAwMFoiLCJyZW1lbWJlcl90b2tlbiI6IjIxNTkxMCIsInJvbGVzIjoiW21pdHJhXSIsImNyZWF0ZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjM3OjQyLjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMS0wOS0xNVQwNzo0MzoxMi4wMDAwMDBaIn19.Kzw6Z1v33Q4AezE5F-G-9I95NpxO3SmNAysL0QkkYZQ`,
+          },
+        }
+      );
+      console.log("data", data);
+      setEmail(data.data.email);
+      setInstitution_name(data.data.institution_name);
     } catch (error) {
       console.log("gagal get province", error);
     }
@@ -210,7 +238,8 @@ const Tambah = () => {
 
   useEffect(() => {
     getDataProvinces();
-  }, [])
+    getProfiles();
+  }, []);
 
   useEffect(() => {
     // get data cities
@@ -234,10 +263,8 @@ const Tambah = () => {
 
       fetchAPI();
     }
+  }, [indonesia_provinces_id]);
 
-    
-  }, [indonesia_provinces_id])
-  
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
@@ -254,7 +281,7 @@ const Tambah = () => {
         />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3 className="card-title text-dark fw-600 fz-20">
               Profile Lembaga
             </h3>
           </div>
@@ -267,86 +294,97 @@ const Tambah = () => {
               onSubmit={submit}
             >
               <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">Nama Lembaga</label>
+                <label className="required fw-bold fs-6 mb-2">
+                  Nama Lembaga
+                </label>
                 <input
                   type="text"
                   name="text_input"
                   className="form-control form-control-solid mb-3 mb-lg-0"
                   placeholder="Masukan Nama Lembaga"
-                  value=""
+                  value={institution_name}
                 />
               </div>
 
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">Website</label>
+                    <label className="required fw-bold fs-6 mb-2">
+                      Website
+                    </label>
                     <input
-                    onFocus={() => setError({ ...error, wesite: "" })}
+                      onFocus={() => setError({ ...error, wesite: "" })}
                       type="text"
                       name="text_input"
                       className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Alamat Website"
                       onChange={(e) => setWesite(e.target.value)}
+                      value={wesite}
                     />
                     {error.wesite ? (
-                    <p className="error-text">{error.wesite}</p>
-                  ) : (
-                    ""
-                  )}
+                      <p className="error-text">{error.wesite}</p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="fv-row mb-10">
                     <label className="required fw-bold fs-6 mb-2">E-mail</label>
                     <input
-                    onFocus={() => setError({ ...error, email: "" })}
+                      onFocus={() => setError({ ...error, email: "" })}
                       type="text"
                       name="text_input"
                       className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Alamat E-mail"
-                      
+                      value={email}
                     />
                     {error.email ? (
-                    <p className="error-text">{error.email}</p>
-                  ) : (
-                    ""
-                  )}
+                      <p className="error-text">{error.email}</p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
 
               <div className="fv-row mb-10 d-flex flex-column">
-                <label className="required fw-bold fs-6 mb-2">Logo Lembaga</label>
+                <label className="required fw-bold fs-6 mb-2">
+                  Logo Lembaga
+                </label>
                 {/* <div className="input-group"> */}
-                    <div className="custom-file col-12 col-xl-4">
-                      <input
-                      onFocus={() => setError({ ...error, agency_logo: "" })}
-                      onChange={(e) => onChangeImage(e)}
-                        type="file"
-                        name="gambar"
-                        className="custom-file-input cursor-pointer"
-                        id="inputGroupFile04"
-                        accept="image/png,image/jpg"
-                        // onChange={handlePdfFileChange}
-                      />
-                      <label className="custom-file-label" htmlFor="inputGroupFile04" style={{color:"#bdbdbd"}}>
-                        {NamePDF ? NamePDF : "Cari Gambar"}
-                      </label>
-                    </div>
-                    {NamePDF ? (
-                    <button
-                      className="btn btn-primary btn-sm my-3"
-                      type="button"
-                      onClick={() => hideImage()}
-                    >
-                      {showImage ? "Tutup" : "Buka"}
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                  {/* </div> */}
-                  {showImage ? (
+                <div className="custom-file col-12 col-xl-12">
+                  <input
+                    onFocus={() => setError({ ...error, agency_logo: "" })}
+                    onChange={(e) => onChangeImage(e)}
+                    type="file"
+                    name="gambar"
+                    className="custom-file-input cursor-pointer"
+                    id="inputGroupFile04"
+                    accept="image/png,image/jpg"
+                    // onChange={handlePdfFileChange}
+                  />
+                  <label
+                    className="custom-file-label"
+                    htmlFor="inputGroupFile04"
+                    style={{ color: "#bdbdbd" }}
+                  >
+                    {NamePDF ? NamePDF : "Cari Gambar"}
+                  </label>
+                </div>
+                {NamePDF ? (
+                  <button
+                    className="btn btn-primary btn-sm my-3"
+                    type="button"
+                    onClick={() => hideImage()}
+                  >
+                    {showImage ? "Tutup" : "Buka"}
+                  </button>
+                ) : (
+                  ""
+                )}
+                {/* </div> */}
+                {showImage ? (
                   <div
                     className={`${
                       agency_logo ? "pdf-container w-100 border my-3" : "d-none"
@@ -368,29 +406,34 @@ const Tambah = () => {
                 ) : (
                   ""
                 )}
-
               </div>
 
               <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">Masukan Alamat Lengkap</label>
+                <label className="required fw-bold fs-6 mb-2">
+                  Masukan Alamat Lengkap
+                </label>
                 <input
-                onFocus={() => setError({ ...error, address: "" })}
+                  onFocus={() => setError({ ...error, address: "" })}
                   type="text"
                   name="text_input"
                   className="form-control form-control-solid mb-3 mb-lg-0"
                   placeholder="Masukan Alamat Lengkap"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                 />
                 {error.address ? (
-                    <p className="error-text">{error.address}</p>
-                  ) : (
-                    ""
-                  )}
+                  <p className="error-text">{error.address}</p>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">Provinsi</label>
+                    <label className="required fw-bold fs-6 mb-2">
+                      Provinsi
+                    </label>
                     {/* <input
                       type="text"
                       name="text_input"
@@ -399,32 +442,36 @@ const Tambah = () => {
                       value=""
                     /> */}
                     <Select
-                    onFocus={() =>
-                      setError({ ...error, indonesia_provinces_id: "" })
-                    }
-                    className="basic-single"
-                    classNamePrefix="select"
-                    placeholder="Pilih provinsi"
-                    defaultValue={allProvinces[0]}
-                    isDisabled={false}
-                    isLoading={false}
-                    isClearable={false}
-                    isRtl={false}
-                    isSearchable={true}
-                    name="color"
-                    onChange={(e) => onChangeProvinces(e)}
-                    options={allProvinces}
-                  />
-                  {error.indonesia_provinces_id ? (
-                    <p className="error-text">{error.indonesia_provinces_id}</p>
-                  ) : (
-                    ""
-                  )}
+                      onFocus={() =>
+                        setError({ ...error, indonesia_provinces_id: "" })
+                      }
+                      className="basic-single"
+                      classNamePrefix="select"
+                      placeholder="Pilih provinsi"
+                      defaultValue={allProvinces[0]}
+                      isDisabled={false}
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => onChangeProvinces(e)}
+                      options={allProvinces}
+                    />
+                    {error.indonesia_provinces_id ? (
+                      <p className="error-text">
+                        {error.indonesia_provinces_id}
+                      </p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">Kota/Kabupaten</label>
+                    <label className="required fw-bold fs-6 mb-2">
+                      Kota/Kabupaten
+                    </label>
                     {/* <input
                       type="text"
                       name="text_input"
@@ -433,122 +480,131 @@ const Tambah = () => {
                       value=""
                     /> */}
                     <Select
-                    onFocus={() =>
-                      setError({ ...error, indonesia_cities_id: "" })
-                    }
-                    className="basic-single"
-                    classNamePrefix="select"
-                    placeholder="Pilih data Kab/Kota"
-                    defaultValue={citiesAll[0]}
-                    isDisabled={false}
-                    isLoading={false}
-                    isClearable={false}
-                    isRtl={false}
-                    isSearchable={true}
-                    name="color"
-                    onChange={(e) => setIndonesia_cities_id(e.id)}
-                    options={citiesAll}
-                  />
-                  {error.indonesia_cities_id ? (
-                    <p className="error-text">{error.indonesia_cities_id}</p>
-                  ) : (
-                    ""
-                  )}
+                      onFocus={() =>
+                        setError({ ...error, indonesia_cities_id: "" })
+                      }
+                      className="basic-single"
+                      classNamePrefix="select"
+                      placeholder="Pilih data Kab/Kota"
+                      defaultValue={citiesAll[0]}
+                      isDisabled={false}
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => setIndonesia_cities_id(e.id)}
+                      options={citiesAll}
+                    />
+                    {error.indonesia_cities_id ? (
+                      <p className="error-text">{error.indonesia_cities_id}</p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">Kode Pos</label>
+                    <label className="required fw-bold fs-6 mb-2">
+                      Kode Pos
+                    </label>
                     <input
-                    onFocus={() => setError({ ...error, postal_code: "" })}
+                      onFocus={() => setError({ ...error, postal_code: "" })}
                       type="number"
                       name="text_input"
                       className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Kode Pos"
+                      value={postal_code}
+                      onChange={(e) => setPostal_code(e.target.value)}
                     />
                     {error.postal_code ? (
-                    <p className="error-text">{error.postal_code}</p>
-                  ) : (
-                    ""
-                  )}
+                      <p className="error-text">{error.postal_code}</p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
 
               <div className="row">
-                <div className="col-12 col-sm-12">
+                <div className="col-12 col-sm-6">
                   <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">Nama Person In Charge (PIC)</label>
+                    <label className="required fw-bold fs-6 mb-2">
+                      Nama Person In Charge (PIC)
+                    </label>
                     <input
-                    onFocus={() => setError({ ...error, pic_name: "" })}
+                      onFocus={() => setError({ ...error, pic_name: "" })}
                       type="text"
                       name="text_input"
                       className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Nama PIC"
+                      value={pic_name}
+                      onChange={(e) => setPic_name(e.target.value)}
                     />
                     {error.pic_name ? (
-                    <p className="error-text">{error.pic_name}</p>
-                  ) : (
-                    ""
-                  )}
+                      <p className="error-text">{error.pic_name}</p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
-                <div className="col-12 col-sm-12">
+                <div className="col-12 col-sm-6">
                   <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">Nomor Handphone Person In Charge (PIC)</label>
+                    <label className="required fw-bold fs-6 mb-2">
+                      Nomor Handphone Person In Charge (PIC)
+                    </label>
                     <input
-                    onFocus={() =>
-                      setError({ ...error, pic_contact_number: "" })
-                    }
+                      onFocus={() =>
+                        setError({ ...error, pic_contact_number: "" })
+                      }
                       type="number"
                       maxLength="13"
-                    minLength="9"
+                      minLength="9"
                       name="text_input"
                       className="form-control form-control-solid mb-3 mb-lg-0"
                       placeholder="Masukan Nama PIC"
-onChange={(e) => setPic_contact_number(e.target.value)}
+                      onChange={(e) => setPic_contact_number(e.target.value)}
+                      value={pic_contact_number}
                     />
                     {error.pic_contact_number ? (
-                    <p className="error-text">{error.pic_contact_number}</p>
-                  ) : (
-                    ""
-                  )}
-
-                    
+                      <p className="error-text">{error.pic_contact_number}</p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
 
               <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">E-mail Person In Charge (PIC)</label>
+                <label className="required fw-bold fs-6 mb-2">
+                  E-mail Person In Charge (PIC)
+                </label>
                 <input
-                onFocus={() => setError({ ...error, pic_email: "" })}
+                  onFocus={() => setError({ ...error, pic_email: "" })}
                   type="email"
                   name="text_input"
                   className="form-control form-control-solid mb-3 mb-lg-0"
                   placeholder="Masukan Alamat E-mail PIC"
-                  value=""
+                  value={pic_email}
+                  onChange={(e) => setPic_email(e.target.value)}
                 />
                 {error.pic_email ? (
-                    <p className="error-text">{error.pic_email}</p>
-                  ) : (
-                    ""
-                  )}
+                  <p className="error-text">{error.pic_email}</p>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="d-flex justify-content-end align-items-center">
                 <Link href="">
-                  <a className="btn btn-white">
-                        Kembali
-                      </a>
+                  <a className="btn btn-white">Kembali</a>
                 </Link>
                 <button className="btn btn-primary ml-4" type="submit">
                   Simpan
                 </button>
               </div>
-
             </form>
             {/* <form>
               <div className="form-group row">

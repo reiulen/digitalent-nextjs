@@ -103,7 +103,7 @@ const TambahKategori = () => {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Isi Nama kategori disini"
+                                        placeholder="Masukkan Nama kategori disini"
                                         value={nama}
                                         onChange={(e) => setNamaKategori(e.target.value)}
                                         onBlur={() => simpleValidator.current.showMessageFor("nama kategori")}

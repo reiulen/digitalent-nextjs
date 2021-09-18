@@ -40,6 +40,7 @@ const Vidio = () => {
     const [video_playing, setVideoPlaying] = useState(false)
     const [publishValue, setPublishValue] = useState(null)
     const [idVideo, setIdVideo] = useState (null)
+    const [disableEndDate, setDisableEndDate] = useState (true)
 
     let loading = false
     let { page = 1, keyword, success } = router.query
@@ -279,6 +280,12 @@ const Vidio = () => {
     const resetValueSort = () => {
         setStartDate(null)
         setEndDate(null)
+        setDisableEndDate (true)
+      }
+    
+    const handleStartDate = (date) => {
+        setStartDate (date)
+        setDisableEndDate (false)
     }
 
     // const handleIsPlayed = (id) => {
@@ -397,6 +404,7 @@ const Vidio = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/video/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
                                     Tambah Video
                                 </a>
                             </Link>
@@ -499,14 +507,14 @@ const Vidio = () => {
                                                 <DatePicker
                                                     className="form-search-date form-control-sm form-control"
                                                     selected={startDate}
-                                                    onChange={(date) => setStartDate(date)}
+                                                    onChange={(date) => handleStartDate(date)}
                                                     selectsStart
                                                     startDate={startDate}
                                                     endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
                                                     placeholderText="Silahkan Isi Tanggal Dari"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                    minDate={moment().toDate()}
+                                                    // minDate={moment().toDate()}
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                                 </div>
@@ -526,15 +534,23 @@ const Vidio = () => {
                                                     startDate={startDate}
                                                     endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
-                                                    minDate={moment().toDate()}
-                                                    // minDate={startDate}
+                                                    // minDate={moment().toDate()}
+                                                    minDate={startDate}
                                                     maxDate={addDays(startDate, 20)}
                                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                    
+                                                    disabled = {disableEndDate === true || disableEndDate === null}
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                                 </div>
+                                                {
+                                                    disableEndDate === true || disableEndDate === null ?
+                                                        <small className="text-muted">
+                                                        Mohon isi Tanggal Dari terlebih dahulu
+                                                        </small>
+                                                    :
+                                                        null
+                                                }
                                             </div>
                                             </div>
                                         <div className="modal-footer">
@@ -798,7 +814,7 @@ const Vidio = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {video.total}</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {video.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''

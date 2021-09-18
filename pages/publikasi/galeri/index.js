@@ -23,7 +23,7 @@ export default function GaleriPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Galeri'>
+                <Layout title='Galeri - Publikasi'>
                     <Galeri />
                 </Layout>
             </div>

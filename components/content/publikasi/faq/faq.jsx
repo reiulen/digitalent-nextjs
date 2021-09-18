@@ -41,6 +41,7 @@ const Faq = () => {
     const [search, setSearch] = useState('')
 
     const [publishValue, setPublishValue] = useState(null);
+    const [disableEndDate, setDisableEndDate] = useState (true)
 
     let { page = 1, success } = router.query
     page = Number(page)
@@ -271,6 +272,12 @@ const Faq = () => {
     const resetValueSort = () => {
         setStartDate(null)
         setEndDate(null)
+        setDisableEndDate (true)
+    }
+
+    const handleStartDate = (date) => {
+        setStartDate (date)
+        setDisableEndDate (false)
     }
 
 
@@ -366,11 +373,9 @@ const Faq = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/faq/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
                                     Tambah FAQ
                                 </a>
-                                {/* <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
-                                    Tambah FAQ
-                                </a> */}
                             </Link>
                         </div>
                     </div>
@@ -471,14 +476,14 @@ const Faq = () => {
                                                 <DatePicker
                                                     className="form-search-date form-control-sm form-control"
                                                     selected={startDate}
-                                                    onChange={(date) => setStartDate(date)}
+                                                    onChange={(date) => handleStartDate(date)}
                                                     selectsStart
                                                     startDate={startDate}
                                                     endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
                                                     placeholderText="Silahkan Isi Tanggal Dari"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                    minDate={moment().toDate()}
+                                                    // minDate={moment().toDate()}
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                                 </div>
@@ -503,10 +508,20 @@ const Faq = () => {
                                                     maxDate={addDays(startDate, 20)}
                                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    disabled = {disableEndDate === true || disableEndDate === null}
                                                 // minDate={addDays(new Date(), 20)}
                                                 />
                                                 </div>
+                                                {
+                                                    disableEndDate === true || disableEndDate === null ?
+                                                        <small className="text-muted">
+                                                        Mohon isi Tanggal Dari terlebih dahulu
+                                                        </small>
+                                                    :
+                                                        null
+                                                }
                                             </div>
+                                            
                                             </div>
                                         <div className="modal-footer">
                                             <div className="d-flex justify-content-end align-items-center">
@@ -637,16 +652,32 @@ const Faq = () => {
                                                             <td className='align-middle'>
                                                                 {
                                                                     row.publish === 1 ? 
-                                                                    <SwitchButton
+                                                                    // <SwitchButton
+                                                                    //     checked={row.pinned === 1 ? true : false}
+                                                                    //     onlabel=" "
+                                                                    //     onstyle="primary"
+                                                                    //     offlabel=" "
+                                                                    //     offstyle="secondary"
+                                                                    //     size="sm"
+                                                                    //     width={30}
+                                                                    //     onChange={(checked) => onSetPin(checked, row.id)}
+                                                                    // />
+                                                                    <label className="switches">
+                                                                        <input
+                                                                        // required
+                                                                        className="checkbox"
                                                                         checked={row.pinned === 1 ? true : false}
-                                                                        onlabel=" "
-                                                                        onstyle="primary"
-                                                                        offlabel=" "
-                                                                        offstyle="secondary"
-                                                                        size="sm"
-                                                                        width={30}
+                                                                        type="checkbox"
+                                                                        // onChange={(checked) => setPublish(checked)}
                                                                         onChange={(checked) => onSetPin(checked, row.id)}
-                                                                    />
+                                                                        />
+                                                                        <span
+                                                                        className={`sliders round ${
+                                                                            row.pinned === 1 ?"text-white" : "pl-2"
+                                                                        }`}
+                                                                        >
+                                                                        </span>
+                                                                    </label>
                                                                     :
                                                                     <div className="text-center ml-1"> - </div>
                                                                 }
@@ -788,7 +819,7 @@ const Faq = () => {
                                             </select>
                                         </div>
                                         <div className="col-8 my-auto">
-                                            <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {faq.total}</p>
+                                            <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {faq.total}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -800,6 +831,7 @@ const Faq = () => {
         </PageWrapper>
     )
 }
+
 
 
 export default Faq

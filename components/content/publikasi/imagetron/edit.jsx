@@ -82,6 +82,7 @@ const EditImagetron = () => {
     const [users_id, setUserId] = useState(3)
     const [_method, setMethod] = useState("put");
     const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date (imagetron.tanggal_publish) : null);
+    const [disablePublishDate, setDisablePublishDate] = useState(imagetron.publish === 0 ? true : false)
 
     const onChangeGambar = (e) => {
         if (e.target.name === 'gambar') {
@@ -98,9 +99,26 @@ const EditImagetron = () => {
     }
 
     const handleChangePublish = (e) => {
-        setPublish(e.target.checked);
+        // setPublish(e.target.checked);
+        setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
+
+        if (e.target.checked === false){
+            setPublishDate (null)
+            setPublish (0)
+        } else {
+            setPublish (1)
+        }
     };
+
+    const handlePublishDate = (date) => {
+        // let result = moment(date).format("YYYY-MM-DD")
+        if (disablePublishDate === false) {
+            // setPublishDate(result)
+            setPublishDate(date)
+            // console.log (result)
+        }
+    }
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -125,7 +143,8 @@ const EditImagetron = () => {
                     gambar,
                     publish,
                     users_id,
-                    _method
+                    _method,
+                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
                 };
 
                 Swal.fire({
@@ -155,7 +174,8 @@ const EditImagetron = () => {
                     gambar: "",
                     publish,
                     users_id,
-                    _method
+                    _method,
+                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
                 };
 
                 Swal.fire({
@@ -232,7 +252,7 @@ const EditImagetron = () => {
             } */}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
+                    <div className="card-header">
                         <h3 className="card-title font-weight-bolder text-dark">Update Imagetron</h3>
                     </div>
                     <div className="card-body">
@@ -363,7 +383,7 @@ const EditImagetron = () => {
 
                                 <div className="mt-3 col-sm-3 text-muted">
                                     <p>
-                                    Resolusi yang direkomendasikan adalah 1024 * 512 dengan ukuran file kurang dari 2 MB. Fokus visual pada bagian tengah gambar
+                                    Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
                                     
                                 </div>
@@ -430,27 +450,35 @@ const EditImagetron = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group">
-                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                                <div className="col-sm-12">
-                                    <div className="input-group">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={publishDate}
-                                        onChange={(date) => setPublishDate(date)}
-                                        selectsStart
-                                        startDate={publishDate}
-                                        // endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                        placeholderText="Silahkan Isi Tanggal Publish"
-                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                        minDate={moment().toDate()}
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
+                            {
+                                disablePublishDate === false ?
+                                    <div className="form-group">
+                                        <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                        <div className="col-sm-12">
+                                            <div className="input-group">
+                                            <DatePicker
+                                                className="form-search-date form-control-sm form-control"
+                                                selected={publishDate}
+                                                onChange={(date) => handlePublishDate(date)}
+                                                // onChange={(date) => setPublishDate(date)}
+                                                selectsStart
+                                                startDate={publishDate}
+                                                // endDate={endDate}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="Silahkan Isi Tanggal Publish"
+                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                // minDate={moment().toDate()}
+                                            // minDate={addDays(new Date(), 20)}
+                                                disabled = {disablePublishDate === true || disablePublishDate === null}
+                                            />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                :
+                                    null
+                            }
 
+                            
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">

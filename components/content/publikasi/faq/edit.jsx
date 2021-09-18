@@ -56,6 +56,7 @@ const EditFaq = () => {
     const [pinned, setPinnedFaq] = useState(faq.pinned === 1 ? true : false)
     const [publish, setPublish] = useState(faq.publish === 1 ? true : false)
     const [publishDate, setPublishDate] = useState(faq.tanggal_publish ? new Date (faq.tanggal_publish) : null);
+    const [disablePublishDate, setDisablePublishDate] = useState(faq.publish === 0 ? true : false)
     const [, forceUpdate] = useState();
 
     const handleChangePinned = (e) => {
@@ -64,9 +65,26 @@ const EditFaq = () => {
     };
 
     const handleChangePublish = (e) => {
-        setPublish(e.target.checked);
+        // setPublish(e.target.checked);
+        setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
+
+        if (e.target.checked === false){
+            setPublishDate (null)
+            setPublish (0)
+        } else {
+            setPublish (1)
+        }
     };
+
+    const handlePublishDate = (date) => {
+        // let result = moment(date).format("YYYY-MM-DD")
+        if (disablePublishDate === false) {
+            // setPublishDate(result)
+            setPublishDate(date)
+            // console.log (result)
+        }
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -100,6 +118,7 @@ const EditFaq = () => {
                 publish,
                 pinned,
                 _method: 'put',
+                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
             }
 
             dispatch(updateFaq(data, faq.id))
@@ -141,7 +160,7 @@ const EditFaq = () => {
                 {
                     faq ? 
                         <div className="card card-custom card-stretch gutter-b">
-                            <div className="card-header border-0">
+                            <div className="card-header">
                                 <h3 className="card-title font-weight-bolder text-dark">Ubah FAQ</h3>
                             </div>
                             <div className="card-body">
@@ -186,7 +205,7 @@ const EditFaq = () => {
                                                 onChange={e => setKategoriId(e.target.value)}
                                                 onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor("kategori") }}
                                             >
-                                                <option value="" disabled selected>-- KATEGORI --</option>
+                                                <option value="" disabled selected>-- FAQ --</option>
                                                 {!kategori || (kategori && kategori.length === 0) ? (
                                                     <option value="">Data kosong</option>
                                                 ) : (
@@ -213,56 +232,6 @@ const EditFaq = () => {
                                             htmlFor="staticEmail"
                                             className="ml-5 pl-4 font-weight-bolder"
                                         >
-                                            Pin FAQ
-                                        </label>
-                                        <div className="col-sm-1 ml-4">
-                                            <div className="">
-                                                <label className="switches">
-                                                    <input
-                                                    // required
-                                                    className="checkbox"
-                                                    checked={pinned}
-                                                    type="checkbox"
-                                                    // onChange={(checked) => setPublish(checked)}
-                                                    onChange={(e) => handleChangePinned(e)}
-                                                    />
-                                                    <span
-                                                    className={`sliders round ${
-                                                        pinned ? "text-white" : "pl-2"
-                                                    }`}
-                                                    >
-                                                    </span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                                        <div className="col-sm-12">
-                                            <div className="input-group">
-                                            <DatePicker
-                                                className="form-search-date form-control-sm form-control"
-                                                selected={publishDate}
-                                                onChange={(date) => setPublishDate(date)}
-                                                selectsStart
-                                                startDate={publishDate}
-                                                // endDate={endDate}
-                                                dateFormat="dd/MM/yyyy"
-                                                placeholderText="Silahkan Isi Tanggal Publish"
-                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                minDate={moment().toDate()}
-                                            // minDate={addDays(new Date(), 20)}
-                                            />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="form-group row">
-                                        <label
-                                            htmlFor="staticEmail"
-                                            className="ml-5 pl-4 font-weight-bolder"
-                                        >
                                             Publish
                                         </label>
                                         <div className="col-sm-1 ml-4">
@@ -275,6 +244,98 @@ const EditFaq = () => {
                                                     type="checkbox"
                                                     // onChange={(checked) => setPublish(checked)}
                                                     onChange={(e) => handleChangePublish(e)}
+                                                    />
+                                                    <span
+                                                    className={`sliders round ${
+                                                        pinned ? "text-white" : "pl-2"
+                                                    }`}
+                                                    >
+                                                    </span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {
+                                        disablePublishDate === false ?
+                                            <div className="form-group">
+                                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                                <div className="col-sm-12">
+                                                    <div className="input-group">
+                                                    <DatePicker
+                                                        className="form-search-date form-control-sm form-control"
+                                                        selected={publishDate}
+                                                        nChange={(date) => handlePublishDate(date)}
+                                                        // onChange={(date) => setPublishDate(date)}
+                                                        selectsStart
+                                                        startDate={publishDate}
+                                                        // endDate={endDate}
+                                                        dateFormat="dd/MM/yyyy"
+                                                        placeholderText="Silahkan Isi Tanggal Publish"
+                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                        // minDate={moment().toDate()}
+                                                        disabled = {disablePublishDate === true || disablePublishDate === null}
+                                                    // minDate={addDays(new Date(), 20)}
+                                                    />
+                                                    </div>
+                                                    {/* {
+                                                        disablePublishDate === true ?
+                                                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                                                        :
+                                                            null
+                                                    } */}
+                                                </div>
+                                            </div>
+                                        :
+                                            null
+                                    }
+
+                                    {/* <div className="form-group">
+                                        <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                        <div className="col-sm-12">
+                                            <div className="input-group">
+                                            <DatePicker
+                                                className="form-search-date form-control-sm form-control"
+                                                selected={publishDate}
+                                                nChange={(date) => handlePublishDate(date)}
+                                                // onChange={(date) => setPublishDate(date)}
+                                                selectsStart
+                                                startDate={publishDate}
+                                                // endDate={endDate}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="Silahkan Isi Tanggal Publish"
+                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                minDate={moment().toDate()}
+                                                disabled = {disablePublishDate === true || disablePublishDate === null}
+                                            // minDate={addDays(new Date(), 20)}
+                                            />
+                                            </div>
+                                            {
+                                                disablePublishDate === true ?
+                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                                                :
+                                                    null
+                                            }
+                                        </div>
+                                    </div> */}
+
+                                    <div className="form-group row">
+                                        <label
+                                            htmlFor="staticEmail"
+                                            className="ml-5 pl-4 font-weight-bolder"
+                                        >
+                                            Pin FAQ
+                                        </label>
+                                        <div className="col-sm-1 ml-4">
+                                            <div className="">
+                                                <label className="switches">
+                                                    <input
+                                                    // required
+                                                    className="checkbox"
+                                                    checked={pinned}
+                                                    type="checkbox"
+                                                    // onChange={(checked) => setPublish(checked)}
+                                                    onChange={(e) => handleChangePinned(e)}
                                                     />
                                                     <span
                                                     className={`sliders round ${

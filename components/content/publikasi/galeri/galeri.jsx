@@ -44,6 +44,7 @@ const Galeri = () => {
     const [endDate, setEndDate] = useState(null);
     const [publishValue, setPublishValue] = useState(null)
     const [index_galleri, setIndexGalleri] = useState (null)
+    const [disableEndDate, setDisableEndDate] = useState (true)
 
     let loading = false
 
@@ -283,13 +284,19 @@ const Galeri = () => {
     const resetValueSort = () => {
         setStartDate(null)
         setEndDate(null)
+        setDisableEndDate (true)
+      }
+    
+    const handleStartDate = (date) => {
+        setStartDate (date)
+        setDisableEndDate (false)
     }
 
     return (
         <PageWrapper>
-            {/* {
+            {
                 console.log (galeri)
-            } */}
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -377,6 +384,7 @@ const Galeri = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/galeri/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
                                     Tambah Galeri
                                 </a>
                             </Link>
@@ -479,14 +487,14 @@ const Galeri = () => {
                                                             <DatePicker
                                                                 className="form-search-date form-control-sm form-control"
                                                                 selected={startDate}
-                                                                onChange={(date) => setStartDate(date)}
+                                                                onChange={(date) => handleStartDate(date)}
                                                                 selectsStart
                                                                 startDate={startDate}
                                                                 endDate={endDate}
                                                                 dateFormat="dd/MM/yyyy"
                                                                 placeholderText="Silahkan Isi Tanggal Dari"
                                                                 wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                minDate={moment().toDate()}
+                                                                // minDate={moment().toDate()}
                                                             // minDate={addDays(new Date(), 20)}
                                                             />
                                                             </div>
@@ -506,14 +514,23 @@ const Galeri = () => {
                                                                 startDate={startDate}
                                                                 endDate={endDate}
                                                                 dateFormat="dd/MM/yyyy"
-                                                                // minDate={startDate}
-                                                                minDate={moment().toDate()}
+                                                                minDate={startDate}
+                                                                // minDate={moment().toDate()}
                                                                 maxDate={addDays(startDate, 20)}
                                                                 placeholderText="Silahkan Isi Tanggal Sampai"
                                                                 wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                disabled = {disableEndDate === true || disableEndDate === null}
                                                             // minDate={addDays(new Date(), 20)}
                                                             />
                                                             </div>
+                                                            {
+                                                                disableEndDate === true || disableEndDate === null ?
+                                                                    <small className="text-muted">
+                                                                    Mohon isi Tanggal Dari terlebih dahulu
+                                                                    </small>
+                                                                :
+                                                                    null
+                                                            }
                                                         </div>
                                                     </div>
                                                     <div className="modal-footer">
@@ -731,10 +748,10 @@ const Galeri = () => {
                                         />
                                     </div>
                                 }
-                                {galeri && galeri.total > 5 ?
+                                {galeri ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
-                                            <div className="col-4 mr-0 p-0">
+                                            <div className="col-4 mr-0 p-0 mt-3">
                                                 <select className="form-control" id="exampleFormControlSelect2" style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }} onChange={e => handleLimit(e.target.value)} onBlur={e => handleLimit(e.target.value)}>
                                                     <option value='5' selected={limit == "5" ? true: false}>5</option>
                                                     <option value='10' selected={limit == "10" ? true: false}>10</option>
@@ -743,7 +760,7 @@ const Galeri = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {galeri.total}</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {galeri.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''

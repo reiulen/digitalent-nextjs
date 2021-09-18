@@ -389,7 +389,7 @@ margin-top: 1rem;
   font-weight: 500;
 }
 .fw-600{
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 .fw-700{
   font-weight: 700;
@@ -419,8 +419,14 @@ margin-top: 1rem;
 .fz-18 {
   font-size: 18px;
 }
+.fz-20 {
+  font-size: 20px !important;
+}
 .fz-24 {
   font-size: 24px;
+}
+.fz-40 {
+  font-size: 40px;
 }
 /* ------------border-radius */
 .br-12{
@@ -461,6 +467,8 @@ margin-top: 1rem;
   border-radius: 8px;
   margin: 20px 0;
 }
+
+
 
 /* shadow icon*/
 .icon-plus {

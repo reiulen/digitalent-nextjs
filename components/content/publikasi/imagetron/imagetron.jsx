@@ -51,6 +51,7 @@ const Imagetron = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [publishValue, setPublishValue] = useState(null)
+    const [disableEndDate, setDisableEndDate] = useState (true)
 
     let loading = false;
     let { page = 1, keyword, success } = router.query;
@@ -282,6 +283,12 @@ const Imagetron = () => {
     const resetValueSort = () => {
         setStartDate(null)
         setEndDate(null)
+        setDisableEndDate (true)
+      }
+    
+    const handleStartDate = (date) => {
+        setStartDate (date)
+        setDisableEndDate (false)
     }
 
     return (
@@ -375,7 +382,8 @@ const Imagetron = () => {
                         <div className="card-toolbar">
                             <Link href="/publikasi/imagetron/tambah">
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
-                                Tambah Imagetron
+                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                    Tambah Imagetron
                                 </a>
                             </Link>
                         </div>
@@ -477,14 +485,14 @@ const Imagetron = () => {
                                                     <DatePicker
                                                         className="form-search-date form-control-sm form-control"
                                                         selected={startDate}
-                                                        onChange={(date) => setStartDate(date)}
+                                                        onChange={(date) => handleStartDate(date)}
                                                         selectsStart
                                                         startDate={startDate}
                                                         endDate={endDate}
                                                         dateFormat="dd/MM/yyyy"
                                                         placeholderText="Silahkan Isi Tanggal Dari"
                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                        minDate={moment().toDate()}
+                                                        // minDate={moment().toDate()}
                                                     // minDate={addDays(new Date(), 20)}
                                                     />
                                                     </div>
@@ -504,14 +512,23 @@ const Imagetron = () => {
                                                         startDate={startDate}
                                                         endDate={endDate}
                                                         dateFormat="dd/MM/yyyy"
-                                                        minDate={moment().toDate()}
-                                                        // minDate={startDate}
+                                                        // minDate={moment().toDate()}
+                                                        minDate={startDate}
                                                         maxDate={addDays(startDate, 20)}
                                                         placeholderText="Silahkan Isi Tanggal Sampai"
                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                        disabled = {disableEndDate === true || disableEndDate === null}
                                                     // minDate={addDays(new Date(), 20)}
                                                     />
                                                     </div>
+                                                    {
+                                                        disableEndDate === true || disableEndDate === null ?
+                                                            <small className="text-muted">
+                                                            Mohon isi Tanggal Dari terlebih dahulu
+                                                            </small>
+                                                        :
+                                                            null
+                                                    }
                                                 </div>
                                                 </div>
                                             <div className="modal-footer">
@@ -771,7 +788,7 @@ const Imagetron = () => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-3' style={{ color: '#B5B5C3' }}>Total Data {imagetron.data.total}</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {imagetron.data.total}</p>
                                             </div>
                                         </div>
                                     </div> : ''
