@@ -293,7 +293,8 @@ const ListSurvey = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {survey && survey.list_survey.length === 0 ? (
+                      {!survey ||
+                      (survey && survey.list_survey.length === 0) ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Masih Kosong
                         </td>

@@ -4,14 +4,14 @@ import dynamic from "next/dynamic";
 // import Layout from "../../../components/templates/layout.component";
 // import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-// import ListSubstansi from '../../../components/content/subvit/substansi/list-substansi'
+import ListSubstansi from "../../../components/content/subvit/substansi/list-substansi";
 const Layout = dynamic(() =>
   import("../../../components/templates/layout.component")
 );
-const ListSubstansi = dynamic(
-  () => import("../../../components/content/subvit/substansi/list-substansi"),
-  { loading: () => <LoadingSkeleton /> }
-);
+// const ListSubstansi = dynamic(
+//   () => import("../../../components/content/subvit/substansi/list-substansi"),
+//   { loading: () => <LoadingSkeleton />, ssr: false }
+// );
 
 import { getAllSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../redux/store";
