@@ -13,6 +13,7 @@ const ListSurvey = dynamic(
   () => import("../../../components/content/subvit/survey/list-survey"),
   { loading: () => <LoadingSkeleton /> }
 );
+import { getSession } from "next-auth/client";
 
 export default function Survey() {
   return (
@@ -28,9 +29,23 @@ export default function Survey() {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query }) => {
+    async ({ query, req }) => {
       await store.dispatch(
         getAllSurveyQuestionBanks(query.page, query.keyword, query.limit)
       );
+
+      const session = await getSession({ req });
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        };
+      }
+
+      return {
+        props: { session },
+      };
     }
 );

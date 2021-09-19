@@ -31,7 +31,6 @@ import {
 } from "../../types/subvit/trivia-question.type";
 
 import axios from "axios";
-import CardPage from "../../../components/CardPage";
 
 // get all data
 export const getAllTriviaQuestionBanks =
@@ -230,7 +229,7 @@ export const allReportTriviaQuestionBanks =
         `api/trivia-question-banks/report/${id}?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
-      if(card) link = link.concat(`&card=${card}`)
+      if (card) link = link.concat(`&card=${card}`);
 
       // const config = {
       //     headers: {

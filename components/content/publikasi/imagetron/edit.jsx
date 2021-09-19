@@ -450,29 +450,35 @@ const EditImagetron = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group">
-                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                                <div className="col-sm-12">
-                                    <div className="input-group">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={publishDate}
-                                        onChange={(date) => handlePublishDate(date)}
-                                        // onChange={(date) => setPublishDate(date)}
-                                        selectsStart
-                                        startDate={publishDate}
-                                        // endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                        placeholderText="Silahkan Isi Tanggal Publish"
-                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                        minDate={moment().toDate()}
-                                    // minDate={addDays(new Date(), 20)}
-                                        disabled = {disablePublishDate === true || disablePublishDate === null}
-                                    />
+                            {
+                                disablePublishDate === false ?
+                                    <div className="form-group">
+                                        <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                        <div className="col-sm-12">
+                                            <div className="input-group">
+                                            <DatePicker
+                                                className="form-search-date form-control-sm form-control"
+                                                selected={publishDate}
+                                                onChange={(date) => handlePublishDate(date)}
+                                                // onChange={(date) => setPublishDate(date)}
+                                                selectsStart
+                                                startDate={publishDate}
+                                                // endDate={endDate}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="Silahkan Isi Tanggal Publish"
+                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                // minDate={moment().toDate()}
+                                            // minDate={addDays(new Date(), 20)}
+                                                disabled = {disablePublishDate === true || disablePublishDate === null}
+                                            />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                :
+                                    null
+                            }
 
+                            
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">

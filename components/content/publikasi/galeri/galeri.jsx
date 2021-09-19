@@ -44,6 +44,7 @@ const Galeri = () => {
     const [endDate, setEndDate] = useState(null);
     const [publishValue, setPublishValue] = useState(null)
     const [index_galleri, setIndexGalleri] = useState (null)
+    const [disableEndDate, setDisableEndDate] = useState (true)
 
     let loading = false
 
@@ -283,6 +284,12 @@ const Galeri = () => {
     const resetValueSort = () => {
         setStartDate(null)
         setEndDate(null)
+        setDisableEndDate (true)
+      }
+    
+    const handleStartDate = (date) => {
+        setStartDate (date)
+        setDisableEndDate (false)
     }
 
     return (
@@ -480,14 +487,14 @@ const Galeri = () => {
                                                             <DatePicker
                                                                 className="form-search-date form-control-sm form-control"
                                                                 selected={startDate}
-                                                                onChange={(date) => setStartDate(date)}
+                                                                onChange={(date) => handleStartDate(date)}
                                                                 selectsStart
                                                                 startDate={startDate}
                                                                 endDate={endDate}
                                                                 dateFormat="dd/MM/yyyy"
                                                                 placeholderText="Silahkan Isi Tanggal Dari"
                                                                 wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                minDate={moment().toDate()}
+                                                                // minDate={moment().toDate()}
                                                             // minDate={addDays(new Date(), 20)}
                                                             />
                                                             </div>
@@ -507,14 +514,23 @@ const Galeri = () => {
                                                                 startDate={startDate}
                                                                 endDate={endDate}
                                                                 dateFormat="dd/MM/yyyy"
-                                                                // minDate={startDate}
-                                                                minDate={moment().toDate()}
+                                                                minDate={startDate}
+                                                                // minDate={moment().toDate()}
                                                                 maxDate={addDays(startDate, 20)}
                                                                 placeholderText="Silahkan Isi Tanggal Sampai"
                                                                 wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                disabled = {disableEndDate === true || disableEndDate === null}
                                                             // minDate={addDays(new Date(), 20)}
                                                             />
                                                             </div>
+                                                            {
+                                                                disableEndDate === true || disableEndDate === null ?
+                                                                    <small className="text-muted">
+                                                                    Mohon isi Tanggal Dari terlebih dahulu
+                                                                    </small>
+                                                                :
+                                                                    null
+                                                            }
                                                         </div>
                                                     </div>
                                                     <div className="modal-footer">
@@ -635,7 +651,7 @@ const Galeri = () => {
                                                                 <button
                                                                     onClick={() => handlePreview(i, row.id)} 
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
-                                                                    data-target="#exampleModalCenter" 
+                                                                    data-target="#galleryModalPreview" 
                                                                     data-toggle="modal"
                                                                 >
                                                                     <i className="ri-todo-fill p-0 text-white"></i>
@@ -756,11 +772,11 @@ const Galeri = () => {
             </div>
             
             {/* Modal */}
-            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+            <div className="modal fade" id="galleryModalPreview" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Image Preview</h5>
+                            <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

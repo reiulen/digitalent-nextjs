@@ -160,45 +160,47 @@ const TambahBerita = () => {
             if (publish === true) {
                 setPublish(1)
               
-              } else if (publish === false) {
+            } else if (publish === false) {
                 setPublish(0)
-                
-              }
-    
-            const data = {
-                kategori_id,
-                users_id,
-                judul_berita,
-                isi_berita,
-                gambar,
-                publish,
-                tag,
-                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            
             }
 
-            Swal.fire({
-                title: "Apakah anda yakin ?",
-                text: "Data ini akan ditambahkan !",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya !",
-                cancelButtonText: "Batal",
-              })
-                .then((result) => {
-                  if (result.isConfirmed) {
-                    // if (success) {
-                    //   dispatch({
-                    //     type: NEW_ARTIKEL_RESET,
-                    //   });
-                    // }
+            if (publishDate === false){}
+    
+            // const data = {
+            //     kategori_id,
+            //     users_id,
+            //     judul_berita,
+            //     isi_berita,
+            //     gambar,
+            //     publish,
+            //     tag,
+            //     tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            // }
+
+            // Swal.fire({
+            //     title: "Apakah anda yakin ?",
+            //     text: "Data ini akan ditambahkan !",
+            //     icon: "warning",
+            //     showCancelButton: true,
+            //     confirmButtonColor: "#3085d6",
+            //     cancelButtonColor: "#d33",
+            //     confirmButtonText: "Ya !",
+            //     cancelButtonText: "Batal",
+            //   })
+            //     .then((result) => {
+            //       if (result.isConfirmed) {
+            //         // if (success) {
+            //         //   dispatch({
+            //         //     type: NEW_ARTIKEL_RESET,
+            //         //   });
+            //         // }
         
-                    dispatch(newBerita(data))
+            //         dispatch(newBerita(data))
         
-                    // console.log(data);
-                  }
-              });
+            //         // console.log(data);
+            //       }
+            //   });
     
             // dispatch(newBerita(data))
             // console.log(data)
@@ -468,34 +470,42 @@ const TambahBerita = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group">
-                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                                <div className="col-sm-12">
-                                    <div className="input-group">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={publishDate}
-                                        onChange={(date) => handlePublishDate(date)}
-                                        // onChange={(date) => setPublishDate(date)}
-                                        selectsStart
-                                        startDate={publishDate}
-                                        // endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                        placeholderText="Silahkan Isi Tanggal Publish"
-                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                        minDate={moment().toDate()}
-                                        disabled = {disablePublishDate === true || disablePublishDate === null}
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
+                            {
+                                disablePublishDate === false ?
+
+                                    <div className="form-group">
+                                        <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                        <div className="col-sm-12">
+                                            <div className="input-group">
+                                            <DatePicker
+                                                className="form-search-date form-control-sm form-control"
+                                                selected={publishDate}
+                                                onChange={(date) => handlePublishDate(date)}
+                                                // onChange={(date) => setPublishDate(date)}
+                                                selectsStart
+                                                startDate={publishDate}
+                                                // endDate={endDate}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="Silahkan Isi Tanggal Publish"
+                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                // minDate={moment().toDate()}
+                                                disabled = {disablePublishDate === true || disablePublishDate === null}
+                                            // minDate={addDays(new Date(), 20)}
+                                            />
+                                            </div>
+                                            {/* {
+                                                disablePublishDate === true ?
+                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                                                :
+                                                    null
+                                            } */}
+                                        </div>
                                     </div>
-                                    {
-                                        disablePublishDate === true ?
-                                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                                        :
-                                            null
-                                    }
-                                </div>
-                            </div>
+                                :
+                                    null
+                            }
+
+                            
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>

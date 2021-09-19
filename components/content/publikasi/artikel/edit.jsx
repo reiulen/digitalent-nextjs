@@ -170,80 +170,242 @@ const EditArtikel = () => {
       }
 
       if (gambarDB !== gambar) {
-        const data = {
-          judul_artikel,
-          isi_artikel,
-          gambar,
-          kategori_id,
-          users_id,
-          tag,
-          publish,
-          id,
-          _method,
-          tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
-        };
+
+        if (publishDate === null) {
+
+          let today = new Date
+
+          console.log (today)
+
+          const data = {
+            judul_artikel,
+            isi_artikel,
+            gambar,
+            kategori_id,
+            users_id,
+            tag,
+            publish,
+            id,
+            _method,
+            tanggal_publish : moment(today).format("YYYY-MM-DD")
+          };
+          
+          Swal.fire({
+            title: "Apakah anda yakin ?",
+            text: "Data ini akan diedit !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya !",
+            cancelButtonText: "Batal",
+          })
+            .then((result) => {
+              if (result.isConfirmed) {
+                // if (success) {
+                //   dispatch({
+                //     // type: NEW_ARTIKEL_RESET
+                //     type: UPDATE_ARTIKEL_RESET,
+                //   });
+                // }
+    
+                dispatch(updateArtikel(data));
+                console.log(data)
+              }
+          });
+
+        } else {
+          const data = {
+            judul_artikel,
+            isi_artikel,
+            gambar,
+            kategori_id,
+            users_id,
+            tag,
+            publish,
+            id,
+            _method,
+            tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+          };
+          
+          Swal.fire({
+            title: "Apakah anda yakin ?",
+            text: "Data ini akan diedit !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya !",
+            cancelButtonText: "Batal",
+          })
+            .then((result) => {
+              if (result.isConfirmed) {
+                // if (success) {
+                //   dispatch({
+                //     // type: NEW_ARTIKEL_RESET
+                //     type: UPDATE_ARTIKEL_RESET,
+                //   });
+                // }
+    
+                dispatch(updateArtikel(data));
+                console.log(data)
+              }
+          });
+        }
+
+        // const data = {
+        //   judul_artikel,
+        //   isi_artikel,
+        //   gambar,
+        //   kategori_id,
+        //   users_id,
+        //   tag,
+        //   publish,
+        //   id,
+        //   _method,
+        //   tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+        // };
         
-        Swal.fire({
-          title: "Apakah anda yakin ?",
-          text: "Data ini akan diedit !",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Ya !",
-          cancelButtonText: "Batal",
-        })
-          .then((result) => {
-            if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
+        // Swal.fire({
+        //   title: "Apakah anda yakin ?",
+        //   text: "Data ini akan diedit !",
+        //   icon: "warning",
+        //   showCancelButton: true,
+        //   confirmButtonColor: "#3085d6",
+        //   cancelButtonColor: "#d33",
+        //   confirmButtonText: "Ya !",
+        //   cancelButtonText: "Batal",
+        // })
+        //   .then((result) => {
+        //     if (result.isConfirmed) {
+        //       // if (success) {
+        //       //   dispatch({
+        //       //     // type: NEW_ARTIKEL_RESET
+        //       //     type: UPDATE_ARTIKEL_RESET,
+        //       //   });
+        //       // }
   
-              dispatch(updateArtikel(data));
-              console.log(data)
-            }
-        });
+        //       dispatch(updateArtikel(data));
+        //       console.log(data)
+        //     }
+        // });
 
       } else {
-        const data = {
-          judul_artikel,
-          isi_artikel,
-          gambar : "",
-          kategori_id,
-          users_id,
-          tag,
-          publish,
-          id,
-          _method,
-          tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
-        };
+
+        if (publishDate === null) {
+          let today = new Date
+
+          const data = {
+            judul_artikel,
+            isi_artikel,
+            gambar : "",
+            kategori_id,
+            users_id,
+            tag,
+            publish,
+            id,
+            _method,
+            tanggal_publish : moment(today).format("YYYY-MM-DD")
+          };
+          
+          Swal.fire({
+            title: "Apakah anda yakin ?",
+            text: "Data ini akan diedit !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya !",
+            cancelButtonText: "Batal",
+          })
+            .then((result) => {
+              if (result.isConfirmed) {
+                // if (success) {
+                //   dispatch({
+                //     // type: NEW_ARTIKEL_RESET
+                //     type: UPDATE_ARTIKEL_RESET,
+                //   });
+                // }
+    
+                dispatch(updateArtikel(data));
+                console.log(data)
+              }
+          });
+        } else {
+          const data = {
+            judul_artikel,
+            isi_artikel,
+            gambar : "",
+            kategori_id,
+            users_id,
+            tag,
+            publish,
+            id,
+            _method,
+            tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+          };
+          
+          Swal.fire({
+            title: "Apakah anda yakin ?",
+            text: "Data ini akan diedit !",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya !",
+            cancelButtonText: "Batal",
+          })
+            .then((result) => {
+              if (result.isConfirmed) {
+                // if (success) {
+                //   dispatch({
+                //     // type: NEW_ARTIKEL_RESET
+                //     type: UPDATE_ARTIKEL_RESET,
+                //   });
+                // }
+    
+                dispatch(updateArtikel(data));
+                console.log(data)
+              }
+          });
+        }
+
+        // const data = {
+        //   judul_artikel,
+        //   isi_artikel,
+        //   gambar : "",
+        //   kategori_id,
+        //   users_id,
+        //   tag,
+        //   publish,
+        //   id,
+        //   _method,
+        //   tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+        // };
         
-        Swal.fire({
-          title: "Apakah anda yakin ?",
-          text: "Data ini akan diedit !",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Ya !",
-          cancelButtonText: "Batal",
-        })
-          .then((result) => {
-            if (result.isConfirmed) {
-              // if (success) {
-              //   dispatch({
-              //     // type: NEW_ARTIKEL_RESET
-              //     type: UPDATE_ARTIKEL_RESET,
-              //   });
-              // }
+        // Swal.fire({
+        //   title: "Apakah anda yakin ?",
+        //   text: "Data ini akan diedit !",
+        //   icon: "warning",
+        //   showCancelButton: true,
+        //   confirmButtonColor: "#3085d6",
+        //   cancelButtonColor: "#d33",
+        //   confirmButtonText: "Ya !",
+        //   cancelButtonText: "Batal",
+        // })
+        //   .then((result) => {
+        //     if (result.isConfirmed) {
+        //       // if (success) {
+        //       //   dispatch({
+        //       //     // type: NEW_ARTIKEL_RESET
+        //       //     type: UPDATE_ARTIKEL_RESET,
+        //       //   });
+        //       // }
   
-              dispatch(updateArtikel(data));
-              console.log(data)
-            }
-        });
+        //       dispatch(updateArtikel(data));
+        //       console.log(data)
+        //     }
+        // });
       }
       
     } else {
@@ -624,34 +786,42 @@ const EditArtikel = () => {
                   </div>
                 </div> */}
 
-                <div className="form-group">
-                  <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                  <div className="col-sm-12">
-                    <div className="input-group">
-                      <DatePicker
-                        className="form-search-date form-control-sm form-control"
-                        selected={publishDate}
-                        onChange={(date) => handlePublishDate(date)}
-                        // onChange={(date) => setPublishDate(date)}
-                        selectsStart
-                        startDate={publishDate}
-                        // endDate={endDate}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Silahkan Isi Tanggal Publish"
-                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                        minDate={moment().toDate()}
-                      // minDate={addDays(new Date(), 20)}
-                        disabled = {disablePublishDate === true || disablePublishDate === null}
-                      />
+                {
+                  disablePublishDate === false ?
+                    <div className="form-group">
+                      <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                      <div className="col-sm-12">
+                        <div className="input-group">
+                          <DatePicker
+                            className="form-search-date form-control-sm form-control"
+                            selected={publishDate}
+                            onChange={(date) => handlePublishDate(date)}
+                            // onChange={(date) => setPublishDate(date)}
+                            selectsStart
+                            startDate={publishDate}
+                            // endDate={endDate}
+                            dateFormat="dd/MM/yyyy"
+                            placeholderText="Silahkan Isi Tanggal Publish"
+                            wrapperClassName="col-12 col-lg-12 col-xl-12"
+                            // minDate={moment().toDate()}
+                          // minDate={addDays(new Date(), 20)}
+                            disabled = {disablePublishDate === true || disablePublishDate === null}
+                          />
+                        </div>
+                        {/* {
+                          disablePublishDate === true ?
+                            <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                          :
+                            null
+                        } */}
+                      </div>
                     </div>
-                    {
-                      disablePublishDate === true ?
-                        <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
-                      :
-                        null
-                    }
-                  </div>
-                </div>
+                  :
+                    null
+
+                }
+
+                
 
                 <div className="form-group row">
                   <div className="col-sm-2"></div>
