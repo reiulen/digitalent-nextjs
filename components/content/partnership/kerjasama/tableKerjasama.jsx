@@ -53,6 +53,7 @@ const Table = () => {
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
+  console.log("allMK",allMK)
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
@@ -440,35 +441,6 @@ const Table = () => {
                                       <label className="required fw-bold fs-6 mb-2">
                                         Mitra
                                       </label>
-
-                                      {/* <select
-                                        onChange={(e) =>
-                                          setValueMitra(e.target.value)
-                                        }
-                                        id="list-mitra"
-                                        className="form-select form-control"
-                                        aria-label="Select example"
-                                      >
-                                        <option value="">Semua</option>
-                                        {allMK.stateListMitra.length === 0
-                                          ? ""
-                                          : allMK.stateListMitra
-                                              .slice(
-                                                1,
-                                                allMK.stateListMitra.length
-                                              )
-                                              .map((items, i) => {
-                                                return (
-                                                  <option
-                                                    key={i}
-                                                    value={items.name}
-                                                  >
-                                                    {items.name}
-                                                  </option>
-                                                );
-                                              })}
-                                      </select> */}
-
                                       <Select
                                         ref={(ref) => (selectRefMitra = ref)}
                                         className="basic-single"
@@ -489,34 +461,6 @@ const Table = () => {
                                       <label className="required fw-bold fs-6 mb-2">
                                         Kategori Kerjasama
                                       </label>
-                                      {/* <select
-                                        onChange={(e) =>
-                                          setValueKerjaSama(e.target.value)
-                                        }
-                                        id="list-kerjasama"
-                                        className="form-select form-control"
-                                        aria-label="Select example"
-                                      >
-                                        <option value="">Semua</option>
-                                        {allMK.stateListKerjaSama.length === 0
-                                          ? ""
-                                          : allMK.stateListKerjaSama.data.map(
-                                              (items, i) => {
-                                                return (
-                                                  <option
-                                                    key={i}
-                                                    value={
-                                                      items.cooperation_categories
-                                                    }
-                                                  >
-                                                    {
-                                                      items.cooperation_categories
-                                                    }
-                                                  </option>
-                                                );
-                                              }
-                                            )}
-                                      </select> */}
                                       <Select
                                         ref={(ref) => (selectRefKerjasama = ref)}
                                         className="basic-single"
@@ -537,30 +481,6 @@ const Table = () => {
                                       <label className="required fw-bold fs-6 mb-2">
                                         Status
                                       </label>
-                                      {/* <select
-                                        id="list-status"
-                                        onChange={(e) =>
-                                          setValueStatus(e.target.value)
-                                        }
-                                        className="form-select form-control"
-                                        aria-label="Select example"
-                                      >
-                                        <option value="">Semua</option>
-                                        {allMK.stateListStatus.length === 0
-                                          ? ""
-                                          : allMK.stateListStatus.data.map(
-                                              (items, i) => {
-                                                return (
-                                                  <option
-                                                    key={i}
-                                                    value={items.name_en}
-                                                  >
-                                                    {items.name}
-                                                  </option>
-                                                );
-                                              }
-                                            )}
-                                      </select> */}
                                       <Select
                                         ref={(ref) => (selectRefStatus = ref)}
                                         className="basic-single"
@@ -579,15 +499,16 @@ const Table = () => {
                                     </div>
                                   </div>
                                   <div className="modal-footer">
+
+
+
+
+
+
                                     <div className="d-flex justify-content-end align-items-center">
-                                      {/* <Link href="/compoenent">
-                                        <a className="btn btn-white">Reset</a>
-                                      </Link> */}
                                       <button
-                                        className="btn btn-white"
+                                        className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                         type="button"
-                                        // type="button"
-                                      // className="close"
                                       data-dismiss="modal"
                                       aria-label="Close"
                                         onClick={() => resetValueSort()}
@@ -595,7 +516,7 @@ const Table = () => {
                                         Reset
                                       </button>
                                       <button
-                                        className="btn btn-primary ml-4"
+                                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                         type="button"
                                         // type="button"
                                       // className="close"
@@ -608,6 +529,13 @@ const Table = () => {
                                         Terapkan
                                       </button>
                                     </div>
+
+
+
+
+
+
+
                                   </div>
                                 </div>
                               </div>
@@ -676,8 +604,6 @@ const Table = () => {
                                       ? index + 1
                                       : (allMK.page - 1) * allMK.limit +
                                         (index + 1)}
-
-                                    {/* {index+1} */}
                                 </td>
                                 <td className="align-middle text-left">
                                   {items.partner === null ? (
@@ -1056,11 +982,11 @@ const Table = () => {
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/review-kerjasama`
+                                          )
+                                        }
                                       >
                                         {/* <IconEye
                                           width="16"
@@ -1078,11 +1004,11 @@ const Table = () => {
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/detail-revisi-kerjasama`
+                                          )
+                                        }
                                       >
                                         <IconEye
                                           width="16"
@@ -1161,11 +1087,11 @@ const Table = () => {
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/submit-dokumen-kerjasama-revisi`
+                                          )
+                                        }
                                       >
                                         <IconReview />
                                         <div className="text-hover-show-hapus">

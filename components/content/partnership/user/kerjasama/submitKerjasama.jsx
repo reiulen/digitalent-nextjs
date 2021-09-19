@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import Link from "next/link";
-import PageWrapper from "../../../wrapper/page.wrapper";
+import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
@@ -12,7 +12,7 @@ import {
   fetchListCooperationSelect,
   changeCooperationSelectByID,
   fetchListCooperationSelectById,
-} from "../../../../redux/actions/partnership/user/cooperation.actions";
+} from "../../../../../redux/actions/partnership/user/cooperation.actions";
 import axios from "axios";
 const DetailDokumenKerjasama = () => {
   const dispatch = useDispatch();
@@ -114,7 +114,7 @@ const DetailDokumenKerjasama = () => {
               {
                 headers: {
                   authorization:
-                    "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMTY5MjYxNywiZXhwIjoxNjMxNzc5MDE3LCJuYmYiOjE2MzE2OTI2MTcsImp0aSI6Ik5Jdm1UODU3OHJFTnk5U1YiLCJzdWIiOjEzLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwidXNlciI6eyJpZCI6MTMsIm5hbWUiOiJSYWhtYXQgSGlkYXlhdHVsbGFoIiwiZW1haWwiOiJyYWhtYXRoaWRheWF0dWxsYWg5OTZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjQzOjEyLjAwMDAwMFoiLCJyZW1lbWJlcl90b2tlbiI6IjIxNTkxMCIsInJvbGVzIjoiW21pdHJhXSIsImNyZWF0ZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjM3OjQyLjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMS0wOS0xNVQwNzo0MzoxMi4wMDAwMDBaIn19.Kzw6Z1v33Q4AezE5F-G-9I95NpxO3SmNAysL0QkkYZQ",
+                    `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
                 },
               }
             );
@@ -395,7 +395,7 @@ const DetailDokumenKerjasama = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/partnership/kerjasama">
+                  <Link href="/partnership/user/kerjasama" passHref>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>

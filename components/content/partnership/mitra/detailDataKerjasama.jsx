@@ -395,7 +395,7 @@ const DetailDataKerjasama = () => {
                                         <a className="btn btn-white">Reset</a>
                                       </Link> */}
                                 <button
-                                  className="btn btn-white"
+                                  className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                   type="button"
                                   data-dismiss="modal"
                                   aria-label="Close"
@@ -404,7 +404,7 @@ const DetailDataKerjasama = () => {
                                   Reset
                                 </button>
                                 <button
-                                  className="btn btn-primary ml-4"
+                                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
                                   onClick={(e) => handleSubmitSearchMany(e)}
                                 >

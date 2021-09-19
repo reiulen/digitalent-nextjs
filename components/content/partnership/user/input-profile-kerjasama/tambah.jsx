@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import PageWrapper from "../../../wrapper/page.wrapper";
+import PageWrapper from "../../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 import { useRouter } from "next/router";
@@ -9,12 +9,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 import axios from "axios";
+import IconClose from "../../../../assets/icon/Close";
+import Image from "next/image";
 
 const Tambah = () => {
+  const router = useRouter();
   // const [startDate, setStartDate] = useState(null);
   // const [endDate, setEndDate] = useState(null);
 
-  const router = useRouter();
+  
   // diambil dari data user ketika pertama kali register (name)
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
@@ -51,9 +54,6 @@ const Tambah = () => {
       });
       notify("Harus isi nama lembaga");
     } else if (wesite === "") {
-      // setError({ ...error, agency_logo: "Harus isi gambar logo dengan format png" });
-      // notify("Harus isi gambar logo dengan format png");
-
       setError({ ...error, wesite: "Harus isi nama website" });
       notify("Harus isi nama website");
     } else if (email === "") {
@@ -115,8 +115,8 @@ const Tambah = () => {
         if (result.value) {
           let formData = new FormData();
           formData.append("institution_name", institution_name);
-          formData.append("_method", "PUT");
-          formData.append("email", email);
+          // formData.append("_method", "PUT");
+          // formData.append("email", email);
           formData.append("agency_logo", agency_logo);
           formData.append("website", wesite);
           formData.append("address", address);
@@ -133,15 +133,14 @@ const Tambah = () => {
               formData,
               {
                 headers: {
-                  authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMTY5MjYxNywiZXhwIjoxNjMxNzc5MDE3LCJuYmYiOjE2MzE2OTI2MTcsImp0aSI6Ik5Jdm1UODU3OHJFTnk5U1YiLCJzdWIiOjEzLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwidXNlciI6eyJpZCI6MTMsIm5hbWUiOiJSYWhtYXQgSGlkYXlhdHVsbGFoIiwiZW1haWwiOiJyYWhtYXRoaWRheWF0dWxsYWg5OTZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjQzOjEyLjAwMDAwMFoiLCJyZW1lbWJlcl90b2tlbiI6IjIxNTkxMCIsInJvbGVzIjoiW21pdHJhXSIsImNyZWF0ZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjM3OjQyLjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMS0wOS0xNVQwNzo0MzoxMi4wMDAwMDBaIn19.Kzw6Z1v33Q4AezE5F-G-9I95NpxO3SmNAysL0QkkYZQ`,
+                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
                 },
               }
             );
-            console.log("data", data);
-            // router.push({
-            //   pathname: "/partnership/user/profile-lembaga/input-profil",
-            //   query: { success: true },
-            // });
+            router.push({
+              pathname: "/partnership/user/kerjasama",
+              query: { successInputProfile: true },
+            });
           } catch (error) {
             notify(error.response.data.message);
           }
@@ -224,7 +223,7 @@ const Tambah = () => {
         `${process.env.END_POINT_API_PARTNERSHIP}/api/profiles`,
         {
           headers: {
-            authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMTY5MjYxNywiZXhwIjoxNjMxNzc5MDE3LCJuYmYiOjE2MzE2OTI2MTcsImp0aSI6Ik5Jdm1UODU3OHJFTnk5U1YiLCJzdWIiOjEzLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwidXNlciI6eyJpZCI6MTMsIm5hbWUiOiJSYWhtYXQgSGlkYXlhdHVsbGFoIiwiZW1haWwiOiJyYWhtYXRoaWRheWF0dWxsYWg5OTZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjQzOjEyLjAwMDAwMFoiLCJyZW1lbWJlcl90b2tlbiI6IjIxNTkxMCIsInJvbGVzIjoiW21pdHJhXSIsImNyZWF0ZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjM3OjQyLjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMS0wOS0xNVQwNzo0MzoxMi4wMDAwMDBaIn19.Kzw6Z1v33Q4AezE5F-G-9I95NpxO3SmNAysL0QkkYZQ`,
+            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
           },
         }
       );
@@ -293,30 +292,36 @@ const Tambah = () => {
               autoComplete="off"
               onSubmit={submit}
             >
-              <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">
+              <div className="form-group mb-10">
+                <label htmlFor="staticE mail" className="col-form-label">
                   Nama Lembaga
                 </label>
                 <input
+                  disabled
                   type="text"
                   name="text_input"
-                  className="form-control form-control-solid mb-3 mb-lg-0"
+                  className="form-control"
                   placeholder="Masukan Nama Lembaga"
                   value={institution_name}
                 />
+                {error.institution_name ? (
+                  <p className="error-text">{error.institution_name}</p>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className="col-form-label">
                       Website
                     </label>
                     <input
                       onFocus={() => setError({ ...error, wesite: "" })}
                       type="text"
                       name="text_input"
-                      className="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control"
                       placeholder="Masukan Alamat Website"
                       onChange={(e) => setWesite(e.target.value)}
                       value={wesite}
@@ -329,13 +334,15 @@ const Tambah = () => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">E-mail</label>
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className="col-form-label">
+                      Email
+                    </label>
                     <input
                       onFocus={() => setError({ ...error, email: "" })}
                       type="text"
                       name="text_input"
-                      className="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control"
                       placeholder="Masukan Alamat E-mail"
                       value={email}
                     />
@@ -348,77 +355,116 @@ const Tambah = () => {
                 </div>
               </div>
 
-              <div className="fv-row mb-10 d-flex flex-column">
-                <label className="required fw-bold fs-6 mb-2">
-                  Logo Lembaga
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Gambar Logo
                 </label>
-                {/* <div className="input-group"> */}
-                <div className="custom-file col-12 col-xl-12">
-                  <input
-                    onFocus={() => setError({ ...error, agency_logo: "" })}
-                    onChange={(e) => onChangeImage(e)}
-                    type="file"
-                    name="gambar"
-                    className="custom-file-input cursor-pointer"
-                    id="inputGroupFile04"
-                    accept="image/png,image/jpg"
-                    // onChange={handlePdfFileChange}
-                  />
-                  <label
-                    className="custom-file-label"
-                    htmlFor="inputGroupFile04"
-                    style={{ color: "#bdbdbd" }}
-                  >
-                    {NamePDF ? NamePDF : "Cari Gambar"}
-                  </label>
-                </div>
-                {NamePDF ? (
-                  <button
-                    className="btn btn-primary btn-sm my-3"
-                    type="button"
-                    onClick={() => hideImage()}
-                  >
-                    {showImage ? "Tutup" : "Buka"}
-                  </button>
-                ) : (
+                {!agency_logo ? (
                   ""
-                )}
-                {/* </div> */}
-                {showImage ? (
+                ) : (
                   <div
-                    className={`${
-                      agency_logo ? "pdf-container w-100 border my-3" : "d-none"
-                    }`}
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    className="shadow-image-form cursor-pointer position-relative"
+                    style={{
+                      maxWidth: "168px",
+                      maxHeight: "168px",
+                      width: "168px",
+                      height: "168px",
+                    }}
                   >
-                    <iframe
+                    {" "}
+                    <Image
                       src={agency_logo}
-                      frameBorder="0"
-                      scrolling="auto"
-                      height={agency_logo ? "500px" : ""}
-                      width="100%"
-                    ></iframe>
+                      alt="Picture of the author"
+                      layout="fill"
+                      objectFit="fill"
+                    />
                   </div>
-                ) : (
-                  ""
                 )}
+
+                <div className="input-group">
+                  <div className="custom-file">
+                    <input
+                      onFocus={() => setError({ ...error, agency_logo: "" })}
+                      onChange={(e) => onChangeImage(e)}
+                      type="file"
+                      name="logo"
+                      className="custom-file-input cursor-pointer"
+                      id="inputGroupFile04"
+                      accept="image/png,image/jpg"
+                    />
+
+                    <label
+                      className="custom-file-label"
+                      htmlFor="inputGroupFile04"
+                    >
+                      {NamePDF ? NamePDF : "Cari Logo"}
+                    </label>
+                  </div>
+                </div>
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (
                   ""
                 )}
               </div>
+              {/* modal image show */}
+              <div
+                className="modal fade"
+                id="exampleModalCenter"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true"
+              >
+                <div
+                  className="modal-dialog modal-dialog-centered"
+                  role="document"
+                >
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalLongTitle">
+                        Gambar Logo
+                      </h5>
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <IconClose />
+                      </button>
+                    </div>
 
-              <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">
+                    <div
+                      className="modal-body text-left p-0"
+                      style={{ height: "400px" }}
+                    >
+                      {!agency_logo ? (
+                        ""
+                      ) : (
+                        <Image
+                          src={agency_logo}
+                          alt="Picture of the author"
+                          layout="fill"
+                          objectFit="fill"
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   Masukan Alamat Lengkap
                 </label>
                 <input
                   onFocus={() => setError({ ...error, address: "" })}
                   type="text"
-                  name="text_input"
-                  className="form-control form-control-solid mb-3 mb-lg-0"
-                  placeholder="Masukan Alamat Lengkap"
-                  value={address}
+                  className="form-control"
+                  placeholder="Masukkan Alamat"
                   onChange={(e) => setAddress(e.target.value)}
                 />
                 {error.address ? (
@@ -430,17 +476,10 @@ const Tambah = () => {
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className="col-form-label">
                       Provinsi
                     </label>
-                    {/* <input
-                      type="text"
-                      name="text_input"
-                      className="form-control form-control-solid mb-3 mb-lg-0"
-                      placeholder="Masukan Alamat Website"
-                      value=""
-                    /> */}
                     <Select
                       onFocus={() =>
                         setError({ ...error, indonesia_provinces_id: "" })
@@ -468,17 +507,10 @@ const Tambah = () => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">
-                      Kota/Kabupaten
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className=" col-form-label">
+                      Kota / Kabupaten
                     </label>
-                    {/* <input
-                      type="text"
-                      name="text_input"
-                      className="form-control form-control-solid mb-3 mb-lg-0"
-                      placeholder="Masukan Alamat E-mail"
-                      value=""
-                    /> */}
                     <Select
                       onFocus={() =>
                         setError({ ...error, indonesia_cities_id: "" })
@@ -504,43 +536,37 @@ const Tambah = () => {
                   </div>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">
-                      Kode Pos
-                    </label>
-                    <input
-                      onFocus={() => setError({ ...error, postal_code: "" })}
-                      type="number"
-                      name="text_input"
-                      className="form-control form-control-solid mb-3 mb-lg-0"
-                      placeholder="Masukan Kode Pos"
-                      value={postal_code}
-                      onChange={(e) => setPostal_code(e.target.value)}
-                    />
-                    {error.postal_code ? (
-                      <p className="error-text">{error.postal_code}</p>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
+
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Kode Pos
+                </label>
+                <input
+                  onFocus={() => setError({ ...error, postal_code: "" })}
+                  type="number"
+                  className="form-control"
+                  placeholder="Masukkan Kode Pos"
+                  onChange={(e) => setPostal_code(e.target.value)}
+                />
+                {error.postal_code ? (
+                  <p className="error-text">{error.postal_code}</p>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="row">
+                
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className="col-form-label">
                       Nama Person In Charge (PIC)
                     </label>
                     <input
                       onFocus={() => setError({ ...error, pic_name: "" })}
                       type="text"
-                      name="text_input"
-                      className="form-control form-control-solid mb-3 mb-lg-0"
-                      placeholder="Masukan Nama PIC"
-                      value={pic_name}
+                      className="form-control"
+                      placeholder="Masukkan Nama"
                       onChange={(e) => setPic_name(e.target.value)}
                     />
                     {error.pic_name ? (
@@ -551,22 +577,20 @@ const Tambah = () => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
-                    <label className="required fw-bold fs-6 mb-2">
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className="col-form-label">
                       Nomor Handphone Person In Charge (PIC)
                     </label>
                     <input
                       onFocus={() =>
                         setError({ ...error, pic_contact_number: "" })
                       }
-                      type="number"
                       maxLength="13"
                       minLength="9"
-                      name="text_input"
-                      className="form-control form-control-solid mb-3 mb-lg-0"
-                      placeholder="Masukan Nama PIC"
+                      type="number"
+                      className="form-control"
+                      placeholder="Masukkan NO. Kontak"
                       onChange={(e) => setPic_contact_number(e.target.value)}
-                      value={pic_contact_number}
                     />
                     {error.pic_contact_number ? (
                       <p className="error-text">{error.pic_contact_number}</p>
@@ -577,17 +601,15 @@ const Tambah = () => {
                 </div>
               </div>
 
-              <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   E-mail Person In Charge (PIC)
                 </label>
                 <input
                   onFocus={() => setError({ ...error, pic_email: "" })}
                   type="email"
-                  name="text_input"
-                  className="form-control form-control-solid mb-3 mb-lg-0"
-                  placeholder="Masukan Alamat E-mail PIC"
-                  value={pic_email}
+                  className="form-control"
+                  placeholder="Masukkan Email"
                   onChange={(e) => setPic_email(e.target.value)}
                 />
                 {error.pic_email ? (
@@ -597,217 +619,23 @@ const Tambah = () => {
                 )}
               </div>
 
-              <div className="d-flex justify-content-end align-items-center">
-                <Link href="">
-                  <a className="btn btn-white">Kembali</a>
-                </Link>
-                <button className="btn btn-primary ml-4" type="submit">
-                  Simpan
-                </button>
-              </div>
-            </form>
-            {/* <form>
               <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Gambar Logo
-                </label>
-                <div className="col-sm-3">
-                  <div className="input-group">
-                    <div className="custom-file">
-                      <input
-                        type="file"
-                        name="gambar"
-                        className="custom-file-input"
-                        id="inputGroupFile04"
-                      />
-                      <label className="custom-file-label" htmlFor="inputGroupFile04">
-                        Cari Dokumen
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Nama Lembaga
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Email
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Website
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Alamat
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Provensi
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Kota / Kabupaten
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Kode Pos
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Nama PIC
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  No. Kontak PIC
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Email PIC
-                </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Judul Kerjasama"
-                  />
-                </div>
-              </div>
-
-              <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm">
-                  <Link href="/partnership/manajemen-kerjasama">
-                    <a className="btn btn-outline-primary mr-2 btn-sm">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link href="/partnership/user/kerjasama" passHref>
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>
+
                   <button
-                    className="btn btn-primary btn-sm"
-                    onClick={(e) => submit(e)}
+                    type="submit"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                   >
-                    Submit
+                    Simpan
                   </button>
                 </div>
               </div>
-            </form> */}
+            </form>
           </div>
         </div>
       </div>

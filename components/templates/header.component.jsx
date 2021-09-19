@@ -7,7 +7,7 @@ const Header = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const allFunctionls = useSelector(state => state.allFunctionls)
-  console.log("header page",allFunctionls)
+  // console.log("header page",allFunctionls)
   
   const [breadcrumbs, setBreadcrumbs] = useState(null);
 

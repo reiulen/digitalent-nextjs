@@ -3,6 +3,7 @@ import LoadingPage from "../../../components/LoadingPage";
 import Layout from "../../../components/templates/layout.component";
 // import Table from "../../../components/content/partnership/manajemen-kerjasama/tableKerjasama";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { getSession } from "next-auth/client";
 const Table = dynamic(
   () =>
     import("../../../components/content/partnership/kerjasama/tableKerjasama"),
@@ -20,5 +21,21 @@ export default function KerjaSamaPage() {
     </>
   );
 }
+
+// export async function getServerSideProps(context) {
+//   const session = await getSession({ req: context.req });
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return {
+//     props: { session },
+//   };
+// }
 
 // KerjaSamaPage.displayName = "KerjaSamaPage";
