@@ -160,45 +160,47 @@ const TambahBerita = () => {
             if (publish === true) {
                 setPublish(1)
               
-              } else if (publish === false) {
+            } else if (publish === false) {
                 setPublish(0)
-                
-              }
-    
-            const data = {
-                kategori_id,
-                users_id,
-                judul_berita,
-                isi_berita,
-                gambar,
-                publish,
-                tag,
-                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            
             }
 
-            Swal.fire({
-                title: "Apakah anda yakin ?",
-                text: "Data ini akan ditambahkan !",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Ya !",
-                cancelButtonText: "Batal",
-              })
-                .then((result) => {
-                  if (result.isConfirmed) {
-                    // if (success) {
-                    //   dispatch({
-                    //     type: NEW_ARTIKEL_RESET,
-                    //   });
-                    // }
+            if (publishDate === false){}
+    
+            // const data = {
+            //     kategori_id,
+            //     users_id,
+            //     judul_berita,
+            //     isi_berita,
+            //     gambar,
+            //     publish,
+            //     tag,
+            //     tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            // }
+
+            // Swal.fire({
+            //     title: "Apakah anda yakin ?",
+            //     text: "Data ini akan ditambahkan !",
+            //     icon: "warning",
+            //     showCancelButton: true,
+            //     confirmButtonColor: "#3085d6",
+            //     cancelButtonColor: "#d33",
+            //     confirmButtonText: "Ya !",
+            //     cancelButtonText: "Batal",
+            //   })
+            //     .then((result) => {
+            //       if (result.isConfirmed) {
+            //         // if (success) {
+            //         //   dispatch({
+            //         //     type: NEW_ARTIKEL_RESET,
+            //         //   });
+            //         // }
         
-                    dispatch(newBerita(data))
+            //         dispatch(newBerita(data))
         
-                    // console.log(data);
-                  }
-              });
+            //         // console.log(data);
+            //       }
+            //   });
     
             // dispatch(newBerita(data))
             // console.log(data)
