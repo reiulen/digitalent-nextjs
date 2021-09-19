@@ -15,6 +15,7 @@ const Layout = dynamic(() =>
 
 import { getAllSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../redux/store";
+import { getSession } from "next-auth/client";
 
 export default function Substansi() {
   return (
@@ -30,9 +31,23 @@ export default function Substansi() {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query }) => {
+    async ({ query, req }) => {
       await store.dispatch(
         getAllSubtanceQuestionBanks(query.page, query.keyword, query.limit)
       );
+
+      const session = await getSession({ req });
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        };
+      }
+
+      return {
+        props: { session },
+      };
     }
 );

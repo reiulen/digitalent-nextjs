@@ -10,6 +10,7 @@ const ListTrivia = dynamic(
 
 import { getAllTriviaQuestionBanks } from "../../../redux/actions/subvit/trivia-question.actions";
 import { wrapper } from "../../../redux/store";
+import { getSession } from "next-auth/client";
 
 export default function Trivia() {
   return (
@@ -25,9 +26,22 @@ export default function Trivia() {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query }) => {
+    async ({ query, req }) => {
       await store.dispatch(
         getAllTriviaQuestionBanks(query.page, query.keyword, query.limit)
       );
+      const session = await getSession({ req });
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        };
+      }
+
+      return {
+        props: { session },
+      };
     }
 );
