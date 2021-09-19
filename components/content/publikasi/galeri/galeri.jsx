@@ -651,7 +651,7 @@ const Galeri = () => {
                                                                 <button
                                                                     onClick={() => handlePreview(i, row.id)} 
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
-                                                                    data-target="#exampleModalCenter" 
+                                                                    data-target="#galleryModalPreview" 
                                                                     data-toggle="modal"
                                                                 >
                                                                     <i className="ri-todo-fill p-0 text-white"></i>
@@ -772,11 +772,11 @@ const Galeri = () => {
             </div>
             
             {/* Modal */}
-            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+            <div className="modal fade" id="galleryModalPreview" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLongTitle">Image Preview</h5>
+                            <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
