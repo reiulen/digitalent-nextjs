@@ -30,6 +30,5 @@ module.exports = {
     // END_POINT_API_PARTNERSHIP: "http://api-dts-dev.majapahit.id/partnership/",
     END_POINT_API_IMAGE_PARTNERSHIP:
       "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
-
   },
 };
