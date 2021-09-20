@@ -1,24 +1,24 @@
 // import Layout from "../../../../components/templates/layout.component";
-// import Table from "../../../../components/content/partnership/user/tanda-tangan/table";
+// import ReviewDokumenKerjasama from "../../../../components/content/partnership/user/reviewDokumenKerjasama";
 
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
-const Table = dynamic(
+const ReviewDokumenKerjasama = dynamic(
   () =>
     import(
-      "../../../../components/content/partnership/user/tanda-tangan/table"
+      "../../../../components/content/partnership/user/reviewDokumenKerjasama"
     ),
-  { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
-export default function IndexPage() {
+export default function RevisiListPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Tanda tangan digital - Partnership"> */}
-        <Table />
+        {/* <Layout title="Review Kerjasama - Partnership"> */}
+        <ReviewDokumenKerjasama />
         {/* </Layout> */}
       </div>
     </>
@@ -39,7 +39,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { session, title: "Tanda tangan digital - Partnership" },
+        props: { session, title: "Review Kerjasama - Partnership" },
       };
     }
 );
