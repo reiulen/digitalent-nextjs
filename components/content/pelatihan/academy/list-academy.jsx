@@ -80,7 +80,7 @@ const ListAcademy = () => {
               List Akademi
             </h1>
             <div className="card-toolbar">
-              <Link href="/subvit/substansi/tambah-step-1">
+              <Link href="/pelatihan/akademi/tambah">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
                   <i className="ri-pencil-fill"></i>
                   Tambah Akademi
