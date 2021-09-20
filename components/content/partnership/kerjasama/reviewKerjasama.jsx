@@ -60,7 +60,7 @@ const ReviewKerjasama = () => {
     console.log("acceptDokument")
     e.preventDefault()
     try {
-      let { data } = await axios.get(
+      let { data } = await axios.put(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept/${router.query.id}`
         );
         console.log("data",data)
@@ -77,9 +77,11 @@ const ReviewKerjasama = () => {
     console.log("rejectDokument")
     e.preventDefault()
     try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject-document/${router.query.id}`
+      let { data } = await axios.put(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`
       );
+
+      console.log("data asdasd",data)
       router.push({
         pathname:"/partnership/kerjasama/",
         query:{successReject:true}

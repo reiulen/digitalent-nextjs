@@ -49,7 +49,7 @@ import IconDelete from "../../../../assets/icon/Delete";
 const Table = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { successInputProfile } = router.query;
+  const { successInputProfile,successSubmitDokumentKerjasama } = router.query;
   let selectRefKerjasama = null;
   let selectRefStatus = null;
 
@@ -145,6 +145,35 @@ const Table = () => {
   return (
     <PageWrapper>
       {successInputProfile ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil menyimpan data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {successSubmitDokumentKerjasama ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
@@ -663,11 +692,11 @@ const Table = () => {
                                         //   )
                                         // }
                                       >
-                                        <option value="6">
-                                          Pengajuan-Selesai
-                                        </option>
                                         <option value="5">
                                           Pengajuan-Pembahasan
+                                        </option>
+                                        <option value="6">
+                                          Pengajuan-Selesai
                                         </option>
                                       </select>
                                       {/* <IconArrow
@@ -771,7 +800,17 @@ const Table = () => {
                                     ) : items.status.name ===
                                       "pengajuan-pembahasan" ? (
                                       <Link
-                                        href="/partnership/user/revisi-submit"
+
+
+
+                                        href={{
+                                          pathname:"/partnership/user/kerjasama/pembahasan-2",
+                                          query:{id:items.id}
+                                        }}
+
+
+
+
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
@@ -783,8 +822,41 @@ const Table = () => {
                                       </Link>
                                     ) : items.status.name ===
                                       "pengajuan-selesai" ? (
-                                      <Link
-                                        href="/partnership/user/hasil"
+
+
+
+
+                                        <Link
+
+
+
+                                        href={{
+                                          pathname:"/partnership/user/kerjasama/pembahasan-2",
+                                          query:{id:items.id}
+                                        }}
+
+                                        
+
+
+                                        passHref
+                                      >
+
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                          <IconReview />
+                                          <div className="text-hover-show-hapus">
+                                            Review
+                                          </div>
+                                        </a>
+
+
+                                        </Link>
+
+
+
+
+
+                                      /* <Link
+                                        href="/partnership/user/kerjasama/pembahasan-2"
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
@@ -793,11 +865,14 @@ const Table = () => {
                                             Review
                                           </div>
                                         </a>
-                                      </Link>
+                                      </Link> */
                                     ) : items.status.name ===
                                       "pengajuan-document" ? (
                                       <Link
-                                        href="/partnership/user/submit-dokumen-kerjasama-revisi"
+                                        href={{
+                                          pathname:"/partnership/user/kerjasama/review-dokumen-kerjasama",
+                                          query:{id:items.id}
+                                        }}
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">

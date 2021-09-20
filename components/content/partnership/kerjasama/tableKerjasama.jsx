@@ -46,7 +46,7 @@ import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/manageme
 
 const Table = () => {
   const router = useRouter();
-  let { update, success,successTerima,successReject } = router.query;
+  let { update, success,successTerima,successReject,successMakeREvisi } = router.query;
   let selectRefKerjasama = null;
   let selectRefStatus = null;
   let selectRefMitra = null;
@@ -85,6 +85,7 @@ const Table = () => {
   };
 
   const changeListStatus = (e, id) => {
+    console.log("e.target.value",e.target.value)
     //     var x = (e.target.options[e.target.selectedIndex].innerText)
     //     var warning = `Apakah anda yakin ingin merubah status menjadi ${x} ?`;
     // if (confirm(warning)) {
@@ -205,6 +206,35 @@ const Table = () => {
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
             Berhasil mengubah data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {successMakeREvisi ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil Menambahkan data revisi
           </div>
           <div className="alert-close">
             <button
@@ -828,19 +858,19 @@ const Table = () => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue pr-10"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
+                                        key={index}
+                                        onChange={(e) =>
+                                          changeListStatus(
+                                            e,
+                                            items.id
+                                          )
+                                        }
                                       >
-                                        <option value="6">
-                                          Pengajuan-Selesai
-                                        </option>
                                         <option value="5">
                                           Pengajuan-Pembahasan
+                                        </option>
+                                        <option value="6">
+                                          Pengajuan-Selesai
                                         </option>
                                       </select>
                                       <IconArrow
@@ -1038,7 +1068,7 @@ const Table = () => {
                                     "pengajuan-review" ? (
                                     <div className="d-flex align-items-center">
 
-                                      <Link href={{pathname:"/partnership/kerjasama/review-kerjasama",query:{id:items.id}}}>
+                                      <Link href={{pathname:"/partnership/kerjasama/revisi-kerjasama",query:{id:items.id}}}>
                                       <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
 
                                         <IconReview />
@@ -1073,7 +1103,24 @@ const Table = () => {
                                   ) : items.status.name ===
                                     "pengajuan-revisi" ? (
                                     <div className="d-flex align-items-center">
-                                      <button
+
+                                      <Link href={{
+                                        pathname:"/partnership/kerjasama/revisi-kerjasama",
+                                        query:{id:items.id}
+                                      }} passHref>
+                                      
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Review
+                                        </div>
+                                      </a>
+                                      </Link>
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
                                           router.push(
@@ -1089,12 +1136,30 @@ const Table = () => {
                                         <div className="text-hover-show-hapus">
                                           Review
                                         </div>
-                                      </button>
+                                      </button> */}
                                     </div>
                                   ) : items.status.name ===
                                     "pengajuan-pembahasan" ? (
                                     <div className="d-flex align-items-center">
-                                      <button
+
+
+                                      <Link href="/partnership/tanda-tangan" passHref>
+                                      
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
+
+                                        <Image
+                                          src={`/assets/icon/ttd.svg`}
+                                          width={19}
+                                          height={19}
+                                          alt="ditolak"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Tanda tangan virtual
+                                        </div>
+
+                                      </a>
+                                      </Link>
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                         // onClick={() =>
                                         //   router.push(
@@ -1111,7 +1176,10 @@ const Table = () => {
                                         <div className="text-hover-show-hapus">
                                           Tanda tangan virtual
                                         </div>
-                                      </button>
+                                      </button> */}
+
+
+
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         // onClick={() =>
@@ -1156,7 +1224,25 @@ const Table = () => {
                                   ) : items.status.name ===
                                     "pengajuan-document" ? (
                                     <div className="d-flex align-items-center">
-                                      <button
+
+
+                                      <Link href={{
+                                        pathname:"/partnership/kerjasama/submit-dokumen-kerjasama-revisi",
+                                        query:{id:items.id}
+
+                                      }} passHref>
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
+                                        <IconReview />
+                                        <div className="text-hover-show-hapus">
+                                          Review
+                                        </div>
+                                      </a>
+                                      </Link>
+
+
+
+
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                         onClick={() =>
                                           router.push(
@@ -1168,7 +1254,11 @@ const Table = () => {
                                         <div className="text-hover-show-hapus">
                                           Review
                                         </div>
-                                      </button>
+                                      </button> */}
+
+
+
+
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         // onClick={() =>
