@@ -197,20 +197,44 @@ const EditGaleri = () => {
 
     }
 
-    const data = {
-      judul,
-      isi_galleri,
-      gambar,
-      kategori_id,
-      users_id,
-      tag,
-      publish,
-      id,
-      _method,
-    };
+    if (publishDate === null){
+        let today = new Date 
 
-    dispatch(updateGaleri(data));
-    console.log(data)
+        const data = {
+            judul,
+            isi_galleri,
+            gambar,
+            kategori_id,
+            users_id,
+            tag,
+            publish,
+            id,
+            _method,
+            tanggal_publish : moment(today).format("YYYY-MM-DD")
+        };
+    
+        dispatch(updateGaleri(data));
+        console.log(data)
+
+    } else {
+        const data = {
+            judul,
+            isi_galleri,
+            gambar,
+            kategori_id,
+            users_id,
+            tag,
+            publish,
+            id,
+            _method,
+            tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+        };
+    
+        dispatch(updateGaleri(data));
+        console.log(data)
+    }
+
+    
   };
 
   const onNewReset = () => {
@@ -255,6 +279,9 @@ const EditGaleri = () => {
 
   return (
     <PageWrapper>
+        {
+            console.log (galeri)
+        }
 
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">

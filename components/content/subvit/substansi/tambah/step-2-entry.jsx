@@ -15,7 +15,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 
-const StepTwo = () => {
+const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
   const importSwitch = () => import("bootstrap-switch-button-react");
   const SwitchButton = dynamic(importSwitch, {
@@ -209,7 +209,7 @@ const StepTwo = () => {
         answer_key,
       };
 
-      dispatch(newSubtanceQuestionDetail(data));
+      dispatch(newSubtanceQuestionDetail(data, token));
     }
   };
 
@@ -277,7 +277,7 @@ const StepTwo = () => {
         answer_key,
       };
 
-      dispatch(newSubtanceQuestionDetail(data));
+      dispatch(newSubtanceQuestionDetail(data, token));
     }
   };
 
