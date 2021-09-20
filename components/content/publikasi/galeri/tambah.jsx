@@ -191,19 +191,39 @@ const TambahGaleri = () => {
         
         }
 
-        const data = {
-            judul,
-            isi_galleri,
-            gambar,
-            kategori_id,
-            users_id,
-            tag,
-            publish,
-            tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+        if (publishDate === null){
+            let today = new Date
+
+            const data = {
+                judul,
+                isi_galleri,
+                gambar,
+                kategori_id,
+                users_id,
+                tag,
+                publish,
+                tanggal_publish : moment(today).format("YYYY-MM-DD")
+            }
+
+            dispatch(newGaleri(data))
+            console.log(data)
+        } else {
+            const data = {
+                judul,
+                isi_galleri,
+                gambar,
+                kategori_id,
+                users_id,
+                tag,
+                publish,
+                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            }
+
+            dispatch(newGaleri(data))
+            console.log(data)
         }
 
-        dispatch(newGaleri(data))
-        // console.log(data)
+        
     }
 
     return (

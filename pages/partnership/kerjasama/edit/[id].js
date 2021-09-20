@@ -15,7 +15,7 @@ export default function editDokumenKerjasama() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Edit Data Kerjasama - Partnership">
+        <Layout title="Ubah Dokumen Kerjasama - Partnership">
           <EditDetailKerjasama />
         </Layout>
       </div>

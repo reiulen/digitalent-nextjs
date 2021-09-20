@@ -110,18 +110,36 @@ const EditFaq = () => {
     
             }
 
-            const data = {
-                kategori_id,
-                judul,
-                jawaban,
-                users_id,
-                publish,
-                pinned,
-                _method: 'put',
-                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
-            }
+            if (publishDate === null){
+                let today = new Date
 
-            dispatch(updateFaq(data, faq.id))
+                const data = {
+                    kategori_id,
+                    judul,
+                    jawaban,
+                    users_id,
+                    publish,
+                    pinned,
+                    _method: 'put',
+                    tanggal_publish : moment(today).format("YYYY-MM-DD")
+                }
+
+                dispatch(updateFaq(data, faq.id))
+
+            } else {
+                const data = {
+                    kategori_id,
+                    judul,
+                    jawaban,
+                    users_id,
+                    publish,
+                    pinned,
+                    _method: 'put',
+                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                }
+
+                dispatch(updateFaq(data, faq.id))
+            }
 
         } else {
             simpleValidator.current.showMessages();

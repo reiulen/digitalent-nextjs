@@ -142,19 +142,38 @@ const TambahImagetron = () => {
                 setPublish(0)
             
             }
-    
-            const data = {
-                kategori_id,
-                judul,
-                url_link,
-                gambar,
-                publish,
-                users_id,
-                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+
+            if (publishDate === null){
+              let today = new Date
+
+              const data = {
+                  kategori_id,
+                  judul,
+                  url_link,
+                  gambar,
+                  publish,
+                  users_id,
+                  tanggal_publish : moment(today).format("YYYY-MM-DD")
+              }
+      
+              dispatch(newImagetron(data))
+              console.log(data)
+            } else {
+              const data = {
+                  kategori_id,
+                  judul,
+                  url_link,
+                  gambar,
+                  publish,
+                  users_id,
+                  tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+              }
+      
+              dispatch(newImagetron(data))
+              console.log(data)
             }
     
-            dispatch(newImagetron(data))
-            // console.log(data)
+            
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);

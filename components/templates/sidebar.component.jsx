@@ -10,11 +10,11 @@ import {IS_ASSIDE_MOBILE_SIDEBAR,IS_OVERLAY_SIDEBAR_MOBILE,IS_MINIMIZE_SIDEBAR} 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const getStorageMenu2 = sessionStorage.getItem("menu2") 
+  const getStorageMenu4 = sessionStorage.getItem("menu4") 
   const getStorageMenu3 = sessionStorage.getItem("menu3") 
   const getStorageMenu = sessionStorage.getItem("menu") 
 
   const allFunctionls = useSelector(state => state.allFunctionls)
-  console.log("sidebar page",allFunctionls)
 
   const router = useRouter();
   const [menuItem1, setMenuItem1] = useState("");
@@ -29,6 +29,8 @@ const Sidebar = () => {
   const [menuItem7, setMenuItem7] = useState("");
   const [menuItem8, setMenuItem8] = useState("");
   const [menuItemS, setMenuItemS] = useState("");
+  // user-mitra
+  const [menuItem9, setMenuItem9] = useState("");
 
   const onSetMenuItem1 = () => {
     if (menuItem1 !== "") {
@@ -170,7 +172,42 @@ const Sidebar = () => {
     setMenuItem4(!sessionStorage.getItem("menu") ? "" : "menu-item-open");
   };
 
-  // ----------------------------------- start partnership
+  // ----------------------------------- end partnership
+  // ----------------------------------- start user-mitra
+
+  // list partnership user-mitra submenu
+  const [listMenuPartnershipMitra, setListMenuPartnershipMitra] = useState([
+    { id: 1, name: "Kerjasama", href: "/partnership/user/kerjasama" },
+    {
+      id: 2,
+      name: "Profil Lembaga",
+      href: "/partnership/user/profile-lembaga/input-profile",
+    },
+    {
+      id: 3,
+      name: "Tanda Tangan Digital",
+      href: "/partnership/user/tanda-tangan-digital",
+    }
+  ]);
+  // function active submenu partnership user-mitra
+  const activeSubItemPartnershipMitra = () => {
+    if (sessionStorage.getItem("menu4")) {
+      sessionStorage.removeItem("menu4");
+    } else {
+      sessionStorage.setItem("menu4", "menu-item-open");
+    }
+  };
+  // function show sub menu partnership user-mitra
+  const activeMenuPartnershipMitra = () => {
+    if (sessionStorage.getItem("menu4")) {
+      sessionStorage.removeItem("menu4");
+    } else {
+      sessionStorage.setItem("menu4", "menu-item-open");
+    }
+    setMenuItem9(!sessionStorage.getItem("menu4") ? "" : "menu-item-open");
+  };
+
+  // ----------------------------------- end user-mitra
 
   const onSetMenuItem5 = () => {
     if (menuItem5 !== "") {
@@ -214,7 +251,7 @@ const Sidebar = () => {
     setMenuItem6(!sessionStorage.getItem("menu3") ? "" : "menu-item-open");
   };
 
-  // ----------------------------------- start subvit
+  // ----------------------------------- end subvit
 
   const onSetMenuItem7 = () => {
     if (menuItem7 !== "") {
@@ -1000,6 +1037,118 @@ const Sidebar = () => {
                   </ul>
                 </div>
               </li> */}
+               <li
+                className={`menu-item menu-item-submenu ${!getStorageMenu4 ? "" : getStorageMenu4}`}
+                onClick={() => activeMenuPartnershipMitra()}
+                aria-haspopup="true"
+                data-menu-toggle="hover"
+              >
+                <a href="javascript:;" className="menu-link menu-toggle d-flex align-items-center">
+                  <span className="svg-icon menu-icon">
+                    {/* <Image
+                      alt="icon-sidebar-orang"
+                      src="/assets/icon/new/aside/people-white.svg"
+                      width={24}
+                      height={24}
+                    /> */}
+                    <svg
+                      width="23"
+                      height="23"
+                      viewBox="0 0 23 23"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M4.79163 6.70833C4.79163 8.82543 6.50787 10.5417 8.62496 10.5417C10.7421 10.5417 12.4583 8.82543 12.4583 6.70833C12.4583 4.59124 10.7421 2.875 8.62496 2.875C6.50787 2.875 4.79163 4.59124 4.79163 6.70833ZM14.375 10.5417C14.375 12.1295 15.6621 13.4167 17.25 13.4167C18.8378 13.4167 20.125 12.1295 20.125 10.5417C20.125 8.95385 18.8378 7.66667 17.25 7.66667C15.6621 7.66667 14.375 8.95385 14.375 10.5417Z"
+                        fill="white"
+                      />
+                      <path
+                        opacity="0.3"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M8.60904 12.4584C4.08433 12.4584 0.372081 14.7838 0.000624531 19.3576C-0.0196092 19.6068 0.456849 20.125 0.69719 20.125H16.5281C17.248 20.125 17.2592 19.5457 17.248 19.3584C16.9672 14.656 13.1974 12.4584 8.60904 12.4584ZM22.4786 20.125L18.7833 20.125C18.7833 17.9679 18.0706 15.9772 16.8678 14.3756C20.1324 14.4113 22.7979 16.0618 22.9985 19.55C23.0066 19.6905 22.9985 20.125 22.4786 20.125Z"
+                        fill="#4299E1"
+                      />
+                    </svg>
+                  </span>
+                  <span className="menu-text">User Partnership</span>
+                  {/* <i className="menu-arrow"></i> */}
+                  <IconArrow2 className="transition-animate" fill="#ffffff" style={{transform:getStorageMenu4 ? "rotate(90deg)" : "rotate(0)"}}/>
+                </a>
+                <div className="menu-submenu">
+                  <i className="menu-arrow"></i>
+                  <ul className="menu-subnav">
+                    <li
+                      className="menu-item menu-item-parent"
+                      aria-haspopup="true"
+                    >
+                      <span className="menu-link">
+                        <span className="menu-text">Partnership</span>
+                      </span>
+                    </li>
+
+                    {/* start partnership loop */}
+
+                    {listMenuPartnershipMitra.map((items,index) => {
+                      return (
+                        <li
+                        key={index}
+                          className={`menu-item ${
+                            items.href === router.pathname
+                              ? "menu-item-active"
+                              : ""
+                          }`}
+                          aria-haspopup="true"
+                          onClick={() => activeSubItemPartnershipMitra()}
+                        >
+                          <Link href={items.href}>
+                            <a className="menu-link">
+                              <span className="menu-text">{items.name}</span>
+                            </a>
+                          </Link>
+                        </li>
+                      );
+                    })}
+
+                    {/* <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/kerjasama">
+                        <a className="menu-link">
+                          <span className="menu-text">Kerjasama</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/mitra">
+                        <a className="menu-link">
+                          <span className="menu-text">Master Mitra</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/master-kategori-kerjasama">
+                        <a className="menu-link">
+                          <span className="menu-text">
+                            Master Kategori Kerjasama
+                          </span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/tanda-tangan">
+                        <a className="menu-link">
+                          <span className="menu-text">
+                            Tanda Tangan Digital
+                          </span>
+                        </a>
+                      </Link>
+                    </li> */}
+                    {/* end partnership loop */}
+                  </ul>
+                </div>
+              </li>
+
             </ul>
             {/* <!--end::Menu Nav--> */}
           </div>

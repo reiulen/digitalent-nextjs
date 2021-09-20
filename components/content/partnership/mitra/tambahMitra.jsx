@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 import IconClose from "../../../assets/icon/Close";
-import Image from 'next/image'
+import Image from "next/image";
 
 const TambahMitra = () => {
   const router = useRouter();
@@ -331,19 +331,13 @@ const TambahMitra = () => {
                       height: "168px",
                     }}
                   >
-                    {/* <img
+                    {" "}
+                    <Image
                       src={agency_logo}
-                      className="w-100 h-100"
-                      alt="images"
-                      style={{ padding: "6px" }}
-                    /> */}
-                    {/* <div className="w-100 h-100"> */}
-
-                    {/* <Image src={agency_logo} alt="Picture of the author" className="w-100 h-100" width={170} height={170} /> */}
-
-                    <Image src={agency_logo} alt="Picture of the author" layout='fill'
-    objectFit='fill' />
-                    
+                      alt="Picture of the author"
+                      layout="fill"
+                      objectFit="fill"
+                    />
                   </div>
                 )}
 
@@ -356,7 +350,6 @@ const TambahMitra = () => {
                       name="logo"
                       className="custom-file-input cursor-pointer"
                       id="inputGroupFile04"
-                      // onChange={onChangeGambar}
                       accept="image/png,image/jpg"
                     />
 
@@ -368,44 +361,13 @@ const TambahMitra = () => {
                     </label>
                   </div>
                 </div>
-                {/* jangan dihapus ============== !!!! */}
-                {/* {NamePDF ? (
-                    <button
-                      className="btn btn-primary btn-sm my-3"
-                      type="button"
-                      onClick={() => hideImage()}
-                    >
-                      {showImage ? "Tutup" : "Buka"}
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                {showImage ? (
-                  <div
-                    className={`${
-                      agency_logo ? "pdf-container w-100 border my-3" : "d-none"
-                    }`}
-                  >
-                    <iframe
-                      src={agency_logo}
-                      frameBorder="0"
-                      scrolling="auto"
-                      height={agency_logo ? "500px" : ""}
-                      width="100%"
-                    ></iframe>
-                  </div>
-                ) : (
-                  ""
-                )} */}
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (
                   ""
                 )}
               </div>
-
               {/* modal image show */}
-
               <div
                 className="modal fade"
                 id="exampleModalCenter"
@@ -438,17 +400,15 @@ const TambahMitra = () => {
                       style={{ height: "400px" }}
                     >
                       {!agency_logo ? (
-                  ""
-                ) : (
-                    // <img
-                    //   src={agency_logo}
-                    //   className="w-100 h-100"
-                    //   alt="images"
-                    //   style={{ padding: "6px" }}
-                    // />
-                    <Image src={agency_logo} alt="Picture of the author" layout='fill'
-    objectFit='fill' />
-                )}
+                        ""
+                      ) : (
+                        <Image
+                          src={agency_logo}
+                          alt="Picture of the author"
+                          layout="fill"
+                          objectFit="fill"
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -536,40 +496,6 @@ const TambahMitra = () => {
                 </div>
               </div>
 
-              {/* <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Kota / Kabupaten
-                </label>
-                <div className="col-sm-10">
-                  <select
-                    onFocus={() =>
-                      setError({ ...error, indonesia_cities_id: "" })
-                    }
-                    className="form-control"
-                    onChange={(e) => setIndonesia_cities_id(e.target.value)}
-                  >
-                    <option value="">Pilih data Kab/Kota</option>
-                    {citiesAll.length === 0
-                      ? ""
-                      : citiesAll.map((item, i) => {
-                          return (
-                            <option key={i} value={item.id}>
-                              {item.name}
-                            </option>
-                          );
-                        })}
-                  </select>
-                  {error.indonesia_cities_id ? (
-                    <p className="error-text">{error.indonesia_cities_id}</p>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div> */}
-
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Kode Pos
@@ -650,24 +576,6 @@ const TambahMitra = () => {
                   ""
                 )}
               </div>
-
-              {/* <div className="form-group row">
-                <div className="row align-items-right mt-5 ml-auto">
-                  <div className="col-sm mr-4">
-                    <Link href="/partnership/manajemen-mitra">
-                      <a className="btn btn-outline-primary btn-sm mr-3">
-                        Kembali
-                      </a>
-                    </Link>
-                    <button
-                      type="submit"
-                      className="btn btn-primary btn-sm"
-                    >
-                      Simpan
-                    </button>
-                  </div>
-                </div>
-              </div> */}
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">

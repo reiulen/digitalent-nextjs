@@ -193,7 +193,7 @@ const DetailDataKerjasama = () => {
               ></i>
             </div>
             <div className="alert-text" style={{ color: "#1BC5BD" }}>
-              Berhasil merubah data
+              Berhasil mengubah data
             </div>
             <div className="alert-close">
               <button
@@ -225,7 +225,7 @@ const DetailDataKerjasama = () => {
               ></i>
             </div>
             <div className="alert-text" style={{ color: "#1BC5BD" }}>
-              Berhasil mengupdate status
+              Berhasil mengubah status
             </div>
             <div className="alert-close">
               <button
@@ -395,7 +395,7 @@ const DetailDataKerjasama = () => {
                                         <a className="btn btn-white">Reset</a>
                                       </Link> */}
                                 <button
-                                  className="btn btn-white"
+                                  className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                   type="button"
                                   data-dismiss="modal"
                                   aria-label="Close"
@@ -404,7 +404,7 @@ const DetailDataKerjasama = () => {
                                   Reset
                                 </button>
                                 <button
-                                  className="btn btn-primary ml-4"
+                                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
                                   onClick={(e) => handleSubmitSearchMany(e)}
                                 >
@@ -426,7 +426,7 @@ const DetailDataKerjasama = () => {
                       className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
                       style={{ width: "max-content" }}
                     >
-                      Export . xlxs
+                      Export .xlsx
                     </button>
                   </div>
                 </div>

@@ -113,7 +113,7 @@ const reviewDokKerjasama = () => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-sm-12">
                   <div className="form-group mb-10">
                     <label className="required mb-2">Nomor Perjanjian Lembaga</label>
                     <input
@@ -128,7 +128,7 @@ const reviewDokKerjasama = () => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-12 col-sm-6">
+                <div className="col-12 col-sm-12">
                   <div className="form-group mb-10">
                     <label className="required mb-2">Nomor Perjanjian Kemkominfo</label>
                     <input
@@ -203,7 +203,7 @@ const reviewDokKerjasama = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/partnership/kerjasama">
+                  <Link href="/partnership/user/kerjasama" passHref>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Batalkan
                     </a>

@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import Style from "../../../../styles/progressbar.module.css";
 
-function ReviewKerjasama() {
+function Hasil() {
   const headText = {
     "font-weight": "bold",
     "line-height": "124.5%",
@@ -20,6 +20,9 @@ function ReviewKerjasama() {
     "margin-top": "1rem",
     color: "#626262",
   };
+  
+
+  // validasi content jika selesai ditolah dan berakhir
 
   return (
     <PageWrapper>
@@ -27,7 +30,7 @@ function ReviewKerjasama() {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title fz-20 fw-500 text-dark">
-              Review Kerjasama
+              Hasil
             </h3>
           </div>
           <div className="card-body pb-28">
@@ -42,24 +45,24 @@ function ReviewKerjasama() {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress">Review Kerjasama</span>
                   </div>
                 </div>
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress">Pembahasan</span>
                   </div>
                 </div>
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress">
                       Submit Dokumen Kerjasama
                     </span>
@@ -68,8 +71,8 @@ function ReviewKerjasama() {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress">
                       Review Dokumen Kerjasama
                     </span>
@@ -78,8 +81,8 @@ function ReviewKerjasama() {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress">Hasil</span>
                   </div>
                 </div>
@@ -89,31 +92,31 @@ function ReviewKerjasama() {
             <div className={`row my-10 ${Style.clearRow}`}>
               <div className="col-12 col-sm-6">
                 <Image
-                  src="/assets/media/hubungi-kami-1.svg"
+                  src="/assets/icon/konfirmasi-1.svg"
                   height={300}
                   width={400}
-                  alt="hubungi-kami"
+                  alt="konfirmasi-1"
                 />
               </div>
               <div className="col-12 col-sm-6">
                 <div className="d-flex flex-column align-items-start justify-content-center h-100">
-                  <h1 className="fz-40 fw-700" style={{color:"#6C6C6C"}}>Terima Kasih</h1>
-                  <p className="mt-5 fz-16">Kamu telah berhasil melakukan pengajuan kerjasama dengan kami</p>
-                  <p className="fz-16">Dibutuhkan beberapa waktu untuk melakukan proses review pada pengajuanmu.</p>
+                  <h1 className="fz-40 fw-700" style={{color:"#6C6C6C"}}>Selamat!</h1>
+                  <p className="mt-5 fz-16">Terima Kasih telah Melakukan Pengajuan Kerjasama </p>
+                  <p className="fz-16">Dengan Kami. Pengajuan Kerjasamamu telah berhasil.</p>
                 </div>
 
                 <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/partnership/user/kerjasama" passHref>
+                  {/* <Link href="/partnership/kerjasama">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
-                  </Link>
+                  </Link> */}
                   <button
                     type="submit"
-                    className="btn btn-sm btn-rounded-full bg-red-primary text-white "
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                   >
-                    Batalkan Kerjasama
+                    Detail
                   </button>
                 </div>
               </div>
@@ -131,4 +134,4 @@ function ReviewKerjasama() {
   );
 }
 
-export default ReviewKerjasama;
+export default Hasil;
