@@ -84,7 +84,7 @@ const TambahTriviaStepOne = ({ token }) => {
     const onSubmit = e => {
         e.preventDefault();
         setTypeSave('lanjut');
-
+        console.log('on submitMASUKKKKKKK');
         if (error) {
             dispatch(clearErrors());
         }
