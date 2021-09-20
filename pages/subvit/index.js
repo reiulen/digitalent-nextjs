@@ -1,14 +1,12 @@
 import DashbardSubvit from "../../components/content/subvit/dashboard/dashboard-subvit";
-import Layout from "../../components/templates/layout.component";
+// import Layout from "../../components/templates/layout.component";
 import { getSession } from "next-auth/client";
 
 export default function Dashboard() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Subvit">
-          <DashbardSubvit />
-        </Layout>
+        <DashbardSubvit />
       </div>
     </>
   );
@@ -26,6 +24,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session },
+    props: { session, title: "Dashboard - Subvit" },
   };
 }

@@ -34,7 +34,7 @@ import axios from "axios";
 
 // get all data
 export const getAllSurveyQuestionBanks =
-  (page = 1, keyword = "", limit = 5) =>
+  (page = 1, keyword = "", limit = 5, token) =>
   async (dispatch) => {
     try {
       dispatch({ type: SURVEY_QUESTION_BANKS_REQUEST });
@@ -45,15 +45,13 @@ export const getAllSurveyQuestionBanks =
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-      const { data } = await axios.get(link);
+      const { data } = await axios.get(link, config);
 
       dispatch({
         type: SURVEY_QUESTION_BANKS_SUCCESS,
