@@ -703,7 +703,7 @@ const EditArtikel = () => {
                                   return (
                                     row.jenis_kategori == "Artikel" ?
                                       <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
-                                        {row.nama_kategori}
+                                        {row.nama}
                                       </option>
                                     :
                                       null

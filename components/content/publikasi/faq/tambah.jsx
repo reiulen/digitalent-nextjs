@@ -103,18 +103,37 @@ const TambahFaq = () => {
     
             }
 
-            const data = {
-                kategori_id,
-                judul,
-                jawaban,
-                users_id,
-                publish,
-                pinned,
-                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            if (publishDate === null){
+                let today = new Date
+
+                const data = {
+                    kategori_id,
+                    judul,
+                    jawaban,
+                    users_id,
+                    publish,
+                    pinned,
+                    tanggal_publish : moment(today).format("YYYY-MM-DD")
+                }
+
+                dispatch(newFaq(data))
+
+            } else {
+                const data = {
+                    kategori_id,
+                    judul,
+                    jawaban,
+                    users_id,
+                    publish,
+                    pinned,
+                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                }
+
+                dispatch(newFaq(data))
+
             }
 
-            dispatch(newFaq(data))
-
+            
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);

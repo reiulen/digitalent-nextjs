@@ -150,129 +150,220 @@ const EditVideo = () => {
           
           } else if (publish === false) {
             setPublish(0)
-    
           }
     
-          if (gambarDB !== gambar) {
-            const data = {
-              judul_video,
-              isi_video,
-              gambar,
-              kategori_id,
-              users_id,
-              tag,
-              publish,
-              id,
-              _method,
-              tanggal_publish : moment(publishDate).format("YYYY-MM-DD"),
-              url_video
-            };
-      
-            // dispatch(updateArtikel(data));
+            if (gambarDB !== gambar) {
+                if (publishDate === null){
+                    let today = new Date
+
+                    const data = {
+                    judul_video,
+                    isi_video,
+                    gambar,
+                    kategori_id,
+                    users_id,
+                    tag,
+                    publish,
+                    id,
+                    _method,
+                    tanggal_publish : moment(today).format("YYYY-MM-DD"),
+                    url_video
+                    };
             
-            Swal.fire({
-              title: "Apakah anda yakin ?",
-              text: "Data ini akan diedit !",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Ya !",
-              cancelButtonText: "Batal",
-            })
-              .then((result) => {
-                if (result.isConfirmed) {
-                  // if (success) {
-                  //   dispatch({
-                  //     // type: NEW_ARTIKEL_RESET
-                  //     type: UPDATE_ARTIKEL_RESET,
-                  //   });
-                  // }
-      
-                  dispatch(updateVideo(data));
-                  console.log(data)
-                }
-            });
-    
-          } else {
-            const data = {
-              judul_video,
-              isi_video,
-              gambar : "",
-              kategori_id,
-              users_id,
-              tag,
-              publish,
-              id,
-              _method,
-              tanggal_publish : moment(publishDate).format("YYYY-MM-DD"),
-              url_video
-            };
-      
-            // dispatch(updateArtikel(data));
+                    // dispatch(updateArtikel(data));
+                    
+                    Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan diedit !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                        // if (success) {
+                        //   dispatch({
+                        //     // type: NEW_ARTIKEL_RESET
+                        //     type: UPDATE_ARTIKEL_RESET,
+                        //   });
+                        // }
             
-            Swal.fire({
-              title: "Apakah anda yakin ?",
-              text: "Data ini akan diedit !",
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Ya !",
-              cancelButtonText: "Batal",
-            })
-              .then((result) => {
-                if (result.isConfirmed) {
-                  // if (success) {
-                  //   dispatch({
-                  //     // type: NEW_ARTIKEL_RESET
-                  //     type: UPDATE_ARTIKEL_RESET,
-                  //   });
-                  // }
-      
-                  dispatch(updateVideo(data));
-                  console.log(data)
+                        dispatch(updateVideo(data));
+                        console.log(data)
+                        }
+                    });
+                } else {
+                    
+                    const data = {
+                    judul_video,
+                    isi_video,
+                    gambar,
+                    kategori_id,
+                    users_id,
+                    tag,
+                    publish,
+                    id,
+                    _method,
+                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD"),
+                    url_video
+                    };
+            
+                    // dispatch(updateArtikel(data));
+                    
+                    Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan diedit !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                        // if (success) {
+                        //   dispatch({
+                        //     // type: NEW_ARTIKEL_RESET
+                        //     type: UPDATE_ARTIKEL_RESET,
+                        //   });
+                        // }
+            
+                        dispatch(updateVideo(data));
+                        console.log(data)
+                        }
+                    });
                 }
-            });
-          }
-      
-          // const data = {
-          //   judul_artikel,
-          //   isi_artikel,
-          //   gambar,
-          //   kategori_id,
-          //   users_id,
-          //   tag,
-          //   publish,
-          //   id,
-          //   _method,
-          // };
-    
-          // // dispatch(updateArtikel(data));
-          
-          // Swal.fire({
-          //   title: "Apakah anda yakin ?",
-          //   text: "Data ini akan diedit !",
-          //   icon: "warning",
-          //   showCancelButton: true,
-          //   confirmButtonColor: "#3085d6",
-          //   cancelButtonColor: "#d33",
-          //   confirmButtonText: "Ya !",
-          //   cancelButtonText: "Batal",
-          // })
-          //   .then((result) => {
-          //     if (result.isConfirmed) {
-          //       // if (success) {
-          //       //   dispatch({
-          //       //     // type: NEW_ARTIKEL_RESET
-          //       //     type: UPDATE_ARTIKEL_RESET,
-          //       //   });
-          //       // }
-    
-          //       dispatch(updateArtikel(data));
-          //       console.log(data)
-          //     }
-          // });
+                
+        
+            } else {
+                if (publishDate === null){
+                    let today = new Date
+
+                    const data = {
+                        judul_video,
+                        isi_video,
+                        gambar : "",
+                        kategori_id,
+                        users_id,
+                        tag,
+                        publish,
+                        id,
+                        _method,
+                        tanggal_publish : moment(today).format("YYYY-MM-DD"),
+                        url_video
+                    };
+                
+                    // dispatch(updateArtikel(data));
+                    
+                    Swal.fire({
+                        title: "Apakah anda yakin ?",
+                        text: "Data ini akan diedit !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya !",
+                        cancelButtonText: "Batal",
+                    })
+                        .then((result) => {
+                        if (result.isConfirmed) {
+                            // if (success) {
+                            //   dispatch({
+                            //     // type: NEW_ARTIKEL_RESET
+                            //     type: UPDATE_ARTIKEL_RESET,
+                            //   });
+                            // }
+                
+                            dispatch(updateVideo(data));
+                            console.log(data)
+                        }
+                    });
+
+                } else {
+                    const data = {
+                    judul_video,
+                    isi_video,
+                    gambar : "",
+                    kategori_id,
+                    users_id,
+                    tag,
+                    publish,
+                    id,
+                    _method,
+                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD"),
+                    url_video
+                    };
+            
+                    // dispatch(updateArtikel(data));
+                    
+                    Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: "Data ini akan diedit !",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Ya !",
+                    cancelButtonText: "Batal",
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+                        // if (success) {
+                        //   dispatch({
+                        //     // type: NEW_ARTIKEL_RESET
+                        //     type: UPDATE_ARTIKEL_RESET,
+                        //   });
+                        // }
+            
+                        dispatch(updateVideo(data));
+                        console.log(data)
+                        }
+                    });
+                }
+                
+            }
+        
+            // const data = {
+            //   judul_artikel,
+            //   isi_artikel,
+            //   gambar,
+            //   kategori_id,
+            //   users_id,
+            //   tag,
+            //   publish,
+            //   id,
+            //   _method,
+            // };
+        
+            // // dispatch(updateArtikel(data));
+            
+            // Swal.fire({
+            //   title: "Apakah anda yakin ?",
+            //   text: "Data ini akan diedit !",
+            //   icon: "warning",
+            //   showCancelButton: true,
+            //   confirmButtonColor: "#3085d6",
+            //   cancelButtonColor: "#d33",
+            //   confirmButtonText: "Ya !",
+            //   cancelButtonText: "Batal",
+            // })
+            //   .then((result) => {
+            //     if (result.isConfirmed) {
+            //       // if (success) {
+            //       //   dispatch({
+            //       //     // type: NEW_ARTIKEL_RESET
+            //       //     type: UPDATE_ARTIKEL_RESET,
+            //       //   });
+            //       // }
+        
+            //       dispatch(updateArtikel(data));
+            //       console.log(data)
+            //     }
+            // });
           
         } else {
           simpleValidator.current.showMessages();
@@ -284,7 +375,7 @@ const EditVideo = () => {
           });
         }
         
-      };
+    };
 
     const onNewReset = () => {
         dispatch({ 

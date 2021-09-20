@@ -135,66 +135,137 @@ const EditImagetron = () => {
             }
 
             if (gambarDB !== gambar) {
-                const data = {
-                    id,
-                    kategori_id,
-                    judul,
-                    url_link,
-                    gambar,
-                    publish,
-                    users_id,
-                    _method,
-                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
-                };
 
-                Swal.fire({
-                    title: "Apakah anda yakin ?",
-                    text: "Data ini akan diedit !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya !",
-                    cancelButtonText: "Batal",
-                })
-                .then((result) => {
-                    if (result.isConfirmed) {
-        
-                    dispatch(updateImagetron(data));
-                    // console.log(data)
-                    }
-                });
+                if (publishDate === null){
+                    let today = new Date
+
+                    const data = {
+                        id,
+                        kategori_id,
+                        judul,
+                        url_link,
+                        gambar,
+                        publish,
+                        users_id,
+                        _method,
+                        tanggal_publish : moment(today).format("YYYY-MM-DD")
+                    };
+
+                    Swal.fire({
+                        title: "Apakah anda yakin ?",
+                        text: "Data ini akan diedit !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya !",
+                        cancelButtonText: "Batal",
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+            
+                        dispatch(updateImagetron(data));
+                        // console.log(data)
+                        }
+                    });
+                } else {
+                    const data = {
+                        id,
+                        kategori_id,
+                        judul,
+                        url_link,
+                        gambar,
+                        publish,
+                        users_id,
+                        _method,
+                        tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                    };
+
+                    Swal.fire({
+                        title: "Apakah anda yakin ?",
+                        text: "Data ini akan diedit !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya !",
+                        cancelButtonText: "Batal",
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+            
+                        dispatch(updateImagetron(data));
+                        // console.log(data)
+                        }
+                    });
+                }
+
+                
             } else {
 
-                const data = {
-                    id,
-                    kategori_id,
-                    judul,
-                    url_link,
-                    gambar: "",
-                    publish,
-                    users_id,
-                    _method,
-                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
-                };
+                if (publishDate === null){
+                    let today = new Date
 
-                Swal.fire({
-                    title: "Apakah anda yakin ?",
-                    text: "Data ini akan diedit !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya !",
-                    cancelButtonText: "Batal",
-                })
-                .then((result) => {
-                    if (result.isConfirmed) {
-        
-                    dispatch(updateImagetron(data));
-                    // console.log(data)
-                    }
-                });
+                    const data = {
+                        id,
+                        kategori_id,
+                        judul,
+                        url_link,
+                        gambar: "",
+                        publish,
+                        users_id,
+                        _method,
+                        tanggal_publish : moment(today).format("YYYY-MM-DD")
+                    };
+    
+                    Swal.fire({
+                        title: "Apakah anda yakin ?",
+                        text: "Data ini akan diedit !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya !",
+                        cancelButtonText: "Batal",
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+            
+                        dispatch(updateImagetron(data));
+                        // console.log(data)
+                        }
+                    });
+                } else {
+                    const data = {
+                        id,
+                        kategori_id,
+                        judul,
+                        url_link,
+                        gambar: "",
+                        publish,
+                        users_id,
+                        _method,
+                        tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                    };
+    
+                    Swal.fire({
+                        title: "Apakah anda yakin ?",
+                        text: "Data ini akan diedit !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya !",
+                        cancelButtonText: "Batal",
+                    })
+                    .then((result) => {
+                        if (result.isConfirmed) {
+            
+                        dispatch(updateImagetron(data));
+                        // console.log(data)
+                        }
+                    });
+                }
             }
         }
         // e.preventDefault()

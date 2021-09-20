@@ -155,21 +155,42 @@ const TambahVidio = () => {
                 setPublish(0)
                 
               }
-    
-            const data = {
-                kategori_id,
-                users_id,
-                judul_video,
-                isi_video,
-                url_video,
-                gambar,
-                tag,
-                publish,
-                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            
+            if (publishDate === null){
+                let today = new Date
+
+                const data = {
+                    kategori_id,
+                    users_id,
+                    judul_video,
+                    isi_video,
+                    url_video,
+                    gambar,
+                    tag,
+                    publish,
+                    tanggal_publish : moment(today).format("YYYY-MM-DD")
+                }
+        
+                dispatch(newVideo(data))
+                console.log(data)
+            } else {
+
+                const data = {
+                    kategori_id,
+                    users_id,
+                    judul_video,
+                    isi_video,
+                    url_video,
+                    gambar,
+                    tag,
+                    publish,
+                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                }
+        
+                dispatch(newVideo(data))
+                console.log(data)
             }
-    
-            dispatch(newVideo(data))
-            console.log(data)
+            
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
