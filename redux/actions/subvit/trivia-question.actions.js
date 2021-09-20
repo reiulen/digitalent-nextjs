@@ -74,6 +74,7 @@ export const newTriviaQuestionBanks = (triviaData, token) => async dispatch => {
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
+                'Content-Type': 'application/json',
             },
         };
 
