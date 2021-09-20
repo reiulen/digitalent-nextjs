@@ -70,7 +70,8 @@ export const newTriviaQuestionBanks = (triviaData, token) => async dispatch => {
         dispatch({
             type: NEW_TRIVIA_QUESTION_BANKS_REQUEST,
         });
-
+        console.log('MASUK KESINIIIIIIIIIIIIIIIAAAAAAAAAAAAAA');
+        console.log(triviaData);
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,

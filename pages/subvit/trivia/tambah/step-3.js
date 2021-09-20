@@ -1,5 +1,6 @@
 import Layout from '/components/templates/layout.component';
 import StepThree from '/components/content/subvit/trivia/tambah/step-3';
+import { getSession } from 'next-auth/client';
 
 export default function TambahBankSoalTriviaStep3(props) {
     const session = props.session.user.user.data;
@@ -18,7 +19,7 @@ export default function TambahBankSoalTriviaStep3(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
     store =>
         async ({ req }) => {
-            const session = await getSession({ req: context.req });
+            const session = await getSession({ req });
             if (!session) {
                 return {
                     redirect: {
