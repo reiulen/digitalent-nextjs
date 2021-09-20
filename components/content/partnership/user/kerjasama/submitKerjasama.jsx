@@ -345,7 +345,7 @@ const DetailDokumenKerjasama = () => {
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2"></label>
-                    <select className="form-control mt-2" disabled>
+                    <select className="form-control mt-2 remove-icon-default" disabled>
                       <option value="">Tahun</option>
                     </select>
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}

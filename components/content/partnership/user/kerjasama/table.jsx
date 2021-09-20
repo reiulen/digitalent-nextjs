@@ -29,7 +29,8 @@ import {
   changeValueKerjaSama,
   fetchListSelectStatus,
   fetchListSelectCooperation,
-  changeValueStatusCard
+  changeValueStatusCard,
+  limitCooporation
 } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 
 import { RESET_VALUE_SORTIR } from "../../../../../redux/types/partnership/user/cooperation.type";
@@ -121,10 +122,23 @@ const Table = () => {
     }
   };
 
+  const [sumWillExpire, setSumWillExpire] = useState(0);
+  const getWillExpire = async () => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`
+      );
+      setSumWillExpire(data.data.total);
+    } catch (error) {
+      console.log("object", error);
+    }
+  };
+
   useEffect(() => {
     dispatch(fetchListSelectStatus());
     dispatch(fetchListSelectCooperation());
     getProfiles();
+    getWillExpire();
   }, [dispatch]);
 
   return (
@@ -165,7 +179,7 @@ const Table = () => {
             background="bg-light-success "
             icon="user-white.svg"
             color="#ffffff"
-            value={"allMK.totalDataActive"}
+            value={allCooperationUser.totalDataActive}
             titleValue="Kerjasama"
             title="Kerjasama Aktif"
             publishedVal="1"
@@ -177,7 +191,7 @@ const Table = () => {
             background="bg-light-warning"
             icon="user-white.svg"
             color="#ffffff"
-            value={"allMK.totalDataAnother"}
+            value={allCooperationUser.totalDataAnother}
             titleValue="Pengajuan Kerjasama"
             title="Pengajuan Kerjasama"
             publishedVal="1"
@@ -187,7 +201,7 @@ const Table = () => {
             background="bg-light-danger"
             icon="user-white.svg"
             color="#ffffff"
-            value={"sumWillExpire"}
+            value={sumWillExpire}
             titleValue="Kerjasama akan Habis"
             title="Kerjasama akan Habis"
             publishedVal="1"
@@ -838,9 +852,9 @@ const Table = () => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
-                        // onChange={(e) =>
-                        //   dispatch(limitCooporation(e.target.value))
-                        // }
+                        onChange={(e) =>
+                          dispatch(limitCooporation(e.target.value))
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>

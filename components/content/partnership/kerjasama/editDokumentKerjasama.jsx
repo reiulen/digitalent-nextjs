@@ -301,7 +301,7 @@ const EditDokumentKerjasama = () => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Edit Dokumen Kerjasama
+              Ubah Dokumen Kerjasama
             </h3>
           </div>
 

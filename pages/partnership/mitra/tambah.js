@@ -13,7 +13,7 @@ export default function TambahPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Tambah Master Mitra - Partnership">
+        <Layout title="Tambah Mitra - Partnership">
           <Tambah />
         </Layout>
       </div>

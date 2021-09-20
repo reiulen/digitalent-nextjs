@@ -138,7 +138,7 @@ const Table = () => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil merubah data
+            Berhasil mengubah data
           </div>
           <div className="alert-close">
             <button
