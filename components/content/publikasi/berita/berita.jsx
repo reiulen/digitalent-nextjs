@@ -281,9 +281,9 @@ const Berita = () => {
 
     return (
         <PageWrapper>
-            {/* {
+            {
                 console.log (berita)
-            } */}
+            }
             
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -356,7 +356,8 @@ const Berita = () => {
                         color='#ffffff'
                         // icon='orang-tambah-green.svg' 
                         // color='#74BBB7' 
-                        value={berita && berita.total_views != "" ? berita.total_views : 0} 
+                        value='64'
+                        // value={berita && berita.total_views !== null ? berita.total_views : 0} 
                         titleValue='Orang' 
                         title='Total Yang Baca' 
                         publishedVal = ""
