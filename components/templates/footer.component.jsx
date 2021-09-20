@@ -93,17 +93,19 @@ const Footer = () => {
                                     @digitalent.kominfo
                                 </span>
                             </div>
-                            <div className="mb-3 d-flex align-items-center">
-                                <Image src="/assets/icon/instagram-white.svg" width={20} height={20} alt="facebook-logo"/>
+                            <div className="d-flex align-items-center">
+                                <Image src="/assets/icon/youtube-white.svg" width={20} height={20} alt="facebook-logo"/>
                                 <span className="ml-2"> 
-                                    @digitalent.kominfo
+                                    Digitalent Media
                                 </span>
                             </div>
 
                         </div>
                     </div>
-                    <div className="card-footer border-top border-gray">
-                        Footer Here
+                    <div className="card-footer border-top border-gray text-white">
+                        <div className='text-center'>
+                            Copyright © 2021 | Kementerian Komunikasi dan Informatika.
+                        </div>
                     </div>
                 </div>
             </div>
