@@ -86,7 +86,10 @@ export const reqCooperationUser = () => async (dispatch, getState) => {
   try {
     dispatch({ type: COOPERATION_REQUEST });
     const { data } = await axios.get(
-      `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=${pageState}&limit=${limitState}&keyword=${keywordState}&categories_cooporation=${categories_cooporationState}&status=${statusState}&card=${cardState}`,
+      // `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=${pageState}&limit=${limitState}&keyword=${keywordState}&categories_cooporation=${categories_cooporationState}&status=${statusState}&card=${cardState}`,
+
+      `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=${pageState}&card=${cardState}&limit=${limitState}&status=${statusState}&categories_cooporation=${categories_cooporationState}&keyword=${keywordState}`,
+
       // params,
       {
         headers: {
@@ -94,6 +97,10 @@ export const reqCooperationUser = () => async (dispatch, getState) => {
         },
       }
     );
+
+    // `/api/cooperations/proposal/index?page=1&card=will_expire&limit=5&status=&categories_cooporation=&partner=&keyword=`;
+
+    console.log("data a a a", data);
     // get data tanpa sortir
     let dataSortirAll = await axios.get(
       `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&limit=1000&keyword=&categories_cooporation=&status=&card=`,
@@ -125,10 +132,10 @@ export const reqCooperationUser = () => async (dispatch, getState) => {
     dispatch({
       type: COOPERATION_SUCCESS,
       payload: data,
-      resultDataActive,
-      resultDataNonActive,
-      resultDataAnother,
-      totalData,
+      resultDataActives: resultDataActive,
+      resultDataNonActives: resultDataNonActive,
+      resultDataAnothers: resultDataAnother,
+      totalDatas: totalData,
     });
   } catch (error) {
     console.log("error");

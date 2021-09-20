@@ -2,27 +2,50 @@ import React, { useState, useRef, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 import Link from "next/link";
+import {useRouter} from 'next/router'
 
 import Style from "../../../../styles/progressbar.module.css";
 
 function ReviewKerjasama() {
-  const headText = {
-    "font-weight": "bold",
-    "line-height": "124.5%",
-    "margin-top": "2rem",
-    color: "#626262",
-  };
+  const router = useRouter()
 
-  const childText = {
-    "font-weight": "normal",
-    "font-size": "15px",
-    "line-height": "124.5%",
-    "margin-top": "1rem",
-    color: "#626262",
+  const {successSubmitKerjasama} = router.query
+
+  const onNewReset = () => {
+    router.replace(`/partnership/user/kerjasama/review-kerjasama-1`);
   };
 
   return (
     <PageWrapper>
+      {successSubmitKerjasama ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil menyimpan data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">

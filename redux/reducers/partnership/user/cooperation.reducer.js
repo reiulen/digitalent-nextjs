@@ -62,9 +62,9 @@ export const cooperationUserReducer = (state = initialState, action) => {
         ...state,
         statusLoad: statuslist.success,
         cooperationMitra: action.payload,
-        totalDataActive: action.resultDataActive.length,
-        totalDataNonActive: action.resultDataNonActive.length,
-        totalDataAnother: action.resultDataAnother.length,
+        totalDataActive: action.resultDataActives.length,
+        totalDataNonActive: action.resultDataNonActives.length,
+        totalDataAnother: action.resultDataAnothers.length,
         totalData: action.totalData,
       };
 
