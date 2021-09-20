@@ -278,6 +278,7 @@ const Galeri = () => {
         }
         dispatch(viewGaleri(data))
         setIndexGalleri(i)
+        console.log("INDEEEXX : ", data)
     }
 
     const resetValueSort = () => {
@@ -574,6 +575,7 @@ const Galeri = () => {
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     galeri && galeri.gallery.map((row, i) => {
                                                         return <tr key={row.id}>
+                                                            {/* {console.log("INI ROWW ID : ",row.id_gallery)} */}
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
@@ -632,9 +634,9 @@ const Galeri = () => {
                                                             <td className="align-middle d-flex">
 
                                                                 <button
-                                                                    onClick={() => handlePreview(i, row.id)} 
+                                                                    onClick={() => handlePreview(i, row.id_gallery)} 
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
-                                                                    data-target="#exampleModalCenter" 
+                                                                    data-target="#image-preview" 
                                                                     data-toggle="modal"
                                                                 >
                                                                     <i class="ri-todo-fill p-0 text-white"></i>
@@ -755,7 +757,7 @@ const Galeri = () => {
             </div>
             
             {/* Modal */}
-            <div className="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+            <div className="modal fade" id="image-preview" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -773,6 +775,7 @@ const Galeri = () => {
                                     {
                                         galeri && galeri.gallery.length !== 0 ?
                                             galeri.gallery.map ((row, i) => {
+                                                {console.log("INI ROWW ID : ",row)}
                                                 return (
                                                     <Image
                                                     key={i}

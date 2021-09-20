@@ -31,13 +31,14 @@ import { DELETE_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.
 const Artikel = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-
+  
+  // console.log(artikel, 'INI ARTIKEL')
   const {
     loading: allLoading,
     error,
     artikel,
   } = useSelector((state) => state.allArtikel);
-
+  console.log(artikel,"Ini ARTIKEL")
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -101,56 +102,56 @@ const Artikel = () => {
   };
 
   const handlePagination = (pageNumber) => {
-    if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue === null) {
-        router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
+    if (limit !== null && search === "" && startDate === null && endDate === null && publishValue === null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
 
     } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
-        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
 
     } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
-        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
 
-    } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue === null) {
-        router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue === null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-    } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
-        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
-    } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
-        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
-    } else if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue !== null) {
-        router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
-      
-    } else if (limit !== null  && search !== "" && startDate === null && endDate === null && publishValue !== null) {
-        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
+    } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+    } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+    } else if (limit !== null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+      router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
+
+    } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
 
     } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
-        router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
+      router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
 
     } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
       router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
 
-    } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+    } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
       router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-    } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+    } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
       router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
-    } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+
+    } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
       router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
     } else {
-        router.push(`${router.pathname}?page=${pageNumber}`)
+      router.push(`${router.pathname}?page=${pageNumber}`)
     }
   }
 
   const handleSearch = () => {
     if (limit != null && startDate === null && endDate === null) {
-       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
 
-    } else if (limit !== null && startDate !== null && endDate !== null ) {
-       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    } else if (limit !== null && startDate !== null && endDate !== null) {
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
     } else {
       router.push(`${router.pathname}?page=1&keyword=${search}`)
@@ -159,113 +160,113 @@ const Artikel = () => {
   };
 
   const handleSearchDate = () => {
-    if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
-        Swal.fire(
-            'Oops !',
-            'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
-            'error'
-        )
-        setStartDate (null)
-        setEndDate (null)
+    if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")) {
+      Swal.fire(
+        'Oops !',
+        'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+        'error'
+      )
+      setStartDate(null)
+      setEndDate(null)
 
     } else if (startDate === null && endDate !== null) {
-        Swal.fire(
-            'Oops !',
-            'Tanggal sebelum tidak boleh kosong',
-            'error'
-        )
-        setStartDate (null)
-        setEndDate (null)
+      Swal.fire(
+        'Oops !',
+        'Tanggal sebelum tidak boleh kosong',
+        'error'
+      )
+      setStartDate(null)
+      setEndDate(null)
 
     } else if (startDate !== null && endDate === null) {
-        Swal.fire(
-            'Oops !',
-            'Tanggal sesudah tidak boleh kosong',
-            'error'
-        )
-        setStartDate (null)
-        setEndDate (null)
+      Swal.fire(
+        'Oops !',
+        'Tanggal sesudah tidak boleh kosong',
+        'error'
+      )
+      setStartDate(null)
+      setEndDate(null)
 
     } else if (startDate === null && endDate === null) {
       Swal.fire(
-          'Oops !',
-          'Harap mengisi tanggal terlebih dahulu.',
-          'error'
+        'Oops !',
+        'Harap mengisi tanggal terlebih dahulu.',
+        'error'
       )
-      setStartDate (null)
-      setEndDate (null)
+      setStartDate(null)
+      setEndDate(null)
 
     } else {
-        if (limit !== null && search !== null && startDate !== null && endDate !== null) {
-            router.push(
-                `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
-            );
+      if (limit !== null && search !== null && startDate !== null && endDate !== null) {
+        router.push(
+          `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+        );
 
-        } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
-            router.push(
-                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
-            )
-          
-        
-        } else if (limit !== null && search === null && startDate === null && endDate === null) {
-            router.push (
-                `${router.pathname}?page=1&limit=${limit}`
-            )
+      } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
+        router.push(
+          `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+        )
 
-        } else if (limit !== null && search !== null && startDate === null && endDate === null) {
-            router.push(
-                `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
-            )
-            
-        } else {
-            router.push(
-                `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-            ); 
-        }
+
+      } else if (limit !== null && search === null && startDate === null && endDate === null) {
+        router.push(
+          `${router.pathname}?page=1&limit=${limit}`
+        )
+
+      } else if (limit !== null && search !== null && startDate === null && endDate === null) {
+        router.push(
+          `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
+        )
+
+      } else {
+        router.push(
+          `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+        );
+      }
     }
   };
 
   const handleLimit = (val) => {
     setLimit(val)
     if (search === "") {
-        router.push(`${router.pathname}?page=1&limit=${val}`);
-    
+      router.push(`${router.pathname}?page=1&limit=${val}`);
+
     } else {
-        router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
     }
-    
+
   };
 
   const handlePublish = (val) => {
     if (val !== null || val !== "") {
-      setPublishValue (val)
+      setPublishValue(val)
 
-      if ( startDate === null && endDate === null && limit === null && search === null){
+      if (startDate === null && endDate === null && limit === null && search === null) {
         router.push(`${router.pathname}?publish=${val}`);
-  
-      } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
-          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-  
-      } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
-          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-      
-      } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
-          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-  
-      } else if ( startDate === null && endDate === null && limit !== null && search === null) {
-          router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
-  
-      } else if ( startDate === null && endDate === null && limit === null && search !== null) {
-          router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
-      
-      } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
-          router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
-      
-      } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
-          router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+
+      } else if (startDate !== null && endDate !== null && limit === null && search === null) {
+        router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+      } else if (startDate !== null && endDate !== null && limit !== null && search === null) {
+        router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+
+      } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
+        router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+
+      } else if (startDate === null && endDate === null && limit !== null && search === null) {
+        router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+
+      } else if (startDate === null && endDate === null && limit === null && search !== null) {
+        router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+
+      } else if (startDate === null && endDate === null && limit !== null && search !== null) {
+        router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+
+      } else if (startDate !== null && endDate !== null && limit !== null && search !== null) {
+        router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
       }
     }
-    
+
   }
 
   const resetValueSort = () => {
@@ -357,7 +358,7 @@ const Artikel = () => {
           />
           <CardPage
             background="bg-light-success"
-            icon='user-white.svg' 
+            icon='user-white.svg'
             color='#ffffff'
             // icon="orang-tambah-green.svg"
             // color="#74BBB7"
@@ -407,16 +408,16 @@ const Artikel = () => {
                   >
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
-                    type="text"
-                    className="form-control pl-10"
-                    placeholder="Ketik disini untuk Pencarian..."
-                    onChange={(e) => setSearch(e.target.value)}
+                      type="text"
+                      className="form-control pl-10"
+                      placeholder="Ketik disini untuk Pencarian..."
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
-                          borderTopLeftRadius: "0",
-                          borderBottomLeftRadius: "0",
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
                       }}
                       onClick={handleSearch}
                     >
@@ -434,19 +435,19 @@ const Artikel = () => {
                       style={{ color: "#464646", minWidth: "230px" }}
                     >
                       <div className="d-flex align-items-center">
-                      <IconFilter className="mr-3" />
-                      Pilih Filter
+                        <IconFilter className="mr-3" />
+                        Pilih Filter
                       </div>
-                      <IconArrow fill="#E4E6EF" width="11" height="11"/>
+                      <IconArrow fill="#E4E6EF" width="11" height="11" />
                     </button>
 
                     {/* modal */}
                     <form
                       // id="kt_docs_formvalidation_text"
                       className="form text-left"
-                      // action="#"
-                      // autoComplete="off"
-                      // onSubmit={handleSubmitSearchMany}
+                    // action="#"
+                    // autoComplete="off"
+                    // onSubmit={handleSubmitSearchMany}
                     >
                       <div
                         className="modal fade"
@@ -466,7 +467,7 @@ const Artikel = () => {
                                 className="modal-title font-weight-bold"
                                 id="exampleModalLongTitle"
                               >
-                              Filter
+                                Filter
                               </h5>
                               <button
                                 type="button"
@@ -475,7 +476,7 @@ const Artikel = () => {
                                 aria-label="Close"
                                 onClick={() => resetValueSort()}
                               >
-                              <IconClose />
+                                <IconClose />
                               </button>
                             </div>
 
@@ -509,7 +510,7 @@ const Artikel = () => {
                                 <label className="required fw-bold fs-6 mb-2">
                                   Tanggal
                                 </label>
-                      
+
                                 <div>
                                   <DatePicker
                                     className="form-search-date form-control-sm form-control"
@@ -529,30 +530,30 @@ const Artikel = () => {
                                 </div>
                               </div>
                             </div>
-                          <div className="modal-footer">
-                            <div className="d-flex justify-content-end align-items-center">
-                              <button
-                                className="btn btn-white-ghost-rounded-full"
-                                type="button"
-                                onClick={() => resetValueSort()}
-                              >
+                            <div className="modal-footer">
+                              <div className="d-flex justify-content-end align-items-center">
+                                <button
+                                  className="btn btn-white-ghost-rounded-full"
+                                  type="button"
+                                  onClick={() => resetValueSort()}
+                                >
                                   Reset
-                              </button>
-                              <button
-                                className="btn btn-primary-rounded-full ml-4"
-                                type="button"
-                                data-dismiss="modal"
-                                onClick={() => handleSearchDate()}
-                              >
+                                </button>
+                                <button
+                                  className="btn btn-primary-rounded-full ml-4"
+                                  type="button"
+                                  data-dismiss="modal"
+                                  onClick={() => handleSearchDate()}
+                                >
                                   Terapkan
-                              </button>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </form>
-                  {/* end modal */}
+                    </form>
+                    {/* end modal */}
 
                   </div>
                 </div>
@@ -638,19 +639,19 @@ const Artikel = () => {
                                   {i + 1 * (page * 5 || limit) - 4}
                                 </span>
                               </td> */}
-                        
+
                               <td className='align-middle text-center'>
-                                  {
-                                    limit === null ?
-                                      <span className="badge badge-secondary text-muted">
-                                        {i + 1 * (page * 5 ) - (5 - 1 )}
-                                      </span>
+                                {
+                                  limit === null ?
+                                    <span className="badge badge-secondary text-muted">
+                                      {i + 1 * (page * 5) - (5 - 1)}
+                                    </span>
                                     :
-                                      <span className="badge badge-secondary text-muted">
-                                        {i + 1 * (page * limit) - (limit - 1)}
-                                      </span>
-                                  }
-                                  
+                                    <span className="badge badge-secondary text-muted">
+                                      {i + 1 * (page * limit) - (limit - 1)}
+                                    </span>
+                                }
+
                               </td>
 
                               <td>
@@ -706,7 +707,7 @@ const Artikel = () => {
                               </td>
                               <td className="align-middle">Super Admin</td>
                               <td className="align-middle d-flex">
-                                
+
                                 <Link
                                   href={`/publikasi/artikel/preview/${artikel.id}`}
                                 >
@@ -714,13 +715,13 @@ const Artikel = () => {
                                     <i className="ri-todo-fill p-0 text-white"></i>
                                     <div className="text-hover-show-hapus">
                                       Pratinjau
-                                    </div> 
+                                    </div>
                                   </a>
                                 </Link>
 
                                 <Link
                                   href={`/publikasi/artikel/${artikel.id}`}
-                                  >
+                                >
                                   <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
                                     <i className="ri-pencil-fill p-0 text-white"></i>
                                     <div className="text-hover-show-hapus">
@@ -739,7 +740,7 @@ const Artikel = () => {
                                   </div>
                                 </button>
 
-                                 {/* <ButtonNewTab
+                                {/* <ButtonNewTab
                                   icon="setting.svg"
                                   link={`/publikasi/artikel/preview/${artikel.id}`}
                                   title="Preview"
@@ -750,7 +751,7 @@ const Artikel = () => {
                                   link={`/publikasi/artikel/${artikel.id}`}
                                   title="Edit"
                                 /> */}
-                                
+
                                 {/* <button
                                   onClick={() => handleDelete(artikel.id)}
                                   className="btn mr-1"
@@ -798,7 +799,7 @@ const Artikel = () => {
                     />
                   </div>
                 )}
-                {artikel  ? (
+                {artikel ? (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0 mt-3">
@@ -814,10 +815,10 @@ const Artikel = () => {
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option value='5' selected={limit == "5" ? true: false}>5</option>
-                          <option value='10' selected={limit == "10" ? true: false}>10</option>
-                          <option value='15' selected={limit == "15" ? true: false}>15</option>
-                          <option value='20' selected={limit == "20" ? true: false}>20</option>
+                          <option value='5' selected={limit == "5" ? true : false}>5</option>
+                          <option value='10' selected={limit == "10" ? true : false}>10</option>
+                          <option value='15' selected={limit == "15" ? true : false}>15</option>
+                          <option value='20' selected={limit == "20" ? true : false}>20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -833,7 +834,7 @@ const Artikel = () => {
                 ) : (
                   ""
                 )}
-                
+
               </div>
             </div>
           </div>

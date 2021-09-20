@@ -169,7 +169,7 @@ export const viewGaleri= (galeriData) => async (dispatch) => {
         dispatch({ type: VIEW_GALERI_REQUEST })
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/galeri/${galeriData.id}`
-
+        console.log("Link Image : ",link)
         const { data } = await axios.post (link, galeriData)
 
         dispatch ({
