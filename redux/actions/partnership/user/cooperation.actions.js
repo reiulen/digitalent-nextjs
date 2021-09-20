@@ -18,6 +18,7 @@ import {
   LIST_COOPERATION_FAIL,
   LIST_COOPERATION_SUCCESS,
   SET_VALUE_CARD_M,
+  LIMIT_CONFIGURATION_M,
 } from "../../../types/partnership/user/cooperation.type";
 import axios from "axios";
 
@@ -64,7 +65,7 @@ export async function getMCooporationUserApi(params) {
 
 export const reqCooperationUser = () => async (dispatch, getState) => {
   let pageState = getState().allCooperationUser.page || 1;
-  // let cardState = getState().allCooperationUser.card || "";
+  let cardState = getState().allCooperationUser.card || "";
   let limitState = getState().allCooperationUser.limit || 5;
   let statusState = getState().allCooperationUser.status || "";
   let categories_cooporationState =
@@ -85,7 +86,17 @@ export const reqCooperationUser = () => async (dispatch, getState) => {
   try {
     dispatch({ type: COOPERATION_REQUEST });
     const { data } = await axios.get(
-      `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=${pageState}&limit=${limitState}&keyword=${keywordState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`,
+      `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=${pageState}&limit=${limitState}&keyword=${keywordState}&categories_cooporation=${categories_cooporationState}&status=${statusState}&card=${cardState}`,
+      // params,
+      {
+        headers: {
+          authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+        },
+      }
+    );
+    // get data tanpa sortir
+    let dataSortirAll = await axios.get(
+      `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&limit=1000&keyword=&categories_cooporation=&status=&card=`,
       // params,
       {
         headers: {
@@ -94,9 +105,30 @@ export const reqCooperationUser = () => async (dispatch, getState) => {
       }
     );
 
+    let totalData = dataSortirAll.data.data.list_cooperations.length;
+    // get total data status aktif
+    let resultDataActive = dataSortirAll.data.data.list_cooperations.filter(
+      (items) => items.status.name === "aktif"
+    );
+    // get total data status tidak aktif
+    let resultDataNonActive = dataSortirAll.data.data.list_cooperations.filter(
+      (items) => items.status.name === "tidak aktif"
+    );
+    // get total data status !-- aktif && tidak aktif
+    let resultDataAnother = dataSortirAll.data.data.list_cooperations.filter(
+      (items) =>
+        items.status.name !== "tidak aktif" &&
+        items.status.name !== "aktif" &&
+        items.status.name !== "dibatalkan"
+    );
+
     dispatch({
       type: COOPERATION_SUCCESS,
       payload: data,
+      resultDataActive,
+      resultDataNonActive,
+      resultDataAnother,
+      totalData,
     });
   } catch (error) {
     console.log("error");
@@ -252,6 +284,13 @@ export const changeValueStatusCard = (value) => {
   return {
     type: SET_VALUE_CARD_M,
     value,
+  };
+};
+
+export const limitCooporation = (value) => {
+  return {
+    type: LIMIT_CONFIGURATION_M,
+    limitValue: value,
   };
 };
 
