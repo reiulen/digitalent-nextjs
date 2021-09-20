@@ -120,10 +120,10 @@ const DetailDokumenKerjasama = () => {
             );
             // alert("berhasil");
             console.log("data",data)
-            // router.push({
-            //   pathname: `/partnership/kerjasama/view/${data.data.id}`,
-            //   query: { success: true },
-            // });
+            router.push({
+              pathname: `/partnership/user/kerjasama/review-kerjasama-1`,
+              query: { successSubmitKerjasama: true },
+            });
           } catch (error) {
             // alert("gagal");
             console.log("error",error)

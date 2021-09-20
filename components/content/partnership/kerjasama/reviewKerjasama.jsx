@@ -13,8 +13,12 @@ import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 
 import IconCalender from "../../../assets/icon/Calender";
+import axios from "axios";
 
 const ReviewKerjasama = () => {
+  const router = useRouter();
+  const id = router.query;
+
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -28,6 +32,66 @@ const ReviewKerjasama = () => {
       draggable: true,
       progress: undefined,
     });
+
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [cooperationID, setCooperationID] = useState("");
+  const [period, setPeriod] = useState("");
+  const [periodUnit, setPeriodUnit] = useState("tahun");
+
+  console.log(title, date, cooperationID, period, periodUnit);
+
+  const setDataSingle = async (id) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`
+      );
+      setTitle(data.data.title);
+      setDate(data.data.submission_date);
+      setCooperationID(data.data.cooperation_category);
+      setPeriod(data.data.period);
+      setPeriodUnit(data.data.period_unit);
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+  };
+
+  const acceptDokument = async(e) => {
+    console.log("acceptDokument")
+    e.preventDefault()
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept/${router.query.id}`
+        );
+        console.log("data",data)
+        router.push({
+          pathname:"/partnership/kerjasama/",
+          query:{successTerima:true}
+        })
+      } catch (error) {
+        console.log("error acceptDokument",error)
+      }
+    }
+    
+    const rejectDokument = async(e) => {
+    console.log("rejectDokument")
+    e.preventDefault()
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject-document/${router.query.id}`
+      );
+      router.push({
+        pathname:"/partnership/kerjasama/",
+        query:{successReject:true}
+      })
+    } catch (error) {
+      console.log("error acceptDokument",error)
+    }
+  }
+
+  useEffect(() => {
+    setDataSingle(router.query.id);
+  }, [router.query.id]);
 
   return (
     <PageWrapper>
@@ -54,170 +118,108 @@ const ReviewKerjasama = () => {
           </div>
           <div className="card-body">
             <form>
-              <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">Tanggal</label>
-                <input
-                  readOnly
-                  // value={date}
-                  type="text"
-                  className="form-control mb-3 mb-lg-0"
-                />
-                {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
-              </div>
-              <div className="fv-row mb-10">
-                <label className="required fw-bold fs-6 mb-2">
-                  Judul Kerjasama
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Tanggal
                 </label>
                 <input
-                  // onFocus={() => setError({ ...error, title: "" })}
-                  type="text"
-                  name="text_input"
-                  className="form-control mb-3 mb-lg-0"
-                  placeholder="Masukan judul kerjasama"
-                  // onChange={(e) => setTitle(e.target.value)}
+                  readOnly
+                  type="date"
+                  required
+                  value={date}
+                  className="form-control"
                 />
-                {/* {error.title ? <p className="error-text">{error.title}</p> : ""} */}
               </div>
-
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Judul kerjasama
+                </label>
+                <input
+                  required
+                  readOnly
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  type="text"
+                  className="form-control"
+                  placeholder="Judul Kerjasama"
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Kategori kerjasama
                 </label>
-                <div>
-                  <select
-                    // onFocus={() => setError({ ...error, cooperationC_id: "" })}
-                    // onChange={(e) => changeSetCooperationC_id(e.target.value)}
-                    className="form-control"
-                  >
-                    <option value="">Pilih Kategory Kerjasama</option>
-                    {/* {allMK.cooperationActiveSelect.length === 0
-                      ? ""
-                      : allMK.cooperationActiveSelect.data.map(
-                          (items, index) => {
-                            return (
-                              <option key={index} value={items.id}>
-                                {items.cooperation_categories}
-                              </option>
-                            );
-                          }
-                        )} */}
-                  </select>
-                  {/* {error.cooperationC_id ? (
-                    <p className="error-text">{error.cooperationC_id}</p>
-                  ) : (
-                    ""
-                  )} */}
-                </div>
-              </div>
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Periode Kerjasama
-                </label>
-                <div className="row">
-                  <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
-                      <DatePicker
-                        // onFocus={() =>
-                        //   setError({ ...error, period_date_start: "" })
-                        // }
-                        className="form-search-date form-control-sm form-control cursor-pointer"
-                        selected={startDate}
-                        // onChange={(date) => onChangePeriodeDateStart(date)}
-                        selectsStart
-                        // value={period_date_start}
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        dateFormat="YYYY-MM-DD"
-                        placeholderText="Dari Tanggal"
-                        minDate={moment().toDate()}
-                      />
-                      <IconCalender
-                        className="right-center-absolute"
-                        style={{ right: "10px" }}
-                      />
-                    </div>
-                    {/* {error.period_date_start ? (
-                      <p className="error-text">{error.period_date_start}</p>
-                    ) : (
-                      ""
-                    )} */}
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
-                      <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
-                        selected={endDate}
-                        // onChange={(date) => setEndDate(date)}
-                        readOnly
-                        selectsEnd
-                        // value={newDate}
-                        startDate={startDate}
-                        endDate={endDate}
-                        // minDate={startDate}
-                        minDate={moment().toDate()}
-                        maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      />
-                      <IconCalender
-                        className="right-center-absolute"
-                        style={{ right: "10px" }}
-                      />
-                    </div>
-                  </div>
-                </div>
+                <select
+                  name=""
+                  id=""
+                  className="form-control"
+                  disabled
+                  value={cooperationID.id}
+                >
+                  <option>{cooperationID.name}</option>
+                </select>
               </div>
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  {/* {items.cooperation_form} */}
-                  Tujuan Kerjasama
+                  Periode
                 </label>
-                <div>
-                  <textarea
-                    // onFocus={() =>
-                    //   setError({ ...error, AllCooperation: "" })
-                    // }
-                    // onChange={(e) => changeFormCooporation(index, e)}
-                    name="cooperation"
-                    id=""
-                    cols="30"
-                    rows="5"
-                    className="form-control"
-                    placeholder="Masukan Tujuan Kerjasama"
-                  ></textarea>
-                  {/* {error.AllCooperation ? (
-                              <p className="error-text">
-                                {error.AllCooperation}
-                              </p>
-                            ) : (
-                              ""
-                            )} */}
+                <div className="row">
+                  <div className="col-12 col-sm-6">
+                    <input
+                      required
+                      readOnly
+                      type="number"
+                      className="form-control mt-2"
+                      onChange={(e) => setPeriod(e.target.value)}
+                      value={period}
+                    />
+                  </div>
+                  <div className="col-12 col-sm-6">
+                    <div className="form-control mt-2">Tahun</div>
+                  </div>
                 </div>
               </div>
+              {cooperationID === ""
+                ? ""
+                : cooperationID.data_content.map((items, i) => {
+                    return (
+                      <div key={i} className={`form-group`}>
+                        <label htmlFor="staticEmail" className="col-form-label">
+                          {items.cooperation_form}
+                        </label>
+                        <textarea
+                          readOnly
+                          value={items.form_content}
+                          name=""
+                          id={i}
+                          cols="30"
+                          rows="5"
+                          className="form-control"
+                        ></textarea>
+                      </div>
+                    );
+                  })}
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <button
-                    type="submit"
+                    // type="button"
+                    onClick={(e)=>rejectDokument(e)}
                     className="btn btn-sm btn-rounded-full bg-red-primary text-white"
                   >
                     Tolak
                   </button>
-                  <Link href="/partnership/kerjasama/detail-revisi-kerjasama" passHref>
+                  <Link
+                    href="/partnership/kerjasama/detail-revisi-kerjasama"
+                    passHref
+                  >
                     <a className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-5">
                       Ajukan Revisi
                     </a>
                   </Link>
-                  {/* <button
-                  
-                    type="submit"
-                    className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-5"
-                  >
-                    Ajukan Revisi
-                  </button> */}
                   <button
-                    type="submit"
+                  // type="button"
+                    onClick={(e)=>acceptDokument(e)}
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                   >
                     Terima
