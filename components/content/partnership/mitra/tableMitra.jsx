@@ -184,7 +184,7 @@ const Table = () => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Manajemen Mitra
+              Master Mitra
             </h1>
             <Link href="/partnership/mitra/tambah">
               <a className="btn btn-rounded-full bg-blue-primary text-white">
@@ -239,7 +239,7 @@ const Table = () => {
                       className="btn btn-rounded-full bg-blue-secondary text-white ml-0"
                       style={{ width: "max-content" }}
                     >
-                      Export .csv
+                      Export .xlsx
                     </button>
                   </div>
                 </div>

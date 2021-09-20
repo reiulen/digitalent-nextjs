@@ -19,6 +19,7 @@ import {
   LIST_COOPERATION_FAIL,
   LIST_COOPERATION_SUCCESS,
   SET_VALUE_CARD_M,
+  LIMIT_CONFIGURATION_M,
 } from "../../../types/partnership/user/cooperation.type";
 
 const statuslist = {
@@ -42,6 +43,10 @@ const initialState = {
   stateListKerjaSama: [],
   categories_cooporation: [],
   status: "",
+  totalDataActive: 0,
+  totalDataNonActive: 0,
+  totalDataAnother: 0,
+  totalData: 0,
 };
 
 export const cooperationUserReducer = (state = initialState, action) => {
@@ -57,6 +62,10 @@ export const cooperationUserReducer = (state = initialState, action) => {
         ...state,
         statusLoad: statuslist.success,
         cooperationMitra: action.payload,
+        totalDataActive: action.resultDataActive.length,
+        totalDataNonActive: action.resultDataNonActive.length,
+        totalDataAnother: action.resultDataAnother.length,
+        totalData: action.totalData,
       };
 
     case COOPERATION_ERROR:
@@ -115,6 +124,7 @@ export const cooperationUserReducer = (state = initialState, action) => {
         ...state,
         status: action.value,
         card: "",
+        page: 1,
       };
 
     case SET_VALUE_KERJA_SAMA_M:
@@ -133,6 +143,15 @@ export const cooperationUserReducer = (state = initialState, action) => {
       return {
         ...state,
         card: action.value,
+        page: 1,
+      };
+
+    case LIMIT_CONFIGURATION_M:
+      return {
+        ...state,
+        limit: action.limitValue,
+        page: 1,
+        card: "",
       };
 
     default:

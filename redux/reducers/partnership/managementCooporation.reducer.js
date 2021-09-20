@@ -135,6 +135,7 @@ export const allMCooporationReducerMK = (state = initialState, action) => {
       return {
         ...state,
         card: action.value,
+        page: 1,
       };
     case SET_VALUE_KERJA_SAMA_M:
       return {

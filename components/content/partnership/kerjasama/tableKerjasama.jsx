@@ -214,7 +214,7 @@ const Table = () => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengupdate data
+            Berhasil mengubah data
           </div>
           <div className="alert-close">
             <button
@@ -243,7 +243,7 @@ const Table = () => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengupdate status
+            Berhasil mengubah status
           </div>
           <div className="alert-close">
             <button
@@ -549,7 +549,7 @@ const Table = () => {
                             type="button"
                             onClick={() => dispatch(exportFileCSV())}
                           >
-                            Export .xlxs
+                            Export .xlsx
                           </button>
                         </div>
                       </div>
