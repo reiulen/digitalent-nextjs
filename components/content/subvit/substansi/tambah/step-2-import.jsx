@@ -24,7 +24,6 @@ import { useRouter } from "next/router";
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingTable from "../../../../LoadingTable";
-import ButtonAction from "../../../../ButtonAction";
 import axios from "axios";
 
 const StepTwo = () => {

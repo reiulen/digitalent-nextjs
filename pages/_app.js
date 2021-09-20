@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import SimpleReactValidator from "simple-react-validator";
 import { wrapper } from "../redux/store";
 
+import Layout from "../components/templates/layout.component";
+
 function MyApp({ Component, pageProps }) {
   SimpleReactValidator.addLocale("id", {
     accepted: ":attribute harus diterima.",
@@ -50,7 +52,17 @@ function MyApp({ Component, pageProps }) {
     url: ":attribute harus berupa url.",
   });
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      {pageProps.data !== "auth" ? (
+        <Layout title={pageProps.title}>
+          <Component {...pageProps} />
+        </Layout>
+      ) : (
+        <Component {...pageProps} />
+      )}
+    </>
+  );
 }
 
 export default wrapper.withRedux(MyApp);
