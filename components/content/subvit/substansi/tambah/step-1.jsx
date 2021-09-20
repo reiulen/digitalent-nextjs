@@ -15,13 +15,14 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 
-const StepOne = () => {
+const StepOne = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const { loading, error, success, subtance } = useSelector(
     (state) => state.newSubtanceQuestionBanks
   );
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
   const [typeSave, setTypeSave] = useState("lanjut");
@@ -33,10 +34,6 @@ const StepOne = () => {
   const [metode, setMetode] = useState("entry");
 
   useEffect(() => {
-    // if (error) {
-    //     dispatch(clearErrors())
-    // }
-
     if (success) {
       const id = subtance.id;
       if (typeSave === "lanjut") {
@@ -51,7 +48,7 @@ const StepOne = () => {
         });
       }
     }
-  }, [dispatch, error, success, typeSave, metode, subtance, router]);
+  }, [dispatch, success, typeSave, metode, subtance, router]);
 
   const saveDraft = () => {
     setTypeSave("draft");
@@ -71,7 +68,7 @@ const StepOne = () => {
         category,
       };
 
-      dispatch(newSubtanceQuestionBanks(data));
+      dispatch(newSubtanceQuestionBanks(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -103,7 +100,7 @@ const StepOne = () => {
         category,
       };
 
-      dispatch(newSubtanceQuestionBanks(data));
+      dispatch(newSubtanceQuestionBanks(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

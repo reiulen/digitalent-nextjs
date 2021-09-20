@@ -19,9 +19,7 @@ export default function Survey() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="List Test Survey">
-          <ListSurvey />
-        </Layout>
+        <ListSurvey />
       </div>
     </>
   );
@@ -30,10 +28,6 @@ export default function Survey() {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
-      await store.dispatch(
-        getAllSurveyQuestionBanks(query.page, query.keyword, query.limit)
-      );
-
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -44,8 +38,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      await store.dispatch(
+        getAllSurveyQuestionBanks(
+          query.page,
+          query.keyword,
+          query.limit,
+          session.user.user.data.token
+        )
+      );
+
       return {
-        props: { session },
+        props: { session, title: "List Survey - Subvit" },
       };
     }
 );

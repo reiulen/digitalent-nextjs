@@ -5,13 +5,6 @@ import dynamic from "next/dynamic";
 // import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import ListSubstansi from "../../../components/content/subvit/substansi/list-substansi";
-const Layout = dynamic(() =>
-  import("../../../components/templates/layout.component")
-);
-// const ListSubstansi = dynamic(
-//   () => import("../../../components/content/subvit/substansi/list-substansi"),
-//   { loading: () => <LoadingSkeleton />, ssr: false }
-// );
 
 import { getAllSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../redux/store";
@@ -21,9 +14,7 @@ export default function Substansi() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="List Test Substansi">
-          <ListSubstansi />
-        </Layout>
+        <ListSubstansi />
       </div>
     </>
   );
@@ -32,10 +23,6 @@ export default function Substansi() {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
-      await store.dispatch(
-        getAllSubtanceQuestionBanks(query.page, query.keyword, query.limit)
-      );
-
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -46,8 +33,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      await store.dispatch(
+        getAllSubtanceQuestionBanks(
+          query.page,
+          query.keyword,
+          query.limit,
+          session.user.user.data.token
+        )
+      );
+
       return {
-        props: { session },
+        props: { session, title: "List Substansi - Subvit" },
       };
     }
 );
