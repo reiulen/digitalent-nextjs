@@ -288,8 +288,6 @@ const Sidebar = () => {
         });
     };
 
-    // ------ jangan dihapus
-
     // useEffect(() => {
     //   // partnership
     //   const dataFromLocal = !sessionStorage.getItem("menu")
@@ -578,11 +576,25 @@ const Sidebar = () => {
                                             className="menu-item"
                                             aria-haspopup="true"
                                         >
-                                            <a className="menu-link">
-                                                <span className="menu-text">
-                                                    Sample Link
-                                                </span>
-                                            </a>
+                                            <Link href="/pelatihan/akademi">
+                                                <a className="menu-link">
+                                                    <span className="menu-text">
+                                                        Akademi
+                                                    </span>
+                                                </a>
+                                            </Link>
+                                        </li>
+                                        <li
+                                            className="menu-item"
+                                            aria-haspopup="true"
+                                        >
+                                            <Link href="/pelatihan/tema">
+                                                <a className="menu-link">
+                                                    <span className="menu-text">
+                                                        Tema
+                                                    </span>
+                                                </a>
+                                            </Link>
                                         </li>
                                     </ul>
                                 </div>
