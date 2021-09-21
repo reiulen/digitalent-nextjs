@@ -79,7 +79,8 @@ export const newTriviaQuestionBanks = (triviaData, token) => async dispatch => {
 
         const { data } = await axios.post(
             process.env.END_POINT_API_SUBVIT + "api/trivia-question-banks",
-            triviaData
+            triviaData,
+            config
         );
 
         dispatch({
