@@ -68,9 +68,7 @@ import {
   updateSettingPublikasiReducer,
 } from "./publikasi/setting.reducers";
 
-import {
-  allDashboardPublikasiReducer
-} from "./publikasi/dashboard-publikasi.reducers"
+import { allDashboardPublikasiReducer } from "./publikasi/dashboard-publikasi.reducers";
 
 // Subvit
 // ============== substansi ===============
@@ -157,6 +155,7 @@ import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
 // ================== user
 import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
 import { dashboardReducer } from "./partnership/dashboard.reducer";
+import { allTandaTanganUserReducer } from "./partnership/user/tanda-tangan.reducer";
 // end Partnership
 
 // functional reducer
@@ -301,6 +300,7 @@ const reducer = combineReducers({
 
   // ================================= => user
   allCooperationUser: cooperationUserReducer,
+  allTandaTanganUser: allTandaTanganUserReducer,
 
   allProvinsi: allProvinsiReducer,
   allKota: allKotaReducer,

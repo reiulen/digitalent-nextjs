@@ -776,7 +776,80 @@ const Table = () => {
 
                                 <td className="align-middle text-left">
                                   <div className="d-flex align-items-center">
-                                    {items.status.name ===
+                                    {items.status.name === "aktif" &&
+                                  moment(items.period_date_start).format(
+                                    "YYYY MM DD"
+                                  ) > moment().format("YYYY MM DD") ? (
+                                    <div className="d-flex align-items-center">
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/user/kerjasama/${items.id}`
+                                          )
+                                        }
+                                      >
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+                                      </div>
+                                  ) : items.status.name === "aktif" &&
+                                    moment(items.period_date_start).format(
+                                      "YYYY MM DD"
+                                    ) <= moment().format("YYYY MM DD") ? (
+                                     <div className="d-flex align-items-center">
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/user/kerjasama/${items.id}`
+                                          )
+                                        }
+                                      >
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+                                      </div>
+                                  ) : items.status.name === "tidak aktif" ? (
+                                    <div className="position-relative w-max-content">
+                                      <select
+                                        disabled
+                                        name=""
+                                        id=""
+                                        className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
+                                        key={index}
+                                        // onChange={(e) =>
+                                        //   changeListStatus(
+                                        //     e,
+                                        //     items.id,
+                                        //     items.status.name
+                                        //   )
+                                        // }
+                                      >
+                                        <option value="2">Tidak Aktif</option>
+                                        <option value="1">Aktif</option>
+                                      </select>
+                                      {/* <IconArrow
+                                        className="right-center-absolute"
+                                        style={{ right: "10px" }}
+                                        fill="#F65464"
+                                        width="7"
+                                        height="7"
+                                      /> */}
+                                    </div>
+                                  ) :items.status.name ===
                                     "pengajuan-review" ? (
                                       <Link
                                         href="/partnership/user/kerjasama/review-kerjasama-1"
