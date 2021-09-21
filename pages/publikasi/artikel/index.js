@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 // import ContentLoader from "react-content-loader"
 
 import { getAllArtikel } from '../../../redux/actions/publikasi/artikel.actions'
-import { getAllKategori } from '../../../redux/actions/publikasi/kategori.actions'
 import { wrapper } from '../../../redux/store'
 import { getSession } from "next-auth/client";
 
@@ -22,14 +21,16 @@ const Artikel = dynamic(
     }
 );
 
-export default function ArtikelPage() {
+export default function ArtikelPage(props) {
+    const session = props.session.user.user.data;
+    // console.log (session.token)
     return (
         <>
             <div className="d-flex flex-column flex-root">
                 {/* <Layout title='Artikel - Publikasi'>
                     <Artikel />
                 </Layout> */}
-                <Artikel />
+                <Artikel token={session.token}/>
             </div>
         </>
     )

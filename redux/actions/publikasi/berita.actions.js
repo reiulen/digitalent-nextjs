@@ -29,7 +29,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, startdate = null, enddate = null) => async (dispatch) => {
+export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, startdate = null, enddate = null, token) => async (dispatch) => {
     try {
 
         dispatch({ type: BERITA_REQUEST })
@@ -41,6 +41,12 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
         if (startdate) link = link.concat(`&startdate=${startdate}`);
         if (enddate) link = link.concat(`&enddate=${enddate}`);
 
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
+
         // const config = {
         //     headers: {
         //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
@@ -49,7 +55,7 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
         //     }
         // }
 
-        const { data } = await axios.get (link)
+        const { data } = await axios.get (link, config)
 
         dispatch({
             type: BERITA_SUCCESS,
@@ -64,12 +70,18 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
     }
 }
 
-export const newBerita = (beritaData) => async (dispatch) => {
+export const newBerita = (beritaData, token) => async (dispatch) => {
     try {
 
         dispatch({
             type: NEW_BERITA_REQUEST
         })
+
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
 
         // const config = {
         //     headers: {
@@ -79,7 +91,7 @@ export const newBerita = (beritaData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/berita', beritaData)
+        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/berita', beritaData, config)
 
         dispatch({
             type: NEW_BERITA_SUCCESS,
@@ -94,16 +106,22 @@ export const newBerita = (beritaData) => async (dispatch) => {
     }
 }
 
-export const getDetailBerita = (id) => async (dispatch) => {
+export const getDetailBerita = (id, token) => async (dispatch) => {
     try {
 
         dispatch({
             type: DETAIL_BERITA_REQUEST
         })
 
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
+
         let link = process.env.END_POINT_API_PUBLIKASI + `api/berita/${id}`
 
-        const { data } = await axios.get(link)
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: DETAIL_BERITA_SUCCESS,
@@ -121,14 +139,20 @@ export const getDetailBerita = (id) => async (dispatch) => {
 }
 
 
-export const updateBerita = (beritaData) => async (dispatch) => {
+export const updateBerita = (beritaData, token) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_BERITA_REQUEST })
 
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
+
         let link = process.env.END_POINT_API_PUBLIKASI + `api/berita/${beritaData.id}`
 
-        const { data } = await axios.post (link, beritaData)
+        const { data } = await axios.post (link, beritaData, config)
 
         dispatch ({
             type: UPDATE_BERITA_SUCCESS,
@@ -143,12 +167,18 @@ export const updateBerita = (beritaData) => async (dispatch) => {
     }
 } 
 
-export const deleteBerita = (id) => async (dispatch) => {
+export const deleteBerita = (id, token) => async (dispatch) => {
 
     try {
         dispatch({ type: DELETE_BERITA_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `api/berita/${id}`)
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
+
+        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `api/berita/${id}`, config)
 
         dispatch({
             type: DELETE_BERITA_SUCCESS,
