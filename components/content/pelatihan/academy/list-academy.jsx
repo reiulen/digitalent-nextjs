@@ -157,7 +157,7 @@ const ListAcademy = () => {
                       </td>
                       <td>
                         <div className="d-flex">
-                          <Link href={`/pelatihan/akademi/edit`}>
+                          <Link href={`/pelatihan/akademi/${1}`}>
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
