@@ -10,10 +10,11 @@ import { Modal } from "react-bootstrap";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
+import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
 
-const ListTheme = () => {
+const ListTraining = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -23,6 +24,7 @@ const ListTheme = () => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [publishValue, setPublishValue] = useState(null);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -64,6 +66,28 @@ const ListTheme = () => {
     });
   };
 
+  const handlePublish = (val) => {
+    setPublishValue(val);
+    let link = `${router.pathname}?id=${id}&page=${1}&card=${val}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (status) link = link.concat(`&status=${status}`);
+    if (nilai) link = link.concat(`&nilai=${nilai}`);
+    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+    router.push(link);
+  };
+
+  const handleExportReport = async () => {
+    let link = `http://dts-subvit-dev.majapahit.id/api/subtance-question-banks/report/export/${id}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (status) link = link.concat(`&status=${status}`);
+    if (nilai) link = link.concat(`&nilai=${nilai}`);
+    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
+
+    await axios.get(link).then((res) => {
+      window.location.href = res.data.data;
+    });
+  };
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -72,6 +96,61 @@ const ListTheme = () => {
 
   return (
     <PageWrapper>
+      <div className="col-lg-12 col-md-12 col-sm-12">
+        <div className="row">
+          <CardPage
+            background="bg-primary"
+            icon="new/add-user.svg"
+            color="#FFFFFF"
+            value={0}
+            titleValue=""
+            title="Selesai"
+            publishedVal=""
+            routePublish={() => handlePublish("")}
+          />
+          <CardPage
+            background="bg-secondary"
+            icon="new/done-circle.svg"
+            color="#FFFFFF"
+            value={0}
+            titleValue=""
+            title="Disetujui"
+            publishedVal="sudah-mengerjakan"
+            routePublish={() => handlePublish("sudah-mengerjakan")}
+          />
+          <CardPage
+            background="bg-success"
+            icon="new/open-book.svg"
+            color="#FFFFFF"
+            value={0}
+            titleValue=""
+            title="Revisi"
+            publishedVal="sedang-mengerjakan"
+            routePublish={() => handlePublish("sedang-mengerjakan")}
+          />
+          <CardPage
+            background="bg-warning"
+            icon="new/mail-white.svg"
+            color="#FFFFFF"
+            value={0}
+            titleValue=""
+            title="Menunggu Review"
+            publishedVal="belum-mengerjakan"
+            routePublish={() => handlePublish("belum-mengerjakan")}
+          />
+          <CardPage
+            background="bg-danger"
+            icon="new/block-white.svg"
+            color="#FFFFFF"
+            value={0}
+            titleValue=""
+            title="Berjalan"
+            publishedVal="gagal-test"
+            routePublish={() => handlePublish("gagal-test")}
+          />
+        </div>
+      </div>
+
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 mt-3">
@@ -79,13 +158,13 @@ const ListTheme = () => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Tema
+              List Pelatihan
             </h1>
             <div className="card-toolbar">
-              <Link href="/pelatihan/tema/tambah">
+              <Link href="/pelatihan/pelatihan/tambah-pelatihan">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
                   <i className="ri-pencil-fill"></i>
-                  Tambah Tema
+                  Tambah Pelatihan
                 </a>
               </Link>
             </div>
@@ -94,7 +173,7 @@ const ListTheme = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-8 col-xl-8">
+                <div className="col-lg-6 col-xl-6">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -136,6 +215,17 @@ const ListTheme = () => {
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
+
+                <div className="col-md-2">
+                  <button
+                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
+                    type="button"
+                    onClick={handleExportReport}
+                  >
+                    Export
+                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -147,22 +237,34 @@ const ListTheme = () => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center ">No</th>
-                      <th>Akademi</th>
-                      <th>Tema</th>
-                      <th>Peminat</th>
-                      <th>Status</th>
+                      <th>ID Pelatihan</th>
+                      <th>Pelatihan</th>
+                      <th>Jadwal</th>
+                      <th>Status Substansi</th>
+                      <th>Status Pelatihan</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td className="text-center">1</td>
+                      <td>CC001</td>
                       <td>
-                        <p className="font-weight-bolder my-0 h6">SVGA</p>
-                        <p className="my-0">Vocation School Graduate Academy</p>
+                        <p className="font-weight-bolder my-0">
+                          Android Developer
+                        </p>
+                        <p className="my-0">IBM</p>
+                        <p className="my-0">DKI</p>
                       </td>
-                      <td>Android Developer</td>
-                      <td>500 Peminat</td>
+                      <td>
+                        <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
+                        <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
+                      </td>
+                      <td>
+                        <span className="label label-inline label-light-success font-weight-bold">
+                          Disetujui
+                        </span>
+                      </td>
                       <td>
                         <span className="label label-inline label-light-success font-weight-bold">
                           Publish
@@ -170,7 +272,7 @@ const ListTheme = () => {
                       </td>
                       <td>
                         <div className="d-flex">
-                          <Link href={`/pelatihan/tema/${1}`}>
+                          <Link href={`/pelatihan/pelatihan/${1}`}>
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
@@ -178,6 +280,56 @@ const ListTheme = () => {
                               title="Edit"
                             >
                               <i className="ri-pencil-fill p-0 text-white"></i>
+                            </a>
+                          </Link>
+                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                            <a
+                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Detail"
+                            >
+                              <i className="ri-eye-fill text-white p-0"></i>
+                            </a>
+                          </Link>
+                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                            <a
+                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Report"
+                            >
+                              <i className="ri-draft-line p-0 text-white"></i>
+                            </a>
+                          </Link>
+                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                            <a
+                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="User"
+                            >
+                              <i className="ri-user-3-fill p-0 text-white"></i>
+                            </a>
+                          </Link>
+                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                            <a
+                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="User"
+                            >
+                              <i className="ri-folder-upload-fill p-0 text-white"></i>
+                            </a>
+                          </Link>
+                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                            <a
+                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="User"
+                            >
+                              <i className="ri-send-backward p-0 text-white"></i>
                             </a>
                           </Link>
                           <button
@@ -233,4 +385,4 @@ const ListTheme = () => {
   );
 };
 
-export default ListTheme;
+export default ListTraining;
