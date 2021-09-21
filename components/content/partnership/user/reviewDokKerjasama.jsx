@@ -75,7 +75,6 @@ const reviewDokKerjasama = () => {
             </div>
 
             <form>
-              '
               <div className="row">
                 <div className="col-12 col-sm-6">
                   {/* tanggal apakah diambil date now atau otomatis date sekarang */}
@@ -217,6 +216,10 @@ const reviewDokKerjasama = () => {
                 </div>
               </div>
             </form>
+          
+          
+          
+          
           </div>
         </div>
       </div>

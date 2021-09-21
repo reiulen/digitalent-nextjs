@@ -10,6 +10,15 @@ import Style from "../../../../styles/progressbar.module.css";
 const DetailRevisiKerjasama = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+
+  useEffect(() => {
+
+    
+
+  }, [])
+
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">

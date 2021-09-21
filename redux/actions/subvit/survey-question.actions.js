@@ -79,13 +79,11 @@ export const newSurveyQuestionBanks =
       //         'apikey': process.env.END_POINT_KEY_AUTH
       //     }
       // }
-
       const config = {
         headers: {
           Authorization: "Bearer " + token,
         },
       };
-
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT + "api/survey-question-banks",
         subtanceData,
@@ -107,16 +105,14 @@ export const newSurveyQuestionBanks =
 export const getDetailSurveyQuestionBanks = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_SURVEY_QUESTION_BANKS_REQUEST });
-
-    let link =
-      process.env.END_POINT_API_SUBVIT +
-      `api/survey-question-banks/detail/${id}`;
-
     const config = {
       headers: {
         Authorization: "Bearer " + token,
       },
     };
+    let link =
+      process.env.END_POINT_API_SUBVIT +
+      `api/survey-question-banks/detail/${id}`;
 
     const { data } = await axios.get(link, config);
 
@@ -135,15 +131,13 @@ export const getDetailSurveyQuestionBanks = (id, token) => async (dispatch) => {
 export const getOneSurveyQuestionBanks = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST });
-
-    let link =
-      process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`;
-
     const config = {
       headers: {
         Authorization: "Bearer " + token,
       },
     };
+    let link =
+      process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`;
 
     const { data } = await axios.get(link, config);
 
@@ -165,13 +159,11 @@ export const updateSurveyQuestionBanks =
       dispatch({
         type: UPDATE_SURVEY_QUESTION_BANKS_REQUEST,
       });
-
       const config = {
         headers: {
           Authorization: "Bearer " + token,
         },
       };
-
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`,
         substanceQuestionData,
@@ -198,7 +190,6 @@ export const deleteSurveyQuestionBanks = (id, token) => async (dispatch) => {
         Authorization: "Bearer " + token,
       },
     };
-
     const { data } = await axios.delete(
       process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`,
       config
@@ -223,11 +214,6 @@ export const updateSurveyQuestionBanksPublish =
         type: UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST,
       });
 
-      const config = {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      };
       // const config = {
       //     headers: {
       //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
@@ -235,7 +221,11 @@ export const updateSurveyQuestionBanksPublish =
       //         'apikey': process.env.END_POINT_KEY_AUTH
       //     }
       // }
-
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT +
           `api/survey-question-banks/publish/${id}`,
@@ -284,14 +274,6 @@ export const allReportSurveyQuestionBanks =
           Authorization: "Bearer " + token,
         },
       };
-
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
 
       const { data } = await axios.get(link, config);
 

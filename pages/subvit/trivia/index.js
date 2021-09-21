@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import Layout from "/components/templates/layout.component";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 // import ListTrivia from "/components/content/subvit/trivia/list-trivia";
@@ -12,13 +11,13 @@ import { getAllTriviaQuestionBanks } from "../../../redux/actions/subvit/trivia-
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function Trivia() {
+export default function Trivia(props) {
+  const session = props.session.user.user.data;
+
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="List Test Trivia">
-          <ListTrivia />
-        </Layout>
+        <ListTrivia token={session.token} />
       </div>
     </>
   );
@@ -27,9 +26,6 @@ export default function Trivia() {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
-      await store.dispatch(
-        getAllTriviaQuestionBanks(query.page, query.keyword, query.limit)
-      );
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -40,8 +36,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      await store.dispatch(
+        getAllTriviaQuestionBanks(
+          query.page,
+          query.keyword,
+          query.limit,
+          session.user.user.data.token
+        )
+      );
+
       return {
-        props: { session },
+        props: { session, title: "Trivia - Subvit" },
       };
     }
 );
