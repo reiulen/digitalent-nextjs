@@ -19,7 +19,7 @@ import {
   NEW_ARTIKEL_RESET,
   UPDATE_ARTIKEL_RESET,
 } from "../../../../redux/types/publikasi/artikel.type";
-import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
+// import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
