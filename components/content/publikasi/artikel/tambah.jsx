@@ -19,7 +19,7 @@ import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.typ
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahArtikel = (token) => {
+const TambahArtikel = ({token}) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();

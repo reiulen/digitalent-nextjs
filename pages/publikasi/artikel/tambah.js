@@ -34,7 +34,7 @@ export default function TambahPage(props) {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, req }) => {
     
     const session = await getSession({ req });
     console.log (`from artikel create ${session}`)

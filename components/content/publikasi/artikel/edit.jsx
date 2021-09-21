@@ -23,7 +23,7 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditArtikel = () => {
+const EditArtikel = ({token}) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -302,7 +302,7 @@ const EditArtikel = () => {
                 //   });
                 // }
     
-                dispatch(updateArtikel(data));
+                dispatch(updateArtikel(data, token));
                 console.log(data)
               }
           });
@@ -340,7 +340,7 @@ const EditArtikel = () => {
                 //   });
                 // }
     
-                dispatch(updateArtikel(data));
+                dispatch(updateArtikel(data, token));
                 console.log(data)
               }
           });
@@ -420,7 +420,7 @@ const EditArtikel = () => {
                 //   });
                 // }
     
-                dispatch(updateArtikel(data));
+                dispatch(updateArtikel(data, token));
                 console.log(data)
               }
           });
@@ -457,7 +457,7 @@ const EditArtikel = () => {
                 //   });
                 // }
     
-                dispatch(updateArtikel(data));
+                dispatch(updateArtikel(data, token));
                 console.log(data)
               }
           });
