@@ -79,11 +79,24 @@ const DetailDataKerjasama = () => {
   };
 
   const [deleteBar, setDeleteBar] = useState(false);
+
+
+  // const onNewReset = () => {
+  //   router.replace(`/partnership/mitra/detail/${router.query.id}`);
+  //   setDeleteBar(false);
+  //   setBarStatus(false);
+  // };
+
+
   const onNewReset = () => {
-    router.replace(`/partnership/mitra/detail/${router.query.id}`);
     setDeleteBar(false);
     setBarStatus(false);
+    router.replace(`/partnership/mitra/detail/${router.query.id}`, undefined, { shallow: true });
   };
+
+
+
+
   const cooperationDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",

@@ -53,61 +53,6 @@ function RevisiList() {
           </div>
 
           <div className="card-body pb-28">
-            <div className="row mt-8 mb-10">
-              <div className="col-2 p-0">
-                <div className="progress-items">
-                  {/* <div className="line-progress"></div> */}
-                  <div className="circle-progress active-circle">
-                    <span className="title-progress">Submit Kerjasama</span>
-                  </div>
-                </div>
-              </div>
-              <div className="col-2">
-                <div className="progress-items">
-                  <div className="line-progress active-line"></div>
-                  <div className="circle-progress active-circle">
-                    <span className="title-progress">Review Kerjasama</span>
-                  </div>
-                </div>
-              </div>
-              <div className="col-2">
-                <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
-                    <span className="title-progress">Pembahasan</span>
-                  </div>
-                </div>
-              </div>
-              <div className="col-2">
-                <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
-                    <span className="title-progress">
-                      Submit Dokumen Kerjasama
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="col-2">
-                <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
-                    <span className="title-progress">
-                      Review Dokumen Kerjasama
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="col-2">
-                <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
-                    <span className="title-progress">Hasil</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <ul>
               {listCardREvisi.length === 0 ? "" : listCardREvisi.map((items,index)=>{
                 return(

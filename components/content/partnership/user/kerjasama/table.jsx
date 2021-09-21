@@ -60,8 +60,13 @@ const Table = () => {
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
 
+  // const onNewReset = () => {
+  //   router.replace(`/partnership/user/kerjasama`);
+  // };
+
   const onNewReset = () => {
-    router.replace(`/partnership/user/kerjasama`);
+    // setSuccessDelete(false);
+    router.replace("/partnership/user/kerjasama", undefined, { shallow: true });
   };
 
   const handleChangeValueSearch = (value) => {
@@ -787,7 +792,13 @@ const Table = () => {
                                     ) : items.status.name ===
                                       "pengajuan-revisi" ? (
                                       <Link
-                                        href="/partnership/user/revisi-list"
+
+                                      href={{
+                                        pathname:"/partnership/user/kerjasama/review-kerjasama-2",
+                                        query:{id:items.id}
+                                      }}
+
+                                        // href="/partnership/user/kerjasama/review-kerjasama-2"
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">

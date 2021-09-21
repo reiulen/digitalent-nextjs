@@ -64,41 +64,43 @@ const Table = () => {
     allMKCooporation.status_list,
   ]);
 
+  // const onNewReset = () => {
+  //   setSuccessDelete(false);
+  //   router.replace(`/partnership/master-kategori-kerjasama`);
+  // };
+
   const onNewReset = () => {
     setSuccessDelete(false);
-    router.replace(`/partnership/master-kategori-kerjasama`);
+    router.replace("/partnership/master-kategori-kerjasama", undefined, { shallow: true });
   };
 
-  useEffect(() => {
-    let searchValue = document.getElementById(
-      "kt_datatable_search_query"
-    ).value;
-    if (searchValue === "") {
-      dispatch(fetchAllMKCooporation("clear keyword"));
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   let searchValue = document.getElementById(
+  //     "kt_datatable_search_query"
+  //   ).value;
+  //   if (searchValue === "") {
+  //     dispatch(fetchAllMKCooporation("clear keyword"));
+  //   }
+  // }, [dispatch]);
 
   return (
     <PageWrapper>
-      {success || successDelete ? (
+      {success ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
-          style={{ backgroundColor: success ? "#C9F7F5" : "#f7c9c9" }}
+          style={{ backgroundColor:  "#C9F7F5" }}
         >
           <div className="alert-icon">
             <i
               className="flaticon2-checkmark"
-              style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
+              style={{ color:  "#1BC5BD" }}
             ></i>
           </div>
           <div
             className="alert-text"
-            style={{ color: success ? "#1BC5BD" : "#c51b1b" }}
-          >
-            {successDelete
-              ? "Berhasil menghapus data"
-              : "Berhasil menyimpan data"}
+            style={{ color:  "#1BC5BD" }}
+          >Berhasil menghapus data
           </div>
           <div className="alert-close">
             <button
@@ -106,7 +108,42 @@ const Table = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
-              onClick={() => onNewReset()}
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {successDelete ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#f7c9c9" }}
+        >
+          <div className="alert-icon">
+            <i
+              className="flaticon2-checkmark"
+              style={{ color:  "#c51b1b" }}
+            ></i>
+          </div>
+          <div
+            className="alert-text"
+            style={{ color:  "#c51b1b" }}
+          >
+              Berhasil menyimpan data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -135,7 +172,7 @@ const Table = () => {
               className="close"
               data-dismiss="alert"
               aria-label="Close"
-              onClick={() => onNewReset()}
+              onClick={onNewReset}
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -146,6 +183,8 @@ const Table = () => {
       ) : (
         ""
       )}
+
+      
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">

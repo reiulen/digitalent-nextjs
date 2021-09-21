@@ -17,12 +17,12 @@ const Tambah = () => {
   // const [startDate, setStartDate] = useState(null);
   // const [endDate, setEndDate] = useState(null);
 
-  
   // diambil dari data user ketika pertama kali register (name)
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
   const [wesite, setWesite] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
+  const [agency_logo_api, setAgency_logo_api] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
@@ -228,6 +228,14 @@ const Tambah = () => {
         }
       );
       console.log("data", data);
+
+      setAgency_logo_api(data.data.agency_logo);
+      setAddress(data.data.address)
+      setPostal_code(data.data.postal_code)
+      setPic_name(data.data.pic_name)
+      setPic_contact_number(data.data.pic_contact_number)
+      setPic_email(data.data.pic_email)
+      setWesite(data.data.website);
       setEmail(data.data.email);
       setInstitution_name(data.data.institution_name);
     } catch (error) {
@@ -324,7 +332,7 @@ const Tambah = () => {
                       className="form-control"
                       placeholder="Masukan Alamat Website"
                       onChange={(e) => setWesite(e.target.value)}
-                      value={wesite}
+                      value={wesite&&wesite}
                     />
                     {error.wesite ? (
                       <p className="error-text">{error.wesite}</p>
@@ -359,7 +367,10 @@ const Tambah = () => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Gambar Logo
                 </label>
-                {!agency_logo ? (
+
+                {
+                
+                !agency_logo ? (
                   ""
                 ) : (
                   <div
@@ -381,7 +392,66 @@ const Tambah = () => {
                       objectFit="fill"
                     />
                   </div>
-                )}
+                )
+                
+                
+                
+                }
+
+
+                {/* {!agency_logo_api ? (
+                  ""
+                ) : (
+                  <div
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    className="shadow-image-form cursor-pointer position-relative"
+                    style={{
+                      maxWidth: "168px",
+                      maxHeight: "168px",
+                      width: "168px",
+                      height: "168px",
+                    }}
+                  >
+                    {" "}
+                    <Image
+                      src={
+                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        "partnership/images/profile-images/" +
+                        agency_logo_api
+                      }
+                      alt="images"
+                      layout="fill"
+                      objectFit="fill"
+                    />
+                  </div>
+                )} */}
+
+
+                {/* {!agency_logo ? 
+
+                <div
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    className="shadow-image-form cursor-pointer position-relative"
+                    style={{
+                      maxWidth: "168px",
+                      maxHeight: "168px",
+                      width: "168px",
+                      height: "168px",
+                    }}
+                  >
+                    {" "}
+                    <Image
+                      src={agency_logo}
+                      alt="Picture of the author"
+                      layout="fill"
+                      objectFit="fill"
+                    />
+                  </div> :""
+
+                  } */}
+
 
                 <div className="input-group">
                   <div className="custom-file">
@@ -466,6 +536,7 @@ const Tambah = () => {
                   className="form-control"
                   placeholder="Masukkan Alamat"
                   onChange={(e) => setAddress(e.target.value)}
+                  value={address&&address}
                 />
                 {error.address ? (
                   <p className="error-text">{error.address}</p>
@@ -544,6 +615,7 @@ const Tambah = () => {
                 <input
                   onFocus={() => setError({ ...error, postal_code: "" })}
                   type="number"
+                  value={postal_code&&postal_code}
                   className="form-control"
                   placeholder="Masukkan Kode Pos"
                   onChange={(e) => setPostal_code(e.target.value)}
@@ -556,13 +628,13 @@ const Tambah = () => {
               </div>
 
               <div className="row">
-                
                 <div className="col-12 col-sm-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nama Person In Charge (PIC)
                     </label>
                     <input
+                    value={pic_name&&pic_name}
                       onFocus={() => setError({ ...error, pic_name: "" })}
                       type="text"
                       className="form-control"
@@ -591,6 +663,7 @@ const Tambah = () => {
                       className="form-control"
                       placeholder="Masukkan NO. Kontak"
                       onChange={(e) => setPic_contact_number(e.target.value)}
+                      value={pic_contact_number&&pic_contact_number}
                     />
                     {error.pic_contact_number ? (
                       <p className="error-text">{error.pic_contact_number}</p>
@@ -611,6 +684,7 @@ const Tambah = () => {
                   className="form-control"
                   placeholder="Masukkan Email"
                   onChange={(e) => setPic_email(e.target.value)}
+                  value={pic_email&&pic_email}
                 />
                 {error.pic_email ? (
                   <p className="error-text">{error.pic_email}</p>
