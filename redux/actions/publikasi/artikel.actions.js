@@ -24,10 +24,12 @@ import axios from "axios";
 
 // get all data
 export const getAllArtikel =
-  (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null) =>
+  (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) =>
   async (dispatch) => {
     try {
       dispatch({ type: ARTIKEL_REQUEST });
+
+      console.log (token)
 
       let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
@@ -37,15 +39,13 @@ export const getAllArtikel =
       if (enddate) link = link.concat(`&enddate=${enddate}`);
 
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
+    const config = {
+      headers: {
+          Authorization: 'Bearer ' + token,
+      },
+    };
 
-      const { data } = await axios.get(link);
+      const { data } = await axios.get(link, config);
 
       dispatch({
         type: ARTIKEL_SUCCESS,
@@ -60,11 +60,17 @@ export const getAllArtikel =
     }
   };
 
-export const getDetailArtikel = (id) => async (dispatch) => {
+export const getDetailArtikel = (id, token) => async (dispatch) => {
   try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+
     let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`;
 
-    const { data } = await axios.get(link);
+    const { data } = await axios.get(link, config);
 
     dispatch({
       type: DETAIL_ARTIKEL_SUCCESS,
@@ -78,7 +84,7 @@ export const getDetailArtikel = (id) => async (dispatch) => {
   }
 };
 
-export const newArtikel = (artikelData) => async (dispatch) => {
+export const newArtikel = (artikelData, token) => async (dispatch) => {
   try {
     dispatch({
       type: NEW_ARTIKEL_REQUEST,
@@ -92,9 +98,16 @@ export const newArtikel = (artikelData) => async (dispatch) => {
     //     }
     // }
 
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+
     const { data } = await axios.post(
       process.env.END_POINT_API_PUBLIKASI + "api/artikel",
-      artikelData
+      artikelData,
+      config
     );
 
     dispatch({
@@ -111,14 +124,20 @@ export const newArtikel = (artikelData) => async (dispatch) => {
   }
 };
 
-export const updateArtikel = (artikelData) => async (dispatch) => {
+export const updateArtikel = (artikelData, token) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ARTIKEL_REQUEST });
+
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
 
     let link =
       process.env.END_POINT_API_PUBLIKASI + `api/artikel/${artikelData.id}`;
 
-    const { data } = await axios.post(link, artikelData);
+    const { data } = await axios.post(link, artikelData, config);
 
     dispatch({
       type: UPDATE_ARTIKEL_SUCCESS,
