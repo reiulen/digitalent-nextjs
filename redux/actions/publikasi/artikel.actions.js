@@ -29,7 +29,7 @@ export const getAllArtikel =
     try {
       dispatch({ type: ARTIKEL_REQUEST });
 
-      console.log (token)
+      // console.log (`Artikel: ${token}`)
 
       let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
