@@ -15,11 +15,12 @@ const ListSurvey = dynamic(
 );
 import { getSession } from "next-auth/client";
 
-export default function Survey() {
+export default function Survey(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ListSurvey />
+        <ListSurvey token={session.token} />
       </div>
     </>
   );

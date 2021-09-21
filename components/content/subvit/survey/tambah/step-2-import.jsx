@@ -26,7 +26,7 @@ import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from "../../../../ButtonAction";
 import axios from "axios";
 
-const StepTwo = () => {
+const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -81,22 +81,22 @@ const StepTwo = () => {
   const [typeSave, setTypeSave] = useState("lanjut");
 
   useEffect(() => {
-    dispatch(getAllSurveyQuestionDetail(id));
+    dispatch(getAllSurveyQuestionDetail(id, token));
     // if (error) {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
-      dispatch(getAllSurveyQuestionDetail(id));
+      dispatch(getAllSurveyQuestionDetail(id, token));
     }
 
     if (successImages) {
-      dispatch(getAllSurveyQuestionDetail(id));
+      dispatch(getAllSurveyQuestionDetail(id, token));
     }
 
     if (isDeleted) {
-      dispatch(getAllSurveyQuestionDetail(id));
+      dispatch(getAllSurveyQuestionDetail(id, token));
     }
-  }, [dispatch, id, successFile, successImages, isDeleted]);
+  }, [dispatch, id, successFile, successImages, isDeleted, token]);
 
   const saveDraft = () => {
     let valid = true;
@@ -177,7 +177,7 @@ const StepTwo = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(importFileSurveyQuestionDetail(data));
+        dispatch(importFileSurveyQuestionDetail(data, token));
       }
     });
   };
@@ -187,17 +187,17 @@ const StepTwo = () => {
     data.append("survey_question_bank_id", id);
     data.append("image_file", image_file, image_file.name);
 
-    dispatch(importImagesSurveyQuestionDetail(data));
+    dispatch(importImagesSurveyQuestionDetail(data, token));
   };
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(getAllSurveyQuestionDetail(id, pageNumber));
+    dispatch(getAllSurveyQuestionDetail(id, pageNumber, token));
   };
 
   const handleLimit = (val) => {
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllSurveyQuestionDetail(id, 1, val));
+    dispatch(getAllSurveyQuestionDetail(id, 1, val, token));
   };
 
   const handleDelete = (id) => {
@@ -213,7 +213,7 @@ const StepTwo = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSurveyQuestionDetail(id));
+        dispatch(deleteSurveyQuestionDetail(id, token));
       }
     });
   };
