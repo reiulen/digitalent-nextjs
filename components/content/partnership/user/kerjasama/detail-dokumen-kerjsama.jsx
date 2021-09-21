@@ -382,6 +382,8 @@ const DetailDokumenKerjasama = () => {
 
               {/* start loop */}
 
+              
+
               {allCooperationUser.cooperationById.length === 0 ? (
                 ""
               ) : allCooperationUser.cooperationById.data.cooperation_category.data_content
