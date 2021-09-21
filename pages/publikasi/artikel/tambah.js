@@ -34,25 +34,46 @@ export default function TambahPage(props) {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, req }) => {
-    
-    const session = await getSession({ req });
-    console.log (`from artikel create ${session}`)
-
-    if (!session) {
-        return {
+export const getServerSideProps = wrapper.getServerSideProps(
+    (store) =>
+      async ({ params, req }) => {
+        const session = await getSession({ req });
+        if (!session) {
+          return {
             redirect: {
-            destination: "/",
-            permanent: false,
+              destination: "/",
+              permanent: false,
             },
-        };
+          };
+        }
+        
+        await store.dispatch(getAllKategori(session.user.user.data.token))
+  
+        return {
+          props: { session, title: "Tambah Artikel - Publikasi" },
+      };
     }
-    await store.dispatch(getAllKategori(session.user.user.data.token))
+);
 
-    return {
-        props: { session, title: "Tambah Artikel - Publikasi" },
-    };
-})
+// export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ query, req }) => {
+    
+//     const session = await getSession({ req });
+//     console.log (`from artikel create ${session}`)
+
+//     if (!session) {
+//         return {
+//             redirect: {
+//             destination: "/",
+//             permanent: false,
+//             },
+//         };
+//     }
+//     await store.dispatch(getAllKategori(session.user.user.data.token))
+
+//     return {
+//         props: { session, title: "Tambah Artikel - Publikasi" },
+//     };
+// })
 
 // export default function TambahPage() {
 //     return (
