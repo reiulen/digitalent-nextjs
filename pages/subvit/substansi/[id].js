@@ -7,11 +7,12 @@ import { getAllSubtanceQuestionBanksType } from "../../../redux/actions/subvit/s
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function DetailSubstansiPage() {
+export default function DetailSubstansiPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DetailSubstansi />
+        <DetailSubstansi token={session.token} />
       </div>
     </>
   );
