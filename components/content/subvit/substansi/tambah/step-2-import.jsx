@@ -26,7 +26,7 @@ import StepInput from "/components/StepInput";
 import LoadingTable from "../../../../LoadingTable";
 import axios from "axios";
 
-const StepTwo = () => {
+const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -81,22 +81,22 @@ const StepTwo = () => {
   const [typeSave, setTypeSave] = useState("lanjut");
 
   useEffect(() => {
-    dispatch(getAllSubtanceQuestionDetail(id));
+    dispatch(getAllSubtanceQuestionDetail(id, token));
     // if (error) {
     //     dispatch(clearErrors())
     // }
     if (successFile) {
-      dispatch(getAllSubtanceQuestionDetail(id));
+      dispatch(getAllSubtanceQuestionDetail(id, token));
     }
 
     if (successImages) {
-      dispatch(getAllSubtanceQuestionDetail(id));
+      dispatch(getAllSubtanceQuestionDetail(id, token));
     }
 
     if (isDeleted) {
-      dispatch(getAllSubtanceQuestionDetail(id));
+      dispatch(getAllSubtanceQuestionDetail(id, token));
     }
-  }, [dispatch, id, successFile, successImages, isDeleted]);
+  }, [dispatch, id, successFile, successImages, isDeleted, token]);
 
   const saveDraft = () => {
     let valid = true;
@@ -177,7 +177,7 @@ const StepTwo = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(importFileSubtanceQuestionDetail(data));
+        dispatch(importFileSubtanceQuestionDetail(data, token));
       }
     });
   };
@@ -187,17 +187,17 @@ const StepTwo = () => {
     data.append("subtance_question_bank_id", id);
     data.append("image_file", image_file, image_file.name);
 
-    dispatch(importImagesSubtanceQuestionDetail(data));
+    dispatch(importImagesSubtanceQuestionDetail(data, token));
   };
 
   const handlePagination = (pageNumber) => {
     router.push(`${router.pathname}?id=${id}&page=${pageNumber}`);
-    dispatch(getAllSubtanceQuestionDetail(id, pageNumber));
+    dispatch(getAllSubtanceQuestionDetail(id, pageNumber, token));
   };
 
   const handleLimit = (val) => {
     router.push(`${router.pathname}?id=${id}&page=${1}&limit=${val}`);
-    dispatch(getAllSubtanceQuestionDetail(id, 1, val));
+    dispatch(getAllSubtanceQuestionDetail(id, 1, val, token));
   };
 
   const handleDelete = (id) => {
@@ -213,7 +213,7 @@ const StepTwo = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionDetail(id));
+        dispatch(deleteSubtanceQuestionDetail(id, token));
       }
     });
   };

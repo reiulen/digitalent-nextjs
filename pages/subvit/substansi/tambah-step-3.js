@@ -1,11 +1,12 @@
-import StepThree from "/components/content/subvit/substansi/tambah/step-3";
+import StepThree from "../../../components/content/subvit/substansi/tambah/step-3.jsx";
 import { getSession } from "next-auth/client";
 
-export default function TambahBankSoalTesSubstansiStep3() {
+export default function TambahBankSoalTesSubstansiStep3(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <StepThree />
+        <StepThree token={session.token} />
       </div>
     </>
   );

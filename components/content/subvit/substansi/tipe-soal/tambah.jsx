@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import LoadingPage from "../../../../LoadingPage";
 import { FAIL_COOPERTAION_ACTIVE_SELECT_BY_ID } from "../../../../../redux/types/partnership/management_cooporation.type";
 
-const TambahTipeSoal = () => {
+const TambahTipeSoal = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -56,7 +56,7 @@ const TambahTipeSoal = () => {
         status: 0,
       };
 
-      dispatch(newSubtanceQuestionBanksType(data));
+      dispatch(newSubtanceQuestionBanksType(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -80,7 +80,7 @@ const TambahTipeSoal = () => {
         status: 1,
       };
 
-      dispatch(newSubtanceQuestionBanksType(data));
+      dispatch(newSubtanceQuestionBanksType(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
