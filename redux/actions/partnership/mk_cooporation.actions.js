@@ -94,8 +94,12 @@ export const successGetSingleCooporation = (data) => {
 export const deleteCooporation = (id) => {
   return async (dispatch, getState) => {
     try {
-      let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`
+      let formData = new FormData();
+      formData.append("_method", "PUT");
+
+      let { data } = await axios.post(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/delete/${id}`,
+        formData
       );
       dispatch(successDeleteCooporation(data));
     } catch (error) {

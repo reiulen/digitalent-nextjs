@@ -119,7 +119,7 @@ const DetailDokumenKerjasama = () => {
               }
             );
             // alert("berhasil");
-            console.log("data",data)
+            // console.log("data",data)
             router.push({
               pathname: `/partnership/user/kerjasama/review-kerjasama-1`,
               query: { successSubmitKerjasama: true },

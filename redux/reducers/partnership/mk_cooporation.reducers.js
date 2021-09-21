@@ -76,7 +76,7 @@ export const allMKCooporationReducer = (state = initialState, action) => {
     case SUCCESS_DELETE_COOPORATION_REQUEST:
       return {
         ...state,
-        status_delete: state.status_delete === "" ? statuslist.success : "",
+        status_delete: state.status_delete === "" ? "delete" : "",
       };
     case SET_PAGE:
       console.log("sdfasf");

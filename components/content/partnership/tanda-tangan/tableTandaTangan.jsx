@@ -53,10 +53,18 @@ const Table = () => {
       }
     });
   };
+
+
   const onNewReset = () => {
     setSuccessDelete(false);
-    router.replace(`/partnership/tanda-tangan`);
+    router.replace("/partnership/tanda-tangan", undefined, { shallow: true });
   };
+  
+  
+  // setSuccessDelete(false);
+  // const onNewReset = () => {
+  //   router.replace(`/partnership/tanda-tangan`);
+  // };
 
   useEffect(() => {
     dispatch(fetchSignature());

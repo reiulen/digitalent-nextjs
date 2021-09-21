@@ -142,11 +142,25 @@ const Table = () => {
   };
   const [isStatusBar, setIsStatusBar] = useState(false);
   const [deleteBar, setDeleteBar] = useState(false);
+
+
+  // const onNewReset = () => {
+  //   router.replace("/partnership/kerjasama");
+  //   setDeleteBar(false);
+  //   setIsStatusBar(false);
+  // };
+
+
+
   const onNewReset = () => {
-    router.replace("/partnership/kerjasama");
     setDeleteBar(false);
     setIsStatusBar(false);
+    router.replace("/partnership/kerjasama", undefined, { shallow: true });
   };
+
+
+
+
   useEffect(() => {
     dispatch(fetchAllMK());
   }, [
