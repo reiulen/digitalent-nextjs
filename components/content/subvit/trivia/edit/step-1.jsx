@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import {
     updatewTriviaQuestionBanks,
     clearErrors,
-} from '../../../../../redux/actions/subvit/trivia-question.actions';
-import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from '../../../../../redux/types/subvit/trivia-question.type';
+} from "../../../../../redux/actions/subvit/trivia-question.actions";
+import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../redux/types/subvit/trivia-question.type";
 
-import PageWrapper from '/components/wrapper/page.wrapper';
-import StepInputPublish from '/components/StepInputPublish';
-import LoadingPage from '../../../../LoadingPage';
+import PageWrapper from "/components/wrapper/page.wrapper";
+import StepInputPublish from "/components/StepInputPublish";
+import LoadingPage from "../../../../LoadingPage";
 
 const StepOne = ({ token }) => {
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const StepOne = ({ token }) => {
         state => state.updateTriviaQuestion
     );
 
-    const [typeSave, setTypeSave] = useState('lanjut');
+    const [typeSave, setTypeSave] = useState("lanjut");
     const [academy_id, setAcademyId] = useState(trivia.academy_id);
     const [theme_id, setThemeId] = useState(trivia.theme_id);
     const [training_id, setTrainingId] = useState(trivia.training_id);
@@ -38,15 +38,18 @@ const StepOne = ({ token }) => {
         // }
 
         if (isUpdated) {
-            dispatch({
-                type: UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
-            });
-            if (typeSave === 'lanjut') {
+            dispatch(
+                {
+                    type: UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
+                },
+                token
+            );
+            if (typeSave === "lanjut") {
                 router.push({
                     pathname: `/subvit/trivia/edit/step-2`,
                     query: { id },
                 });
-            } else if (typeSave === 'draft') {
+            } else if (typeSave === "draft") {
                 router.push({
                     pathname: `/subvit/trivia`,
                     query: { success: true },
@@ -60,25 +63,25 @@ const StepOne = ({ token }) => {
     // };
 
     const saveDraft = () => {
-        setTypeSave('draft');
+        setTypeSave("draft");
         const data = {
             academy_id,
             theme_id,
             training_id,
-            _method: 'put',
+            _method: "put",
         };
         dispatch(updatewTriviaQuestionBanks(id, data, token));
     };
 
     const onSubmit = e => {
         e.preventDefault();
-        setTypeSave('lanjut');
+        setTypeSave("lanjut");
 
         const data = {
             academy_id,
             theme_id,
             training_id,
-            _method: 'put',
+            _method: "put",
         };
         dispatch(updatewTriviaQuestionBanks(id, data, token));
     };
@@ -115,10 +118,10 @@ const StepOne = ({ token }) => {
                     </div>
                 </div>
             ) : (
-                ''
+                ""
             )}
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-                {loading ? <LoadingPage loading={loading} /> : ''}
+                {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <StepInputPublish step="1"></StepInputPublish>
                     <div className="card-header border-0">
@@ -146,8 +149,8 @@ const StepOne = ({ token }) => {
                                     >
                                         <option> -Pilih Akademi -</option>
                                         <option value="1" selected>
-                                            {' '}
-                                            Computer Scientist{' '}
+                                            {" "}
+                                            Computer Scientist{" "}
                                         </option>
                                         <option value="2"> Designer </option>
                                     </select>
@@ -172,12 +175,12 @@ const StepOne = ({ token }) => {
                                     >
                                         <option> -Pilih Tema-</option>
                                         <option value="1" selected>
-                                            {' '}
-                                            Cloud Computing{' '}
+                                            {" "}
+                                            Cloud Computing{" "}
                                         </option>
                                         <option value="2">
-                                            {' '}
-                                            UI/UX Designer{' '}
+                                            {" "}
+                                            UI/UX Designer{" "}
                                         </option>
                                     </select>
                                 </div>
@@ -201,12 +204,12 @@ const StepOne = ({ token }) => {
                                     >
                                         <option> -Pilih Pelatihan-</option>
                                         <option value="1" selected>
-                                            {' '}
-                                            Google Cloud Computing{' '}
+                                            {" "}
+                                            Google Cloud Computing{" "}
                                         </option>
                                         <option value="2">
-                                            {' '}
-                                            Adobe UI/UX Designer{' '}
+                                            {" "}
+                                            Adobe UI/UX Designer{" "}
                                         </option>
                                     </select>
                                 </div>

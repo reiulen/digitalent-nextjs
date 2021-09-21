@@ -1,21 +1,21 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
-import DatePicker from 'react-datepicker';
-import SimpleReactValidator from 'simple-react-validator';
-import Swal from 'sweetalert2';
-import moment from 'moment';
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import DatePicker from "react-datepicker";
+import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
+import moment from "moment";
 
 import {
     updateTriviaQuestionBanksPublish,
     clearErrors,
-} from '../../../../../redux/actions/subvit/trivia-question.actions';
-import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from '../../../../../redux/types/subvit/trivia-question.type';
+} from "../../../../../redux/actions/subvit/trivia-question.actions";
+import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../redux/types/subvit/trivia-question.type";
 
-import PageWrapper from '/components/wrapper/page.wrapper';
-import StepInput from '/components/StepInput';
-import LoadingPage from '../../../../LoadingPage';
+import PageWrapper from "/components/wrapper/page.wrapper";
+import StepInput from "/components/StepInput";
+import LoadingPage from "../../../../LoadingPage";
 
 const StepThree = ({ token }) => {
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const StepThree = ({ token }) => {
     const { loading, error, success } = useSelector(
         state => state.updateTriviaQuestionBanksPublish
     );
-    const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }));
+    const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
     useEffect(() => {
         // if (error) {
@@ -33,9 +33,12 @@ const StepThree = ({ token }) => {
         // }
 
         if (success) {
-            dispatch({
-                type: UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
-            });
+            dispatch(
+                {
+                    type: UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET,
+                },
+                token
+            );
             router.push({
                 pathname: `/subvit/trivia`,
                 query: { success: true },
@@ -49,27 +52,27 @@ const StepThree = ({ token }) => {
     const [endDate, setEndDate] = useState(null);
     const [duration, setDuration] = useState(null);
     const [jumlah_soal, setJumlahSoal] = useState(null);
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState("");
 
     const saveDraft = () => {
         if (
-            moment(startDate).format('YYYY-MM-DD') >
-            moment(endDate).format('YYYY-MM-DD')
+            moment(startDate).format("YYYY-MM-DD") >
+            moment(endDate).format("YYYY-MM-DD")
         ) {
             Swal.fire(
-                'Oops !',
-                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
-                'error'
+                "Oops !",
+                "Tanggal sebelum tidak boleh melebihi tanggal sesudah.",
+                "error"
             );
             setStartDate(null);
             setEndDate(null);
         } else {
             if (simpleValidator.current.allValid()) {
-                const start_at = moment(startDate).format('YYYY-MM-DD');
-                const end_at = moment(endDate).format('YYYY-MM-DD');
+                const start_at = moment(startDate).format("YYYY-MM-DD");
+                const end_at = moment(endDate).format("YYYY-MM-DD");
 
                 const data = {
-                    _method: 'put',
+                    _method: "put",
                     start_at,
                     end_at,
                     duration,
@@ -82,9 +85,9 @@ const StepThree = ({ token }) => {
                 simpleValidator.current.showMessages();
                 forceUpdate(1);
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Isi data dengan benar !',
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Isi data dengan benar !",
                 });
             }
         }
@@ -98,23 +101,23 @@ const StepThree = ({ token }) => {
         }
 
         if (
-            moment(startDate).format('YYYY-MM-DD') >
-            moment(endDate).format('YYYY-MM-DD')
+            moment(startDate).format("YYYY-MM-DD") >
+            moment(endDate).format("YYYY-MM-DD")
         ) {
             Swal.fire(
-                'Oops !',
-                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
-                'error'
+                "Oops !",
+                "Tanggal sebelum tidak boleh melebihi tanggal sesudah.",
+                "error"
             );
             setStartDate(null);
             setEndDate(null);
         } else {
             if (simpleValidator.current.allValid()) {
-                const start_at = moment(startDate).format('YYYY-MM-DD');
-                const end_at = moment(endDate).format('YYYY-MM-DD');
+                const start_at = moment(startDate).format("YYYY-MM-DD");
+                const end_at = moment(endDate).format("YYYY-MM-DD");
 
                 const data = {
-                    _method: 'put',
+                    _method: "put",
                     start_at,
                     end_at,
                     duration,
@@ -127,9 +130,9 @@ const StepThree = ({ token }) => {
                 simpleValidator.current.showMessages();
                 forceUpdate(1);
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Isi data dengan benar !',
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Isi data dengan benar !",
                 });
             }
         }
@@ -160,10 +163,10 @@ const StepThree = ({ token }) => {
                     </div>
                 </div>
             ) : (
-                ''
+                ""
             )}
             <div className="col-lg-12 order-1 order-xxl-2 px-0">
-                {loading ? <LoadingPage loading={loading} /> : ''}
+                {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <StepInput step="3"></StepInput>
                     <div className="card-header border-0">
@@ -189,7 +192,7 @@ const StepThree = ({ token }) => {
                                         onChange={date => setStartDate(date)}
                                         onBlur={() =>
                                             simpleValidator.current.showMessageFor(
-                                                'tanggal mulai'
+                                                "tanggal mulai"
                                             )
                                         }
                                         selectsStart
@@ -200,10 +203,10 @@ const StepThree = ({ token }) => {
                                     />
 
                                     {simpleValidator.current.message(
-                                        'tanggal mulai',
+                                        "tanggal mulai",
                                         startDate,
-                                        'required',
-                                        { className: 'text-danger' }
+                                        "required",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
 
@@ -221,7 +224,7 @@ const StepThree = ({ token }) => {
                                         onChange={date => setEndDate(date)}
                                         onBlur={() =>
                                             simpleValidator.current.showMessageFor(
-                                                'tanggal sampai'
+                                                "tanggal sampai"
                                             )
                                         }
                                         selectsEnd
@@ -233,10 +236,10 @@ const StepThree = ({ token }) => {
                                     />
 
                                     {simpleValidator.current.message(
-                                        'tanggal sampai',
+                                        "tanggal sampai",
                                         endDate,
-                                        'required',
-                                        { className: 'text-danger' }
+                                        "required",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
@@ -260,7 +263,7 @@ const StepThree = ({ token }) => {
                                             }
                                             onBlur={() =>
                                                 simpleValidator.current.showMessageFor(
-                                                    'jumlah soal'
+                                                    "jumlah soal"
                                                 )
                                             }
                                             min={1}
@@ -276,10 +279,10 @@ const StepThree = ({ token }) => {
                                     </div>
 
                                     {simpleValidator.current.message(
-                                        'jumlah soal',
+                                        "jumlah soal",
                                         jumlah_soal,
-                                        'required|integer',
-                                        { className: 'text-danger' }
+                                        "required|integer",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                                 <div className="col-sm-12 col-md-6">
@@ -300,7 +303,7 @@ const StepThree = ({ token }) => {
                                             }
                                             onBlur={() =>
                                                 simpleValidator.current.showMessageFor(
-                                                    'durasi'
+                                                    "durasi"
                                                 )
                                             }
                                             min={1}
@@ -316,10 +319,10 @@ const StepThree = ({ token }) => {
                                     </div>
 
                                     {simpleValidator.current.message(
-                                        'durasi',
+                                        "durasi",
                                         duration,
-                                        'required|integer',
-                                        { className: 'text-danger' }
+                                        "required|integer",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
@@ -343,7 +346,7 @@ const StepThree = ({ token }) => {
                                         onBlur={e => {
                                             setStatus(e.target.value);
                                             simpleValidator.current.showMessageFor(
-                                                'status'
+                                                "status"
                                             );
                                         }}
                                     >
@@ -355,10 +358,10 @@ const StepThree = ({ token }) => {
                                     </select>
 
                                     {simpleValidator.current.message(
-                                        'status',
+                                        "status",
                                         status,
-                                        'required',
-                                        { className: 'text-danger' }
+                                        "required",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                             </div>

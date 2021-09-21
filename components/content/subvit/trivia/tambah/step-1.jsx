@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
-import { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
-import SimpleReactValidator from 'simple-react-validator';
-import Swal from 'sweetalert2';
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import SimpleReactValidator from "simple-react-validator";
+import Swal from "sweetalert2";
 
 import {
     newTriviaQuestionBanks,
     clearErrors,
-} from '../../../../../redux/actions/subvit/trivia-question.actions';
-import { NEW_TRIVIA_QUESTION_BANKS_RESET } from '../../../../../redux/types/subvit/trivia-question.type';
+} from "../../../../../redux/actions/subvit/trivia-question.actions";
+import { NEW_TRIVIA_QUESTION_BANKS_RESET } from "../../../../../redux/types/subvit/trivia-question.type";
 
-import PageWrapper from '/components/wrapper/page.wrapper';
-import StepInput from '/components/StepInput';
-import LoadingPage from '../../../../LoadingPage';
+import PageWrapper from "/components/wrapper/page.wrapper";
+import StepInput from "/components/StepInput";
+import LoadingPage from "../../../../LoadingPage";
 
 const TambahTriviaStepOne = ({ token }) => {
     const dispatch = useDispatch();
@@ -22,14 +22,14 @@ const TambahTriviaStepOne = ({ token }) => {
     const { loading, error, success, trivia } = useSelector(
         state => state.newTriviaQuestionBanks
     );
-    const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }));
+    const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
     const [, forceUpdate] = useState();
-    const [typeSave, setTypeSave] = useState('lanjut');
+    const [typeSave, setTypeSave] = useState("lanjut");
 
-    const [academy_id, setAcademyId] = useState('');
-    const [theme_id, setThemeId] = useState('');
-    const [training_id, setTrainingId] = useState('');
-    const [metode, setMetode] = useState('entry');
+    const [academy_id, setAcademyId] = useState("");
+    const [theme_id, setThemeId] = useState("");
+    const [training_id, setTrainingId] = useState("");
+    const [metode, setMetode] = useState("entry");
 
     useEffect(() => {
         // if (error) {
@@ -38,12 +38,12 @@ const TambahTriviaStepOne = ({ token }) => {
 
         if (success) {
             const id = trivia.id;
-            if (typeSave === 'lanjut') {
+            if (typeSave === "lanjut") {
                 router.push({
                     pathname: `/subvit/trivia/tambah/step-2-${metode}`,
                     query: { id, metode },
                 });
-            } else if (typeSave === 'draft') {
+            } else if (typeSave === "draft") {
                 router.push({
                     pathname: `/subvit/trivia`,
                     query: { success: true },
@@ -53,14 +53,17 @@ const TambahTriviaStepOne = ({ token }) => {
     }, [dispatch, error, success, typeSave, router, metode, trivia]);
 
     const saveDraft = () => {
-        setTypeSave('draft');
+        setTypeSave("draft");
         if (error) {
             dispatch(clearErrors());
         }
         if (success) {
-            dispatch({
-                type: NEW_TRIVIA_QUESTION_BANKS_RESET,
-            });
+            dispatch(
+                {
+                    type: NEW_TRIVIA_QUESTION_BANKS_RESET,
+                },
+                token
+            );
         }
         if (simpleValidator.current.allValid()) {
             const data = {
@@ -74,24 +77,27 @@ const TambahTriviaStepOne = ({ token }) => {
             simpleValidator.current.showMessages();
             forceUpdate(1);
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi data dengan benar !',
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
             });
         }
     };
 
     const onSubmit = e => {
         e.preventDefault();
-        setTypeSave('lanjut');
-        console.log('on submitMASUKKKKKKK');
+        console.log("on submitMASUKKKKKKK");
+        setTypeSave("lanjut");
         if (error) {
             dispatch(clearErrors());
         }
         if (success) {
-            dispatch({
-                type: NEW_TRIVIA_QUESTION_BANKS_RESET,
-            });
+            dispatch(
+                {
+                    type: NEW_TRIVIA_QUESTION_BANKS_RESET,
+                },
+                token
+            );
         }
         if (simpleValidator.current.allValid()) {
             const data = {
@@ -99,15 +105,14 @@ const TambahTriviaStepOne = ({ token }) => {
                 theme_id,
                 training_id,
             };
-
             dispatch(newTriviaQuestionBanks(data, token));
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi data dengan benar !',
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
             });
         }
     };
@@ -144,11 +149,11 @@ const TambahTriviaStepOne = ({ token }) => {
                     </div>
                 </div>
             ) : (
-                ''
+                ""
             )}
 
             <div className="col-lg-12 order-1 order-xxl-2 px-0">
-                {loading ? <LoadingPage loading={loading} /> : ''}
+                {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <StepInput step="1"></StepInput>
                     <div className="card-header border-0">
@@ -176,26 +181,26 @@ const TambahTriviaStepOne = ({ token }) => {
                                         onBlur={e => {
                                             setAcademyId(e.target.value);
                                             simpleValidator.current.showMessageFor(
-                                                'academy_id'
+                                                "academy_id"
                                             );
                                         }}
                                         className="form-control"
                                     >
                                         <option selected disabled value="">
-                                            {' '}
+                                            {" "}
                                             -Pilih Akademi -
                                         </option>
                                         <option value="1">
-                                            {' '}
-                                            Computer Scientist{' '}
+                                            {" "}
+                                            Computer Scientist{" "}
                                         </option>
                                         <option value="2"> Designer </option>
                                     </select>
                                     {simpleValidator.current.message(
-                                        'academy_id',
+                                        "academy_id",
                                         academy_id,
-                                        'required',
-                                        { className: 'text-danger' }
+                                        "required",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
@@ -217,29 +222,29 @@ const TambahTriviaStepOne = ({ token }) => {
                                         onBlur={e => {
                                             setThemeId(e.target.value);
                                             simpleValidator.current.showMessageFor(
-                                                'theme_id'
+                                                "theme_id"
                                             );
                                         }}
                                         className="form-control"
                                     >
                                         <option selected disabled value="">
-                                            {' '}
+                                            {" "}
                                             -Pilih Tema-
                                         </option>
                                         <option value="1">
-                                            {' '}
-                                            Cloud Computing{' '}
+                                            {" "}
+                                            Cloud Computing{" "}
                                         </option>
                                         <option value="2">
-                                            {' '}
-                                            UI/UX Designer{' '}
+                                            {" "}
+                                            UI/UX Designer{" "}
                                         </option>
                                     </select>
                                     {simpleValidator.current.message(
-                                        'theme_id',
+                                        "theme_id",
                                         theme_id,
-                                        'required',
-                                        { className: 'text-danger' }
+                                        "required",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
@@ -264,16 +269,16 @@ const TambahTriviaStepOne = ({ token }) => {
                                         className="form-control"
                                     >
                                         <option selected disabled>
-                                            {' '}
+                                            {" "}
                                             -Pilih Pelatihan-
                                         </option>
                                         <option value="1">
-                                            {' '}
-                                            Google Cloud Computing{' '}
+                                            {" "}
+                                            Google Cloud Computing{" "}
                                         </option>
                                         <option value="1">
-                                            {' '}
-                                            Adobe UI/UX Designer{' '}
+                                            {" "}
+                                            Adobe UI/UX Designer{" "}
                                         </option>
                                     </select>
                                 </div>
@@ -293,8 +298,8 @@ const TambahTriviaStepOne = ({ token }) => {
                                             type="radio"
                                             name="method"
                                             value="entry"
-                                            checked={metode === 'entry'}
-                                            onClick={() => setMetode('entry')}
+                                            checked={metode === "entry"}
+                                            onClick={() => setMetode("entry")}
                                         />
                                         <label className="form-check-label">
                                             Entry Soal
@@ -306,8 +311,8 @@ const TambahTriviaStepOne = ({ token }) => {
                                             type="radio"
                                             name="method"
                                             value="import"
-                                            checked={metode === 'import'}
-                                            onClick={() => setMetode('import')}
+                                            checked={metode === "import"}
+                                            onClick={() => setMetode("import")}
                                         />
                                         <label className="form-check-label">
                                             Import .csv/.xls

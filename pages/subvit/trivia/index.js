@@ -1,15 +1,15 @@
-import dynamic from 'next/dynamic';
-import LoadingSkeleton from '../../../components/LoadingSkeleton';
+import dynamic from "next/dynamic";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 // import ListTrivia from "/components/content/subvit/trivia/list-trivia";
 const ListTrivia = dynamic(
-    () => import('../../../components/content/subvit/trivia/list-trivia'),
+    () => import("../../../components/content/subvit/trivia/list-trivia"),
     { suspense: true, loading: () => <LoadingSkeleton /> }
 );
 
-import { getAllTriviaQuestionBanks } from '../../../redux/actions/subvit/trivia-question.actions';
-import { wrapper } from '../../../redux/store';
-import { getSession } from 'next-auth/client';
+import { getAllTriviaQuestionBanks } from "../../../redux/actions/subvit/trivia-question.actions";
+import { wrapper } from "../../../redux/store";
+import { getSession } from "next-auth/client";
 
 export default function Trivia(props) {
     const session = props.session.user.user.data;
@@ -30,7 +30,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             if (!session) {
                 return {
                     redirect: {
-                        destination: '/',
+                        destination: "/",
                         permanent: false,
                     },
                 };
@@ -46,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             );
 
             return {
-                props: { session, title: 'Trivia - Subvit' },
+                props: { session, title: "Trivia - Subvit" },
             };
         }
 );

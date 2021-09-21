@@ -1,29 +1,29 @@
 // #Next & React
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 // #Page, Component & Library
-import PageWrapper from '../../../wrapper/page.wrapper';
-import DatePicker from 'react-datepicker';
-import { addDays } from 'date-fns';
-import LoadingTable from '../../../LoadingTable';
-import Pagination from 'react-js-pagination';
-
+import PageWrapper from "../../../wrapper/page.wrapper";
+import DatePicker from "react-datepicker";
+import { addDays } from "date-fns";
+import LoadingTable from "../../../LoadingTable";
+import Pagination from "react-js-pagination";
+import Image from "next/image";
 // #Icon
-import IconArrow from '../../../assets/icon/Arrow';
-import IconClose from '../../../assets/icon/Close';
-import IconFilter from '../../../assets/icon/Filter';
+import IconArrow from "../../../assets/icon/Arrow";
+import IconClose from "../../../assets/icon/Close";
+import IconFilter from "../../../assets/icon/Filter";
 
 export default function MasterSertifikat() {
     const router = useRouter();
 
     const handleLimit = () => {
-        console.log('');
+        console.log("");
     };
 
     const handleSearch = () => {
-        console.log('');
+        console.log("");
     };
 
     // #DatePicker
@@ -45,51 +45,51 @@ export default function MasterSertifikat() {
         artikel: [
             {
                 id: 110,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat A',
-                jenis_sertifikat: '1 sisi',
-                status: 'belum tersedia',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat A",
+                jenis_sertifikat: "1 sisi",
+                status: "belum tersedia",
             },
             {
                 id: 111,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat B',
-                jenis_sertifikat: '1 sisi',
-                status: 'review',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat B",
+                jenis_sertifikat: "1 sisi",
+                status: "review",
             },
             {
                 id: 112,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat C',
-                jenis_sertifikat: '1 sisi',
-                status: 'draft',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat C",
+                jenis_sertifikat: "1 sisi",
+                status: "draft",
             },
             {
                 id: 112,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat C',
-                jenis_sertifikat: '1 sisi',
-                status: 'publish',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat C",
+                jenis_sertifikat: "1 sisi",
+                status: "publish",
             },
             {
                 id: 112,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat C',
-                jenis_sertifikat: '1 sisi',
-                status: 'ditolak',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat C",
+                jenis_sertifikat: "1 sisi",
+                status: "ditolak",
             },
             {
                 id: 112,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat C',
-                jenis_sertifikat: '1 sisi',
-                status: 'revisi',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat C",
+                jenis_sertifikat: "1 sisi",
+                status: "revisi",
             },
         ],
     };
@@ -102,17 +102,25 @@ export default function MasterSertifikat() {
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">
-                            Kelola Sertifikat
+                            Master Sertifikat
                         </h3>
+                        <div className="card-toolbar">
+                            <Link href="/sertifikat/master-sertifikat/tambah">
+                                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
+                                    <i className="ri-pencil-fill"></i>
+                                    Buat Design
+                                </a>
+                            </Link>
+                        </div>
                     </div>
-
                     <div className="card-body pt-0">
+                        {/* START SEARCHBAR */}
                         <div className="table-filter">
                             <div className="row align-items-center">
                                 <div className="col-lg-6 col-xl-6 col-sm-9">
                                     <div
                                         className="position-relative overflow-hidden mt-3"
-                                        style={{ maxWidth: '330px' }}
+                                        style={{ maxWidth: "330px" }}
                                     >
                                         <i className="ri-search-line left-center-absolute ml-2"></i>
                                         <input
@@ -126,8 +134,8 @@ export default function MasterSertifikat() {
                                         <button
                                             className="btn bg-blue-primary text-white right-center-absolute"
                                             style={{
-                                                borderTopLeftRadius: '0',
-                                                borderBottomLeftRadius: '0',
+                                                borderTopLeftRadius: "0",
+                                                borderBottomLeftRadius: "0",
                                             }}
                                             onClick={handleSearch}
                                         >
@@ -135,6 +143,7 @@ export default function MasterSertifikat() {
                                         </button>
                                     </div>
                                 </div>
+                                {/* START MODAL */}
                                 <div className="col-lg-6 col-xl-6 col-sm-9">
                                     <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                                         {/* sortir by modal */}
@@ -143,8 +152,8 @@ export default function MasterSertifikat() {
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
                                             style={{
-                                                color: '#464646',
-                                                minWidth: '230px',
+                                                color: "#464646",
+                                                minWidth: "230px",
                                             }}
                                         >
                                             <div className="d-flex align-items-center">
@@ -202,7 +211,7 @@ export default function MasterSertifikat() {
                                                         <div
                                                             className="modal-body text-left"
                                                             style={{
-                                                                height: '200px',
+                                                                height: "200px",
                                                             }}
                                                         >
                                                             <div className="mb-10 col-12">
@@ -306,116 +315,67 @@ export default function MasterSertifikat() {
                                 </div>
                             </div>
                         </div>
-                        {/* START TABLE */}
-                        <div className="table-page mt-5">
-                            <div className="table-responsive">
-                                <LoadingTable
-                                // UNFISNISH
-                                // loading={loading}
-                                // Isi dengan loading dari dispatch
-                                />
-
-                                {loading === false ? (
-                                    <table className="table table-separate table-head-custom table-checkable">
-                                        <thead
-                                            style={{ background: '#F3F6F9' }}
+                        {/* END SEARCHBAR */}
+                        {/* START CONTENT */}
+                        <div className="mt-5">
+                            <div className="row justify-content-start">
+                                {/* START LOOP */}
+                                <div className="col-lg-4 p-10 col-sm-6">
+                                    <div className="my-10 justify-content-center d-flex">
+                                        <Image
+                                            src="https://dts-sertifikat-dev.s3.ap-southeast-1.amazonaws.com/certificate/images/certificate-images/2d08970e-7c1a-483a-ae55-ce19e6b8d36f.jpg"
+                                            alt="fitur"
+                                            height={191}
+                                            width={270}
+                                        />
+                                    </div>
+                                    <div className="align-self-center text-center my-5">
+                                        Sertifikat A
+                                    </div>
+                                    <div className="d-flex justify-content-center">
+                                        <Link
+                                            href={`/subvit/substansi/${""}`}
+                                            // isi id
                                         >
-                                            <tr>
-                                                <th className="text-center">
-                                                    No
-                                                </th>
-                                                <th>Tema Pelatihan</th>
-                                                <th>Nama Pelatihan</th>
-                                                <th>Jumlah Sertifikat</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {!artikel ||
-                                            (artikel &&
-                                                artikel.artikel.length ===
-                                                    0) ? (
-                                                <tr>
-                                                    <td
-                                                        className="text-center"
-                                                        colSpan={6}
-                                                    >
-                                                        Data Masih Kosong
-                                                    </td>
-                                                </tr>
-                                            ) : (
-                                                artikel &&
-                                                // artikel.artikel &&
-                                                artikel.artikel.map(
-                                                    (artikel, i) => {
-                                                        return (
-                                                            <tr
-                                                                key={artikel.id}
-                                                            >
-                                                                <td className="align-middle text-center">
-                                                                    {limit ===
-                                                                    null ? (
-                                                                        <span className="badge badge-secondary text-muted">
-                                                                            {i +
-                                                                                1 *
-                                                                                    (page *
-                                                                                        5) -
-                                                                                (5 -
-                                                                                    1)}
-                                                                        </span>
-                                                                    ) : (
-                                                                        <span className="badge badge-secondary text-muted">
-                                                                            {i +
-                                                                                1 *
-                                                                                    (page *
-                                                                                        limit) -
-                                                                                (limit -
-                                                                                    1)}
-                                                                        </span>
-                                                                    )}
-                                                                </td>
-                                                                {/* START TABLE DATA */}
-                                                                <td className="align-middle">
-                                                                    {
-                                                                        artikel.tema_pelatihan
-                                                                    }
-                                                                </td>
-                                                                <td className="align-middle">
-                                                                    {
-                                                                        artikel.nama_pelatihan
-                                                                    }
-                                                                </td>
-                                                                <td className="align-middle">
-                                                                    {
-                                                                        artikel.jumlah_sertifikat
-                                                                    }
-                                                                </td>
-                                                                <td className="align-middle d-flex">
-                                                                    <Link
-                                                                        href={`/sertifikat/kelola-sertifikat/${artikel.akademi}`}
-                                                                    >
-                                                                        <a
-                                                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                                                            data-toggle="tooltip"
-                                                                            data-placement="bottom"
-                                                                            title="Detail"
-                                                                        >
-                                                                            <i className="ri-eye-fill p-0 text-white"></i>
-                                                                        </a>
-                                                                    </Link>
-                                                                </td>
-                                                                {/* END TABLE DATA */}
-                                                            </tr>
-                                                        );
-                                                    }
-                                                )
-                                            )}
-                                        </tbody>
-                                    </table>
-                                ) : (
-                                    ''
-                                )}
+                                            <a
+                                                className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                data-toggle="tooltip"
+                                                data-placement="bottom"
+                                                title="Detail"
+                                            >
+                                                <i className="ri-eye-fill p-0 text-white"></i>
+                                            </a>
+                                        </Link>
+                                        <Link
+                                            href={`/subvit/substansi/edit?id=${""}`}
+                                            // isi id
+                                        >
+                                            <a
+                                                className="btn btn-link-action bg-warning text-white mr-2"
+                                                data-toggle="tooltip"
+                                                data-placement="bottom"
+                                                title="Edit"
+                                            >
+                                                <i className="ri-pencil-fill p-0 text-white"></i>
+                                            </a>
+                                        </Link>
+                                        <button
+                                            className="btn btn-link-action bg-danger text-white"
+                                            onClick={() =>
+                                                // handleDelete(subtance.id)
+                                                console.log("")
+                                            }
+                                            data-toggle="tooltip"
+                                            data-placement="bottom"
+                                            title="Hapus"
+                                        >
+                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                {/* END LOOP */}
                             </div>
+                            {/* END CONTENT*/}
                             {/* START Pagination */}
                             <div className="row">
                                 {artikel && artikel.perPage < artikel.total && (
@@ -426,10 +386,10 @@ export default function MasterSertifikat() {
                                             totalItemsCount={artikel.total}
                                             pageRangeDisplayed={3}
                                             onChange={handlePagination}
-                                            nextPageText={'>'}
-                                            prevPageText={'<'}
-                                            firstPageText={'<<'}
-                                            lastPageText={'>>'}
+                                            nextPageText={">"}
+                                            prevPageText={"<"}
+                                            firstPageText={"<<"}
+                                            lastPageText={">>"}
                                             itemClass="page-item"
                                             linkClass="page-link"
                                         />
@@ -443,10 +403,10 @@ export default function MasterSertifikat() {
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
                                                     style={{
-                                                        width: '65px',
-                                                        background: '#F3F6F9',
-                                                        borderColor: '#F3F6F9',
-                                                        color: '#9E9E9E',
+                                                        width: "65px",
+                                                        background: "#F3F6F9",
+                                                        borderColor: "#F3F6F9",
+                                                        color: "#9E9E9E",
                                                     }}
                                                     onChange={e =>
                                                         handleLimit(
@@ -462,7 +422,7 @@ export default function MasterSertifikat() {
                                                     <option
                                                         value="5"
                                                         selected={
-                                                            limit == '5'
+                                                            limit == "5"
                                                                 ? true
                                                                 : false
                                                         }
@@ -472,7 +432,7 @@ export default function MasterSertifikat() {
                                                     <option
                                                         value="10"
                                                         selected={
-                                                            limit == '10'
+                                                            limit == "10"
                                                                 ? true
                                                                 : false
                                                         }
@@ -482,7 +442,7 @@ export default function MasterSertifikat() {
                                                     <option
                                                         value="15"
                                                         selected={
-                                                            limit == '15'
+                                                            limit == "15"
                                                                 ? true
                                                                 : false
                                                         }
@@ -492,7 +452,7 @@ export default function MasterSertifikat() {
                                                     <option
                                                         value="20"
                                                         selected={
-                                                            limit == '20'
+                                                            limit == "20"
                                                                 ? true
                                                                 : false
                                                         }
@@ -504,9 +464,9 @@ export default function MasterSertifikat() {
                                             <div className="col-8 my-auto">
                                                 <p
                                                     className="align-middle my-auto"
-                                                    style={{ color: '#B5B5C3' }}
+                                                    style={{ color: "#B5B5C3" }}
                                                 >
-                                                    Total Data{' '}
+                                                    Total Data{" "}
                                                     {artikel.artikel.length}
                                                     {
                                                         // artikel.total
@@ -516,7 +476,7 @@ export default function MasterSertifikat() {
                                         </div>
                                     </div>
                                 ) : (
-                                    ''
+                                    ""
                                 )}
                             </div>
                             {/* End Pagination */}
