@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { getSession } from "next-auth/client";
 
 import Layout from "../../../components/templates/layout.component";
 // import Tambah from "../../../components/content/publikasi/faq/tambah";
@@ -18,18 +19,38 @@ const Tambah = dynamic(
     }
 );
 
-export default function TambahPage() {
+export default function TambahPage(props) {
+    const session = props.session.user.user.data;
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Tambah FAQ - Publikasi'>
-                    <Tambah />
-                </Layout>
+                <Tambah token={session.token}/>
             </div>
         </>
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
-    await store.dispatch(getAllKategoriInput("Faq"));
-});
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, req }) => {
+    
+    const session = await getSession({ req });
+    // console.log (`from artikel create ${session}`)
+
+    if (!session) {
+        return {
+            redirect: {
+            destination: "/",
+            permanent: false,
+            },
+        };
+    }
+    
+    await store.dispatch(getAllKategoriInput("Faq", session.user.user.data.token))
+
+    return {
+        props: { session, title: "Tambah Faq - Publikasi" },
+    };
+})
+
+// export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+//     await store.dispatch(getAllKategoriInput("Faq"));
+// });
