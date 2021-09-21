@@ -46,19 +46,19 @@ import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/manageme
 
 const Table = () => {
   const router = useRouter();
-  let { update, success } = router.query;
+  let { update, success,successTerima,successReject,successMakeREvisi } = router.query;
   let selectRefKerjasama = null;
   let selectRefStatus = null;
   let selectRefMitra = null;
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK",allMK)
+  console.log("allMK", allMK);
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
-  const [isChangeOption, setIsChangeOption] = useState(false)
+  const [isChangeOption, setIsChangeOption] = useState(false);
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
@@ -85,18 +85,18 @@ const Table = () => {
   };
 
   const changeListStatus = (e, id) => {
-//     var x = (e.target.options[e.target.selectedIndex].innerText)
-//     var warning = `Apakah anda yakin ingin merubah status menjadi ${x} ?`;
-// if (confirm(warning)) {
-//     dispatch(changeStatusList(e.target.value, id));
-//         setIsStatusBar(true);
-//         setDeleteBar(false);
-//         setIsChangeOption(true)
-// }
-// else {
-//     dispatch(reloadTable());
-// }
-
+    console.log("e.target.value",e.target.value)
+    //     var x = (e.target.options[e.target.selectedIndex].innerText)
+    //     var warning = `Apakah anda yakin ingin merubah status menjadi ${x} ?`;
+    // if (confirm(warning)) {
+    //     dispatch(changeStatusList(e.target.value, id));
+    //         setIsStatusBar(true);
+    //         setDeleteBar(false);
+    //         setIsChangeOption(true)
+    // }
+    // else {
+    //     dispatch(reloadTable());
+    // }
 
     Swal.fire({
       title: "Apakah anda yakin ingin merubah status ?",
@@ -109,19 +109,15 @@ const Table = () => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        
         dispatch(changeStatusList(e.target.value, id));
         setIsStatusBar(true);
         setDeleteBar(false);
-        setIsChangeOption(true)
+        setIsChangeOption(true);
       } else {
         dispatch(reloadTable());
       }
     });
-
-
   };
-
 
   const cooperationDelete = (id) => {
     Swal.fire({
@@ -178,14 +174,11 @@ const Table = () => {
     }
   };
 
-//   const  test = (a) => {
-//     // var x = (a.value || a.options[a.selectedIndex].value);  //crossbrowser solution =)
-//     // alert(x);
-//     console.log("a",a.target.options)
-// }
-
-
-
+  //   const  test = (a) => {
+  //     // var x = (a.value || a.options[a.selectedIndex].value);  //crossbrowser solution =)
+  //     // alert(x);
+  //     console.log("a",a.target.options)
+  // }
 
   useEffect(() => {
     dispatch(fetchListSelectMitra());
@@ -195,14 +188,12 @@ const Table = () => {
   }, [dispatch]);
   return (
     <PageWrapper>
-
       {/* <select onChange={(e) => test(e)} id="select_id">
     <option value="0">-Select-</option>
     <option value="1">111</option>
     <option value="2">222</option>
     <option value="3">333</option>
 </select> */}
-
 
       {update ? (
         <div
@@ -215,6 +206,64 @@ const Table = () => {
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
             Berhasil mengubah data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {successMakeREvisi ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil Menambahkan data revisi
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {successTerima ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil mengubah data status
           </div>
           <div className="alert-close">
             <button
@@ -273,6 +322,35 @@ const Table = () => {
           </div>
           <div className="alert-text" style={{ color: "#c51b1b" }}>
             Berhasil menghapus data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+       {successReject ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#f7c9c9" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#c51b1b" }}>
+            Berhasil mengubah data status
           </div>
           <div className="alert-close">
             <button
@@ -453,7 +531,7 @@ const Table = () => {
                                         isRtl={false}
                                         isSearchable={true}
                                         name="color"
-                                        onChange={(e) => setValueMitra(e?.name )}
+                                        onChange={(e) => setValueMitra(e?.name)}
                                         options={allMK.stateListMitra}
                                       />
                                     </div>
@@ -462,18 +540,26 @@ const Table = () => {
                                         Kategori Kerjasama
                                       </label>
                                       <Select
-                                        ref={(ref) => (selectRefKerjasama = ref)}
+                                        ref={(ref) =>
+                                          (selectRefKerjasama = ref)
+                                        }
                                         className="basic-single"
                                         classNamePrefix="select"
                                         placeholder="Semua"
-                                        defaultValue={allMK.stateListKerjaSama[0]}
+                                        defaultValue={
+                                          allMK.stateListKerjaSama[0]
+                                        }
                                         isDisabled={false}
                                         isLoading={false}
                                         isClearable={false}
                                         isRtl={false}
                                         isSearchable={true}
                                         name="color"
-                                        onChange={(e) => setValueKerjaSama(e?.cooperation_categories )}
+                                        onChange={(e) =>
+                                          setValueKerjaSama(
+                                            e?.cooperation_categories
+                                          )
+                                        }
                                         options={allMK.stateListKerjaSama}
                                       />
                                     </div>
@@ -493,24 +579,20 @@ const Table = () => {
                                         isRtl={false}
                                         isSearchable={true}
                                         name="color"
-                                        onChange={(e) => setValueStatus(e?.name_en )}
+                                        onChange={(e) =>
+                                          setValueStatus(e?.name_en)
+                                        }
                                         options={allMK.stateListStatus}
                                       />
                                     </div>
                                   </div>
                                   <div className="modal-footer">
-
-
-
-
-
-
                                     <div className="d-flex justify-content-end align-items-center">
                                       <button
                                         className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                         type="button"
-                                      data-dismiss="modal"
-                                      aria-label="Close"
+                                        data-dismiss="modal"
+                                        aria-label="Close"
                                         onClick={() => resetValueSort()}
                                       >
                                         Reset
@@ -519,9 +601,9 @@ const Table = () => {
                                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                         type="button"
                                         // type="button"
-                                      // className="close"
-                                      // data-dismiss="modal"
-                                      // aria-label="Close"
+                                        // className="close"
+                                        // data-dismiss="modal"
+                                        // aria-label="Close"
                                         onClick={(e) =>
                                           handleSubmitSearchMany(e)
                                         }
@@ -529,13 +611,6 @@ const Table = () => {
                                         Terapkan
                                       </button>
                                     </div>
-
-
-
-
-
-
-
                                   </div>
                                 </div>
                               </div>
@@ -600,10 +675,10 @@ const Table = () => {
                             return (
                               <tr key={index}>
                                 <td className="text-left align-middle">
-                                    {allMK.page === 1
-                                      ? index + 1
-                                      : (allMK.page - 1) * allMK.limit +
-                                        (index + 1)}
+                                  {allMK.page === 1
+                                    ? index + 1
+                                    : (allMK.page - 1) * allMK.limit +
+                                      (index + 1)}
                                 </td>
                                 <td className="align-middle text-left">
                                   {items.partner === null ? (
@@ -640,8 +715,6 @@ const Table = () => {
                                     )}
                                     {/* moment().format('MMMM Do YYYY, h:mm:ss a'); */}
                                     {/* H, HHss     */}
-
-
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
@@ -652,7 +725,11 @@ const Table = () => {
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
-                                  {(items.status.name === "aktif") &&  moment(items.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD") ? (<div className="position-relative w-max-content">
+                                  {items.status.name === "aktif" &&
+                                  moment(items.period_date_start).format(
+                                    "YYYY MM DD"
+                                  ) > moment().format("YYYY MM DD") ? (
+                                    <div className="position-relative w-max-content">
                                       <select
                                         name=""
                                         id=""
@@ -666,9 +743,7 @@ const Table = () => {
                                         //   )
                                         // }
                                       >
-                                        <option value="1">
-                                          Disetujui
-                                        </option>
+                                        <option value="1">Disetujui</option>
                                         <option value="2">Tidak Aktif</option>
                                       </select>
                                       {/* <IconArrow
@@ -677,7 +752,11 @@ const Table = () => {
                                         width="7"
                                         height="7"
                                       /> */}
-                                    </div>) : (items.status.name === "aktif") && moment(items.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ? (
+                                    </div>
+                                  ) : items.status.name === "aktif" &&
+                                    moment(items.period_date_start).format(
+                                      "YYYY MM DD"
+                                    ) <= moment().format("YYYY MM DD") ? (
                                     <div className="position-relative w-max-content">
                                       <select
                                         name=""
@@ -779,19 +858,19 @@ const Table = () => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue pr-10"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
+                                        key={index}
+                                        onChange={(e) =>
+                                          changeListStatus(
+                                            e,
+                                            items.id
+                                          )
+                                        }
                                       >
-                                        <option value="6">
-                                          Pengajuan-Selesai
-                                        </option>
                                         <option value="5">
                                           Pengajuan-Pembahasan
+                                        </option>
+                                        <option value="6">
+                                          Pengajuan-Selesai
                                         </option>
                                       </select>
                                       <IconArrow
@@ -867,39 +946,10 @@ const Table = () => {
                                 {console.log("date now",moment().format("YYYY MM DD"))}
                                 {console.log("date cek",moment(items.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD"))} */}
                                 <td className="align-middle text-left">
-                                  {(items.status.name === "aktif") &&  moment(items.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD") ? (<div className="d-flex align-items-center">
-                                      <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/view/${items.id}`
-                                          )
-                                        }
-                                      >
-                                        <IconEye
-                                          width="16"
-                                          height="16"
-                                          fill="rgba(255,255,255,1)"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Detail
-                                        </div>
-                                      </button>
-
-                                      <button
-                                        className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                        onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/edit/${items.id}`
-                                          )
-                                        }
-                                      >
-                                        <IconPencil width="16" height="16" />
-                                        <div className="text-hover-show-hapus">
-                                          Ubah
-                                        </div>
-                                      </button>
-                                    </div>) : (items.status.name === "aktif") && moment(items.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ?  (
+                                  {items.status.name === "aktif" &&
+                                  moment(items.period_date_start).format(
+                                    "YYYY MM DD"
+                                  ) > moment().format("YYYY MM DD") ? (
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
@@ -933,7 +983,44 @@ const Table = () => {
                                         </div>
                                       </button>
                                     </div>
-                                  )  : items.status.name === "tidak aktif" ? (
+                                  ) : items.status.name === "aktif" &&
+                                    moment(items.period_date_start).format(
+                                      "YYYY MM DD"
+                                    ) <= moment().format("YYYY MM DD") ? (
+                                    <div className="d-flex align-items-center">
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/view/${items.id}`
+                                          )
+                                        }
+                                      >
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/edit/${items.id}`
+                                          )
+                                        }
+                                      >
+                                        <IconPencil width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </button>
+                                    </div>
+                                  ) : items.status.name === "tidak aktif" ? (
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
@@ -980,7 +1067,23 @@ const Table = () => {
                                   ) : items.status.name ===
                                     "pengajuan-review" ? (
                                     <div className="d-flex align-items-center">
-                                      <button
+
+                                      <Link href={{pathname:"/partnership/kerjasama/revisi-kerjasama",query:{id:items.id}}}>
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+
+                                        <IconReview />
+                                        <div className="text-hover-show-hapus">
+                                          Review
+                                        </div>
+
+
+
+                                      </a>
+                                      </Link>
+
+
+
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
                                           router.push(
@@ -988,21 +1091,36 @@ const Table = () => {
                                           )
                                         }
                                       >
-                                        {/* <IconEye
-                                          width="16"
-                                          height="16"
-                                          fill="rgba(255,255,255,1)"
-                                        /> */}
                                         <IconReview />
                                         <div className="text-hover-show-hapus">
                                           Review
                                         </div>
-                                      </button>
+                                      </button> */}
+
+
+
                                     </div>
                                   ) : items.status.name ===
                                     "pengajuan-revisi" ? (
                                     <div className="d-flex align-items-center">
-                                      <button
+
+                                      <Link href={{
+                                        pathname:"/partnership/kerjasama/revisi-kerjasama",
+                                        query:{id:items.id}
+                                      }} passHref>
+                                      
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Review
+                                        </div>
+                                      </a>
+                                      </Link>
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
                                           router.push(
@@ -1018,12 +1136,30 @@ const Table = () => {
                                         <div className="text-hover-show-hapus">
                                           Review
                                         </div>
-                                      </button>
+                                      </button> */}
                                     </div>
                                   ) : items.status.name ===
                                     "pengajuan-pembahasan" ? (
                                     <div className="d-flex align-items-center">
-                                      <button
+
+
+                                      <Link href="/partnership/tanda-tangan" passHref>
+                                      
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
+
+                                        <Image
+                                          src={`/assets/icon/ttd.svg`}
+                                          width={19}
+                                          height={19}
+                                          alt="ditolak"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Tanda tangan virtual
+                                        </div>
+
+                                      </a>
+                                      </Link>
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                         // onClick={() =>
                                         //   router.push(
@@ -1040,7 +1176,10 @@ const Table = () => {
                                         <div className="text-hover-show-hapus">
                                           Tanda tangan virtual
                                         </div>
-                                      </button>
+                                      </button> */}
+
+
+
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         // onClick={() =>
@@ -1085,7 +1224,25 @@ const Table = () => {
                                   ) : items.status.name ===
                                     "pengajuan-document" ? (
                                     <div className="d-flex align-items-center">
-                                      <button
+
+
+                                      <Link href={{
+                                        pathname:"/partnership/kerjasama/submit-dokumen-kerjasama-revisi",
+                                        query:{id:items.id}
+
+                                      }} passHref>
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
+                                        <IconReview />
+                                        <div className="text-hover-show-hapus">
+                                          Review
+                                        </div>
+                                      </a>
+                                      </Link>
+
+
+
+
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                         onClick={() =>
                                           router.push(
@@ -1097,7 +1254,11 @@ const Table = () => {
                                         <div className="text-hover-show-hapus">
                                           Review
                                         </div>
-                                      </button>
+                                      </button> */}
+
+
+
+
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         // onClick={() =>

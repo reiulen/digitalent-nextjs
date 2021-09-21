@@ -15,7 +15,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 
-const TambahSurveyStepOne = () => {
+const TambahSurveyStepOne = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -69,7 +69,7 @@ const TambahSurveyStepOne = () => {
         training_id,
       };
 
-      dispatch(newSurveyQuestionBanks(data));
+      dispatch(newSurveyQuestionBanks(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -100,7 +100,7 @@ const TambahSurveyStepOne = () => {
         training_id,
       };
 
-      dispatch(newSurveyQuestionBanks(data));
+      dispatch(newSurveyQuestionBanks(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

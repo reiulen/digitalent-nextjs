@@ -1,7 +1,6 @@
 import DashbardSubvit from "../../components/content/subvit/dashboard/dashboard-subvit";
 // import Layout from "../../components/templates/layout.component";
 import { getSession } from "next-auth/client";
-import { wrapper } from "../../../../redux/store";
 
 export default function Dashboard() {
     return (

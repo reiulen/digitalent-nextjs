@@ -421,7 +421,7 @@ const DashbardPublikasi = () => {
                                                         {/* <!--end::Symbol--> */}
                                                         {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_berita}</p>
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul}</p>
                                                             <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
                                                             <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
                                                         </div>

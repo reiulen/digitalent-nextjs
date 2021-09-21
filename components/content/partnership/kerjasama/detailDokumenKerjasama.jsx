@@ -318,22 +318,15 @@ const DetailDokumenKerjasama = () => {
                       Dokumen Kerjasama
                     </label>
                         <div className="position-relative overflow-hidden w-100 ">
-                          {/* <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          /> */}
+                         
                           <input
-                            // id="kt_datatable_search_query"
                             disabled
                             type="text"
                             className="form-control"
                             placeholder={`${pdfFIle}`}
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
                           />
                           <button
-                            type="submit"
+                            type="button"
                             className="btn right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
