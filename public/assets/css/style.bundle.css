@@ -46,7 +46,7 @@
   --light: #F3F6F9;
   --dark: #181C32;
   --white: #ffffff;
-  --extras: #4Cbde2;
+  --extras: #4CBDE2;
   --navbar: #1B3A59;
   --breakpoint-xs: 0;
   --breakpoint-sm: 576px;
@@ -8145,6 +8145,10 @@ a.close.disabled {
 
 .bg-neutral-shade{
   background-color: var(--neutral-shade) !important;
+}
+
+.bg-extras {
+  background-color: var(--extras) !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
