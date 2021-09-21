@@ -12,8 +12,12 @@ function ReviewKerjasama() {
   const {successSubmitKerjasama} = router.query
 
   const onNewReset = () => {
-    router.replace(`/partnership/user/kerjasama/review-kerjasama-1`);
+    router.replace("/partnership/user/kerjasama/review-kerjasama-1", undefined, { shallow: true });
   };
+
+  // const onNewReset = () => {
+  //   router.replace(`/partnership/user/kerjasama/review-kerjasama-1`);
+  // };
 
   return (
     <PageWrapper>

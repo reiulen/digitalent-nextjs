@@ -4,11 +4,12 @@ import { getSession } from "next-auth/client";
 import { getDetailSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../../redux/store";
 
-export default function EditSubstansiStep1Page() {
+export default function EditSubstansiStep1Page(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditSubstansiStep1 />
+        <EditSubstansiStep1 token={session.token} />
       </div>
     </>
   );

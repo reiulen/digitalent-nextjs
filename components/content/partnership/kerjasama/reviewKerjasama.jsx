@@ -46,11 +46,13 @@ const ReviewKerjasama = () => {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`
       );
+      console.log("data sdfsdf",data)
       setTitle(data.data.title);
       setDate(data.data.submission_date);
       setCooperationID(data.data.cooperation_category);
       setPeriod(data.data.period);
       setPeriodUnit(data.data.period_unit);
+
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
@@ -128,7 +130,7 @@ const ReviewKerjasama = () => {
                   readOnly
                   type="date"
                   required
-                  value={date}
+                  value={date&&date}
                   className="form-control"
                 />
               </div>
@@ -212,7 +214,10 @@ const ReviewKerjasama = () => {
                     Tolak
                   </button>
                   <Link
-                    href="/partnership/kerjasama/detail-revisi-kerjasama"
+                    href={{
+                      pathname:"/partnership/kerjasama/detail-revisi-kerjasama",
+                      query:{id:router.query.id,varsion:router.query.version}
+                    }}
                     passHref
                   >
                     <a className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-5">

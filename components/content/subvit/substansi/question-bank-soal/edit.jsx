@@ -17,7 +17,7 @@ import { UPDATE_SUBTANCE_QUESTION_DETAIL_RESET } from "../../../../../redux/type
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import LoadingPage from "../../../../LoadingPage";
 
-const EditSoalSubstansi = () => {
+const EditSoalSubstansi = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const importSwitch = () => import("bootstrap-switch-button-react");
@@ -204,7 +204,7 @@ const EditSoalSubstansi = () => {
         question_type_id: question_type,
       };
       console.log(data);
-      dispatch(updateSubtanceQuestionDetail(id, data));
+      dispatch(updateSubtanceQuestionDetail(id, data, token));
     }
   };
 
