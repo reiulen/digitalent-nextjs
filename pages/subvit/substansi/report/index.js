@@ -1,15 +1,15 @@
 import Layout from "/components/templates/layout.component";
-import Report from "/components/content/subvit/substansi/report";
+import Report from "../../../../components/content/subvit/substansi/report";
 import { allReportSubtanceQuestionBanks } from "../../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../../redux/store";
+import { getSession } from "next-auth/client";
 
-export default function ReportPage() {
+export default function ReportPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Report Bank Soal Tes Subtansi">
-          <Report />
-        </Layout>
+        <Report token={session.token} />
       </div>
     </>
   );
@@ -17,7 +17,16 @@ export default function ReportPage() {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query }) => {
+    async ({ query, req }) => {
+      const session = await getSession({ req });
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        };
+      }
       await store.dispatch(
         allReportSubtanceQuestionBanks(
           query.id,
@@ -27,8 +36,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.pelatihan,
           query.status,
           query.nilai,
-          query.card
+          query.card,
+          session.user.user.data.token
         )
       );
+      return {
+        props: { session, title: "Report Bank Soal Tes Subtansi - Subvit" },
+      };
     }
 );

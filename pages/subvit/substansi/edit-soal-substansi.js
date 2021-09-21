@@ -5,11 +5,12 @@ import { getAllSubtanceQuestionBanksType } from "../../../redux/actions/subvit/s
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function EditSubstansiBankPage() {
+export default function EditSubstansiBankPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditSubstansiBank />
+        <EditSubstansiBank token={session.token} />
       </div>
     </>
   );

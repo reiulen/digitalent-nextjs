@@ -15,10 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearErrors,
   deleteSubtanceQuestionBanks,
-} from "/redux/actions/subvit/subtance.actions";
+} from "../../../../redux/actions/subvit/subtance.actions";
 import { DELETE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/subtance.type";
 
-const ListSubstansi = () => {
+const ListSubstansi = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -154,7 +154,7 @@ const ListSubstansi = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionBanks(id));
+        dispatch(deleteSubtanceQuestionBanks(id, token));
       }
     });
   };
