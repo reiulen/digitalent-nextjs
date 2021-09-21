@@ -9,7 +9,9 @@ import { wrapper } from "../../../../redux/store";
 
 const Detail = dynamic(
   () =>
-    import("../../../../components/content/partnership/user/detail-kerjasama"),
+    import(
+      "../../../../components/content/partnership/user/kerjasama/detail-dokumen-kerjsama"
+    ),
   { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 

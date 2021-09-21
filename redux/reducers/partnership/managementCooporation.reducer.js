@@ -221,7 +221,6 @@ export const allMCooporationReducerMK = (state = initialState, action) => {
         status_delete: state.status_delete === "" ? "delete" : "",
       };
     case SUCCESS_GET_SINGLE_COOPERATION_M:
-      console.log("data single", action.data);
       return {
         ...state,
         cooperationById: action.data,
