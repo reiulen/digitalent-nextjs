@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const AddAcademy = () => {
+const EditAcademy = () => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -129,7 +129,7 @@ const AddAcademy = () => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              Tambah Akademi
+              Edit Akademi
             </h2>
           </div>
 
@@ -342,4 +342,4 @@ const AddAcademy = () => {
   );
 };
 
-export default AddAcademy;
+export default EditAcademy;

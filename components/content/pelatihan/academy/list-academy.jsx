@@ -92,7 +92,7 @@ const ListAcademy = () => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-5 col-xl-5">
+                <div className="col-lg-12 col-xl-12">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -116,10 +116,6 @@ const ListAcademy = () => {
                     </button>
                   </div>
                 </div>
-
-                <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
-                <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
-                <div className="col-lg-2 col-xl-2 justify-content-end d-flex"></div>
               </div>
             </div>
 
@@ -128,7 +124,10 @@ const ListAcademy = () => {
                 {/* <LoadingTable loading={loading} /> */}
 
                 <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
+                  <thead
+                    style={{ background: "#F3F6F9" }}
+                    className="font-weight-bolder"
+                  >
                     <tr>
                       <th className="text-center">No</th>
                       <th>Logo</th>
@@ -140,7 +139,47 @@ const ListAcademy = () => {
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                    <tr>
+                      <td className="text-center">1</td>
+                      <td></td>
+                      <td>
+                        <p className="font-weight-bolder my-0 h6">SVGA</p>
+                        <p className="my-0">Vocation School Graduate Academy</p>
+                      </td>
+                      <td>50</td>
+                      <td>150</td>
+                      <td>50 Mitra</td>
+                      <td>
+                        <span className="label label-inline label-light-success font-weight-bold">
+                          Publish
+                        </span>
+                      </td>
+                      <td>
+                        <div className="d-flex">
+                          <Link href={`/pelatihan/akademi/edit`}>
+                            <a
+                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Edit"
+                            >
+                              <i className="ri-pencil-fill p-0 text-white"></i>
+                            </a>
+                          </Link>
+                          <button
+                            className="btn btn-link-action bg-blue-secondary text-white"
+                            onClick={() => handleDelete(1)}
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Hapus"
+                          >
+                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>
