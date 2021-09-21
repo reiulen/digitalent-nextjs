@@ -20,7 +20,7 @@ import MultipleChoiceComponent from "./edit-soal/multiple-choice-component";
 import TriggeredQuestionComponent from "./edit-soal/triggered-question-component";
 import PertanyaanTerbukaComponent from "./edit-soal/pertanyaan-terbuka-component";
 
-const EditSoalTrivia = () => {
+const EditSoalTrivia = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -122,7 +122,7 @@ const EditSoalTrivia = () => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateSurveyQuestionDetail(id, data));
+          dispatch(updateSurveyQuestionDetail(id, data, token));
         }
         break;
       case "multiple_choice":
@@ -137,7 +137,7 @@ const EditSoalTrivia = () => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateSurveyQuestionDetail(id, data));
+          dispatch(updateSurveyQuestionDetail(id, data, token));
         }
         break;
       case "pertanyaan_terbuka":
@@ -151,7 +151,7 @@ const EditSoalTrivia = () => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateSurveyQuestionDetail(id, data));
+          dispatch(updateSurveyQuestionDetail(id, data, token));
         }
         break;
       case "triggered_question":
@@ -166,7 +166,7 @@ const EditSoalTrivia = () => {
             type: methodAdd,
             _method: "put",
           };
-          dispatch(updateSurveyQuestionDetail(id, data));
+          dispatch(updateSurveyQuestionDetail(id, data, token));
         }
         break;
       default:

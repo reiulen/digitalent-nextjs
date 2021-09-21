@@ -17,7 +17,7 @@ import {
 } from "../../../../redux/actions/subvit/survey-question.actions";
 import { DELETE_SURVEY_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/survey-question.type";
 
-const ListSurvey = () => {
+const ListSurvey = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -90,7 +90,7 @@ const ListSurvey = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSurveyQuestionBanks(id));
+        dispatch(deleteSurveyQuestionBanks(id, token));
       }
     });
   };

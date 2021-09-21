@@ -18,7 +18,7 @@ import {
 } from "/redux/actions/subvit/subtance.actions";
 import { NEW_TRIVIA_QUESTION_DETAIL_FAIL } from "../../../../redux/types/subvit/trivia-question-detail.type";
 
-const ListSubstansi = () => {
+const ListSubstansi = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 

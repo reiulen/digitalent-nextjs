@@ -16,7 +16,7 @@ import {
   clearErrors,
 } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
-const DetailSubstansi = () => {
+const DetailSubstansi = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -81,7 +81,7 @@ const DetailSubstansi = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSubtanceQuestionDetail(id));
+        dispatch(deleteSubtanceQuestionDetail(id, token));
       }
     });
   };

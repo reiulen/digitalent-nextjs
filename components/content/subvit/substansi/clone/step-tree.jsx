@@ -17,7 +17,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInputClone";
 import LoadingPage from "../../../../LoadingPage";
 
-const StepTwo = () => {
+const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -69,7 +69,7 @@ const StepTwo = () => {
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(updateSubtanceQuestionBanksPublish(data, id));
+      dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -100,7 +100,7 @@ const StepTwo = () => {
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(updateSubtanceQuestionBanksPublish(data, id));
+      dispatch(updateSubtanceQuestionBanksPublish(data, id, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

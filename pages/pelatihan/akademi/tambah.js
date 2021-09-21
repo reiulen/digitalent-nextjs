@@ -1,21 +1,25 @@
-import Layout from "/components/templates/layout.component";
-import StepOne from "/components/content/subvit/substansi/clone/step-one";
-import { wrapper } from "../../../../redux/store";
+import React, { Suspense } from "react";
+
+import dynamic from "next/dynamic";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import AddAcademy from "../../../components/content/pelatihan/academy/add-academy";
+
+import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function CloneSoalSubtansi(props) {
-  const session = props.session.user.user.data;
+export default function AddAcademyPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <StepOne token={session.token} />
+        <AddAcademy />
       </div>
     </>
   );
 }
+
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ req }) => {
+    async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -27,7 +31,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { session, title: "Clone Bank Soal Tes Subtansi - Subvit" },
+        props: { session, title: "Tambah Akademi - Pelatihan" },
       };
     }
 );
