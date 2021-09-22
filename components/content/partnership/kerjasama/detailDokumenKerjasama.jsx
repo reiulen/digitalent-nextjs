@@ -54,6 +54,8 @@ const DetailDokumenKerjasama = () => {
               data-dismiss="alert"
               aria-label="Close"
               // onClick={onNewReset}
+
+              
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>

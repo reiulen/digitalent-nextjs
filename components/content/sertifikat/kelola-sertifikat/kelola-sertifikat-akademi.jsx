@@ -1,19 +1,19 @@
 // #Next & React
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 // #Page, Component & Library
-import PageWrapper from '../../../wrapper/page.wrapper';
-import DatePicker from 'react-datepicker';
-import { addDays } from 'date-fns';
-import LoadingTable from '../../../LoadingTable';
-import Pagination from 'react-js-pagination';
+import PageWrapper from "../../../wrapper/page.wrapper";
+import DatePicker from "react-datepicker";
+import { addDays } from "date-fns";
+import LoadingTable from "../../../LoadingTable";
+import Pagination from "react-js-pagination";
 
 // #Icon
-import IconArrow from '../../../assets/icon/Arrow';
-import IconClose from '../../../assets/icon/Close';
-import IconFilter from '../../../assets/icon/Filter';
+import IconArrow from "../../../assets/icon/Arrow";
+import IconClose from "../../../assets/icon/Close";
+import IconFilter from "../../../assets/icon/Filter";
 
 export default function KelolaSertifikat() {
     const router = useRouter();
@@ -39,66 +39,66 @@ export default function KelolaSertifikat() {
         artikel: [
             {
                 id: 110,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat A',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat A",
                 jenis_sertifikat: 1,
-                status: 'belum tersedia',
+                status: "belum tersedia",
             },
             {
                 id: 111,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat B',
-                jenis_sertifikat: '1 sisi',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat B",
+                jenis_sertifikat: "1 sisi",
                 status: 2,
-                created_by: 'Alfian',
+                created_by: "Alfian",
             },
             {
                 id: 112,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat C',
-                jenis_sertifikat: '1 sisi',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat C",
+                jenis_sertifikat: "1 sisi",
                 status: 3,
-                created_by: 'Firaz',
+                created_by: "Firaz",
             },
             {
                 id: 112,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat C',
-                jenis_sertifikat: '1 sisi',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat C",
+                jenis_sertifikat: "1 sisi",
                 status: 4,
-                created_by: 'Jhony',
+                created_by: "Jhony",
             },
             {
                 id: 112,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat C',
-                jenis_sertifikat: '1 sisi',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat C",
+                jenis_sertifikat: "1 sisi",
                 status: 5,
-                created_by: 'Indro',
+                created_by: "Indro",
             },
             {
                 id: 112,
-                akademi: 'FGA',
-                nama_pelatihan: 'Security Awareness',
-                nama_sertifikat: 'Sertifikat C',
-                jenis_sertifikat: '1 sisi',
+                akademi: "FGA",
+                nama_pelatihan: "Security Awareness",
+                nama_sertifikat: "Sertifikat C",
+                jenis_sertifikat: "1 sisi",
                 status: 1,
-                created_by: 'Alvin',
+                created_by: "Alvin",
             },
         ],
     };
 
     const handleLimit = () => {
-        console.log('');
+        console.log("");
     };
 
     const handleSearch = () => {
-        console.log('');
+        console.log("");
     };
 
     return (
@@ -119,7 +119,7 @@ export default function KelolaSertifikat() {
                                 <div className="col-lg-6 col-xl-6 col-sm-9">
                                     <div
                                         className="position-relative overflow-hidden mt-3"
-                                        style={{ maxWidth: '330px' }}
+                                        style={{ maxWidth: "330px" }}
                                     >
                                         <i className="ri-search-line left-center-absolute ml-2"></i>
                                         <input
@@ -133,8 +133,8 @@ export default function KelolaSertifikat() {
                                         <button
                                             className="btn bg-blue-primary text-white right-center-absolute"
                                             style={{
-                                                borderTopLeftRadius: '0',
-                                                borderBottomLeftRadius: '0',
+                                                borderTopLeftRadius: "0",
+                                                borderBottomLeftRadius: "0",
                                             }}
                                             onClick={handleSearch}
                                         >
@@ -150,8 +150,8 @@ export default function KelolaSertifikat() {
                                             data-toggle="modal"
                                             data-target="#exampleModalCenter"
                                             style={{
-                                                color: '#464646',
-                                                minWidth: '230px',
+                                                color: "#464646",
+                                                minWidth: "230px",
                                             }}
                                         >
                                             <div className="d-flex align-items-center">
@@ -209,7 +209,7 @@ export default function KelolaSertifikat() {
                                                         <div
                                                             className="modal-body text-left"
                                                             style={{
-                                                                height: '200px',
+                                                                height: "200px",
                                                             }}
                                                         >
                                                             <div className="mb-10 col-12">
@@ -325,7 +325,7 @@ export default function KelolaSertifikat() {
                                 {loading === false ? (
                                     <table className="table table-separate table-head-custom table-checkable">
                                         <thead
-                                            style={{ background: '#F3F6F9' }}
+                                            style={{ background: "#F3F6F9" }}
                                         >
                                             <tr>
                                                 <th className="text-center">
@@ -335,7 +335,6 @@ export default function KelolaSertifikat() {
                                                 <th>Nama Pelatihan</th>
                                                 <th>Nama Sertifikat</th>
                                                 <th>Jenis Sertifikat</th>
-                                                <th>Dibuat Oleh</th>
                                                 <th>Status</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -405,11 +404,7 @@ export default function KelolaSertifikat() {
                                                                         artikel.jenis_sertifikat
                                                                     }
                                                                 </td>
-                                                                <td className="align-middle">
-                                                                    {
-                                                                        artikel.created_by
-                                                                    }
-                                                                </td>
+
                                                                 <td className="align-middle">
                                                                     {artikel.status ==
                                                                     1 ? (
@@ -446,7 +441,7 @@ export default function KelolaSertifikat() {
                                                                 {/* START AKSI sertifikat */}
                                                                 <td className="align-middle d-flex">
                                                                     {artikel.status ==
-                                                                    'belum tersedia' ? (
+                                                                    "belum tersedia" ? (
                                                                         <Link
                                                                             href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
                                                                         >
@@ -460,7 +455,7 @@ export default function KelolaSertifikat() {
                                                                             </a>
                                                                         </Link>
                                                                     ) : artikel.status ==
-                                                                      'review' ? (
+                                                                      "review" ? (
                                                                         <Link
                                                                             href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
                                                                         >
@@ -474,7 +469,7 @@ export default function KelolaSertifikat() {
                                                                             </a>
                                                                         </Link>
                                                                     ) : artikel.status ==
-                                                                      'draft' ? (
+                                                                      "draft" ? (
                                                                         <>
                                                                             <Link
                                                                                 href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
@@ -502,7 +497,7 @@ export default function KelolaSertifikat() {
                                                                             </Link>
                                                                         </>
                                                                     ) : artikel.status ==
-                                                                      'publish' ? (
+                                                                      "publish" ? (
                                                                         <>
                                                                             <Link
                                                                                 href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
@@ -530,15 +525,49 @@ export default function KelolaSertifikat() {
                                                                             </Link>
                                                                         </>
                                                                     ) : artikel.status ==
-                                                                      'ditolak' ? (
+                                                                      "ditolak" ? (
                                                                         <div>
                                                                             ditolak
                                                                         </div>
                                                                     ) : (
-                                                                        <div>
-                                                                            revisi
-                                                                        </div>
+                                                                        <div></div>
                                                                     )}
+                                                                    <Link
+                                                                        href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                    >
+                                                                        <a
+                                                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                            data-toggle="tooltip"
+                                                                            data-placement="bottom"
+                                                                            title="Tambah"
+                                                                        >
+                                                                            <i className="ri-add-circle-fill p-0 text-white"></i>
+                                                                        </a>
+                                                                    </Link>
+                                                                    <Link
+                                                                        href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                    >
+                                                                        <a
+                                                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                            data-toggle="tooltip"
+                                                                            data-placement="bottom"
+                                                                            title="Tambah"
+                                                                        >
+                                                                            <i className="ri-add-circle-fill p-0 text-white"></i>
+                                                                        </a>
+                                                                    </Link>
+                                                                    <Link
+                                                                        href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                    >
+                                                                        <a
+                                                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                            data-toggle="tooltip"
+                                                                            data-placement="bottom"
+                                                                            title="Tambah"
+                                                                        >
+                                                                            <i className="ri-add-circle-fill p-0 text-white"></i>
+                                                                        </a>
+                                                                    </Link>
                                                                 </td>
                                                                 {/* END TABLE DATA */}
                                                             </tr>
@@ -549,7 +578,7 @@ export default function KelolaSertifikat() {
                                         </tbody>
                                     </table>
                                 ) : (
-                                    ''
+                                    ""
                                 )}
                             </div>
                             {/* START Pagination */}
@@ -562,10 +591,10 @@ export default function KelolaSertifikat() {
                                             totalItemsCount={artikel.total}
                                             pageRangeDisplayed={3}
                                             onChange={handlePagination}
-                                            nextPageText={'>'}
-                                            prevPageText={'<'}
-                                            firstPageText={'<<'}
-                                            lastPageText={'>>'}
+                                            nextPageText={">"}
+                                            prevPageText={"<"}
+                                            firstPageText={"<<"}
+                                            lastPageText={">>"}
                                             itemClass="page-item"
                                             linkClass="page-link"
                                         />
@@ -579,10 +608,10 @@ export default function KelolaSertifikat() {
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
                                                     style={{
-                                                        width: '65px',
-                                                        background: '#F3F6F9',
-                                                        borderColor: '#F3F6F9',
-                                                        color: '#9E9E9E',
+                                                        width: "65px",
+                                                        background: "#F3F6F9",
+                                                        borderColor: "#F3F6F9",
+                                                        color: "#9E9E9E",
                                                     }}
                                                     onChange={e =>
                                                         handleLimit(
@@ -598,7 +627,7 @@ export default function KelolaSertifikat() {
                                                     <option
                                                         value="5"
                                                         selected={
-                                                            limit == '5'
+                                                            limit == "5"
                                                                 ? true
                                                                 : false
                                                         }
@@ -608,7 +637,7 @@ export default function KelolaSertifikat() {
                                                     <option
                                                         value="10"
                                                         selected={
-                                                            limit == '10'
+                                                            limit == "10"
                                                                 ? true
                                                                 : false
                                                         }
@@ -618,7 +647,7 @@ export default function KelolaSertifikat() {
                                                     <option
                                                         value="15"
                                                         selected={
-                                                            limit == '15'
+                                                            limit == "15"
                                                                 ? true
                                                                 : false
                                                         }
@@ -628,7 +657,7 @@ export default function KelolaSertifikat() {
                                                     <option
                                                         value="20"
                                                         selected={
-                                                            limit == '20'
+                                                            limit == "20"
                                                                 ? true
                                                                 : false
                                                         }
@@ -640,9 +669,9 @@ export default function KelolaSertifikat() {
                                             <div className="col-8 my-auto">
                                                 <p
                                                     className="align-middle my-auto"
-                                                    style={{ color: '#B5B5C3' }}
+                                                    style={{ color: "#B5B5C3" }}
                                                 >
-                                                    Total Data{' '}
+                                                    Total Data{" "}
                                                     {artikel.artikel.length}
                                                     {
                                                         // artikel.total
@@ -652,7 +681,7 @@ export default function KelolaSertifikat() {
                                         </div>
                                     </div>
                                 ) : (
-                                    ''
+                                    ""
                                 )}
                             </div>
                             {/* End Pagination */}

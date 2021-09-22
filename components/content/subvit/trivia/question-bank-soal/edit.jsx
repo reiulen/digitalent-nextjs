@@ -1,29 +1,29 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from "react";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
-import Swal from 'sweetalert2';
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import Swal from "sweetalert2";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 import {
     clearErrors,
     updateTriviaQuestionDetail,
-} from '../../../../../redux/actions/subvit/trivia-question-detail.action';
-import { UPDATE_TRIVIA_QUESTION_DETAIL_RESET } from '../../../../../redux/types/subvit/trivia-question-detail.type';
+} from "../../../../../redux/actions/subvit/trivia-question-detail.action";
+import { UPDATE_TRIVIA_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/trivia-question-detail.type";
 
-import PageWrapper from '../../../../wrapper/page.wrapper';
-import LoadingPage from '../../../../LoadingPage';
-import PollingComponent from './edit-soal/polling-component';
-import CheckboxComponent from './edit-soal/checkbox-component';
-import BlankComponent from './edit-soal/blank-component';
+import PageWrapper from "../../../../wrapper/page.wrapper";
+import LoadingPage from "../../../../LoadingPage";
+import PollingComponent from "./edit-soal/polling-component";
+import CheckboxComponent from "./edit-soal/checkbox-component";
+import BlankComponent from "./edit-soal/blank-component";
 
 const EditSoalTrivia = ({ token }) => {
     const dispatch = useDispatch();
     const router = useRouter();
-    const importSwitch = () => import('bootstrap-switch-button-react');
+    const importSwitch = () => import("bootstrap-switch-button-react");
     const SwitchButton = dynamic(importSwitch, {
         ssr: false,
     });
@@ -57,9 +57,12 @@ const EditSoalTrivia = ({ token }) => {
 
     useEffect(() => {
         if (success) {
-            dispatch({
-                type: UPDATE_TRIVIA_QUESTION_DETAIL_RESET,
-            });
+            dispatch(
+                {
+                    type: UPDATE_TRIVIA_QUESTION_DETAIL_RESET,
+                },
+                token
+            );
             router.push({
                 pathname: `/subvit/trivia`,
                 query: { success: true },
@@ -68,7 +71,7 @@ const EditSoalTrivia = ({ token }) => {
     }, [dispatch, success, router]);
 
     const handleSoalImage = e => {
-        if (e.target.name === 'question_image') {
+        if (e.target.name === "question_image") {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
@@ -89,34 +92,37 @@ const EditSoalTrivia = ({ token }) => {
         }
 
         if (success) {
-            dispatch({
-                type: UPDATE_TRIVIA_QUESTION_DETAIL_RESET,
-            });
+            dispatch(
+                {
+                    type: UPDATE_TRIVIA_QUESTION_DETAIL_RESET,
+                },
+                token
+            );
         }
 
-        if (question == '' && question_image == '') {
+        if (question == "" && question_image == "") {
             valid = false;
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi pertanyaan dengan benar !',
+                icon: "error",
+                title: "Oops...",
+                text: "Isi pertanyaan dengan benar !",
             });
         }
 
         answer.forEach((row, j) => {
-            if (row.option == '' && row.image == '') {
+            if (row.option == "" && row.image == "") {
                 valid = false;
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Isi jawaban dengan benar !',
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Isi jawaban dengan benar !",
                 });
             }
         });
 
         const answers = JSON.stringify(answer);
         switch (methodAdd) {
-            case 'polling':
+            case "polling":
                 if (valid) {
                     const data = {
                         trivia_question_bank_id:
@@ -126,12 +132,12 @@ const EditSoalTrivia = ({ token }) => {
                         answer: answers,
                         status,
                         type: methodAdd,
-                        _method: 'put',
+                        _method: "put",
                     };
                     dispatch(updateTriviaQuestionDetail(id, data, token));
                 }
                 break;
-            case 'checkbox':
+            case "checkbox":
                 if (valid) {
                     const data = {
                         trivia_question_bank_id:
@@ -142,12 +148,12 @@ const EditSoalTrivia = ({ token }) => {
                         duration,
                         status,
                         type: methodAdd,
-                        _method: 'put',
+                        _method: "put",
                     };
                     dispatch(updateTriviaQuestionDetail(id, data, token));
                 }
                 break;
-            case 'fill_in_the_blank':
+            case "fill_in_the_blank":
                 if (valid) {
                     const data = {
                         trivia_question_bank_id:
@@ -158,7 +164,7 @@ const EditSoalTrivia = ({ token }) => {
                         duration,
                         status,
                         type: methodAdd,
-                        _method: 'put',
+                        _method: "put",
                     };
                     dispatch(updateTriviaQuestionDetail(id, data, token));
                 }
@@ -170,7 +176,7 @@ const EditSoalTrivia = ({ token }) => {
 
     const handleMethodeInput = () => {
         switch (methodAdd) {
-            case 'polling':
+            case "polling":
                 return (
                     <PollingComponent
                         propsAnswer={answer}
@@ -180,7 +186,7 @@ const EditSoalTrivia = ({ token }) => {
                     />
                 );
                 break;
-            case 'checkbox':
+            case "checkbox":
                 return (
                     <CheckboxComponent
                         propsAnswer={answer}
@@ -196,7 +202,7 @@ const EditSoalTrivia = ({ token }) => {
                     />
                 );
                 break;
-            case 'fill_in_the_blank':
+            case "fill_in_the_blank":
                 return (
                     <BlankComponent
                         propsAnswer={answer}
@@ -244,11 +250,11 @@ const EditSoalTrivia = ({ token }) => {
                     </div>
                 </div>
             ) : (
-                ''
+                ""
             )}
 
             <div className="col-lg-12 order-1 px-0">
-                {loading ? <LoadingPage loading={loading} /> : ''}
+                {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <form onSubmit={handleSubmit}>
                         <div className="card-header border-0 d-flex pb-0">
@@ -323,9 +329,9 @@ const EditSoalTrivia = ({ token }) => {
                                             name="inlineRadioOptions"
                                             id="inlineRadio1"
                                             value="polling"
-                                            checked={methodAdd === 'polling'}
+                                            checked={methodAdd === "polling"}
                                             onChange={() =>
-                                                setMethodAdd('polling')
+                                                setMethodAdd("polling")
                                             }
                                         />
                                         <label
@@ -342,9 +348,9 @@ const EditSoalTrivia = ({ token }) => {
                                             name="inlineRadioOptions"
                                             id="inlineRadio2"
                                             value="checkbox"
-                                            checked={methodAdd === 'checkbox'}
+                                            checked={methodAdd === "checkbox"}
                                             onChange={() =>
-                                                setMethodAdd('checkbox')
+                                                setMethodAdd("checkbox")
                                             }
                                         />
                                         <label
@@ -363,11 +369,11 @@ const EditSoalTrivia = ({ token }) => {
                                             value="fill_in_the_blank"
                                             checked={
                                                 methodAdd ===
-                                                'fill_in_the_blank'
+                                                "fill_in_the_blank"
                                             }
                                             onChange={() =>
                                                 setMethodAdd(
-                                                    'fill_in_the_blank'
+                                                    "fill_in_the_blank"
                                                 )
                                             }
                                         />

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import Link from 'next/link';
-import Swal from 'sweetalert2';
-import Image from 'next/image';
-import Pagination from 'react-js-pagination';
-import { useDispatch, useSelector } from 'react-redux';
+import Link from "next/link";
+import Swal from "sweetalert2";
+import Image from "next/image";
+import Pagination from "react-js-pagination";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
     getAllTriviaQuestionDetail,
@@ -12,19 +12,19 @@ import {
     importFileTriviaQuestionDetail,
     importImagesTriviaQuestionDetail,
     clearErrors,
-} from '../../../../../redux/actions/subvit/trivia-question-detail.action';
+} from "../../../../../redux/actions/subvit/trivia-question-detail.action";
 import {
     IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET,
     IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_RESET,
     DELETE_TRIVIA_QUESTION_DETAIL_RESET,
-} from '../../../../../redux/types/subvit/trivia-question-detail.type';
-import { useRouter } from 'next/router';
+} from "../../../../../redux/types/subvit/trivia-question-detail.type";
+import { useRouter } from "next/router";
 
-import PageWrapper from '/components/wrapper/page.wrapper';
-import StepInput from '/components/StepInput';
-import LoadingTable from '../../../../LoadingTable';
-import ButtonAction from '../../../../ButtonAction';
-import axios from 'axios';
+import PageWrapper from "/components/wrapper/page.wrapper";
+import StepInput from "/components/StepInput";
+import LoadingTable from "../../../../LoadingTable";
+import ButtonAction from "../../../../ButtonAction";
+import axios from "axios";
 
 const StepTwo = ({ token }) => {
     const dispatch = useDispatch();
@@ -78,7 +78,7 @@ const StepTwo = ({ token }) => {
 
     const [question_file, setQuestionFile] = useState(null);
     const [image_file, setImageFile] = useState(null);
-    const [typeSave, setTypeSave] = useState('lanjut');
+    const [typeSave, setTypeSave] = useState("lanjut");
 
     useEffect(() => {
         dispatch(getAllTriviaQuestionDetail(id, token));
@@ -104,27 +104,33 @@ const StepTwo = ({ token }) => {
         if (!successImages) {
             valid = false;
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi data gambar dengan benar !',
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data gambar dengan benar !",
             });
         }
         if (!successFile) {
             valid = false;
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi data soal dengan benar !',
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data soal dengan benar !",
             });
         }
 
         if (valid) {
-            dispatch({
-                type: IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET,
-            });
-            dispatch({
-                type: IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_RESET,
-            });
+            dispatch(
+                {
+                    type: IMPORT_FILE_TRIVIA_QUESTION_DETAIL_RESET,
+                },
+                token
+            );
+            dispatch(
+                {
+                    type: IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_RESET,
+                },
+                token
+            );
             router.push({
                 pathname: `/subvit/trivia/tambah/step-2-import`,
                 query: { id },
@@ -139,17 +145,17 @@ const StepTwo = ({ token }) => {
         if (!successImages) {
             valid = false;
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi data gambar dengan benar !',
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data gambar dengan benar !",
             });
         }
         if (!successFile) {
             valid = false;
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi data soal dengan benar !',
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data soal dengan benar !",
             });
         }
 
@@ -163,18 +169,18 @@ const StepTwo = ({ token }) => {
 
     const handleImportFile = async () => {
         const data = new FormData();
-        data.append('trivia_question_bank_id', id);
-        data.append('question_file', question_file, question_file.name);
+        data.append("trivia_question_bank_id", id);
+        data.append("question_file", question_file, question_file.name);
 
         Swal.fire({
-            title: 'Perhatian',
-            text: 'Jika file anda mempunyai gambar harap import gambar terlebih dahulu, atau kamu tetap ingin melanjutkan !',
-            icon: 'warning',
+            title: "Perhatian",
+            text: "Jika file anda mempunyai gambar harap import gambar terlebih dahulu, atau kamu tetap ingin melanjutkan !",
+            icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya Lanjut !',
-            cancelButtonText: 'Batal',
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya Lanjut !",
+            cancelButtonText: "Batal",
         }).then(result => {
             if (result.isConfirmed) {
                 dispatch(importFileTriviaQuestionDetail(data, token));
@@ -184,8 +190,8 @@ const StepTwo = ({ token }) => {
 
     const handleImportImage = async () => {
         const data = new FormData();
-        data.append('trivia_question_bank_id', id);
-        data.append('image_file', image_file, image_file.name);
+        data.append("trivia_question_bank_id", id);
+        data.append("image_file", image_file, image_file.name);
 
         dispatch(importImagesTriviaQuestionDetail(data, token));
     };
@@ -203,14 +209,14 @@ const StepTwo = ({ token }) => {
     const handleDelete = id => {
         console.log(id);
         Swal.fire({
-            title: 'Apakah anda yakin ?',
-            text: 'Data ini tidak bisa dikembalikan !',
-            icon: 'warning',
+            title: "Apakah anda yakin ?",
+            text: "Data ini tidak bisa dikembalikan !",
+            icon: "warning",
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya !',
-            cancelButtonText: 'Batal',
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ya !",
+            cancelButtonText: "Batal",
         }).then(result => {
             if (result.isConfirmed) {
                 dispatch(deleteTriviaQuestionDetail(id, token));
@@ -221,7 +227,7 @@ const StepTwo = ({ token }) => {
     const handleDownloadTemplate = async () => {
         await axios
             .get(
-                'http://dts-subvit-dev.majapahit.id/api/trivia-question-bank-details/template'
+                "http://dts-subvit-dev.majapahit.id/api/trivia-question-bank-details/template"
             )
             .then(res => {
                 window.location.href = res.data.data;
@@ -259,7 +265,7 @@ const StepTwo = ({ token }) => {
                     </div>
                 </div>
             ) : (
-                ''
+                ""
             )}
             {isDeleted ? (
                 <div
@@ -285,7 +291,7 @@ const StepTwo = ({ token }) => {
                     </div>
                 </div>
             ) : (
-                ''
+                ""
             )}
             <div className="col-lg-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
@@ -305,7 +311,7 @@ const StepTwo = ({ token }) => {
                                         onClick={handleDownloadTemplate}
                                         className="btn btn-rounded-full bg-blue-secondary btn-sm text-white"
                                     >
-                                        <i className="ri-download-2-fill text-white"></i>{' '}
+                                        <i className="ri-download-2-fill text-white"></i>{" "}
                                         Unduh
                                     </button>
                                 </div>
@@ -388,7 +394,7 @@ const StepTwo = ({ token }) => {
 
                             <div
                                 className="table-page"
-                                style={{ marginTop: '20px' }}
+                                style={{ marginTop: "20px" }}
                             >
                                 {successFile ? (
                                     <div className="mb-5">
@@ -397,16 +403,16 @@ const StepTwo = ({ token }) => {
                                         </h2>
                                         <span className="text-muted">
                                             {trivia_question_file.success +
-                                                trivia_question_file.failed}{' '}
-                                            Total Import |{' '}
-                                            {trivia_question_file.success}{' '}
-                                            Sukses di Import |{' '}
+                                                trivia_question_file.failed}{" "}
+                                            Total Import |{" "}
+                                            {trivia_question_file.success}{" "}
+                                            Sukses di Import |{" "}
                                             {trivia_question_file.failed} Gagal
                                             di import
                                         </span>
                                     </div>
                                 ) : (
-                                    ''
+                                    ""
                                 )}
                                 <div className="table-responsive">
                                     <LoadingTable loading={loading} />
@@ -415,7 +421,7 @@ const StepTwo = ({ token }) => {
                                         <table className="table table-separate table-head-custom table-checkable">
                                             <thead
                                                 style={{
-                                                    background: '#F3F6F9',
+                                                    background: "#F3F6F9",
                                                 }}
                                             >
                                                 <tr>
@@ -521,7 +527,7 @@ const StepTwo = ({ token }) => {
                                             </tbody>
                                         </table>
                                     ) : (
-                                        ''
+                                        ""
                                     )}
                                 </div>
 
@@ -542,10 +548,10 @@ const StepTwo = ({ token }) => {
                                                     }
                                                     pageRangeDisplayed={3}
                                                     onChange={handlePagination}
-                                                    nextPageText={'>'}
-                                                    prevPageText={'<'}
-                                                    firstPageText={'<<'}
-                                                    lastPageText={'>>'}
+                                                    nextPageText={">"}
+                                                    prevPageText={"<"}
+                                                    firstPageText={"<<"}
+                                                    lastPageText={">>"}
                                                     itemClass="page-item"
                                                     linkClass="page-link"
                                                 />
@@ -561,12 +567,12 @@ const StepTwo = ({ token }) => {
                                                                 className="form-control"
                                                                 id="exampleFormControlSelect2"
                                                                 style={{
-                                                                    width: '65px',
+                                                                    width: "65px",
                                                                     background:
-                                                                        '#F3F6F9',
+                                                                        "#F3F6F9",
                                                                     borderColor:
-                                                                        '#F3F6F9',
-                                                                    color: '#9E9E9E',
+                                                                        "#F3F6F9",
+                                                                    color: "#9E9E9E",
                                                                 }}
                                                                 onChange={e =>
                                                                     handleLimit(
@@ -602,10 +608,10 @@ const StepTwo = ({ token }) => {
                                                             <p
                                                                 className="align-middle mt-3"
                                                                 style={{
-                                                                    color: '#B5B5C3',
+                                                                    color: "#B5B5C3",
                                                                 }}
                                                             >
-                                                                Total Data{' '}
+                                                                Total Data{" "}
                                                                 {
                                                                     trivia_question_detail.total
                                                                 }
@@ -616,7 +622,7 @@ const StepTwo = ({ token }) => {
                                         </div>
                                     </div>
                                 ) : (
-                                    ''
+                                    ""
                                 )}
                             </div>
 

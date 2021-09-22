@@ -22,12 +22,12 @@ import {
     IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_SUCCESS,
     IMPORT_IMAGES_TRIVIA_QUESTION_DETAIL_FAIL,
     CLEAR_ERRORS,
-} from '../../types/subvit/trivia-question-detail.type';
+} from "../../types/subvit/trivia-question-detail.type";
 
-import axios from 'axios';
+import axios from "axios";
 
 export const getAllTriviaQuestionDetail =
-    (id, page = 1, keyword = '', limit = null, token) =>
+    (id, page = 1, keyword = "", limit = null, token) =>
     async dispatch => {
         try {
             dispatch({ type: TRIVIA_QUESTION_DETAIL_REQUEST });
@@ -41,7 +41,7 @@ export const getAllTriviaQuestionDetail =
 
             const config = {
                 headers: {
-                    Authorization: 'Bearer ' + token,
+                    Authorization: "Bearer " + token,
                 },
             };
 
@@ -68,13 +68,13 @@ export const newTriviaQuestionDetail =
 
             const config = {
                 headers: {
-                    Authorization: 'Bearer ' + token,
+                    Authorization: "Bearer " + token,
                 },
             };
 
             const { data } = await axios.post(
                 process.env.END_POINT_API_SUBVIT +
-                    'api/trivia-question-bank-details',
+                    "api/trivia-question-bank-details",
                 triviaDetailData,
                 config
             );
@@ -96,7 +96,7 @@ export const deleteTriviaQuestionDetail = (id, token) => async dispatch => {
         dispatch({ type: DELETE_TRIVIA_QUESTION_DETAIL_REQUEST });
         const config = {
             headers: {
-                Authorization: 'Bearer ' + token,
+                Authorization: "Bearer " + token,
             },
         };
         const { data } = await axios.delete(
@@ -122,10 +122,10 @@ export const detailTriviaQuestionDetail = (id, token) => async dispatch => {
         dispatch({ type: DETAIL_TRIVIA_QUESTION_DETAIL_REQUEST });
         const config = {
             headers: {
-                Authorization: 'Bearer ' + token,
+                Authorization: "Bearer " + token,
             },
         };
-        console.log('masukkesiniiiiaaa');
+        console.log("masukkesiniiiiaaa");
         const { data } = await axios.get(
             process.env.END_POINT_API_SUBVIT +
                 `api/trivia-question-bank-details/${id}`
@@ -149,7 +149,7 @@ export const updateTriviaQuestionDetail =
             dispatch({ type: UPDATE_TRIVIA_QUESTION_DETAIL_REQUEST });
             const config = {
                 headers: {
-                    Authorization: 'Bearer ' + token,
+                    Authorization: "Bearer " + token,
                 },
             };
             const { data } = await axios.post(
@@ -180,13 +180,13 @@ export const importFileTriviaQuestionDetail =
 
             const config = {
                 headers: {
-                    Authorization: 'Bearer ' + token,
+                    Authorization: "Bearer " + token,
                 },
             };
 
             const { data } = await axios.post(
                 process.env.END_POINT_API_SUBVIT +
-                    'api/trivia-question-bank-details/import-file',
+                    "api/trivia-question-bank-details/import-file",
                 triviaDetailFile,
                 config
             );
@@ -211,13 +211,13 @@ export const importImagesTriviaQuestionDetail =
             });
             const config = {
                 headers: {
-                    Authorization: 'Bearer ' + token,
+                    Authorization: "Bearer " + token,
                 },
             };
 
             const { data } = await axios.post(
                 process.env.END_POINT_API_SUBVIT +
-                    'api/trivia-question-bank-details/import-images',
+                    "api/trivia-question-bank-details/import-images",
                 triviaDetailImages,
                 config
             );

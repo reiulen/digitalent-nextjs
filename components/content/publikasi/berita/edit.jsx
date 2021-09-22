@@ -36,7 +36,7 @@ const EditBerita = () => {
 
     useEffect(() => {
 
-        dispatch(getAllKategori())
+        // dispatch(getAllKategori())
 
         editorRef.current = {
             CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor

@@ -1,8 +1,8 @@
-import ReportTrivia from '../../../../components/content/subvit/trivia/report-trivia';
-import Layout from '../../../../components/templates/layout.component';
+import ReportTrivia from "../../../../components/content/subvit/trivia/report-trivia";
 
-import { allReportTriviaQuestionBanks } from '../../../../redux/actions/subvit/trivia-question.actions';
-import { wrapper } from '../../../../redux/store';
+import { allReportTriviaQuestionBanks } from "../../../../redux/actions/subvit/trivia-question.actions";
+import { wrapper } from "../../../../redux/store";
+import { getSession } from "next-auth/client";
 
 export default function ReportTriviaPage(props) {
     const session = props.session.user.user.data;
@@ -23,7 +23,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             if (!session) {
                 return {
                     redirect: {
-                        destination: '/',
+                        destination: "/",
                         permanent: false,
                     },
                 };
@@ -35,11 +35,12 @@ export const getServerSideProps = wrapper.getServerSideProps(
                     query.page,
                     query.keyword,
                     query.limit,
-                    query.card
+                    query.card,
+                    session.user.user.data.token
                 )
             );
             return {
-                props: { session, title: 'Report Trivia - Subvit' },
+                props: { session, title: "Report Trivia - Subvit" },
             };
         }
 );

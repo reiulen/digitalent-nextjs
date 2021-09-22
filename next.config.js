@@ -7,6 +7,7 @@ module.exports = {
       "dts-subvit-dev.s3.ap-southeast-1.amazonaws.com",
       "dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com",
       "dts-partnership-dev.s3.ap-southeast-1.amazonaws.com",
+      "dts-sertifikat-dev.s3.ap-southeast-1.amazonaws.com",
     ],
   },
   env: {
