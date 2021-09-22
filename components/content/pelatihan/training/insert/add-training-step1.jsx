@@ -85,6 +85,7 @@ const AddTrainingStep1 = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-registrasi");
     if (simpleValidator.current.allValid()) {
       const data = {
         program,
@@ -132,8 +133,13 @@ const AddTrainingStep1 = () => {
   const onLogoHandler = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (type.includes(e.target.files[0].type)) {
-      setLogoFile(e.target.files[0]);
-      setLogoName(e.target.files[0].name);
+      if (e.target.files[0].size > 2000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+      } else {
+        setLogoFile(e.target.files[0]);
+        setLogoName(e.target.files[0].name);
+      }
     } else {
       e.target.value = null;
       Swal.fire(
@@ -162,8 +168,13 @@ const AddTrainingStep1 = () => {
   const onSilabusHandler = (e) => {
     const type = ["application/pdf"];
     if (type.includes(e.target.files[0].type)) {
-      setSilabusFile(e.target.files[0]);
-      setSilabusName(e.target.files[0].name);
+      if (e.target.files[0].size > 2000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+      } else {
+        setSilabusFile(e.target.files[0]);
+        setSilabusName(e.target.files[0].name);
+      }
     } else {
       e.target.value = null;
       Swal.fire(
