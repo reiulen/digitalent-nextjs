@@ -7,67 +7,114 @@ import Style from "../../../../styles/progressbar.module.css";
 function RevisiList() {
   const cardContainer = {
     background: "#FFFFFF",
-    "box-shadow": "8px 8px 20px rgba(0, 0, 0, 0.15)",
-    "border-radius": "5px",
-    margin: "1.5rem 0",
-    clear: "both",
+    boxShadow: "8px 8px 20px rgba(0, 0, 0, 0.15)",
+    borderRadius: "5px",
+    padding: "16px 32px",
+    borderRadius: "12px",
+  };
+  const labelStyle = {
+    color: "#04AA77",
+    fontSize: "14px",
+    fontWeight: "600",
+    background: "#E6F7F1",
+    borderRadius: "4px",
+    padding:"4px"
   };
 
   return (
-    <div className="container">
-      <PageWrapper>
-        <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
-          <div className="card card-custom card-stretch gutter-b">
-            <div className="card-header border-0">
-              <h3 className="card-title font-weight-bolder text-dark">
-                Review Kerjasama
-              </h3>
+    <PageWrapper>
+      <div className="col-lg-12 order-1 px-0">
+        <div className="card card-custom card-stretch gutter-b">
+          <div className="card-header border-0">
+            <h3 className="card-title fz-20 fw-500 text-dark">
+              Review Kerjasama
+            </h3>
+          </div>
+
+          <div className="card-body pb-28">
+             <div className="row mt-8 mb-10">
+              <div className="col-2 p-0">
+                <div className="progress-items">
+                  {/* <div className="line-progress"></div> */}
+                  <div className="circle-progress active-circle">
+                    <span className="title-progress">Submit Kerjasama</span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="progress-items">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
+                    <span className="title-progress">Review Kerjasama</span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="progress-items">
+                  <div className="line-progress"></div>
+                  <div className="circle-progress">
+                    <span className="title-progress">Pembahasan</span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="progress-items">
+                  <div className="line-progress"></div>
+                  <div className="circle-progress">
+                    <span className="title-progress">
+                      Submit Dokumen Kerjasama
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="progress-items">
+                  <div className="line-progress"></div>
+                  <div className="circle-progress">
+                    <span className="title-progress">
+                      Review Dokumen Kerjasama
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-2">
+                <div className="progress-items">
+                  <div className="line-progress"></div>
+                  <div className="circle-progress">
+                    <span className="title-progress">Hasil</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            {/* <div className="card-body"> */}
-            <div className={`card-body ${Style.refreshZindex}`}>
-              <div className={Style.containerProggres}>
-                <ul className={Style.progressbar}>
-                  <li className={Style.active}>Submit Kerjasama</li>
-                  <li className={Style.active}>Review Kerjasama</li>
-                  <li>Pembahasan</li>
-                  <li>Dokumen Kerjasama</li>
-                  <li>Review Dokumen </li>
-                  <li>Selesai</li>
-                </ul>
+
+            <div
+              className="d-flex align-items-center justify-content-between"
+              style={cardContainer}
+            >
+              <div>
+                <h1 className="fw-500 fz-20" style={{color:"#6C6C6C"}}>Perjanjian Kerjasama</h1>
+                <p className="mt-4" style={{color:"#ADB5BD"}}>Pengajuan Kerjasama Anda Perlu direvisi.</p>
+                <p style={{color:"#ADB5BD"}}>Revisi Versi.1</p>
               </div>
-              <div style={{ marginTop: "100px" }}></div>
-              <div className="d-flex" style={cardContainer}>
-                <div className="p-5">
-                  <h2>Perjanjian Kerjasama</h2>
-                  <p>Pengajuan Kerjasama Anda Perlu direvisi.</p>
-                  <p>Revisi Versi.1</p>
-                </div>
-                <div className="ml-auto my-auto pr-5">
-                  <button
-                    type="button"
-                    className="btn btn-outline-success btn-light-success"
-                  >
-                    Sudah Direvisi
-                  </button>
-                </div>
+
+              <span style={labelStyle}>Sudah direvisi</span>
+            </div>
+            <div
+              className="d-flex align-items-center justify-content-between mt-8"
+              style={cardContainer}
+            >
+              <div>
+                <h1 className="fw-500 fz-20" style={{color:"#6C6C6C"}}>Perjanjian Kerjasama</h1>
+                <p className="mt-4" style={{color:"#ADB5BD"}}>Pengajuan Kerjasama Anda Perlu direvisi.</p>
+                <p style={{color:"#ADB5BD"}}>Revisi Versi.2</p>
               </div>
-              <div className="d-flex" style={cardContainer}>
-                <div className="p-5">
-                  <h2>Perjanjian Kerjasama</h2>
-                  <p>Pengajuan Kerjasama Anda Perlu direvisi.</p>
-                  <p>Revisi Versi.1</p>
-                </div>
-                <div className="ml-auto my-auto pr-5">
-                  <button type="button" className="btn btn-primary">
-                    Lihat Detail Revisi
-                  </button>
-                </div>
-              </div>
+
+              <button className="btn btn-sm btn-rounded-full bg-blue-primary text-white">Lihat Detail REvisi</button>
             </div>
           </div>
         </div>
-      </PageWrapper>
-    </div>
+      </div>
+    </PageWrapper>
   );
 }
 

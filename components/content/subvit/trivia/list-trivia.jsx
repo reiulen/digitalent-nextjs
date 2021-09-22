@@ -286,7 +286,8 @@ const ListTrivia = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {trivia && trivia.list_trivia.length === 0 ? (
+                      {!trivia ||
+                      (trivia && trivia.list_trivia.length === 0) ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Masih Kosong
                         </td>

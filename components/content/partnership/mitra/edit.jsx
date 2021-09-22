@@ -308,7 +308,10 @@ const EditMitra = () => {
 
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark" style={{ fontSize: "24px" }}>
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
               Ubah Mitra
             </h3>
           </div>
@@ -388,7 +391,7 @@ const EditMitra = () => {
                   <div
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
-                    className="shadow-image-form cursor-pointer"
+                    className="shadow-image-form cursor-pointer position-relative"
                     style={{
                       maxWidth: "168px",
                       maxHeight: "168px",
@@ -403,17 +406,21 @@ const EditMitra = () => {
                       style={{ padding: "6px" }}
                     /> */}
 
-                    <Image src={agency_logo} alt="Picture of the author" layout='fill'
-    objectFit='fill' />
-
+                    <Image
+                      src={agency_logo}
+                      alt="Picture of the author"
+                      layout="fill"
+                      objectFit="fill"
+                    />
                   </div>
                 )}
                 {/* read gambar yg ada from api */}
-                {agency_logo ? "" : 
-                !imageview ? (
+                {agency_logo ? (
+                  ""
+                ) : !imageview ? (
                   ""
                 ) : (
-                <div
+                  <div
                     data-toggle="modal"
                     data-target="#exampleModalCenter"
                     className="shadow-image-form cursor-pointer"
@@ -424,14 +431,20 @@ const EditMitra = () => {
                       height: "168px",
                     }}
                   >
-
-                    <div className="w-100 h-100 position-relative" style={{ padding: "6px" }}>
-
-                      <Image src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                        "partnership/images/profile-images/" +
-                        imageview} alt="images" layout='fill'
-    objectFit='fill' />
-
+                    <div
+                      className="w-100 h-100 position-relative"
+                      style={{ padding: "6px" }}
+                    >
+                      <Image
+                        src={
+                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                          "partnership/images/profile-images/" +
+                          imageview
+                        }
+                        alt="images"
+                        layout="fill"
+                        objectFit="fill"
+                      />
                     </div>
 
                     {/* <img
@@ -443,105 +456,104 @@ const EditMitra = () => {
                       alt="images"
                       style={{ padding: "6px" }}
                     /> */}
-
-
-
-
                   </div>
-                  )
-                  }
+                )}
 
-                  {agency_logo ? (
-                    <button
-                      className="btn btn-primary btn-sm my-3 mr-3"
-                      type="button"
-                      onClick={() => setAgency_logo("")}
-                    >
-                      Batal ubah
-                    </button>
-                  ) : (
-                    ""
-                  )}
+                {agency_logo ? (
+                  <button
+                    className="btn btn-primary btn-sm my-3 mr-3"
+                    type="button"
+                    onClick={() => setAgency_logo("")}
+                  >
+                    Batal ubah
+                  </button>
+                ) : (
+                  ""
+                )}
 
-                  {/* modal view image */}
-                  <div
-                className="modal fade"
-                id="exampleModalCenter"
-                tabIndex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalCenterTitle"
-                aria-hidden="true"
-              >
+                {/* modal view image */}
                 <div
-                  className="modal-dialog modal-dialog-centered"
-                  role="document"
+                  className="modal fade"
+                  id="exampleModalCenter"
+                  tabIndex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalCenterTitle"
+                  aria-hidden="true"
                 >
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <h5 className="modal-title" id="exampleModalLongTitle">
-                        Gambar Logo
-                      </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
+                  <div
+                    className="modal-dialog modal-dialog-centered"
+                    role="document"
+                  >
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalLongTitle">
+                          Gambar Logo
+                        </h5>
+                        <button
+                          type="button"
+                          className="close"
+                          data-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <IconClose />
+                        </button>
+                      </div>
+
+                      <div
+                        className="modal-body text-left p-0"
+                        style={{ height: "400px" }}
                       >
-                        <IconClose />
-                      </button>
-                    </div>
-
-                    <div
-                      className="modal-body text-left p-0"
-                      style={{ height: "400px" }}
-                    >
-                      
-                      {agency_logo ?
-
-/* <img
+                        {
+                          agency_logo ? (
+                            /* <img
                       src={agency_logo}
                       className="w-100 h-100"
                       alt="images"
                       style={{ padding: "6px" }}
                       /> */
 
-                      <div className="w-100 h-100 position-relative" style={{ padding: "6px" }}>
+                            <div
+                              className="w-100 h-100 position-relative"
+                              style={{ padding: "6px" }}
+                            >
+                              <Image
+                                src={agency_logo}
+                                alt="images"
+                                layout="fill"
+                                objectFit="fill"
+                              />
+                            </div>
+                          ) : (
+                            <div
+                              className="w-100 h-100 position-relative"
+                              style={{ padding: "6px" }}
+                            >
+                              <Image
+                                src={
+                                  process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                                  "partnership/images/profile-images/" +
+                                  imageview
+                                }
+                                alt="images"
+                                layout="fill"
+                                objectFit="fill"
+                              />
+                            </div>
+                          )
 
-                      <Image src={agency_logo} alt="images" layout='fill'
-    objectFit='fill' />
-
-                    </div>
-
-                    :
-
-                    <div className="w-100 h-100 position-relative" style={{ padding: "6px" }}>
-
-                      <Image src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                        "partnership/images/profile-images/" +
-                        imageview} alt="images" layout='fill'
-    objectFit='fill' />
-
+                          // <img
+                          //   src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                          //     "partnership/images/profile-images/" +
+                          //     imageview}
+                          //   className="w-100 h-100"
+                          //   alt="images"
+                          //   style={{ padding: "6px" }}
+                          //   />
+                        }
                       </div>
-
-
-                    // <img
-                    //   src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                    //     "partnership/images/profile-images/" +
-                    //     imageview}
-                    //   className="w-100 h-100"
-                    //   alt="images"
-                    //   style={{ padding: "6px" }}
-                    //   />
-                    }
-
-
-
                     </div>
                   </div>
                 </div>
-              </div>
-
-
 
                 <div className="input-group">
                   <div className="custom-file">

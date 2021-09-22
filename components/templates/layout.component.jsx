@@ -36,7 +36,7 @@ import Footer from "./footer.component";
 const Layout = ({ children, title = "Dashboard" }) => {
   const dispatch = useDispatch();
   const allFunctionls = useSelector(state => state.allFunctionls)
-  console.log("layout page",allFunctionls)
+  // console.log("layout page",allFunctionls)
   const handlerLogout = () => {
     signOut();
   };

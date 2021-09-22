@@ -1,11 +1,11 @@
 import Layout from "../../../../components/templates/layout.component";
-import Tambah from "../../../../components/content/partnership/user/tambah";
+import Tambah from "../../../../components/content/partnership/user/tanda-tangan/tambah";
 
 export default function TambahPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Publikasi">
+        <Layout title="Tambah tanda tangan digital -Partnership">
           <Tambah />
         </Layout>
       </div>

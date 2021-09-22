@@ -277,7 +277,11 @@ const DetailSubstansi = () => {
                         <p className="font-weight-bolder text-dark">Akademi</p>
                       </td>
                       <td>
-                        <p className="pl-5">{subtance.academy.name || "-"}</p>
+                        <p className="pl-5">
+                          {subtance.academy != null
+                            ? subtance.academy.name
+                            : "-"}
+                        </p>
                       </td>
                     </tr>
                     <tr>

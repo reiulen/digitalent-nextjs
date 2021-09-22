@@ -36,7 +36,7 @@ import {
 import axios from 'axios'
 
 // get all data
-export const getAllFaq = () => async (dispatch) => {
+export const getAllFaq = () => async (dispatch, token) => {
     try {
 
         dispatch({ type: FAQ_REQUEST })
@@ -56,7 +56,13 @@ export const getAllFaq = () => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: FAQ_SUCCESS,
@@ -71,7 +77,7 @@ export const getAllFaq = () => async (dispatch) => {
     }
 }
 
-export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null) => async (dispatch) => {
+export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) => async (dispatch) => {
     try {
 
         dispatch({ type: PAGINATION_FAQ_REQUEST })
@@ -83,15 +89,13 @@ export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish =
         if (startdate) link = link.concat(`&startdate=${startdate}`)
         if (enddate) link = link.concat(`&enddate=${enddate}`)
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
 
-        const { data } = await axios.get(link)
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: PAGINATION_FAQ_SUCCESS,
@@ -156,13 +160,19 @@ export const deleteFaq = (id) => async (dispatch) => {
     }
 }
 
-export const getDetailFaq = (id) => async (dispatch) => {
+export const getDetailFaq = (id, token) => async (dispatch) => {
     try {
         dispatch({ type: DETAIL_FAQ_REQUEST })
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/faq/${id}`;
 
-        const { data } = await axios.get(link);
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+
+        const { data } = await axios.get(link, config);
 
         dispatch({
             type: DETAIL_FAQ_SUCCESS,

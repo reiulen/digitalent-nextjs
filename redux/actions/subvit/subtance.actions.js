@@ -37,10 +37,11 @@ import {
 } from "../../types/subvit/subtance.type";
 
 import axios from "axios";
+import { getSession } from "next-auth/client";
 
 // get all data
 export const getAllSubtanceQuestionBanks =
-  (page = 1, keyword = "", limit = 5) =>
+  (page = 1, keyword = "", limit = 5, token) =>
   async (dispatch) => {
     try {
       dispatch({ type: SUBTANCE_QUESTION_BANKS_REQUEST });
@@ -51,15 +52,13 @@ export const getAllSubtanceQuestionBanks =
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-      const { data } = await axios.get(link);
+      const { data } = await axios.get(link, config);
 
       dispatch({
         type: SUBTANCE_QUESTION_BANKS_SUCCESS,
@@ -73,67 +72,80 @@ export const getAllSubtanceQuestionBanks =
     }
   };
 
-export const newSubtanceQuestionBanks = (subtanceData) => async (dispatch) => {
-  try {
-    dispatch({
-      type: NEW_SUBTANCE_QUESTION_BANKS_REQUEST,
-    });
+export const newSubtanceQuestionBanks =
+  (subtanceData, token) => async (dispatch) => {
+    try {
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_BANKS_REQUEST,
+      });
 
-    // const config = {
-    //     headers: {
-    //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-    //         'Access-Control-Allow-Origin': '*',
-    //         'apikey': process.env.END_POINT_KEY_AUTH
-    //     }
-    // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_SUBVIT + "api/subtance-question-banks",
-      subtanceData
-    );
+      const { data } = await axios.post(
+        process.env.END_POINT_API_SUBVIT + "api/subtance-question-banks",
+        subtanceData,
+        config
+      );
 
-    dispatch({
-      type: NEW_SUBTANCE_QUESTION_BANKS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: NEW_SUBTANCE_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_BANKS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: NEW_SUBTANCE_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-export const getDetailSubtanceQuestionBanks = (id) => async (dispatch) => {
-  try {
-    dispatch({ type: DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST });
+export const getDetailSubtanceQuestionBanks =
+  (id, token) => async (dispatch) => {
+    try {
+      dispatch({ type: DETAIL_SUBTANCE_QUESTION_BANKS_REQUEST });
 
-    let link =
-      process.env.END_POINT_API_SUBVIT +
-      `api/subtance-question-banks/detail/${id}`;
+      let link =
+        process.env.END_POINT_API_SUBVIT +
+        `api/subtance-question-banks/detail/${id}`;
 
-    const { data } = await axios.get(link);
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-    dispatch({
-      type: DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
-      payload: data.data,
-    });
-  } catch (error) {
-    dispatch({
-      type: DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
+      const { data } = await axios.get(link, config);
 
-export const getOneSubtanceQuestionBanks = (id) => async (dispatch) => {
+      dispatch({
+        type: DETAIL_SUBTANCE_QUESTION_BANKS_SUCCESS,
+        payload: data.data,
+      });
+    } catch (error) {
+      dispatch({
+        type: DETAIL_SUBTANCE_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+
+export const getOneSubtanceQuestionBanks = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_REQUEST });
 
     let link =
       process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`;
 
-    const { data } = await axios.get(link);
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
 
     dispatch({
       type: DETAIL_ONE_SUBTANCE_QUESTION_BANKS_SUCCESS,
@@ -148,15 +160,22 @@ export const getOneSubtanceQuestionBanks = (id) => async (dispatch) => {
 };
 
 export const updatewSubtanceQuestionBanks =
-  (id, substanceQuestionData) => async (dispatch) => {
+  (id, substanceQuestionData, token) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_BANKS_REQUEST,
       });
 
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`,
-        substanceQuestionData
+        substanceQuestionData,
+        config
       );
 
       dispatch({
@@ -171,12 +190,19 @@ export const updatewSubtanceQuestionBanks =
     }
   };
 
-export const deleteSubtanceQuestionBanks = (id) => async (dispatch) => {
+export const deleteSubtanceQuestionBanks = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_SUBTANCE_QUESTION_BANKS_REQUEST });
 
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
     const data = await axios.delete(
-      process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`
+      process.env.END_POINT_API_SUBVIT + `api/subtance-question-banks/${id}`,
+      config
     );
 
     dispatch({
@@ -192,14 +218,21 @@ export const deleteSubtanceQuestionBanks = (id) => async (dispatch) => {
 };
 
 export const deleteCloneSubtanceQuestionBanks =
-  (dataId) => async (dispatch) => {
+  (dataId, token) => async (dispatch) => {
     try {
       dispatch({ type: DELETE_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST });
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
       const data = await axios.post(
         process.env.END_POINT_API_SUBVIT +
           `api/subtance-question-bank-details/multiple-delete`,
-        dataId
+        dataId,
+        config
       );
 
       dispatch({
@@ -215,24 +248,23 @@ export const deleteCloneSubtanceQuestionBanks =
   };
 
 export const updateSubtanceQuestionBanksPublish =
-  (subtanceData, id) => async (dispatch) => {
+  (subtanceData, id, token) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_REQUEST,
       });
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT +
           `api/subtance-question-banks/publish/${id}`,
-        subtanceData
+        subtanceData,
+        config
       );
 
       dispatch({
@@ -256,7 +288,8 @@ export const allReportSubtanceQuestionBanks =
     pelatihan = null,
     status = null,
     nilai = null,
-    card = null
+    card = null,
+    token
   ) =>
   async (dispatch) => {
     try {
@@ -272,15 +305,13 @@ export const allReportSubtanceQuestionBanks =
       if (nilai) link = link.concat(`&nilai=${nilai}`);
       if (card) link = link.concat(`&card=${card}`);
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-      const { data } = await axios.get(link);
+      const { data } = await axios.get(link, config);
 
       dispatch({
         type: REPORT_SUBTANCE_QUESTION_BANKS_SUCCESS,
@@ -295,23 +326,22 @@ export const allReportSubtanceQuestionBanks =
   };
 
 export const newCloneSubtanceQuestionBanks =
-  (subtanceData) => async (dispatch) => {
+  (subtanceData, token) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_CLONE_SUBTANCE_QUESTION_BANKS_REQUEST,
       });
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT + "api/subtance-question-banks/clone",
-        subtanceData
+        subtanceData,
+        config
       );
 
       dispatch({

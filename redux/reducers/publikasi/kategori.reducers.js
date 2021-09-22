@@ -70,7 +70,6 @@ export const paginationKategoriReducer = (state = { paginateKategori: [] }, acti
                 loading: false,
                 paginateKategori: action.payload.data
             }
-
         case PAGINATION_KATEGORI_FAIL:
             return {
                 loading: false,
@@ -95,6 +94,7 @@ export const newKategoriReducer = (state = { kategori: {} }, action) => {
             }
 
         case NEW_KATEGORI_SUCCESS:
+            console.log("Reducer Kategori Success :", action.payload.data)
             return {
                 loading: false,
                 success: action.payload.message,

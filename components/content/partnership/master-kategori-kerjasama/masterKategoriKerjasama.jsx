@@ -127,7 +127,7 @@ const Table = () => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil merubah data
+            Berhasil mengubah data
           </div>
           <div className="alert-close">
             <button
@@ -258,7 +258,9 @@ const Table = () => {
                                       className="cursor-pointer"
                                     >
                                       <p
-                                        className="status-div"
+                                        className={`${allMKCooporation.mk_cooporation.data
+                                          .list_cooperation_categories[index]
+                                          .status === 0 ? "status-div-red" :"status-div-green"}`}
                                         style={{ width: "max-content" }}
                                       >
                                         {allMKCooporation.mk_cooporation.data

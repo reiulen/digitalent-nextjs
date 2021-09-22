@@ -13,24 +13,22 @@ module.exports = {
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
 
-    // END_POINT_API: 'http://api.dts.majapahit.id:8002/',
-    // END_POINT_API_IMAGE: 'http://api.dts.majapahit.id:8002/storage/',
-    // END_POINT_API_IMAGE_PUBLIKASI:
-    //   "http://dts-publikasi-dev.majapahit.id/storage/",
-    END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
+    // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
+    END_POINT_API_PUBLIKASI: "http://api-dts-dev.majapahit.id/publikasi/",
     END_POINT_API_IMAGE_PUBLIKASI:
       "http://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
-    END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
+    // END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
+    END_POINT_API_SUBVIT: "http://api-dts-dev.majapahit.id/subvit/",
     END_POINT_API_IMAGE_SUBVIT:
       "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // partnership
-    END_POINT_API_PARTNERSHIP: "http://dts-partnership-dev.majapahit.id",
+    TOKEN_PARTNERSHIP_TEMP:
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMjEwNTc1MCwiZXhwIjoxNjMyMTkyMTUwLCJuYmYiOjE2MzIxMDU3NTAsImp0aSI6Ik9icmlCVW44ZnBvY0pBMnAiLCJzdWIiOjEzLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwidXNlciI6eyJpZCI6MTMsIm5hbWUiOiJSYWhtYXQgSGlkYXlhdHVsbGFoIiwiZW1haWwiOiJyYWhtYXRoaWRheWF0dWxsYWg5OTZAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjQzOjEyLjAwMDAwMFoiLCJyZW1lbWJlcl90b2tlbiI6IjIxNTkxMCIsInJvbGVzIjoiW21pdHJhXSIsImNyZWF0ZWRfYXQiOiIyMDIxLTA5LTE1VDA3OjM3OjQyLjAwMDAwMFoiLCJ1cGRhdGVkX2F0IjoiMjAyMS0wOS0xOVQwODo1NzoxNi4wMDAwMDBaIn19.lXF4TO_dqq0O8k83WhStZuSKGEbWTO0kTVa4KEKhCYg",
+    // END_POINT_API_PARTNERSHIP: "http://dts-partnership-dev.majapahit.id",
+    END_POINT_API_PARTNERSHIP: "http://api-dts-dev.majapahit.id/partnership/",
     END_POINT_API_IMAGE_PARTNERSHIP:
       "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
-    END_POINT_TOKEN_API:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImlzcyI6InNuSzEyd3hLQ1hRSzRYdHU2azBLV29QaVN6U1hTUmxNIn0.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Im5hbWEgZHV1ZHUiLCJleHAiOjE2MjcxMjk5Mzd9.f8dRFus2HnsJ22_KDnwvlvJ_k3efz_8bdJ2JCbET8uA",
-    END_POINT_KEY_AUTH: "12131231231210923123",
   },
 };

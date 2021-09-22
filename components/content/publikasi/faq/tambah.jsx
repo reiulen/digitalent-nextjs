@@ -54,17 +54,30 @@ const TambahFaq = () => {
     const [pinned, setPinnedFaq] = useState(false)
     const [publish, setPublish] = useState(false)
     const [publishDate, setPublishDate] = useState(null);
+    const [disablePublishDate, setDisablePublishDate] = useState(true)
     const [, forceUpdate] = useState();
 
-    const handleChangePinned = (e) => {
-        setPinnedFaq(e.target.checked);
+    const handleChangePublish = (e) => {
+        // setPublish(e.target.checked);
+        setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
+    
+        if (e.target.checked === false){
+            setPublishDate (null)
+            setPublish (0)
+        } else {
+            setPublish (1)
+        }
     };
 
-    const handleChangePublish = (e) => {
-        setPublish(e.target.checked);
-        // console.log (e.target.checked)
-    };
+    const handlePublishDate = (date) => {
+        // let result = moment(date).format("YYYY-MM-DD")
+        if (disablePublishDate === false) {
+            // setPublishDate(result)
+            setPublishDate(date)
+            // console.log (result)
+        }
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -74,17 +87,53 @@ const TambahFaq = () => {
                 dispatch(clearErrors())
             }
 
-            const data = {
-                kategori_id,
-                judul,
-                jawaban,
-                users_id,
-                publish,
-                pinned
+            if (publish === true) {
+                setPublish(1)
+              
+            } else if (publish === false) {
+                setPublish(0)
+            
             }
 
-            dispatch(newFaq(data))
+            if (pinned === true) {
+                setPinnedFaq(1)
+              
+            } else if (pinned === false) {
+                setPinnedFaq(0)
+    
+            }
 
+            if (publishDate === null){
+                let today = new Date
+
+                const data = {
+                    kategori_id,
+                    judul,
+                    jawaban,
+                    users_id,
+                    publish,
+                    pinned,
+                    tanggal_publish : moment(today).format("YYYY-MM-DD")
+                }
+
+                dispatch(newFaq(data))
+
+            } else {
+                const data = {
+                    kategori_id,
+                    judul,
+                    jawaban,
+                    users_id,
+                    publish,
+                    pinned,
+                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                }
+
+                dispatch(newFaq(data))
+
+            }
+
+            
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
@@ -114,7 +163,7 @@ const TambahFaq = () => {
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
+                    <div className="card-header">
                         <h3 className="card-title font-weight-bolder text-dark">Tambah FAQ</h3>
                     </div>
                     <div className="card-body">
@@ -125,7 +174,7 @@ const TambahFaq = () => {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        placeholder="Isi Judul disini"
+                                        placeholder="Masukkan Judul Disini"
                                         value={judul}
                                         onChange={(e) => setJudulPertanyaan(e.target.value)}
                                         onBlur={() => simpleValidator.current.showMessageFor("judul pertanyaan")}
@@ -139,7 +188,7 @@ const TambahFaq = () => {
                                 <div className="col-sm-12">
                                     <textarea
                                         className='form-control'
-                                        placeholder='isi deskripsi jawaban disini'
+                                        placeholder='Tulis disini'
                                         name="jawaban"
                                         rows="10"
                                         onChange={e => setJawaban(e.target.value)}
@@ -162,7 +211,7 @@ const TambahFaq = () => {
                                         onChange={e => setKategoriId(e.target.value)}
                                         onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor("kategori") }}
                                     >
-                                        <option value="" disabled selected>-- KATEGORI --</option>
+                                        <option value="" disabled selected>-- FAQ --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
                                             <option value="">Data kosong</option>
                                         ) : (
@@ -213,26 +262,41 @@ const TambahFaq = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group">
-                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                                <div className="col-sm-12">
-                                    <div className="input-group">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={publishDate}
-                                        onChange={(date) => setPublishDate(date)}
-                                        selectsStart
-                                        startDate={publishDate}
-                                        // endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                        placeholderText="Silahkan Isi Tanggal Publish"
-                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                        minDate={moment().toDate()}
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
+                            {
+                                disablePublishDate === false ?
+                                    <div className="form-group">
+                                        <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                        <div className="col-sm-12">
+                                            <div className="input-group">
+                                            <DatePicker
+                                                className="form-search-date form-control-sm form-control"
+                                                selected={publishDate}
+                                                onChange={(date) => handlePublishDate(date)}
+                                                // onChange={(date) => setPublishDate(date)}
+                                                selectsStart
+                                                startDate={publishDate}
+                                                // endDate={endDate}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="Silahkan Isi Tanggal Publish"
+                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                // minDate={moment().toDate()}
+                                                disabled = {disablePublishDate === true || disablePublishDate === null}
+                                            // minDate={addDays(new Date(), 20)}
+                                            />
+                                            </div>
+                                            {/* {
+                                                disablePublishDate === true ?
+                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                                                :
+                                                    null
+                                            } */}
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                :
+                                    null
+                            }
+
+                            
 
                             <div className="form-group row">
                                 <label
@@ -247,7 +311,7 @@ const TambahFaq = () => {
                                             <input
                                             // required
                                             className="checkbox"
-                                            checked={publish}
+                                            checked={pinned}
                                             type="checkbox"
                                             // onChange={(checked) => setPublish(checked)}
                                             onChange={(e) => handleChangePinned(e)}

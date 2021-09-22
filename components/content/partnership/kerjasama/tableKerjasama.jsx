@@ -53,10 +53,12 @@ const Table = () => {
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
+  console.log("allMK",allMK)
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
+  const [isChangeOption, setIsChangeOption] = useState(false)
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
@@ -82,7 +84,20 @@ const Table = () => {
     dispatch(searchCooporation(valueSearch));
   };
 
-  const changeListStatus = (value, id) => {
+  const changeListStatus = (e, id) => {
+//     var x = (e.target.options[e.target.selectedIndex].innerText)
+//     var warning = `Apakah anda yakin ingin merubah status menjadi ${x} ?`;
+// if (confirm(warning)) {
+//     dispatch(changeStatusList(e.target.value, id));
+//         setIsStatusBar(true);
+//         setDeleteBar(false);
+//         setIsChangeOption(true)
+// }
+// else {
+//     dispatch(reloadTable());
+// }
+
+
     Swal.fire({
       title: "Apakah anda yakin ingin merubah status ?",
       icon: "warning",
@@ -94,14 +109,19 @@ const Table = () => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(changeStatusList(value, id));
+        
+        dispatch(changeStatusList(e.target.value, id));
         setIsStatusBar(true);
         setDeleteBar(false);
+        setIsChangeOption(true)
       } else {
         dispatch(reloadTable());
       }
     });
+
+
   };
+
 
   const cooperationDelete = (id) => {
     Swal.fire({
@@ -158,6 +178,15 @@ const Table = () => {
     }
   };
 
+//   const  test = (a) => {
+//     // var x = (a.value || a.options[a.selectedIndex].value);  //crossbrowser solution =)
+//     // alert(x);
+//     console.log("a",a.target.options)
+// }
+
+
+
+
   useEffect(() => {
     dispatch(fetchListSelectMitra());
     dispatch(fetchListSelectCooperation());
@@ -166,6 +195,15 @@ const Table = () => {
   }, [dispatch]);
   return (
     <PageWrapper>
+
+      {/* <select onChange={(e) => test(e)} id="select_id">
+    <option value="0">-Select-</option>
+    <option value="1">111</option>
+    <option value="2">222</option>
+    <option value="3">333</option>
+</select> */}
+
+
       {update ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
@@ -176,7 +214,7 @@ const Table = () => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengupdate data
+            Berhasil mengubah data
           </div>
           <div className="alert-close">
             <button
@@ -205,7 +243,7 @@ const Table = () => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengupdate status
+            Berhasil mengubah status
           </div>
           <div className="alert-close">
             <button
@@ -403,34 +441,6 @@ const Table = () => {
                                       <label className="required fw-bold fs-6 mb-2">
                                         Mitra
                                       </label>
-
-                                      {/* <select
-                                        onChange={(e) =>
-                                          setValueMitra(e.target.value)
-                                        }
-                                        id="list-mitra"
-                                        className="form-select form-control"
-                                        aria-label="Select example"
-                                      >
-                                        <option value="">Semua</option>
-                                        {allMK.stateListMitra.length === 0
-                                          ? ""
-                                          : allMK.stateListMitra
-                                              .slice(
-                                                1,
-                                                allMK.stateListMitra.length
-                                              )
-                                              .map((items, i) => {
-                                                return (
-                                                  <option
-                                                    key={i}
-                                                    value={items.name}
-                                                  >
-                                                    {items.name}
-                                                  </option>
-                                                );
-                                              })}
-                                      </select> */}
                                       <Select
                                         ref={(ref) => (selectRefMitra = ref)}
                                         className="basic-single"
@@ -449,36 +459,8 @@ const Table = () => {
                                     </div>
                                     <div className="fv-row mb-10">
                                       <label className="required fw-bold fs-6 mb-2">
-                                        Kerjasama
+                                        Kategori Kerjasama
                                       </label>
-                                      {/* <select
-                                        onChange={(e) =>
-                                          setValueKerjaSama(e.target.value)
-                                        }
-                                        id="list-kerjasama"
-                                        className="form-select form-control"
-                                        aria-label="Select example"
-                                      >
-                                        <option value="">Semua</option>
-                                        {allMK.stateListKerjaSama.length === 0
-                                          ? ""
-                                          : allMK.stateListKerjaSama.data.map(
-                                              (items, i) => {
-                                                return (
-                                                  <option
-                                                    key={i}
-                                                    value={
-                                                      items.cooperation_categories
-                                                    }
-                                                  >
-                                                    {
-                                                      items.cooperation_categories
-                                                    }
-                                                  </option>
-                                                );
-                                              }
-                                            )}
-                                      </select> */}
                                       <Select
                                         ref={(ref) => (selectRefKerjasama = ref)}
                                         className="basic-single"
@@ -499,30 +481,6 @@ const Table = () => {
                                       <label className="required fw-bold fs-6 mb-2">
                                         Status
                                       </label>
-                                      {/* <select
-                                        id="list-status"
-                                        onChange={(e) =>
-                                          setValueStatus(e.target.value)
-                                        }
-                                        className="form-select form-control"
-                                        aria-label="Select example"
-                                      >
-                                        <option value="">Semua</option>
-                                        {allMK.stateListStatus.length === 0
-                                          ? ""
-                                          : allMK.stateListStatus.data.map(
-                                              (items, i) => {
-                                                return (
-                                                  <option
-                                                    key={i}
-                                                    value={items.name_en}
-                                                  >
-                                                    {items.name}
-                                                  </option>
-                                                );
-                                              }
-                                            )}
-                                      </select> */}
                                       <Select
                                         ref={(ref) => (selectRefStatus = ref)}
                                         className="basic-single"
@@ -541,15 +499,16 @@ const Table = () => {
                                     </div>
                                   </div>
                                   <div className="modal-footer">
+
+
+
+
+
+
                                     <div className="d-flex justify-content-end align-items-center">
-                                      {/* <Link href="/compoenent">
-                                        <a className="btn btn-white">Reset</a>
-                                      </Link> */}
                                       <button
-                                        className="btn btn-white"
+                                        className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                         type="button"
-                                        // type="button"
-                                      // className="close"
                                       data-dismiss="modal"
                                       aria-label="Close"
                                         onClick={() => resetValueSort()}
@@ -557,12 +516,12 @@ const Table = () => {
                                         Reset
                                       </button>
                                       <button
-                                        className="btn btn-primary ml-4"
+                                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                         type="button"
                                         // type="button"
                                       // className="close"
-                                      data-dismiss="modal"
-                                      aria-label="Close"
+                                      // data-dismiss="modal"
+                                      // aria-label="Close"
                                         onClick={(e) =>
                                           handleSubmitSearchMany(e)
                                         }
@@ -570,6 +529,13 @@ const Table = () => {
                                         Terapkan
                                       </button>
                                     </div>
+
+
+
+
+
+
+
                                   </div>
                                 </div>
                               </div>
@@ -583,7 +549,7 @@ const Table = () => {
                             type="button"
                             onClick={() => dispatch(exportFileCSV())}
                           >
-                            Export .xlxs
+                            Export .xlsx
                           </button>
                         </div>
                       </div>
@@ -638,8 +604,6 @@ const Table = () => {
                                       ? index + 1
                                       : (allMK.page - 1) * allMK.limit +
                                         (index + 1)}
-
-                                    {/* {index+1} */}
                                 </td>
                                 <td className="align-middle text-left">
                                   {items.partner === null ? (
@@ -695,24 +659,24 @@ const Table = () => {
                                         disabled
                                         className="form-control remove-icon-default dropdown-arrows-green"
                                         key={index}
-                                        onChange={(e) =>
-                                          changeListStatus(
-                                            e.target.value,
-                                            items.id
-                                          )
-                                        }
+                                        // onChange={(e) =>
+                                        //   changeListStatus(
+                                        //     e.target.value,
+                                        //     items.id
+                                        //   )
+                                        // }
                                       >
                                         <option value="1">
                                           Disetujui
                                         </option>
                                         <option value="2">Tidak Aktif</option>
                                       </select>
-                                      <IconArrow
+                                      {/* <IconArrow
                                         className="right-center-absolute"
                                         style={{ right: "10px" }}
                                         width="7"
                                         height="7"
-                                      />
+                                      /> */}
                                     </div>) : (items.status.name === "aktif") && moment(items.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ? (
                                     <div className="position-relative w-max-content">
                                       <select
@@ -722,8 +686,9 @@ const Table = () => {
                                         key={index}
                                         onChange={(e) =>
                                           changeListStatus(
-                                            e.target.value,
-                                            items.id
+                                            e,
+                                            items.id,
+                                            items.status.name
                                           )
                                         }
                                       >
@@ -748,8 +713,9 @@ const Table = () => {
                                         key={index}
                                         onChange={(e) =>
                                           changeListStatus(
-                                            e.target.value,
-                                            items.id
+                                            e,
+                                            items.id,
+                                            items.status.name
                                           )
                                         }
                                       >
@@ -1016,11 +982,11 @@ const Table = () => {
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/review-kerjasama`
+                                          )
+                                        }
                                       >
                                         {/* <IconEye
                                           width="16"
@@ -1038,11 +1004,11 @@ const Table = () => {
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/detail-revisi-kerjasama`
+                                          )
+                                        }
                                       >
                                         <IconEye
                                           width="16"
@@ -1121,11 +1087,11 @@ const Table = () => {
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/submit-dokumen-kerjasama-revisi`
+                                          )
+                                        }
                                       >
                                         <IconReview />
                                         <div className="text-hover-show-hapus">

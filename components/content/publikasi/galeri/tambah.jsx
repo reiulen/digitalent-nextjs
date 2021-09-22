@@ -147,11 +147,29 @@ const TambahGaleri = () => {
     const [tag, setTag] = useState([])
     const [publish, setPublish] = useState(false)
     const [publishDate, setPublishDate] = useState(null);
+    const [disablePublishDate, setDisablePublishDate] = useState(true)
 
     const handleChangePublish = (e) => {
-        setPublish(e.target.checked);
+        // setPublish(e.target.checked);
+        setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
+    
+        if (e.target.checked === false){
+            setPublishDate (null)
+            setPublish (0)
+        } else {
+            setPublish (1)
+        }
     };
+
+    const handlePublishDate = (date) => {
+        // let result = moment(date).format("YYYY-MM-DD")
+        if (disablePublishDate === false) {
+            // setPublishDate(result)
+            setPublishDate(date)
+            // console.log (result)
+        }
+    }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -164,19 +182,48 @@ const TambahGaleri = () => {
               type: NEW_GALERI_RESET,
             });
           }
-
-        const data = {
-            judul,
-            isi_galleri,
-            gambar,
-            kategori_id,
-            users_id,
-            tag,
-            publish
+        
+        if (publish === true) {
+            setPublish(1)
+        
+        } else if (publish === false) {
+            setPublish(0)   
+        
         }
 
-        dispatch(newGaleri(data))
-        // console.log(data)
+        if (publishDate === null){
+            let today = new Date
+
+            const data = {
+                judul,
+                isi_galleri,
+                gambar,
+                kategori_id,
+                users_id,
+                tag,
+                publish,
+                tanggal_publish : moment(today).format("YYYY-MM-DD")
+            }
+
+            dispatch(newGaleri(data))
+            console.log(data)
+        } else {
+            const data = {
+                judul,
+                isi_galleri,
+                gambar,
+                kategori_id,
+                users_id,
+                tag,
+                publish,
+                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            }
+
+            dispatch(newGaleri(data))
+            console.log(data)
+        }
+
+        
     }
 
     return (
@@ -196,7 +243,7 @@ const TambahGaleri = () => {
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
-                    <div className="card-header border-0">
+                    <div className="card-header">
                         <h3 className="card-title font-weight-bolder text-dark">Tambah Galeri</h3>
                     </div>
                     <div className="card-body">
@@ -204,7 +251,7 @@ const TambahGaleri = () => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("judul")}/>
+                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("judul")}/>
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
@@ -217,7 +264,7 @@ const TambahGaleri = () => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
                                 <div className="col-sm-12">
-                                    <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() =>simpleValidator.current.showMessageFor("deskripsi")}></textarea>
+                                    <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() =>simpleValidator.current.showMessageFor("deskripsi")}></textarea>
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
@@ -265,7 +312,7 @@ const TambahGaleri = () => {
                                     }}
                                     >
                                     <option selected disabled value="">
-                                        -- Kategori --
+                                        -- Galeri --
                                     </option>
                                     {!kategori || (kategori && kategori.length === 0) ? (
                                         <option value="">Data kosong</option>
@@ -336,26 +383,41 @@ const TambahGaleri = () => {
                                 </div>
                             </div>
 
-                            <div className="form-group">
-                                <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                                <div className="col-sm-12">
-                                    <div className="input-group">
-                                    <DatePicker
-                                        className="form-search-date form-control-sm form-control"
-                                        selected={publishDate}
-                                        onChange={(date) => setPublishDate(date)}
-                                        selectsStart
-                                        startDate={publishDate}
-                                        // endDate={endDate}
-                                        dateFormat="dd/MM/yyyy"
-                                        placeholderText="Silahkan Isi Tanggal Publish"
-                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                        minDate={moment().toDate()}
-                                    // minDate={addDays(new Date(), 20)}
-                                    />
+                            {
+                                disablePublishDate === false ?
+                                    <div className="form-group">
+                                        <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
+                                        <div className="col-sm-12">
+                                            <div className="input-group">
+                                            <DatePicker
+                                                className="form-search-date form-control-sm form-control"
+                                                selected={publishDate}
+                                                onChange={(date) => handlePublishDate(date)}
+                                                // onChange={(date) => setPublishDate(date)}
+                                                selectsStart
+                                                startDate={publishDate}
+                                                // endDate={endDate}
+                                                dateFormat="dd/MM/yyyy"
+                                                placeholderText="Silahkan Isi Tanggal Publish"
+                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                // minDate={moment().toDate()}
+                                                disabled = {disablePublishDate === true || disablePublishDate === null}
+                                            // minDate={addDays(new Date(), 20)}
+                                            />
+                                            </div>
+                                            {/* {
+                                                disablePublishDate === true ?
+                                                    <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
+                                                :
+                                                    null
+                                            } */}
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                :
+                                    null
+                            }
+
+                            
 
                             {/* <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>

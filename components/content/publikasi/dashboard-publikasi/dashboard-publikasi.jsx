@@ -1,61 +1,77 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import Image from 'next/image'
 import { BarChart, Bar, PieChart, Pie, Cell, Tooltip, Legend, XAxis } from 'recharts';
+import { useDispatch, useSelector } from "react-redux";
 
 import CardDashboard from '../../../CardDashboard'
 import PageWrapper from '../../../wrapper/page.wrapper'
+import LoadingTable from "../../../LoadingTable"
+
+import { clearErrors } from "../../../../redux/actions/publikasi/dashboard-publikasi.actions";
 
 const DashbardPublikasi = () => {
 
-    // const [ openBook, setOpenBook ] = useState ("/assets/new/open-book.svg")
+    const {
+        loading,
+        error,
+        dashboard_publikasi,
+      } = useSelector((state) => state.allDashboardPublikasi);
+
+    const [ totalPublishContent, setTotalPublishContent ] = useState (null)
+    const [ totalUnpublishContent, setTotalUnpublishContent ] = useState (null)
+
+    useEffect(() => {
+        let sum_publish = 0
+        let sum_unpublish = 0
+
+        if (dashboard_publikasi){
+            for ( const prop in dashboard_publikasi){
+                sum_publish += dashboard_publikasi[prop].total_publish
+                sum_unpublish += dashboard_publikasi[prop].total_unpublish
+            }
+
+            setTotalPublishContent (sum_publish) 
+            setTotalUnpublishContent (sum_unpublish)
+        }
+
+    }, [dashboard_publikasi])
+
     const colors = [ "#4299E1", "#215480"]
     const [ dataBarChart, setDataBarChart ] = useState ([
         {
-            "name": "Page A",
-            "publish": 38,
-            "unpublish": 40
+            "name": "Artikel",
+            "publish": dashboard_publikasi.artikel.total_publish,
+            "unpublish": dashboard_publikasi.artikel.total_unpublish
         },
 
         {
-            "name": "Page B",
-            "publish": 58,
-            "unpublish": 61
+            "name": "Berita",
+            "publish": dashboard_publikasi.berita.total_publish,
+            "unpublish": dashboard_publikasi.berita.total_unpublish
         },
 
         {
-            "name": "Page C",
-            "publish": 78,
-            "unpublish": 82
+            "name": "Video",
+            "publish": dashboard_publikasi.video.total_publish,
+            "unpublish": dashboard_publikasi.video.total_unpublish
         },
 
         {
-            "name": "Page D",
-            "publish": 28,
-            "unpublish": 31
+            "name": "Galeri",
+            "publish": dashboard_publikasi.gallery.total_publish,
+            "unpublish": dashboard_publikasi.gallery.total_unpublish
         },
 
         {
-            "name": "Page F",
-            "publish": 26,
-            "unpublish": 28
+            "name": "Imagetron",
+            "publish": dashboard_publikasi.imagetron.total_publish,
+            "unpublish": dashboard_publikasi.imagetron.total_unpublish
         },
 
         {
-            "name": "Page G",
-            "publish": 48,
-            "unpublish": 52
-        },
-
-        {
-            "name": "Page H",
-            "publish": 48,
-            "unpublish": 52
-        },
-
-        {
-            "name": "Page I",
-            "publish": 48,
-            "unpublish": 52
+            "name": "FAQ",
+            "publish": dashboard_publikasi.faq.total_publish,
+            "unpublish": dashboard_publikasi.faq.total_unpublish
         },
     ])
 
@@ -72,10 +88,20 @@ const DashbardPublikasi = () => {
     ])
 
     // const [ colors, setColors ] = useState (["#215480", "#4299E1"])
+    // const [ totalPublish, setTotalPublish ] = useState ()
+
+    const [ dataDashboardBerita, setDataDashboardBerita ] = useState (dashboard_publikasi.berita ? dashboard_publikasi.berita : null)
+    const [ dataDashboardArtikel, setDataDashboardArtikel ] = useState (dashboard_publikasi.artikel ? dashboard_publikasi.artikel : null)
+    const [ dataDashboardGallery, setDataDashboardGallery ] = useState (dashboard_publikasi.gallery ? dashboard_publikasi.gallery: null)
+    const [ dataDashboardVideo, setDataDashboardVideo ] = useState (dashboard_publikasi.video ? dashboard_publikasi.video : null)
+
+    
 
     return (
         <>
             <PageWrapper>
+                {console.log (dashboard_publikasi)}
+                {/* {console.log (dataDashboardGallery)} */}
                 <div className="row">
                     <div className="col-lg-12 col-xxl-12 mt-4">
                         <div className="card card-custom bg-light-primary">
@@ -146,7 +172,7 @@ const DashbardPublikasi = () => {
                                             {/* <Image src="/assets/icon/new/mail-purple.svg" width={50} height={50} alt="publish-pict" /> */}
                                             <div className=" ml-3 my-2">
                                                 <h3 className="font-weight-bold">
-                                                    90
+                                                    {totalPublishContent}
                                                 </h3>
                                                 
                                                 <div className="text-muted">
@@ -161,7 +187,7 @@ const DashbardPublikasi = () => {
                                             {/* <Image src="/assets/icon/new/blue-bars.svg" width={50} height={50} alt="publish-pict" /> */}
                                             <div className=" ml-3 my-2">
                                                 <h3 className="font-weight-bold">
-                                                    43
+                                                    {totalUnpublishContent}
                                                 </h3>
                                                 
                                                 <div className="text-muted">
@@ -269,367 +295,206 @@ const DashbardPublikasi = () => {
 
                     <div className="col-lg-6 col-xxl-6">
                         {/* <!--begin::List Widget 3--> */}
-                        <div className="card card-custom card-stretch gutter-b">
-                            {/* <!--begin::Header--> */}
-                            <div className="card-header border-0">
-                                <h3 className="card-title font-weight-bolder text-dark">3 Top Berita</h3>
-                            </div>
-                            {/* <!--end::Header--> */}
-                            {/* <!--begin::Body--> */}
-                            <div className="card-body pt-2">
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
-                                    </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Data Peserta DTS yang Lulus</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
 
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">120.000</p>
-                                        <span className="text-muted">Dibaca</span>
+                        {
+                            dataDashboardBerita.top_berita ?
+                                <div className="card card-custom card-stretch gutter-b">
+                                    {/* <!--begin::Header--> */}
+                                    <div className="card-header border-0">
+                                        <h3 className="card-title font-weight-bolder text-dark">3 Top Berita</h3>
                                     </div>
-                                    {/* <!--end::Text--> */}
+                                    {/* <!--end::Header--> */}
+                                    {/* <!--begin::Body--> */}
+                                    <div className="card-body pt-2">
+                                        {/* <!--begin::Item--> */}
+                                        {
+                                            dataDashboardBerita.top_berita.map ((el, i) => {
+                                                return (
+                                                    <div className="d-flex align-items-center mb-10" key={i}>
+                                                        {/* <!--begin::Symbol--> */}
+                                                        <div className="symbol symbol-40 symbol-light-success mr-5">
+                                                            <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
+                                                        </div>
+                                                        {/* <!--end::Symbol--> */}
+                                                        {/* <!--begin::Text--> */}
+                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_berita}</p>
+                                                            <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
+                                                            <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
+                                                        </div>
+                                                        {/* <!--end::Text--> */}
+
+                                                        {/* <!--begin::Text--> */}
+                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
+                                                            <span className="text-muted">Dibaca</span>
+                                                        </div>
+                                                        {/* <!--end::Text--> */}
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                        {/* <!--end::Item--> */}
+
+                                    </div>
+                                    {/* <!--end::Body--> */}
                                 </div>
-                                {/* <!--end::Item--> */}
-
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
-                                    </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Cara Mengurangi Riba</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">90.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-                                </div>
-                                {/* <!--end::Item--> */}
-
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
-                                    </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Teknologi Digital di Masa Kini</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">1.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-                                </div>
-                                {/* <!--end::Item--> */}
-
-                            </div>
-                            {/* <!--end::Body--> */}
-                        </div>
+                            :
+                                <LoadingTable />
+                        }
+                        
                         {/* <!--end::List Widget 3--> */}
                     </div>
 
                     <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
                         {/* <!--begin::List Widget 3--> */}
-                        <div className="card card-custom card-stretch gutter-b">
-                            {/* <!--begin::Header--> */}
-                            <div className="card-header border-0">
-                                <h3 className="card-title font-weight-bolder text-dark">3 Top Artikel</h3>
-                            </div>
-                            {/* <!--end::Header--> */}
-                            {/* <!--begin::Body--> */}
-                            <div className="card-body pt-2">
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
+                        {
+                            dataDashboardArtikel.top_artikel ?
+                                <div className="card card-custom card-stretch gutter-b">
+                                    {/* <!--begin::Header--> */}
+                                    <div className="card-header border-0">
+                                        <h3 className="card-title font-weight-bolder text-dark">3 Top Artikel</h3>
                                     </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Data Peserta DTS yang Lulus</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
+                                    {/* <!--end::Header--> */}
+                                    {/* <!--begin::Body--> */}
+                                    <div className="card-body pt-2">
+                                        {/* <!--begin::Item--> */}
+                                        {
+                                            dataDashboardArtikel.top_artikel.map ((el, i) => {
+                                                return (
+                                                    <div className="d-flex align-items-center mb-10" key={i}>
+                                                        {/* <!--begin::Symbol--> */}
+                                                        <div className="symbol symbol-40 symbol-light-success mr-5">
+                                                            <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
+                                                        </div>
+                                                        {/* <!--end::Symbol--> */}
+                                                        {/* <!--begin::Text--> */}
+                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_berita}</p>
+                                                            <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
+                                                            <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
+                                                        </div>
+                                                        {/* <!--end::Text--> */}
+
+                                                        {/* <!--begin::Text--> */}
+                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
+                                                            <span className="text-muted">Dibaca</span>
+                                                        </div>
+                                                        {/* <!--end::Text--> */}
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                        {/* <!--end::Item--> */}
+
                                     </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">120.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-
+                                    {/* <!--end::Body--> */}
                                 </div>
-                                {/* <!--end::Item--> */}
-
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
-                                    </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Cara Mengurangi Riba</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-weight-bold display-4">90.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-                                </div>
-                                {/* <!--end::Item--> */}
-
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
-                                    </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Teknologi Digital di Masa Kini</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-weight-bold display-4">1.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-                                </div>
-                                {/* <!--end::Item--> */}
-
-                            </div>
-                            {/* <!--end::Body--> */}
-                        </div>
+                            :
+                                <LoadingTable />
+                        }
                         {/* <!--end::List Widget 3--> */}
                     </div>
 
                     <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
                         {/* <!--begin::List Widget 3--> */}
-                        <div className="card card-custom card-stretch gutter-b">
-                            {/* <!--begin::Header--> */}
-                            <div className="card-header border-0">
-                                <h3 className="card-title font-weight-bolder text-dark">3 Top Galeri</h3>
-                            </div>
-                            {/* <!--end::Header--> */}
-                            {/* <!--begin::Body--> */}
-                            <div className="card-body pt-2">
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
+                        {
+                            dataDashboardGallery.top_gallery ?
+                                <div className="card card-custom card-stretch gutter-b">
+                                    {/* <!--begin::Header--> */}
+                                    <div className="card-header border-0">
+                                        <h3 className="card-title font-weight-bolder text-dark">3 Top Galeri</h3>
                                     </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Data Peserta DTS yang Lulus</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
+                                    {/* <!--end::Header--> */}
+                                    {/* <!--begin::Body--> */}
+                                    <div className="card-body pt-2">
+                                        {/* <!--begin::Item--> */}
+                                        {
+                                            dataDashboardGallery.top_gallery.map ((el, i) => {
+                                                return (
+                                                    <div className="d-flex align-items-center mb-10" key={i}>
+                                                        {/* <!--begin::Symbol--> */}
+                                                        <div className="symbol symbol-40 symbol-light-success mr-5" key={i}>
+                                                            <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
+                                                        </div>
+                                                        {/* <!--end::Symbol--> */}
+                                                        {/* <!--begin::Text--> */}
+                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_berita}</p>
+                                                            <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
+                                                            <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
+                                                        </div>
+                                                        {/* <!--end::Text--> */}
+
+                                                        {/* <!--begin::Text--> */}
+                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
+                                                            <span className="text-muted">Dibaca</span>
+                                                        </div>
+                                                        {/* <!--end::Text--> */}
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                        {/* <!--end::Item--> */}
+
                                     </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">120.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-
+                                    {/* <!--end::Body--> */}
                                 </div>
-                                {/* <!--end::Item--> */}
-
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
-                                    </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Cara Mengurangi Riba</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-weight-bold display-4">90.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-                                </div>
-                                {/* <!--end::Item--> */}
-
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
-                                    </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Teknologi Digital di Masa Kini</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-weight-bold display-4">1.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-                                </div>
-                                {/* <!--end::Item--> */}
-
-                            </div>
-                            {/* <!--end::Body--> */}
-                        </div>
+                            :
+                                <LoadingTable />
+                        }
                         {/* <!--end::List Widget 3--> */}
                     </div>
                     <div className="col-lg-6 col-xxl-6 order-1 order-xxl-2">
                         {/* <!--begin::List Widget 3--> */}
-                        <div className="card card-custom card-stretch gutter-b">
-                            {/* <!--begin::Header--> */}
-                            <div className="card-header border-0">
-                                <h3 className="card-title font-weight-bolder text-dark">3 Top Video</h3>
-                            </div>
-                            {/* <!--end::Header--> */}
-                            {/* <!--begin::Body--> */}
-                            <div className="card-body pt-2">
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
+                        {
+                            dataDashboardVideo.top_video?
+                                <div className="card card-custom card-stretch gutter-b">
+                                    {/* <!--begin::Header--> */}
+                                    <div className="card-header border-0">
+                                        <h3 className="card-title font-weight-bolder text-dark">3 Top Video</h3>
                                     </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Data Peserta DTS yang Lulus</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
+                                    {/* <!--end::Header--> */}
+                                    {/* <!--begin::Body--> */}
+                                    <div className="card-body pt-2">
+                                        {/* <!--begin::Item--> */}
+                                        {
+                                            dataDashboardVideo.top_video.map ((el, i) => {
+                                                return (
+                                                    <div className="d-flex align-items-center mb-10" key={i}>
+                                                        {/* <!--begin::Symbol--> */}
+                                                        <div className="symbol symbol-40 symbol-light-success mr-5">
+                                                            <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
+                                                        </div>
+                                                        {/* <!--end::Symbol--> */}
+                                                        {/* <!--begin::Text--> */}
+                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold">
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_berita}</p>
+                                                            <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
+                                                            <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
+                                                        </div>
+                                                        {/* <!--end::Text--> */}
+
+                                                        {/* <!--begin::Text--> */}
+                                                        <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">{el.total_views}</p>
+                                                            <span className="text-muted">Dibaca</span>
+                                                        </div>
+                                                        {/* <!--end::Text--> */}
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                        {/* <!--end::Item--> */}
+
                                     </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg font-weight-bold display-4">120.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-
+                                    {/* <!--end::Body--> */}
                                 </div>
-                                {/* <!--end::Item--> */}
-
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
-                                    </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Cara Mengurangi Riba</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-weight-bold display-4">90.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-                                </div>
-                                {/* <!--end::Item--> */}
-
-                                {/* <!--begin::Item--> */}
-                                <div className="d-flex align-items-center mb-10">
-                                    
-                                    {/* <!--begin::Symbol--> */}
-                                    <div className="symbol symbol-40 symbol-light-success mr-5">
-                                        <Image width={94} height={63} src="/assets/media/dummy-banner.png" className="align-self-end rounded" alt="" />
-                                    </div>
-                                    {/* <!--end::Symbol--> */}
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                        <p className="text-dark text-hover-primary mb-1 font-size-lg">Teknologi Digital di Masa Kini</p>
-                                        <span className="text-muted">Kategori : <span className='text-primary'>VGA</span></span>
-                                        <span className="text-muted">Created By : <span className='text-primary'>Jacky, Rafli</span></span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-
-                                    {/* <!--begin::Text--> */}
-                                    <div className="d-flex flex-column flex-grow-1 font-weight-bold text-right">
-                                        <p className="text-dark text-hover-primary mb-1 font-weight-bold display-4">1.000</p>
-                                        <span className="text-muted">Dibaca</span>
-                                    </div>
-                                    {/* <!--end::Text--> */}
-                                </div>
-                                {/* <!--end::Item--> */}
-
-                            </div>
-                            {/* <!--end::Body--> */}
-                        </div>
+                            :
+                                <LoadingTable />
+                        }
                         {/* <!--end::List Widget 3--> */}
                     </div>
                 </div>

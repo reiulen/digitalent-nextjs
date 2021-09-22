@@ -13,14 +13,13 @@ const ListSurvey = dynamic(
   () => import("../../../components/content/subvit/survey/list-survey"),
   { loading: () => <LoadingSkeleton /> }
 );
+import { getSession } from "next-auth/client";
 
 export default function Survey() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="List Test Survey">
-          <ListSurvey />
-        </Layout>
+        <ListSurvey />
       </div>
     </>
   );
@@ -28,9 +27,28 @@ export default function Survey() {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query }) => {
+    async ({ query, req }) => {
+      const session = await getSession({ req });
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        };
+      }
+
       await store.dispatch(
-        getAllSurveyQuestionBanks(query.page, query.keyword, query.limit)
+        getAllSurveyQuestionBanks(
+          query.page,
+          query.keyword,
+          query.limit,
+          session.user.user.data.token
+        )
       );
+
+      return {
+        props: { session, title: "List Survey - Subvit" },
+      };
     }
 );

@@ -30,7 +30,7 @@ import axios from 'axios'
 
 // get all data
 // page = 1, keyword = "", limit = 5
-export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null) => async (dispatch) => {
+export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) => async (dispatch) => {
     try {
 
         dispatch({ type: IMAGETRON_REQUEST })
@@ -43,22 +43,21 @@ export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = nul
         if (startdate) link = link.concat(`&startdate=${startdate}`);
         if (enddate) link = link.concat(`&enddate=${enddate}`);
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-        const  data  = await axios.get(link);
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+
+        const data = await axios.get(link, config);
 
         dispatch({
             type: IMAGETRON_SUCCESS,
             payload: data
         })
 
-        console.log ("check")
-        console.log (data)
+        console.log("check")
+        console.log(data)
 
     } catch (error) {
         dispatch({
@@ -68,42 +67,47 @@ export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = nul
     }
 }
 
-export const getDetailImagetron = (id) => async (dispatch) => {
+export const getDetailImagetron = (id, token) => async (dispatch) => {
     try {
         let link = process.env.END_POINT_API_PUBLIKASI + `api/imagetron/${id}`;
 
-        const { data } = await axios.get(link);
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+
+        const { data } = await axios.get(link, config);
 
         dispatch({
-        type: DETAIL_IMAGETRON_SUCCESS,
-        payload: data.data,
+            type: DETAIL_IMAGETRON_SUCCESS,
+            payload: data.data,
         });
 
     } catch (error) {
         dispatch({
-        type: DETAIL_IMAGETRON_FAIL,
-        payload: error.response.data.message,
+            type: DETAIL_IMAGETRON_FAIL,
+            payload: error.response.data.message,
         });
     }
 };
-  
 
-export const newImagetron = (imagetronData) => async (dispatch) => {
+
+export const newImagetron = (imagetronData, token) => async (dispatch) => {
     try {
 
         dispatch({
             type: NEW_IMAGETRON_REQUEST
         })
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
 
-        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/imagetron', imagetronData)
+        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/imagetron', imagetronData, config)
+        console.log("Data IMAGETRON : ", data)
 
         dispatch({
             type: NEW_IMAGETRON_SUCCESS,
@@ -120,24 +124,24 @@ export const newImagetron = (imagetronData) => async (dispatch) => {
 
 export const updateImagetron = (imagetronData) => async (dispatch) => {
     try {
-      dispatch({ type: UPDATE_IMAGETRON_REQUEST });
-  
-      let link =
-        process.env.END_POINT_API_PUBLIKASI + `api/imagetron/${imagetronData.id}`;
-  
-      const { data } = await axios.post(link, imagetronData);
-  
-      dispatch({
-        type: UPDATE_IMAGETRON_SUCCESS,
-        payload: data,
-      });
+        dispatch({ type: UPDATE_IMAGETRON_REQUEST });
+
+        let link =
+            process.env.END_POINT_API_PUBLIKASI + `api/imagetron/${imagetronData.id}`;
+
+        const { data } = await axios.post(link, imagetronData);
+
+        dispatch({
+            type: UPDATE_IMAGETRON_SUCCESS,
+            payload: data,
+        });
     } catch (error) {
-      dispatch({
-        type: UPDATE_IMAGETRON_FAIL,
-        payload: error.response.data.message,
-      });
+        dispatch({
+            type: UPDATE_IMAGETRON_FAIL,
+            payload: error.response.data.message,
+        });
     }
-  };
+};
 
 export const deleteImagetron = (id) => async (dispatch) => {
     try {
@@ -151,8 +155,8 @@ export const deleteImagetron = (id) => async (dispatch) => {
             payload: data.status
         })
 
-        console.log ("delete")
-        console.log (data)
+        console.log("delete")
+        console.log(data)
 
     } catch (error) {
         dispatch({

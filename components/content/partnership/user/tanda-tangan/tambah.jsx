@@ -1,93 +1,83 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
-import dynamic from "next/dynamic";
 import SignaturePad from "react-signature-pad-wrapper";
-import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+
+import Swal from "sweetalert2";
+import SimpleReactValidator from "simple-react-validator";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import axios from "axios";
 
 const TambahTandaTangan = () => {
-  const importSwitch = () => import("bootstrap-switch-button-react");
-
   const signCanvas = useRef({});
-  const clear = () => {
-    signCanvas.current.clear();
-  };
-
-  const SwitchButton = dynamic(importSwitch, {
-    ssr: false,
-  });
-
   const router = useRouter();
-  const Swal = require("sweetalert2");
 
-  const submit = (e) => {
-    e.preventDefault();
-    Swal.fire({
-      title: "Apakah anda yakin ?",
-      // text: "Data ini tidak bisa dikembalikan !",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then((result) => {
-      if (result.value) {
-        router.push("/partnership/tanda-tangan");
-      }
-    });
-  };
+
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
               Tambah Tanda Tangan Digital
             </h3>
           </div>
           <div className="card-body">
             <form>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   Nama
                 </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nama"
-                  />
-                </div>
+                <input
+                  // onFocus={() => setError({ ...error, nama: "" })}
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Nama"
+                  // value={nama}
+                  // onChange={(e) => setNama(e.target.value)}
+                />
+                {/* {error.nama ? <p className="error-text">{error.nama}</p> : ""} */}
               </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   Jabatan
                 </label>
-                <div className="col-sm-10">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Jabatan"
-                  />
-                </div>
+                <input
+                  // onFocus={() => setError({ ...error, jabatan: "" })}
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Jabatan"
+                  // onChange={(e) => setJabatan(e.target.value)}
+                />
+                {/* {error.jabatan ? (
+                  <p className="error-text">{error.jabatan}</p>
+                ) : (
+                  ""
+                )} */}
               </div>
-              <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
                   Buat Tanda Tangan
                 </label>
-                <div className="col-sm-10">
+                <div>
                   <div
                     style={{
                       background: "#FFFFFF",
@@ -96,34 +86,34 @@ const TambahTandaTangan = () => {
                     }}
                   >
                     <SignaturePad
-                      ref={signCanvas}
+                      // ref={signCanvas}
                       options={{
                         minWidth: 1,
                         maxWidth: 3,
                         penColor: "rgb(66, 133, 244)",
                       }}
+                      // onBlur={() =>
+                      //   simpleValidator.current.showMessageFor("tandaTangan")
+                      // }
                     />
+                    {/* {simpleValidator.current.message(
+                      "tandaTangan",
+                      tandaTangan,
+                      "required",
+                      { className: "text-danger" }
+                    )} */}
                   </div>
-                  <div className="col-sm-10 mt-5">
-                    <Link href="/publikasi/artikel">
-                      <a
-                        className="btn btn-outline-primary mr-2 btn-sm"
-                        style={{
-                          backgroundColor: "#C9F7F5",
-                          color: "#1BC5BD",
-                        }}
-                      >
-                        Buat Tanda Tangan
-                      </a>
-                    </Link>
+                  <div className="d-flex align-items-center mt-5">
+                    <a
+                      className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
+                      // onClick={() => dataTandaTangan()}
+                    >
+                      Buat Tanda Tangan
+                    </a>
                     <button
                       type="button"
-                      onClick={clear}
-                      className="btn btn-sm"
-                      style={{
-                        backgroundColor: "#EDEF80",
-                        color: "#B0B328",
-                      }}
+                      // onClick={clear}
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
                     >
                       Buat Ulang Tanda Tangan
                     </button>
@@ -131,43 +121,19 @@ const TambahTandaTangan = () => {
                 </div>
               </div>
 
-              {/* masih rancu di pakai atau tidaknya */}
-
-              {/* <div className="form-group row">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
-                >
-                  Status
-                </label>
-                <div className="col-sm-1">
-                  <SwitchButton
-                    checked={false}
-                    onlabel=" "
-                    onstyle="primary"
-                    offlabel=" "
-                    offstyle="danger"
-                    size="sm"
-                  />
-                </div>
-              </div> */}
               <div className="form-group row">
-                <div className="row align-items-right mt-5 ml-auto">
-                  <div className="col-sm mr-4">
-                    <Link href="/partnership/tanda-tangan">
-                      <a className="btn btn-outline-primary btn-sm mr-3">
-                        Kembali
-                      </a>
-                    </Link>
-                    {/* <Link href="/partnership/tanda-tangan"> */}
-                    <button
-                      className="btn btn-primary btn-sm"
-                      onClick={(e) => submit(e)}
-                    >
-                      Simpan
-                    </button>
-                    {/* </Link> */}
-                  </div>
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link href="/partnership/user/tanda-tangan-digital">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                      Kembali
+                    </a>
+                  </Link>
+                  <button
+                    type="submit"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                  >
+                    Simpan
+                  </button>
                 </div>
               </div>
             </form>

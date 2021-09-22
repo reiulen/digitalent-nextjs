@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { getSession } from "next-auth/client";
 
 import Layout from "../../../components/templates/layout.component";
 // import EditArtikel from "../../../components/content/publikasi/artikel/edit";
@@ -10,11 +11,11 @@ import LoadingPage from "../../../components/LoadingPage";
 
 const EditArtikel = dynamic(
   () => import("../../../components/content/publikasi/artikel/edit"),
-  { 
-      // suspense: true,
-      // loading: () => <LoadingSkeleton />, 
-      loading: function loadingNow () {return <LoadingPage /> }, 
-      ssr: false
+  {
+    // suspense: true,
+    // loading: () => <LoadingSkeleton />, 
+    loading: function loadingNow() { return <LoadingPage /> },
+    ssr: false
   }
 );
 
@@ -32,7 +33,16 @@ export default function EditArtikelPage() {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ params }) => {
-      await store.dispatch(getDetailArtikel(params.id));
+    async ({ params, req }) => {
+      const session = await getSession({ req });
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        };
+      }
+      await store.dispatch(getDetailArtikel(params.id, session.user.user.data.token));
     }
 );

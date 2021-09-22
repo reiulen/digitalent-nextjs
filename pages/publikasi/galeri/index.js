@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { getSession } from "next-auth/client";
 
 import Layout from "../../../components/templates/layout.component";
 // import Galeri from "../../../components/content/publikasi/galeri/galeri";
@@ -11,10 +12,10 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const Galeri = dynamic(
     () => import("../../../components/content/publikasi/galeri/galeri"),
-    { 
+    {
         // suspense: true,
         // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        loading: function loadingNow() { return <LoadingSkeleton /> },
         ssr: false
     }
 );
@@ -23,7 +24,7 @@ export default function GaleriPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Galeri'>
+                <Layout title='Galeri - Publikasi'>
                     <Galeri />
                 </Layout>
             </div>
@@ -31,6 +32,15 @@ export default function GaleriPage() {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-    await store.dispatch(getAllGaleri(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
+    const session = await getSession({ req });
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            },
+        };
+    }
+    await store.dispatch(getAllGaleri(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
 })

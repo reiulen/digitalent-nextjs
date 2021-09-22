@@ -1,11 +1,11 @@
 import Layout from "../../../components/templates/layout.component";
-import SubmitKerjasama from "../../../components/content/partnership/user/submitKerjasama";
+import SubmitKerjasama from "../../../components/content/partnership/kerjasama/revisiKerjasama";
 
-export default function DetailKerjasamaPage() {
+export default function RevisiSubmit() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Dashboard Publikasi">
+        <Layout title="Revisi Dokumen - Partnership">
           <SubmitKerjasama />
         </Layout>
       </div>

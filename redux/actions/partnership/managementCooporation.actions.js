@@ -238,6 +238,11 @@ export const fetchListSelectCooperation = () => {
     }
   };
 };
+export const errorFetchListSelectCooperation = () => {
+  return {
+    type: LIST_COOPERATION_FAIL,
+  };
+};
 export const successFetchListSelectCooperation = (data) => {
   return {
     type: LIST_COOPERATION_SUCCESS,
@@ -300,11 +305,7 @@ export const errorFetchListCooperationSelectByID = () => {
   };
 };
 //
-export const errorFetchListSelectCooperation = () => {
-  return {
-    type: LIST_COOPERATION_FAIL,
-  };
-};
+
 export const fetchListSelectStatus = () => {
   return async (dispatch, getState) => {
     dispatch({ type: LIST_STATUS_REQUEST });
