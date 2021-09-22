@@ -27,6 +27,9 @@ const RevisiKerjasama = () => {
   const [tgl_ttd, setTgl_ttd] = useState("");
   const [dokument, setDokument] = useState("");
   const [catatanREvisi, setCatatanREvisi] = useState("");
+  const [error, setError] = useState({
+    catatanREvisi: "",
+  });
   const notify = (value) =>
     toast.info(`🦄 ${value}`, {
       position: "top-right",
@@ -91,24 +94,30 @@ const RevisiKerjasama = () => {
     }
   };
   const ajukanRevisiDokumen = async (e) => {
-    console.log("rejectDokument",catatanREvisi);
     e.preventDefault();
-    try {
-      let formData = new FormData();
-      formData.append("_method", "PUT");
-      formData.append("note", catatanREvisi);
-      let { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi-document/${router.query.id}`,
-        formData
-      );
+    if(catatanREvisi === ""){
+      setError({ ...error, catatanREvisi: "Catatan Revisi harus diisi" });
+      notify("Catatan Revisi harus diisi");
 
-      console.log("data asdasd", data);
-      router.push({
-        pathname: "/partnership/kerjasama/",
-        query: { successMakeREvisi: true },
-      });
-    } catch (error) {
-      console.log("error acceptDokument", error);
+    }else{
+
+      try {
+        let formData = new FormData();
+        formData.append("_method", "PUT");
+        formData.append("note", catatanREvisi);
+        let { data } = await axios.post(
+          `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi-document/${router.query.id}`,
+          formData
+        );
+  
+        console.log("data asdasd", data);
+        router.push({
+          pathname: "/partnership/kerjasama/",
+          query: { successMakeREvisi: true },
+        });
+      } catch (error) {
+        console.log("error acceptDokument", error);
+      }
     }
   };
 
@@ -275,9 +284,9 @@ const RevisiKerjasama = () => {
                 </label>
                 <div>
                   <textarea
-                    // onFocus={() =>
-                    //   setError({ ...error, AllCooperation: "" })
-                    // }
+                    onFocus={() =>
+                      setError({ ...error, catatanREvisi: "" })
+                    }
                     // onChange={(e) => changeFormCooporation(index, e)}
                     onChange={(e) => setCatatanREvisi(e.target.value)}
                     name="cooperation"
@@ -295,6 +304,7 @@ const RevisiKerjasama = () => {
                             ) : (
                               ""
                             )} */}
+                            {error.catatanREvisi ? <p className="error-text">{error.catatanREvisi}</p> : ""}
                 </div>
               </div>
 
