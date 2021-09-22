@@ -20,6 +20,7 @@ import {
   LIST_COOPERATION_SUCCESS,
   SET_VALUE_CARD_M,
   LIMIT_CONFIGURATION_M,
+  SUCCESS_GET_SINGLE_COOPERATION_M,
 } from "../../../types/partnership/user/cooperation.type";
 
 const statuslist = {
@@ -47,6 +48,7 @@ const initialState = {
   totalDataNonActive: 0,
   totalDataAnother: 0,
   totalData: 0,
+  cooperationById: [],
 };
 
 export const cooperationUserReducer = (state = initialState, action) => {
@@ -152,6 +154,12 @@ export const cooperationUserReducer = (state = initialState, action) => {
         limit: action.limitValue,
         page: 1,
         card: "",
+      };
+
+    case SUCCESS_GET_SINGLE_COOPERATION_M:
+      return {
+        ...state,
+        cooperationById: action.data,
       };
 
     default:

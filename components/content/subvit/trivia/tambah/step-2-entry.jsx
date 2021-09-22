@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import Swal from 'sweetalert2';
-import { useDispatch, useSelector } from 'react-redux';
+import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
 import {
     newTriviaQuestionDetail,
     clearErrors,
-} from '../../../../../redux/actions/subvit/trivia-question-detail.action';
-import { NEW_TRIVIA_QUESTION_DETAIL_RESET } from '../../../../../redux/types/subvit/trivia-question-detail.type';
-import { useRouter } from 'next/router';
+} from "../../../../../redux/actions/subvit/trivia-question-detail.action";
+import { NEW_TRIVIA_QUESTION_DETAIL_RESET } from "../../../../../redux/types/subvit/trivia-question-detail.type";
+import { useRouter } from "next/router";
 
-import PageWrapper from '/components/wrapper/page.wrapper';
-import StepInput from '/components/StepInput';
-import LoadingPage from '../../../../LoadingPage';
+import PageWrapper from "/components/wrapper/page.wrapper";
+import StepInput from "/components/StepInput";
+import LoadingPage from "../../../../LoadingPage";
 
-import PollingComponent from './step-2/polling-component';
-import CheckboxComponent from './step-2/checkbox-component';
-import BlankComponent from './step-2/blank-component';
+import PollingComponent from "./step-2/polling-component";
+import CheckboxComponent from "./step-2/checkbox-component";
+import BlankComponent from "./step-2/blank-component";
 
 const StepTwo = ({ token }) => {
     const dispatch = useDispatch();
@@ -27,49 +27,52 @@ const StepTwo = ({ token }) => {
     );
     const { trivia } = useSelector(state => state.detailTriviaQuestionBanks);
 
-    const [methodAdd, setMethodAdd] = useState('polling');
-    const [question, setSoal] = useState('');
-    const [question_image, setSoalImage] = useState('');
+    const [methodAdd, setMethodAdd] = useState("polling");
+    const [question, setSoal] = useState("");
+    const [question_image, setSoalImage] = useState("");
 
     // polling
     const [answer, setSoalList] = useState([
-        { key: 'A', option: '', image: '' },
-        { key: 'B', option: '', image: '' },
-        { key: 'C', option: '', image: '' },
-        { key: 'D', option: '', image: '' },
+        { key: "A", option: "", image: "" },
+        { key: "B", option: "", image: "" },
+        { key: "C", option: "", image: "" },
+        { key: "D", option: "", image: "" },
     ]);
     //checkbox
     const [answer_checkbox, setCheckboxList] = useState([
-        { key: 'A', value: '', option: '', image: '', is_right: false },
-        { key: 'B', value: '', option: '', image: '', is_right: false },
-        { key: 'C', value: '', option: '', image: '', is_right: false },
-        { key: 'D', value: '', option: '', image: '', is_right: false },
+        { key: "A", value: "", option: "", image: "", is_right: false },
+        { key: "B", value: "", option: "", image: "", is_right: false },
+        { key: "C", value: "", option: "", image: "", is_right: false },
+        { key: "D", value: "", option: "", image: "", is_right: false },
     ]);
     const [duration, setDuration] = useState(null);
     //blank
     const [answer_blank, setBlanklList] = useState([
-        { key: 'A', value: '', type: '', option: '', image: '' },
-        { key: 'B', value: '', type: '', option: '', image: '' },
-        { key: 'C', value: '', type: '', option: '', image: '' },
-        { key: 'D', value: '', type: '', option: '', image: '' },
+        { key: "A", value: "", type: "", option: "", image: "" },
+        { key: "B", value: "", type: "", option: "", image: "" },
+        { key: "C", value: "", type: "", option: "", image: "" },
+        { key: "D", value: "", type: "", option: "", image: "" },
     ]);
     const [durationBlank, setDurationBlank] = useState(null);
 
-    const [answer_key, setAnswerKey] = useState('');
-    const [typeSave, setTypeSave] = useState('lanjut');
+    const [answer_key, setAnswerKey] = useState("");
+    const [typeSave, setTypeSave] = useState("lanjut");
 
     useEffect(() => {
         if (success) {
-            dispatch({
-                type: NEW_TRIVIA_QUESTION_DETAIL_RESET,
-            });
-            if (typeSave === 'lanjut') {
+            dispatch(
+                {
+                    type: NEW_TRIVIA_QUESTION_DETAIL_RESET,
+                },
+                token
+            );
+            if (typeSave === "lanjut") {
                 handleResetForm();
                 router.push({
                     pathname: `/subvit/trivia/tambah/step-3`,
                     query: { id },
                 });
-            } else if (typeSave === 'draft') {
+            } else if (typeSave === "draft") {
                 handleResetForm();
                 router.push({
                     pathname: `/subvit/trivia/tambah/step-2-${metode}`,
@@ -81,7 +84,7 @@ const StepTwo = ({ token }) => {
     }, [dispatch, success, typeSave, id, metode, router]);
 
     const handleSoalImage = e => {
-        if (e.target.name === 'question_image') {
+        if (e.target.name === "question_image") {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
@@ -93,33 +96,33 @@ const StepTwo = ({ token }) => {
     };
 
     const handleResetForm = () => {
-        setSoal('');
-        setSoalImage('');
+        setSoal("");
+        setSoalImage("");
         setSoalList([
-            { key: 'A', option: '', image: '' },
-            { key: 'B', option: '', image: '' },
-            { key: 'C', option: '', image: '' },
-            { key: 'D', option: '', image: '' },
+            { key: "A", option: "", image: "" },
+            { key: "B", option: "", image: "" },
+            { key: "C", option: "", image: "" },
+            { key: "D", option: "", image: "" },
         ]);
         setCheckboxList([
-            { key: 'A', value: '', option: '', image: '', is_right: false },
-            { key: 'B', value: '', option: '', image: '', is_right: false },
-            { key: 'C', value: '', option: '', image: '', is_right: false },
-            { key: 'D', value: '', option: '', image: '', is_right: false },
+            { key: "A", value: "", option: "", image: "", is_right: false },
+            { key: "B", value: "", option: "", image: "", is_right: false },
+            { key: "C", value: "", option: "", image: "", is_right: false },
+            { key: "D", value: "", option: "", image: "", is_right: false },
         ]);
-        setDuration('');
+        setDuration("");
         setBlanklList([
-            { key: 'A', value: '', type: '', option: '', image: '' },
-            { key: 'B', value: '', type: '', option: '', image: '' },
-            { key: 'C', value: '', type: '', option: '', image: '' },
-            { key: 'D', value: '', type: '', option: '', image: '' },
+            { key: "A", value: "", type: "", option: "", image: "" },
+            { key: "B", value: "", type: "", option: "", image: "" },
+            { key: "C", value: "", type: "", option: "", image: "" },
+            { key: "D", value: "", type: "", option: "", image: "" },
         ]);
-        setDurationBlank('');
-        setAnswerKey('');
+        setDurationBlank("");
+        setAnswerKey("");
     };
 
     const saveDraft = () => {
-        setTypeSave('draft');
+        setTypeSave("draft");
         let valid = true;
 
         if (error) {
@@ -127,29 +130,32 @@ const StepTwo = ({ token }) => {
         }
 
         if (success) {
-            dispatch({
-                type: NEW_TRIVIA_QUESTION_DETAIL_RESET,
-            });
+            dispatch(
+                {
+                    type: NEW_TRIVIA_QUESTION_DETAIL_RESET,
+                },
+                token
+            );
         }
 
-        if (question == '' && question_image == '') {
+        if (question == "" && question_image == "") {
             valid = false;
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi pertanyaan dengan benar !',
+                icon: "error",
+                title: "Oops...",
+                text: "Isi pertanyaan dengan benar !",
             });
         }
 
         switch (methodAdd) {
-            case 'polling':
+            case "polling":
                 answer.forEach((row, j) => {
-                    if (row.option == '' && row.image == '') {
+                    if (row.option == "" && row.image == "") {
                         valid = false;
                         Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Isi jawaban dengan benar !',
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Isi jawaban dengan benar !",
                         });
                     }
                 });
@@ -168,23 +174,23 @@ const StepTwo = ({ token }) => {
                     dispatch(newTriviaQuestionDetail(data, token));
                 }
                 break;
-            case 'checkbox':
-                if (answer_key === '') {
+            case "checkbox":
+                if (answer_key === "") {
                     valid = false;
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Isi kunci jawaban dengan benar !',
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Isi kunci jawaban dengan benar !",
                     });
                 }
 
                 answer_checkbox.forEach((row, j) => {
-                    if (row.option == '' && row.image == '') {
+                    if (row.option == "" && row.image == "") {
                         valid = false;
                         Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Isi jawaban dengan benar !',
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Isi jawaban dengan benar !",
                         });
                     }
                 });
@@ -203,7 +209,7 @@ const StepTwo = ({ token }) => {
                     dispatch(newTriviaQuestionDetail(data, token));
                 }
                 break;
-            case 'fill_in_the_blank':
+            case "fill_in_the_blank":
                 const answers_blank = JSON.stringify(answer_blank);
                 if (valid) {
                     const data = {
@@ -226,7 +232,7 @@ const StepTwo = ({ token }) => {
 
     const onSubmit = e => {
         e.preventDefault();
-        setTypeSave('lanjut');
+        setTypeSave("lanjut");
         let valid = true;
 
         if (error) {
@@ -234,29 +240,32 @@ const StepTwo = ({ token }) => {
         }
 
         if (success) {
-            dispatch({
-                type: NEW_TRIVIA_QUESTION_DETAIL_RESET,
-            });
+            dispatch(
+                {
+                    type: NEW_TRIVIA_QUESTION_DETAIL_RESET,
+                },
+                token
+            );
         }
 
-        if (question == '' && question_image == '') {
+        if (question == "" && question_image == "") {
             valid = false;
             Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Isi pertanyaan dengan benar !',
+                icon: "error",
+                title: "Oops...",
+                text: "Isi pertanyaan dengan benar !",
             });
         }
 
         switch (methodAdd) {
-            case 'polling':
+            case "polling":
                 answer.forEach((row, j) => {
-                    if (row.option == '' && row.image == '') {
+                    if (row.option == "" && row.image == "") {
                         valid = false;
                         Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Isi jawaban dengan benar !',
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Isi jawaban dengan benar !",
                         });
                     }
                 });
@@ -272,26 +281,26 @@ const StepTwo = ({ token }) => {
                         type: methodAdd,
                     };
 
-                    dispatch(newTriviaQuestionDetail(data));
+                    dispatch(newTriviaQuestionDetail(data, token));
                 }
                 break;
-            case 'checkbox':
-                if (answer_key === '') {
+            case "checkbox":
+                if (answer_key === "") {
                     valid = false;
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: 'Isi kunci jawaban dengan benar !',
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Isi kunci jawaban dengan benar !",
                     });
                 }
 
                 answer_checkbox.forEach((row, j) => {
-                    if (row.option == '' && row.image == '') {
+                    if (row.option == "" && row.image == "") {
                         valid = false;
                         Swal.fire({
-                            icon: 'error',
-                            title: 'Oops...',
-                            text: 'Isi jawaban dengan benar !',
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Isi jawaban dengan benar !",
                         });
                     }
                 });
@@ -307,10 +316,10 @@ const StepTwo = ({ token }) => {
                         duration,
                         type: methodAdd,
                     };
-                    dispatch(newTriviaQuestionDetail(data));
+                    dispatch(newTriviaQuestionDetail(data, token));
                 }
                 break;
-            case 'fill_in_the_blank':
+            case "fill_in_the_blank":
                 const answers_blank = JSON.stringify(answer_blank);
                 if (valid) {
                     const data = {
@@ -324,7 +333,7 @@ const StepTwo = ({ token }) => {
                         answer_key: null,
                     };
                     // console.log(data)
-                    dispatch(newTriviaQuestionDetail(data));
+                    dispatch(newTriviaQuestionDetail(data, token));
                 }
                 break;
             default:
@@ -334,14 +343,14 @@ const StepTwo = ({ token }) => {
 
     const handleMethodeInput = () => {
         switch (methodAdd) {
-            case 'polling':
+            case "polling":
                 return (
                     <PollingComponent
                         props_answer={answer => setSoalList(answer)}
                     />
                 );
                 break;
-            case 'checkbox':
+            case "checkbox":
                 return (
                     <CheckboxComponent
                         props_answer={answer => setCheckboxList(answer)}
@@ -350,7 +359,7 @@ const StepTwo = ({ token }) => {
                     />
                 );
                 break;
-            case 'fill_in_the_blank':
+            case "fill_in_the_blank":
                 return (
                     <BlankComponent
                         props_answer={answer => setBlanklList(answer)}
@@ -400,10 +409,10 @@ const StepTwo = ({ token }) => {
                     </div>
                 </div>
             ) : (
-                ''
+                ""
             )}
             <div className="col-lg-12 order-1 order-xxl-2 px-0">
-                {loading ? <LoadingPage loading={loading} /> : ''}
+                {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <StepInput step="2"></StepInput>
                     <div className="card-header border-0">
@@ -468,9 +477,9 @@ const StepTwo = ({ token }) => {
                                             name="inlineRadioOptions"
                                             id="inlineRadio1"
                                             value="polling"
-                                            checked={methodAdd === 'polling'}
+                                            checked={methodAdd === "polling"}
                                             onChange={() =>
-                                                setMethodAdd('polling')
+                                                setMethodAdd("polling")
                                             }
                                         />
                                         <label
@@ -487,9 +496,9 @@ const StepTwo = ({ token }) => {
                                             name="inlineRadioOptions"
                                             id="inlineRadio2"
                                             value="checkbox"
-                                            checked={methodAdd === 'checkbox'}
+                                            checked={methodAdd === "checkbox"}
                                             onChange={() =>
-                                                setMethodAdd('checkbox')
+                                                setMethodAdd("checkbox")
                                             }
                                         />
                                         <label
@@ -508,11 +517,11 @@ const StepTwo = ({ token }) => {
                                             value="fill_in_the_blank"
                                             checked={
                                                 methodAdd ===
-                                                'fill_in_the_blank'
+                                                "fill_in_the_blank"
                                             }
                                             onChange={() =>
                                                 setMethodAdd(
-                                                    'fill_in_the_blank'
+                                                    "fill_in_the_blank"
                                                 )
                                             }
                                         />

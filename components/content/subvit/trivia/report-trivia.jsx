@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
-import Pagination from 'react-js-pagination';
-import LoadingTable from '../../../LoadingTable';
+import Pagination from "react-js-pagination";
+import LoadingTable from "../../../LoadingTable";
 
-import PageWrapper from '../../../wrapper/page.wrapper';
-import CardPage from '../../../CardPage';
+import PageWrapper from "../../../wrapper/page.wrapper";
+import CardPage from "../../../CardPage";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 
 const ReportTrivia = ({ token }) => {
     const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const ReportTrivia = ({ token }) => {
     let { page = 1, id } = router.query;
     page = Number(page);
 
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState("");
     const [limit, setLimit] = useState(null);
     const [publishValue, setPublishValue] = useState(null);
 
@@ -88,7 +88,7 @@ const ReportTrivia = ({ token }) => {
                     </div>
                 </div>
             ) : (
-                ''
+                ""
             )}
 
             <div className="col-lg-12 col-md-12">
@@ -97,41 +97,41 @@ const ReportTrivia = ({ token }) => {
                         background="bg-primary"
                         icon="new/add-user.svg"
                         color="#FFFFFF"
-                        value={trivia.data.total_peserta}
+                        value={trivia?.data?.total_peserta}
                         titleValue=""
                         title="Total Peserta"
                         publishedVal=""
-                        routePublish={() => handlePublish('')}
+                        routePublish={() => handlePublish("")}
                     />
                     <CardPage
                         background="bg-secondary"
                         icon="new/done-circle.svg"
                         color="#FFFFFF"
-                        value={trivia.data.sudah_mengerjakan}
+                        value={trivia?.data?.sudah_mengerjakan}
                         titleValue=""
                         title="Sudah Mengerjakan"
                         publishedVal="sudah-mengerjakan"
-                        routePublish={() => handlePublish('sudah-mengerjakan')}
+                        routePublish={() => handlePublish("sudah-mengerjakan")}
                     />
                     <CardPage
                         background="bg-success"
                         icon="new/open-book.svg"
                         color="#FFFFFF"
-                        value={trivia.data.sedang_mengerjakan}
+                        value={trivia?.data?.sedang_mengerjakan}
                         titleValue=""
                         title="Sedang Mengerjakan"
                         publishedVal="sedang-mengerjakan"
-                        routePublish={() => handlePublish('sedang-mengerjakan')}
+                        routePublish={() => handlePublish("sedang-mengerjakan")}
                     />
                     <CardPage
                         background="bg-warning"
                         icon="new/mail-white.svg"
                         color="#FFFFFF"
-                        value={trivia.data.belum_mengerjakan}
+                        value={trivia?.data?.belum_mengerjakan}
                         titleValue=""
                         title="Belum Mengerjakan"
                         publishedVal="belum-mengerjakan"
-                        routePublish={() => handlePublish('belum-mengerjakan')}
+                        routePublish={() => handlePublish("belum-mengerjakan")}
                     />
                 </div>
             </div>
@@ -141,14 +141,14 @@ const ReportTrivia = ({ token }) => {
                     <div className="card-header border-0 align-items-center row">
                         <div className="col-lg-10 col-xl-10">
                             <h3 className="card-title font-weight-bolder text-dark">
-                                Report Trivia{' '}
-                                {publishValue === null || ''
-                                    ? ''
+                                Report Trivia{" "}
+                                {publishValue === null || ""
+                                    ? ""
                                     : `- ${
                                           publishValue.charAt(0).toUpperCase() +
                                           publishValue
                                               .slice(1)
-                                              .replace('-', ' ')
+                                              .replace("-", " ")
                                       }`}
                             </h3>
                             <p className="text-muted">FGA - Cloud Computing</p>
@@ -173,8 +173,8 @@ const ReportTrivia = ({ token }) => {
                                         <button
                                             className="btn bg-blue-primary text-white right-center-absolute mt-1"
                                             style={{
-                                                borderTopLeftRadius: '0',
-                                                borderBottomLeftRadius: '0',
+                                                borderTopLeftRadius: "0",
+                                                borderBottomLeftRadius: "0",
                                             }}
                                             onClick={handleSearch}
                                         >
@@ -205,7 +205,7 @@ const ReportTrivia = ({ token }) => {
                                 {loading === false ? (
                                     <table className="table table-separate table-head-custom table-checkable">
                                         <thead
-                                            style={{ background: '#F3F6F9' }}
+                                            style={{ background: "#F3F6F9" }}
                                         >
                                             <tr>
                                                 <th className="text-center">
@@ -315,7 +315,7 @@ const ReportTrivia = ({ token }) => {
                                         </tbody>
                                     </table>
                                 ) : (
-                                    ''
+                                    ""
                                 )}
                             </div>
 
@@ -328,10 +328,10 @@ const ReportTrivia = ({ token }) => {
                                             totalItemsCount={trivia.total}
                                             pageRangeDisplayed={3}
                                             onChange={handlePagination}
-                                            nextPageText={'>'}
-                                            prevPageText={'<'}
-                                            firstPageText={'<<'}
-                                            lastPageText={'>>'}
+                                            nextPageText={">"}
+                                            prevPageText={"<"}
+                                            firstPageText={"<<"}
+                                            lastPageText={">>"}
                                             itemClass="page-item"
                                             linkClass="page-link"
                                         />
@@ -345,10 +345,10 @@ const ReportTrivia = ({ token }) => {
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
                                                     style={{
-                                                        width: '65px',
-                                                        background: '#F3F6F9',
-                                                        borderColor: '#F3F6F9',
-                                                        color: '#9E9E9E',
+                                                        width: "65px",
+                                                        background: "#F3F6F9",
+                                                        borderColor: "#F3F6F9",
+                                                        color: "#9E9E9E",
                                                     }}
                                                     onChange={e =>
                                                         handleLimit(
@@ -376,7 +376,7 @@ const ReportTrivia = ({ token }) => {
                                             <div className="col-8 my-auto">
                                                 <p
                                                     className="align-middle mt-3"
-                                                    style={{ color: '#B5B5C3' }}
+                                                    style={{ color: "#B5B5C3" }}
                                                 >
                                                     Total Data {trivia.total}
                                                 </p>
@@ -384,7 +384,7 @@ const ReportTrivia = ({ token }) => {
                                         </div>
                                     </div>
                                 ) : (
-                                    ''
+                                    ""
                                 )}
                             </div>
                         </div>
