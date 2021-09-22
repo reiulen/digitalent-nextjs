@@ -9,6 +9,7 @@ import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import SimpleReactValidator from 'simple-react-validator'
 import DatePicker from 'react-datepicker'
+import { getSession } from "next-auth/client";
 
 import {
   updateArtikel,
@@ -18,11 +19,11 @@ import {
   NEW_ARTIKEL_RESET,
   UPDATE_ARTIKEL_RESET,
 } from "../../../../redux/types/publikasi/artikel.type";
-import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
+// import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditArtikel = () => {
+const EditArtikel = ({token}) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -43,10 +44,20 @@ const EditArtikel = () => {
     (state) => state.updatedArtikel
   );
   const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
+  // const session = getSession({ req });
+
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: "/",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   useEffect(() => {
 
-    dispatch(getAllKategori())
+    // dispatch(getAllKategori(session.user.user.data.token))
 
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
@@ -291,7 +302,7 @@ const EditArtikel = () => {
                 //   });
                 // }
     
-                dispatch(updateArtikel(data));
+                dispatch(updateArtikel(data, token));
                 console.log(data)
               }
           });
@@ -329,7 +340,7 @@ const EditArtikel = () => {
                 //   });
                 // }
     
-                dispatch(updateArtikel(data));
+                dispatch(updateArtikel(data, token));
                 console.log(data)
               }
           });
@@ -409,7 +420,7 @@ const EditArtikel = () => {
                 //   });
                 // }
     
-                dispatch(updateArtikel(data));
+                dispatch(updateArtikel(data, token));
                 console.log(data)
               }
           });
@@ -446,7 +457,7 @@ const EditArtikel = () => {
                 //   });
                 // }
     
-                dispatch(updateArtikel(data));
+                dispatch(updateArtikel(data, token));
                 console.log(data)
               }
           });
@@ -513,9 +524,9 @@ const EditArtikel = () => {
     <>
       <PageWrapper>
         {console.log (artikel)}
-        {/* {
+        {
           console.log (kategori)
-        } */}
+        }
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"

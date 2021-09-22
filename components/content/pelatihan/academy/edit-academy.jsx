@@ -323,6 +323,7 @@ const EditAcademy = () => {
                   <button
                     className="btn btn-light-ghost-rounded-full mr-2"
                     type="button"
+                    onClick={() => router.back()}
                   >
                     Batal
                   </button>

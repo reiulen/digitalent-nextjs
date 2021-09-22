@@ -19,7 +19,7 @@ import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.typ
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahArtikel = () => {
+const TambahArtikel = ({token}) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -42,7 +42,7 @@ const TambahArtikel = () => {
   } = useSelector((state) => state.allKategori);
 
   useEffect(() => {
-    dispatch(getAllKategori());
+    // dispatch(getAllKategori());
 
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
@@ -188,7 +188,7 @@ const TambahArtikel = () => {
               //   });
               // }
   
-              dispatch(newArtikel(data));
+              dispatch(newArtikel(data, token));
   
               console.log(data);
             }
@@ -225,7 +225,7 @@ const TambahArtikel = () => {
               //   });
               // }
   
-              dispatch(newArtikel(data));
+              dispatch(newArtikel(data, token));
   
               console.log(data);
             }
@@ -245,9 +245,9 @@ const TambahArtikel = () => {
 
   return (
     <>
-    {
+    {/* {
       console.log (kategori)
-    }
+    } */}
       <PageWrapper>
         {error ? (
           <div

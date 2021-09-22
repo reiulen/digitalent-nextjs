@@ -16,6 +16,127 @@ const TambahTandaTangan = () => {
   const signCanvas = useRef({});
   const router = useRouter();
 
+  const clear = () => {
+    Swal.fire({
+      title: "Apakah anda yakin ingin reset tanda tangan ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        signCanvas.current.clear();
+        setTandaTangan("");
+      }
+    });
+  };
+
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+
+  const [nama, setNama] = useState("");
+  const [jabatan, setJabatan] = useState("");
+  const [tandaTangan, setTandaTangan] = useState("");
+
+  const [error, setError] = useState({
+    nama: "",
+    jabatan: "",
+    tandaTangan: "",
+  });
+
+  const dataTandaTangan = () => {
+    const data = signCanvas.current.toDataURL();
+    if (!tandaTangan) {
+      Swal.fire({
+        icon: "success",
+        title: "Tanda Tangan Berhasil di Buat",
+        // text: "Berhasil",
+      });
+      setTandaTangan(data);
+    }
+    if (tandaTangan) {
+      Swal.fire({
+        icon: "error",
+        title: "Tanda Tangan Sudah dibuat",
+        // text: "Berhasil",
+      });
+    }
+  };
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (nama === "") {
+      setError({ ...error, nama: "Harus isi nama" });
+      notify("Harus isi nama");
+    } else if (jabatan === "") {
+      setError({ ...error, jabatan: "Harus isi jabatan" });
+      notify("Harus isi jabatan");
+    } else if (tandaTangan === "") {
+      setError({
+        ...error,
+        tandaTangan:
+          "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan",
+      });
+      notify(
+        "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan"
+      );
+    } else {
+      Swal.fire({
+        title: "Apakah anda yakin ingin simpan ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          let formData = new FormData();
+          formData.append("name", nama);
+          formData.append("position", jabatan);
+          formData.append("signature_image", tandaTangan);
+
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/create`,
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                },
+              }
+            );
+            router.push({
+              pathname: "/partnership/user/tanda-tangan-digital",
+              query: { success: true },
+            });
+          } catch (error) {
+            notify(error.response.data.message);
+          }
+        }
+      });
+    }
+  };
+
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+  const onNewReset = () => {
+    router.replace("/partnership/user/tanda-tangan-digital", undefined, { shallow: true });
+  };
 
   return (
     <PageWrapper>
@@ -41,37 +162,37 @@ const TambahTandaTangan = () => {
             </h3>
           </div>
           <div className="card-body">
-            <form>
+            <form onSubmit={submit}>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama
                 </label>
                 <input
-                  // onFocus={() => setError({ ...error, nama: "" })}
+                  onFocus={() => setError({ ...error, nama: "" })}
                   type="text"
                   className="form-control"
                   placeholder="Masukkan Nama"
-                  // value={nama}
-                  // onChange={(e) => setNama(e.target.value)}
+                  value={nama}
+                  onChange={(e) => setNama(e.target.value)}
                 />
-                {/* {error.nama ? <p className="error-text">{error.nama}</p> : ""} */}
+                {error.nama ? <p className="error-text">{error.nama}</p> : ""}
               </div>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Jabatan
                 </label>
                 <input
-                  // onFocus={() => setError({ ...error, jabatan: "" })}
+                  onFocus={() => setError({ ...error, jabatan: "" })}
                   type="text"
                   className="form-control"
                   placeholder="Masukkan Jabatan"
-                  // onChange={(e) => setJabatan(e.target.value)}
+                  onChange={(e) => setJabatan(e.target.value)}
                 />
-                {/* {error.jabatan ? (
+                {error.jabatan ? (
                   <p className="error-text">{error.jabatan}</p>
                 ) : (
                   ""
-                )} */}
+                )}
               </div>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -86,33 +207,33 @@ const TambahTandaTangan = () => {
                     }}
                   >
                     <SignaturePad
-                      // ref={signCanvas}
+                      ref={signCanvas}
                       options={{
                         minWidth: 1,
                         maxWidth: 3,
                         penColor: "rgb(66, 133, 244)",
                       }}
-                      // onBlur={() =>
-                      //   simpleValidator.current.showMessageFor("tandaTangan")
-                      // }
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("tandaTangan")
+                      }
                     />
-                    {/* {simpleValidator.current.message(
+                    {simpleValidator.current.message(
                       "tandaTangan",
                       tandaTangan,
                       "required",
                       { className: "text-danger" }
-                    )} */}
+                    )}
                   </div>
                   <div className="d-flex align-items-center mt-5">
                     <a
                       className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
-                      // onClick={() => dataTandaTangan()}
+                      onClick={() => dataTandaTangan()}
                     >
                       Buat Tanda Tangan
                     </a>
                     <button
                       type="button"
-                      // onClick={clear}
+                      onClick={clear}
                       className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
                     >
                       Buat Ulang Tanda Tangan

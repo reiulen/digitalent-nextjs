@@ -82,7 +82,7 @@ const ListTheme = () => {
               List Tema
             </h1>
             <div className="card-toolbar">
-              <Link href="/subvit/substansi/tambah-step-1">
+              <Link href="/pelatihan/tema/tambah">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
                   <i className="ri-pencil-fill"></i>
                   Tambah Tema
@@ -154,7 +154,45 @@ const ListTheme = () => {
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody></tbody>
+                  <tbody>
+                    <tr>
+                      <td className="text-center">1</td>
+                      <td>
+                        <p className="font-weight-bolder my-0 h6">SVGA</p>
+                        <p className="my-0">Vocation School Graduate Academy</p>
+                      </td>
+                      <td>Android Developer</td>
+                      <td>500 Peminat</td>
+                      <td>
+                        <span className="label label-inline label-light-success font-weight-bold">
+                          Publish
+                        </span>
+                      </td>
+                      <td>
+                        <div className="d-flex">
+                          <Link href={`/pelatihan/tema/${1}`}>
+                            <a
+                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Edit"
+                            >
+                              <i className="ri-pencil-fill p-0 text-white"></i>
+                            </a>
+                          </Link>
+                          <button
+                            className="btn btn-link-action bg-blue-secondary text-white"
+                            onClick={() => handleDelete(1)}
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Hapus"
+                          >
+                            <i className="ri-delete-bin-fill p-0 text-white"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>

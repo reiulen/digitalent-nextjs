@@ -8,14 +8,20 @@ import {
 
 import axios from "axios";
 
-export const getAllDashboardPublikasi = () =>
+export const getAllDashboardPublikasi = (token) =>
   async (dispatch) => {
     try {
       dispatch({ type: DASHBOARD_PUBLIKASI_REQUEST });
 
+      const config = {
+        headers: {
+          Authorization: 'Bearer ' + token,
+        },
+      };
+
       let link = process.env.END_POINT_API_PUBLIKASI + `api/dashboard`;
 
-      const { data } = await axios.get(link);
+      const { data } = await axios.get(link, config);
 
       dispatch({
         type: DASHBOARD_PUBLIKASI_SUCCESS,

@@ -33,6 +33,7 @@ const SubmitKerjasama = () => {
   });
 
   const router = useRouter();
+  const {id} = router.query.id
   const [period_date_start, setPeriod_date_start] = useState("");
   const [agreement_number_partner, setAgreement_number_partner] = useState("");
   const [agreement_number_kemkominfo, setAgreement_number_kemkominfo] =
@@ -151,8 +152,8 @@ const SubmitKerjasama = () => {
             console.log("data fdfdfdfdf",data)
             // alert('berhasil');
             router.push({
-              pathname: `/partnership/user/kerjasama/`,
-              query: { successSubmitDokumentKerjasama: true },
+              pathname: `/partnership/user/kerjasama/review-dokumen-kerjasama`,
+              query: { successSubmitDokumentKerjasama: true, id:id },
             });
           } catch (error) {
             alert("gagal menambahkan data tipe file harus pdf");

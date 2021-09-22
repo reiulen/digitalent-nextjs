@@ -265,6 +265,12 @@ const Kategori = () => {
 
     return (
         <PageWrapper>
+            {
+                console.log (kategori)
+            }
+            {
+                console.log (paginateKategori)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -560,12 +566,7 @@ const Kategori = () => {
                                 }
                             </div>
 
-                            {
-                                console.log (kategori)
-                            }
-                            {
-                                console.log (paginateKategori)
-                            }
+                            
                             {
                                 kategori && paginateKategori ?
                                     <div className="row">

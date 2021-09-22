@@ -21,14 +21,16 @@ const Artikel = dynamic(
     }
 );
 
-export default function ArtikelPage() {
+export default function ArtikelPage(props) {
+    const session = props.session.user.user.data;
+    // console.log (session.token)
     return (
         <>
             <div className="d-flex flex-column flex-root">
                 {/* <Layout title='Artikel - Publikasi'>
                     <Artikel />
                 </Layout> */}
-                <Artikel />
+                <Artikel token={session.token}/>
             </div>
         </>
     )
@@ -48,7 +50,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ q
     }
     
     await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
-
+    // await store.dispatch(getAllKategori(session.user.user.data.token))
     return {
         props: { session, title: "Artikel - Publikasi" },
     };

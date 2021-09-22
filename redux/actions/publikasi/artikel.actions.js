@@ -29,7 +29,7 @@ export const getAllArtikel =
     try {
       dispatch({ type: ARTIKEL_REQUEST });
 
-      console.log (token)
+      // console.log (`Artikel: ${token}`)
 
       let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
@@ -152,14 +152,22 @@ export const updateArtikel = (artikelData, token) => async (dispatch) => {
   }
 };
 
-export const deleteArtikel = (id) => async (dispatch) => {
+export const deleteArtikel = (id, token ) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ARTIKEL_REQUEST });
 
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
-    );
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
 
+    // console.log (token)
+
+    const { data } = await axios.delete(
+      process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`, config
+    );
+    
     dispatch({
       type: DELETE_ARTIKEL_SUCCESS,
       payload: data.status,

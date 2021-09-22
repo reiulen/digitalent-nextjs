@@ -446,16 +446,6 @@ const EditMitra = () => {
                         objectFit="fill"
                       />
                     </div>
-
-                    {/* <img
-                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                        "partnership/images/profile-images/" +
-                        imageview}
-                      
-                      className="w-100 h-100"
-                      alt="images"
-                      style={{ padding: "6px" }}
-                    /> */}
                   </div>
                 )}
 
@@ -505,12 +495,6 @@ const EditMitra = () => {
                       >
                         {
                           agency_logo ? (
-                            /* <img
-                      src={agency_logo}
-                      className="w-100 h-100"
-                      alt="images"
-                      style={{ padding: "6px" }}
-                      /> */
 
                             <div
                               className="w-100 h-100 position-relative"
@@ -540,15 +524,6 @@ const EditMitra = () => {
                               />
                             </div>
                           )
-
-                          // <img
-                          //   src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                          //     "partnership/images/profile-images/" +
-                          //     imageview}
-                          //   className="w-100 h-100"
-                          //   alt="images"
-                          //   style={{ padding: "6px" }}
-                          //   />
                         }
                       </div>
                     </div>
@@ -575,65 +550,7 @@ const EditMitra = () => {
                     </label>
                   </div>
                 </div>
-                {/* <div className="d-flex align-items-center">
-                  {NamePDF ? (
-                    <button
-                      className="btn btn-primary btn-sm my-3 mr-3"
-                      type="button"
-                      onClick={() => hideImage()}
-                    >
-                      {showImage ? "Tutup" : "Buka"}
-                    </button>
-                  ) : (
-                    ""
-                  )}
-
-                  {agency_logo ? (
-                    <button
-                      className="btn btn-primary btn-sm my-3"
-                      type="button"
-                      onClick={() => cancelChangeImage()}
-                    >
-                      Batal ubah gambar menjadi default
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                </div> */}
-                {/* {!NamePDF ? (
-                  <div className="border my-3">
-                    <Image
-                      unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                      src={
-                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                        "partnership/images/profile-images/" +
-                        imageview
-                      }
-                      width={500}
-                      height={500}
-                      alt="logo"
-                    />
-                  </div>
-                ) : (
-                  ""
-                )} */}
-                {/* {showImage ? (
-                  <div
-                    className={`${
-                      agency_logo ? "pdf-container w-100 border my-3" : "d-none"
-                    }`}
-                  >
-                    <iframe
-                      src={agency_logo}
-                      frameBorder="0"
-                      scrolling="auto"
-                      height={agency_logo ? "500px" : ""}
-                      width="100%"
-                    ></iframe>
-                  </div>
-                ) : (
-                  ""
-                )} */}
+               
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (
