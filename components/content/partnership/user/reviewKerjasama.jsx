@@ -3,17 +3,55 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 import Link from "next/link";
 import {useRouter} from 'next/router'
+import { useDispatch, useSelector } from "react-redux";
 
 import Style from "../../../../styles/progressbar.module.css";
 
+import {
+  rejectCooperation,
+  reloadTable
+} from "../../../../redux/actions/partnership/user/cooperation.actions";
+
 function ReviewKerjasama() {
   const router = useRouter()
+  let dispatch = useDispatch();
+  
 
   const {successSubmitKerjasama} = router.query
 
   const onNewReset = () => {
     router.replace("/partnership/user/kerjasama/review-kerjasama-1", undefined, { shallow: true });
   };
+
+  const cooperationRejection = () =>{
+    // e.preventDefault()
+
+    Swal.fire({
+      title: "Apakah anda yakin ingin batalkan kerjasama ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        dispatch(rejectCooperation(router.query.id));
+        // setDeleteBar(true);
+        // setIsStatusBar(true);
+        router.push({
+              pathname: `/partnership/user/kerjasama/`,
+              query: { successUpdateStatus: true },
+            });
+        // router.push("/partnership/user/kerjasama");
+        
+      } else {
+        dispatch(reloadTable());
+      }
+    });
+
+  }
 
   // const onNewReset = () => {
   //   router.replace(`/partnership/user/kerjasama/review-kerjasama-1`);
@@ -137,8 +175,11 @@ function ReviewKerjasama() {
                     </a>
                   </Link>
                   <button
-                    type="submit"
-                    className="btn btn-sm btn-rounded-full bg-red-primary text-white "
+                    type="button"
+                    className="btn btn-sm btn-rounded-full bg-red-primary text-white"
+                    onClick={() =>
+                                          cooperationRejection(router.query.id)
+                                        }
                   >
                     Batalkan Kerjasama
                   </button>
