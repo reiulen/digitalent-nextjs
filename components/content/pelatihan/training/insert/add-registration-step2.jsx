@@ -438,7 +438,7 @@ const AddRegistrationStep2 = () => {
               </div>
 
               {formBuilder.map((row, i) => (
-                <div className="builder row">
+                <div className="builder row" key={i}>
                   <div className="col-sm-12 col-md-2">
                     <div className="form-group mb-2">
                       <label className="col-form-label font-weight-bold">
@@ -585,7 +585,7 @@ const AddRegistrationStep2 = () => {
 
       <div
         className="modal fade bd-example-modal-lg"
-        tabindex="-1"
+        tabIndex="-1"
         role="dialog"
         aria-labelledby="myLargeModalLabel"
         aria-hidden="true"
