@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
-import Tables from "../../../Table/Table";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import CardPage from "../../../CardPage";
 import IconSearch from "../../../assets/icon/Search";
@@ -40,6 +39,7 @@ import {
   changeStatusList,
   exportFileCSV,
   reloadTable,
+  rejectCooperation
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/management_cooporation.type";
@@ -72,9 +72,6 @@ const Table = () => {
     selectRefKerjasama.select.clearValue();
     selectRefMitra.select.clearValue();
     selectRefStatus.select.clearValue();
-    // document.getElementById("list-mitra").selectedIndex = 0;
-    // document.getElementById("list-kerjasama").selectedIndex = 0;
-    // document.getElementById("list-status").selectedIndex = 0;
     dispatch({
       type: RESET_VALUE_SORTIR,
     });
@@ -85,19 +82,6 @@ const Table = () => {
   };
 
   const changeListStatus = (e, id) => {
-    console.log("e.target.value",e.target.value)
-    //     var x = (e.target.options[e.target.selectedIndex].innerText)
-    //     var warning = `Apakah anda yakin ingin merubah status menjadi ${x} ?`;
-    // if (confirm(warning)) {
-    //     dispatch(changeStatusList(e.target.value, id));
-    //         setIsStatusBar(true);
-    //         setDeleteBar(false);
-    //         setIsChangeOption(true)
-    // }
-    // else {
-    //     dispatch(reloadTable());
-    // }
-
     Swal.fire({
       title: "Apakah anda yakin ingin merubah status ?",
       icon: "warning",
@@ -113,6 +97,7 @@ const Table = () => {
         setIsStatusBar(true);
         setDeleteBar(false);
         setIsChangeOption(true);
+        router.replace("/partnership/kerjasama", undefined, { shallow: true })
       } else {
         dispatch(reloadTable());
       }
@@ -143,23 +128,11 @@ const Table = () => {
   const [isStatusBar, setIsStatusBar] = useState(false);
   const [deleteBar, setDeleteBar] = useState(false);
 
-
-  // const onNewReset = () => {
-  //   router.replace("/partnership/kerjasama");
-  //   setDeleteBar(false);
-  //   setIsStatusBar(false);
-  // };
-
-
-
   const onNewReset = () => {
     setDeleteBar(false);
     setIsStatusBar(false);
     router.replace("/partnership/kerjasama", undefined, { shallow: true });
   };
-
-
-
 
   useEffect(() => {
     dispatch(fetchAllMK());
@@ -188,11 +161,29 @@ const Table = () => {
     }
   };
 
-  //   const  test = (a) => {
-  //     // var x = (a.value || a.options[a.selectedIndex].value);  //crossbrowser solution =)
-  //     // alert(x);
-  //     console.log("a",a.target.options)
-  // }
+  const cooperationRejection = (id) =>{
+    Swal.fire({
+      title: "Apakah anda yakin ingin batalkan kerjasama ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        dispatch(rejectCooperation(id));
+        // setDeleteBar(true);
+        setIsStatusBar(true);
+        // router.replace("/partnership/kerjasama");
+        
+      } else {
+        dispatch(reloadTable());
+      }
+    });
+
+  }
 
   useEffect(() => {
     dispatch(fetchListSelectMitra());
@@ -202,12 +193,6 @@ const Table = () => {
   }, [dispatch]);
   return (
     <PageWrapper>
-      {/* <select onChange={(e) => test(e)} id="select_id">
-    <option value="0">-Select-</option>
-    <option value="1">111</option>
-    <option value="2">222</option>
-    <option value="3">333</option>
-</select> */}
 
       {update ? (
         <div
@@ -489,11 +474,7 @@ const Table = () => {
                           </button>
                           {/* modal */}
                           <form
-                            // id="kt_docs_formvalidation_text"
                             className="form text-left"
-                            // action="#"
-                            // autoComplete="off"
-                            // onSubmit={handleSubmitSearchMany}
                           >
                             <div
                               className="modal fade"
@@ -614,10 +595,6 @@ const Table = () => {
                                       <button
                                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                         type="button"
-                                        // type="button"
-                                        // className="close"
-                                        // data-dismiss="modal"
-                                        // aria-label="Close"
                                         onClick={(e) =>
                                           handleSubmitSearchMany(e)
                                         }
@@ -750,22 +727,10 @@ const Table = () => {
                                         disabled
                                         className="form-control remove-icon-default dropdown-arrows-green"
                                         key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="1">Disetujui</option>
                                         <option value="2">Tidak Aktif</option>
                                       </select>
-                                      {/* <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        width="7"
-                                        height="7"
-                                      /> */}
                                     </div>
                                   ) : items.status.name === "aktif" &&
                                     moment(items.period_date_start).format(
@@ -956,9 +921,6 @@ const Table = () => {
                                     </div>
                                   )}
                                 </td>
-                                {/* {console.log("date periode_start_date",moment(items.period_date_start).format("YYYY MM DD"))}
-                                {console.log("date now",moment().format("YYYY MM DD"))}
-                                {console.log("date cek",moment(items.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD"))} */}
                                 <td className="align-middle text-left">
                                   {items.status.name === "aktif" &&
                                   moment(items.period_date_start).format(
@@ -1081,38 +1043,14 @@ const Table = () => {
                                   ) : items.status.name ===
                                     "pengajuan-review" ? (
                                     <div className="d-flex align-items-center">
-
                                       <Link href={{pathname:"/partnership/kerjasama/revisi-kerjasama",query:{id:items.id}}}>
                                       <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-
                                         <IconReview />
                                         <div className="text-hover-show-hapus">
                                           Review
                                         </div>
-
-
-
                                       </a>
                                       </Link>
-
-
-
-                                      {/* <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/review-kerjasama`
-                                          )
-                                        }
-                                      >
-                                        <IconReview />
-                                        <div className="text-hover-show-hapus">
-                                          Review
-                                        </div>
-                                      </button> */}
-
-
-
                                     </div>
                                   ) : items.status.name ===
                                     "pengajuan-revisi" ? (
@@ -1134,23 +1072,6 @@ const Table = () => {
                                         </div>
                                       </a>
                                       </Link>
-                                      {/* <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/detail-revisi-kerjasama`
-                                          )
-                                        }
-                                      >
-                                        <IconEye
-                                          width="16"
-                                          height="16"
-                                          fill="rgba(255,255,255,1)"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Review
-                                        </div>
-                                      </button> */}
                                     </div>
                                   ) : items.status.name ===
                                     "pengajuan-pembahasan" ? (
@@ -1173,34 +1094,15 @@ const Table = () => {
 
                                       </a>
                                       </Link>
-                                      {/* <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
-                                      >
-                                        <Image
-                                          src={`/assets/icon/ttd.svg`}
-                                          width={19}
-                                          height={19}
-                                          alt="ditolak"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Tanda tangan virtual
-                                        </div>
-                                      </button> */}
 
 
 
                                       <button
+                                      type="button"
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          cooperationRejection(items.id)
+                                        }
                                       >
                                         <Image
                                           src={`/assets/icon/Ditolak.svg`}
@@ -1217,12 +1119,11 @@ const Table = () => {
                                     "pengajuan-selesai" ? (
                                     <div className="d-flex align-items-center">
                                       <button
+                                      type="button"
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          cooperationRejection(items.id)
+                                        }
                                       >
                                         <Image
                                           src={`/assets/icon/Ditolak.svg`}
@@ -1253,33 +1154,12 @@ const Table = () => {
                                       </a>
                                       </Link>
 
-
-
-
-                                      {/* <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
-                                        onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/submit-dokumen-kerjasama-revisi`
-                                          )
-                                        }
-                                      >
-                                        <IconReview />
-                                        <div className="text-hover-show-hapus">
-                                          Review
-                                        </div>
-                                      </button> */}
-
-
-
-
                                       <button
+                                      type="button"
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                        onClick={() =>
+                                          cooperationRejection(items.id)
+                                        }
                                       >
                                         <Image
                                           src={`/assets/icon/Ditolak.svg`}

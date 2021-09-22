@@ -17,30 +17,16 @@ import axios from "axios";
 
 const ReviewKerjasama = () => {
   const router = useRouter();
-  const id = router.query;
 
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
 
-  const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
+  // state cek-progres
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [cooperationID, setCooperationID] = useState("");
   const [period, setPeriod] = useState("");
   const [periodUnit, setPeriodUnit] = useState("tahun");
 
-  console.log(title, date, cooperationID, period, periodUnit);
-
+  // cek progress
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
@@ -57,6 +43,35 @@ const ReviewKerjasama = () => {
       console.log("action getSIngle gagal", error);
     }
   };
+
+  // state cek review card-version
+  const [allCooperationView, setAllCooperationView] = useState([]);
+  const [titleView, setTitleView] = useState("");
+  const [dateView, setDateView] = useState("");
+  const [cooperationIDView, setCooperationIDView] = useState("");
+  const [periodView, setPeriodView] = useState("");
+  const [periodUnitView, setPeriodUnitView] = useState("tahun");
+  const [noteView, setNoteView] = useState("");
+
+  // cek review card-version
+  const setDataSingleSelesaiReview = async (id,version) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`,
+      );
+      setTitleView(data.data.title);
+      setDateView(data.data.date);
+      setCooperationIDView(data.data.cooperation_category);
+      setPeriodView(data.data.period);
+      setPeriodUnitView(data.data.period_unit);
+      setAllCooperationView(data.data.cooperation_category.data_content);
+      setNoteView(data.data.note);
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+  };
+
+
 
   const acceptDokument = async(e) => {
     console.log("acceptDokument")
@@ -92,10 +107,16 @@ const ReviewKerjasama = () => {
       console.log("error acceptDokument",error)
     }
   }
-
+const [statusInfo, setstatusInfo] = useState("")
+console.log("statusInfo",statusInfo)
   useEffect(() => {
     setDataSingle(router.query.id);
-  }, [router.query.id]);
+    setDataSingleSelesaiReview(router.query.id,router.query.version);
+    if(router.query.statusInfo){
+      setstatusInfo(router.query.statusInfo)
+      
+    }
+  }, [router.query.id,router.query.version,router.query.statusInfo]);
 
   return (
     <PageWrapper>
@@ -121,7 +142,154 @@ const ReviewKerjasama = () => {
             </h3>
           </div>
           <div className="card-body">
-            <form>
+
+
+            {statusInfo&&(statusInfo === "Sudah direview") ? <form>
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Tanggal
+                </label>
+                <input
+                  readOnly
+                  type="date"
+                  required
+                  value={dateView&&dateView}
+                  className="form-control"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Judul kerjasama
+                </label>
+                <input
+                  required
+                  readOnly
+                  value={titleView&&titleView}
+                  onChange={(e) => setTitle(e.target.value)}
+                  type="text"
+                  className="form-control"
+                  placeholder="Judul Kerjasama"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Kategori kerjasama
+                </label>
+                <select
+                  name=""
+                  id=""
+                  className="form-control"
+                  disabled
+                  value={cooperationIDView.id}
+                >
+                  <option>{cooperationIDView.name}</option>
+                </select>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Periode
+                </label>
+                <div className="row">
+                  <div className="col-12 col-sm-6">
+                    <input
+                      required
+                      readOnly
+                      type="number"
+                      className="form-control mt-2"
+                      onChange={(e) => setPeriod(e.target.value)}
+                      value={periodView}
+                    />
+                  </div>
+                  <div className="col-12 col-sm-6">
+                    <div className="form-control mt-2">Tahun</div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              {cooperationIDView === ""
+                ? ""
+                : cooperationIDView.data_content.map((items, i) => {
+                    return (
+                      <div className="row" key={i}>
+                        <div className="col-12 col-sm-6">
+                      <div className={`form-group`}>
+                        <label htmlFor="staticEmail" className="col-form-label">
+                          {items.cooperation_form}
+                        </label>
+                        <textarea
+                          readOnly
+                          value={items.form_content}
+                          name=""
+                          id={i}
+                          cols="30"
+                          rows="5"
+                          className="form-control"
+                        ></textarea>
+                      </div>
+                      </div>
+                        <div className="col-12 col-sm-6">
+                      <div className={`form-group`}>
+                        <label htmlFor="staticEmail" className="col-form-label">
+                          Catatan Revisi
+                        </label>
+                        <textarea
+                          readOnly
+                          value={items.form_content_review}
+                          name=""
+                          id={i}
+                          cols="30"
+                          rows="5"
+                          className="form-control"
+                        ></textarea>
+                      </div>
+                      </div>
+                      </div>
+                    );
+                  })}
+
+                  <div className="form-group">
+                <label htmlFor="staticEmail" className="col-form-label">
+                  Catatan Tambahan
+                </label>
+                <div>
+                  <textarea
+                    onChange={(e) => setNote(e.target.value)}
+                    name="cooperation"
+                    id=""
+                    disabled
+                    value={noteView && noteView}
+                    cols="30"
+                    rows="5"
+                    className="form-control"
+                    placeholder="Tuliskan Catatan Tambahan"
+                  ></textarea>
+                </div>
+              </div>
+
+
+
+
+              <div className="form-group row">
+                <div className="col-sm-12 d-flex justify-content-end">
+             
+                  <Link
+                    href={{
+                      pathname:"/partnership/kerjasama/revisi-kerjasama",
+                      query:{id:router.query.id}
+                    }}
+                    passHref
+                  >
+                    <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                      Kembali
+                    </a>
+                  </Link>
+                </div>
+              </div>
+            </form>:  <form>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal
@@ -183,6 +351,10 @@ const ReviewKerjasama = () => {
                   </div>
                 </div>
               </div>
+
+
+
+
               {cooperationID === ""
                 ? ""
                 : cooperationID.data_content.map((items, i) => {
@@ -203,6 +375,9 @@ const ReviewKerjasama = () => {
                       </div>
                     );
                   })}
+
+
+
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
@@ -234,6 +409,12 @@ const ReviewKerjasama = () => {
                 </div>
               </div>
             </form>
+
+          
+          }
+
+          
+          
           </div>
         </div>
       </div>

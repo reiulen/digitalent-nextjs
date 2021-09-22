@@ -18,6 +18,7 @@ import CardPage from "../../../../CardPage";
 import ButtonAction from "../../../../ButtonAction";
 
 import IconCalender from "../../../../assets/icon/Calender";
+import IconTodoLine from "../../../../assets/icon/TodoLine";
 import axios from "axios";
 import moment from "moment";
 
@@ -30,7 +31,8 @@ import {
   fetchListSelectStatus,
   fetchListSelectCooperation,
   changeValueStatusCard,
-  limitCooporation
+  limitCooporation,
+  deleteCooperation
 } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 
 import { RESET_VALUE_SORTIR } from "../../../../../redux/types/partnership/user/cooperation.type";
@@ -49,7 +51,7 @@ import IconDelete from "../../../../assets/icon/Delete";
 const Table = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { successInputProfile,successSubmitDokumentKerjasama } = router.query;
+  const { successInputProfile,successSubmitDokumentKerjasama,successUpdateStatus } = router.query;
   let selectRefKerjasama = null;
   let selectRefStatus = null;
 
@@ -64,8 +66,9 @@ const Table = () => {
   //   router.replace(`/partnership/user/kerjasama`);
   // };
 
+  const [deleteBar, setDeleteBar] = useState(false);
   const onNewReset = () => {
-    // setSuccessDelete(false);
+    setDeleteBar(false);
     router.replace("/partnership/user/kerjasama", undefined, { shallow: true });
   };
 
@@ -102,6 +105,7 @@ const Table = () => {
     allCooperationUser.limit,
     allCooperationUser.status,
     allCooperationUser.card,
+    allCooperationUser.status_delete,
   ]);
 
   const [isProfile, setIsProfile] = useState("");
@@ -140,6 +144,28 @@ const Table = () => {
     }
   };
 
+  const cooperationDelete = (id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ingin menghapus data ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        dispatch(deleteCooperation(id));
+        setDeleteBar(true);
+        // setIsStatusBar(false);
+        // router.replace("/partnership/kerjasama");
+      } else {
+        dispatch(reloadTable());
+      }
+    });
+  };
+
   useEffect(() => {
     dispatch(fetchListSelectStatus());
     dispatch(fetchListSelectCooperation());
@@ -149,6 +175,35 @@ const Table = () => {
 
   return (
     <PageWrapper>
+      {deleteBar ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#f7c9c9" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#c51b1b" }}>
+            Berhasil menghapus data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {successInputProfile ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
@@ -189,6 +244,35 @@ const Table = () => {
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
             Berhasil menyimpan data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {successUpdateStatus ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil membatalkan kerjasama
           </div>
           <div className="alert-close">
             <button
@@ -782,7 +866,7 @@ const Table = () => {
                                   ) > moment().format("YYYY MM DD") ? (
                                     <div className="d-flex align-items-center">
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                         onClick={() =>
                                           router.push(
                                             `/partnership/user/kerjasama/${items.id}`
@@ -796,6 +880,20 @@ const Table = () => {
                                         />
                                         <div className="text-hover-show-hapus">
                                           Detail
+                                        </div>
+                                      </button>
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/user/kerjasama/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <IconTodoLine
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Review
                                         </div>
                                       </button>
                                       </div>
@@ -805,7 +903,7 @@ const Table = () => {
                                     ) <= moment().format("YYYY MM DD") ? (
                                      <div className="d-flex align-items-center">
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                         onClick={() =>
                                           router.push(
                                             `/partnership/user/kerjasama/${items.id}`
@@ -821,38 +919,75 @@ const Table = () => {
                                           Detail
                                         </div>
                                       </button>
-                                      </div>
-                                  ) : items.status.name === "tidak aktif" ? (
-                                    <div className="position-relative w-max-content">
-                                      <select
-                                        disabled
-                                        name=""
-                                        id=""
-                                        className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
-                                        key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e,
-                                        //     items.id,
-                                        //     items.status.name
+                                      <Link href={{
+                                         pathname:"/partnership/user/kerjasama/hasil",
+                                         query:{statusKerjasama:items.status.name,id:items.id}
+                                       }}>
+
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/user/kerjasama/${items.id}`
                                         //   )
                                         // }
                                       >
-                                        <option value="2">Tidak Aktif</option>
-                                        <option value="1">Aktif</option>
-                                      </select>
-                                      {/* <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        fill="#F65464"
-                                        width="7"
-                                        height="7"
-                                      /> */}
-                                    </div>
+                                        <IconTodoLine
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Review
+                                        </div>
+                                      </a>
+                                      </Link>
+                                      </div>
+                                  ) : items.status.name === "tidak aktif" ? (
+                                    <div className="d-flex align-items-center">
+                                      
+
+                                      <Link href={{
+                                         pathname:"/partnership/user/kerjasama/hasil",
+                                         query:{statusKerjasama:items.status.name,id:items.id}
+                                       }}>
+
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/user/kerjasama/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Review
+                                        </div>
+                                      </a>
+                                      </Link>
+
+                                       <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          cooperationDelete(items.id)
+                                        }
+                                      >
+                                        <IconDelete width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Hapus
+                                        </div>
+                                      </button>
+                                      </div>
+                                  
                                   ) :items.status.name ===
                                     "pengajuan-review" ? (
                                       <Link
-                                        href="/partnership/user/kerjasama/review-kerjasama-1"
+                                        href={{
+                                          pathname:"/partnership/user/kerjasama/review-kerjasama-1",
+                                          query:{id:items.id}
+                                        }}
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
@@ -937,19 +1072,6 @@ const Table = () => {
 
 
 
-
-
-                                      /* <Link
-                                        href="/partnership/user/kerjasama/pembahasan-2"
-                                        passHref
-                                      >
-                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                          <IconReview />
-                                          <div className="text-hover-show-hapus">
-                                            Review
-                                          </div>
-                                        </a>
-                                      </Link> */
                                     ) : items.status.name ===
                                       "pengajuan-document" ? (
                                       <Link
@@ -967,7 +1089,50 @@ const Table = () => {
                                         </a>
                                       </Link>
                                     ) : (
-                                      ""
+                                      <div className="d-flex align-items-center">
+                                      
+                                      {/* <Link href={{
+                                         pathname:"/partnership/user/kerjasama/hasil",
+                                         query:{statusKerjasama:items.status.name}
+                                       }}> */}
+
+                                     
+                                      {/* </Link> */}
+                                      <Link href={{
+                                         pathname:"/partnership/user/kerjasama/hasil",
+                                         query:{statusKerjasama:items.status.name,id:items.id}
+                                       }}>
+
+                                      <a
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/user/kerjasama/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Review
+                                        </div>
+                                      </a>
+                                      </Link>
+                                       <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          cooperationDelete(items.id)
+                                        }
+                                      >
+                                        <IconDelete width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Hapus
+                                        </div>
+                                      </button>
+                                      </div>
                                     )}
                                   </div>
                                 </td>

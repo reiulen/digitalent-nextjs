@@ -25,6 +25,7 @@ import {
   CANCEL_CHANGE_EMAIL,
   RELOAD_TABLE,
   RESET_VALUE_SORTIR,
+  REJECT_COOPERATION,
 } from "../../types/partnership/management_cooporation.type";
 
 const statuslist = {
@@ -216,6 +217,11 @@ export const allMCooporationReducerMK = (state = initialState, action) => {
         status_delete: state.status_delete === "" ? "delete" : "",
       };
     case RELOAD_TABLE:
+      return {
+        ...state,
+        status_delete: state.status_delete === "" ? "delete" : "",
+      };
+    case REJECT_COOPERATION:
       return {
         ...state,
         status_delete: state.status_delete === "" ? "delete" : "",
