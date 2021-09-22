@@ -28,13 +28,13 @@ import {
     REPORT_TRIVIA_QUESTION_BANKS_SUCCESS,
     REPORT_TRIVIA_QUESTION_BANKS_FAIL,
     CLEAR_ERRORS,
-} from '../../types/subvit/trivia-question.type';
+} from "../../types/subvit/trivia-question.type";
 
-import axios from 'axios';
+import axios from "axios";
 
 // get all data
 export const getAllTriviaQuestionBanks =
-    (page = 1, keyword = '', limit = 5, token) =>
+    (page = 1, keyword = "", limit = 5, token) =>
     async dispatch => {
         try {
             dispatch({ type: TRIVIA_QUESTION_BANKS_REQUEST });
@@ -47,7 +47,7 @@ export const getAllTriviaQuestionBanks =
 
             const config = {
                 headers: {
-                    Authorization: 'Bearer ' + token,
+                    Authorization: "Bearer " + token,
                 },
             };
 
@@ -70,16 +70,15 @@ export const newTriviaQuestionBanks = (triviaData, token) => async dispatch => {
         dispatch({
             type: NEW_TRIVIA_QUESTION_BANKS_REQUEST,
         });
-        console.log('MASUK KESINIIIIIIIIIIIIIIIAAAAAAAAAAAAAA');
-        console.log(triviaData);
+        console.log("MASUK KESINIIIIIIIIIIIIIIIAAAAAAAAAAAAAA");
         const config = {
             headers: {
-                Authorization: 'Bearer ' + token,
+                Authorization: "Bearer " + token,
             },
         };
 
         const { data } = await axios.post(
-            process.env.END_POINT_API_SUBVIT + 'api/trivia-question-banks',
+            process.env.END_POINT_API_SUBVIT + "api/trivia-question-banks",
             triviaData,
             config
         );
@@ -106,7 +105,7 @@ export const getDetailTriviaQuestionBanks = (id, token) => async dispatch => {
 
         const config = {
             headers: {
-                Authorization: 'Bearer ' + token,
+                Authorization: "Bearer " + token,
             },
         };
 
@@ -133,7 +132,7 @@ export const getOneTriviaQuestionBanks = (id, token) => async dispatch => {
             `api/trivia-question-banks/${id}`;
         const config = {
             headers: {
-                Authorization: 'Bearer ' + token,
+                Authorization: "Bearer " + token,
             },
         };
         const { data } = await axios.get(link, config);
@@ -158,7 +157,7 @@ export const updatewTriviaQuestionBanks =
             });
             const config = {
                 headers: {
-                    Authorization: 'Bearer ' + token,
+                    Authorization: "Bearer " + token,
                 },
             };
             const { data } = await axios.post(
@@ -183,11 +182,14 @@ export const updatewTriviaQuestionBanks =
 export const deleteTriviaQuestionBanks = (id, token) => async dispatch => {
     try {
         dispatch({ type: DELETE_TRIVIA_QUESTION_BANKS_REQUEST });
+
         const config = {
             headers: {
-                Authorization: 'Bearer ' + token,
+                Authorization: "Bearer " + token,
             },
         };
+
+        console.log("MASUK SINI TOKEN", token);
         const { data } = await axios.delete(
             process.env.END_POINT_API_SUBVIT +
                 `api/trivia-question-banks/${id}`,
@@ -214,7 +216,7 @@ export const updateTriviaQuestionBanksPublish =
             });
             const config = {
                 headers: {
-                    Authorization: 'Bearer ' + token,
+                    Authorization: "Bearer " + token,
                 },
             };
             // const config = {
@@ -245,13 +247,13 @@ export const updateTriviaQuestionBanksPublish =
     };
 
 export const allReportTriviaQuestionBanks =
-    (id, page = 1, keyword = '', limit = null, card = null, token) =>
+    (id, page = 1, keyword = "", limit = null, card = null, token) =>
     async dispatch => {
         try {
             dispatch({ type: REPORT_TRIVIA_QUESTION_BANKS_REQUEST });
             const config = {
                 headers: {
-                    Authorization: 'Bearer ' + token,
+                    Authorization: "Bearer " + token,
                 },
             };
             let link =

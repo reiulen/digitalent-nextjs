@@ -1,15 +1,15 @@
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
 
-const MasterSertifikat = dynamic(
+const Tambah = dynamic(
     () =>
         import(
-            "../../../components/content/sertifikat/master-sertifikat/master-sertifikat"
+            "../../../../components/content/sertifikat/master-sertifikat/tambah/tambah"
         ),
     {
         loading: function loadingNow() {
@@ -19,11 +19,11 @@ const MasterSertifikat = dynamic(
     }
 );
 
-export default function MasterSertifikatPage() {
+export default function TambahMasterSertifikatPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <MasterSertifikat />
+                <Tambah />
             </div>
         </>
     );
