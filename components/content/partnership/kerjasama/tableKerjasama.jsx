@@ -44,7 +44,7 @@ import {
 
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/management_cooporation.type";
 
-const Table = () => {
+const Table = ({token}) => {
   const router = useRouter();
   let { update, success,successTerima,successReject,successMakeREvisi } = router.query;
   let selectRefKerjasama = null;
@@ -53,7 +53,6 @@ const Table = () => {
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK", allMK);
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
@@ -135,7 +134,7 @@ const Table = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchAllMK());
+    dispatch(fetchAllMK(token));
   }, [
     dispatch,
     allMK.keyword,
@@ -174,10 +173,7 @@ const Table = () => {
     }).then(async (result) => {
       if (result.value) {
         dispatch(rejectCooperation(id));
-        // setDeleteBar(true);
         setIsStatusBar(true);
-        // router.replace("/partnership/kerjasama");
-        
       } else {
         dispatch(reloadTable());
       }
@@ -817,13 +813,7 @@ const Table = () => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-yellow"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
+                                        
                                       >
                                         <option value="">
                                           Pengajuan - Revisi
@@ -867,13 +857,7 @@ const Table = () => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
+                                        
                                       >
                                         <option value="">
                                           Pengajuan - Selesai
@@ -888,13 +872,7 @@ const Table = () => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
+                                        
                                       >
                                         <option value="">
                                           Pengajuan - Dokumen
@@ -908,13 +886,7 @@ const Table = () => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-red-primary"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
+                                       
                                       >
                                         <option value="">Ditolak</option>
                                       </select>
@@ -1146,32 +1118,13 @@ const Table = () => {
                                         query:{id:items.id}
 
                                       }} passHref>
-                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
+                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
                                         <IconReview />
                                         <div className="text-hover-show-hapus">
                                           Review
                                         </div>
                                       </a>
                                       </Link>
-
-                                      <button
-                                      type="button"
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        onClick={() =>
-                                          cooperationRejection(items.id)
-                                        }
-                                      >
-                                        <Image
-                                          src={`/assets/icon/Ditolak.svg`}
-                                          width={19}
-                                          height={19}
-                                          alt="ditolak"
-                                        />
-
-                                        <div className="text-hover-show-hapus">
-                                          Dibatalkan
-                                        </div>
-                                      </button>
                                     </div>
                                   ) : (
                                     <div className="d-flex align-items-center">

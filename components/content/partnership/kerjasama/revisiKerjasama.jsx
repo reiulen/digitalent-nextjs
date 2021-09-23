@@ -1,21 +1,18 @@
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 
-import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
+import React, { useState, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Select from "react-select";
 import axios from "axios";
 
 import IconCalender from "../../../assets/icon/Calender";
 
-const RevisiKerjasama = () => {
+const RevisiKerjasama = ({ token }) => {
   const router = useRouter();
 
   const [startDate, setStartDate] = useState(null);
@@ -52,72 +49,102 @@ const RevisiKerjasama = () => {
       setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
       setTgl_ttd(data.data.signing_date);
       setDokument(data.data.document);
-
-      console.log("data asdasdasd", data);
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
   };
 
-  const acceptDokument = async (e) => {
-    console.log("acceptDokument");
+  const acceptDokument = (e) => {
     e.preventDefault();
-    try {
-      let { data } = await axios.put(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept-document/${router.query.id}`
-      );
-      console.log("data", data);
-      router.push({
-        pathname: "/partnership/kerjasama/",
-        query: { successTerima: true },
-      });
-    } catch (error) {
-      console.log("error acceptDokument", error);
-    }
+    Swal.fire({
+      title: "Apakah anda yakin ingin terima kerjasama ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        try {
+          let { data } = await axios.put(
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept-document/${router.query.id}`
+          );
+          router.push({
+            pathname: "/partnership/kerjasama/",
+            query: { successTerima: true },
+          });
+        } catch (error) {
+          console.log("error acceptDokument", error);
+        }
+      }
+    });
   };
 
-  const rejectDokument = async (e) => {
-    console.log("rejectDokument");
+  const rejectDokument = (e) => {
     e.preventDefault();
-    try {
-      let { data } = await axios.put(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`
-      );
-
-      console.log("data asdasd", data);
-      router.push({
-        pathname: "/partnership/kerjasama/",
-        query: { successReject: true },
-      });
-    } catch (error) {
-      console.log("error acceptDokument", error);
-    }
+    Swal.fire({
+      title: "Apakah anda yakin ingin tolak kerjasama ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        try {
+          let { data } = await axios.put(
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`
+          );
+          router.push({
+            pathname: "/partnership/kerjasama/",
+            query: { successReject: true },
+          });
+        } catch (error) {
+          console.log("error acceptDokument", error);
+        }
+      }
+    });
   };
   const ajukanRevisiDokumen = async (e) => {
     e.preventDefault();
-    if(catatanREvisi === ""){
+    if (catatanREvisi === "") {
       setError({ ...error, catatanREvisi: "Catatan Revisi harus diisi" });
       notify("Catatan Revisi harus diisi");
-
-    }else{
-
-      try {
-        let formData = new FormData();
-        formData.append("_method", "PUT");
-        formData.append("note", catatanREvisi);
-        let { data } = await axios.post(
-          `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi-document/${router.query.id}`,
-          formData
-        );
-  
-        console.log("data asdasd", data);
-        router.push({
-          pathname: "/partnership/kerjasama/",
-          query: { successMakeREvisi: true },
-        });
-      } catch (error) {
-        console.log("error acceptDokument", error);
-      }
+    } else {
+      Swal.fire({
+        title: "Apakah anda yakin ingin ajukan revisi ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          try {
+            let formData = new FormData();
+            formData.append("_method", "PUT");
+            formData.append("note", catatanREvisi);
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi-document/${router.query.id}`,
+              formData
+            );
+            router.push({
+              pathname: "/partnership/kerjasama/",
+              query: { successMakeREvisi: true },
+            });
+          } catch (error) {
+            console.log("error acceptDokument", error);
+          }
+        }
+      });
     }
   };
 
@@ -229,10 +256,11 @@ const RevisiKerjasama = () => {
                   </label>
                   <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                     <DatePicker
+                      readOnly
                       value={tgl_ttd && tgl_ttd}
                       className="form-search-date form-control-sm form-control cursor-pointer"
                       selected={startDate}
-                       selectsStart
+                      selectsStart
                       dateFormat="YYYY-MM-DD"
                       placeholderText="Dari Tanggal"
                       minDate={moment().toDate()}
@@ -279,15 +307,11 @@ const RevisiKerjasama = () => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  {/* {items.cooperation_form} */}
                   Catatan Revisi
                 </label>
                 <div>
                   <textarea
-                    onFocus={() =>
-                      setError({ ...error, catatanREvisi: "" })
-                    }
-                    // onChange={(e) => changeFormCooporation(index, e)}
+                    onFocus={() => setError({ ...error, catatanREvisi: "" })}
                     onChange={(e) => setCatatanREvisi(e.target.value)}
                     name="cooperation"
                     id=""
@@ -297,43 +321,29 @@ const RevisiKerjasama = () => {
                     className="form-control"
                     placeholder="Masukan Tujuan Kerjasama"
                   ></textarea>
-                  {/* {error.AllCooperation ? (
-                              <p className="error-text">
-                                {error.AllCooperation}
-                              </p>
-                            ) : (
-                              ""
-                            )} */}
-                            {error.catatanREvisi ? <p className="error-text">{error.catatanREvisi}</p> : ""}
+                  {error.catatanREvisi ? (
+                    <p className="error-text">{error.catatanREvisi}</p>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <button
-                    // type="button"
                     onClick={(e) => rejectDokument(e)}
                     className="btn btn-sm btn-rounded-full bg-red-primary text-white"
                   >
                     Tolak
                   </button>
                   <button
-                    // type="button"
                     onClick={(e) => ajukanRevisiDokumen(e)}
                     className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-5"
                   >
                     Ajukan Revisi
                   </button>
-                  {/* <Link
-                    href="/partnership/kerjasama/detail-revisi-kerjasama"
-                    passHref
-                  >
-                    <a className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-5">
-                      Ajukan Revisi
-                    </a>
-                  </Link> */}
                   <button
-                    // type="button"
                     onClick={(e) => acceptDokument(e)}
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                   >

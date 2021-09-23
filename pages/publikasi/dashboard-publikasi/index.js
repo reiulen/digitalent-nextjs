@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { getSession } from "next-auth/client";
 
 // import Layout from "../../../components/templates/layout.component";
 // import Berita from "../../../components/content/publikasi/berita/berita";
@@ -12,10 +13,10 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const DashboardPublikasi = dynamic(
     () => import("../../../components/content/publikasi/dashboard-publikasi/dashboard-publikasi"),
-    { 
+    {
         // suspense: true,
         // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        loading: function loadingNow() { return <LoadingSkeleton /> },
         ssr: false
     }
 );

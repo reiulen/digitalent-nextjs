@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getSingleCooperation } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
-const DetailDokumenKerjasama = () => {
+const DetailDokumenKerjasama = ({token}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { success } = router.query;
@@ -18,7 +18,6 @@ const DetailDokumenKerjasama = () => {
   const allMK = useSelector((state) => state.allMK);
 
   const [pdfFIle, setPdfFIle] = useState("");
-  const [showPdf, setShowPdf] = useState(false);
 
   const getSingleValue = async (id) => {
     try {
@@ -54,8 +53,6 @@ const DetailDokumenKerjasama = () => {
               data-dismiss="alert"
               aria-label="Close"
               // onClick={onNewReset}
-
-              
             >
               <span aria-hidden="true">
                 <i className="ki ki-close"></i>
@@ -138,8 +135,6 @@ const DetailDokumenKerjasama = () => {
                       onChange={(date) => setStartDate(date)}
                       selectsStart
                       readOnly
-                      // startDate={startDate}
-                      // endDate={endDate}
                       value={
                         allMK.cooperationById.length === 0
                           ? ""
@@ -161,8 +156,6 @@ const DetailDokumenKerjasama = () => {
                           ? ""
                           : allMK.cooperationById.data.period_date_end
                       }
-                      // startDate={startDate}
-                      // endDate={endDate}
                       minDate={startDate}
                       readOnly
                       maxDate={addDays(startDate, 20)}
@@ -179,19 +172,6 @@ const DetailDokumenKerjasama = () => {
                 </label>
                 <div className="row">
                   <div className="col-12 col-sm-6">
-                    {/* <DatePicker
-                        className="form-control-sm form-control"
-                        selected={startDate}
-                        onChange={(date) => setStartDate(date)}
-                        selectsStart
-                        value={allMK.cooperationById.length===0 ? "":allMK.cooperationById.data.period}
-                        readOnly
-                        startDate={startDate}
-                        endDate={endDate}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Dari Tanggal"
-                        // minDate={addDays(new Date(), 20)}
-                      /> */}
                     <input
                       type="text"
                       value={
@@ -204,20 +184,6 @@ const DetailDokumenKerjasama = () => {
                     />
                   </div>
                   <div className="col-12 col-sm-6">
-                    {/* <DatePicker
-                        className="form-control-sm form-control"
-                        // selected={endDate}
-                        readOnly
-                        
-                        // onChange={(date) => setEndDate(date)}
-                        selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
-                        // maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      /> */}
                     <input
                       type="text"
                       value={
@@ -231,38 +197,6 @@ const DetailDokumenKerjasama = () => {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Nama Lembaga
-                </label>
-                <input
-                  type="text"
-                  value={
-                    allMK.cooperationById.length === 0
-                      ? ""
-                      : allMK.cooperationById.data.institution_name
-                  }
-                  readOnly
-                  className="form-control"
-                />
-              </div> */}
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Email
-                </label>
-                <input
-                  type="text"
-                  value={
-                    allMK.cooperationById.length === 0
-                      ? ""
-                      : allMK.cooperationById.data.email
-                  }
-                  readOnly
-                  className="form-control"
-                />
-              </div> */}
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -344,40 +278,6 @@ const DetailDokumenKerjasama = () => {
                   </div>
                 </div>
               </div>
-
-              {/* ------------- jangan dihapus !! */}
-
-              {/* <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Dokumen Kerjasama
-                </label>
-                <div className="row">
-                  <div className="col-12 col-sm-3">
-                    <button
-                      type="button"
-                      onClick={() => setShowPdf(showPdf ? false : true)}
-                      className="btn btn-primary btn-sm"
-                    >
-                      {showPdf ? "Tutup dokument" : "Lihat Dokumen"}
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {showPdf ? (
-                <iframe
-                  className="mb-4 border"
-                  src={`https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`}
-                  frameBorder="0"
-                  scrolling="auto"
-                  height={"500px"}
-                  width="100%"
-                ></iframe>
-              ) : (
-                ""
-              )} */}
-
-              {/* start loop */}
 
               {allMK.cooperationById.length === 0 ? (
                 ""

@@ -41,7 +41,7 @@ import LoadingTable from "../../../LoadingTable";
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/mitra.type";
 import moment from "moment";
 
-const DetailDataKerjasama = () => {
+const DetailDataKerjasama = ({token}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { update } = router.query;
@@ -66,8 +66,6 @@ const DetailDataKerjasama = () => {
   };
 
   const resetValueSort = () => {
-    // document.getElementById("list-kerjasama").selectedIndex = 0;
-    // document.getElementById("list-status").selectedIndex = 0;
     selectRefKerjasama.select.clearValue();
     selectRefStatus.select.clearValue();
     setValueKerjaSama("");
@@ -80,14 +78,6 @@ const DetailDataKerjasama = () => {
   };
 
   const [deleteBar, setDeleteBar] = useState(false);
-
-
-  // const onNewReset = () => {
-  //   router.replace(`/partnership/mitra/detail/${router.query.id}`);
-  //   setDeleteBar(false);
-  //   setBarStatus(false);
-  // };
-
 
   const onNewReset = () => {
     setDeleteBar(false);
@@ -142,7 +132,6 @@ const DetailDataKerjasama = () => {
 
   const [getId, setgetId] = useState("");
   useEffect(() => {
-    // getDataSingleAll(router.query.id)
     if (router.query.id) {
       setgetId(router.query.id);
       dispatch(getSingleValue(router.query.id));
@@ -316,11 +305,7 @@ const DetailDataKerjasama = () => {
                     </button>
                     {/* modal */}
                     <form
-                      // id="kt_docs_formvalidation_text"
                       className="form text-left"
-                      // action="#"
-                      // autoComplete="off"
-                      // onSubmit={handleSubmitSearchMany}
                     >
                       <div
                         className="modal fade"
@@ -374,7 +359,6 @@ const DetailDataKerjasama = () => {
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
-                                  // onChange={(e) => setValueKerjaSama(e?.cooperation_categories )}
                                   onChange={(e) =>
                                     setValueKerjaSama(e?.cooperation_categories)
                                   }
@@ -406,9 +390,6 @@ const DetailDataKerjasama = () => {
                             </div>
                             <div className="modal-footer">
                               <div className="d-flex justify-content-end align-items-center">
-                                {/* <Link href="/compoenent">
-                                        <a className="btn btn-white">Reset</a>
-                                      </Link> */}
                                 <button
                                   className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                   type="button"
@@ -544,12 +525,6 @@ const DetailDataKerjasama = () => {
                                     <option value="1">Disetujui</option>
                                     <option value="2">Tidak Aktif</option>
                                   </select>
-                                  {/* <IconArrow
-                                    className="right-center-absolute"
-                                    style={{ right: "10px" }}
-                                    width="7"
-                                    height="7"
-                                  /> */}
                                 </div>
                               ) : items.status.name === "aktif" &&
                                 moment(items.period_date_start).format(
@@ -606,10 +581,7 @@ const DetailDataKerjasama = () => {
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue"
-                                    // key={index}
-                                    // onChange={(e) =>
-                                    //   changeListStatus(e.target.value, items.id)
-                                    // }
+                                  
                                   >
                                     <option value="">Pengajuan - Review</option>
                                   </select>
@@ -627,10 +599,7 @@ const DetailDataKerjasama = () => {
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-yellow"
-                                    // key={index}
-                                    // onChange={(e) =>
-                                    //   changeListStatus(e.target.value, items.id)
-                                    // }
+                                   
                                   >
                                     <option value="">Pengajuan - Revisi</option>
                                   </select>
@@ -648,10 +617,7 @@ const DetailDataKerjasama = () => {
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue pr-10"
-                                    // key={index}
-                                    // onChange={(e) =>
-                                    //   changeListStatus(e.target.value, items.id)
-                                    // }
+                                    
                                   >
                                     <option value="6">Pengajuan-Selesai</option>
                                     <option value="5">
@@ -672,10 +638,7 @@ const DetailDataKerjasama = () => {
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue"
-                                    // key={index}
-                                    // onChange={(e) =>
-                                    //   changeListStatus(e.target.value, items.id)
-                                    // }
+                                   
                                   >
                                     <option value="">
                                       Pengajuan - Selesai
@@ -689,10 +652,7 @@ const DetailDataKerjasama = () => {
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue"
-                                    // key={index}
-                                    // onChange={(e) =>
-                                    //   changeListStatus(e.target.value, items.id)
-                                    // }
+                                   
                                   >
                                     <option value="">
                                       Pengajuan - Dokumen
@@ -706,10 +666,7 @@ const DetailDataKerjasama = () => {
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-red-primary"
-                                    // key={index}
-                                    // onChange={(e) =>
-                                    //   changeListStatus(e.target.value, items.id)
-                                    // }
+                                  
                                   >
                                     <option value="">Ditolak</option>
                                   </select>
@@ -840,26 +797,7 @@ const DetailDataKerjasama = () => {
                                   </button>
                                 </div>
                               ) : items.status.name === "pengajuan-review" ? (
-                                // <div className="d-flex align-items-center">
-                                //   <button
-                                //     className="btn btn-link-action bg-blue-secondary btn-delete position-relative"
-                                //     onClick={() =>
-                                //       router.push({
-                                //         pathname: `/partnership/mitra/detail/mitra/${items.id}`,
-                                //         query: { idDetail: getId },
-                                //       })
-                                //     }
-                                //   >
-                                //     <IconEye
-                                //       width="14"
-                                //       height="12"
-                                //       fill="rgba(255,255,255,1)"
-                                //     />
-                                //     <div className="text-hover-show-hapus">
-                                //       Review
-                                //     </div>
-                                //   </button>
-                                // </div>
+                               
                                 <div className="d-flex align-items-center">
                                       <Link href={{pathname:"/partnership/kerjasama/revisi-kerjasama",query:{id:items.id}}}>
                                       <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
@@ -871,26 +809,7 @@ const DetailDataKerjasama = () => {
                                       </Link>
                                     </div>
                               ) : items.status.name === "pengajuan-revisi" ? (
-                                // <div className="d-flex align-items-center">
-                                //   <button
-                                //     className="btn btn-link-action bg-blue-secondary btn-delete position-relative"
-                                //     onClick={() =>
-                                //       router.push({
-                                //         pathname: `/partnership/mitra/detail/mitra/${items.id}`,
-                                //         query: { idDetail: getId },
-                                //       })
-                                //     }
-                                //   >
-                                //     <IconEye
-                                //       width="14"
-                                //       height="12"
-                                //       fill="rgba(255,255,255,1)"
-                                //     />
-                                //     <div className="text-hover-show-hapus">
-                                //       Review
-                                //     </div>
-                                //   </button>
-                                // </div>
+                                
                                 <div className="d-flex align-items-center">
 
                                       <Link href={{
@@ -946,11 +865,7 @@ const DetailDataKerjasama = () => {
                                 <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                       
                                       >
                                         <Image
                                           src={`/assets/icon/Ditolak.svg`}
@@ -980,9 +895,7 @@ const DetailDataKerjasama = () => {
                                       <button
                                       type="button"
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   cooperationRejection(items.id)
-                                        // }
+                                       
                                       >
                                         <Image
                                           src={`/assets/icon/Ditolak.svg`}
@@ -1000,11 +913,7 @@ const DetailDataKerjasama = () => {
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/kerjasama/view/${items.id}`
-                                        //   )
-                                        // }
+                                       
                                       >
                                         <IconEye
                                           width="16"
@@ -1017,11 +926,7 @@ const DetailDataKerjasama = () => {
                                       </button>
                                       <button
                                         className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   router.push(
-                                        //     `/partnership/kerjasama/edit/${items.id}`
-                                        //   )
-                                        // }
+                                        
                                       >
                                         <IconPencil width="16" height="16" />
 
@@ -1031,9 +936,7 @@ const DetailDataKerjasama = () => {
                                       </button>
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                        // onClick={() =>
-                                        //   cooperationDelete(items.id)
-                                        // }
+                                       
                                       >
                                         <IconDelete width="16" height="16" />
                                         <div className="text-hover-show-hapus">

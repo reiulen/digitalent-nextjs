@@ -20,7 +20,7 @@ import IconSearch from "../../../assets/icon/Search";
 import IconPencil from "../../../assets/icon/Pencil";
 import IconDelete from "../../../assets/icon/Delete";
 
-const Table = () => {
+const Table = ({token}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { success, update } = router.query;
@@ -59,12 +59,6 @@ const Table = () => {
     setSuccessDelete(false);
     router.replace("/partnership/tanda-tangan", undefined, { shallow: true });
   };
-  
-  
-  // setSuccessDelete(false);
-  // const onNewReset = () => {
-  //   router.replace(`/partnership/tanda-tangan`);
-  // };
 
   useEffect(() => {
     dispatch(fetchSignature());

@@ -11,12 +11,13 @@ const Dashboard = dynamic(
   { loading: () => <LoadingSkeleton /> }
 );
 
-export default function KerjaSamaPage() {
+export default function KerjaSamaPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Dashboard - Partnership"> */}
-        <Dashboard />
+        <Dashboard token={session.token} />
         {/* </Layout> */}
       </div>
     </>

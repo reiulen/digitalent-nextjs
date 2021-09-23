@@ -113,7 +113,7 @@ const SubmitKerjasama = () => {
       notify("Harus unggah file");
     } else {
       Swal.fire({
-        title: "Apakah anda yakin ?",
+        title: "Apakah anda yakin ingin simpan ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -153,7 +153,7 @@ const SubmitKerjasama = () => {
             // alert('berhasil');
             router.push({
               pathname: `/partnership/user/kerjasama/review-dokumen-kerjasama`,
-              query: { successSubmitDokumentKerjasama: true, id:id },
+              query: { successSubmitDokumentKerjasama: true, id:router.query.id },
             });
           } catch (error) {
             alert("gagal menambahkan data tipe file harus pdf");
@@ -325,7 +325,6 @@ const SubmitKerjasama = () => {
             </div>
 
             <form onSubmit={submit}>
-              '
               
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">

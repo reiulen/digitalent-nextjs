@@ -13,7 +13,6 @@ import IconPencil from "../../../assets/icon/Pencil";
 import IconAdd from "../../../assets/icon/Add";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
-import CardPage from "../../../CardPage";
 import {
   fetchMitra,
   searchByKey,
@@ -27,7 +26,7 @@ import LoadingTable from "../../../LoadingTable";
 
 import Swal from "sweetalert2";
 
-const Table = () => {
+const Table = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { success, update } = router.query;
@@ -60,21 +59,10 @@ const Table = () => {
       }
     });
   };
-
-
-  // const onNewReset = () => {
-  //   setSuccessDelete(false);
-  //   router.replace(`/partnership/mitra`);
-  // };
-
-
   const onNewReset = () => {
     setSuccessDelete(false);
     router.replace("/partnership/mitra", undefined, { shallow: true });
   };
-
-
-
 
   useEffect(() => {
     dispatch(fetchMitra());
@@ -178,17 +166,6 @@ const Table = () => {
       ) : (
         ""
       )}
-
-      {/* <div className="col-lg-12 col-md-12">
-        <CardPage
-          background="bg-light-success "
-          icon="user-blue.svg"
-          color="#ffffff"
-          value={allMitra.totalDataMitra}
-          titleValue="Mitra"
-          title="Total Mitra"
-        />
-      </div> */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="d-flex flex-wrap align-items-center justify-content-between p-8">

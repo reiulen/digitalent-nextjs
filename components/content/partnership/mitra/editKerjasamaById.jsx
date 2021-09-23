@@ -25,19 +25,15 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditDokumentKerjasamaById = () => {
+const EditDokumentKerjasamaById = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { idDetail } = router.query;
 
   const allMK = useSelector((state) => state.allMK);
   //
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   //
   // state onchange form data
-  let singleproduct = useSelector((state) => state.allMK);
-  // console.log("singleproduct",singleproduct)
   const [isntitusiName, setIsntitusiName] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -109,7 +105,6 @@ const EditDokumentKerjasamaById = () => {
     setPdfFile(null);
     setNamePDF(null);
   };
-  // console.log("viewPDF",viewPDF)
 
   const handleSubmit = async () => {
     // e.preventDefault();
@@ -225,7 +220,6 @@ const EditDokumentKerjasamaById = () => {
 
   // onchange textarea default cooperationID
   const changeDataContentDefault = (event, i) => {
-    // console.log("object")
     let dataCoopertaion = { ...cooperationID };
     dataCoopertaion.data_content[i].form_content = event.target.value;
     setCooperationID(dataCoopertaion);
@@ -373,13 +367,13 @@ const EditDokumentKerjasamaById = () => {
                       </select>
                     </div>
                     <div className="col-12 col-sm-3">
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2 w-100 d-flex justify-content-center"
-                      onClick={() => dispatch(fetchListCooperationSelect())}
-                    >
-                      Ubah Kategory
-                    </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2 w-100 d-flex justify-content-center"
+                        onClick={() => dispatch(fetchListCooperationSelect())}
+                      >
+                        Ubah Kategory
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -402,24 +396,26 @@ const EditDokumentKerjasamaById = () => {
                         <option value="">Pilih Kategory Kerjasama</option>
                         {allMK.cooperationActiveSelect.length === 0
                           ? ""
-                          : allMK.cooperationActiveSelect.data.map((items, i) => {
-                              return (
-                                <option key={i} value={items.id}>
-                                  {items.cooperation_categories}
-                                </option>
-                              );
-                            })}
+                          : allMK.cooperationActiveSelect.data.map(
+                              (items, i) => {
+                                return (
+                                  <option key={i} value={items.id}>
+                                    {items.cooperation_categories}
+                                  </option>
+                                );
+                              }
+                            )}
                       </select>
                     </div>
                     <div className="col-12 col-sm-3">
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2 d-flex justify-content-center"
-                      onClick={() => dispatch(cancelChangeCategory())}
-                    >
-                      Batal Ubah Kategory
-                    </button>
-                  </div>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2 d-flex justify-content-center"
+                        onClick={() => dispatch(cancelChangeCategory())}
+                      >
+                        Batal Ubah Kategory
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -450,29 +446,12 @@ const EditDokumentKerjasamaById = () => {
                 </label>
                 <div className="row">
                   <div className="col-12 col-sm-6">
-                    {/* <input
-                        required
-                        type="date"
-                        onChange={(e) => setPeriodDateStart(e.target.value)}
-                        value={periodDateStart}
-                        className="form-control"
-                      /> */}
-
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
-                        // selected={periodDateStart}
-                        // onChange={(date) =>
-                        //   setPeriodDateStart(moment(date).format("YYYY-MM-DD"))
-                        // }
                         onChange={(date) => onChangePeriodeDateStart(date)}
                         value={periodDateStart}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
                         minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       />
@@ -486,17 +465,11 @@ const EditDokumentKerjasamaById = () => {
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
-                        // selected={periodDateStart}
                         onChange={(date) =>
                           setPeriodDateEnd(moment(date).format("YYYY-MM-DD"))
                         }
                         value={periodDateEnd}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
                         minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       />
@@ -505,14 +478,6 @@ const EditDokumentKerjasamaById = () => {
                         style={{ right: "10px" }}
                       />
                     </div>
-                    {/* 
-                      <input
-                        required
-                        onChange={(e) => setPeriodDateEnd(e.target.value)}
-                        type="date"
-                        value={periodDateEnd}
-                        className="form-control"
-                      /> */}
                   </div>
                 </div>
               </div>
@@ -574,17 +539,11 @@ const EditDokumentKerjasamaById = () => {
                 <div className="d-flex align-items-center position-relative datepicker-w">
                   <DatePicker
                     className="form-search-date form-control-sm form-control cursor-pointer"
-                    // selected={periodDateStart}
                     onChange={(date) =>
                       setSigninDate(moment(date).format("YYYY-MM-DD"))
                     }
                     value={signinDate}
-                    // selectsEnd
-                    // startDate={startDate}
-                    // endDate={endDate}
-                    // minDate={startDate}
                     minDate={moment().toDate()}
-                    // maxDate={addDays(startDate, 20)}
                     dateFormat="dd/MM/yyyy"
                     placeholderText="Sampai Tanggal"
                   />
@@ -604,28 +563,25 @@ const EditDokumentKerjasamaById = () => {
                 {/* start action show and upload */}
                 <div className="row">
                   <div className="col-12">
-
                     <div className="d-flex flex-wrap align-items-center">
-
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
-                      onClick={() => showDocument()}
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
+                        onClick={() => showDocument()}
                       >
-                      {viewPDF || showDokument
-                        ? "Tutup dokumen"
-                        : "Lihat dokumen"}
-                    </button>
-                    {" "}
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white  mt-2 mr-3"
-                      onClick={() => setDocumentChange()}
+                        {viewPDF || showDokument
+                          ? "Tutup dokumen"
+                          : "Lihat dokumen"}
+                      </button>{" "}
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white  mt-2 mr-3"
+                        onClick={() => setDocumentChange()}
                       >
-                      {!changeDokumen ? "Ubah dokumen" : "Batal Ubah"}
-                    </button>
+                        {!changeDokumen ? "Ubah dokumen" : "Batal Ubah"}
+                      </button>
                     </div>
-                      </div>
+                  </div>
                 </div>
 
                 {changeDokumen && !viewPDF ? (
@@ -662,7 +618,9 @@ const EditDokumentKerjasamaById = () => {
                 )}
                 <div
                   className={`${
-                    viewPDF ? "pdf-container w-100 mt-3" : "pdf-container d-none"
+                    viewPDF
+                      ? "pdf-container w-100 mt-3"
+                      : "pdf-container d-none"
                   }`}
                 >
                   <iframe
@@ -699,25 +657,24 @@ const EditDokumentKerjasamaById = () => {
                       <div
                         key={i}
                         className={`form-group ${
-                          allMK.cooperationActiveSelect.length !== 0 ? "d-none" : ""
+                          allMK.cooperationActiveSelect.length !== 0
+                            ? "d-none"
+                            : ""
                         }`}
                       >
-                        <label
-                          htmlFor="staticEmail"
-                          className="col-form-label"
-                        >
+                        <label htmlFor="staticEmail" className="col-form-label">
                           {items.cooperation_form}
                         </label>
-                          <textarea
-                            onChange={(e) => changeDataContentDefault(e, i)}
-                            value={items.form_content}
-                            name=""
-                            id={i}
-                            cols="30"
-                            rows="5"
-                            className="form-control"
-                            placeholder="Masukkan Tujuan Kerjasama disini"
-                          ></textarea>
+                        <textarea
+                          onChange={(e) => changeDataContentDefault(e, i)}
+                          value={items.form_content}
+                          name=""
+                          id={i}
+                          cols="30"
+                          rows="5"
+                          className="form-control"
+                          placeholder="Masukkan Tujuan Kerjasama disini"
+                        ></textarea>
                       </div>
                     );
                   })}
@@ -743,22 +700,20 @@ const EditDokumentKerjasamaById = () => {
                           >
                             {items.cooperation_form}
                           </label>
-                            <textarea
-                              required
-                              onChange={(e) => changeFormCooporation(index, e)}
-                              name="cooperation"
-                              id={index + 1}
-                              cols="30"
-                              rows="5"
-                              className="form-control"
-                              placeholder="Masukan Tujuan Kerjasama"
-                            ></textarea>
+                          <textarea
+                            required
+                            onChange={(e) => changeFormCooporation(index, e)}
+                            name="cooperation"
+                            id={index + 1}
+                            cols="30"
+                            rows="5"
+                            className="form-control"
+                            placeholder="Masukan Tujuan Kerjasama"
+                          ></textarea>
                         </div>
                       );
                     }
                   )}
-
-
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
@@ -776,11 +731,6 @@ const EditDokumentKerjasamaById = () => {
                   </button>
                 </div>
               </div>
-
-
-
-
-
             </form>
           </div>
         </div>

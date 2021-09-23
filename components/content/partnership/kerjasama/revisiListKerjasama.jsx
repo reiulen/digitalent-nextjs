@@ -1,13 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from 'next/link'
 
-import Style from "../../../../styles/progressbar.module.css";
-
-function RevisiList() {
+function RevisiList({token}) {
   const router = useRouter();
   const cardContainer = {
     background: "#FFFFFF",
@@ -22,7 +19,7 @@ function RevisiList() {
     fontWeight: "600",
     background: "#E6F7F1",
     borderRadius: "4px",
-    padding: "4px",
+    padding:"4px 10px"
   };
 
   const styleList = {
@@ -77,16 +74,18 @@ function RevisiList() {
                     <p style={{ color: "#ADB5BD" }}>Revisi Versi.{items.version}</p>
                   </div>
 
-                  {/* <span style={labelStyle}>{items.information2}</span> */}
-
-                  <Link href={{
+                  {items.information2 === "Sudah direvisi" ? <Link href={{
+                    pathname:"/partnership/kerjasama/review-kerjasama",
+                    query:{id:router.query.id,version:items.version,statusInfo:items.information2}
+                  }}>
+                 <a style={labelStyle}>{items.information2}</a> 
+                  </Link> :<Link href={{
                     pathname:"/partnership/kerjasama/review-kerjasama",
                     query:{id:router.query.id,version:items.version,statusInfo:items.information2}
                   }}>
                  <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">{items.information2}</a> 
-                  </Link>
-
-
+                  </Link>}
+                  
                 </div>
               </li>
                 )
@@ -94,19 +93,6 @@ function RevisiList() {
               
                 }
             </ul>
-
-            {/* <div
-              className="d-flex align-items-center justify-content-between mt-8"
-              style={cardContainer}
-            >
-              <div>
-                <h1 className="fw-500 fz-20" style={{color:"#6C6C6C"}}>Perjanjian Kerjasama</h1>
-                <p className="mt-4" style={{color:"#ADB5BD"}}>Pengajuan Kerjasama Anda Perlu direvisi.</p>
-                <p style={{color:"#ADB5BD"}}>Revisi Versi.2</p>
-              </div>
-
-              <button className="btn btn-sm btn-rounded-full bg-blue-primary text-white">Lihat Detail REvisi</button>
-            </div> */}
           </div>
         </div>
       </div>

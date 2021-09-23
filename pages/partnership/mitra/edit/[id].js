@@ -11,12 +11,13 @@ const EditMitra = dynamic(
   { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
-export default function EditMitraPage() {
+export default function EditMitraPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Ubah Mitra - Paretnership"> */}
-        <EditMitra />
+        <EditMitra token={session.token} />
         {/* </Layout> */}
       </div>
     </>
