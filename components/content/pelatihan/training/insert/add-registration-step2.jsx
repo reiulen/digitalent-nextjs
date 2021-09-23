@@ -320,7 +320,9 @@ const AddRegistrationStep2 = () => {
               {modalShow === true
                 ? row.option === "manual"
                   ? row.dataOption.map((dat, i) => (
-                      <option value={dat}>{dat}</option>
+                      <option value={dat} key={i}>
+                        {dat}
+                      </option>
                     ))
                   : ""
                 : ""}
@@ -338,7 +340,7 @@ const AddRegistrationStep2 = () => {
               {modalShow === true
                 ? row.option === "manual"
                   ? row.dataOption.map((dat, i) => (
-                      <div className="form-check pb-3">
+                      <div className="form-check pb-3" key={i}>
                         <input
                           type="checkbox"
                           name="plotRegistration"
@@ -381,7 +383,7 @@ const AddRegistrationStep2 = () => {
               {modalShow === true
                 ? row.option === "manual"
                   ? row.dataOption.map((dat, i) => (
-                      <div className="form-check pb-3">
+                      <div className="form-check pb-3" key={i}>
                         <input
                           type="radio"
                           name={row.name}
