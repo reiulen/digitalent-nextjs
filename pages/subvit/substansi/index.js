@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 
 import dynamic from "next/dynamic";
 // import Layout from "../../../components/templates/layout.component";
@@ -10,11 +10,12 @@ import { getAllSubtanceQuestionBanks } from "../../../redux/actions/subvit/subta
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function Substansi() {
+export default function Substansi(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ListSubstansi />
+        <ListSubstansi token={session.token} />
       </div>
     </>
   );

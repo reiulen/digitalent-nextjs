@@ -2,33 +2,48 @@ import React, { useState, useRef, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Style from "../../../../styles/progressbar.module.css";
+import axios from "axios";
 
 function Pembahasan() {
-  const headText = {
-    "font-weight": "bold",
-    "line-height": "124.5%",
-    "margin-top": "2rem",
-    color: "#626262",
+  const router = useRouter();
+  const { id } = router.query;
+
+  console.log("id", id);
+
+  const [status, setStatus] = useState("");
+  const cekProgresStatus = async (id) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+          },
+        }
+      );
+
+      console.log("data a a a ssss", data.data.status_migrates_id.status);
+      setStatus(data.data.status_migrates_id.status);
+    } catch (error) {
+      console.log("gagal get province", error);
+    }
   };
 
-  const childText = {
-    "font-weight": "normal",
-    "font-size": "15px",
-    "line-height": "124.5%",
-    "margin-top": "1rem",
-    color: "#626262",
-  };
+  useEffect(() => {
+    // api cek progress
+    console.log("router.query.id", router.query.id);
+    cekProgresStatus(router.query.id);
+  }, [router.query.id]);
 
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title fz-20 fw-500 text-dark">
-              Pembahasan
-            </h3>
+            <h3 className="card-title fz-20 fw-500 text-dark">Pembahasan</h3>
           </div>
           <div className="card-body pb-28">
             <div className="row mt-8 mb-10">
@@ -97,31 +112,52 @@ function Pembahasan() {
               </div>
               <div className="col-12 col-sm-6">
                 <div className="d-flex flex-column align-items-start justify-content-center h-100">
-                  <h1 className="fz-40 fw-700" style={{color:"#6C6C6C"}}>Pengajuan Anda Telah Diterima</h1>
-                  <p className="mt-5 fz-16">Selamat! Pengajuan anda telah diterima.</p>
-                  <p className="fz-16">Selanjutnya proses pembahasan detail kerjasama akan di infokan ke kontak PIC anda</p>
+                  <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
+                    Pengajuan Anda Telah Diterima
+                  </h1>
+                  <p className="mt-5 fz-16">
+                    Selamat! Pengajuan anda telah diterima.
+                  </p>
+                  <p className="fz-16">
+                    Selanjutnya proses pembahasan detail kerjasama akan di
+                    infokan ke kontak PIC anda
+                  </p>
                 </div>
 
                 <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Input Tanda Tangan Digital
-                    </a>
-                  </Link>
-                  <button
-                    type="submit"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                  >
-                    Submit Dokumen Kerjasama
-                  </button>
+                  <div className="col-sm-12 d-flex justify-content-end">
+                    <Link href="/partnership/kerjasama">
+                      <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                        Input Tanda Tangan Digital
+                      </a>
+                    </Link>
+
+                    {status === "" ? (
+                      ""
+                    ) : status === "pengajuan-selesai" ? (
+                      <Link
+                        href={{
+                          pathname: "/partnership/user/kerjasama/submit-dokumen-kerjasama",
+                          query: { id: router.query.id },
+                        }}
+                        passHref
+                      >
+                        <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                          Submit Dokumen Kerjasama
+                        </a>
+                      </Link>
+                    ) : (
+                      // <button
+                      //   type="submit"
+                      //   className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                      // >
+
+                      // </button>
+
+                      ""
+                    )}
+                  </div>
                 </div>
-              </div>
-
-
-
-
-
               </div>
             </div>
           </div>

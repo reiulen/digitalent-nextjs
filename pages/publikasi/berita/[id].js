@@ -5,6 +5,7 @@ import Layout from "../../../components/templates/layout.component";
 // import EditBerita from "../../../components/content/publikasi/berita/edit"
 
 import { getDetailBerita } from '../../../redux/actions/publikasi/berita.actions'
+import { getAllKategori } from '../../../redux/actions/publikasi/kategori.actions'
 import { wrapper } from '../../../redux/store'
 
 import LoadingPage from "../../../components/LoadingPage";
@@ -19,27 +20,34 @@ const EditBerita = dynamic(
     }
 );
 
-export default function EditBeritaPage() {
+export default function EditBeritaPage(props) {
+    const session = props.session.user.user.data;
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Ubah Berita - Publikasi'>
-                    <EditBerita />
-                </Layout>
+                <EditBerita token={session.token}/>
             </div>
         </>
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, req }) => {
-    const session = await getSession({ req });
-    if (!session) {
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params, req }) => {
+      const session = await getSession({ req });
+      if (!session) {
         return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
         };
+      }
+      await store.dispatch(getDetailBerita(params.id,  session.user.user.data.token));
+      await store.dispatch(getAllKategori(session.user.user.data.token))
+
+      return {
+        props: { session, title: "Edit Berita - Publikasi" },
+    };
     }
-    await store.dispatch(getDetailBerita(params.id, session.user.user.data.token))
-})
+);

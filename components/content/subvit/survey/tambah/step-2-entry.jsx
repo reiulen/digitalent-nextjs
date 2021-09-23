@@ -17,7 +17,7 @@ import ObjectiveComponent from "./step-2/objective-component";
 import MultipleChoiceComponent from "./step-2/multiple-choice-component";
 import TriggeredQuestionComponent from "./step-2/triggered-question-component";
 
-const StepTwo = () => {
+const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -164,7 +164,7 @@ const StepTwo = () => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data));
+          dispatch(newSurveyQuestionDetail(data, token));
         }
         break;
       case "multiple_choice":
@@ -190,7 +190,7 @@ const StepTwo = () => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data));
+          dispatch(newSurveyQuestionDetail(data, token));
         }
         break;
       case "pertanyaan_terbuka":
@@ -201,7 +201,7 @@ const StepTwo = () => {
             question_image,
             type: methodAdd,
           };
-          dispatch(newSurveyQuestionDetail(data));
+          dispatch(newSurveyQuestionDetail(data, token));
         }
         break;
       case "triggered_question":
@@ -229,7 +229,7 @@ const StepTwo = () => {
 
           // console.log(data)
 
-          dispatch(newSurveyQuestionDetail(data));
+          dispatch(newSurveyQuestionDetail(data, token));
         }
       default:
         break;
@@ -284,7 +284,7 @@ const StepTwo = () => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data));
+          dispatch(newSurveyQuestionDetail(data, token));
         }
         break;
       case "multiple_choice":
@@ -310,7 +310,7 @@ const StepTwo = () => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data));
+          dispatch(newSurveyQuestionDetail(data, token));
         }
         break;
       case "pertanyaan_terbuka":
@@ -321,7 +321,7 @@ const StepTwo = () => {
             question_image,
             type: methodAdd,
           };
-          dispatch(newSurveyQuestionDetail(data));
+          dispatch(newSurveyQuestionDetail(data, token));
         }
         break;
       case "triggered_question":
@@ -347,7 +347,7 @@ const StepTwo = () => {
             type: methodAdd,
           };
 
-          dispatch(newSurveyQuestionDetail(data));
+          dispatch(newSurveyQuestionDetail(data, token));
         }
       default:
         break;

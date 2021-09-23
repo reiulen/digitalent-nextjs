@@ -5,6 +5,7 @@ import Layout from "../../../components/templates/layout.component";
 // import EditGaleri from "../../../components/content/publikasi/galeri/edit";
 
 import { getDetailGaleri } from "../../../redux/actions/publikasi/galeri.actions";
+import { getAllKategori } from '../../../redux/actions/publikasi/kategori.actions'
 import { wrapper } from "../../../redux/store";
 
 import LoadingPage from "../../../components/LoadingPage";
@@ -19,18 +20,16 @@ const EditGaleri = dynamic(
   }
 );
 
-export default function EditGaleriPage() {
+export default function EditGaleriPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Ubah Galeri - Publikasi">
-          <EditGaleri />
-        </Layout>
+        <EditGaleri token={session.token} />
       </div>
     </>
   );
 }
-
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
@@ -44,5 +43,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       await store.dispatch(getDetailGaleri(params.id, session.user.user.data.token));
-    }
-);
+      await store.dispatch(getAllKategori(session.user.user.data.token))
+
+      return {
+        props: { session, title: "Ubah Galeri" },
+      };
+    });
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ params }) => {
+//       await store.dispatch(getDetailGaleri(params.id));
+//     }
+// );
+

@@ -25,47 +25,50 @@ import axios from "axios";
 // get all data
 export const getAllArtikel =
   (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) =>
-    async (dispatch) => {
-      try {
-        dispatch({ type: ARTIKEL_REQUEST });
+  async (dispatch) => {
+    try {
+      dispatch({ type: ARTIKEL_REQUEST });
 
-        let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
-        if (keyword) link = link.concat(`&keyword=${keyword}`);
-        if (limit) link = link.concat(`&limit=${limit}`);
-        if (publish) link = link.concat(`&publish=${publish}`);
-        if (startdate) link = link.concat(`&startdate=${startdate}`);
-        if (enddate) link = link.concat(`&enddate=${enddate}`);
+      // console.log (`Artikel: ${token}`)
 
-        const config = {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        };
+      let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel?page=${page}`;
+      if (keyword) link = link.concat(`&keyword=${keyword}`);
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (publish) link = link.concat(`&publish=${publish}`);
+      if (startdate) link = link.concat(`&startdate=${startdate}`);
+      if (enddate) link = link.concat(`&enddate=${enddate}`);
 
-        const { data } = await axios.get(link, config);
-
-        dispatch({
-          type: ARTIKEL_SUCCESS,
-          payload: data,
-        });
-
-      } catch (error) {
-        dispatch({
-          type: ARTIKEL_FAIL,
-          payload: error.message,
-        });
-      }
-    };
-
-export const getDetailArtikel = (id, token) => async (dispatch) => {
-  try {
-    let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`;
 
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+          Authorization: 'Bearer ' + token,
       },
     };
+
+      const { data } = await axios.get(link, config);
+
+      dispatch({
+        type: ARTIKEL_SUCCESS,
+        payload: data,
+      });
+
+    } catch (error) {
+      dispatch({
+        type: ARTIKEL_FAIL,
+        payload: error.message,
+      });
+    }
+  };
+
+export const getDetailArtikel = (id, token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+
+    let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`;
 
     const { data } = await axios.get(link, config);
 
@@ -93,6 +96,12 @@ export const newArtikel = (artikelData, token) => async (dispatch) => {
       },
     };
 
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
+
     const { data } = await axios.post(
       process.env.END_POINT_API_PUBLIKASI + "api/artikel",
       artikelData,
@@ -113,14 +122,20 @@ export const newArtikel = (artikelData, token) => async (dispatch) => {
   }
 };
 
-export const updateArtikel = (artikelData) => async (dispatch) => {
+export const updateArtikel = (artikelData, token) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ARTIKEL_REQUEST });
+
+    const config = {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    };
 
     let link =
       process.env.END_POINT_API_PUBLIKASI + `api/artikel/${artikelData.id}`;
 
-    const { data } = await axios.post(link, artikelData);
+    const { data } = await axios.post(link, artikelData, config);
 
     dispatch({
       type: UPDATE_ARTIKEL_SUCCESS,
@@ -135,21 +150,22 @@ export const updateArtikel = (artikelData) => async (dispatch) => {
   }
 };
 
-export const deleteArtikel = (id, token) => async (dispatch) => {
+export const deleteArtikel = (id, token ) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ARTIKEL_REQUEST });
 
     const config = {
       headers: {
-        Authorization: "Bearer " + token,
+        Authorization: 'Bearer ' + token,
       },
     };
 
-    const { data } = await axios.delete(
-      process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`,
-      config
-    );
+    // console.log (token)
 
+    const { data } = await axios.delete(
+      process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`, config
+    );
+    
     dispatch({
       type: DELETE_ARTIKEL_SUCCESS,
       payload: data.status,

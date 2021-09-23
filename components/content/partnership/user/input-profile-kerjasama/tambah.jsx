@@ -14,15 +14,16 @@ import Image from "next/image";
 
 const Tambah = () => {
   const router = useRouter();
+  const { successInputProfile } = router.query;
   // const [startDate, setStartDate] = useState(null);
   // const [endDate, setEndDate] = useState(null);
 
-  
   // diambil dari data user ketika pertama kali register (name)
   const [institution_name, setInstitution_name] = useState("");
   const [email, setEmail] = useState("");
   const [wesite, setWesite] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
+  const [agency_logo_api, setAgency_logo_api] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
@@ -120,8 +121,19 @@ const Tambah = () => {
           formData.append("agency_logo", agency_logo);
           formData.append("website", wesite);
           formData.append("address", address);
-          formData.append("indonesia_provinces_id", indonesia_provinces_id);
-          formData.append("indonesia_cities_id", indonesia_cities_id);
+
+
+          if(typeof indonesia_provinces_id === "object"){
+            formData.append("indonesia_provinces_id", indonesia_provinces_id.id);
+            formData.append("indonesia_cities_id", indonesia_cities_id.id);
+          }else{
+
+            formData.append("indonesia_provinces_id", indonesia_provinces_id);
+            formData.append("indonesia_cities_id", indonesia_cities_id);
+          }
+
+
+
           formData.append("postal_code", postal_code);
           formData.append("pic_name", pic_name);
           formData.append("pic_contact_number", pic_contact_number);
@@ -138,11 +150,12 @@ const Tambah = () => {
               }
             );
             router.push({
-              pathname: "/partnership/user/kerjasama",
+              pathname: "/partnership/user/profile-lembaga/input-profile",
               query: { successInputProfile: true },
             });
           } catch (error) {
-            notify(error.response.data.message);
+            // notify(error.response.data.message);
+            notify("cek field kab/kota anda apakah sudah sesuai dengan provinsi yang ada");
           }
         }
       });
@@ -198,6 +211,7 @@ const Tambah = () => {
 
   // pertama kali load provinces set kesini
   const [allProvinces, setAllProvinces] = useState([]);
+  // console.log("allProvinces",allProvinces)
   // ketika load cities state ini save data
   const [citiesAll, setCitiesAll] = useState([]);
 
@@ -228,8 +242,21 @@ const Tambah = () => {
         }
       );
       console.log("data", data);
+
+      if(data){
+
+      setAgency_logo_api(data.data.agency_logo);
+      setAddress(data.data.address)
+      setPostal_code(data.data.postal_code)
+      setPic_name(data.data.pic_name)
+      setPic_contact_number(data.data.pic_contact_number)
+      setPic_email(data.data.pic_email)
+      setWesite(data.data.website);
       setEmail(data.data.email);
       setInstitution_name(data.data.institution_name);
+      setIndonesia_cities_id(data.data.city)
+      setIndonesia_provinces_id(data.data.province)
+      }
     } catch (error) {
       console.log("gagal get province", error);
     }
@@ -264,8 +291,42 @@ const Tambah = () => {
     }
   }, [indonesia_provinces_id]);
 
+  const onNewReset = () => {
+    // setSuccessDelete(false);
+    router.replace("/partnership/user/profile-lembaga/input-profile", undefined, { shallow: true });
+  };
+
   return (
     <PageWrapper>
+      {successInputProfile ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil menyimpan data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <ToastContainer
           position="bottom-right"
@@ -324,7 +385,7 @@ const Tambah = () => {
                       className="form-control"
                       placeholder="Masukan Alamat Website"
                       onChange={(e) => setWesite(e.target.value)}
-                      value={wesite}
+                      value={wesite&&wesite}
                     />
                     {error.wesite ? (
                       <p className="error-text">{error.wesite}</p>
@@ -339,6 +400,7 @@ const Tambah = () => {
                       Email
                     </label>
                     <input
+                    disabled
                       onFocus={() => setError({ ...error, email: "" })}
                       type="text"
                       name="text_input"
@@ -359,7 +421,10 @@ const Tambah = () => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Gambar Logo
                 </label>
-                {!agency_logo ? (
+
+                {
+                
+                !agency_logo ? (
                   ""
                 ) : (
                   <div
@@ -381,7 +446,66 @@ const Tambah = () => {
                       objectFit="fill"
                     />
                   </div>
-                )}
+                )
+                
+                
+                
+                }
+
+
+                {/* {!agency_logo_api ? (
+                  ""
+                ) : (
+                  <div
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    className="shadow-image-form cursor-pointer position-relative"
+                    style={{
+                      maxWidth: "168px",
+                      maxHeight: "168px",
+                      width: "168px",
+                      height: "168px",
+                    }}
+                  >
+                    {" "}
+                    <Image
+                      src={
+                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        "partnership/images/profile-images/" +
+                        agency_logo_api
+                      }
+                      alt="images"
+                      layout="fill"
+                      objectFit="fill"
+                    />
+                  </div>
+                )} */}
+
+
+                {/* {!agency_logo ? 
+
+                <div
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    className="shadow-image-form cursor-pointer position-relative"
+                    style={{
+                      maxWidth: "168px",
+                      maxHeight: "168px",
+                      width: "168px",
+                      height: "168px",
+                    }}
+                  >
+                    {" "}
+                    <Image
+                      src={agency_logo}
+                      alt="Picture of the author"
+                      layout="fill"
+                      objectFit="fill"
+                    />
+                  </div> :""
+
+                  } */}
+
 
                 <div className="input-group">
                   <div className="custom-file">
@@ -466,6 +590,7 @@ const Tambah = () => {
                   className="form-control"
                   placeholder="Masukkan Alamat"
                   onChange={(e) => setAddress(e.target.value)}
+                  value={address&&address}
                 />
                 {error.address ? (
                   <p className="error-text">{error.address}</p>
@@ -486,8 +611,8 @@ const Tambah = () => {
                       }
                       className="basic-single"
                       classNamePrefix="select"
-                      placeholder="Pilih provinsi"
-                      defaultValue={allProvinces[0]}
+                      placeholder={`${indonesia_provinces_id === "" ? "Pilih provinsi": indonesia_provinces_id.name} `}
+                      defaultValue={indonesia_provinces_id === "" ? allProvinces[0] :indonesia_provinces_id}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -517,8 +642,8 @@ const Tambah = () => {
                       }
                       className="basic-single"
                       classNamePrefix="select"
-                      placeholder="Pilih data Kab/Kota"
-                      defaultValue={citiesAll[0]}
+                      placeholder={`${(indonesia_cities_id && typeof indonesia_provinces_id !== "object") ? "Pilih data Kab/Kota":indonesia_cities_id.name} `}
+                      defaultValue={indonesia_cities_id === "" ? citiesAll[0]:indonesia_cities_id}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -544,6 +669,7 @@ const Tambah = () => {
                 <input
                   onFocus={() => setError({ ...error, postal_code: "" })}
                   type="number"
+                  value={postal_code&&postal_code}
                   className="form-control"
                   placeholder="Masukkan Kode Pos"
                   onChange={(e) => setPostal_code(e.target.value)}
@@ -556,13 +682,13 @@ const Tambah = () => {
               </div>
 
               <div className="row">
-                
                 <div className="col-12 col-sm-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nama Person In Charge (PIC)
                     </label>
                     <input
+                    value={pic_name&&pic_name}
                       onFocus={() => setError({ ...error, pic_name: "" })}
                       type="text"
                       className="form-control"
@@ -591,6 +717,7 @@ const Tambah = () => {
                       className="form-control"
                       placeholder="Masukkan NO. Kontak"
                       onChange={(e) => setPic_contact_number(e.target.value)}
+                      value={pic_contact_number&&pic_contact_number}
                     />
                     {error.pic_contact_number ? (
                       <p className="error-text">{error.pic_contact_number}</p>
@@ -611,6 +738,7 @@ const Tambah = () => {
                   className="form-control"
                   placeholder="Masukkan Email"
                   onChange={(e) => setPic_email(e.target.value)}
+                  value={pic_email&&pic_email}
                 />
                 {error.pic_email ? (
                   <p className="error-text">{error.pic_email}</p>

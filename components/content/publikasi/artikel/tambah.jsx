@@ -19,7 +19,7 @@ import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.typ
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahArtikel = () => {
+const TambahArtikel = ({token}) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -188,7 +188,7 @@ const TambahArtikel = () => {
               //   });
               // }
   
-              dispatch(newArtikel(data));
+              dispatch(newArtikel(data, token));
   
               console.log(data);
             }
@@ -225,7 +225,7 @@ const TambahArtikel = () => {
               //   });
               // }
   
-              dispatch(newArtikel(data));
+              dispatch(newArtikel(data, token));
   
               console.log(data);
             }
@@ -245,6 +245,9 @@ const TambahArtikel = () => {
 
   return (
     <>
+    {/* {
+      console.log (kategori)
+    } */}
       <PageWrapper>
         {error ? (
           <div
@@ -361,7 +364,7 @@ const TambahArtikel = () => {
                   </label>
                   <div className="ml-3 row">
                     <figure
-                      className="avatar item-rtl"
+                      className="avatar item-rtl position-relative"
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
                     >
@@ -373,7 +376,25 @@ const TambahArtikel = () => {
                         objectFit="cover"
                       />
                     </figure>
-                    <div>
+                    <div className="position-relative">
+                      <label className="circle-top" htmlFor="inputGroupFile04">
+                        <i className="ri-add-line text-dark"></i>
+                      </label>
+                      <input
+                        type="file"
+                        name="gambar"
+                        className="custom-file-input"
+                        id="inputGroupFile04"
+                        onChange={onChangeGambar}
+                        // onChange={(e) => onChangeGambar(e)}
+                        accept="image/*"
+                        onBlur={() =>
+                          simpleValidator.current.showMessageFor("gambar")
+                        }
+                        style={{display: "none"}}
+                      />
+                    </div>
+                    {/* <div>
                       <label htmlFor="inputGroupFile04" className="icon-plus">
                         <Image
                           src={iconPlus}
@@ -382,6 +403,9 @@ const TambahArtikel = () => {
                           height={60} 
                         />
                       </label>
+                      <div className="circle-top" onClick={onChangeGambar}>
+                        <i className="ri-add-line text-dark"></i>
+                      </div>
                       
                       <input
                         type="file"
@@ -395,7 +419,7 @@ const TambahArtikel = () => {
                         }
                         style={{display: "none"}}
                       />
-                    </div>
+                    </div> */}
                     
                   </div>
 

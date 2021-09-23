@@ -1,14 +1,11 @@
-import EditSoalSurvey from '../../../../components/content/subvit/survey/edit-soal-survey'
-import Layout from '../../../../components/templates/layout.component'
+import EditSoalSurvey from "../../../../components/content/subvit/survey/edit-soal-survey";
 
 export default function EditSoalSurveyPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Edit Soal Survey'>
-                    <EditSoalSurvey />
-                </Layout>
+                <EditSoalSurvey />
             </div>
         </>
-    )
+    );
 }

@@ -280,6 +280,12 @@ const Kategori = () => {
 
     return (
         <PageWrapper>
+            {
+                console.log (kategori)
+            }
+            {
+                console.log (paginateKategori)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -518,7 +524,7 @@ const Kategori = () => {
                                                     <td className='align-middle text-center' colSpan={4}>Data Masih Kosong</td> :
                                                     paginateKategori && paginateKategori.kategori.map((row, i) => {
                                                         return <tr key={row.id}>
-                                                            {/* {console.log("KATEGORI : ",row.nama)} */}
+                                                            {/* {console.log("KATEGORI : ",row.nama_kategori)} */}
                                                             {/* <td className='align-middle text-center'>{i + 1 * (page * 5 || limit) - 4}</td> */}
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -533,7 +539,7 @@ const Kategori = () => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>{row.nama}</td>
+                                                            <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.jenis_kategori}</td>
                                                             <td className="align-middle d-flex justify-content-center">
 

@@ -14,7 +14,7 @@ import { UPDATE_SUBTANCE_QUESTION_TYPE_RESET } from "../../../../../redux/types/
 import PageWrapper from "/components/wrapper/page.wrapper";
 import LoadingPage from "../../../../LoadingPage";
 
-const EditTipeSoal = () => {
+const EditTipeSoal = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -63,7 +63,7 @@ const EditTipeSoal = () => {
         _method: "put",
       };
 
-      dispatch(updatewSubtanceQuestionBanksType(id, data));
+      dispatch(updatewSubtanceQuestionBanksType(id, data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

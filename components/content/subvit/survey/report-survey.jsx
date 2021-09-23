@@ -14,7 +14,7 @@ import CardPage from "../../../CardPage";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
 
-const ReportSurvey = () => {
+const ReportSurvey = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 

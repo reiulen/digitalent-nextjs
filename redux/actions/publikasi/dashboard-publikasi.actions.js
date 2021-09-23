@@ -13,13 +13,13 @@ export const getAllDashboardPublikasi = (token) =>
     try {
       dispatch({ type: DASHBOARD_PUBLIKASI_REQUEST });
 
-      let link = process.env.END_POINT_API_PUBLIKASI + `api/dashboard`;
-
       const config = {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: 'Bearer ' + token,
         },
       };
+
+      let link = process.env.END_POINT_API_PUBLIKASI + `api/dashboard`;
 
       const { data } = await axios.get(link, config);
 

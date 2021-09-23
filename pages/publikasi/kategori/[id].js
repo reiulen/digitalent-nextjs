@@ -23,23 +23,34 @@ export default function EditKategoriPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title="Ubah Kategori">
+                {/* <Layout title="Ubah Kategori">
                     <EditKategori />
-                </Layout>
+                </Layout> */}
+                <EditKategori />
             </div>
         </>
     );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params, req }) => {
-    const session = await getSession({ req });
-    if (!session) {
-        return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
-        };
-    }
-    await store.dispatch(getDetailKategori(params.id, session.user.user.data.token));
-});
+export const getServerSideProps = wrapper.getServerSideProps(
+    (store) =>
+        async ({ params, req }) => {
+            const session = await getSession({ req });
+            if (!session) {
+                return {
+                    redirect: {
+                        destination: "/",
+                        permanent: false,
+                    },
+                };
+            }
+            await store.dispatch(getDetailKategori(params.id, session.user.user.data.token));
+            return {
+                props: { session, title: "Kategori" },
+            };
+        }
+);
+
+// export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params }) => {
+//     await store.dispatch(getDetailKategori(params.id));
+// });

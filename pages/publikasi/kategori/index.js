@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 
-import Layout from "../../../components/templates/layout.component";
+// import Layout from "../../../components/templates/layout.component";
 // import Kategori from "../../../components/content/publikasi/kategori/kategori";
 
 import { getAllKategori, paginationKategori } from '../../../redux/actions/publikasi/kategori.actions'
 import { wrapper } from '../../../redux/store'
 
-import LoadingPage from "../../../components/LoadingPage";
+// import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const Kategori = dynamic(
@@ -21,28 +21,33 @@ const Kategori = dynamic(
 );
 
 export default function KategoriPage() {
-  return (
-    <>
-      <div className="d-flex flex-column flex-root">
-        <Layout title='Kategori - Publikasi'>
-          <Kategori />
-        </Layout>
-      </div>
-    </>
-  )
+    return (
+        <>
+            <div className="d-flex flex-column flex-root">
+                {/* <Layout title='Kategori - Publikasi'>
+                    <Kategori />
+                </Layout> */}
+                <Kategori />
+            </div>
+        </>
+    )
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
-  // await store.dispatch(getAllKategori(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
-  const session = await getSession({ req });
-  if (!session) {
+    
+    const session = await getSession({ req });
+    if (!session) {
+        return {
+            redirect: {
+            destination: "/",
+            permanent: false,
+            },
+        };
+    }
+    await store.dispatch(getAllKategori(session.user.user.data.token))
+    await store.dispatch(paginationKategori(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
+
     return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
+        props: { session, title: "Kategori - Publikasi" },
     };
-  }
-  await store.dispatch(getAllKategori(session.user.user.data.token))
-  await store.dispatch(paginationKategori(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
 })

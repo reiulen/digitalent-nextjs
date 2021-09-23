@@ -65,46 +65,56 @@ export const getAllSurveyQuestionBanks =
     }
   };
 
-export const newSurveyQuestionBanks = (subtanceData) => async (dispatch) => {
-  try {
-    dispatch({
-      type: NEW_SURVEY_QUESTION_BANKS_REQUEST,
-    });
+export const newSurveyQuestionBanks =
+  (subtanceData, token) => async (dispatch) => {
+    try {
+      dispatch({
+        type: NEW_SURVEY_QUESTION_BANKS_REQUEST,
+      });
 
-    // const config = {
-    //     headers: {
-    //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-    //         'Access-Control-Allow-Origin': '*',
-    //         'apikey': process.env.END_POINT_KEY_AUTH
-    //     }
-    // }
+      // const config = {
+      //     headers: {
+      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+      //         'Access-Control-Allow-Origin': '*',
+      //         'apikey': process.env.END_POINT_KEY_AUTH
+      //     }
+      // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+      const { data } = await axios.post(
+        process.env.END_POINT_API_SUBVIT + "api/survey-question-banks",
+        subtanceData,
+        config
+      );
 
-    const { data } = await axios.post(
-      process.env.END_POINT_API_SUBVIT + "api/survey-question-banks",
-      subtanceData
-    );
+      dispatch({
+        type: NEW_SURVEY_QUESTION_BANKS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: NEW_SURVEY_QUESTION_BANKS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
-    dispatch({
-      type: NEW_SURVEY_QUESTION_BANKS_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: NEW_SURVEY_QUESTION_BANKS_FAIL,
-      payload: error.response.data.message,
-    });
-  }
-};
-
-export const getDetailSurveyQuestionBanks = (id) => async (dispatch) => {
+export const getDetailSurveyQuestionBanks = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_SURVEY_QUESTION_BANKS_REQUEST });
-
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     let link =
       process.env.END_POINT_API_SUBVIT +
       `api/survey-question-banks/detail/${id}`;
 
-    const { data } = await axios.get(link);
+    const { data } = await axios.get(link, config);
 
     dispatch({
       type: DETAIL_SURVEY_QUESTION_BANKS_SUCCESS,
@@ -118,14 +128,18 @@ export const getDetailSurveyQuestionBanks = (id) => async (dispatch) => {
   }
 };
 
-export const getOneSurveyQuestionBanks = (id) => async (dispatch) => {
+export const getOneSurveyQuestionBanks = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_ONE_SURVEY_QUESTION_BANKS_REQUEST });
-
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     let link =
       process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`;
 
-    const { data } = await axios.get(link);
+    const { data } = await axios.get(link, config);
 
     dispatch({
       type: DETAIL_ONE_SURVEY_QUESTION_BANKS_SUCCESS,
@@ -140,15 +154,20 @@ export const getOneSurveyQuestionBanks = (id) => async (dispatch) => {
 };
 
 export const updateSurveyQuestionBanks =
-  (id, substanceQuestionData) => async (dispatch) => {
+  (id, substanceQuestionData, token) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SURVEY_QUESTION_BANKS_REQUEST,
       });
-
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`,
-        substanceQuestionData
+        substanceQuestionData,
+        config
       );
 
       dispatch({
@@ -163,12 +182,17 @@ export const updateSurveyQuestionBanks =
     }
   };
 
-export const deleteSurveyQuestionBanks = (id) => async (dispatch) => {
+export const deleteSurveyQuestionBanks = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_SURVEY_QUESTION_BANKS_REQUEST });
-
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     const { data } = await axios.delete(
-      process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`
+      process.env.END_POINT_API_SUBVIT + `api/survey-question-banks/${id}`,
+      config
     );
 
     dispatch({
@@ -184,7 +208,7 @@ export const deleteSurveyQuestionBanks = (id) => async (dispatch) => {
 };
 
 export const updateSurveyQuestionBanksPublish =
-  (subtanceData, id) => async (dispatch) => {
+  (subtanceData, id, token) => async (dispatch) => {
     try {
       dispatch({
         type: UPDATE_SURVEY_QUESTION_BANKS_PUBLISH_REQUEST,
@@ -197,11 +221,16 @@ export const updateSurveyQuestionBanksPublish =
       //         'apikey': process.env.END_POINT_KEY_AUTH
       //     }
       // }
-
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT +
           `api/survey-question-banks/publish/${id}`,
-        subtanceData
+        subtanceData,
+        config
       );
 
       dispatch({
@@ -224,7 +253,8 @@ export const allReportSurveyQuestionBanks =
     limit = null,
     pelatihan = null,
     status = null,
-    card = null
+    card = null,
+    token
   ) =>
   async (dispatch) => {
     try {
@@ -239,15 +269,13 @@ export const allReportSurveyQuestionBanks =
       if (status) link = link.concat(`&status=${status}`);
       if (card) link = link.concat(`&card=${card}`);
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
-      const { data } = await axios.get(link);
+      const { data } = await axios.get(link, config);
 
       dispatch({
         type: REPORT_SURVEY_QUESTION_BANKS_SUCCESS,

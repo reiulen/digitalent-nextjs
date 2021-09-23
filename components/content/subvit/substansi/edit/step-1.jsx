@@ -15,7 +15,7 @@ import LoadingPage from "../../../../LoadingPage";
 
 import { useRouter } from "next/router";
 
-const StepOne = () => {
+const StepOne = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -62,7 +62,7 @@ const StepOne = () => {
       _method: "put",
     };
 
-    dispatch(updatewSubtanceQuestionBanks(id, data));
+    dispatch(updatewSubtanceQuestionBanks(id, data, token));
   };
 
   const onSubmit = (e) => {
@@ -77,7 +77,7 @@ const StepOne = () => {
       _method: "put",
     };
 
-    dispatch(updatewSubtanceQuestionBanks(id, data));
+    dispatch(updatewSubtanceQuestionBanks(id, data, token));
 
     console.log(data);
   };

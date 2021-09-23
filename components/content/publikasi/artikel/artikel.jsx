@@ -28,7 +28,7 @@ import {
 
 import { DELETE_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.type";
 
-const Artikel = () => {
+const Artikel = ({token}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   
@@ -97,7 +97,7 @@ const Artikel = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteArtikel(id));
+        dispatch(deleteArtikel(id, token));
       }
     });
   };

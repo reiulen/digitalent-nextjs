@@ -60,10 +60,22 @@ const Table = () => {
       }
     });
   };
+
+
+  // const onNewReset = () => {
+  //   setSuccessDelete(false);
+  //   router.replace(`/partnership/mitra`);
+  // };
+
+
   const onNewReset = () => {
     setSuccessDelete(false);
-    router.replace(`/partnership/mitra`);
+    router.replace("/partnership/mitra", undefined, { shallow: true });
   };
+
+
+
+
   useEffect(() => {
     dispatch(fetchMitra());
     dispatch(cancelChangeProvinces());

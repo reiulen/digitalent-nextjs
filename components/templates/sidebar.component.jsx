@@ -2,19 +2,23 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import IconArrow2 from '../../components/assets/icon/Arrow2'
-import {useDispatch,useSelector} from 'react-redux'
+import IconArrow2 from "../../components/assets/icon/Arrow2";
+import { useDispatch, useSelector } from "react-redux";
 
-import {IS_ASSIDE_MOBILE_SIDEBAR,IS_OVERLAY_SIDEBAR_MOBILE,IS_MINIMIZE_SIDEBAR} from '../../redux/types/utils/functionals.type'
+import {
+  IS_ASSIDE_MOBILE_SIDEBAR,
+  IS_OVERLAY_SIDEBAR_MOBILE,
+  IS_MINIMIZE_SIDEBAR,
+} from "../../redux/types/utils/functionals.type";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
-  const getStorageMenu2 = sessionStorage.getItem("menu2") 
-  const getStorageMenu4 = sessionStorage.getItem("menu4") 
-  const getStorageMenu3 = sessionStorage.getItem("menu3") 
-  const getStorageMenu = sessionStorage.getItem("menu") 
+  const getStorageMenu2 = sessionStorage.getItem("menu2");
+  const getStorageMenu4 = sessionStorage.getItem("menu4");
+  const getStorageMenu3 = sessionStorage.getItem("menu3");
+  const getStorageMenu = sessionStorage.getItem("menu");
 
-  const allFunctionls = useSelector(state => state.allFunctionls)
+  const allFunctionls = useSelector((state) => state.allFunctionls);
 
   const router = useRouter();
   const [menuItem1, setMenuItem1] = useState("");
@@ -109,7 +113,6 @@ const Sidebar = () => {
   ]);
   // function active submenu publikasi
   const activeSubItemPublikasi = () => {
-    
     if (sessionStorage.getItem("menu2")) {
       sessionStorage.removeItem("menu2");
     } else {
@@ -187,7 +190,7 @@ const Sidebar = () => {
       id: 3,
       name: "Tanda Tangan Digital",
       href: "/partnership/user/tanda-tangan-digital",
-    }
+    },
   ]);
   // function active submenu partnership user-mitra
   const activeSubItemPartnershipMitra = () => {
@@ -276,17 +279,14 @@ const Sidebar = () => {
       setMenuItemS("menu-item-open");
     }
   };
-  const activeProfileAndOverlay = () =>{
+  const activeProfileAndOverlay = () => {
     dispatch({
-        type: IS_ASSIDE_MOBILE_SIDEBAR,
-      });
-      dispatch({
-        type: IS_OVERLAY_SIDEBAR_MOBILE,
-      });
-  }
-
-
-  // ------ jangan dihapus
+      type: IS_ASSIDE_MOBILE_SIDEBAR,
+    });
+    dispatch({
+      type: IS_OVERLAY_SIDEBAR_MOBILE,
+    });
+  };
 
   // useEffect(() => {
   //   // partnership
@@ -306,11 +306,45 @@ const Sidebar = () => {
   //   setMenuItem6(dataFromLocal3);
   // }, []);
 
+  // START LIST MENU SERTIFIKAT
+  const [listMenuSertifikat, setListMenuSertifikat] = useState([
+    {
+      id: 1,
+      name: "Kelola Sertifikat",
+      href: "/sertifikat/kelola-sertifikat",
+    },
+    {
+      id: 2,
+      name: "Master Sertifikat",
+      href: "/sertifikat/master-sertifikat",
+    },
+    {
+      id: 3,
+      name: "Perubahan Sertifikat",
+      href: "/sertifikat/perubahan-sertifikat",
+    },
+  ]);
+
+  const activeSubItemSertifikat = () => {
+    if (sessionStorage.getItem("menu5")) {
+      sessionStorage.removeItem("menu5");
+    } else {
+      sessionStorage.setItem("menu5", "menu-item-open");
+    }
+  };
+
+  // END LIST MENU SERTIFIKAT
+
   return (
     <>
       {/* <!--begin::Aside--> */}
       <div
-        className={`aside aside-left aside-fixed d-flex flex-column flex-row-auto scroll-hidden ${allFunctionls.isAsideMobileSidebar && allFunctionls.isAsideMobileSidebar ? "aside-on" : ""}`}
+        className={`aside aside-left aside-fixed d-flex flex-column flex-row-auto scroll-hidden ${
+          allFunctionls.isAsideMobileSidebar &&
+          allFunctionls.isAsideMobileSidebar
+            ? "aside-on"
+            : ""
+        }`}
         // aside-on
         id="kt_aside"
         style={{ overflow: "scroll" }}
@@ -321,15 +355,22 @@ const Sidebar = () => {
           <a className="brand-logo">
             <Image
               alt="icon-sidebar-logo"
-              src="/assets/icon/new/aside/logo dts 1 (1).svg"
-              width={100}
-              height={42}
+              src="/assets/logo/logo-6.svg"
+              width={58}
+              height={53}
             />
-            
           </a>
           {/* <!--end::Logo--> */}
           {/* <!--begin::Toggle--> */}
-          <button className={`brand-toggle btn btn-sm px-0 ${allFunctionls.isMinimizeSidebar && allFunctionls.isMinimizeSidebar ? "active" :"" }`} id="kt_aside_toggle" onClick={()=>dispatch ({type:IS_MINIMIZE_SIDEBAR})}>
+          <button
+            className={`brand-toggle btn btn-sm px-0 ${
+              allFunctionls.isMinimizeSidebar && allFunctionls.isMinimizeSidebar
+                ? "active"
+                : ""
+            }`}
+            id="kt_aside_toggle"
+            onClick={() => dispatch({ type: IS_MINIMIZE_SIDEBAR })}
+          >
             <span className="svg-icon svg-icon svg-icon-xl">
               {/* <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-left.svg--> */}
               <Image
@@ -348,7 +389,8 @@ const Sidebar = () => {
         {/* <!--begin::Aside Menu--> */}
         <div
           className="aside-menu-wrapper flex-column-fluid"
-          id="kt_aside_menu_wrapper" style={{zIndex:"999999999"}}
+          id="kt_aside_menu_wrapper"
+          style={{ zIndex: "999999999" }}
         >
           {/* <!--begin::Menu Container--> */}
           <div
@@ -366,7 +408,10 @@ const Sidebar = () => {
                 aria-haspopup="true"
                 data-menu-toggle="hover"
               >
-                <a href="javascript:;" className="menu-link menu-toggle d-flex align-items-center">
+                <a
+                  href="javascript:;"
+                  className="menu-link menu-toggle d-flex align-items-center"
+                >
                   <span className="svg-icon menu-icon">
                     {/* <Image
                       alt="icon-sidebar-layers"
@@ -396,7 +441,7 @@ const Sidebar = () => {
                     </svg>
                   </span>
                   <span className="menu-text">Dashboard</span>
-                 <i className="menu-arrow"></i>
+                  <i className="menu-arrow"></i>
                 </a>
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
@@ -495,16 +540,34 @@ const Sidebar = () => {
                       </span>
                     </li>
                     <li className="menu-item" aria-haspopup="true">
-                      <a className="menu-link">
-                        <span className="menu-text">Sample Link</span>
-                      </a>
+                      <Link href="/pelatihan/akademi">
+                        <a className="menu-link">
+                          <span className="menu-text">Akademi</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/pelatihan/tema">
+                        <a className="menu-link">
+                          <span className="menu-text">Tema</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/pelatihan/pelatihan">
+                        <a className="menu-link">
+                          <span className="menu-text">Pelatihan</span>
+                        </a>
+                      </Link>
                     </li>
                   </ul>
                 </div>
               </li>
 
               <li
-                className={`menu-item menu-item-submenu ${!getStorageMenu2 ? "" : getStorageMenu2}`}
+                className={`menu-item menu-item-submenu ${
+                  !getStorageMenu2 ? "" : getStorageMenu2
+                }`}
                 aria-haspopup="true"
                 data-menu-toggle="hover"
                 onClick={() => activeMenuPublikasi()}
@@ -559,7 +622,15 @@ const Sidebar = () => {
                   </span>
                   <span className="menu-text">Publikasi</span>
                   {/* <i className="menu-arrow"></i> */}
-                  <IconArrow2 className="transition-animate" fill="#ffffff" style={{transform:getStorageMenu2 ? "rotate(90deg)" : "rotate(0)"}}/>
+                  <IconArrow2
+                    className="transition-animate"
+                    fill="#ffffff"
+                    style={{
+                      transform: getStorageMenu2
+                        ? "rotate(90deg)"
+                        : "rotate(0)",
+                    }}
+                  />
                 </a>
                 <div className={`menu-submenu`}>
                   <i className="menu-arrow"></i>
@@ -577,7 +648,7 @@ const Sidebar = () => {
                       </span>
                     </li>
                     {/* start loop publikasi */}
-                    {listMenuPublikasi.map((items ,index) => {
+                    {listMenuPublikasi.map((items, index) => {
                       return (
                         // <li
                         //   className={
@@ -658,12 +729,17 @@ const Sidebar = () => {
               </li>
 
               <li
-                className={`menu-item menu-item-submenu ${!getStorageMenu ? "" : getStorageMenu}`}
+                className={`menu-item menu-item-submenu ${
+                  !getStorageMenu ? "" : getStorageMenu
+                }`}
                 onClick={() => activeMenuPartnership()}
                 aria-haspopup="true"
                 data-menu-toggle="hover"
               >
-                <a href="javascript:;" className="menu-link menu-toggle d-flex align-items-center">
+                <a
+                  href="javascript:;"
+                  className="menu-link menu-toggle d-flex align-items-center"
+                >
                   <span className="svg-icon menu-icon">
                     {/* <Image
                       alt="icon-sidebar-orang"
@@ -695,7 +771,13 @@ const Sidebar = () => {
                   </span>
                   <span className="menu-text">Partnership</span>
                   {/* <i className="menu-arrow"></i> */}
-                  <IconArrow2 className="transition-animate" fill="#ffffff" style={{transform:getStorageMenu ? "rotate(90deg)" : "rotate(0)"}}/>
+                  <IconArrow2
+                    className="transition-animate"
+                    fill="#ffffff"
+                    style={{
+                      transform: getStorageMenu ? "rotate(90deg)" : "rotate(0)",
+                    }}
+                  />
                 </a>
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
@@ -711,10 +793,10 @@ const Sidebar = () => {
 
                     {/* start partnership loop */}
 
-                    {listMenuPartnership.map((items,index) => {
+                    {listMenuPartnership.map((items, index) => {
                       return (
                         <li
-                        key={index}
+                          key={index}
                           className={`menu-item ${
                             items.href === router.pathname
                               ? "menu-item-active"
@@ -775,7 +857,10 @@ const Sidebar = () => {
                 aria-haspopup="true"
                 data-menu-toggle="hover"
               >
-                <a href="javascript:;" className="menu-link menu-toggle d-flex align-items-center">
+                <a
+                  href="javascript:;"
+                  className="menu-link menu-toggle d-flex align-items-center"
+                >
                   <span className="svg-icon menu-icon">
                     {/* <Image
                       alt="icon-sidebar-document"
@@ -817,6 +902,33 @@ const Sidebar = () => {
                         <span className="menu-text">Sertifikat</span>
                       </span>
                     </li>
+                    {listMenuSertifikat.map((items, index) => {
+                      return (
+                        // <li className="menu-item" aria-haspopup="true">
+                        //   <Link href="/subvit/substansi">
+                        //     <a className="menu-link">
+                        //       <span className="menu-text">Tes Substansi</span>
+                        //     </a>
+                        //   </Link>
+                        // </li>
+                        <li
+                          key={index}
+                          className={`menu-item ${
+                            items.href === router.pathname
+                              ? "menu-item-active"
+                              : ""
+                          }`}
+                          aria-haspopup="true"
+                          onClick={() => activeSubItemSertifikat()}
+                        >
+                          <Link href={items.href}>
+                            <a className="menu-link">
+                              <span className="menu-text">{items.name}</span>
+                            </a>
+                          </Link>
+                        </li>
+                      );
+                    })}
                     <li className="menu-item" aria-haspopup="true">
                       <a className="menu-link">
                         <span className="menu-text">Sample Link</span>
@@ -834,7 +946,10 @@ const Sidebar = () => {
                 aria-haspopup="true"
                 data-menu-toggle="hover"
               >
-                <a href="javascript:;" className="menu-link menu-toggle d-flex align-items-center">
+                <a
+                  href="javascript:;"
+                  className="menu-link menu-toggle d-flex align-items-center"
+                >
                   <span className="svg-icon menu-icon">
                     {/* <Image
                       alt="icon-sidebar-kotak-kotak"
@@ -866,7 +981,15 @@ const Sidebar = () => {
                   </span>
                   <span className="menu-text">Subvit</span>
                   {/* <i className="menu-arrow"></i> */}
-                  <IconArrow2 className="transition-animate" fill="#ffffff" style={{transform:getStorageMenu3 ? "rotate(90deg)" : "rotate(0)"}}/>
+                  <IconArrow2
+                    className="transition-animate"
+                    fill="#ffffff"
+                    style={{
+                      transform: getStorageMenu3
+                        ? "rotate(90deg)"
+                        : "rotate(0)",
+                    }}
+                  />
                 </a>
                 {/* <Link href='/subvit/'>
                 </Link> */}
@@ -884,7 +1007,7 @@ const Sidebar = () => {
 
                     {/* start loop subvit */}
 
-                    {listMenuSubvit.map((items,index) => {
+                    {listMenuSubvit.map((items, index) => {
                       return (
                         // <li className="menu-item" aria-haspopup="true">
                         //   <Link href="/subvit/substansi">
@@ -894,7 +1017,7 @@ const Sidebar = () => {
                         //   </Link>
                         // </li>
                         <li
-                        key={index}
+                          key={index}
                           className={`menu-item ${
                             items.href === router.pathname
                               ? "menu-item-active"
@@ -1037,13 +1160,18 @@ const Sidebar = () => {
                   </ul>
                 </div>
               </li> */}
-               <li
-                className={`menu-item menu-item-submenu ${!getStorageMenu4 ? "" : getStorageMenu4}`}
+              <li
+                className={`menu-item menu-item-submenu ${
+                  !getStorageMenu4 ? "" : getStorageMenu4
+                }`}
                 onClick={() => activeMenuPartnershipMitra()}
                 aria-haspopup="true"
                 data-menu-toggle="hover"
               >
-                <a href="javascript:;" className="menu-link menu-toggle d-flex align-items-center">
+                <a
+                  href="javascript:;"
+                  className="menu-link menu-toggle d-flex align-items-center"
+                >
                   <span className="svg-icon menu-icon">
                     {/* <Image
                       alt="icon-sidebar-orang"
@@ -1075,7 +1203,15 @@ const Sidebar = () => {
                   </span>
                   <span className="menu-text">User Partnership</span>
                   {/* <i className="menu-arrow"></i> */}
-                  <IconArrow2 className="transition-animate" fill="#ffffff" style={{transform:getStorageMenu4 ? "rotate(90deg)" : "rotate(0)"}}/>
+                  <IconArrow2
+                    className="transition-animate"
+                    fill="#ffffff"
+                    style={{
+                      transform: getStorageMenu4
+                        ? "rotate(90deg)"
+                        : "rotate(0)",
+                    }}
+                  />
                 </a>
                 <div className="menu-submenu">
                   <i className="menu-arrow"></i>
@@ -1091,10 +1227,10 @@ const Sidebar = () => {
 
                     {/* start partnership loop */}
 
-                    {listMenuPartnershipMitra.map((items,index) => {
+                    {listMenuPartnershipMitra.map((items, index) => {
                       return (
                         <li
-                        key={index}
+                          key={index}
                           className={`menu-item ${
                             items.href === router.pathname
                               ? "menu-item-active"
@@ -1148,16 +1284,22 @@ const Sidebar = () => {
                   </ul>
                 </div>
               </li>
-
             </ul>
             {/* <!--end::Menu Nav--> */}
           </div>
           {/* <!--end::Menu Container--> */}
         </div>
         {/* <!--end::Aside Menu--> */}
-        {allFunctionls.isOverlayMobileSidebar && allFunctionls.isOverlayMobileSidebar ? 
-        <div className="aside-overlay" style={{zIndex:"1"}} onClick={()=>activeProfileAndOverlay()}></div> :""
-      }
+        {allFunctionls.isOverlayMobileSidebar &&
+        allFunctionls.isOverlayMobileSidebar ? (
+          <div
+            className="aside-overlay"
+            style={{ zIndex: "1" }}
+            onClick={() => activeProfileAndOverlay()}
+          ></div>
+        ) : (
+          ""
+        )}
       </div>
       {/* <!--end::Aside--> */}
     </>

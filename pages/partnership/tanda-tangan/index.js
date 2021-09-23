@@ -1,8 +1,10 @@
-import Layout from "../../../components/templates/layout.component";
-import dynamic from "next/dynamic";
+// import Layout from "../../../components/templates/layout.component";
 // import LoadingPage from "../../../components/LoadingPage";
 // import TandaTangan from "../../../components/content/partnership/tanda-tangan/tableTandaTangan";
+import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { getSession } from "next-auth/client";
+import { wrapper } from "../../../redux/store";
 const TandaTangan = dynamic(
   () =>
     import(
@@ -19,12 +21,29 @@ export default function TandaTanganPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Tanda Tangan Digital - Partnership">
-          <TandaTangan />
-        </Layout>
+        {/* <Layout title="Tanda Tangan Digital - Partnership"> */}
+        <TandaTangan />
+        {/* </Layout> */}
       </div>
     </>
   );
 }
 
-// TandaTanganPage.displayName = "TandaTanganPage";
+export const getServerSideProps = wrapper.getServerSideProps(
+  () =>
+    async ({ req }) => {
+      const session = await getSession({ req });
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        };
+      }
+
+      return {
+        props: { session, title: "Tanda Tangan Digital - Partnership" },
+      };
+    }
+);

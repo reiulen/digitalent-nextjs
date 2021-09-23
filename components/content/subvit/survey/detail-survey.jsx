@@ -16,7 +16,7 @@ import {
   clearErrors,
 } from "../../../../redux/actions/subvit/survey-question-detail.action";
 
-const DetailSurvey = () => {
+const DetailSurvey = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -73,7 +73,7 @@ const DetailSurvey = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
-        dispatch(deleteSurveyQuestionDetail(id));
+        dispatch(deleteSurveyQuestionDetail(id, token));
       }
     });
   };

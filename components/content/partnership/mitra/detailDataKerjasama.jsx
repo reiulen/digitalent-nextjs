@@ -38,6 +38,7 @@ import IconCalender from "../../../assets/icon/Calender";
 import LoadingTable from "../../../LoadingTable";
 
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/mitra.type";
+import moment from "moment";
 
 const DetailDataKerjasama = () => {
   const dispatch = useDispatch();
@@ -78,11 +79,24 @@ const DetailDataKerjasama = () => {
   };
 
   const [deleteBar, setDeleteBar] = useState(false);
+
+
+  // const onNewReset = () => {
+  //   router.replace(`/partnership/mitra/detail/${router.query.id}`);
+  //   setDeleteBar(false);
+  //   setBarStatus(false);
+  // };
+
+
   const onNewReset = () => {
-    router.replace(`/partnership/mitra/detail/${router.query.id}`);
     setDeleteBar(false);
     setBarStatus(false);
+    router.replace(`/partnership/mitra/detail/${router.query.id}`, undefined, { shallow: true });
   };
+
+
+
+
   const cooperationDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
@@ -455,13 +469,12 @@ const DetailDataKerjasama = () => {
                 }
                 tableBody={
                   mitraDetailAll.status === "process" ? (
-              <div className="my-12">
-                <LoadingTable />
-              </div>
-            ) : (
-                  mitraDetailAll.mitraDetailAll.data &&
-                  mitraDetailAll.mitraDetailAll.data.list_cooperation_categories
-                    .length === 0 ? (
+                    <div className="my-12">
+                      <LoadingTable />
+                    </div>
+                  ) : mitraDetailAll.mitraDetailAll.data &&
+                    mitraDetailAll.mitraDetailAll.data
+                      .list_cooperation_categories.length === 0 ? (
                     <tr>
                       <td colSpan="8" className="text-center">
                         <h4>Data tidak ditemukan</h4>
@@ -703,7 +716,7 @@ const DetailDataKerjasama = () => {
                               )}
                             </td>
                             <td className="align-middle text-left">
-                              {items.status.name === "aktif" ? (
+                              {items.status.name === "aktif" && moment(items.period_date_start).format("YYYY MM DD") > moment().format("YYYY MM DD") ? (
                                 <div className="d-flex align-items-center">
                                   <button
                                     className="btn btn-link-action bg-blue-secondary btn-delete mr-2 position-relative"
@@ -742,7 +755,46 @@ const DetailDataKerjasama = () => {
                                     </div>
                                   </button>
                                 </div>
-                              ) : (
+                              ):items.status.name === "aktif" && moment(items.period_date_start).format("YYYY MM DD") <= moment().format("YYYY MM DD") ? (
+                                <div className="d-flex align-items-center">
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary btn-delete mr-2 position-relative"
+                                    onClick={() =>
+                                      router.push({
+                                        pathname: `/partnership/mitra/detail/mitra/${items.id}`,
+                                        query: { idDetail: getId },
+                                      })
+                                    }
+                                  >
+                                    <IconEye
+                                      width="14"
+                                      height="12"
+                                      fill="rgba(255,255,255,1)"
+                                    />
+                                    <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
+                                  </button>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push({
+                                        pathname: `/partnership/mitra/edit/mitra/${items.id}`,
+                                        query: { idDetail: getId },
+                                      })
+                                    }
+                                  >
+                                    <IconPencil
+                                      width="14"
+                                      height="12"
+                                      fill="rgba(255,255,255,1)"
+                                    />
+                                    <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
+                                  </button>
+                                </div>
+                              ) : items.status.name === "tidak aktif" ? (
                                 <div className="d-flex align-items-center">
                                   <button
                                     className="btn btn-link-action bg-blue-secondary btn-delete position-relative"
@@ -786,13 +838,214 @@ const DetailDataKerjasama = () => {
                                     </div>
                                   </button>
                                 </div>
-                              )}
+                              ) : items.status.name === "pengajuan-review" ? (
+                                <div className="d-flex align-items-center">
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary btn-delete position-relative"
+                                    onClick={() =>
+                                      router.push({
+                                        pathname: `/partnership/mitra/detail/mitra/${items.id}`,
+                                        query: { idDetail: getId },
+                                      })
+                                    }
+                                  >
+                                    <IconEye
+                                      width="14"
+                                      height="12"
+                                      fill="rgba(255,255,255,1)"
+                                    />
+                                    <div className="text-hover-show-hapus">
+                                      Review
+                                    </div>
+                                  </button>
+                                </div>
+                              ) : items.status.name === "pengajuan-revisi" ? (
+                                <div className="d-flex align-items-center">
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary btn-delete position-relative"
+                                    onClick={() =>
+                                      router.push({
+                                        pathname: `/partnership/mitra/detail/mitra/${items.id}`,
+                                        query: { idDetail: getId },
+                                      })
+                                    }
+                                  >
+                                    <IconEye
+                                      width="14"
+                                      height="12"
+                                      fill="rgba(255,255,255,1)"
+                                    />
+                                    <div className="text-hover-show-hapus">
+                                      Review
+                                    </div>
+                                  </button>
+                                </div>
+                              ) : items.status.name === "pengajuan-pembahasan" ? (
+                                <div className="d-flex align-items-center">
+                                  {/* <button
+                                    className="btn btn-link-action bg-blue-secondary btn-delete position-relative"
+                                    onClick={() =>
+                                      router.push({
+                                        pathname: `/partnership/mitra/detail/mitra/${items.id}`,
+                                        query: { idDetail: getId },
+                                      })
+                                    }
+                                  >
+                                    <IconEye
+                                      width="14"
+                                      height="12"
+                                      fill="rgba(255,255,255,1)"
+                                    />
+                                    <div className="text-hover-show-hapus">
+                                      Review
+                                    </div>
+                                  </button> */}
+                                  <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <Image
+                                          src={`/assets/icon/ttd.svg`}
+                                          width={19}
+                                          height={19}
+                                          alt="ditolak"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Tanda tangan virtual
+                                        </div>
+                                      </button>
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <Image
+                                          src={`/assets/icon/Ditolak.svg`}
+                                          width={19}
+                                          height={19}
+                                          alt="ditolak"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Dibatalkan
+                                        </div>
+                                      </button>
+                                </div>
+                              ) : items.status.name === "pengajuan-selesai" ? (
+                                <div className="d-flex align-items-center">
+                                  {/* <button
+                                    className="btn btn-link-action bg-blue-secondary btn-delete position-relative"
+                                    onClick={() =>
+                                      router.push({
+                                        pathname: `/partnership/mitra/detail/mitra/${items.id}`,
+                                        query: { idDetail: getId },
+                                      })
+                                    }
+                                  >
+                                    <IconEye
+                                      width="14"
+                                      height="12"
+                                      fill="rgba(255,255,255,1)"
+                                    />
+                                    <div className="text-hover-show-hapus">
+                                      Review
+                                    </div>
+                                  </button> */}
+                                  <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <Image
+                                          src={`/assets/icon/ttd.svg`}
+                                          width={19}
+                                          height={19}
+                                          alt="ditolak"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Tanda tangan virtual
+                                        </div>
+                                      </button>
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/manajemen-kerjasama/view/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <Image
+                                          src={`/assets/icon/Ditolak.svg`}
+                                          width={19}
+                                          height={19}
+                                          alt="ditolak"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Dibatalkan
+                                        </div>
+                                      </button>
+                                </div>
+                              ) : (
+                                    <div className="d-flex align-items-center">
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/kerjasama/view/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                        // onClick={() =>
+                                        //   router.push(
+                                        //     `/partnership/kerjasama/edit/${items.id}`
+                                        //   )
+                                        // }
+                                      >
+                                        <IconPencil width="16" height="16" />
+
+                                        <div className="text-hover-show-hapus">
+                                          Ubah
+                                        </div>
+                                      </button>
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        // onClick={() =>
+                                        //   cooperationDelete(items.id)
+                                        // }
+                                      >
+                                        <IconDelete width="16" height="16" />
+                                        <div className="text-hover-show-hapus">
+                                          Hapus
+                                        </div>
+                                      </button>
+                                    </div>
+                                  ) }
                             </td>
                           </tr>
                         );
                       }
                     )
-                  ))
+                  )
                 }
                 pagination={
                   <Pagination

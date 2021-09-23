@@ -17,7 +17,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
 
-const StepThree = () => {
+const StepThree = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -65,7 +65,7 @@ const StepThree = () => {
         questions_to_share: jumlah_soal,
       };
 
-      dispatch(updateSurveyQuestionBanksPublish(data, id));
+      dispatch(updateSurveyQuestionBanksPublish(data, id, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -109,7 +109,7 @@ const StepThree = () => {
           questions_to_share: jumlah_soal,
         };
 
-        dispatch(updateSurveyQuestionBanksPublish(data, id));
+        dispatch(updateSurveyQuestionBanksPublish(data, id, token));
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);

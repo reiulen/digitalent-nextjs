@@ -15,7 +15,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInputClone";
 import LoadingPage from "../../../../LoadingPage";
 
-const StepOne = () => {
+const StepOne = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -70,7 +70,7 @@ const StepOne = () => {
         category,
       };
 
-      dispatch(newCloneSubtanceQuestionBanks(data));
+      dispatch(newCloneSubtanceQuestionBanks(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -102,7 +102,7 @@ const StepOne = () => {
         category,
       };
 
-      dispatch(newCloneSubtanceQuestionBanks(data));
+      dispatch(newCloneSubtanceQuestionBanks(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);

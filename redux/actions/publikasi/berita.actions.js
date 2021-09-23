@@ -43,11 +43,19 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
 
         const config = {
             headers: {
-                Authorization: "Bearer " + token,
+                Authorization: 'Bearer ' + token,
             },
         };
 
-        const { data } = await axios.get(link, config)
+        // const config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+        //         'Access-Control-Allow-Origin': '*',
+        //         'apikey': process.env.END_POINT_KEY_AUTH
+        //     }
+        // }
+
+        const { data } = await axios.get (link, config)
 
         dispatch({
             type: BERITA_SUCCESS,
@@ -62,12 +70,18 @@ export const getAllBerita = (page = 1, keyword = '', limit = 5, publish = null, 
     }
 }
 
-export const newBerita = (beritaData) => async (dispatch) => {
+export const newBerita = (beritaData, token) => async (dispatch) => {
     try {
 
         dispatch({
             type: NEW_BERITA_REQUEST
         })
+
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
 
         // const config = {
         //     headers: {
@@ -77,7 +91,7 @@ export const newBerita = (beritaData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/berita', beritaData)
+        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/berita', beritaData, config)
 
         dispatch({
             type: NEW_BERITA_SUCCESS,
@@ -92,20 +106,20 @@ export const newBerita = (beritaData) => async (dispatch) => {
     }
 }
 
-export const getDetailBerita = (id) => async (dispatch, token) => {
+export const getDetailBerita = (id, token) => async (dispatch) => {
     try {
 
         dispatch({
             type: DETAIL_BERITA_REQUEST
         })
 
-        let link = process.env.END_POINT_API_PUBLIKASI + `api/berita/${id}`
-
         const config = {
             headers: {
-                Authorization: "Bearer " + token,
+                Authorization: 'Bearer ' + token,
             },
         };
+
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/berita/${id}`
 
         const { data } = await axios.get(link, config)
 
@@ -125,14 +139,20 @@ export const getDetailBerita = (id) => async (dispatch, token) => {
 }
 
 
-export const updateBerita = (beritaData) => async (dispatch) => {
+export const updateBerita = (beritaData, token) => async (dispatch) => {
     try {
 
         dispatch({ type: UPDATE_BERITA_REQUEST })
 
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
+
         let link = process.env.END_POINT_API_PUBLIKASI + `api/berita/${beritaData.id}`
 
-        const { data } = await axios.post(link, beritaData)
+        const { data } = await axios.post (link, beritaData, config)
 
         dispatch({
             type: UPDATE_BERITA_SUCCESS,
@@ -154,7 +174,7 @@ export const deleteBerita = (id, token) => async (dispatch) => {
 
         const config = {
             headers: {
-                Authorization: "Bearer " + token,
+                Authorization: 'Bearer ' + token,
             },
         };
 

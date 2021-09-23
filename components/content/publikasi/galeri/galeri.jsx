@@ -279,7 +279,7 @@ const Galeri = () => {
         }
         dispatch(viewGaleri(data))
         setIndexGalleri(i)
-        console.log("INDEEEXX : ", data)
+        console.log("INDEEEXX : ", id)
     }
 
     const resetValueSort = () => {
@@ -588,11 +588,11 @@ const Galeri = () => {
 
                                         <tbody>
                                             {
-                                                !galeri || galeri && galeri.galleri.length === 0 ?
+                                                !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    galeri && galeri.galleri.map((row, i) => {
+                                                    galeri && galeri.gallery.map((row, i) => {
+                                                        { console.log("INI ROWW ID : ", row) }
                                                         return <tr key={row.id}>
-                                                            {/* {console.log("INI ROWW ID : ",row.id_gallery)} */}
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
@@ -663,7 +663,7 @@ const Galeri = () => {
                                                                 </button>
 
                                                                 <Link
-                                                                    href={`/publikasi/galeri/${row.id}`}
+                                                                    href={`/publikasi/galeri/${row.id_gallery}`}
                                                                 >
                                                                     <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
                                                                         <i className="ri-pencil-fill p-0 text-white"></i>
@@ -790,8 +790,9 @@ const Galeri = () => {
                             <div className="row">
                                 <div className="col-7">
                                     {
-                                        galeri && galeri.galleri.length !== 0 ?
-                                            galeri.galleri.map((row, i) => {
+                                        galeri && galeri.gallery.length !== 0 ?
+                                            galeri.gallery.map((row, i) => {
+                                                // { console.log("Galeri Map : ", row) }
                                                 return (
                                                     <Image
                                                         key={i}
@@ -817,11 +818,11 @@ const Galeri = () => {
                                 </div>
                                 <div className="col-5">
                                     {
-                                        galeri && galeri.galleri.length !== 0 && index_galleri !== null ?
+                                        galeri && galeri.gallery.length !== 0 && index_galleri !== null ?
                                             <>
                                                 <div className="row mb-1">
                                                     <h5>
-                                                        {galeri.galleri[index_galleri].judul}
+                                                        {galeri.gallery[index_galleri].judul}
                                                     </h5>
                                                 </div>
                                                 <div className="row mb-1">
@@ -838,7 +839,7 @@ const Galeri = () => {
                                                         className="mr-5 px-3 py-1 rounded mb-1">
                                                         <i className="flaticon2-calendar-4"></i>
                                                         <span className="ml-1">
-                                                            Publish: {galeri.galleri[index_galleri].tanggal_publish}
+                                                            Publish: {galeri.gallery[index_galleri].tanggal_publish}
                                                         </span>
                                                     </div>
 
@@ -846,7 +847,7 @@ const Galeri = () => {
 
                                                 </div>
                                                 <div className="row mb-1">
-                                                    <p dangerouslySetInnerHTML={{ __html: galeri.galleri[index_galleri].isi_galleri }}>
+                                                    <p dangerouslySetInnerHTML={{ __html: galeri.gallery[index_galleri].isi_galleri }}>
                                                     </p>
                                                 </div>
                                             </>

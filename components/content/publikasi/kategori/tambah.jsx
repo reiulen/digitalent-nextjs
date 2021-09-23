@@ -11,7 +11,7 @@ import { NEW_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.t
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahKategori = () => {
+const TambahKategori = (token) => {
 
     const dispatch = useDispatch()
     const router = useRouter();
@@ -60,7 +60,7 @@ const TambahKategori = () => {
                 jenis_kategori       
             }
 
-            dispatch(newKategori(data))
+            dispatch(newKategori(data, token))
             // console.log(data)
 
         } else {
@@ -76,6 +76,9 @@ const TambahKategori = () => {
 
     return (
         <PageWrapper>
+            {/* {
+                console.log (kategori)
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>

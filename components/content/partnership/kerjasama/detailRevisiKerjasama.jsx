@@ -6,10 +6,135 @@ import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 
 import Style from "../../../../styles/progressbar.module.css";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const DetailRevisiKerjasama = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
+  const router = useRouter();
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [cooperationID, setCooperationID] = useState("");
+  const [allCooperation, setAllCooperation] = useState([])
+  console.log("allCooperation",allCooperation)
+  const [period, setPeriod] = useState("");
+  const [periodUnit, setPeriodUnit] = useState("tahun");
+  const [note, setNote] = useState("");
+
+
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    Swal.fire({
+      title: "Apakah anda yakin ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Tidak",
+      confirmButtonText: "Ya",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+
+        let formData = new FormData();
+
+        const method = "PUT";
+        formData.append("_method", method);
+        formData.append("note", note);
+
+        let dataee = allCooperation.map((items, i) => {
+          return items.form_content_review;
+        });
+
+        dataee.forEach((item, i) => {
+          formData.append(`cooperation_form_review[${i}]`, item);
+        });
+
+
+
+        // console.log("note",note);
+        // console.log("method","PUT");
+
+
+
+        // let formData = new FormData();
+        // const method = "PUT";
+        // formData.append("_method", method);
+        // formData.append("note", note);
+
+        // if (AllCooperation === "") {
+        //   // start data default
+        //   formData.append("cooperation_category_id", cooperationID.id);
+        //   let dataee = cooperationID.data_content.map((items, i) => {
+        //     return items.form_content;
+        //   });
+        //   dataee.forEach((item, i) => {
+        //     formData.append(`cooperation_form_content[${i}]`, item);
+        //   });
+        //   // end data default
+        // } else {
+        //   // start jika tidak default
+        //   formData.append("cooperation_category_id", cooperationC_id);
+        //   let ez = AllCooperation.map((items, i) => {
+        //     return items.cooperation;
+        //   });
+        //   ez.forEach((item, i) => {
+        //     formData.append(`cooperation_form_content[${i}]`, item);
+        //   });
+        //   // end jika tidak default
+        // }
+
+        try {
+          let { data } = await axios.post(
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi/${router.query.id}/${router.query.varsion}`,
+            formData
+          );
+
+          router.push({
+            pathname: "/partnership/kerjasama/",
+            // query: { update: true },
+          });
+        } catch (error) {
+          notify(error.response.data.message);
+        }
+      }
+    });
+  };
+
+  
+
+
+  const setDataSingle = async (id) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`
+      );
+      setTitle(data.data.title);
+      setDate(data.data.submission_date);
+      setAllCooperation(data.data.cooperation_category.data_content)
+      setCooperationID(data.data.cooperation_category);
+      setPeriod(data.data.period);
+      setPeriodUnit(data.data.period_unit);
+      setNote(data.data.note)
+
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+  };
+  const handleChange = (e, index) => {
+    let dataaa = [...allCooperation];
+    dataaa[index].form_content_review = e.target.value;
+    console.log("dataaa",dataaa)
+    // console.log("index",index)
+    setAllCooperation(dataaa);
+  };
+  useEffect(() => {
+    setDataSingle(router.query.id);
+  }, [router.query.id])
+
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -27,8 +152,8 @@ const DetailRevisiKerjasama = () => {
                 <div className="position-relative">
                   <input
                     placeholder="Pilih Tanggal"
-                    // readOnly
-                    // value={date}
+                    readOnly
+                    value={date&&date}
                     type="date"
                     className="form-control mb-3 mb-lg-0"
                   />
@@ -43,8 +168,8 @@ const DetailRevisiKerjasama = () => {
                     <label className="required mb-2">Judul Kerjasama</label>
                     <input
                       placeholder="Masukan Judul Kerjasama"
-                      // readOnly
-                      // value={date}
+                      readOnly
+                      value={title&&title}
                       type="text"
                       className="form-control mb-3 mb-lg-0"
                     />
@@ -54,8 +179,8 @@ const DetailRevisiKerjasama = () => {
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2">Kategori Kerjasama</label>
-                    <select className="form-control">
-                      <option value="">Pilih Kategori Kerjasama</option>
+                    <select className="form-control remove-icon-default" disabled>
+                      <option value="">{cooperationID&&cooperationID.name}</option>
                     </select>
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
@@ -68,8 +193,8 @@ const DetailRevisiKerjasama = () => {
                     <label className="required mb-2">Periode Kerjasama</label>
                     <input
                       placeholder="Masukan Lama Kerjasama"
-                      // readOnly
-                      // value={date}
+                      readOnly
+                      value={period&&period}
                       type="number"
                       className="form-control mb-3 mb-lg-0"
                     />
@@ -87,18 +212,25 @@ const DetailRevisiKerjasama = () => {
                 </div>
               </div>
 
-              <div className="row">
+
+              {/* start loop */}
+
+              {!allCooperation.length ? "" : allCooperation.map((items,index)=>{
+                return(
+                    <div className="row" key={index}>
                 <div className="col-12 col-sm-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
-                      Tujuan Kerjasama
+                      {items.cooperation_form}
                     </label>
                     <div>
                       <textarea
                         name="cooperation"
                         id=""
+                        readOnly
                         cols="30"
                         rows="5"
+                        value={items.form_content}
                         className="form-control"
                         placeholder="Tuliskan Tujuan Kerjasama"
                       ></textarea>
@@ -112,6 +244,8 @@ const DetailRevisiKerjasama = () => {
                     </label>
                     <div>
                       <textarea
+                      onChange={(e) => handleChange(e, index)}
+                      value={items.form_content_review}
                         name="cooperation"
                         id=""
                         cols="30"
@@ -124,79 +258,11 @@ const DetailRevisiKerjasama = () => {
                 </div>
               </div>
 
-              <div className="row">
-                <div className="col-12 col-sm-6">
-                  <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Ruang Lingkup Kerjasama
-                    </label>
-                    <div>
-                      <textarea
-                        name="cooperation"
-                        id=""
-                        cols="30"
-                        rows="5"
-                        className="form-control"
-                        placeholder="Tuliskan Ruang Lingkup Kerjasama"
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6">
-                  <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Catatan Revisi
-                    </label>
-                    <div>
-                      <textarea
-                        name="cooperation"
-                        id=""
-                        cols="30"
-                        rows="5"
-                        className="form-control"
-                        placeholder="Tuliskan Catatan Revisi"
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div className="row">
-                <div className="col-12 col-sm-6">
-                  <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Target Kerjasama
-                    </label>
-                    <div>
-                      <textarea
-                        name="cooperation"
-                        id=""
-                        cols="30"
-                        rows="5"
-                        className="form-control"
-                        placeholder="Tuliskan Target Kerjasama"
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6">
-                  <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Catatan Revisi
-                    </label>
-                    <div>
-                      <textarea
-                        name="cooperation"
-                        id=""
-                        cols="30"
-                        rows="5"
-                        className="form-control"
-                        placeholder="Tuliskan Catatan Revisi"
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                )
+              })}
+
+              {/* end loop */}
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -204,8 +270,10 @@ const DetailRevisiKerjasama = () => {
                 </label>
                 <div>
                   <textarea
+                  onChange={(e)=>setNote(e.target.value)}
                     name="cooperation"
                     id=""
+                    value={note&&note}
                     cols="30"
                     rows="5"
                     className="form-control"
@@ -213,20 +281,6 @@ const DetailRevisiKerjasama = () => {
                   ></textarea>
                 </div>
               </div>
-
-              {/* <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10">
-                  <Link href="/partnership/kerjasama">
-                    <a className="btn btn-outline-primary mr-2 btn-sm">
-                      Kembali
-                    </a>
-                  </Link>
-                  <Link href="/partnership/user/review-kerjasama">
-                    <a className="btn btn-primary mr-2 btn-sm">Submit</a>
-                  </Link>
-                </div>
-              </div> */}
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
@@ -236,8 +290,9 @@ const DetailRevisiKerjasama = () => {
                     </a>
                   </Link>
                   <button
-                    type="submit"
+                    type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    onClick={() => handleSubmit()}
                   >
                     Simpan
                   </button>

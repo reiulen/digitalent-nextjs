@@ -14,7 +14,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
 import LoadingPage from "../../../../LoadingPage";
 
-const StepOne = () => {
+const StepOne = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -67,7 +67,7 @@ const StepOne = () => {
       _method: "put",
     };
 
-    dispatch(updateSurveyQuestionBanks(id, data));
+    dispatch(updateSurveyQuestionBanks(id, data, token));
   };
 
   const onSubmit = (e) => {
@@ -81,7 +81,7 @@ const StepOne = () => {
       _method: "put",
     };
 
-    dispatch(updateSurveyQuestionBanks(id, data));
+    dispatch(updateSurveyQuestionBanks(id, data, token));
 
     console.log(data);
   };

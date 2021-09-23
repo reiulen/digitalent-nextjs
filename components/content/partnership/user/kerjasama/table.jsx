@@ -49,7 +49,7 @@ import IconDelete from "../../../../assets/icon/Delete";
 const Table = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const { successInputProfile } = router.query;
+  const { successInputProfile,successSubmitDokumentKerjasama } = router.query;
   let selectRefKerjasama = null;
   let selectRefStatus = null;
 
@@ -60,8 +60,13 @@ const Table = () => {
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
 
+  // const onNewReset = () => {
+  //   router.replace(`/partnership/user/kerjasama`);
+  // };
+
   const onNewReset = () => {
-    router.replace(`/partnership/user/kerjasama`);
+    // setSuccessDelete(false);
+    router.replace("/partnership/user/kerjasama", undefined, { shallow: true });
   };
 
   const handleChangeValueSearch = (value) => {
@@ -128,6 +133,7 @@ const Table = () => {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`
       );
+      console.log("data.data.total",data.data.total)
       setSumWillExpire(data.data.total);
     } catch (error) {
       console.log("object", error);
@@ -144,6 +150,35 @@ const Table = () => {
   return (
     <PageWrapper>
       {successInputProfile ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil menyimpan data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {successSubmitDokumentKerjasama ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
@@ -662,11 +697,11 @@ const Table = () => {
                                         //   )
                                         // }
                                       >
-                                        <option value="6">
-                                          Pengajuan-Selesai
-                                        </option>
                                         <option value="5">
                                           Pengajuan-Pembahasan
+                                        </option>
+                                        <option value="6">
+                                          Pengajuan-Selesai
                                         </option>
                                       </select>
                                       {/* <IconArrow
@@ -741,7 +776,80 @@ const Table = () => {
 
                                 <td className="align-middle text-left">
                                   <div className="d-flex align-items-center">
-                                    {items.status.name ===
+                                    {items.status.name === "aktif" &&
+                                  moment(items.period_date_start).format(
+                                    "YYYY MM DD"
+                                  ) > moment().format("YYYY MM DD") ? (
+                                    <div className="d-flex align-items-center">
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/user/kerjasama/${items.id}`
+                                          )
+                                        }
+                                      >
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+                                      </div>
+                                  ) : items.status.name === "aktif" &&
+                                    moment(items.period_date_start).format(
+                                      "YYYY MM DD"
+                                    ) <= moment().format("YYYY MM DD") ? (
+                                     <div className="d-flex align-items-center">
+                                      <button
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/user/kerjasama/${items.id}`
+                                          )
+                                        }
+                                      >
+                                        <IconEye
+                                          width="16"
+                                          height="16"
+                                          fill="rgba(255,255,255,1)"
+                                        />
+                                        <div className="text-hover-show-hapus">
+                                          Detail
+                                        </div>
+                                      </button>
+                                      </div>
+                                  ) : items.status.name === "tidak aktif" ? (
+                                    <div className="position-relative w-max-content">
+                                      <select
+                                        disabled
+                                        name=""
+                                        id=""
+                                        className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
+                                        key={index}
+                                        // onChange={(e) =>
+                                        //   changeListStatus(
+                                        //     e,
+                                        //     items.id,
+                                        //     items.status.name
+                                        //   )
+                                        // }
+                                      >
+                                        <option value="2">Tidak Aktif</option>
+                                        <option value="1">Aktif</option>
+                                      </select>
+                                      {/* <IconArrow
+                                        className="right-center-absolute"
+                                        style={{ right: "10px" }}
+                                        fill="#F65464"
+                                        width="7"
+                                        height="7"
+                                      /> */}
+                                    </div>
+                                  ) :items.status.name ===
                                     "pengajuan-review" ? (
                                       <Link
                                         href="/partnership/user/kerjasama/review-kerjasama-1"
@@ -757,7 +865,13 @@ const Table = () => {
                                     ) : items.status.name ===
                                       "pengajuan-revisi" ? (
                                       <Link
-                                        href="/partnership/user/revisi-list"
+
+                                      href={{
+                                        pathname:"/partnership/user/kerjasama/review-kerjasama-2",
+                                        query:{id:items.id}
+                                      }}
+
+                                        // href="/partnership/user/kerjasama/review-kerjasama-2"
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
@@ -770,7 +884,17 @@ const Table = () => {
                                     ) : items.status.name ===
                                       "pengajuan-pembahasan" ? (
                                       <Link
-                                        href="/partnership/user/revisi-submit"
+
+
+
+                                        href={{
+                                          pathname:"/partnership/user/kerjasama/pembahasan-2",
+                                          query:{id:items.id}
+                                        }}
+
+
+
+
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
@@ -782,8 +906,41 @@ const Table = () => {
                                       </Link>
                                     ) : items.status.name ===
                                       "pengajuan-selesai" ? (
-                                      <Link
-                                        href="/partnership/user/hasil"
+
+
+
+
+                                        <Link
+
+
+
+                                        href={{
+                                          pathname:"/partnership/user/kerjasama/pembahasan-2",
+                                          query:{id:items.id}
+                                        }}
+
+                                        
+
+
+                                        passHref
+                                      >
+
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                          <IconReview />
+                                          <div className="text-hover-show-hapus">
+                                            Review
+                                          </div>
+                                        </a>
+
+
+                                        </Link>
+
+
+
+
+
+                                      /* <Link
+                                        href="/partnership/user/kerjasama/pembahasan-2"
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
@@ -792,11 +949,14 @@ const Table = () => {
                                             Review
                                           </div>
                                         </a>
-                                      </Link>
+                                      </Link> */
                                     ) : items.status.name ===
                                       "pengajuan-document" ? (
                                       <Link
-                                        href="/partnership/user/submit-dokumen-kerjasama-revisi"
+                                        href={{
+                                          pathname:"/partnership/user/kerjasama/review-dokumen-kerjasama",
+                                          query:{id:items.id}
+                                        }}
                                         passHref
                                       >
                                         <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">

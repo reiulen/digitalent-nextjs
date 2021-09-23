@@ -1,10 +1,11 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 
-import Layout from "../../../components/templates/layout.component";
+// import Layout from "../../../components/templates/layout.component";
 // import EditArtikel from "../../../components/content/publikasi/artikel/edit";
 
 import { getDetailArtikel } from "../../../redux/actions/publikasi/artikel.actions";
+import { getAllKategori } from '../../../redux/actions/publikasi/kategori.actions'
 import { wrapper } from "../../../redux/store";
 
 import LoadingPage from "../../../components/LoadingPage";
@@ -19,13 +20,24 @@ const EditArtikel = dynamic(
   }
 );
 
-export default function EditArtikelPage() {
+// export default function EditArtikelPage() {
+//   return (
+//     <>
+//       <div className="d-flex flex-column flex-root">
+//         <Layout title="Ubah Artikel - Publikasi">
+//           <EditArtikel />
+//         </Layout>
+//       </div>
+//     </>
+//   );
+// }
+
+export default function EditArtikelPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Ubah Artikel - Publikasi">
-          <EditArtikel />
-        </Layout>
+        <EditArtikel token={session.token}/>
       </div>
     </>
   );
@@ -43,6 +55,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      await store.dispatch(getDetailArtikel(params.id, session.user.user.data.token));
+      await store.dispatch(getDetailArtikel(params.id,  session.user.user.data.token));
+      await store.dispatch(getAllKategori(session.user.user.data.token))
+
+      return {
+        props: { session, title: "Edit Artikel - Publikasi" },
+    };
     }
 );

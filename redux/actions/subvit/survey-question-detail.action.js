@@ -26,26 +26,22 @@ import {
 import axios from "axios";
 
 export const getAllSurveyQuestionDetail =
-  (id, page = 1, limit = null, keyword = "") =>
+  (id, page = 1, limit = null, keyword = "", token) =>
   async (dispatch) => {
     try {
       dispatch({ type: SURVEY_QUESTION_DETAIL_REQUEST });
-
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
       let link =
         process.env.END_POINT_API_SUBVIT +
         `api/survey-question-bank-details/all/${id}?`;
       if (page) link = link.concat(`&page=${page}`);
       if (limit) link = link.concat(`&limit=${limit}`);
 
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
-
-      const { data } = await axios.get(link);
+      const { data } = await axios.get(link, config);
 
       dispatch({
         type: SURVEY_QUESTION_DETAIL_SUCCESS,
@@ -60,23 +56,21 @@ export const getAllSurveyQuestionDetail =
   };
 
 export const newSurveyQuestionDetail =
-  (triviaDetailData) => async (dispatch) => {
+  (triviaDetailData, token) => async (dispatch) => {
     try {
       dispatch({
         type: NEW_SURVEY_QUESTION_DETAIL_REQUEST,
       });
-
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT + "api/survey-question-bank-details",
-        triviaDetailData
+        triviaDetailData,
+        config
       );
 
       dispatch({
@@ -91,13 +85,18 @@ export const newSurveyQuestionDetail =
     }
   };
 
-export const deleteSurveyQuestionDetail = (id) => async (dispatch) => {
+export const deleteSurveyQuestionDetail = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_SURVEY_QUESTION_DETAIL_REQUEST });
-
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     const { data } = await axios.delete(
       process.env.END_POINT_API_SUBVIT +
-        `api/survey-question-bank-details/${id}`
+        `api/survey-question-bank-details/${id}`,
+      config
     );
 
     dispatch({
@@ -112,16 +111,20 @@ export const deleteSurveyQuestionDetail = (id) => async (dispatch) => {
   }
 };
 
-export const detailSurveyQuestionDetail = (id) => async (dispatch) => {
+export const detailSurveyQuestionDetail = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DETAIL_SURVEY_QUESTION_DETAIL_REQUEST });
-
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
     const { data } = await axios.get(
       process.env.END_POINT_API_SUBVIT +
-        `api/survey-question-bank-details/${id}`
+        `api/survey-question-bank-details/${id}`,
+      config
     );
 
-    console.log(data);
     dispatch({
       type: DETAIL_SURVEY_QUESTION_DETAIL_SUCCESS,
       payload: data,
@@ -135,14 +138,19 @@ export const detailSurveyQuestionDetail = (id) => async (dispatch) => {
 };
 
 export const updateSurveyQuestionDetail =
-  (id, dataBankSoal) => async (dispatch) => {
+  (id, dataBankSoal, token) => async (dispatch) => {
     try {
       dispatch({ type: UPDATE_SURVEY_QUESTION_DETAIL_REQUEST });
-
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT +
           `api/survey-question-bank-details/${id}`,
-        dataBankSoal
+        dataBankSoal,
+        config
       );
 
       dispatch({
@@ -158,24 +166,22 @@ export const updateSurveyQuestionDetail =
   };
 
 export const importFileSurveyQuestionDetail =
-  (triviaDetailFile) => async (dispatch) => {
+  (triviaDetailFile, token) => async (dispatch) => {
     try {
       dispatch({
         type: IMPORT_FILE_SURVEY_QUESTION_DETAIL_REQUEST,
       });
-
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT +
           "api/survey-question-bank-details/import-file",
-        triviaDetailFile
+        triviaDetailFile,
+        config
       );
 
       dispatch({
@@ -191,24 +197,22 @@ export const importFileSurveyQuestionDetail =
   };
 
 export const importImagesSurveyQuestionDetail =
-  (triviaDetailImages) => async (dispatch) => {
+  (triviaDetailImages, token) => async (dispatch) => {
     try {
       dispatch({
         type: IMPORT_IMAGES_SURVEY_QUESTION_DETAIL_REQUEST,
       });
-
-      // const config = {
-      //     headers: {
-      //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-      //         'Access-Control-Allow-Origin': '*',
-      //         'apikey': process.env.END_POINT_KEY_AUTH
-      //     }
-      // }
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
 
       const { data } = await axios.post(
         process.env.END_POINT_API_SUBVIT +
           "api/survey-question-bank-details/import-image",
-        triviaDetailImages
+        triviaDetailImages,
+        config
       );
 
       dispatch({
