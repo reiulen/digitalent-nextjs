@@ -6,9 +6,10 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { Modal } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
+import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 
 const AddRegistrationStep2 = () => {
@@ -17,8 +18,7 @@ const AddRegistrationStep2 = () => {
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
-
-  const [showModal, setShowModal] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   const [element] = useState([
     {
@@ -118,15 +118,6 @@ const AddRegistrationStep2 = () => {
       dataOption: "",
       required: false,
     },
-    {
-      key: 2,
-      name: "",
-      element: "",
-      size: "",
-      option: "",
-      dataOption: "",
-      required: false,
-    },
   ]);
 
   const handleResetError = () => {
@@ -171,22 +162,51 @@ const AddRegistrationStep2 = () => {
     setFormBuilder(list);
   };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const data = {
-      title,
-      formBuilder,
-    };
-    console.log(data);
-    if (simpleValidator.current.allValid()) {
+  const renderDataOptionHandler = (row, i) => {
+    if (row.option === "select_reference") {
+      return (
+        <div className="col-sm-12 col-md-2">
+          <div className="form-group mb-2">
+            <label className="col-form-label font-weight-bold">
+              Data Option
+            </label>
+            <select
+              className="form-control"
+              name="dataOption"
+              value={row.dataOption}
+              onChange={(e) => inputChangeHandler(e, i)}
+            >
+              <option value="" disabled selected>
+                -- PILIH --
+              </option>
+              {dataOptions.map((datOpt, i) => (
+                <option key={i} value={datOpt.value}>
+                  {datOpt.value}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      );
     } else {
-      simpleValidator.current.showMessages();
-      forceUpdate(1);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Isi data yang bener dong lu !",
-      });
+      return (
+        <div className="col-sm-12 col-md-2">
+          <div className="form-group mb-2">
+            <label className="col-form-label font-weight-bold">
+              Data Option
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="dataOption"
+              value={row.dataOption}
+              placeholder="data1;data2"
+              autoComplete="off"
+              onChange={(e) => inputChangeHandler(e, i)}
+            />
+          </div>
+        </div>
+      );
     }
   };
 
@@ -218,28 +238,7 @@ const AddRegistrationStep2 = () => {
               </select>
             </div>
           </div>
-          <div className="col-sm-12 col-md-2">
-            <div className="form-group mb-2">
-              <label className="col-form-label font-weight-bold">
-                Data Option
-              </label>
-              <select
-                className="form-control"
-                name="dataOption"
-                value={row.dataOption}
-                onChange={(e) => inputChangeHandler(e, i)}
-              >
-                <option value="" disabled selected>
-                  -- PILIH --
-                </option>
-                {dataOptions.map((datOpt, i) => (
-                  <option key={i} value={datOpt.value}>
-                    {datOpt.value}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+          {renderDataOptionHandler(row, i)}
         </>
       );
     } else {
@@ -302,7 +301,12 @@ const AddRegistrationStep2 = () => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <input type={row.element} name="" className="form-control" />
+            <input
+              type={row.element}
+              name=""
+              className="form-control"
+              required={row.required}
+            />
           </div>
         );
         break;
@@ -312,8 +316,14 @@ const AddRegistrationStep2 = () => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <select name="" className="form-control">
-              <option value=""></option>
+            <select name="" className="form-control" required={row.required}>
+              {modalShow === true
+                ? row.option === "manual"
+                  ? row.dataOption.map((dat, i) => (
+                      <option value={dat}>{dat}</option>
+                    ))
+                  : ""
+                : ""}
             </select>
           </div>
         );
@@ -324,13 +334,23 @@ const AddRegistrationStep2 = () => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <div className="form-check">
-              <input
-                type="checkbox"
-                name="plotRegistration"
-                className="form-check-input"
-              />
-              <label className="form-check-label">Umum</label>
+            <div className="my-auto">
+              {modalShow === true
+                ? row.option === "manual"
+                  ? row.dataOption.map((dat, i) => (
+                      <div className="form-check pb-3">
+                        <input
+                          type="checkbox"
+                          name="plotRegistration"
+                          className="form-check-input"
+                          required={row.required}
+                          value={dat}
+                        />
+                        <label className="form-check-label">{dat}</label>
+                      </div>
+                    ))
+                  : ""
+                : ""}
             </div>
           </div>
         );
@@ -341,7 +361,13 @@ const AddRegistrationStep2 = () => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <textarea name="" cols="30" rows="5" className="form-control" />
+            <textarea
+              name=""
+              cols="30"
+              rows="5"
+              className="form-control"
+              required={row.required}
+            />
           </div>
         );
         break;
@@ -351,14 +377,23 @@ const AddRegistrationStep2 = () => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <div className="form-check">
-              <input
-                type="radio"
-                name={row.name}
-                className="form-check-input"
-                value={row.name}
-              />
-              <label className="form-check-label">{row.name}</label>
+            <div className="my-auto">
+              {modalShow === true
+                ? row.option === "manual"
+                  ? row.dataOption.map((dat, i) => (
+                      <div className="form-check pb-3">
+                        <input
+                          type="radio"
+                          name={row.name}
+                          className="form-check-input"
+                          value={dat}
+                          required={row.required}
+                        />
+                        <label className="form-check-label">{dat}</label>
+                      </div>
+                    ))
+                  : ""
+                : ""}
             </div>
           </div>
         );
@@ -374,6 +409,7 @@ const AddRegistrationStep2 = () => {
                 type="file"
                 className="custom-file-input"
                 accept="image/png, image/jpeg , image/jpg"
+                required={row.required}
               />
               <label className="custom-file-label" htmlFor="customFile">
                 Belum ada File
@@ -393,6 +429,7 @@ const AddRegistrationStep2 = () => {
                 type="file"
                 className="custom-file-input"
                 accept="application/pdf"
+                required={row.required}
               />
               <label className="custom-file-label" htmlFor="customFile">
                 Belum ada File
@@ -407,7 +444,12 @@ const AddRegistrationStep2 = () => {
             <label className="col-form-label font-weight-bold">
               {row.name}
             </label>
-            <input type={row.element} name="" className="form-control" />
+            <input
+              type={row.element}
+              name=""
+              className="form-control"
+              required={row.required}
+            />
           </div>
         );
         break;
@@ -416,8 +458,53 @@ const AddRegistrationStep2 = () => {
     }
   };
 
+  const showPreviewHandler = () => {
+    let list = [...formBuilder];
+    list.forEach((row, i) => {
+      if (row.option === "manual") {
+        let dataOption = row.dataOption.split(";");
+        row.dataOption = dataOption;
+      }
+    });
+    setFormBuilder(list);
+    setModalShow(true);
+  };
+
+  const closePreviewHandler = () => {
+    let list = [...formBuilder];
+    list.forEach((row, i) => {
+      if (row.option === "manual") {
+        let dataOption = row.dataOption.join(";");
+        row.dataOption = dataOption;
+      }
+    });
+    setFormBuilder(list);
+    setModalShow(false);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-form-komitmen");
+    const data = {
+      title,
+      formBuilder,
+    };
+    console.log(data);
+    if (simpleValidator.current.allValid()) {
+    } else {
+      simpleValidator.current.showMessages();
+      forceUpdate(1);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Isi data yang bener dong lu !",
+      });
+    }
+  };
+
   return (
     <PageWrapper>
+      <StepInputPelatihan step={2} />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
@@ -546,8 +633,7 @@ const AddRegistrationStep2 = () => {
                     className="btn btn-light-success mr-2"
                     type="button"
                     style={{ borderRadius: "30px", fontWeight: "600" }}
-                    data-toggle="modal"
-                    data-target=".bd-example-modal-lg"
+                    onClick={showPreviewHandler}
                   >
                     Review
                   </button>
@@ -583,36 +669,39 @@ const AddRegistrationStep2 = () => {
         </div>
       </div>
 
-      <div
-        className="modal fade bd-example-modal-lg"
-        tabIndex="-1"
-        role="dialog"
-        aria-labelledby="myLargeModalLabel"
-        aria-hidden="true"
+      <Modal
+        show={modalShow}
+        onHide={closePreviewHandler}
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
       >
-        <div className="modal-dialog modal-xl">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title">{title}</h4>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
-              </button>
-            </div>
-            <div className="modal-body p-7">
-              <div className="row">
-                {formBuilder.map((row, i) => (
-                  <>{readerElementHandler(row, i)}</>
-                ))}
-              </div>
-            </div>
+        <Modal.Header>
+          <Modal.Title id="contained-modal-title-vcenter">{title}</Modal.Title>
+          <button type="button" className="close" onClick={closePreviewHandler}>
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row">
+            {formBuilder.map((row, i) => (
+              <>{readerElementHandler(row, i)}</>
+            ))}
           </div>
-        </div>
-      </div>
+        </Modal.Body>
+        <Modal.Footer className="py-2">
+          <div className="float-right">
+            <button
+              className="btn btn-warning"
+              type="button"
+              style={{ borderRadius: "30px", fontWeight: "600" }}
+              onClick={closePreviewHandler}
+            >
+              Kembali
+            </button>
+          </div>
+        </Modal.Footer>
+      </Modal>
     </PageWrapper>
   );
 };
