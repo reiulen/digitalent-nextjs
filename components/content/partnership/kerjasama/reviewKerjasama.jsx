@@ -1,23 +1,14 @@
-import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
-
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Select from "react-select";
-
-import IconCalender from "../../../assets/icon/Calender";
 import axios from "axios";
 
-const ReviewKerjasama = () => {
+const ReviewKerjasama = ({ token }) => {
   const router = useRouter();
-
 
   // state cek-progres
   const [title, setTitle] = useState("");
@@ -32,13 +23,12 @@ const ReviewKerjasama = () => {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`
       );
-      console.log("data sdfsdf",data)
+      console.log("data sdfsdf", data);
       setTitle(data.data.title);
       setDate(data.data.submission_date);
       setCooperationID(data.data.cooperation_category);
       setPeriod(data.data.period);
       setPeriodUnit(data.data.period_unit);
-
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
@@ -54,10 +44,10 @@ const ReviewKerjasama = () => {
   const [noteView, setNoteView] = useState("");
 
   // cek review card-version
-  const setDataSingleSelesaiReview = async (id,version) => {
+  const setDataSingleSelesaiReview = async (id, version) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`
       );
       setTitleView(data.data.title);
       setDateView(data.data.date);
@@ -71,52 +61,99 @@ const ReviewKerjasama = () => {
     }
   };
 
-
-
-  const acceptDokument = async(e) => {
-    console.log("acceptDokument")
-    e.preventDefault()
-    try {
-      let { data } = await axios.put(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept/${router.query.id}`
-        );
-        console.log("data",data)
+  const ajukanRevisi = (e) => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Apakah anda yakin ingin ajukan revisi ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
         router.push({
-          pathname:"/partnership/kerjasama/",
-          query:{successTerima:true}
-        })
-      } catch (error) {
-        console.log("error acceptDokument",error)
+          pathname: "/partnership/kerjasama/detail-revisi-kerjasama",
+          query: { id: router.query.id, varsion: router.query.version },
+        });
       }
-    }
-    
-    const rejectDokument = async(e) => {
-    console.log("rejectDokument")
-    e.preventDefault()
-    try {
-      let { data } = await axios.put(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`
-      );
+    });
+  };
 
-      console.log("data asdasd",data)
-      router.push({
-        pathname:"/partnership/kerjasama/",
-        query:{successReject:true}
-      })
-    } catch (error) {
-      console.log("error acceptDokument",error)
-    }
-  }
-const [statusInfo, setstatusInfo] = useState("")
-console.log("statusInfo",statusInfo)
+  const acceptDokument = (e) => {
+    e.preventDefault();
+
+    Swal.fire({
+      title: "Apakah anda yakin ingin terima kerjasama ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        try {
+          let { data } = await axios.put(
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept/${router.query.id}`
+          );
+          console.log("data", data);
+          router.push({
+            pathname: "/partnership/kerjasama/",
+            query: { successTerima: true },
+          });
+        } catch (error) {
+          console.log("error acceptDokument", error);
+        }
+      }
+    });
+  };
+
+  const rejectDokument = (e) => {
+    console.log("rejectDokument");
+    e.preventDefault();
+
+    Swal.fire({
+      title: "Apakah anda yakin ingin tolak kerjasama ?",
+      // text: "Data ini tidak bisa dikembalikan !",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        try {
+          let { data } = await axios.put(
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`
+          );
+
+          console.log("data asdasd", data);
+          router.push({
+            pathname: "/partnership/kerjasama/",
+            query: { successReject: true },
+          });
+        } catch (error) {
+          console.log("error acceptDokument", error);
+        }
+      }
+    });
+  };
+  const [statusInfo, setstatusInfo] = useState("");
   useEffect(() => {
     setDataSingle(router.query.id);
-    setDataSingleSelesaiReview(router.query.id,router.query.version);
-    if(router.query.statusInfo){
-      setstatusInfo(router.query.statusInfo)
-      
+    setDataSingleSelesaiReview(router.query.id, router.query.version);
+    if (router.query.statusInfo) {
+      setstatusInfo(router.query.statusInfo);
     }
-  }, [router.query.id,router.query.version,router.query.statusInfo]);
+  }, [router.query.id, router.query.version, router.query.statusInfo]);
 
   return (
     <PageWrapper>
@@ -142,279 +179,269 @@ console.log("statusInfo",statusInfo)
             </h3>
           </div>
           <div className="card-body">
-
-
-            {statusInfo&&(statusInfo === "Sudah direview") ? <form>
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal
-                </label>
-                <input
-                  readOnly
-                  type="date"
-                  required
-                  value={dateView&&dateView}
-                  className="form-control"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Judul kerjasama
-                </label>
-                <input
-                  required
-                  readOnly
-                  value={titleView&&titleView}
-                  onChange={(e) => setTitle(e.target.value)}
-                  type="text"
-                  className="form-control"
-                  placeholder="Judul Kerjasama"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Kategori kerjasama
-                </label>
-                <select
-                  name=""
-                  id=""
-                  className="form-control"
-                  disabled
-                  value={cooperationIDView.id}
-                >
-                  <option>{cooperationIDView.name}</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Periode
-                </label>
-                <div className="row">
-                  <div className="col-12 col-sm-6">
-                    <input
-                      required
-                      readOnly
-                      type="number"
-                      className="form-control mt-2"
-                      onChange={(e) => setPeriod(e.target.value)}
-                      value={periodView}
-                    />
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-control mt-2">Tahun</div>
-                  </div>
-                </div>
-              </div>
-
-
-
-
-              {cooperationIDView === ""
-                ? ""
-                : cooperationIDView.data_content.map((items, i) => {
-                    return (
-                      <div className="row" key={i}>
-                        <div className="col-12 col-sm-6">
-                      <div className={`form-group`}>
-                        <label htmlFor="staticEmail" className="col-form-label">
-                          {items.cooperation_form}
-                        </label>
-                        <textarea
-                          readOnly
-                          value={items.form_content}
-                          name=""
-                          id={i}
-                          cols="30"
-                          rows="5"
-                          className="form-control"
-                        ></textarea>
-                      </div>
-                      </div>
-                        <div className="col-12 col-sm-6">
-                      <div className={`form-group`}>
-                        <label htmlFor="staticEmail" className="col-form-label">
-                          Catatan Revisi
-                        </label>
-                        <textarea
-                          readOnly
-                          value={items.form_content_review}
-                          name=""
-                          id={i}
-                          cols="30"
-                          rows="5"
-                          className="form-control"
-                        ></textarea>
-                      </div>
-                      </div>
-                      </div>
-                    );
-                  })}
-
-                  <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Catatan Tambahan
-                </label>
-                <div>
-                  <textarea
-                    onChange={(e) => setNote(e.target.value)}
-                    name="cooperation"
-                    id=""
-                    disabled
-                    value={noteView && noteView}
-                    cols="30"
-                    rows="5"
+            {statusInfo && statusInfo === "Sudah direview" ? (
+              <form>
+                <div className="form-group">
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Tanggal
+                  </label>
+                  <input
+                    readOnly
+                    type="date"
+                    required
+                    value={dateView && dateView}
                     className="form-control"
-                    placeholder="Tuliskan Catatan Tambahan"
-                  ></textarea>
+                  />
                 </div>
-              </div>
-
-
-
-
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
-             
-                  <Link
-                    href={{
-                      pathname:"/partnership/kerjasama/revisi-kerjasama",
-                      query:{id:router.query.id}
-                    }}
-                    passHref
+                <div className="form-group">
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Judul kerjasama
+                  </label>
+                  <input
+                    required
+                    readOnly
+                    value={titleView && titleView}
+                    onChange={(e) => setTitle(e.target.value)}
+                    type="text"
+                    className="form-control"
+                    placeholder="Judul Kerjasama"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Kategori kerjasama
+                  </label>
+                  <select
+                    name=""
+                    id=""
+                    className="form-control"
+                    disabled
+                    value={cooperationIDView.id}
                   >
-                    <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
-                      Kembali
-                    </a>
-                  </Link>
+                    <option>{cooperationIDView.name}</option>
+                  </select>
                 </div>
-              </div>
-            </form>:  <form>
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal
-                </label>
-                <input
-                  readOnly
-                  type="date"
-                  required
-                  value={date&&date}
-                  className="form-control"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Judul kerjasama
-                </label>
-                <input
-                  required
-                  readOnly
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  type="text"
-                  className="form-control"
-                  placeholder="Judul Kerjasama"
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Kategori kerjasama
-                </label>
-                <select
-                  name=""
-                  id=""
-                  className="form-control"
-                  disabled
-                  value={cooperationID.id}
-                >
-                  <option>{cooperationID.name}</option>
-                </select>
-              </div>
 
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Periode
-                </label>
-                <div className="row">
-                  <div className="col-12 col-sm-6">
-                    <input
-                      required
-                      readOnly
-                      type="number"
-                      className="form-control mt-2"
-                      onChange={(e) => setPeriod(e.target.value)}
-                      value={period}
-                    />
-                  </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="form-control mt-2">Tahun</div>
+                <div className="form-group">
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Periode
+                  </label>
+                  <div className="row">
+                    <div className="col-12 col-sm-6">
+                      <input
+                        required
+                        readOnly
+                        type="number"
+                        className="form-control mt-2"
+                        onChange={(e) => setPeriod(e.target.value)}
+                        value={periodView}
+                      />
+                    </div>
+                    <div className="col-12 col-sm-6">
+                      <div className="form-control mt-2">Tahun</div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
+                {cooperationIDView === ""
+                  ? ""
+                  : cooperationIDView.data_content.map((items, i) => {
+                      return (
+                        <div className="row" key={i}>
+                          <div className="col-12 col-sm-6">
+                            <div className={`form-group`}>
+                              <label
+                                htmlFor="staticEmail"
+                                className="col-form-label"
+                              >
+                                {items.cooperation_form}
+                              </label>
+                              <textarea
+                                readOnly
+                                value={items.form_content}
+                                name=""
+                                id={i}
+                                cols="30"
+                                rows="5"
+                                className="form-control"
+                              ></textarea>
+                            </div>
+                          </div>
+                          <div className="col-12 col-sm-6">
+                            <div className={`form-group`}>
+                              <label
+                                htmlFor="staticEmail"
+                                className="col-form-label"
+                              >
+                                Catatan Revisi
+                              </label>
+                              <textarea
+                                readOnly
+                                value={items.form_content_review}
+                                name=""
+                                id={i}
+                                cols="30"
+                                rows="5"
+                                className="form-control"
+                              ></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
 
+                <div className="form-group">
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Catatan Tambahan
+                  </label>
+                  <div>
+                    <textarea
+                      onChange={(e) => setNote(e.target.value)}
+                      name="cooperation"
+                      id=""
+                      disabled
+                      value={noteView && noteView}
+                      cols="30"
+                      rows="5"
+                      className="form-control"
+                      placeholder="Tuliskan Catatan Tambahan"
+                    ></textarea>
+                  </div>
+                </div>
 
-
-              {cooperationID === ""
-                ? ""
-                : cooperationID.data_content.map((items, i) => {
-                    return (
-                      <div key={i} className={`form-group`}>
-                        <label htmlFor="staticEmail" className="col-form-label">
-                          {items.cooperation_form}
-                        </label>
-                        <textarea
-                          readOnly
-                          value={items.form_content}
-                          name=""
-                          id={i}
-                          cols="30"
-                          rows="5"
-                          className="form-control"
-                        ></textarea>
-                      </div>
-                    );
-                  })}
-
-
-
-
-              <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
-                  <button
-                    // type="button"
-                    onClick={(e)=>rejectDokument(e)}
-                    className="btn btn-sm btn-rounded-full bg-red-primary text-white"
+                <div className="form-group row">
+                  <div className="col-sm-12 d-flex justify-content-end">
+                    <Link
+                      href={{
+                        pathname: "/partnership/kerjasama/revisi-kerjasama",
+                        query: { id: router.query.id },
+                      }}
+                      passHref
+                    >
+                      <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                        Kembali
+                      </a>
+                    </Link>
+                  </div>
+                </div>
+              </form>
+            ) : (
+              <form>
+                <div className="form-group">
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Tanggal
+                  </label>
+                  <input
+                    readOnly
+                    type="date"
+                    required
+                    value={date && date}
+                    className="form-control"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Judul kerjasama
+                  </label>
+                  <input
+                    required
+                    readOnly
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    type="text"
+                    className="form-control"
+                    placeholder="Judul Kerjasama"
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Kategori kerjasama
+                  </label>
+                  <select
+                    name=""
+                    id=""
+                    className="form-control"
+                    disabled
+                    value={cooperationID.id}
                   >
-                    Tolak
-                  </button>
-                  <Link
-                    href={{
-                      pathname:"/partnership/kerjasama/detail-revisi-kerjasama",
-                      query:{id:router.query.id,varsion:router.query.version}
-                    }}
-                    passHref
-                  >
-                    <a className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-5">
+                    <option>{cooperationID.name}</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Periode
+                  </label>
+                  <div className="row">
+                    <div className="col-12 col-sm-6">
+                      <input
+                        required
+                        readOnly
+                        type="number"
+                        className="form-control mt-2"
+                        onChange={(e) => setPeriod(e.target.value)}
+                        value={period}
+                      />
+                    </div>
+                    <div className="col-12 col-sm-6">
+                      <div className="form-control mt-2">Tahun</div>
+                    </div>
+                  </div>
+                </div>
+
+                {cooperationID === ""
+                  ? ""
+                  : cooperationID.data_content.map((items, i) => {
+                      return (
+                        <div key={i} className={`form-group`}>
+                          <label
+                            htmlFor="staticEmail"
+                            className="col-form-label"
+                          >
+                            {items.cooperation_form}
+                          </label>
+                          <textarea
+                            readOnly
+                            value={items.form_content}
+                            name=""
+                            id={i}
+                            cols="30"
+                            rows="5"
+                            className="form-control"
+                          ></textarea>
+                        </div>
+                      );
+                    })}
+
+                <div className="form-group row">
+                  <div className="col-sm-12 d-flex justify-content-end">
+                    <button
+                      type="button"
+                      onClick={(e) => rejectDokument(e)}
+                      className="btn btn-sm btn-rounded-full bg-red-primary text-white"
+                    >
+                      Tolak
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={(e) => ajukanRevisi(e)}
+                      className="btn btn-sm btn-rounded-full bg-yellow-primary text-white mx-5"
+                    >
                       Ajukan Revisi
-                    </a>
-                  </Link>
-                  <button
-                  // type="button"
-                    onClick={(e)=>acceptDokument(e)}
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                  >
-                    Terima
-                  </button>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={(e) => acceptDokument(e)}
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
+                    >
+                      Terima
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </form>
-
-          
-          }
-
-          
-          
+              </form>
+            )}
           </div>
         </div>
       </div>

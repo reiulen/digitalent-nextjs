@@ -1,16 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import dynamic from "next/dynamic";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Tambah = () => {
+const Tambah = ({ token }) => {
   const [valueCreateCooporations, setValueCreateCooporations] = useState([""]);
 
   const router = useRouter();
@@ -215,8 +212,7 @@ const Tambah = () => {
                         className={`sliders round ${
                           status ? "text-white" : "pl-2"
                         }`}
-                      >
-                      </span>
+                      ></span>
                     </label>
                     <p
                       className="position-relative mb-0"

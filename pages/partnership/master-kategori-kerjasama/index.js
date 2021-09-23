@@ -16,12 +16,13 @@ const MasterKategoriKerjasama = dynamic(
   { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 
-export default function KategoriKerjasama() {
+export default function KategoriKerjasama(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Master Kategori Kerjasama - Partnership"> */}
-        <MasterKategoriKerjasama />
+        <MasterKategoriKerjasama token={session.token} />
         {/* </Layout> */}
       </div>
     </>

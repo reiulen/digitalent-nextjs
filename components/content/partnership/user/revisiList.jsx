@@ -23,8 +23,14 @@ function RevisiList() {
     fontWeight: "600",
     background: "#E6F7F1",
     borderRadius: "4px",
-    padding:"4px"
+    padding:"4px 10px"
   };
+
+  const styleList = {
+    listStyle :"none",
+    padding:"0",
+    margin:"0"
+  }
 
   const [listCardREvisi, setListCardREvisi] = useState([]);
 
@@ -116,10 +122,10 @@ function RevisiList() {
               </div>
             </div>
 
-           <ul>
+           <ul style={styleList}>
               {listCardREvisi.length === 0 ? "" : listCardREvisi.map((items,index)=>{
                 return(
-                  <li key={index}>
+                  <li key={index} className="mt-5">
                 <div
                   className="d-flex align-items-center justify-content-between"
                   style={cardContainer}
@@ -135,13 +141,32 @@ function RevisiList() {
                   </div>
 
                   {/* <span style={labelStyle}>{items.information2}</span> */}
+                {listCardREvisi.length -1 === index ? 
 
+                 
                   <Link href={{
                     pathname:"/partnership/user/kerjasama/pembahasan-1",
-                    query:{id:router.query.id,version:items.version}
+                    query:{id:router.query.id,version:items.version,information2:items.information2,index:index}
                   }}>
-                 <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">{items.information2}</a> 
+                 <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">Lihat Detail Revisi</a> 
                   </Link>
+                
+                :
+
+                <Link href={{
+                    pathname:"/partnership/user/kerjasama/pembahasan-1",
+                    query:{id:router.query.id,version:items.version,information2:items.information2,index:index}
+                  }}>
+                 <a style={labelStyle}>{items.information2}</a> 
+                  </Link>
+
+                // 
+                 
+                
+                  
+                }
+
+
 
                   {/* <button className="btn btn-sm btn-rounded-full bg-blue-primary text-white">{items.information2}</button> */}
 

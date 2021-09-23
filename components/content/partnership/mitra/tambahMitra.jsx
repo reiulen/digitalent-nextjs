@@ -12,7 +12,7 @@ import Select from "react-select";
 import IconClose from "../../../assets/icon/Close";
 import Image from "next/image";
 
-const TambahMitra = () => {
+const TambahMitra = ({token}) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const allMitra = useSelector((state) => state.allMitra);
@@ -100,7 +100,6 @@ const TambahMitra = () => {
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
-        // text: "Data ini tidak bisa dikembalikan !",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -196,7 +195,6 @@ const TambahMitra = () => {
         return { ...items, label: items.name, value: items.id };
       });
       dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-      console.log("dataNewProvinces", dataNewProvinces);
       setAllProvinces(dataNewProvinces);
     } catch (error) {
       console.log("gagal get province", error);

@@ -3,7 +3,7 @@
 // import Table from "../../../components/content/partnership/manajemen-kerjasama/tableKerjasama";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import { getSession } from "next-auth/client";
+import { getSession, session } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
 const Table = dynamic(
   () =>
@@ -11,12 +11,13 @@ const Table = dynamic(
   { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 
-export default function KerjaSamaPage() {
+export default function KerjaSamaPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Kerjasama - Partnership"> */}
-        <Table />
+        <Table token={session.token} />
         {/* </Layout> */}
       </div>
     </>

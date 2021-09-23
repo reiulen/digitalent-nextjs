@@ -11,12 +11,13 @@ const DetailDataKerjasama = dynamic(
     import("../../../components/content/partnership/mitra/detailDataKerjasama"),
   { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
-export default function DetailDataKerjasamaPage() {
+export default function DetailDataKerjasamaPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Detail Master Mitra - Paretnership"> */}
-        <DetailDataKerjasama />
+        <DetailDataKerjasama token={session.token} />
         {/* </Layout> */}
       </div>
     </>
