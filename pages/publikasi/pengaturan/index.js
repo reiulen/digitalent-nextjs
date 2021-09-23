@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { getSession } from "next-auth/client";
 
 import Layout from "../../../components/templates/layout.component";
 // import PengaturanPublikasi from "../../../components/content/publikasi/pengaturan/pengaturan";
@@ -25,6 +26,15 @@ export default function PengaturanPublikasiPage() {
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query }) => {
-    await store.dispatch(getSettingPublikasi())
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
+    const session = await getSession({ req });
+    if (!session) {
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            },
+        };
+    }
+    await store.dispatch(getSettingPublikasi(session.user.user.data.token))
 })

@@ -58,7 +58,6 @@ const TambahImagetron = () => {
 
     }, [dispatch, error, success, simpleValidator, router]);
 
-
     const [kategori_id, setKategoriId] = useState('')
     const [judul, setJudulImagetron] = useState('')
     const [gambar, setGambar] = useState('')

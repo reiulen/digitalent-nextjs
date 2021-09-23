@@ -76,14 +76,15 @@ const TambahGaleri = () => {
 
     const thumbs = files.map(file => (
         <div style={thumb} key={file.name}>
+            {console.log("IMAGE : ", file)}
             <div style={thumbInner}>
                 <Image
                     loader={() => file.preview}
                     src={file.preview}
                     alt="thumb"
                     // layout="fill"
-                    width= {250}
-                    height= "100%"
+                    width={250}
+                    height="100%"
                     display="block"
                     objectFit="fill"
                     unoptimized={true}
@@ -103,7 +104,7 @@ const TambahGaleri = () => {
     ));
 
     useEffect(() => {
-        dispatch(getAllKategori());
+        // dispatch(getAllKategori());
 
         files.forEach(file => URL.revokeObjectURL(file.preview));
 
@@ -113,13 +114,13 @@ const TambahGaleri = () => {
             })
         }
 
-        let temps= []
+        let temps = []
 
         for (let i = 0; i < files.length; i++) {
             const reader = new FileReader()
 
             reader.onload = () => {
-                temps.push (reader.result)
+                temps.push(reader.result)
             }
 
             reader.readAsDataURL(files[i])
@@ -153,12 +154,12 @@ const TambahGaleri = () => {
         // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
-    
-        if (e.target.checked === false){
-            setPublishDate (null)
-            setPublish (0)
+
+        if (e.target.checked === false) {
+            setPublishDate(null)
+            setPublish(0)
         } else {
-            setPublish (1)
+            setPublish(1)
         }
     };
 
@@ -179,19 +180,19 @@ const TambahGaleri = () => {
 
         if (success) {
             dispatch({
-              type: NEW_GALERI_RESET,
+                type: NEW_GALERI_RESET,
             });
-          }
-        
-        if (publish === true) {
-            setPublish(1)
-        
-        } else if (publish === false) {
-            setPublish(0)   
-        
         }
 
-        if (publishDate === null){
+        if (publish === true) {
+            setPublish(1)
+
+        } else if (publish === false) {
+            setPublish(0)
+
+        }
+
+        if (publishDate === null) {
             let today = new Date
 
             const data = {
@@ -202,11 +203,11 @@ const TambahGaleri = () => {
                 users_id,
                 tag,
                 publish,
-                tanggal_publish : moment(today).format("YYYY-MM-DD")
+                tanggal_publish: moment(today).format("YYYY-MM-DD")
             }
 
             dispatch(newGaleri(data))
-            console.log(data)
+            console.log("Non Publish data : ",data)
         } else {
             const data = {
                 judul,
@@ -216,14 +217,14 @@ const TambahGaleri = () => {
                 users_id,
                 tag,
                 publish,
-                tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
             }
 
             dispatch(newGaleri(data))
-            console.log(data)
+            // console.log("Publish data : ", data)
         }
 
-        
+
     }
 
     return (
@@ -251,7 +252,7 @@ const TambahGaleri = () => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("judul")}/>
+                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul")} />
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
@@ -264,7 +265,7 @@ const TambahGaleri = () => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
                                 <div className="col-sm-12">
-                                    <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() =>simpleValidator.current.showMessageFor("deskripsi")}></textarea>
+                                    <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri} onBlur={() => simpleValidator.current.showMessageFor("deskripsi")}></textarea>
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
@@ -301,41 +302,41 @@ const TambahGaleri = () => {
                                 </label>
                                 <div className="col-sm-12">
                                     <select
-                                    name=""
-                                    id=""
-                                    className="form-control"
-                                    value={kategori_id}
-                                    onChange={(e) => setKategoriId(e.target.value)}
-                                    onBlur={(e) => {
-                                        setKategoriId(e.target.value);
-                                        simpleValidator.current.showMessageFor("kategori_id");
-                                    }}
+                                        name=""
+                                        id=""
+                                        className="form-control"
+                                        value={kategori_id}
+                                        onChange={(e) => setKategoriId(e.target.value)}
+                                        onBlur={(e) => {
+                                            setKategoriId(e.target.value);
+                                            simpleValidator.current.showMessageFor("kategori_id");
+                                        }}
                                     >
-                                    <option selected disabled value="">
-                                        -- Galeri --
-                                    </option>
-                                    {!kategori || (kategori && kategori.length === 0) ? (
-                                        <option value="">Data kosong</option>
-                                    ) : (
-                                        kategori &&
-                                        kategori.kategori &&
-                                        kategori.kategori.map((row) => {
-                                        return (
-                                            row.jenis_kategori == "Galeri" ?
-                                                <option key={row.id} value={row.id}>
-                                                    {row.nama_kategori}
-                                                </option>
-                                            :
-                                                null
-                                        );
-                                        })
-                                    )}
+                                        <option selected disabled value="">
+                                            -- Galeri --
+                                        </option>
+                                        {!kategori || (kategori && kategori.length === 0) ? (
+                                            <option value="">Data kosong</option>
+                                        ) : (
+                                            kategori &&
+                                            kategori.kategori &&
+                                            kategori.kategori.map((row) => {
+                                                return (
+                                                    row.jenis_kategori == "Galeri" ?
+                                                        <option key={row.id} value={row.id}>
+                                                            {row.nama_kategori}
+                                                        </option>
+                                                        :
+                                                        null
+                                                );
+                                            })
+                                        )}
                                     </select>
                                     {simpleValidator.current.message(
-                                    "kategori_id",
-                                    kategori_id,
-                                    "required",
-                                    { className: "text-danger" }
+                                        "kategori_id",
+                                        kategori_id,
+                                        "required",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
@@ -359,26 +360,25 @@ const TambahGaleri = () => {
                                     htmlFor="staticEmail"
                                     className="ml-5 pl-4 font-weight-bolder"
                                 >
-                                    Publish 
+                                    Publish
                                 </label>
                                 <div className="col-sm-1 ml-4">
                                     <div className="">
-                                    <label className="switches">
-                                        <input
-                                        // required
-                                        className="checkbox"
-                                        checked={publish}
-                                        type="checkbox"
-                                        // onChange={(checked) => setPublish(checked)}
-                                        onChange={(e) => handleChangePublish(e)}
-                                        />
-                                        <span
-                                        className={`sliders round ${
-                                            publish ? "text-white" : "pl-2"
-                                        }`}
-                                        >
-                                        </span>
-                                    </label>
+                                        <label className="switches">
+                                            <input
+                                                // required
+                                                className="checkbox"
+                                                checked={publish}
+                                                type="checkbox"
+                                                // onChange={(checked) => setPublish(checked)}
+                                                onChange={(e) => handleChangePublish(e)}
+                                            />
+                                            <span
+                                                className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                    }`}
+                                            >
+                                            </span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -389,21 +389,21 @@ const TambahGaleri = () => {
                                         <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
                                         <div className="col-sm-12">
                                             <div className="input-group">
-                                            <DatePicker
-                                                className="form-search-date form-control-sm form-control"
-                                                selected={publishDate}
-                                                onChange={(date) => handlePublishDate(date)}
-                                                // onChange={(date) => setPublishDate(date)}
-                                                selectsStart
-                                                startDate={publishDate}
-                                                // endDate={endDate}
-                                                dateFormat="dd/MM/yyyy"
-                                                placeholderText="Silahkan Isi Tanggal Publish"
-                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                // minDate={moment().toDate()}
-                                                disabled = {disablePublishDate === true || disablePublishDate === null}
-                                            // minDate={addDays(new Date(), 20)}
-                                            />
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={publishDate}
+                                                    onChange={(date) => handlePublishDate(date)}
+                                                    // onChange={(date) => setPublishDate(date)}
+                                                    selectsStart
+                                                    startDate={publishDate}
+                                                    // endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    placeholderText="Silahkan Isi Tanggal Publish"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    // minDate={moment().toDate()}
+                                                    disabled={disablePublishDate === true || disablePublishDate === null}
+                                                // minDate={addDays(new Date(), 20)}
+                                                />
                                             </div>
                                             {/* {
                                                 disablePublishDate === true ?
@@ -413,11 +413,11 @@ const TambahGaleri = () => {
                                             } */}
                                         </div>
                                     </div>
-                                :
+                                    :
                                     null
                             }
 
-                            
+
 
                             {/* <div className="form-group row">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Publish</label>

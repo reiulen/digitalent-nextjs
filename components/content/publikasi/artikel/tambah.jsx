@@ -245,9 +245,9 @@ const TambahArtikel = ({token}) => {
 
   return (
     <>
-    {/* {
+    {
       console.log (kategori)
-    } */}
+    }
       <PageWrapper>
         {error ? (
           <div
