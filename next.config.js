@@ -33,7 +33,7 @@ module.exports = {
     END_POINT_API_IMAGE_PARTNERSHIP:
       "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
 
-    // NEXTAUTH_URL: "http://dts-dev.majapahit.id/",
+    NEXTAUTH_URL: "http://dts-dev.majapahit.id/",
 
     // pelatihan
     END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",
