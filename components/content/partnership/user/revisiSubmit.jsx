@@ -10,16 +10,12 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 const RevisiSubmit = () => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
   const router = useRouter();
-  console.log(router.query.id)
-  console.log(router.query.version)
+
+  const [allCooperation, setAllCooperation] = useState([]);
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [cooperationID, setCooperationID] = useState("");
-  const [allCooperation, setAllCooperation] = useState([]);
-  console.log("allCooperation", allCooperation);
   const [period, setPeriod] = useState("");
   const [periodUnit, setPeriodUnit] = useState("tahun");
   const [note, setNote] = useState("");
@@ -82,10 +78,10 @@ const RevisiSubmit = () => {
     });
   };
 
-  const setDataSingle = async (id) => {
+  const setDataSingle = async (id,version) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`,
         {
           headers: {
             authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
@@ -94,10 +90,10 @@ const RevisiSubmit = () => {
       );
       setTitle(data.data.title);
       setDate(data.data.submission_date);
-      setAllCooperation(data.data.cooperation_category.data_content);
       setCooperationID(data.data.cooperation_category);
       setPeriod(data.data.period);
       setPeriodUnit(data.data.period_unit);
+      setAllCooperation(data.data.cooperation_category.data_content);
       setNote(data.data.note);
     } catch (error) {
       console.log("action getSIngle gagal", error);
@@ -111,8 +107,8 @@ const RevisiSubmit = () => {
     setAllCooperation(dataaa);
   };
   useEffect(() => {
-    setDataSingle(router.query.id);
-  }, [router.query.id]);
+    setDataSingle(router.query.id,router.query.version);
+  }, [router.query.id,router.query.version]);
 
   return (
     <PageWrapper>
@@ -357,6 +353,7 @@ const RevisiSubmit = () => {
                 </div>
               </div>
             </form>
+         
           </div>
         </div>
       </div>

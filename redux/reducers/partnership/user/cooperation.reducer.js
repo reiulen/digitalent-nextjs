@@ -21,6 +21,9 @@ import {
   SET_VALUE_CARD_M,
   LIMIT_CONFIGURATION_M,
   SUCCESS_GET_SINGLE_COOPERATION_M,
+  SUCCESS_DELETE_COOPERATION_M,
+  REJECT_COOPERATION,
+  RELOAD_TABLE,
 } from "../../../types/partnership/user/cooperation.type";
 
 const statuslist = {
@@ -49,6 +52,7 @@ const initialState = {
   totalDataAnother: 0,
   totalData: 0,
   cooperationById: [],
+  status_delete: "",
 };
 
 export const cooperationUserReducer = (state = initialState, action) => {
@@ -160,6 +164,23 @@ export const cooperationUserReducer = (state = initialState, action) => {
       return {
         ...state,
         cooperationById: action.data,
+      };
+
+    case SUCCESS_DELETE_COOPERATION_M:
+      return {
+        ...state,
+        status_delete: state.status_delete === "" ? "delete" : "",
+      };
+
+    case REJECT_COOPERATION:
+      return {
+        ...state,
+        status_delete: state.status_delete === "" ? "delete" : "",
+      };
+    case RELOAD_TABLE:
+      return {
+        ...state,
+        status_delete: state.status_delete === "" ? "delete" : "",
       };
 
     default:

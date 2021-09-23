@@ -25,6 +25,12 @@ function RevisiList() {
     padding: "4px",
   };
 
+  const styleList = {
+    listStyle :"none",
+    margin:"0",
+    padding:"0"
+  }
+
   const [listCardREvisi, setListCardREvisi] = useState([]);
 
   const getCardREviewList = async (id) => {
@@ -53,10 +59,10 @@ function RevisiList() {
           </div>
 
           <div className="card-body pb-28">
-            <ul>
+            <ul style={styleList}>
               {listCardREvisi.length === 0 ? "" : listCardREvisi.map((items,index)=>{
                 return(
-                  <li key={index}>
+                  <li key={index} className="mt-5">
                 <div
                   className="d-flex align-items-center justify-content-between"
                   style={cardContainer}
@@ -75,12 +81,10 @@ function RevisiList() {
 
                   <Link href={{
                     pathname:"/partnership/kerjasama/review-kerjasama",
-                    query:{id:router.query.id,version:items.version}
+                    query:{id:router.query.id,version:items.version,statusInfo:items.information2}
                   }}>
                  <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">{items.information2}</a> 
                   </Link>
-
-                  {/* <button className="btn btn-sm btn-rounded-full bg-blue-primary text-white">{items.information2}</button> */}
 
 
                 </div>
