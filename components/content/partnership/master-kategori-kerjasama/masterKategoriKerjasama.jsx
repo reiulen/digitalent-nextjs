@@ -19,7 +19,7 @@ import IconAdd from "../../../assets/icon/Add";
 
 import IconSearch from "../../../assets/icon/Search";
 
-const Table = () => {
+const Table = ({token}) => {
   let dispatch = useDispatch();
   const router = useRouter();
   let { success, update } = router.query;
@@ -64,24 +64,10 @@ const Table = () => {
     allMKCooporation.status_list,
   ]);
 
-  // const onNewReset = () => {
-  //   setSuccessDelete(false);
-  //   router.replace(`/partnership/master-kategori-kerjasama`);
-  // };
-
   const onNewReset = () => {
     setSuccessDelete(false);
     router.replace("/partnership/master-kategori-kerjasama", undefined, { shallow: true });
   };
-
-  // useEffect(() => {
-  //   let searchValue = document.getElementById(
-  //     "kt_datatable_search_query"
-  //   ).value;
-  //   if (searchValue === "") {
-  //     dispatch(fetchAllMKCooporation("clear keyword"));
-  //   }
-  // }, [dispatch]);
 
   return (
     <PageWrapper>
@@ -313,14 +299,6 @@ const Table = () => {
                                 </td>
                                 <td className="text-left align-middle">
                                   <div className="d-flex align-items-center">
-                                    {/* <button
-                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    >
-                                      <IconEye width="16" height="16" fill="rgba(255,255,255,1)"/>
-                                      <div className="text-hover-show-hapus">
-                                      Detail
-                                    </div>
-                                    </button> */}
 
                                     <button
                                       className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"

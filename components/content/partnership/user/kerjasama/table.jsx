@@ -32,7 +32,8 @@ import {
   fetchListSelectCooperation,
   changeValueStatusCard,
   limitCooporation,
-  deleteCooperation
+  deleteCooperation,
+  exportFileCSV
 } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 
 import { RESET_VALUE_SORTIR } from "../../../../../redux/types/partnership/user/cooperation.type";
@@ -534,7 +535,7 @@ const Table = () => {
                           <button
                             className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
                             type="button"
-                            // onClick={() => dispatch(exportFileCSV())}
+                            onClick={() => dispatch(exportFileCSV())}
                           >
                             Export .xlxs
                           </button>

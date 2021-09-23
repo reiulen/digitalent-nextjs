@@ -11,12 +11,13 @@ const SubmitKerjasama = dynamic(
   { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 
-export default function Submit() {
+export default function Submit(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Dokumen Kerjasama - Partnership"> */}
-        <SubmitKerjasama />
+        <SubmitKerjasama token={session.token} />
         {/* </Layout> */}
       </div>
     </>

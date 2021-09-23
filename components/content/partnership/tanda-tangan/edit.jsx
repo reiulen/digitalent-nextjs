@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import SignaturePad from "react-signature-pad-wrapper";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
 
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
@@ -10,9 +9,9 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import Image from 'next/image'
+import Image from "next/image";
 
-const EditTandaTangan = () => {
+const EditTandaTangan = ({ token }) => {
   const signCanvas = useRef({});
   const clear = () => {
     Swal.fire({
@@ -42,7 +41,6 @@ const EditTandaTangan = () => {
       Swal.fire({
         icon: "success",
         title: "Tanda Tangan Berhasil di Buat",
-        // text: "Berhasil",
       });
       setSignature(data);
     }
@@ -50,7 +48,6 @@ const EditTandaTangan = () => {
       Swal.fire({
         icon: "error",
         title: "Tanda Tangan Sudah dibuat",
-        // text: "Berhasil",
       });
     }
   };
@@ -61,7 +58,6 @@ const EditTandaTangan = () => {
     if (signCanvas.current.isEmpty()) {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
-        // text: "Data ini tidak bisa dikembalikan !",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -95,7 +91,6 @@ const EditTandaTangan = () => {
       if (signature !== "") {
         Swal.fire({
           title: "Apakah anda yakin ingin simpan ?",
-          // text: "Data ini tidak bisa dikembalikan !",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#3085d6",
@@ -223,21 +218,18 @@ const EditTandaTangan = () => {
                 <div className="row">
                   <div className="col-sm-2 ">
                     <div className="border my-3">
-                    <Image
-                              unoptimized={
-                                process.env.ENVIRONMENT !== "PRODUCTION"
-                              }
-
-                              
-                              src={
-                                process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                "partnership/images/signatures/" +
-                                tandaTangan
-                              }
-                              width={400}
-                              height={400}
-                              alt="logo"
-                            /></div>
+                      <Image
+                        unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                        src={
+                          process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                          "partnership/images/signatures/" +
+                          tandaTangan
+                        }
+                        width={400}
+                        height={400}
+                        alt="logo"
+                      />
+                    </div>
                   </div>
                   <div className="col-sm-12">
                     <div

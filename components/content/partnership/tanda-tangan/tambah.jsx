@@ -3,7 +3,6 @@ import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import SignaturePad from "react-signature-pad-wrapper";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
 
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
@@ -12,14 +11,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
 
-const TambahTandaTangan = () => {
+const TambahTandaTangan = ({token}) => {
   const signCanvas = useRef({});
   const router = useRouter();
 
   const clear = () => {
     Swal.fire({
       title: "Apakah anda yakin ingin reset tanda tangan ?",
-      // text: "Data ini tidak bisa dikembalikan !",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -126,10 +124,6 @@ const TambahTandaTangan = () => {
       draggable: true,
       progress: undefined,
     });
-
-  const onNewReset = () => {
-    router.replace("/partnership/tanda-tangan", undefined, { shallow: true });
-  };
 
   return (
     <PageWrapper>

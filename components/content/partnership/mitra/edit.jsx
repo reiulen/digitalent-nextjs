@@ -17,7 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 
-const EditMitra = () => {
+const EditMitra = ({token}) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const allMitra = useSelector((state) => state.allMitra);
@@ -399,12 +399,6 @@ const EditMitra = () => {
                       height: "168px",
                     }}
                   >
-                    {/* <img
-                      src={agency_logo}
-                      className="w-100 h-100"
-                      alt="images"
-                      style={{ padding: "6px" }}
-                    /> */}
 
                     <Image
                       src={agency_logo}
@@ -540,7 +534,6 @@ const EditMitra = () => {
                       className="custom-file-input cursor-pointer"
                       id="inputGroupFile04"
                       accept="image/png,image/jpg"
-                      // onChange={onChangeGambar}
                     />
                     <label
                       className="custom-file-label"
@@ -644,14 +637,6 @@ const EditMitra = () => {
                     </div>
                   </div>
 
-                  {/* <button
-                    type="button"
-                    className="col-sm-3 btn btn-primary btn-sm"
-                    onClick={() => cancelProvincesChange()}
-                  >
-                    Batal Ubah Provinsi
-                  </button> */}
-
                   {error.indonesia_provinces_id ? (
                     <p className="error-text">{error.indonesia_provinces_id}</p>
                   ) : (
@@ -686,26 +671,6 @@ const EditMitra = () => {
                   <label htmlFor="staticEmail" className="col-form-label">
                     Kota / Kabupaten
                   </label>
-                  {/* <select
-                      onFocus={() =>
-                        setError({ ...error, indonesia_cities_id: "" })
-                      }
-                      className="form-control"
-                      onChange={(e) => setIndonesia_cities_id(e.target.value)}
-                      // onBlur={(e) => setKotaKabupaten(e.target.value)}
-                    >
-                      <option value={defaultValueCitieID}>
-                        Pilih data Kab/Kota
-                      </option>
-
-                      {citiesAll.map((itemsss, index) => {
-                        return (
-                          <option key={index} value={itemsss.id}>
-                            {itemsss.name}
-                          </option>
-                        );
-                      })}
-                    </select> */}
 
                   <Select
                     onFocus={() =>
@@ -808,25 +773,6 @@ const EditMitra = () => {
                   ""
                 )}
               </div>
-
-              {/* <div className="form-group row">
-                <div className="row align-items-right mt-5 ml-auto">
-                  <div className="col-sm mr-4">
-                    <Link href="/partnership/manajemen-mitra">
-                      <a className="btn btn-outline-primary btn-sm mr-3">
-                        Kembali
-                      </a>
-                    </Link>
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-sm"
-                      onClick={(e) => handleSubmit(e)}
-                    >
-                      Simpan
-                    </button>
-                  </div>
-                </div>
-              </div> */}
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">

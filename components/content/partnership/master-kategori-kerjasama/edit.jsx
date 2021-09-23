@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import dynamic from "next/dynamic";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Edit = () => {
+const Edit = ({token}) => {
   const router = useRouter();
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [stateDataSingleOld, setStateDataSingleOld] = useState([]);

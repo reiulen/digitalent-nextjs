@@ -17,12 +17,13 @@ const TandaTangan = dynamic(
 
 // import { wrapper } from "../../../redux/store";
 
-export default function TandaTanganPage() {
+export default function TandaTanganPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Tanda Tangan Digital - Partnership"> */}
-        <TandaTangan />
+        <TandaTangan token={session.token} />
         {/* </Layout> */}
       </div>
     </>

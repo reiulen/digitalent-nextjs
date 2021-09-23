@@ -80,7 +80,7 @@ const DetailDokumenKerjasama = () => {
       notify("Kerjasama form tidak boleh kosong");
     } else {
       Swal.fire({
-        title: "Apakah anda yakin ?",
+        title: "Apakah anda yakin ingin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
         icon: "warning",
         showCancelButton: true,

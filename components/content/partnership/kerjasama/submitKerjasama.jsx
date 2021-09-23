@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
@@ -13,7 +13,7 @@ import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const SubmitKerjasama = () => {
+const SubmitKerjasama = ({token}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   // pdf file
@@ -66,19 +66,6 @@ const SubmitKerjasama = () => {
   };
 
   const submit = (e) => {
-    // console.log("institution_name",institution_name)
-    // console.log("date",date)
-    // console.log("title",title)
-    // console.log("period",period)
-    // console.log("periodUnit",periodUnit)
-    // console.log("cooperationC_id",cooperationC_id)
-    // console.log("period_date_start",period_date_start)
-    // console.log("newDate",newDate)
-    // console.log("agreement_number_partner",agreement_number_partner)
-    // console.log("agreement_number_kemkominfo",agreement_number_kemkominfo)
-    // console.log("signing_date",signing_date)
-    // console.log("document",document)
-    // console.log("AllCooperation",AllCooperation)
 
     e.preventDefault();
 

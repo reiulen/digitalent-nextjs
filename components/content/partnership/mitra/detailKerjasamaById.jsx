@@ -3,29 +3,23 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
-  fetchListSelectCooperation,
   cancelChangeCategory,
   cancelChangeNamaLembaga,
   changeCooperationSelectByID,
   fetchListCooperationSelectById,
-  fetchListSelectMitra,
-  getEmail,
-  setNameLembaga,
   fetchDataEmail,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 import IconCalender from "../../../assets/icon/Calender";
 import moment from "moment";
 
-import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditDokumentKerjasamaById = () => {
+const EditDokumentKerjasamaById = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { idDetail } = router.query;
@@ -37,7 +31,6 @@ const EditDokumentKerjasamaById = () => {
   //
   // state onchange form data
   let singleproduct = useSelector((state) => state.allMK);
-  // console.log("singleproduct",singleproduct)
   const [isntitusiName, setIsntitusiName] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -101,19 +94,6 @@ const EditDokumentKerjasamaById = () => {
       setShowDokument(showDokument ? false : true);
     }
   };
-  // change document batal
-  const setDocumentChange = () => {
-    setShowDokument(false);
-    setChangeDokumen(changeDokumen ? false : true);
-    setViewPDF(null);
-    setPdfFile(null);
-    setNamePDF(null);
-  };
-
-  const changeSetCooperationC_id = (value) => {
-    setCooperationC_id(value);
-    dispatch(changeCooperationSelectByID(value));
-  };
 
   const setDataSingle = async (id) => {
     try {
@@ -147,7 +127,6 @@ const EditDokumentKerjasamaById = () => {
 
   // onchange textarea default cooperationID
   const changeDataContentDefault = (event, i) => {
-    // console.log("object")
     let dataCoopertaion = { ...cooperationID };
     dataCoopertaion.data_content[i].form_content = event.target.value;
     setCooperationID(dataCoopertaion);
@@ -250,30 +229,7 @@ const EditDokumentKerjasamaById = () => {
                     />
                   </div>
                   <div className="col-12 col-sm-6">
-                    {/* {periodUnit === "bulan" ? (
-                        <select
-                          className="form-control"
-                          onChange={(e) => setPeriodUnit(e.target.value)}
-                        >
-                          <option value="bulan">Bulan</option>
-                          <option value="tahun">Tahun</option>
-                        </select>
-                      ) : (
-                        <select
-                          className="form-control"
-                          onChange={(e) => setPeriodUnit(e.target.value)}
-                        >
-                          <option value="tahun">Tahun</option>
-                          <option value="bulan">Bulan</option>
-                        </select>
-                      )} */}
                     <div className="form-control mt-2">Tahun</div>
-                    {/* <input
-                      required
-                        type="text"
-                        className="form-control"
-                        value={periodUnit}
-                      /> */}
                   </div>
                 </div>
               </div>
@@ -288,17 +244,11 @@ const EditDokumentKerjasamaById = () => {
                       <DatePicker
                         readOnly
                         className="form-search-date form-control-sm form-control cursor-pointer"
-                        // selected={periodDateStart}
                         onChange={(date) =>
                           setPeriodDateStart(moment(date).format("YYYY-MM-DD"))
                         }
                         value={periodDateStart}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
                         minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       />
@@ -313,17 +263,11 @@ const EditDokumentKerjasamaById = () => {
                       <DatePicker
                         readOnly
                         className="form-search-date form-control-sm form-control cursor-pointer"
-                        // selected={periodDateStart}
                         onChange={(date) =>
                           setPeriodDateEnd(moment(date).format("YYYY-MM-DD"))
                         }
                         value={periodDateEnd}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
                         minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       />
@@ -355,11 +299,6 @@ const EditDokumentKerjasamaById = () => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nomor Perjanjian Lembaga
                 </label>
-                {/* <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nomor Perjanjian Lembaga"
-                  /> */}
                 <input
                   required
                   readOnly
@@ -374,11 +313,6 @@ const EditDokumentKerjasamaById = () => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nomor Perjanjian KemKominfo
                 </label>
-                {/* <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Nomor Perjanjian Kemkominfo"
-                  /> */}
                 <input
                   readOnly
                   required
@@ -395,29 +329,16 @@ const EditDokumentKerjasamaById = () => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Tanggal Penandatanganan
                     </label>
-                    {/* <input
-                        required
-                        onChange={(e) => setSigninDate(e.target.value)}
-                        value={signinDate}
-                        type="date"
-                        className="form-control form-control-sm"
-                      /> */}
 
                     <div className="d-flex align-items-center position-relative datepicker-w">
                       <DatePicker
                         readOnly
                         className="form-search-date form-control-sm form-control cursor-pointer"
-                        // selected={periodDateStart}
                         onChange={(date) =>
                           setSigninDate(moment(date).format("YYYY-MM-DD"))
                         }
                         value={signinDate}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
                         minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       />
@@ -435,119 +356,33 @@ const EditDokumentKerjasamaById = () => {
                       Dokumen Kerjasama
                     </label>
                     <div className="position-relative overflow-hidden w-100 ">
-                      
-                    <input
-                      // id="kt_datatable_search_query"
-                      disabled
-                      type="text"
-                      className="form-control"
-                      placeholder={`${document}`}
-                      // onChange={(e) =>
-                      //   handleChangeValueSearch(e.target.value)
-                      // }
-                    />
-                    <button
-                      type="button"
-                      className="btn right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                        backgroundColor: "#D7E1EA",
-                        color: "#6C6C6C",
-                      }}
-                      onClick={() =>
-                        window.open(
-                          `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${document}`
-                        )
-                      }
-                    >
-                      Buka File
-                    </button>
+                      <input
+                        disabled
+                        type="text"
+                        className="form-control"
+                        placeholder={`${document}`}
+                      />
+                      <button
+                        type="button"
+                        className="btn right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                          backgroundColor: "#D7E1EA",
+                          color: "#6C6C6C",
+                        }}
+                        onClick={() =>
+                          window.open(
+                            `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${document}`
+                          )
+                        }
+                      >
+                        Buka File
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-
-              {/* action show and upload */}
-              {/* start action show and upload */}
-
-              {/* <div className="row">
-                  <div className="col-12 col-sm-3">
-                    <button
-                      type="button"
-                      className="btn btn-primary btn-sm"
-                      onClick={() => showDocument()}
-                    >
-                      {viewPDF || showDokument
-                        ? "Tutup dokumen"
-                        : "Lihat dokumen"}
-                    </button>
-                  </div>
-                </div> */}
-
-              {/* {changeDokumen && !viewPDF ? (
-                  <div className="input-group mt-3">
-                    <div className="custom-file">
-                      <input
-                        type="file"
-                        name="gambar"
-                        className="custom-file-input cursor-pointer"
-                        id="inputGroupFile04"
-                        required
-                        onChange={handlePdfFileChange}
-                      />
-                      <label
-                        className="custom-file-label"
-                        htmlFor="inputGroupFile04"
-                      >
-                        {NamePDF ? NamePDF : "Tambah dokumen baru"}
-                      </label>
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )} */}
-
-              {/* {pdfFileError && (
-                  <div
-                    className="mt-3"
-                    style={{ color: "red", fontWeight: "bold" }}
-                  >
-                    {pdfFileError}
-                  </div>
-                )} */}
-
-              {/* <div
-                className={`${
-                  viewPDF ? "pdf-container w-100" : "pdf-container d-none"
-                }`}
-              >
-                <iframe
-                  src={viewPDF}
-                  frameBorder="0"
-                  scrolling="auto"
-                  height={viewPDF ? "500px" : ""}
-                  width="100%"
-                ></iframe>
-                {!viewPDF && <>No pdf file selected </>}
-              </div> */}
-              {/* {showDokument ? (
-                <iframe
-                  className="my-4 border"
-                  src={`http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${document}`}
-                  frameBorder="0"
-                  scrolling="auto"
-                  height={"500px"}
-                  width="100%"
-                ></iframe>
-              ) : (
-                ""
-              )} */}
-              {/* start action show and upload */}
-
-              {/* end dokument */}
-
-              {/* start first loop */}
 
               {cooperationID === ""
                 ? ""

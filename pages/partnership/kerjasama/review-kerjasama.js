@@ -12,12 +12,13 @@ const ReviewKerjasama = dynamic(
   { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 
-export default function ReviewKerjasamaPage() {
+export default function ReviewKerjasamaPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Review Kerjasama - Partnership"> */}
-        <ReviewKerjasama />
+        <ReviewKerjasama token={session.token} />
         {/* </Layout> */}
       </div>
     </>
