@@ -621,7 +621,7 @@ const Galeri = () => {
                                                                     }
                                                                     width={80} height={50} />
                                                             </td>
-                                                            <td className='align-middle'>{row.kategori_id}</td>
+                                                            <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.judul}</td>
                                                             <td className='align-middle'>{
                                                                 row.status === 1 ? (

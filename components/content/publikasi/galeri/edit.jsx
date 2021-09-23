@@ -106,7 +106,7 @@ const EditGaleri = () => {
 
     useEffect(() => {
 
-        dispatch(getAllKategori())
+    // dispatch(getAllKategori())
 
         files.forEach(file => URL.revokeObjectURL(file.preview));
 

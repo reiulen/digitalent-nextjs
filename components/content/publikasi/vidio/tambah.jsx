@@ -16,7 +16,7 @@ import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahVidio = () => {
+const TambahVidio = ({ token }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -27,7 +27,12 @@ const TambahVidio = () => {
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
-    const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+    const simpleValidator = useRef(new SimpleReactValidator({ 
+        locale: "id",
+        messages: {
+           url: "Format url berupa: https://www.example.com"
+        }
+    }));
     const [, forceUpdate] = useState();
 
     const { loading, error, success } = useSelector(state => state.newVideo)
@@ -38,7 +43,7 @@ const TambahVidio = () => {
       } = useSelector((state) => state.allKategori);
 
     useEffect(() => {
-        dispatch(getAllKategori());
+        // dispatch(getAllKategori());
         // if (error) {
         //     dispatch(clearErrors())
         // }
@@ -171,8 +176,8 @@ const TambahVidio = () => {
                     tanggal_publish : moment(today).format("YYYY-MM-DD")
                 }
         
-                dispatch(newVideo(data))
-                console.log(data)
+                dispatch(newVideo(data, token))
+                // console.log(data)
             } else {
 
                 const data = {
@@ -187,8 +192,8 @@ const TambahVidio = () => {
                     tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
                 }
         
-                dispatch(newVideo(data))
-                console.log(data)
+                dispatch(newVideo(data, token))
+                // console.log(data)
             }
             
         } else {
@@ -345,11 +350,11 @@ const TambahVidio = () => {
                                         {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
                                         </div> */}
-                                        <input type="text" className="form-control" value={url_video} onChange={e => setUrlVideo(e.target.value)} placeholder="www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_video")}/>
+                                        <input type="text" className="form-control" value={url_video} onChange={e => setUrlVideo(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url video")}/>
                                         
                                     </div>
                                     {simpleValidator.current.message(
-                                    "url_video",
+                                    "url video",
                                     url_video,
                                     "required|url",
                                     { className: "text-danger" }
