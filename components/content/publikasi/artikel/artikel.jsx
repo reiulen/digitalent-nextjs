@@ -99,6 +99,8 @@ const Artikel = ({token}) => {
         dispatch(deleteArtikel(id, token));
       }
     });
+
+    // console.log (token)
   };
 
   const handlePagination = (pageNumber) => {

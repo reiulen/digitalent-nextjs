@@ -30,7 +30,7 @@ const TambahFaq = () => {
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
     useEffect(() => {
-        dispatch(getAllKategori())
+        // dispatch(getAllKategori())
         // if (error) {
         //     dispatch(clearErrors())
         // }

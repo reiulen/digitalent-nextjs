@@ -16,7 +16,7 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditVideo = () => {
+const EditVideo = ({token}) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -27,7 +27,12 @@ const EditVideo = () => {
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
-    const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+    const simpleValidator = useRef(new SimpleReactValidator({ 
+        locale: "id",
+        messages: {
+           url: "Format url berupa: https://www.example.com"
+        }
+    }));
     const [, forceUpdate] = useState();
     const { video } = useSelector(state => state.detailVideo)
     const { error, success, loading } = useSelector(state => state.updatedVideo)
@@ -35,7 +40,7 @@ const EditVideo = () => {
 
     useEffect(() => {
 
-        dispatch(getAllKategori())
+        // dispatch(getAllKategori())
 
         // editorRef.current = {
         //     CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
@@ -191,7 +196,7 @@ const EditVideo = () => {
                         //   });
                         // }
             
-                        dispatch(updateVideo(data));
+                        dispatch(updateVideo(data, token));
                         console.log(data)
                         }
                     });
@@ -232,7 +237,7 @@ const EditVideo = () => {
                         //   });
                         // }
             
-                        dispatch(updateVideo(data));
+                        dispatch(updateVideo(data, token));
                         console.log(data)
                         }
                     });
@@ -278,7 +283,7 @@ const EditVideo = () => {
                             //   });
                             // }
                 
-                            dispatch(updateVideo(data));
+                            dispatch(updateVideo(data, token));
                             console.log(data)
                         }
                     });
@@ -319,7 +324,7 @@ const EditVideo = () => {
                         //   });
                         // }
             
-                        dispatch(updateVideo(data));
+                        dispatch(updateVideo(data, token));
                         console.log(data)
                         }
                     });
