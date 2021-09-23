@@ -34,6 +34,7 @@ import {
   CANCEL_CHANGE_CATEGORY,
   CANCEL_CHANGE_EMAIL,
   RELOAD_TABLE,
+  REJECT_COOPERATION,
 } from "../../types/partnership/management_cooporation.type";
 import axios from "axios";
 import router from "next/router";
@@ -539,6 +540,20 @@ export const exportFileCSV = () => {
       // console.log("data", data);
     } catch (error) {
       console.log("object", error);
+    }
+  };
+};
+
+export const rejectCooperation = (id) => {
+  return async (dispatch) => {
+    try {
+      let { data } = await axios.put(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${id}`
+      );
+      dispatch({ type: REJECT_COOPERATION });
+      console.log("berhasil");
+    } catch (error) {
+      console.log("error rejectCooperation", error);
     }
   };
 };

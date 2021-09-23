@@ -20,6 +20,8 @@ import {
   SET_VALUE_CARD_M,
   LIMIT_CONFIGURATION_M,
   SUCCESS_GET_SINGLE_COOPERATION_M,
+  SUCCESS_DELETE_COOPERATION_M,
+  REJECT_COOPERATION,
 } from "../../../types/partnership/user/cooperation.type";
 import axios from "axios";
 
@@ -323,6 +325,55 @@ export const successGetSingleCooperation = (data) => {
   return {
     type: SUCCESS_GET_SINGLE_COOPERATION_M,
     data,
+  };
+};
+
+export const deleteCooperation = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      let { data } = await axios.delete(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+          },
+        }
+      );
+      dispatch(successDeleteCooperation());
+    } catch (error) {
+      console.log("action delete gagal", error);
+    }
+  };
+};
+
+export const successDeleteCooperation = () => {
+  return {
+    type: SUCCESS_DELETE_COOPERATION_M,
+  };
+};
+
+export const rejectCooperation = (id) => {
+  return async (dispatch) => {
+    try {
+      let { data } = await axios.put(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+          },
+        }
+      );
+      dispatch({ type: REJECT_COOPERATION });
+      console.log("berhasil");
+    } catch (error) {
+      console.log("error rejectCooperation", error);
+    }
+  };
+};
+
+export const reloadTable = () => {
+  return {
+    type: RELOAD_TABLE,
   };
 };
 
