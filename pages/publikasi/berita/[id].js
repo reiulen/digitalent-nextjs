@@ -1,4 +1,5 @@
 import dynamic from "next/dynamic";
+import { getSession } from "next-auth/client";
 
 import Layout from "../../../components/templates/layout.component";
 // import EditBerita from "../../../components/content/publikasi/berita/edit"
@@ -6,19 +7,18 @@ import Layout from "../../../components/templates/layout.component";
 import { getDetailBerita } from '../../../redux/actions/publikasi/berita.actions'
 import { getAllKategori } from '../../../redux/actions/publikasi/kategori.actions'
 import { wrapper } from '../../../redux/store'
-import { getSession } from "next-auth/client";
 
 import LoadingPage from "../../../components/LoadingPage";
 
 const EditBerita = dynamic(
     () => import("../../../components/content/publikasi/berita/edit"),
-    { 
+    {
         // suspense: true,
         // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingPage /> }, 
+        loading: function loadingNow() { return <LoadingPage /> },
         ssr: false
     }
-  );
+);
 
 export default function EditBeritaPage(props) {
     const session = props.session.user.user.data;

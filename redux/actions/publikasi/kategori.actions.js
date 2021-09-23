@@ -69,14 +69,6 @@ export const getAllKategori = (token) => async (dispatch) => {
         // if (startdate) link = link.concat(`&startdate=${startdate}`)
         // if (enddate) link = link.concat(`&enddate=${enddate}`)
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const config = {
             headers: {
                 Authorization: 'Bearer ' + token,
@@ -153,14 +145,6 @@ export const getAllKategoriInput = (kategori, token) => async (dispatch) => {
             },
         };
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const { data } = await axios.get(link, config)
 
         dispatch({
@@ -181,19 +165,11 @@ export const newKategori = (kategoriData, token) => async (dispatch) => {
             type: NEW_KATEGORI_REQUEST,
         });
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const config = {
             headers: {
-                Authorization: 'Bearer ' + token,
+                Authorization: "Bearer " + token,
             },
-        };  
+        };
 
         const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/kategori', kategoriData, config)
 
@@ -267,7 +243,7 @@ export const updateKategori = (kategori, id, token) => async (dispatch) => {
 
         let link =
             process.env.END_POINT_API_PUBLIKASI + `api/kategori/${id}`;
-
+        
         const { data } = await axios.put(link, kategori, config);
 
         dispatch({

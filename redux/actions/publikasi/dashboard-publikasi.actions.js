@@ -1,9 +1,9 @@
 import {
-    DASHBOARD_PUBLIKASI_REQUEST,
-    DASHBOARD_PUBLIKASI_SUCCESS,
-    DASHBOARD_PUBLIKASI_FAIL,
+  DASHBOARD_PUBLIKASI_REQUEST,
+  DASHBOARD_PUBLIKASI_SUCCESS,
+  DASHBOARD_PUBLIKASI_FAIL,
 
-    CLEAR_ERRORS
+  CLEAR_ERRORS
 } from '../../types/publikasi/dashboard-publikasi.type'
 
 import axios from "axios";
@@ -34,11 +34,11 @@ export const getAllDashboardPublikasi = (token) =>
         payload: error.message,
       });
     }
-};
+  };
 
 // Clear Error
 export const clearErrors = () => async (dispatch) => {
-    dispatch({
-      type: CLEAR_ERRORS,
-    });
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
 };

@@ -12,10 +12,10 @@ import LoadingPage from "../../../components/LoadingPage";
 
 const EditVideo = dynamic(
     () => import("../../../components/content/publikasi/vidio/edit"),
-    { 
+    {
         // suspense: true,
         // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingPage /> }, 
+        loading: function loadingNow() { return <LoadingPage /> },
         ssr: false
     }
 );

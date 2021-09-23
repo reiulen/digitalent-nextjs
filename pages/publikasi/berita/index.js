@@ -1,21 +1,21 @@
 import dynamic from "next/dynamic";
+import { getSession } from "next-auth/client";
 
 import Layout from "../../../components/templates/layout.component";
 // import Berita from "../../../components/content/publikasi/berita/berita";
 
 import { getAllBerita } from "../../../redux/actions/publikasi/berita.actions"
 import { wrapper } from "../../../redux/store"
-import { getSession } from "next-auth/client";
 
 import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const Berita = dynamic(
     () => import("../../../components/content/publikasi/berita/berita"),
-    { 
+    {
         // suspense: true,
         // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        loading: function loadingNow() { return <LoadingSkeleton /> },
         ssr: false
     }
 );

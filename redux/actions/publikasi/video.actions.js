@@ -96,7 +96,7 @@ export const getDetailVideo = (id, token) => async (dispatch) => {
             payload: data.data
         })
 
-        
+
     } catch (error) {
         dispatch({
             type: DETAIL_VIDEO_FAIL,
@@ -133,7 +133,7 @@ export const newVideo = (videoData, token) => async (dispatch) => {
             payload: data
         })
 
-        console.log (videoData)
+        console.log(videoData)
 
     } catch (error) {
         dispatch({
@@ -172,15 +172,15 @@ export const updateVideo= (videoData, token) => async (dispatch) => {
 
         const { data } = await axios.post (link, videoData, config)
 
-        dispatch ({
+        dispatch({
             type: UPDATE_VIDEO_SUCCESS,
             payload: data
         })
         // console.log ("check")
-        console.log (videoData)
+        console.log(videoData)
 
     } catch (error) {
-        dispatch ({
+        dispatch({
             type: UPDATE_VIDEO_FAIL,
             payload: error.response.data.message
         })
@@ -227,13 +227,13 @@ export const playVideo= (videoData, token) => async (dispatch) => {
 
         const { data } = await axios.post (link, videoData, config)
 
-        dispatch ({
+        dispatch({
             type: PLAY_VIDEO_SUCCESS,
             payload: data
         })
-    
+
     } catch (error) {
-        dispatch ({
+        dispatch({
             type: PLAY_VIDEO_FAIL,
             payload: error.response.data.message
         })

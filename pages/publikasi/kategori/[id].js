@@ -11,13 +11,13 @@ import LoadingPage from "../../../components/LoadingPage";
 
 const EditKategori = dynamic(
     () => import("../../../components/content/publikasi/kategori/edit"),
-    { 
+    {
         // suspense: true,
         // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingPage /> }, 
+        loading: function loadingNow() { return <LoadingPage /> },
         ssr: false
     }
-  );
+);
 
 export default function EditKategoriPage() {
     return (
@@ -35,17 +35,20 @@ export default function EditKategoriPage() {
 export const getServerSideProps = wrapper.getServerSideProps(
     (store) =>
         async ({ params, req }) => {
-        const session = await getSession({ req });
-        if (!session) {
+            const session = await getSession({ req });
+            if (!session) {
+                return {
+                    redirect: {
+                        destination: "/",
+                        permanent: false,
+                    },
+                };
+            }
+            await store.dispatch(getDetailKategori(params.id, session.user.user.data.token));
             return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
+                props: { session, title: "Kategori" },
             };
         }
-    await store.dispatch(getDetailKategori(params.id,  session.user.user.data.token));
-    }
 );
 
 // export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params }) => {

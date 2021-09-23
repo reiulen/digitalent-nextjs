@@ -12,10 +12,10 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const Vidio = dynamic(
     () => import("../../../components/content/publikasi/vidio/vidio"),
-    { 
+    {
         // suspense: true,
         // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        loading: function loadingNow() { return <LoadingSkeleton /> },
         ssr: false
     }
 );

@@ -1,21 +1,21 @@
 import dynamic from "next/dynamic";
+import { getSession } from "next-auth/client";
 
 import Layout from "../../../components/templates/layout.component";
 // import Faq from "../../../components/content/publikasi/faq/faq";
 
 import { getAllFaq, getAllFaqPagination } from '../../../redux/actions/publikasi/faq.actions'
 import { wrapper } from '../../../redux/store'
-import { getSession } from "next-auth/client";
 
 // import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const FAQ = dynamic(
     () => import("../../../components/content/publikasi/faq/faq"),
-    { 
+    {
         // suspense: true,
         // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        loading: function loadingNow() { return <LoadingSkeleton /> },
         ssr: false
     }
 );

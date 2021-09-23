@@ -1,21 +1,21 @@
 import dynamic from "next/dynamic";
+import { getSession } from "next-auth/client";
 
 import Layout from "../../../components/templates/layout.component";
 // import Galeri from "../../../components/content/publikasi/galeri/galeri";
 
 import { getAllGaleri } from '../../../redux/actions/publikasi/galeri.actions'
 import { wrapper } from '../../../redux/store'
-import { getSession } from "next-auth/client";
 
 // import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const Galeri = dynamic(
     () => import("../../../components/content/publikasi/galeri/galeri"),
-    { 
+    {
         // suspense: true,
         // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingSkeleton /> }, 
+        loading: function loadingNow() { return <LoadingSkeleton /> },
         ssr: false
     }
 );

@@ -90,13 +90,11 @@ export const newArtikel = (artikelData, token) => async (dispatch) => {
       type: NEW_ARTIKEL_REQUEST,
     });
 
-    // const config = {
-    //     headers: {
-    //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-    //         'Access-Control-Allow-Origin': '*',
-    //         'apikey': process.env.END_POINT_KEY_AUTH
-    //     }
-    // }
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
 
     const config = {
       headers: {
@@ -143,7 +141,7 @@ export const updateArtikel = (artikelData, token) => async (dispatch) => {
       type: UPDATE_ARTIKEL_SUCCESS,
       payload: data,
     });
-    
+
   } catch (error) {
     dispatch({
       type: UPDATE_ARTIKEL_FAIL,
