@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteVideo, playVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { DELETE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
 
-const Vidio = () => {
+const Vidio = ({token}) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -41,6 +41,9 @@ const Vidio = () => {
     const [publishValue, setPublishValue] = useState(null)
     const [idVideo, setIdVideo] = useState (null)
     const [disableEndDate, setDisableEndDate] = useState (true)
+    const [judul_video, setJudulVideo] = useState (null)
+    const [tanggal_publish, setTanggalPublish] = useState (null)
+    const [kategori, setKategori] = useState (null)
 
     let loading = false
     let { page = 1, keyword, success } = router.query
@@ -89,7 +92,7 @@ const Vidio = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-            dispatch(deleteVideo(id));
+            dispatch(deleteVideo(id, token));
             }
         });
     };
@@ -254,7 +257,7 @@ const Vidio = () => {
         
     }
 
-    const handlePreview = (url, id) => {
+    const handlePreview = (url, id, judul_video, tanggal_publish, kategori) => {
         // const data = {
         //     id,
         //     _method: "PUT",
@@ -265,6 +268,9 @@ const Vidio = () => {
         setIdVideo(id)
         setVideoPlaying(true)
         setUrlVideo(url) 
+        setJudulVideo (judul_video)
+        setTanggalPublish (tanggal_publish)
+        setKategori(kategori)
     }
 
     const handleIsPlayed =() => {
@@ -404,7 +410,7 @@ const Vidio = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/video/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
-                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                    <i className="ri-add-fill pb-1 text-white mr-2 "></i>
                                     Tambah Video
                                 </a>
                             </Link>
@@ -714,7 +720,7 @@ const Vidio = () => {
                                                             <td className="align-middle d-flex">
 
                                                                 <button
-                                                                    onClick={() => handlePreview(row.url_video, row.id)} 
+                                                                    onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori)} 
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
                                                                     data-target="#videoPlayerModal" 
                                                                     data-toggle="modal"
@@ -826,17 +832,46 @@ const Vidio = () => {
             </div>
             
             {/* Modal */}
-            <div className="modal fade" id="videoPlayerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div className="modal fade" id="videoPlayerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
+                    <div className="modal-content" style={{ width: '1000px'}}>
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Video</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div className="modal-body d-flex justify-content-center" style={{ height: '400px' }}>
+                        <div className="modal-body d-flex justify-content-center flex-column" style={{ height: '400px'}}>
                             <ReactPlayer url={url_video} controls width="700px" playing={video_playing} onPlay={handleIsPlayed}/>
+                            <div className="my-2">
+                                <h3>
+                                    {judul_video}
+                                </h3>
+                            </div>
+                            <div className="row">
+                                <div style={{ background: "#F3F6F9"}} 
+                                    className="mr-5 px-3 py-1 rounded mb-1 ml-4">
+                                    <i className="flaticon2-calendar-4"></i>
+                                    {
+                                        tanggal_publish ?
+                                            <span className="ml-1">
+                                                Publish : {tanggal_publish} 
+                                            </span>
+                                        :
+                                            <span className="ml-1">
+                                                Belum dipublish
+                                            </span>
+                                    }
+                                </div>
+
+                                <div style={{ background: "#F3F6F9"}} 
+                                    className=" rounded px-3">
+                                    <i className="ri-dashboard-line"></i>
+                                    <span className="ml-1 py-1">
+                                        Kategori: {kategori}
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => setVideoPlaying(false)}>Tutup</button>

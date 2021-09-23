@@ -89,17 +89,9 @@ export const getAllFaqPagination = (page = 1, keyword = "", limit = 5, publish =
         if (startdate) link = link.concat(`&startdate=${startdate}`)
         if (enddate) link = link.concat(`&enddate=${enddate}`)
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const config = {
             headers: {
-                Authorization: 'Bearer ' + token,
+                Authorization: "Bearer " + token,
             },
         };
 

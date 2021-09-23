@@ -12,11 +12,11 @@ import LoadingPage from "../../../components/LoadingPage";
 
 const EditArtikel = dynamic(
   () => import("../../../components/content/publikasi/artikel/edit"),
-  { 
-      // suspense: true,
-      // loading: () => <LoadingSkeleton />, 
-      loading: function loadingNow () {return <LoadingPage /> }, 
-      ssr: false
+  {
+    // suspense: true,
+    // loading: () => <LoadingSkeleton />, 
+    loading: function loadingNow() { return <LoadingPage /> },
+    ssr: false
   }
 );
 

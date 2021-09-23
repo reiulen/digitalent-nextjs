@@ -154,18 +154,18 @@ export const updateBerita = (beritaData, token) => async (dispatch) => {
 
         const { data } = await axios.post (link, beritaData, config)
 
-        dispatch ({
+        dispatch({
             type: UPDATE_BERITA_SUCCESS,
             payload: data
         })
-        
+
     } catch (error) {
         dispatch({
             type: UPDATE_BERITA_FAIL,
             payload: error.response.data.message
         })
     }
-} 
+}
 
 export const deleteBerita = (id, token) => async (dispatch) => {
 
