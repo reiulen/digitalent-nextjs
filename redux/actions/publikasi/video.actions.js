@@ -33,7 +33,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null) => async (dispatch) => {
+export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) => async (dispatch) => {
     try {
 
         dispatch({ type: VIDEO_REQUEST })
@@ -45,16 +45,14 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
         if (startdate) link = link.concat(`&startdate=${startdate}`);
         if (enddate) link = link.concat(`&enddate=${enddate}`);
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
 
         // const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'api/video')
-        const { data } = await axios.get(link)
+        const { data } = await axios.get(link, config)
 
         dispatch({
             type: VIDEO_SUCCESS,
@@ -69,22 +67,28 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
     }
 }
 
-export const getDetailVideo = (id) => async (dispatch) => {
+export const getDetailVideo = (id, token) => async (dispatch) => {
     try {
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${id}`
 
-        const { data } = await axios.get(link)
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
 
-        console.log ("test")
-        console.log (data)
+        const { data } = await axios.get(link, config)
+
+        console.log("test")
+        console.log(data)
 
         dispatch({
             type: DETAIL_VIDEO_SUCCESS,
             payload: data.data
         })
 
-        
+
     } catch (error) {
         dispatch({
             type: DETAIL_VIDEO_FAIL,
@@ -115,7 +119,7 @@ export const newVideo = (videoData) => async (dispatch) => {
             payload: data
         })
 
-        console.log (videoData)
+        console.log(videoData)
 
     } catch (error) {
         dispatch({
@@ -125,7 +129,7 @@ export const newVideo = (videoData) => async (dispatch) => {
     }
 }
 
-export const updateVideo= (videoData) => async (dispatch) => {
+export const updateVideo = (videoData) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_VIDEO_REQUEST })
 
@@ -145,17 +149,17 @@ export const updateVideo= (videoData) => async (dispatch) => {
         // }
 
         // const { data } = await axios.post (link, dataToSend)
-        const { data } = await axios.post (link, videoData)
+        const { data } = await axios.post(link, videoData)
 
-        dispatch ({
+        dispatch({
             type: UPDATE_VIDEO_SUCCESS,
             payload: data
         })
         // console.log ("check")
-        console.log (videoData)
+        console.log(videoData)
 
     } catch (error) {
-        dispatch ({
+        dispatch({
             type: UPDATE_VIDEO_FAIL,
             payload: error.response.data.message
         })
@@ -182,21 +186,21 @@ export const deleteVideo = (id) => async (dispatch) => {
     }
 }
 
-export const playVideo= (videoData) => async (dispatch) => {
+export const playVideo = (videoData) => async (dispatch) => {
     try {
         dispatch({ type: PLAY_VIDEO_REQUEST })
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${videoData.id}`
 
-        const { data } = await axios.post (link, videoData)
+        const { data } = await axios.post(link, videoData)
 
-        dispatch ({
+        dispatch({
             type: PLAY_VIDEO_SUCCESS,
             payload: data
         })
-    
+
     } catch (error) {
-        dispatch ({
+        dispatch({
             type: PLAY_VIDEO_FAIL,
             payload: error.response.data.message
         })

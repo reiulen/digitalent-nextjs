@@ -69,21 +69,19 @@ export const getAllKategori = (token) => async (dispatch) => {
         // if (startdate) link = link.concat(`&startdate=${startdate}`)
         // if (enddate) link = link.concat(`&enddate=${enddate}`)
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const config = {
             headers: {
-                Authorization: 'Bearer ' + " eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMjIwNTIyOSwiZXhwIjoxNjMyMjkxNjI5LCJuYmYiOjE2MzIyMDUyMjksImp0aSI6Im10bVdDUWs3bGdoQks3V1UiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkX2F0IjoiMjAyMS0wOS0yMVQwMTozNDoxMy4wMDAwMDBaIiwiY3JlYXRlZF9hdCI6IjIwMjEtMDktMjFUMDE6MzQ6MTMuMDAwMDAwWiIsInVwZGF0ZWRfYXQiOiIyMDIxLTA5LTIxVDAxOjM0OjEzLjAwMDAwMFoiLCJ2ZXJpZmlrYXRvciI6MCwidHlwZSI6MCwiZGVsZXRlZF9hdCI6bnVsbCwibm9tb3JfaGFuZHBob25lIjoiMCIsInJvbGVzIjpbXX19.Y2RwtKlO2o07VCwtPu5yMB5D0anyHLgyjxEVPuzuQkQ",
+                Authorization: "Bearer " + token,
             },
         };
 
-        console.log (`Kategori: ${token}`)
+        // const config = {
+        //     headers: {
+        //         Authorization: 'Bearer ' + " eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMjIwNTIyOSwiZXhwIjoxNjMyMjkxNjI5LCJuYmYiOjE2MzIyMDUyMjksImp0aSI6Im10bVdDUWs3bGdoQks3V1UiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjciLCJ1c2VyIjp7ImlkIjoxLCJuYW1lIjoiYWRtaW4iLCJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkX2F0IjoiMjAyMS0wOS0yMVQwMTozNDoxMy4wMDAwMDBaIiwiY3JlYXRlZF9hdCI6IjIwMjEtMDktMjFUMDE6MzQ6MTMuMDAwMDAwWiIsInVwZGF0ZWRfYXQiOiIyMDIxLTA5LTIxVDAxOjM0OjEzLjAwMDAwMFoiLCJ2ZXJpZmlrYXRvciI6MCwidHlwZSI6MCwiZGVsZXRlZF9hdCI6bnVsbCwibm9tb3JfaGFuZHBob25lIjoiMCIsInJvbGVzIjpbXX19.Y2RwtKlO2o07VCwtPu5yMB5D0anyHLgyjxEVPuzuQkQ",
+        //     },
+        // };
+
+        // console.log (`Kategori: ${token}`)
 
         const { data } = await axios.get(link, config)
 
@@ -153,14 +151,6 @@ export const getAllKategoriInput = (kategori, token) => async (dispatch) => {
             },
         };
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const { data } = await axios.get(link, config)
 
         dispatch({
@@ -181,19 +171,11 @@ export const newKategori = (kategoriData, token) => async (dispatch) => {
             type: NEW_KATEGORI_REQUEST,
         });
 
-        // const config = {
-        //     headers: {
-        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-        //         'Access-Control-Allow-Origin': '*',
-        //         'apikey': process.env.END_POINT_KEY_AUTH
-        //     }
-        // }
-
         const config = {
             headers: {
-                Authorization: 'Bearer ' + token,
+                Authorization: "Bearer " + token,
             },
-        };  
+        };
 
         const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/kategori', kategoriData, config)
 
@@ -267,7 +249,7 @@ export const updateKategori = (kategori, id, token) => async (dispatch) => {
 
         let link =
             process.env.END_POINT_API_PUBLIKASI + `api/kategori/${id}`;
-
+        
         const { data } = await axios.put(link, kategori, config);
 
         dispatch({

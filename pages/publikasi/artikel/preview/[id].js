@@ -5,6 +5,7 @@ import { getSession } from "next-auth/client";
 
 import { getDetailArtikel } from '../../../../redux/actions/publikasi/artikel.actions'
 import { wrapper } from '../../../../redux/store'
+import { getSession } from "next-auth/client";
 
 
 export default function PreviewArtikel (props) {

@@ -26,7 +26,7 @@ import { deleteGaleri, viewGaleri, clearErrors } from '../../../../redux/actions
 
 import {
     DELETE_GALERI_RESET
-  } from '../../../../redux/types/publikasi/galeri.type'
+} from '../../../../redux/types/publikasi/galeri.type'
 
 const Galeri = () => {
 
@@ -43,8 +43,8 @@ const Galeri = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [publishValue, setPublishValue] = useState(null)
-    const [index_galleri, setIndexGalleri] = useState (null)
-    const [disableEndDate, setDisableEndDate] = useState (true)
+    const [index_galleri, setIndexGalleri] = useState(null)
+    const [disableEndDate, setDisableEndDate] = useState(true)
 
     let loading = false
 
@@ -66,17 +66,17 @@ const Galeri = () => {
         // }
 
         if (isDeleted) {
-          Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
-            if (result.isConfirmed) {
-              window.location.reload()
-            }
-          });
-          dispatch({
-            type: DELETE_GALERI_RESET
-          })
+            Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload()
+                }
+            });
+            dispatch({
+                type: DELETE_GALERI_RESET
+            })
         }
 
-      }, [isDeleted, dispatch]);
+    }, [isDeleted, dispatch]);
 
     // const override = css`
     //     margin: 0 auto;
@@ -98,51 +98,51 @@ const Galeri = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-            dispatch(deleteGaleri(id));
+                dispatch(deleteGaleri(id));
             }
         });
     };
 
     const handlePagination = (pageNumber) => {
-        if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue === null) {
+        if (limit !== null && search === "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
-    
+
         } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
-    
+
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
-    
-        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue === null) {
+
+        } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
-        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+
+        } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-        
-        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+
+        } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-        
-        } else if (limit !== null  && search === "" && startDate === null && endDate === null && publishValue !== null) {
+
+        } else if (limit !== null && search === "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
-          
-        } else if (limit !== null  && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+
+        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
-    
+
         } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
-    
+
         } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
-    
-        } else if (limit !== null  && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
-        } else if (limit !== null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-        
-        } else if (limit === null  && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-          router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
+            router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+
+        } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+        } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+        } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
         }
@@ -150,80 +150,80 @@ const Galeri = () => {
 
     const handleSearch = () => {
         if (limit != null && startDate === null && endDate === null) {
-           router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
-    
-        } else if (limit !== null && startDate !== null && endDate !== null ) {
-           router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-    
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+
+        } else if (limit !== null && startDate !== null && endDate !== null) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
         } else {
-          router.push(`${router.pathname}?page=1&keyword=${search}`)
+            router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
-    
+
     };
 
     const handleSearchDate = () => {
-        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
+        if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")) {
             Swal.fire(
                 'Oops !',
                 'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
-    
+            setStartDate(null)
+            setEndDate(null)
+
         } else if (startDate === null && endDate !== null) {
             Swal.fire(
                 'Oops !',
                 'Tanggal sebelum tidak boleh kosong',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
-    
+            setStartDate(null)
+            setEndDate(null)
+
         } else if (startDate !== null && endDate === null) {
             Swal.fire(
                 'Oops !',
                 'Tanggal sesudah tidak boleh kosong',
                 'error'
             )
-            setStartDate (null)
-            setEndDate (null)
-    
+            setStartDate(null)
+            setEndDate(null)
+
         } else if (startDate === null && endDate === null) {
-          Swal.fire(
-              'Oops !',
-              'Harap mengisi tanggal terlebih dahulu.',
-              'error'
-          )
-          setStartDate (null)
-          setEndDate (null)
-    
+            Swal.fire(
+                'Oops !',
+                'Harap mengisi tanggal terlebih dahulu.',
+                'error'
+            )
+            setStartDate(null)
+            setEndDate(null)
+
         } else {
             if (limit !== null && search !== null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&keyword=${search}startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 );
-    
+
             } else if (limit !== null && search === null && startDate !== null && endDate !== null) {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
                 )
-              
-            
+
+
             } else if (limit !== null && search === null && startDate === null && endDate === null) {
-                router.push (
+                router.push(
                     `${router.pathname}?page=1&limit=${limit}`
                 )
-    
+
             } else if (limit !== null && search !== null && startDate === null && endDate === null) {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
                 )
-                
+
             } else {
                 router.push(
                     `${router.pathname}?page=1&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-                ); 
+                );
             }
         }
     };
@@ -232,43 +232,43 @@ const Galeri = () => {
         setLimit(val)
         if (search === "") {
             router.push(`${router.pathname}?page=1&limit=${val}`);
-        
+
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
         }
-        
+
     };
-    
+
     const handlePublish = (val) => {
         if (val !== null || val !== "") {
-          setPublishValue (val)
-    
-          if ( startDate === null && endDate === null && limit === null && search === null){
-            router.push(`${router.pathname}?publish=${val}`);
-      
-          } else if ( startDate !== null && endDate !== null && limit === null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-      
-          } else if ( startDate !== null && endDate !== null && limit !== null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-          
-          } else if ( startDate !== null && endDate !== null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-      
-          } else if ( startDate === null && endDate === null && limit !== null && search === null) {
-              router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
-      
-          } else if ( startDate === null && endDate === null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
-          
-          } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
-          
-          } else if ( startDate !== null && endDate !== null && limit !== null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-          }
+            setPublishValue(val)
+
+            if (startDate === null && endDate === null && limit === null && search === null) {
+                router.push(`${router.pathname}?publish=${val}`);
+
+            } else if (startDate !== null && endDate !== null && limit === null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+            } else if (startDate !== null && endDate !== null && limit !== null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+
+            } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+
+            } else if (startDate === null && endDate === null && limit !== null && search === null) {
+                router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+
+            } else if (startDate === null && endDate === null && limit === null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+
+            } else if (startDate === null && endDate === null && limit !== null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+
+            } else if (startDate !== null && endDate !== null && limit !== null && search !== null) {
+                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+            }
         }
-        
+
     }
 
     const handlePreview = (i, id) => {
@@ -279,23 +279,24 @@ const Galeri = () => {
         }
         dispatch(viewGaleri(data))
         setIndexGalleri(i)
+        console.log("INDEEEXX : ", id)
     }
 
     const resetValueSort = () => {
         setStartDate(null)
         setEndDate(null)
-        setDisableEndDate (true)
-      }
-    
+        setDisableEndDate(true)
+    }
+
     const handleStartDate = (date) => {
-        setStartDate (date)
-        setDisableEndDate (false)
+        setStartDate(date)
+        setDisableEndDate(false)
     }
 
     return (
         <PageWrapper>
             {
-                console.log (galeri)
+                console.log(galeri)
             }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -311,67 +312,67 @@ const Galeri = () => {
             }
 
             {success ?
-                    <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
+                <div className="alert alert-custom alert-light-success fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon2-checkmark"></i></div>
                     <div className="alert-text">Berhasil Menyimpan Data !</div>
                     <div className="alert-close">
                         <button type="button" className="close" data-dismiss="alert" aria-label="Close" onClick={onNewReset} >
-                        <span aria-hidden="true"><i className="ki ki-close"></i></span>
+                            <span aria-hidden="true"><i className="ki ki-close"></i></span>
                         </button>
                     </div>
-                    </div>
-                    : ''
-                }
+                </div>
+                : ''
+            }
 
             <div className="col-lg-12 col-md-12">
                 <div className="row">
-                    <CardPage 
-                        background='bg-light-info' 
+                    <CardPage
+                        background='bg-light-info'
                         icon="new/open-book.svg"
                         color='#ffffff'
                         // icon='mail-purple.svg' 
                         // color='#8A50FC' 
-                        value={galeri && galeri.publish != "" ? galeri.publish : 0} 
-                        titleValue='Galeri' 
+                        value={galeri && galeri.publish != "" ? galeri.publish : 0}
+                        titleValue='Galeri'
                         title='Total Publish'
-                        publishedVal = "1"
-                        routePublish = { () => handlePublish("1")} 
+                        publishedVal="1"
+                        routePublish={() => handlePublish("1")}
                     />
-                    <CardPage 
-                        background='bg-light-warning' 
+                    <CardPage
+                        background='bg-light-warning'
                         icon="new/mail-white.svg"
                         color="#ffffff"
                         // icon='garis-yellow.svg' 
                         // color='#634100' 
-                        value='64' 
-                        titleValue='Galeri' 
-                        title='Total Author' 
-                        publishedVal = ""
-                        routePublish = { () => handlePublish("")}
+                        value='64'
+                        titleValue='Galeri'
+                        title='Total Author'
+                        publishedVal=""
+                        routePublish={() => handlePublish("")}
                     />
-                    <CardPage 
-                        background='bg-light-success' 
-                        icon='user-white.svg' 
+                    <CardPage
+                        background='bg-light-success'
+                        icon='user-white.svg'
                         color='#ffffff'
                         // icon='orang-tambah-green.svg' 
                         // color='#74BBB7' 
-                        value='64' 
-                        titleValue='K' 
-                        title='Total Yang Baca' 
-                        publishedVal = ""
-                        routePublish = { () => handlePublish("")}
+                        value='64'
+                        titleValue='K'
+                        title='Total Yang Baca'
+                        publishedVal=""
+                        routePublish={() => handlePublish("")}
                     />
-                    <CardPage 
+                    <CardPage
                         background='bg-light-danger'
                         icon="Library.svg"
-                        color='#ffffff' 
+                        color='#ffffff'
                         // icon='kotak-kotak-red.svg' 
                         // color='#F65464' 
-                        value={galeri && galeri.unpublish != "" ? galeri.unpublish : 0} 
-                        titleValue='Galeri' 
-                        title='Total Unpublish' 
-                        publishedVal = "0"
-                        routePublish = { () => handlePublish("0")}
+                        value={galeri && galeri.unpublish != "" ? galeri.unpublish : 0}
+                        titleValue='Galeri'
+                        title='Total Unpublish'
+                        publishedVal="0"
+                        routePublish={() => handlePublish("0")}
                     />
                 </div>
             </div>
@@ -402,20 +403,20 @@ const Galeri = () => {
                                     >
                                         <i className="ri-search-line left-center-absolute ml-2"></i>
                                         <input
-                                        type="text"
-                                        className="form-control pl-10"
-                                        placeholder="Ketik disini untuk Pencarian..."
-                                        onChange={(e) => setSearch(e.target.value)}
+                                            type="text"
+                                            className="form-control pl-10"
+                                            placeholder="Ketik disini untuk Pencarian..."
+                                            onChange={(e) => setSearch(e.target.value)}
                                         />
                                         <button
-                                        className="btn bg-blue-primary text-white right-center-absolute"
-                                        style={{
-                                            borderTopLeftRadius: "0",
-                                            borderBottomLeftRadius: "0",
-                                        }}
-                                        onClick={handleSearch}
+                                            className="btn bg-blue-primary text-white right-center-absolute"
+                                            style={{
+                                                borderTopLeftRadius: "0",
+                                                borderBottomLeftRadius: "0",
+                                            }}
+                                            onClick={handleSearch}
                                         >
-                                        Cari
+                                            Cari
                                         </button>
                                     </div>
                                 </div>
@@ -432,12 +433,12 @@ const Galeri = () => {
                                                 <IconFilter className="mr-3" />
                                                 Pilih Filter
                                             </div>
-                                            <IconArrow fill="#E4E6EF" width="11" height="11"/>
+                                            <IconArrow fill="#E4E6EF" width="11" height="11" />
                                         </button>
 
                                         {/* modal */}
                                         <form
-                                        // id="kt_docs_formvalidation_text"
+                                            // id="kt_docs_formvalidation_text"
                                             lassName="form text-left"
                                         // action="#"
                                         // autoComplete="off"
@@ -452,116 +453,116 @@ const Galeri = () => {
                                                 aria-hidden="true"
                                             >
                                                 <div
-                                                className="modal-dialog modal-dialog-centered"
-                                                role="document"
+                                                    className="modal-dialog modal-dialog-centered"
+                                                    role="document"
                                                 >
                                                     <div className="modal-content">
                                                         <div className="modal-header">
-                                                        <h5
-                                                            className="modal-title font-weight-bold"
-                                                            id="exampleModalLongTitle"
-                                                        >
-                                                        Filter
-                                                        </h5>
-                                                        <button
-                                                            type="button"
-                                                            className="close"
-                                                            data-dismiss="modal"
-                                                            aria-label="Close"
-                                                            onClick={() => resetValueSort()}
-                                                        >
-                                                        <IconClose />
-                                                        </button>
+                                                            <h5
+                                                                className="modal-title font-weight-bold"
+                                                                id="exampleModalLongTitle"
+                                                            >
+                                                                Filter
+                                                            </h5>
+                                                            <button
+                                                                type="button"
+                                                                className="close"
+                                                                data-dismiss="modal"
+                                                                aria-label="Close"
+                                                                onClick={() => resetValueSort()}
+                                                            >
+                                                                <IconClose />
+                                                            </button>
                                                         </div>
 
                                                         <div
-                                                        className="modal-body text-left"
-                                                        style={{ height: "200px" }}
+                                                            className="modal-body text-left"
+                                                            style={{ height: "200px" }}
                                                         >
-                                                        <div className="mb-10 col-12">
-                                                            <label className="required fw-bold fs-6 mb-2">
-                                                            Tanggal
-                                                            </label>
+                                                            <div className="mb-10 col-12">
+                                                                <label className="required fw-bold fs-6 mb-2">
+                                                                    Tanggal
+                                                                </label>
 
-                                                            <div>
-                                                            <DatePicker
-                                                                className="form-search-date form-control-sm form-control"
-                                                                selected={startDate}
-                                                                onChange={(date) => handleStartDate(date)}
-                                                                selectsStart
-                                                                startDate={startDate}
-                                                                endDate={endDate}
-                                                                dateFormat="dd/MM/yyyy"
-                                                                placeholderText="Silahkan Isi Tanggal Dari"
-                                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                // minDate={moment().toDate()}
-                                                            // minDate={addDays(new Date(), 20)}
-                                                            />
+                                                                <div>
+                                                                    <DatePicker
+                                                                        className="form-search-date form-control-sm form-control"
+                                                                        selected={startDate}
+                                                                        onChange={(date) => handleStartDate(date)}
+                                                                        selectsStart
+                                                                        startDate={startDate}
+                                                                        endDate={endDate}
+                                                                        dateFormat="dd/MM/yyyy"
+                                                                        placeholderText="Silahkan Isi Tanggal Dari"
+                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                    // minDate={moment().toDate()}
+                                                                    // minDate={addDays(new Date(), 20)}
+                                                                    />
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="mb-10 col-12">
+                                                                <label className="required fw-bold fs-6 mb-2">
+                                                                    Tanggal
+                                                                </label>
+
+                                                                <div>
+                                                                    <DatePicker
+                                                                        className="form-search-date form-control-sm form-control"
+                                                                        selected={endDate}
+                                                                        onChange={(date) => setEndDate(date)}
+                                                                        selectsEnd
+                                                                        startDate={startDate}
+                                                                        endDate={endDate}
+                                                                        dateFormat="dd/MM/yyyy"
+                                                                        minDate={startDate}
+                                                                        // minDate={moment().toDate()}
+                                                                        maxDate={addDays(startDate, 20)}
+                                                                        placeholderText="Silahkan Isi Tanggal Sampai"
+                                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                                        disabled={disableEndDate === true || disableEndDate === null}
+                                                                    // minDate={addDays(new Date(), 20)}
+                                                                    />
+                                                                </div>
+                                                                {
+                                                                    disableEndDate === true || disableEndDate === null ?
+                                                                        <small className="text-muted">
+                                                                            Mohon isi Tanggal Dari terlebih dahulu
+                                                                        </small>
+                                                                        :
+                                                                        null
+                                                                }
                                                             </div>
                                                         </div>
-
-                                                        <div className="mb-10 col-12">
-                                                            <label className="required fw-bold fs-6 mb-2">
-                                                            Tanggal
-                                                            </label>
-                                                
-                                                            <div>
-                                                            <DatePicker
-                                                                className="form-search-date form-control-sm form-control"
-                                                                selected={endDate}
-                                                                onChange={(date) => setEndDate(date)}
-                                                                selectsEnd
-                                                                startDate={startDate}
-                                                                endDate={endDate}
-                                                                dateFormat="dd/MM/yyyy"
-                                                                minDate={startDate}
-                                                                // minDate={moment().toDate()}
-                                                                maxDate={addDays(startDate, 20)}
-                                                                placeholderText="Silahkan Isi Tanggal Sampai"
-                                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                                disabled = {disableEndDate === true || disableEndDate === null}
-                                                            // minDate={addDays(new Date(), 20)}
-                                                            />
+                                                        <div className="modal-footer">
+                                                            <div className="d-flex justify-content-end align-items-center">
+                                                                <button
+                                                                    className="btn btn-white-ghost-rounded-full"
+                                                                    type="button"
+                                                                    onClick={() => resetValueSort()}
+                                                                >
+                                                                    Reset
+                                                                </button>
+                                                                <button
+                                                                    className="btn btn-primary-rounded-full ml-4"
+                                                                    type="button"
+                                                                    data-dismiss="modal"
+                                                                    onClick={() => handleSearchDate()}
+                                                                >
+                                                                    Terapkan
+                                                                </button>
                                                             </div>
-                                                            {
-                                                                disableEndDate === true || disableEndDate === null ?
-                                                                    <small className="text-muted">
-                                                                    Mohon isi Tanggal Dari terlebih dahulu
-                                                                    </small>
-                                                                :
-                                                                    null
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                    <div className="modal-footer">
-                                                        <div className="d-flex justify-content-end align-items-center">
-                                                            <button
-                                                                className="btn btn-white-ghost-rounded-full"
-                                                                type="button"
-                                                                onClick={() => resetValueSort()}
-                                                            >
-                                                                Reset
-                                                            </button>
-                                                            <button
-                                                                className="btn btn-primary-rounded-full ml-4"
-                                                                type="button"
-                                                                data-dismiss="modal"
-                                                                onClick={() => handleSearchDate()}
-                                                            >
-                                                                Terapkan
-                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </form>
-                                    {/* end modal */}
+                                        </form>
+                                        {/* end modal */}
 
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                         <div className="table-page mt-5">
@@ -590,85 +591,86 @@ const Galeri = () => {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     galeri && galeri.gallery.map((row, i) => {
+                                                        { console.log("INI ROWW ID : ", row) }
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
-                                                                    <span className="badge badge-secondary text-muted">
-                                                                        {i + 1 * (page * 5 ) - (5 - 1 )}
-                                                                    </span>
-                                                                    :
-                                                                    <span className="badge badge-secondary text-muted">
-                                                                        {i + 1 * (page * limit) - (limit - 1)}
-                                                                    </span>
+                                                                        <span className="badge badge-secondary text-muted">
+                                                                            {i + 1 * (page * 5) - (5 - 1)}
+                                                                        </span>
+                                                                        :
+                                                                        <span className="badge badge-secondary text-muted">
+                                                                            {i + 1 * (page * limit) - (limit - 1)}
+                                                                        </span>
                                                                 }
-                                                                
+
                                                             </td>
                                                             <td className='text-center'>
-                                                                <Image alt='name_image' 
-                                                                unoptimized={
-                                                                    process.env.ENVIRONMENT !== "PRODUCTION"
-                                                                }
-                                                                loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                                    "publikasi/images/" +
-                                                                    row.gambar)}
-                                                                src={
-                                                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                                    "publikasi/images/" +
-                                                                    row.gambar
-                                                                } 
-                                                                width={80} height={50} />
+                                                                <Image alt='name_image'
+                                                                    unoptimized={
+                                                                        process.env.ENVIRONMENT !== "PRODUCTION"
+                                                                    }
+                                                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                        "publikasi/images/" +
+                                                                        row.gambar)}
+                                                                    src={
+                                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                        "publikasi/images/" +
+                                                                        row.gambar
+                                                                    }
+                                                                    width={80} height={50} />
                                                             </td>
                                                             <td className='align-middle'>{row.kategori_id}</td>
                                                             <td className='align-middle'>{row.judul}</td>
                                                             <td className='align-middle'>{
                                                                 row.status === 1 ? (
                                                                     row.tanggal_publish
-                                                                  ) : (
+                                                                ) : (
                                                                     <span className="label label-inline label-light-danger font-weight-bold">
-                                                                      Belum dipublish
+                                                                        Belum dipublish
                                                                     </span>
-                                                                  )
+                                                                )
                                                             }</td>
                                                             <td className='align-middle'>
                                                                 {/* {row.role_name} */}
                                                                 Super Admin
                                                             </td>
                                                             <td className='align-middle'>
-                                                                { row.status  === 1 ? (
+                                                                {row.status === 1 ? (
                                                                     <span className="label label-inline label-light-success font-weight-bold">
-                                                                    Publish
-                                                                  </span>
+                                                                        Publish
+                                                                    </span>
                                                                 ) : (
-                                                                  <span className="label label-inline label-light-warning font-weight-bold">
-                                                                    Belum di publish
-                                                                  </span>
+                                                                    <span className="label label-inline label-light-warning font-weight-bold">
+                                                                        Belum di publish
+                                                                    </span>
                                                                 )}
                                                             </td>
                                                             <td className='align-middle'>Super Admin</td>
                                                             <td className="align-middle d-flex">
 
                                                                 <button
-                                                                    onClick={() => handlePreview(i, row.id)} 
+                                                                    onClick={() => handlePreview(i, row.id_gallery)}
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
-                                                                    data-target="#galleryModalPreview" 
+                                                                    data-target="#galleryModalPreview"
                                                                     data-toggle="modal"
                                                                 >
                                                                     <i className="ri-todo-fill p-0 text-white"></i>
                                                                     <div className="text-hover-show-hapus">
                                                                         Pratinjau
-                                                                    </div> 
+                                                                    </div>
                                                                 </button>
 
                                                                 <Link
-                                                                href={`/publikasi/galeri/${row.id}`}
+                                                                    href={`/publikasi/galeri/${row.id_gallery}`}
                                                                 >
-                                                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Ubah
-                                                                    </div> 
-                                                                </a>
+                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                        <div className="text-hover-show-hapus">
+                                                                            Ubah
+                                                                        </div>
+                                                                    </a>
                                                                 </Link>
 
                                                                 <button
@@ -678,7 +680,7 @@ const Galeri = () => {
                                                                     <i className="ri-delete-bin-fill p-0 text-white"></i>
                                                                     <div className="text-hover-show-hapus">
                                                                         Hapus
-                                                                    </div> 
+                                                                    </div>
                                                                 </button>
 
                                                             </td>
@@ -753,10 +755,10 @@ const Galeri = () => {
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0 mt-3">
                                                 <select className="form-control" id="exampleFormControlSelect2" style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }} onChange={e => handleLimit(e.target.value)} onBlur={e => handleLimit(e.target.value)}>
-                                                    <option value='5' selected={limit == "5" ? true: false}>5</option>
-                                                    <option value='10' selected={limit == "10" ? true: false}>10</option>
-                                                    <option value='15' selected={limit == "15" ? true: false}>15</option>
-                                                    <option value='20' selected={limit == "20" ? true: false}>20</option>
+                                                    <option value='5' selected={limit == "5" ? true : false}>5</option>
+                                                    <option value='10' selected={limit == "10" ? true : false}>10</option>
+                                                    <option value='15' selected={limit == "15" ? true : false}>15</option>
+                                                    <option value='20' selected={limit == "20" ? true : false}>20</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
@@ -770,7 +772,7 @@ const Galeri = () => {
                     </div>
                 </div>
             </div>
-            
+
             {/* Modal */}
             <div className="modal fade" id="galleryModalPreview" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
@@ -789,76 +791,77 @@ const Galeri = () => {
                                 <div className="col-7">
                                     {
                                         galeri && galeri.gallery.length !== 0 ?
-                                            galeri.gallery.map ((row, i) => {
+                                            galeri.gallery.map((row, i) => {
+                                                // { console.log("Galeri Map : ", row) }
                                                 return (
                                                     <Image
-                                                    key={i}
-                                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                        "publikasi/images/" +
-                                                        row.gambar)}
-                                                    src={
-                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                        "publikasi/images/" +
-                                                        row.gambar
-                                                    } 
-                                                    
-                                                    alt='image'
-                                                    layout='fill'
-                                                    objectFit='cover'
+                                                        key={i}
+                                                        loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                            "publikasi/images/" +
+                                                            row.gambar)}
+                                                        src={
+                                                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                            "publikasi/images/" +
+                                                            row.gambar
+                                                        }
+
+                                                        alt='image'
+                                                        layout='fill'
+                                                        objectFit='cover'
                                                     />
                                                 )
                                             })
-                                            
-                                        :
+
+                                            :
                                             null
                                     }
                                 </div>
                                 <div className="col-5">
                                     {
-                                        galeri && galeri.gallery.length !== 0  && index_galleri !== null ?
-                                        <>
-                                            <div className="row mb-1">
-                                                <h5>
-                                                    {galeri.gallery[index_galleri].judul}
-                                                </h5>
-                                            </div>
-                                            <div className="row mb-1">
-                                                <div style={{ background: "#F3F6F9"}} 
-                                                    className="mr-5 px-3 py-1 rounded mb-1">
-                                                    <i className="flaticon2-user"></i>
-                                                    <span className="ml-1">
-                                                        User : Super Admin 
-                                                        {/* User : {galeri.gallery[index_galleri].role_name}  */}
-                                                    </span>
+                                        galeri && galeri.gallery.length !== 0 && index_galleri !== null ?
+                                            <>
+                                                <div className="row mb-1">
+                                                    <h5>
+                                                        {galeri.gallery[index_galleri].judul}
+                                                    </h5>
                                                 </div>
+                                                <div className="row mb-1">
+                                                    <div style={{ background: "#F3F6F9" }}
+                                                        className="mr-5 px-3 py-1 rounded mb-1">
+                                                        <i className="flaticon2-user"></i>
+                                                        <span className="ml-1">
+                                                            User : Super Admin
+                                                            {/* User : {galeri.gallery[index_galleri].role_name}  */}
+                                                        </span>
+                                                    </div>
 
-                                                <div style={{ background: "#F3F6F9"}} 
-                                                    className="mr-5 px-3 py-1 rounded mb-1">
-                                                    <i className="flaticon2-calendar-4"></i>
-                                                    <span className="ml-1">
-                                                        Publish: {galeri.gallery[index_galleri].tanggal_publish}  
-                                                    </span>
+                                                    <div style={{ background: "#F3F6F9" }}
+                                                        className="mr-5 px-3 py-1 rounded mb-1">
+                                                        <i className="flaticon2-calendar-4"></i>
+                                                        <span className="ml-1">
+                                                            Publish: {galeri.gallery[index_galleri].tanggal_publish}
+                                                        </span>
+                                                    </div>
+
+
+
                                                 </div>
-
-                                                
-                                            
+                                                <div className="row mb-1">
+                                                    <p dangerouslySetInnerHTML={{ __html: galeri.gallery[index_galleri].isi_galleri }}>
+                                                    </p>
+                                                </div>
+                                            </>
+                                            :
+                                            <div>
+                                                Data Kosong
                                             </div>
-                                            <div className="row mb-1">
-                                                <p dangerouslySetInnerHTML={{__html: galeri.gallery[index_galleri].isi_galleri}}>
-                                                </p>
-                                            </div>
-                                        </>
-                                        :
-                                        <div>
-                                            Data Kosong
-                                        </div>
                                     }
-                                    
+
                                 </div>
-                                
+
                             </div>
-                            
-                            
+
+
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal">Tutup</button>
