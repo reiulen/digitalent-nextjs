@@ -22,7 +22,7 @@ const Tambah = dynamic(
 export default function TambahMasterSertifikatPage() {
     return (
         <>
-            <div className="d-flex flex-column flex-root">
+            <div className="d-flex flex-column flex-root font-weight-boldest">
                 <Tambah />
             </div>
         </>
