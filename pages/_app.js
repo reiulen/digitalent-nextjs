@@ -50,16 +50,17 @@ function MyApp({ Component, pageProps }) {
     string: ":attribute harus berupa string.",
     typeof: ":attribute tidak cocok dengan tipe :type.",
     url: ":attribute yang valid.",
+    lembaga: "",
     // url: ":attribute harus berupa url.",
   });
 
   return (
     <>
       {pageProps.data !== "auth" ? (
-        <Layout title={pageProps.title}>
-          <Component {...pageProps} />
-        </Layout>
+        // <Layout title={pageProps.title}>
+        <Component {...pageProps} />
       ) : (
+        // </Layout>
         <Component {...pageProps} />
       )}
     </>
