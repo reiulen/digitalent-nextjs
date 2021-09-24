@@ -134,7 +134,7 @@ const Table = ({token}) => {
   };
 
   useEffect(() => {
-    dispatch(fetchAllMK(token));
+    dispatch(fetchAllMK());
   }, [
     dispatch,
     allMK.keyword,
@@ -146,6 +146,7 @@ const Table = ({token}) => {
     allMK.card,
     allMK.status_delete,
     allMK.status_list,
+    
   ]);
 
   const [sumWillExpire, setSumWillExpire] = useState(0);

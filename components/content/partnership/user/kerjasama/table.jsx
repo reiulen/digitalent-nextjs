@@ -556,7 +556,7 @@ const Table = () => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-left">No</th>
-                        <th className="text-left align-middle">Mitra</th>
+                        {/* <th className="text-left align-middle">Mitra</th> */}
                         <th className="text-left align-middle">
                           Judul Kerjasama
                         </th>
@@ -593,7 +593,7 @@ const Table = () => {
                                         allCooperationUser.limit +
                                       (index + 1)}
                                 </td>
-                                <td className="align-middle text-left">
+                                {/* <td className="align-middle text-left">
                                   {items.partner === null ? (
                                     "Tidak ada"
                                   ) : (
@@ -601,7 +601,7 @@ const Table = () => {
                                       {items.partner.user.name}
                                     </p>
                                   )}
-                                </td>
+                                </td> */}
                                 <td className="d-flex justify-content-start">
                                   <div className="d-flex align-items-start justify-content-center flex-column">
                                     <p className="p-part-t">{items.title}</p>
