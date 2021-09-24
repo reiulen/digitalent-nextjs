@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
@@ -18,7 +18,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 
-const Tambah = () => {
+const Tambah = ({token}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const allMK = useSelector((state) => state.allMK);

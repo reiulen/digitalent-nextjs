@@ -68,11 +68,8 @@ const ListTraining = () => {
 
   const handlePublish = (val) => {
     setPublishValue(val);
-    let link = `${router.pathname}?id=${id}&page=${1}&card=${val}`;
+    let link = `${router.pathname}?page=${1}&card=${val}`;
     if (search) link = link.concat(`&keyword=${search}`);
-    if (status) link = link.concat(`&status=${status}`);
-    if (nilai) link = link.concat(`&nilai=${nilai}`);
-    if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
     router.push(link);
   };
 
@@ -139,7 +136,7 @@ const ListTraining = () => {
             routePublish={() => handlePublish("belum-mengerjakan")}
           />
           <CardPage
-            background="bg-danger"
+            background="bg-extras"
             icon="new/block-white.svg"
             color="#FFFFFF"
             value={0}
@@ -358,15 +355,56 @@ const ListTraining = () => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Filter</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setShowModal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
         </Modal.Header>
         <Modal.Body>
           <div className="form-group mb-5">
-            <label className="p-0">Pelatihan</label>
+            <label className="p-0">Penyelenggara</label>
             <select className="form-control">
               <option>Semua</option>
             </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Akademi</label>
+            <select className="form-control">
+              <option>Semua</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Tema</label>
+            <select className="form-control">
+              <option>Semua</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Status Substansi</label>
+            <select className="form-control">
+              <option>Semua</option>
+            </select>
+          </div>
+          <div className="form-group mb-5">
+            <label className="p-0">Status Pelatihan</label>
+            <select className="form-control">
+              <option>Semua</option>
+            </select>
+          </div>
+          <div className="row">
+            <div className="form-group mb-5 col-md-6">
+              <label className="p-0">Tanggal Pendaftaran</label>
+              <input type="date" name="" id="" className="form-control" />
+            </div>
+            <div className="form-group mb-5 col-md-6">
+              <label className="p-0">Tanggal Pelaksanaan</label>
+              <input type="date" name="" id="" className="form-control" />
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>

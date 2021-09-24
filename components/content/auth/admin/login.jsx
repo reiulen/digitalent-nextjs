@@ -95,7 +95,7 @@ const LoginAdmin = () => {
                     className="form-control form-control-auth"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Placeholder"
+                    placeholder="Masukan Email"
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("Email")
                     }
@@ -119,7 +119,7 @@ const LoginAdmin = () => {
                       className="form-control form-control-auth pr-10"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Placeholder"
+                      placeholder="Masukan Password"
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("Password")
                       }
@@ -175,14 +175,14 @@ const LoginAdmin = () => {
                 {/* <Link href="/publikasi/">
                 </Link> */}
               </form>
-              <div className="bottom mt-9 text-center">
+              {/* <div className="bottom mt-9 text-center">
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
                   Belum punya akun?
                   <Link href="/auth/register">
                     <a className="text-primary ml-2">Buat Akun</a>
                   </Link>
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

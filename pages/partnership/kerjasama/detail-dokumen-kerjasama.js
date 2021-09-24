@@ -13,12 +13,13 @@ const DetailKerjasama = dynamic(
   { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 
-export default function detailDokumenKerjasama() {
+export default function detailDokumenKerjasama(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Detail Data Kerjasama - Partnership"> */}
-        <DetailKerjasama />
+        <DetailKerjasama token={session.token} />
         {/* </Layout> */}
       </div>
     </>

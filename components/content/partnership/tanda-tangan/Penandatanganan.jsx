@@ -1,15 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
+import React from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import dynamic from "next/dynamic";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
 
-const Penandatanganan = () => {
-  const importSwitch = () => import("bootstrap-switch-button-react");
-  const SwitchButton = dynamic(importSwitch, {
-    ssr: false,
-  });
+const Penandatanganan = ({token}) => {
 
   const thumbsContainer = {
     display: "flex",
@@ -43,7 +37,6 @@ const Penandatanganan = () => {
           <h1
             className="text-center"
             style={{
-              /* Heading 20 / bold */
               fontWeight: "500",
               fontSize: "20px",
               lineHeight: "28px",
@@ -104,13 +97,12 @@ const Penandatanganan = () => {
                     </span>
                   </div>
                 </div>
-                <aside style={thumbsContainer}>{/* {thumbs} */}</aside>
+                <aside style={thumbsContainer}></aside>
               </div>
             </div>
           </div>
           <div
             style={{
-              // border: "1px solid black",
               position: "relative",
               left: "50%",
               top: "50%",
@@ -121,7 +113,6 @@ const Penandatanganan = () => {
           >
             <div
               className="d-flex justify-content-start"
-              // style={{ marginTop: "10%" }}
             >
               <label htmlFor="staticEmail" className=" col-form-label">
                 Pihak 1

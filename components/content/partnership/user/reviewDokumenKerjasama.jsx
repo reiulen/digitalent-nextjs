@@ -31,7 +31,11 @@ function ReviewDokumenKerjasama() {
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,{
+          headers: {
+            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+          },
+        }
       );
       setPeriod_start(data.data.period_date_start);
       setPeriod_end(data.data.period_date_end);
@@ -264,7 +268,7 @@ function ReviewDokumenKerjasama() {
                     </a>
                   </Link> */}
                       <button
-                        type="submit"
+                        // type="submit"
                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                       >
                         Selesai
@@ -490,7 +494,7 @@ function ReviewDokumenKerjasama() {
                 {showDokument ? (
                   <iframe
                     className="my-4 border"
-                    src={`http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${dokument}`}
+                    src={`http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${dokument}`}
                     frameBorder="0"
                     scrolling="auto"
                     height={"500px"}

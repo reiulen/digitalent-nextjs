@@ -12,12 +12,13 @@ const EditDetailKerjasama = dynamic(
   { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
-export default function editDokumenKerjasama() {
+export default function editDokumenKerjasama(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Ubah Dokumen Kerjasama - Partnership"> */}
-        <EditDetailKerjasama />
+        <EditDetailKerjasama token={session.token} />
         {/* </Layout> */}
       </div>
     </>

@@ -1,33 +1,26 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import Link from "next/link";
 import PageWrapper from "../../../wrapper/page.wrapper";
-import DatePicker from "react-datepicker";
-import { addDays } from "date-fns";
-
-import Style from "../../../../styles/progressbar.module.css";
 import axios from "axios";
 import { useRouter } from "next/router";
 
 const DetailRevisiKerjasama = () => {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
 
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [cooperationID, setCooperationID] = useState("");
   const [allCooperation, setAllCooperation] = useState([])
-  console.log("allCooperation",allCooperation)
   const [period, setPeriod] = useState("");
   const [periodUnit, setPeriodUnit] = useState("tahun");
   const [note, setNote] = useState("");
 
 
-  const handleSubmit = async () => {
+  const handleSubmit = async ({token}) => {
     // e.preventDefault();
     Swal.fire({
-      title: "Apakah anda yakin ?",
+      title: "Apakah anda yakin ingin simpan ?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -52,40 +45,6 @@ const DetailRevisiKerjasama = () => {
           formData.append(`cooperation_form_review[${i}]`, item);
         });
 
-
-
-        // console.log("note",note);
-        // console.log("method","PUT");
-
-
-
-        // let formData = new FormData();
-        // const method = "PUT";
-        // formData.append("_method", method);
-        // formData.append("note", note);
-
-        // if (AllCooperation === "") {
-        //   // start data default
-        //   formData.append("cooperation_category_id", cooperationID.id);
-        //   let dataee = cooperationID.data_content.map((items, i) => {
-        //     return items.form_content;
-        //   });
-        //   dataee.forEach((item, i) => {
-        //     formData.append(`cooperation_form_content[${i}]`, item);
-        //   });
-        //   // end data default
-        // } else {
-        //   // start jika tidak default
-        //   formData.append("cooperation_category_id", cooperationC_id);
-        //   let ez = AllCooperation.map((items, i) => {
-        //     return items.cooperation;
-        //   });
-        //   ez.forEach((item, i) => {
-        //     formData.append(`cooperation_form_content[${i}]`, item);
-        //   });
-        //   // end jika tidak default
-        // }
-
         try {
           let { data } = await axios.post(
             `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi/${router.query.id}/${router.query.varsion}`,
@@ -93,8 +52,8 @@ const DetailRevisiKerjasama = () => {
           );
 
           router.push({
-            pathname: "/partnership/kerjasama/",
-            // query: { update: true },
+            pathname: `/partnership/kerjasama/revisi-kerjasama/`,
+            query: { id:router.query.id },
           });
         } catch (error) {
           notify(error.response.data.message);
@@ -126,8 +85,6 @@ const DetailRevisiKerjasama = () => {
   const handleChange = (e, index) => {
     let dataaa = [...allCooperation];
     dataaa[index].form_content_review = e.target.value;
-    console.log("dataaa",dataaa)
-    // console.log("index",index)
     setAllCooperation(dataaa);
   };
   useEffect(() => {
@@ -144,9 +101,7 @@ const DetailRevisiKerjasama = () => {
           </div>
 
           <div className="card-body">
-            {" "}
             <form>
-              {/* tanggal apakah diambil date now atau otomatis date sekarang */}
               <div className="form-group mb-10">
                 <label className="required mb-2">Tanggal</label>
                 <div className="position-relative">
@@ -157,9 +112,7 @@ const DetailRevisiKerjasama = () => {
                     type="date"
                     className="form-control mb-3 mb-lg-0"
                   />
-                  {/* icon calender */}
                 </div>
-                {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
               </div>
 
               <div className="row">
@@ -173,7 +126,6 @@ const DetailRevisiKerjasama = () => {
                       type="text"
                       className="form-control mb-3 mb-lg-0"
                     />
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -182,7 +134,6 @@ const DetailRevisiKerjasama = () => {
                     <select className="form-control remove-icon-default" disabled>
                       <option value="">{cooperationID&&cooperationID.name}</option>
                     </select>
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
               </div>
@@ -198,7 +149,6 @@ const DetailRevisiKerjasama = () => {
                       type="number"
                       className="form-control mb-3 mb-lg-0"
                     />
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -207,7 +157,6 @@ const DetailRevisiKerjasama = () => {
                     <select className="form-control mt-2" disabled>
                       <option value="">Tahun</option>
                     </select>
-                    {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
                 </div>
               </div>
@@ -284,7 +233,10 @@ const DetailRevisiKerjasama = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/partnership/kerjasama">
+                  <Link href={{
+                    pathname: `/partnership/kerjasama/revisi-kerjasama/`,
+                    query:{id:router.query.id}
+                  }}>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>

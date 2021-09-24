@@ -8,9 +8,12 @@ import { addDays } from "date-fns";
 import Style from "../../../../styles/progressbar.module.css";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RevisiSubmit = () => {
   const router = useRouter();
+  const [information2, setInformation2] = useState("")
 
   const [allCooperation, setAllCooperation] = useState([]);
   const [title, setTitle] = useState("");
@@ -23,7 +26,7 @@ const RevisiSubmit = () => {
   const handleSubmit = async () => {
     // e.preventDefault();
     Swal.fire({
-      title: "Apakah anda yakin ?",
+      title: "Apakah anda yakin ingin simpan revisi?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -56,7 +59,7 @@ const RevisiSubmit = () => {
         // console.log(object)
 
         try {
-          let { data } = await axios.post(
+          let respoonse = await axios.post(
             `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi/${router.query.id}/${router.query.version}`,
             formData,
             {
@@ -65,12 +68,13 @@ const RevisiSubmit = () => {
               },
             }
           );
-          console.log("berhasil");
 
-          // router.push({
-          //   pathname: "/partnership/kerjasama/",
-          //   // query: { update: true },
-          // });
+            router.push({
+              pathname: "/partnership/user/kerjasama",
+              query: { successInputProfile: true },
+            });
+          
+
         } catch (error) {
           notify(error.response.data.message);
         }
@@ -88,8 +92,9 @@ const RevisiSubmit = () => {
           },
         }
       );
+      console.log("data list revisi",data)
       setTitle(data.data.title);
-      setDate(data.data.submission_date);
+      setDate(data.data.date);
       setCooperationID(data.data.cooperation_category);
       setPeriod(data.data.period);
       setPeriodUnit(data.data.period_unit);
@@ -99,6 +104,29 @@ const RevisiSubmit = () => {
       console.log("action getSIngle gagal", error);
     }
   };
+
+  const [lengthListCard, setLengthListCard] = useState("")
+  const [indexCard, setIndexCard] = useState("")
+  console.log("lengthListCard",lengthListCard)
+  console.log("indexCard",indexCard)
+  const getLengthListCard = async (id) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/card-review/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+          },
+        }
+      );
+      console.log("data list revisi",data.data.length -1)
+      setLengthListCard(data.data.length - 1)
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+  };
+
+
   const handleChange = (e, index) => {
     let dataaa = [...allCooperation];
     dataaa[index].form_content = e.target.value;
@@ -106,12 +134,37 @@ const RevisiSubmit = () => {
     // console.log("index",index)
     setAllCooperation(dataaa);
   };
+
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
   useEffect(() => {
     setDataSingle(router.query.id,router.query.version);
-  }, [router.query.id,router.query.version]);
+    setInformation2(router.query.information2)
+    getLengthListCard(router.query.id)
+    setIndexCard(router.query.index)
+  }, [router.query.id,router.query.version,router.query.information2,router.query.index]);
 
   return (
     <PageWrapper>
+      <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -263,6 +316,7 @@ const RevisiSubmit = () => {
                             </label>
                             <div>
                               <textarea
+                              disabled={(lengthListCard || indexCard) === "" ? false  : lengthListCard == indexCard ? false : true }
                                 name="cooperation"
                                 id=""
                                 onChange={(e) => handleChange(e, index)}
@@ -322,34 +376,25 @@ const RevisiSubmit = () => {
                 </div>
               </div>
 
-              {/* <div className="form-group row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-10">
-                  <Link href="/partnership/kerjasama">
-                    <a className="btn btn-outline-primary mr-2 btn-sm">
-                      Kembali
-                    </a>
-                  </Link>
-                  <Link href="/partnership/user/review-kerjasama">
-                    <a className="btn btn-primary mr-2 btn-sm">Submit</a>
-                  </Link>
-                </div>
-              </div> */}
-
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/partnership/user/kerjasama">
+                  <Link href={{
+                    pathname:"/partnership/user/kerjasama/review-kerjasama-2",
+                    query:{id:router.query.id}
+                  }}>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>
+                  {(lengthListCard || indexCard) === "" ? ""  : lengthListCard == indexCard ? 
                   <button
-                    type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                  type="button"
+                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                     onClick={() => handleSubmit()}
-                  >
+                    >
                     Simpan
                   </button>
+                  :""}
                 </div>
               </div>
             </form>

@@ -24,6 +24,7 @@ import {
   REJECT_COOPERATION,
 } from "../../../types/partnership/user/cooperation.type";
 import axios from "axios";
+import router from "next/router";
 
 //
 
@@ -374,6 +375,38 @@ export const rejectCooperation = (id) => {
 export const reloadTable = () => {
   return {
     type: RELOAD_TABLE,
+  };
+};
+
+export const exportFileCSV = () => {
+  return async (dispatch, getState) => {
+    let statusState = getState().allCooperationUser.status || "";
+    let categories_cooporationState =
+      getState().allCooperationUser.categories_cooporation || "";
+
+    const paramssz = {
+      status: statusState,
+      categories_cooporation: categories_cooporationState,
+    };
+    try {
+      let urlExport = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/excel/export`,
+        {
+          paramssz,
+          headers: {
+            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+          },
+        }
+      );
+      router.push(
+        urlExport.config.url +
+          `?&categories_cooporation=${categories_cooporationState}&status=${statusState}`
+      );
+
+      // console.log("data", data);
+    } catch (error) {
+      console.log("object", error);
+    }
   };
 };
 
