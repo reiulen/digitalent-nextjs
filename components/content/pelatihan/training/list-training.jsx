@@ -269,7 +269,9 @@ const ListTraining = () => {
                       </td>
                       <td>
                         <div className="d-flex">
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                          <Link
+                            href={`/pelatihan/pelatihan/edit-pelatihan/${1}`}
+                          >
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
@@ -279,7 +281,9 @@ const ListTraining = () => {
                               <i className="ri-pencil-fill p-0 text-white"></i>
                             </a>
                           </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                          <Link
+                            href={`/pelatihan/pelatihan/view-pelatihan/${1}`}
+                          >
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
