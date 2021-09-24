@@ -37,7 +37,12 @@ const EditArtikel = ({token}) => {
   });
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
-  const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+  const simpleValidator = useRef(new SimpleReactValidator({ 
+    locale: "id",
+    messages: {
+       url: "Format url berupa: https://www.example.com"
+    }
+  }));
   const [, forceUpdate] = useState();
   const { artikel } = useSelector((state) => state.detailArtikel);
   const { error, success, loading } = useSelector(

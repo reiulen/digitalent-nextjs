@@ -54,7 +54,7 @@ const img = {
     height: '100%'
 };
 
-const EditGaleri = () => {
+const EditGaleri = ({ token }) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -106,7 +106,7 @@ const EditGaleri = () => {
 
     useEffect(() => {
 
-        dispatch(getAllKategori())
+    // dispatch(getAllKategori())
 
         files.forEach(file => URL.revokeObjectURL(file.preview));
 

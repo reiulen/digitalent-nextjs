@@ -21,12 +21,11 @@ import Swal from "sweetalert2";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditDokumentKerjasama = () => {
+const EditDokumentKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK",allMK)
   // state onchange form data
   const [isntitusiName, setIsntitusiName] = useState("");
   const [title, setTitle] = useState("");
@@ -271,7 +270,6 @@ const EditDokumentKerjasama = () => {
         setPeriodDateEnd(futureMonth);
       }
       // jika tahun
-      
       else {
         let futureYear = moment(date)
           .add(parseInt(period), "y")
@@ -382,13 +380,15 @@ const EditDokumentKerjasama = () => {
                         <option value="">Pilih Kategory Kerjasama</option>
                         {allMK.cooperationActiveSelect.length === 0
                           ? ""
-                          : allMK.cooperationActiveSelect.data.map((items, i) => {
-                              return (
-                                <option key={i} value={items.id}>
-                                  {items.cooperation_categories}
-                                </option>
-                              );
-                            })}
+                          : allMK.cooperationActiveSelect.data.map(
+                              (items, i) => {
+                                return (
+                                  <option key={i} value={items.id}>
+                                    {items.cooperation_categories}
+                                  </option>
+                                );
+                              }
+                            )}
                       </select>
                     </div>
                     <div className="col-12 col-sm-3">
@@ -433,19 +433,9 @@ const EditDokumentKerjasama = () => {
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
-                        // selected={periodDateStart}
-
-                        // onChange={(date) => setPeriodDateStart(moment(date).format('YYYY-MM-DD'))}
-                        // value={periodDateStart}
-
                         onChange={(date) => onChangePeriodeDateStart(date)}
                         value={periodDateStart}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
                         minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       />
@@ -460,17 +450,11 @@ const EditDokumentKerjasama = () => {
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         readOnly
-                        // selected={periodDateStart}
                         onChange={(date) =>
                           setPeriodDateEnd(moment(date).format("YYYY-MM-DD"))
                         }
                         value={periodDateEnd}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
                         minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       />
@@ -539,17 +523,11 @@ const EditDokumentKerjasama = () => {
                     <div className="d-flex align-items-center position-relative datepicker-w">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
-                        // selected={periodDateStart}
                         onChange={(date) =>
                           setSigninDate(moment(date).format("YYYY-MM-DD"))
                         }
                         value={signinDate}
-                        // selectsEnd
-                        // startDate={startDate}
-                        // endDate={endDate}
-                        // minDate={startDate}
                         minDate={moment().toDate()}
-                        // maxDate={addDays(startDate, 20)}
                         dateFormat="dd/MM/yyyy"
                         placeholderText="Sampai Tanggal"
                       />
@@ -572,22 +550,22 @@ const EditDokumentKerjasama = () => {
                 <div className="row">
                   <div className="col-sm-12">
                     <div className="d-flex flex-wrap align-items-center">
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
-                      onClick={() => showDocument()}
-                    >
-                      {viewPDF || showDokument
-                        ? "Tutup dokumen"
-                        : "Lihat dokumen"}
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
-                      onClick={() => setDocumentChange()}
-                    >
-                      {!changeDokumen ? "Ubah dokumen" : "Batal Ubah"}
-                    </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
+                        onClick={() => showDocument()}
+                      >
+                        {viewPDF || showDokument
+                          ? "Tutup dokumen"
+                          : "Lihat dokumen"}
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
+                        onClick={() => setDocumentChange()}
+                      >
+                        {!changeDokumen ? "Ubah dokumen" : "Batal Ubah"}
+                      </button>
                     </div>
 
                     {changeDokumen && !viewPDF ? (
@@ -663,7 +641,9 @@ const EditDokumentKerjasama = () => {
                       <div
                         key={i}
                         className={`form-group ${
-                          allMK.cooperationActiveSelect.length !== 0 ? "d-none" : ""
+                          allMK.cooperationActiveSelect.length !== 0
+                            ? "d-none"
+                            : ""
                         }`}
                       >
                         <label htmlFor="staticEmail" className="col-form-label">

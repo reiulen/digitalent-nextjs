@@ -26,6 +26,7 @@
 
   --neutral:#F2F7FC;
   --neutral-shade: #D7E1EA;
+  --neutral-body: #6C6C6C;
   /* --primary: #3699FF; */
   --secondary: #4299e1;
   --secondary-shade: #4298E1;
@@ -63,6 +64,11 @@
 *::after {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+.row-eq-height {
+  display: flex !important;
+  flex-wrap: wrap !important;
 }
 
 html {
@@ -8124,6 +8130,8 @@ a.close.disabled {
 .align-text-top {
   vertical-align: text-top !important;
 }
+
+
 
 .bg-primary {
   background-color: var(--primary) !important;
@@ -27874,6 +27882,8 @@ button.bg-white:focus {
   text-align: center !important;
 }
 
+
+
 @media (min-width: 576px) {
   .text-sm-left {
     text-align: left !important;
@@ -27989,6 +27999,10 @@ button.bg-white:focus {
 
 .text-neutral-shade {
   color:  var(--neutral-shade) !important;
+}
+
+.text-neutral-body {
+  color:  var(--neutral-body) !important;
 }
 
 a.text-primary:hover, a.text-primary:focus {

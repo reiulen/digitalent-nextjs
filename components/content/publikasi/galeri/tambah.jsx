@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link'
 import Image from 'next/image'
 import dynamic from "next/dynamic";
-import { useDropzone } from 'react-dropzone';
+// import { useDropzone } from 'react-dropzone';
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from 'react-redux'
 import SimpleReactValidator from 'simple-react-validator'
@@ -13,36 +13,35 @@ import { TagsInput } from "react-tag-input-component";
 
 import { newGaleri, clearErrors } from '../../../../redux/actions/publikasi/galeri.actions'
 import { NEW_GALERI_RESET } from '../../../../redux/types/publikasi/galeri.type'
-import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+// import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from "../../../LoadingPage";
-import { Col, Row } from 'react-bootstrap';
 
-const thumbsContainer = {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 16
-};
+// const thumbsContainer = {
+//     display: 'flex',
+//     flexDirection: 'row',
+//     flexWrap: 'wrap',
+//     marginTop: 16
+// };
 
-const thumb = {
-    display: 'inline-flex',
-    borderRadius: 2,
-    border: '1px solid #eaeaea',
-    marginBottom: 8,
-    marginRight: 8,
-    width: 250,
-    height: 150,
-    padding: 4,
-    boxSizing: 'border-box'
-};
+// const thumb = {
+//     display: 'inline-flex',
+//     borderRadius: 2,
+//     border: '1px solid #eaeaea',
+//     marginBottom: 8,
+//     marginRight: 8,
+//     width: 250,
+//     height: 150,
+//     padding: 4,
+//     boxSizing: 'border-box'
+// };
 
-const thumbInner = {
-    display: 'flex',
-    minWidth: 0,
-    overflow: 'hidden'
-};
+// const thumbInner = {
+//     display: 'flex',
+//     minWidth: 0,
+//     overflow: 'hidden'
+// };
 
 // const img = {
 //     display: 'block',
@@ -50,7 +49,7 @@ const thumbInner = {
 //     height: '100%'
 // };
 
-const TambahGaleri = () => {
+const TambahGaleri = ({ token }) => {
     const dispatch = useDispatch()
     const router = useRouter();
 
@@ -65,80 +64,122 @@ const TambahGaleri = () => {
     const { loading, error, success } = useSelector(state => state.newGaleri)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
 
-    const [files, setFiles] = useState([]);
-    const { getRootProps, getInputProps } = useDropzone({
-        accept: 'image/*',
-        onDrop: acceptedFiles => {
-            setFiles(acceptedFiles.map(file => Object.assign(file, {
-                preview: URL.createObjectURL(file)
-            })));
-        }
-    });
+    // const [files, setFiles] = useState([]);
+    // const { getRootProps, getInputProps } = useDropzone({
+    //     accept: 'image/*',
+    //     onDrop: acceptedFiles => {
+    //         setFiles(acceptedFiles.map(file => Object.assign(file, {
+    //             preview: URL.createObjectURL(file)
+    //         })));
+    //     }
+    // });
 
-    const thumbs = files.map(file => (
-        <div style={thumb} key={file.name}>
-            {/* {console.log("IMAGE : ", file.preview)} */}
-            <div style={thumbInner}>
-                <Image
-                    loader={() => file.preview}
-                    src={file.preview}
-                    alt="thumb"
-                    // layout="fill"
-                    width={250}
-                    height="100%"
-                    display="block"
-                    objectFit="fill"
-                    unoptimized={true}
-                />
-                {/* <img
-                    src={file.preview}
-                    alt="thumb"
-                    width= '250px'
-                    height= '250px'>
-                </img> */}
+    // const thumbs = files.map(file => (
+    //     <div style={thumb} key={file.name}>
+    //         {console.log("IMAGE : ", file)}
+    //         <div style={thumbInner}>
+    //             <Image
+    //                 loader={() => file.preview}
+    //                 src={file.preview}
+    //                 alt="thumb"
+    //                 // layout="fill"
+    //                 width={250}
+    //                 height="100%"
+    //                 display="block"
+    //                 objectFit="fill"
+    //                 unoptimized={true}
+    //             />
+    //             {/* <img
+    //                 src={file.preview}
+    //                 alt="thumb"
+    //                 width= '10vh'
+    //                 height= '10vh'>
+    //             </img> */}
 
-                {/* {
-                    console.log (file)
-                } */}
+    //             {/* {
+    //                 console.log (file)
+    //             } */}
+    //         </div>
+    //     </div>
+    // ));
+
+    const Thumb = () => {
+        return (
+            <div>
+                <div className="ml-3 row">
+                    <figure
+                        className="avatar item-rtl position-relative"
+                        data-toggle="modal"
+                        data-target="#exampleModalCenter"
+                    >
+                        <Image
+                            src={gambarPreview}
+                            alt="image"
+                            width={160}
+                            height={160}
+                            objectFit="cover"
+                        />
+                    </figure>
+
+                    <div className="position-relative">
+                        <label className="circle-top" htmlFor="inputGroupFile04">
+                            <i className="ri-add-line text-dark"></i>
+                        </label>
+                        <input
+                            type="file"
+                            name="gambar"
+                            className="custom-file-input"
+                            id="inputGroupFile04"
+                            onChange={onChangeGambar}
+                            // onChange={(e) => onChangeGambar(e)}
+                            accept="image/*"
+                            onBlur={() =>
+                            simpleValidator.current.showMessageFor("gambar")
+                            }
+                            style={{display: "none"}}
+                        />
+                    </div>
+
+                    {/* <div className="ml-5 mt-5 py-5">
+                        <button className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                        <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                            Tambah Gambar
+                        </button>
+                    </div> */}
+                    
+                </div>
+                
+                <div className="ml-3">
+                    {simpleValidator.current.message(
+                    "gambar",
+                    gambar,
+                    "required",
+                    { className: "text-danger" }
+                    )}
+                    {
+                    gambarName !== null ?
+                        <small className="text-danger">{gambarName}</small>
+                    :
+                        null
+                    }
+                </div>
+
+                <div className="mt-3 col-sm-3 text-muted">
+                    <p>
+                    Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                    </p>
+                    
+                </div>
             </div>
-        </div>
-    ));
-    console.log("DATA FILES : ", files)
-
-    // const onAddImage = (e) => {
-    //     console.log("BUTTON IMAGE : ", e)
-    //     e.preventDefault()
-    //     const type = ["image/jpg", "image/png", "image/jpeg"]
-    //     // console.log (e.target.files[0].type)
-    //     // console.log (e.target.files[0])
-    //     // console.log ("check")
-
-    //     if (type.includes(e.target.files[0].type)) {
-    //         const reader = new FileReader();
-    //         reader.onload = () => {
-    //             if (reader.readyState === 2) {
-    //                 setFiles(reader.result);
-    //                 //   setGambarPreview(reader.result);
-    //             }
-    //         };
-    //         reader.readAsDataURL(e.target.files[0])
-    //         // console.log (reader.readAsDataURL(e.target.files[0]))
-    //         //   setGambarName(e.target.files[0].name)
-    //     }
-    //     else {
-    //         e.target.value = null
-    //         Swal.fire(
-    //             'Oops !',
-    //             'Data yang bisa dimasukkan hanya berupa data gambar.',
-    //             'error'
-    //         )
-    //     }
-    // }
+        )
+    }
+        
+    
 
     useEffect(() => {
-        dispatch(getAllKategori());
+        // dispatch(getAllKategori());
 
-        files.forEach(file => URL.revokeObjectURL(file.preview));
+        // files.forEach(file => URL.revokeObjectURL(file.preview));
 
         if (success) {
             dispatch({
@@ -146,19 +187,19 @@ const TambahGaleri = () => {
             })
         }
 
-        let temps = []
+        // let temps = []
 
-        for (let i = 0; i < files.length; i++) {
-            const reader = new FileReader()
+        // for (let i = 0; i < files.length; i++) {
+        //     const reader = new FileReader()
 
-            reader.onload = () => {
-                temps.push(reader.result)
-            }
+        //     reader.onload = () => {
+        //         temps.push(reader.result)
+        //     }
 
-            reader.readAsDataURL(files[i])
-        }
+        //     reader.readAsDataURL(files[i])
+        // }
 
-        setGambar(temps)
+        // setGambar(temps)
 
         if (success) {
             router.push({
@@ -167,13 +208,17 @@ const TambahGaleri = () => {
             })
         }
 
-    }, [dispatch, error, success, files, router]);
+    // }, [dispatch, error, success, files, router]);
+    }, [dispatch, error, success, router]);
 
 
     const [judul, setJudulGaleri] = useState('')
     const [isi_galleri, setIsiGaleri] = useState('');
     const [gambar, setGambar] = useState([])
-    const [gambarPreview, setGambarPreview] = useState(null)
+    // const [gambarPreview, setGambarPreview] = useState(null)
+    const [gambarPreview, setGambarPreview] = useState(
+        "/assets/media/default.jpg"
+      );
     const [kategori_id, setKategoriId] = useState('')
     // const [kategori_id, setKategoriId] = useState(1)
     const [users_id, setUserId] = useState(3)
@@ -181,6 +226,8 @@ const TambahGaleri = () => {
     const [publish, setPublish] = useState(false)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
+    const [gambarName, setGambarName] = useState (null)
+    const [ totalImage, setTotalImage ] = useState(1)
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
@@ -202,6 +249,43 @@ const TambahGaleri = () => {
             setPublishDate(date)
             // console.log (result)
         }
+    }
+
+    const onChangeGambar = (e) => {
+        const type = ["image/jpg", "image/png", "image/jpeg"]
+        // console.log (e.target.files[0].type)
+        // console.log (e.target.files[0])
+        // console.log ("check")
+    
+        if (type.includes (e.target.files[0].type)){
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setGambar(reader.result);
+              setGambarPreview(reader.result);
+            }
+          };
+          reader.readAsDataURL(e.target.files[0])
+          // console.log (reader.readAsDataURL(e.target.files[0]))
+          setGambarName(e.target.files[0].name)
+        } 
+        else {
+          // setGambar("")
+          // setGambarPreview("/assets/media/default.jpg")
+          // setGambarName(null)
+          // simpleValidator.current.showMessages();
+          // forceUpdate(1);
+          e.target.value = null
+          Swal.fire(
+            'Oops !',
+            'Data yang bisa dimasukkan hanya berupa data gambar.',
+            'error'
+          )
+        }
+    };
+
+    const handleAddImage = () => {
+        setTotalImage ((totalImage) + 1)
     }
 
     const onSubmit = (e) => {
@@ -238,7 +322,7 @@ const TambahGaleri = () => {
                 tanggal_publish: moment(today).format("YYYY-MM-DD")
             }
 
-            dispatch(newGaleri(data))
+            dispatch(newGaleri(data, token))
             // console.log("Non Publish data : ",data)
         } else {
             const data = {
@@ -252,7 +336,7 @@ const TambahGaleri = () => {
                 tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
             }
 
-            dispatch(newGaleri(data))
+            dispatch(newGaleri(data, token))
             // console.log("Publish data : ", data)
         }
 
@@ -310,21 +394,810 @@ const TambahGaleri = () => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Upload Gambar</label>
-                                <div className="col-sm-12">
+                                
+                                {
+                                    totalImage === 1 ?
+                                        <div>
+                                            <div className="ml-3 row">
+                                                <figure
+                                                    className="avatar item-rtl position-relative"
+                                                    data-toggle="modal"
+                                                    data-target="#exampleModalCenter"
+                                                >
+                                                    <Image
+                                                        src={gambarPreview}
+                                                        alt="image"
+                                                        width={160}
+                                                        height={160}
+                                                        objectFit="cover"
+                                                    />
+                                                </figure>
+
+                                                <div className="position-relative">
+                                                    <label className="circle-top" htmlFor="inputGroupFile04">
+                                                        <i className="ri-add-line text-dark"></i>
+                                                    </label>
+                                                    <input
+                                                        type="file"
+                                                        name="gambar"
+                                                        className="custom-file-input"
+                                                        id="inputGroupFile04"
+                                                        onChange={onChangeGambar}
+                                                        // onChange={(e) => onChangeGambar(e)}
+                                                        accept="image/*"
+                                                        onBlur={() =>
+                                                        simpleValidator.current.showMessageFor("gambar")
+                                                        }
+                                                        style={{display: "none"}}
+                                                    />
+                                                </div>
+
+                                                <div className="ml-5 mt-5 py-5">
+                                                    <button className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block" onClick={handleAddImage} style={{marginTop: "30px"}}>
+                                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                                        Tambah Gambar
+                                                    </button>
+                                                </div>
+                                                
+                                            </div>
+                                            
+                                            <div className="d-flex flex-column">
+                                                <div className="ml-3">
+                                                    {simpleValidator.current.message(
+                                                    "gambar",
+                                                    gambar,
+                                                    "required",
+                                                    { className: "text-danger" }
+                                                    )}
+                                                    {
+                                                    gambarName !== null ?
+                                                        <small className="text-danger">{gambarName}</small>
+                                                    :
+                                                        null
+                                                    }
+                                                </div>
+
+                                                <div className="mt-3 col-sm-3 text-muted">
+                                                    <p>
+                                                    Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                    </p>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    :
+                                        totalImage === 2 ?
+                                            <div>
+                                                <div className="ml-3 row">
+                                                    
+                                                    <figure
+                                                        className="avatar item-rtl position-relative"
+                                                        data-toggle="modal"
+                                                        data-target="#exampleModalCenter"
+                                                    >
+                                                        <Image
+                                                            src={gambarPreview}
+                                                            alt="image"
+                                                            width={160}
+                                                            height={160}
+                                                            objectFit="cover"
+                                                        />
+                                                    </figure>
+
+                                                    <div className="position-relative mr-5">
+                                                        <label className="circle-top" htmlFor="inputGroupFile04">
+                                                            <i className="ri-add-line text-dark"></i>
+                                                        </label>
+                                                        <input
+                                                            type="file"
+                                                            name="gambar"
+                                                            className="custom-file-input"
+                                                            id="inputGroupFile04"
+                                                            onChange={onChangeGambar}
+                                                            // onChange={(e) => onChangeGambar(e)}
+                                                            accept="image/*"
+                                                            onBlur={() =>
+                                                            simpleValidator.current.showMessageFor("gambar")
+                                                            }
+                                                            style={{display: "none"}}
+                                                        />
+                                                    </div>
+                                                    
+                                                    <figure
+                                                        className="avatar item-rtl position-relative ml-5"
+                                                        data-toggle="modal"
+                                                        data-target="#exampleModalCenter"
+                                                    >
+                                                        <Image
+                                                            src={gambarPreview}
+                                                            alt="image"
+                                                            width={160}
+                                                            height={160}
+                                                            objectFit="cover"
+                                                        />
+                                                    </figure>
+
+                                                    <div className="position-relative mr-5">
+                                                        <label className="circle-top" htmlFor="inputGroupFile04">
+                                                            <i className="ri-add-line text-dark"></i>
+                                                        </label>
+                                                        <input
+                                                            type="file"
+                                                            name="gambar"
+                                                            className="custom-file-input"
+                                                            id="inputGroupFile04"
+                                                            onChange={onChangeGambar}
+                                                            // onChange={(e) => onChangeGambar(e)}
+                                                            accept="image/*"
+                                                            onBlur={() =>
+                                                            simpleValidator.current.showMessageFor("gambar")
+                                                            }
+                                                            style={{display: "none"}}
+                                                        />
+                                                    </div>
+
+                                                    <div className="ml-5 mt-5 py-5">
+                                                        <button className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block" onClick={handleAddImage} style={{marginTop: "30px"}}>
+                                                        <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                                            Tambah Gambar
+                                                        </button>
+                                                    </div>
+                                                    
+                                                </div>
+                                                
+                                                <div className="d-flex flex-column">
+                                                    <div className="mt-3 col-sm-5 text-muted d-flex flex-row">
+                                                        <div className="mr-5">
+                                                            {simpleValidator.current.message(
+                                                            "gambar",
+                                                            gambar,
+                                                            "required",
+                                                            { className: "text-danger" }
+                                                            )}
+                                                            {
+                                                            gambarName !== null ?
+                                                                <small className="text-danger">{gambarName}</small>
+                                                            :
+                                                                null
+                                                            }
+                                                        </div>
+
+                                                        <div className="ml-5">
+                                                            {simpleValidator.current.message(
+                                                            "gambar",
+                                                            gambar,
+                                                            "required",
+                                                            { className: "text-danger" }
+                                                            )}
+                                                            {
+                                                            gambarName !== null ?
+                                                                <small className="text-danger">{gambarName}</small>
+                                                            :
+                                                                null
+                                                            }
+                                                        </div>
+                                                        
+                                                    </div>
+
+                                                    <div className="mt-3 col-sm-5 text-muted d-flex flex-row">
+                                                        <p className="mr-5">
+                                                        Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                        </p>
+
+                                                        <p className="ml-5">
+                                                        Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                        </p>
+                                                        
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        :
+                                            totalImage === 3 ?
+                                                <div>
+                                                    <div className="ml-3 row">
+                                                        
+                                                        <figure
+                                                            className="avatar item-rtl position-relative"
+                                                            data-toggle="modal"
+                                                            data-target="#exampleModalCenter"
+                                                        >
+                                                            <Image
+                                                                src={gambarPreview}
+                                                                alt="image"
+                                                                width={160}
+                                                                height={160}
+                                                                objectFit="cover"
+                                                            />
+                                                        </figure>
+
+                                                        <div className="position-relative mr-5">
+                                                            <label className="circle-top" htmlFor="inputGroupFile04">
+                                                                <i className="ri-add-line text-dark"></i>
+                                                            </label>
+                                                            <input
+                                                                type="file"
+                                                                name="gambar"
+                                                                className="custom-file-input"
+                                                                id="inputGroupFile04"
+                                                                onChange={onChangeGambar}
+                                                                // onChange={(e) => onChangeGambar(e)}
+                                                                accept="image/*"
+                                                                onBlur={() =>
+                                                                simpleValidator.current.showMessageFor("gambar")
+                                                                }
+                                                                style={{display: "none"}}
+                                                            />
+                                                        </div>
+                                                        
+                                                        <figure
+                                                            className="avatar item-rtl position-relative ml-5"
+                                                            data-toggle="modal"
+                                                            data-target="#exampleModalCenter"
+                                                        >
+                                                            <Image
+                                                                src={gambarPreview}
+                                                                alt="image"
+                                                                width={160}
+                                                                height={160}
+                                                                objectFit="cover"
+                                                            />
+                                                        </figure>
+
+                                                        <div className="position-relative mr-5">
+                                                            <label className="circle-top" htmlFor="inputGroupFile04">
+                                                                <i className="ri-add-line text-dark"></i>
+                                                            </label>
+                                                            <input
+                                                                type="file"
+                                                                name="gambar"
+                                                                className="custom-file-input"
+                                                                id="inputGroupFile04"
+                                                                onChange={onChangeGambar}
+                                                                // onChange={(e) => onChangeGambar(e)}
+                                                                accept="image/*"
+                                                                onBlur={() =>
+                                                                simpleValidator.current.showMessageFor("gambar")
+                                                                }
+                                                                style={{display: "none"}}
+                                                            />
+                                                        </div>
+
+                                                        <figure
+                                                            className="avatar item-rtl position-relative ml-5"
+                                                            data-toggle="modal"
+                                                            data-target="#exampleModalCenter"
+                                                        >
+                                                            <Image
+                                                                src={gambarPreview}
+                                                                alt="image"
+                                                                width={160}
+                                                                height={160}
+                                                                objectFit="cover"
+                                                            />
+                                                        </figure>
+
+                                                        <div className="position-relative mr-5">
+                                                            <label className="circle-top" htmlFor="inputGroupFile04">
+                                                                <i className="ri-add-line text-dark"></i>
+                                                            </label>
+                                                            <input
+                                                                type="file"
+                                                                name="gambar"
+                                                                className="custom-file-input"
+                                                                id="inputGroupFile04"
+                                                                onChange={onChangeGambar}
+                                                                // onChange={(e) => onChangeGambar(e)}
+                                                                accept="image/*"
+                                                                onBlur={() =>
+                                                                simpleValidator.current.showMessageFor("gambar")
+                                                                }
+                                                                style={{display: "none"}}
+                                                            />
+                                                        </div>
+
+                                                        <div className="ml-5 mt-5 py-5">
+                                                            <button className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block" onClick={handleAddImage} style={{marginTop: "30px"}}>
+                                                            <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                                                Tambah Gambar
+                                                            </button>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    
+                                                    <div className="d-flex flex-column">
+                                                        <div className="mt-3 col-sm85 text-muted d-flex flex-row">
+                                                            <div className="mr-5">
+                                                                {simpleValidator.current.message(
+                                                                "gambar",
+                                                                gambar,
+                                                                "required",
+                                                                { className: "text-danger" }
+                                                                )}
+                                                                {
+                                                                gambarName !== null ?
+                                                                    <small className="text-danger">{gambarName}</small>
+                                                                :
+                                                                    null
+                                                                }
+                                                            </div>
+
+                                                            <div className="mr-5">
+                                                                {simpleValidator.current.message(
+                                                                "gambar",
+                                                                gambar,
+                                                                "required",
+                                                                { className: "text-danger" }
+                                                                )}
+                                                                {
+                                                                gambarName !== null ?
+                                                                    <small className="text-danger">{gambarName}</small>
+                                                                :
+                                                                    null
+                                                                }
+                                                            </div>
+
+                                                            <div className="mr-5">
+                                                                {simpleValidator.current.message(
+                                                                "gambar",
+                                                                gambar,
+                                                                "required",
+                                                                { className: "text-danger" }
+                                                                )}
+                                                                {
+                                                                gambarName !== null ?
+                                                                    <small className="text-danger">{gambarName}</small>
+                                                                :
+                                                                    null
+                                                                }
+                                                            </div>
+                                                            
+                                                        </div>
+
+                                                        <div className="mt-3 col-sm-8 text-muted d-flex flex-row">
+                                                            <p className="mr-5">
+                                                            Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                            </p>
+
+                                                            <p className="mr-5">
+                                                            Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                            </p>
+
+                                                            <p className="mr-5">
+                                                            Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                            </p>
+                                                            
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                
+                                            :
+                                                totalImage === 4 ?
+                                                    <div>
+                                                        <div className="ml-3 row">
+                                                            
+                                                            <figure
+                                                                className="avatar item-rtl position-relative"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModalCenter"
+                                                            >
+                                                                <Image
+                                                                    src={gambarPreview}
+                                                                    alt="image"
+                                                                    width={160}
+                                                                    height={160}
+                                                                    objectFit="cover"
+                                                                />
+                                                            </figure>
+
+                                                            <div className="position-relative mr-5">
+                                                                <label className="circle-top" htmlFor="inputGroupFile04">
+                                                                    <i className="ri-add-line text-dark"></i>
+                                                                </label>
+                                                                <input
+                                                                    type="file"
+                                                                    name="gambar"
+                                                                    className="custom-file-input"
+                                                                    id="inputGroupFile04"
+                                                                    onChange={onChangeGambar}
+                                                                    // onChange={(e) => onChangeGambar(e)}
+                                                                    accept="image/*"
+                                                                    onBlur={() =>
+                                                                    simpleValidator.current.showMessageFor("gambar")
+                                                                    }
+                                                                    style={{display: "none"}}
+                                                                />
+                                                            </div>
+                                                            
+                                                            <figure
+                                                                className="avatar item-rtl position-relative ml-5"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModalCenter"
+                                                            >
+                                                                <Image
+                                                                    src={gambarPreview}
+                                                                    alt="image"
+                                                                    width={160}
+                                                                    height={160}
+                                                                    objectFit="cover"
+                                                                />
+                                                            </figure>
+
+                                                            <div className="position-relative mr-5">
+                                                                <label className="circle-top" htmlFor="inputGroupFile04">
+                                                                    <i className="ri-add-line text-dark"></i>
+                                                                </label>
+                                                                <input
+                                                                    type="file"
+                                                                    name="gambar"
+                                                                    className="custom-file-input"
+                                                                    id="inputGroupFile04"
+                                                                    onChange={onChangeGambar}
+                                                                    // onChange={(e) => onChangeGambar(e)}
+                                                                    accept="image/*"
+                                                                    onBlur={() =>
+                                                                    simpleValidator.current.showMessageFor("gambar")
+                                                                    }
+                                                                    style={{display: "none"}}
+                                                                />
+                                                            </div>
+
+                                                            <figure
+                                                                className="avatar item-rtl position-relative ml-5"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModalCenter"
+                                                            >
+                                                                <Image
+                                                                    src={gambarPreview}
+                                                                    alt="image"
+                                                                    width={160}
+                                                                    height={160}
+                                                                    objectFit="cover"
+                                                                />
+                                                            </figure>
+
+                                                            <div className="position-relative mr-5">
+                                                                <label className="circle-top" htmlFor="inputGroupFile04">
+                                                                    <i className="ri-add-line text-dark"></i>
+                                                                </label>
+                                                                <input
+                                                                    type="file"
+                                                                    name="gambar"
+                                                                    className="custom-file-input"
+                                                                    id="inputGroupFile04"
+                                                                    onChange={onChangeGambar}
+                                                                    // onChange={(e) => onChangeGambar(e)}
+                                                                    accept="image/*"
+                                                                    onBlur={() =>
+                                                                    simpleValidator.current.showMessageFor("gambar")
+                                                                    }
+                                                                    style={{display: "none"}}
+                                                                />
+                                                            </div>
+
+                                                            <div className="ml-5 mt-5 py-5">
+                                                                <button className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block" onClick={handleAddImage} style={{marginTop: "30px"}}>
+                                                                <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                                                    Tambah Gambar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div className="d-flex flex-column mb-3">
+                                                            <div className="mt-3 col-sm-8 text-muted d-flex flex-row">
+                                                                <div className="mr-5">
+                                                                    {simpleValidator.current.message(
+                                                                    "gambar",
+                                                                    gambar,
+                                                                    "required",
+                                                                    { className: "text-danger" }
+                                                                    )}
+                                                                    {
+                                                                    gambarName !== null ?
+                                                                        <small className="text-danger">{gambarName}</small>
+                                                                    :
+                                                                        null
+                                                                    }
+                                                                </div>
+
+                                                                <div className="mr-5">
+                                                                    {simpleValidator.current.message(
+                                                                    "gambar",
+                                                                    gambar,
+                                                                    "required",
+                                                                    { className: "text-danger" }
+                                                                    )}
+                                                                    {
+                                                                    gambarName !== null ?
+                                                                        <small className="text-danger">{gambarName}</small>
+                                                                    :
+                                                                        null
+                                                                    }
+                                                                </div>
+
+                                                                <div className="mr-5">
+                                                                    {simpleValidator.current.message(
+                                                                    "gambar",
+                                                                    gambar,
+                                                                    "required",
+                                                                    { className: "text-danger" }
+                                                                    )}
+                                                                    {
+                                                                    gambarName !== null ?
+                                                                        <small className="text-danger">{gambarName}</small>
+                                                                    :
+                                                                        null
+                                                                    }
+                                                                </div>
+
+                                                                <div className="mr-5">
+                                                                    {simpleValidator.current.message(
+                                                                    "gambar",
+                                                                    gambar,
+                                                                    "required",
+                                                                    { className: "text-danger" }
+                                                                    )}
+                                                                    {
+                                                                    gambarName !== null ?
+                                                                        <small className="text-danger">{gambarName}</small>
+                                                                    :
+                                                                        null
+                                                                    }
+                                                                </div>
+                                                                
+                                                            </div>
+
+                                                            <div className="mt-3 col-sm-8 text-muted d-flex flex-row">
+                                                                <p className="mr-5">
+                                                                Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                                </p>
+
+                                                                <p className="mr-5">
+                                                                Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                                </p>
+
+                                                                <p className="mr-5">
+                                                                Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                                </p>
+                                                                
+                                                                <p className="mr-5">
+                                                                Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="ml-3 row">
+                                                            
+                                                            <figure
+                                                                className="avatar item-rtl position-relative"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModalCenter"
+                                                            >
+                                                                <Image
+                                                                    src={gambarPreview}
+                                                                    alt="image"
+                                                                    width={160}
+                                                                    height={160}
+                                                                    objectFit="cover"
+                                                                />
+                                                            </figure>
+
+                                                            <div className="position-relative mr-5">
+                                                                <label className="circle-top" htmlFor="inputGroupFile04">
+                                                                    <i className="ri-add-line text-dark"></i>
+                                                                </label>
+                                                                <input
+                                                                    type="file"
+                                                                    name="gambar"
+                                                                    className="custom-file-input"
+                                                                    id="inputGroupFile04"
+                                                                    onChange={onChangeGambar}
+                                                                    // onChange={(e) => onChangeGambar(e)}
+                                                                    accept="image/*"
+                                                                    onBlur={() =>
+                                                                    simpleValidator.current.showMessageFor("gambar")
+                                                                    }
+                                                                    style={{display: "none"}}
+                                                                />
+                                                            </div>
+                                                            
+                                                            <figure
+                                                                className="avatar item-rtl position-relative ml-5"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModalCenter"
+                                                            >
+                                                                <Image
+                                                                    src={gambarPreview}
+                                                                    alt="image"
+                                                                    width={160}
+                                                                    height={160}
+                                                                    objectFit="cover"
+                                                                />
+                                                            </figure>
+
+                                                            <div className="position-relative mr-5">
+                                                                <label className="circle-top" htmlFor="inputGroupFile04">
+                                                                    <i className="ri-add-line text-dark"></i>
+                                                                </label>
+                                                                <input
+                                                                    type="file"
+                                                                    name="gambar"
+                                                                    className="custom-file-input"
+                                                                    id="inputGroupFile04"
+                                                                    onChange={onChangeGambar}
+                                                                    // onChange={(e) => onChangeGambar(e)}
+                                                                    accept="image/*"
+                                                                    onBlur={() =>
+                                                                    simpleValidator.current.showMessageFor("gambar")
+                                                                    }
+                                                                    style={{display: "none"}}
+                                                                />
+                                                            </div>
+
+                                                            <figure
+                                                                className="avatar item-rtl position-relative ml-5"
+                                                                data-toggle="modal"
+                                                                data-target="#exampleModalCenter"
+                                                            >
+                                                                <Image
+                                                                    src={gambarPreview}
+                                                                    alt="image"
+                                                                    width={160}
+                                                                    height={160}
+                                                                    objectFit="cover"
+                                                                />
+                                                            </figure>
+
+                                                            <div className="position-relative mr-5">
+                                                                <label className="circle-top" htmlFor="inputGroupFile04">
+                                                                    <i className="ri-add-line text-dark"></i>
+                                                                </label>
+                                                                <input
+                                                                    type="file"
+                                                                    name="gambar"
+                                                                    className="custom-file-input"
+                                                                    id="inputGroupFile04"
+                                                                    onChange={onChangeGambar}
+                                                                    // onChange={(e) => onChangeGambar(e)}
+                                                                    accept="image/*"
+                                                                    onBlur={() =>
+                                                                    simpleValidator.current.showMessageFor("gambar")
+                                                                    }
+                                                                    style={{display: "none"}}
+                                                                />
+                                                            </div>
+
+                                                            {/* <div className="ml-5 mt-5 py-5">
+                                                                <button className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block" onClick={handleAddImage} style={{marginTop: "30px"}}>
+                                                                <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                                                    Tambah Gambar
+                                                                </button>
+                                                            </div> */}
+                                                        </div>
+                                                        
+                                                        <div className="d-flex flex-column mb-3">
+                                                            <div className="mt-3 col-sm-8 text-muted d-flex flex-row">
+                                                                <div className="mr-5">
+                                                                    {simpleValidator.current.message(
+                                                                    "gambar",
+                                                                    gambar,
+                                                                    "required",
+                                                                    { className: "text-danger" }
+                                                                    )}
+                                                                    {
+                                                                    gambarName !== null ?
+                                                                        <small className="text-danger">{gambarName}</small>
+                                                                    :
+                                                                        null
+                                                                    }
+                                                                </div>
+
+                                                                <div className="mr-5">
+                                                                    {simpleValidator.current.message(
+                                                                    "gambar",
+                                                                    gambar,
+                                                                    "required",
+                                                                    { className: "text-danger" }
+                                                                    )}
+                                                                    {
+                                                                    gambarName !== null ?
+                                                                        <small className="text-danger">{gambarName}</small>
+                                                                    :
+                                                                        null
+                                                                    }
+                                                                </div>
+
+                                                                <div className="mr-5">
+                                                                    {simpleValidator.current.message(
+                                                                    "gambar",
+                                                                    gambar,
+                                                                    "required",
+                                                                    { className: "text-danger" }
+                                                                    )}
+                                                                    {
+                                                                    gambarName !== null ?
+                                                                        <small className="text-danger">{gambarName}</small>
+                                                                    :
+                                                                        null
+                                                                    }
+                                                                </div>
+
+                                                                <div className="mr-5">
+                                                                    {simpleValidator.current.message(
+                                                                    "gambar",
+                                                                    gambar,
+                                                                    "required",
+                                                                    { className: "text-danger" }
+                                                                    )}
+                                                                    {
+                                                                    gambarName !== null ?
+                                                                        <small className="text-danger">{gambarName}</small>
+                                                                    :
+                                                                        null
+                                                                    }
+                                                                </div>
+                                                                
+                                                            </div>
+
+                                                            <div className="mt-3 col-sm-8 text-muted d-flex flex-row">
+                                                                <p className="mr-5">
+                                                                Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                                </p>
+
+                                                                <p className="mr-5">
+                                                                Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                                </p>
+
+                                                                <p className="mr-5">
+                                                                Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                                </p>
+                                                                
+                                                                <p className="mr-5">
+                                                                Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                                                </p>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    // <div>
+                                                    //     test
+                                                    // </div>
+                                                    
+                                                :
+                                                    null
+
+
+                                }
+                                
+                                {/* <div className="col-sm-12">
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
                                         <p className='text-center my-auto'>Seret gambar ke sini atau klik untuk memilih.</p>
                                         <p className='text-center my-auto'>Untuk memilih banyak gambar klik dengan menekan tombol CTRL atau seret gambar dengan menekan Shift</p>
                                     </div>
-                                    {/* <div className="row align-items-center mt-5 ms-5"> */}
                                     <aside style={thumbsContainer}>
                                         {thumbs}
                                     </aside>
-                                    {/* <label class="custom-file-upload">
-                                            <input type="file" className='btn btn-primary-rounded-full rounded-pill btn-sm' onChange={()=>onAddImage(...getInputProps())}/>
-                                            Tambah Gambar
-                                        </label> */}
-                                    {/* <label className="circle-top" htmlFor="inputGroupFile04">
+                                </div> */}
+
+                                {/* <div className="ml-3 row">
+                                    <figure
+                                        className="avatar item-rtl position-relative"
+                                        data-toggle="modal"
+                                        data-target="#exampleModalCenter"
+                                    >
+                                        <Image
+                                            src={gambarPreview}
+                                            alt="image"
+                                            width={160}
+                                            height={160}
+                                            objectFit="cover"
+                                        />
+                                    </figure>
+
+                                    <div className="position-relative">
+                                        <label className="circle-top" htmlFor="inputGroupFile04">
                                             <i className="ri-add-line text-dark"></i>
                                         </label>
                                         <input
@@ -332,21 +1205,59 @@ const TambahGaleri = () => {
                                             name="gambar"
                                             className="custom-file-input"
                                             id="inputGroupFile04"
-                                            onChange={onAddImage}
+                                            onChange={onChangeGambar}
                                             // onChange={(e) => onChangeGambar(e)}
                                             accept="image/*"
                                             onBlur={() =>
-                                                simpleValidator.current.showMessageFor("gambar")
+                                            simpleValidator.current.showMessageFor("gambar")
                                             }
-                                            style={{ display: "none" }}
-                                        /> */}
-                                    {/* <button type="button" className='btn btn-primary-rounded-full rounded-pill btn-sm' onClick={onAddImage}>
-                                            <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                            style={{display: "none"}}
+                                        />
+                                    </div>
+
+                                    <div className="ml-5 mt-5 py-5">
+                                        <button className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                        <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
                                             Tambah Gambar
-                                        </button> */}
-                                    {/* </div> */}
+                                        </button>
+                                    </div>
+                                    
                                 </div>
+
+                                <div className="ml-3">
+                                    {simpleValidator.current.message(
+                                    "gambar",
+                                    gambar,
+                                    "required",
+                                    { className: "text-danger" }
+                                    )}
+                                    {
+                                    gambarName !== null ?
+                                        <small className="text-danger">{gambarName}</small>
+                                    :
+                                        null
+                                    }
+                                </div>
+
+                                <div className="mt-3 col-sm-3 text-muted">
+                                    <p>
+                                    Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
+                                    </p>
+                                    
+                                </div> */}
+                                {/* <div>
+
+                                    <div className="ml-5 mt-5 py-5">
+                                        <button className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
+                                        <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                            Tambah Gambar
+                                        </button>
+                                    </div>
+
+                                </div> */}
+                                
                             </div>
+
                             {/* {
                                 console.log (kategori)
                             } */}
@@ -504,6 +1415,54 @@ const TambahGaleri = () => {
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+
+
+            <div
+                className="modal fade"
+                id="exampleModalCenter"
+                tabIndex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalCenterTitle"
+                aria-hidden="true"
+            >
+                <div className="modal-dialog modal-dialog-centered" role="document">
+                <div className="modal-content">
+                    <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLongTitle">
+                        Pratinjau Gambar
+                    </h5>
+                    <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                    >
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div
+                    className="modal-body text-center"
+                    style={{ height: "400px" }}
+                    >
+                    <Image
+                        src={gambarPreview}
+                        alt="image"
+                        layout="fill"
+                        objectFit="cover"
+                    />
+                    </div>
+                    <div className="modal-footer">
+                    <button
+                        type="button"
+                        className="btn btn-secondary"
+                        data-dismiss="modal"
+                    >
+                        Tutup
+                    </button>
+                    </div>
+                </div>
                 </div>
             </div>
 

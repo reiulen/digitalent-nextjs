@@ -13,12 +13,13 @@ const RevisiListKerjasama = dynamic(
   { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 
-export default function RevisiSubmit() {
+export default function RevisiSubmit(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Revisi List - Partnership"> */}
-        <RevisiListKerjasama />
+        <RevisiListKerjasama token={session.token} />
         {/* </Layout> */}
       </div>
     </>

@@ -14,12 +14,13 @@ const Penandatanganan = dynamic(
   { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 
-export default function PenandatangananPage() {
+export default function PenandatangananPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Dashboard Publikasi"> */}
-        <Penandatanganan />
+        <Penandatanganan token={session.token} />
         {/* </Layout> */}
       </div>
     </>

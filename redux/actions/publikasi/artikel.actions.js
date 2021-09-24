@@ -154,7 +154,7 @@ export const deleteArtikel = (id, token ) => async (dispatch) => {
       },
     };
 
-    // console.log (token)
+    console.log (`token-delete: ${token}`)
 
     const { data } = await axios.delete(
       process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`, config

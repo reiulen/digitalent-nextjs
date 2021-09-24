@@ -28,7 +28,7 @@ import {
     DELETE_GALERI_RESET
 } from '../../../../redux/types/publikasi/galeri.type'
 
-const Galeri = () => {
+const Galeri = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -98,7 +98,7 @@ const Galeri = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteGaleri(id));
+                dispatch(deleteGaleri(id, token));
             }
         });
     };
@@ -279,7 +279,7 @@ const Galeri = () => {
         }
         dispatch(viewGaleri(data))
         setIndexGalleri(i)
-        console.log("INDEEEXX : ", id)
+        // console.log("INDEEEXX : ", id)
     }
 
     const resetValueSort = () => {

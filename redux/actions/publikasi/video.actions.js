@@ -47,9 +47,17 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
 
         const config = {
             headers: {
-                Authorization: "Bearer " + token,
+                Authorization: 'Bearer ' + token,
             },
         };
+
+        // const config = {
+        //     headers: {
+        //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
+        //         'Access-Control-Allow-Origin': '*',
+        //         'apikey': process.env.END_POINT_KEY_AUTH
+        //     }
+        // }
 
         // const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'api/video')
         const { data } = await axios.get(link, config)
@@ -70,18 +78,18 @@ export const getAllVideo = (page = 1, keyword = "", limit = 5, publish = null, s
 export const getDetailVideo = (id, token) => async (dispatch) => {
     try {
 
-        let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${id}`
-
         const config = {
             headers: {
-                Authorization: "Bearer " + token,
+                Authorization: 'Bearer ' + token,
             },
         };
 
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${id}`
+
         const { data } = await axios.get(link, config)
 
-        console.log("test")
-        console.log(data)
+        // console.log ("test")
+        // console.log (data)
 
         dispatch({
             type: DETAIL_VIDEO_SUCCESS,
@@ -97,7 +105,7 @@ export const getDetailVideo = (id, token) => async (dispatch) => {
     }
 }
 
-export const newVideo = (videoData) => async (dispatch) => {
+export const newVideo = (videoData, token) => async (dispatch) => {
     try {
 
         dispatch({
@@ -112,7 +120,13 @@ export const newVideo = (videoData) => async (dispatch) => {
         //     }
         // }
 
-        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/video', videoData)
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
+
+        const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/video', videoData, config)
 
         dispatch({
             type: NEW_VIDEO_SUCCESS,
@@ -129,7 +143,7 @@ export const newVideo = (videoData) => async (dispatch) => {
     }
 }
 
-export const updateVideo = (videoData, token) => async (dispatch) => {
+export const updateVideo= (videoData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_VIDEO_REQUEST })
 
@@ -152,18 +166,18 @@ export const updateVideo = (videoData, token) => async (dispatch) => {
 
         const config = {
             headers: {
-                Authorization: "Bearer " + token,
+                Authorization: 'Bearer ' + token,
             },
         };
 
         const { data } = await axios.post(link, videoData, config)
-        console.log("Update Data : ", data)
+        // console.log("Update Data : ", data)
         dispatch({
             type: UPDATE_VIDEO_SUCCESS,
             payload: data
         })
         // console.log ("check")
-        console.log("Video Data : ", videoData)
+        // console.log("Video Data : ", videoData)
 
     } catch (error) {
         dispatch({
@@ -173,12 +187,18 @@ export const updateVideo = (videoData, token) => async (dispatch) => {
     }
 }
 
-export const deleteVideo = (id) => async (dispatch) => {
+export const deleteVideo = (id, token) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_VIDEO_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `api/video/${id}`)
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
+
+        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `api/video/${id}`, config)
 
         dispatch({
             type: DELETE_VIDEO_SUCCESS,
@@ -193,13 +213,19 @@ export const deleteVideo = (id) => async (dispatch) => {
     }
 }
 
-export const playVideo = (videoData) => async (dispatch) => {
+export const playVideo= (videoData, token) => async (dispatch) => {
     try {
         dispatch({ type: PLAY_VIDEO_REQUEST })
 
+        const config = {
+            headers: {
+                Authorization: 'Bearer ' + token,
+            },
+        };
+
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${videoData.id}`
 
-        const { data } = await axios.post(link, videoData)
+        const { data } = await axios.post (link, videoData, config)
 
         dispatch({
             type: PLAY_VIDEO_SUCCESS,

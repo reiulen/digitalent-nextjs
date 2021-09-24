@@ -3,9 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import PageWrapper from "../../../wrapper/page.wrapper";
-
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   fetchSignature,
   setPage,
@@ -14,13 +12,14 @@ import {
   searchByKey,
 } from "../../../../redux/actions/partnership/tandaTangan.actions";
 import LoadingTable from "../../../LoadingTable";
-
 import IconAdd from "../../../assets/icon/Add";
 import IconSearch from "../../../assets/icon/Search";
 import IconPencil from "../../../assets/icon/Pencil";
 import IconDelete from "../../../assets/icon/Delete";
+import BtnIcon from "../components/BtnIcon";
+import AlertBar from "../components/BarAlert";
 
-const Table = () => {
+const Table = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { success, update } = router.query;
@@ -54,17 +53,10 @@ const Table = () => {
     });
   };
 
-
   const onNewReset = () => {
     setSuccessDelete(false);
     router.replace("/partnership/tanda-tangan", undefined, { shallow: true });
   };
-  
-  
-  // setSuccessDelete(false);
-  // const onNewReset = () => {
-  //   router.replace(`/partnership/tanda-tangan`);
-  // };
 
   useEffect(() => {
     dispatch(fetchSignature());
@@ -79,94 +71,23 @@ const Table = () => {
   return (
     <PageWrapper>
       {success ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menyimpan data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil menyimpan data" className="alert-light-success" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {successDelete ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#f7c9c9" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#c51b1b" }}>
-            Berhasil menghapus data 
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil menghapus data" className="alert-light-danger" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       {update ? (
-        <div
-          className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-          style={{ backgroundColor: "#C9F7F5" }}
-        >
-          <div className="alert-icon">
-            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
-          </div>
-          <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil mengubah data
-          </div>
-          <div className="alert-close">
-            <button
-              type="button"
-              className="close"
-              data-dismiss="alert"
-              aria-label="Close"
-              onClick={() => onNewReset()}
-            >
-              <span aria-hidden="true">
-                <i className="ki ki-close"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+        <AlertBar text="Berhasil mengubah data" className="alert-light-warning" onClick={() => onNewReset()}/>
       ) : (
         ""
       )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
+
           <div className="card-header border-0">
             <h3
               className="card-title font-weight-bolder text-dark"
@@ -177,7 +98,7 @@ const Table = () => {
             <div className="card-toolbar">
               <Link href="/partnership/tanda-tangan/tambah">
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
-                  <IconAdd  className="mr-3" width="14" height="14" />
+                  <IconAdd className="mr-3" width="14" height="14" />
                   Tambah Tanda Tangan
                 </a>
               </Link>
@@ -251,13 +172,11 @@ const Table = () => {
                             return (
                               <tr key={index}>
                                 <td className="align-middle text-left">
-                                  
-                                    {allTandaTangan.page === 1
-                                      ? index + 1
-                                      : (allTandaTangan.page - 1) *
-                                          allTandaTangan.limit +
-                                        (index + 1)}
-                                 
+                                  {allTandaTangan.page === 1
+                                    ? index + 1
+                                    : (allTandaTangan.page - 1) *
+                                        allTandaTangan.limit +
+                                      (index + 1)}
                                 </td>
                                 <td className="align-middle text-left">
                                   {items.name}
@@ -267,8 +186,8 @@ const Table = () => {
                                 </td>
                                 <td className="align-middle text-left">
                                   <div className="d-flex align-items-center">
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"
+                                    <BtnIcon
+                                      className="bg-blue-secondary mr-3"
                                       onClick={() =>
                                         router.push(
                                           `/partnership/tanda-tangan/${items.id}`
@@ -277,18 +196,18 @@ const Table = () => {
                                     >
                                       <IconPencil width="16" height="16" />
                                       <div className="text-hover-show-hapus">
-                                          Ubah
-                                        </div>
-                                    </button>
-                                    <button
-                                      className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        Ubah
+                                      </div>
+                                    </BtnIcon>
+                                    <BtnIcon
+                                      className="bg-blue-secondary"
                                       onClick={() => handleDelete(items.id)}
                                     >
                                       <IconDelete width="16" height="16" />
                                       <div className="text-hover-show-hapus">
-                                          Hapus
-                                        </div>
-                                    </button>
+                                        Hapus
+                                      </div>
+                                    </BtnIcon>
                                   </div>
                                 </td>
                               </tr>
