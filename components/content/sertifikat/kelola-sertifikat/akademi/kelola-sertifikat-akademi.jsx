@@ -4,20 +4,20 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 // #Page, Component & Library
-import PageWrapper from "../../../wrapper/page.wrapper";
+import PageWrapper from "../../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
-import LoadingTable from "../../../LoadingTable";
+import LoadingTable from "../../../../LoadingTable";
 import Pagination from "react-js-pagination";
 
 // #Icon
-import IconArrow from "../../../assets/icon/Arrow";
-import IconClose from "../../../assets/icon/Close";
-import IconFilter from "../../../assets/icon/Filter";
+import IconArrow from "../../../../assets/icon/Arrow";
+import IconClose from "../../../../assets/icon/Close";
+import IconFilter from "../../../../assets/icon/Filter";
 
 export default function KelolaSertifikat() {
     const router = useRouter();
-
+    const { query } = router;
     // #DatePicker
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -51,7 +51,7 @@ export default function KelolaSertifikat() {
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat B",
                 jenis_sertifikat: "1 sisi",
-                status: 2,
+                status: "menunggu",
                 created_by: "Alfian",
             },
             {
@@ -60,7 +60,7 @@ export default function KelolaSertifikat() {
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat C",
                 jenis_sertifikat: "1 sisi",
-                status: 3,
+                status: "publish",
                 created_by: "Firaz",
             },
             {
@@ -69,7 +69,7 @@ export default function KelolaSertifikat() {
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat C",
                 jenis_sertifikat: "1 sisi",
-                status: 4,
+                status: "draft",
                 created_by: "Jhony",
             },
             {
@@ -78,7 +78,7 @@ export default function KelolaSertifikat() {
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat C",
                 jenis_sertifikat: "1 sisi",
-                status: 5,
+                status: "revisi",
                 created_by: "Indro",
             },
             {
@@ -87,7 +87,7 @@ export default function KelolaSertifikat() {
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat C",
                 jenis_sertifikat: "1 sisi",
-                status: 1,
+                status: "ditolak",
                 created_by: "Alvin",
             },
         ],
@@ -405,36 +405,37 @@ export default function KelolaSertifikat() {
                                                                     }
                                                                 </td>
 
-                                                                <td className="align-middle">
+                                                                <td className="align-middle text-capitalize">
                                                                     {artikel.status ==
-                                                                    1 ? (
+                                                                    "belum tersedia" ? (
                                                                         <span className="label label-inline label-light-danger font-weight-bold">
-                                                                            Belum
-                                                                            Tersedia
+                                                                            belum
+                                                                            tersedia
                                                                         </span>
                                                                     ) : artikel.status ==
-                                                                      2 ? (
+                                                                      "ditolak" ? (
                                                                         <span className="label label-inline label-light-danger font-weight-bold">
-                                                                            Ditolak
+                                                                            ditolak
                                                                         </span>
                                                                     ) : artikel.status ==
-                                                                      3 ? (
+                                                                      "publish" ? (
                                                                         <span className="label label-inline label-light-success font-weight-bold">
-                                                                            Publish
+                                                                            publish
                                                                         </span>
                                                                     ) : artikel.status ==
-                                                                      4 ? (
+                                                                      "draft" ? (
                                                                         <span className="label label-inline label-light-warning font-weight-bold">
-                                                                            Draft
+                                                                            draft
                                                                         </span>
                                                                     ) : artikel.status ==
-                                                                      5 ? (
+                                                                      "menunggu" ? (
                                                                         <span className="label label-inline label-light-primary font-weight-bold">
-                                                                            Review
+                                                                            menunggu
                                                                         </span>
                                                                     ) : (
                                                                         <span className="label label-inline label-light-warning font-weight-bold">
-                                                                            Draft
+                                                                            revisi
+                                                                            - 1
                                                                         </span>
                                                                     )}
                                                                 </td>
@@ -443,7 +444,7 @@ export default function KelolaSertifikat() {
                                                                     {artikel.status ==
                                                                     "belum tersedia" ? (
                                                                         <Link
-                                                                            href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            href={`/sertifikat/kelola-sertifikat/add`}
                                                                         >
                                                                             <a
                                                                                 className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -455,24 +456,50 @@ export default function KelolaSertifikat() {
                                                                             </a>
                                                                         </Link>
                                                                     ) : artikel.status ==
-                                                                      "review" ? (
-                                                                        <Link
-                                                                            href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
-                                                                        >
-                                                                            <a
-                                                                                className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                                                                data-toggle="tooltip"
-                                                                                data-placement="bottom"
-                                                                                title="Detail"
+                                                                      "menunggu" ? (
+                                                                        <>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${query.akademi}/${artikel.id}`}
                                                                             >
-                                                                                <i className="ri-eye-fill p-0 text-white"></i>
-                                                                            </a>
-                                                                        </Link>
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-eye-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-file-user-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-history-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                        </>
                                                                     ) : artikel.status ==
                                                                       "draft" ? (
                                                                         <>
                                                                             <Link
-                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                                href={`/sertifikat/kelola-sertifikat/${query.akademi}/${artikel.id}`}
                                                                             >
                                                                                 <a
                                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -500,7 +527,7 @@ export default function KelolaSertifikat() {
                                                                       "publish" ? (
                                                                         <>
                                                                             <Link
-                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                                href={`/sertifikat/kelola-sertifikat/${query.akademi}/${artikel.id}`}
                                                                             >
                                                                                 <a
                                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -523,51 +550,135 @@ export default function KelolaSertifikat() {
                                                                                     <i className="ri-pencil-fill p-0 text-white"></i>
                                                                                 </a>
                                                                             </Link>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-file-user-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-history-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
                                                                         </>
                                                                     ) : artikel.status ==
                                                                       "ditolak" ? (
-                                                                        <div>
-                                                                            ditolak
-                                                                        </div>
+                                                                        <>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Edit"
+                                                                                >
+                                                                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-file-user-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-history-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-warning text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-error-warning-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                        </>
                                                                     ) : (
-                                                                        <div></div>
+                                                                        <>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Edit"
+                                                                                >
+                                                                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-file-user-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-history-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-warning text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-error-warning-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                        </>
                                                                     )}
-                                                                    <Link
-                                                                        href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
-                                                                    >
-                                                                        <a
-                                                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                                                            data-toggle="tooltip"
-                                                                            data-placement="bottom"
-                                                                            title="Tambah"
-                                                                        >
-                                                                            <i className="ri-add-circle-fill p-0 text-white"></i>
-                                                                        </a>
-                                                                    </Link>
-                                                                    <Link
-                                                                        href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
-                                                                    >
-                                                                        <a
-                                                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                                                            data-toggle="tooltip"
-                                                                            data-placement="bottom"
-                                                                            title="Tambah"
-                                                                        >
-                                                                            <i className="ri-add-circle-fill p-0 text-white"></i>
-                                                                        </a>
-                                                                    </Link>
-                                                                    <Link
-                                                                        href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
-                                                                    >
-                                                                        <a
-                                                                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                                                            data-toggle="tooltip"
-                                                                            data-placement="bottom"
-                                                                            title="Tambah"
-                                                                        >
-                                                                            <i className="ri-add-circle-fill p-0 text-white"></i>
-                                                                        </a>
-                                                                    </Link>
                                                                 </td>
                                                                 {/* END TABLE DATA */}
                                                             </tr>

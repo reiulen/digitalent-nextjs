@@ -87,7 +87,6 @@ export const getAllKategori = token => async dispatch => {
         // console.log (`Kategori: ${token}`)
 
         const { data } = await axios.get(link, config);
-        const { data } = await axios.get(link, config);
 
         dispatch({
             type: KATEGORI_SUCCESS,
@@ -100,48 +99,6 @@ export const getAllKategori = token => async dispatch => {
         });
     }
 };
-
-export const paginationKategori =
-    (page = 1, keyword = "", limit = 5, startdate = "", enddate = "", token) =>
-    async dispatch => {
-        try {
-            dispatch({ type: PAGINATION_KATEGORI_REQUEST });
-
-            let link =
-                process.env.END_POINT_API_PUBLIKASI +
-                `api/kategori?page=${page}`;
-            if (keyword) link = link.concat(`&keyword=${keyword}`);
-            if (limit) link = link.concat(`&limit=${limit}`);
-            if (startdate) link = link.concat(`&startdate=${startdate}`);
-            if (enddate) link = link.concat(`&enddate=${enddate}`);
-
-            const config = {
-                headers: {
-                    Authorization: "Bearer " + token,
-                },
-            };
-
-            // const config = {
-            //     headers: {
-            //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-            //         'Access-Control-Allow-Origin': '*',
-            //         'apikey': process.env.END_POINT_KEY_AUTH
-            //     }
-            // }
-
-            const { data } = await axios.get(link, config);
-
-            dispatch({
-                type: PAGINATION_KATEGORI_SUCCESS,
-                payload: data,
-            });
-        } catch (error) {
-            dispatch({
-                type: PAGINATION_KATEGORI_FAIL,
-                payload: error.message,
-            });
-        }
-    };
 
 export const paginationKategori =
     (page = 1, keyword = "", limit = 5, startdate = "", enddate = "", token) =>

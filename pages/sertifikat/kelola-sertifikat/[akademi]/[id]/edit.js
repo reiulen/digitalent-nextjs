@@ -24,7 +24,8 @@ export default function KelokaSertifikatPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <KelolaSertifikatKategori />
+                {/* <KelolaSertifikatKategori /> */}
+                aaaaaaaaaa
             </div>
         </>
     );
