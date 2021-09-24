@@ -129,7 +129,7 @@ export const newVideo = (videoData) => async (dispatch) => {
     }
 }
 
-export const updateVideo = (videoData) => async (dispatch) => {
+export const updateVideo = (videoData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_VIDEO_REQUEST })
 
@@ -149,14 +149,21 @@ export const updateVideo = (videoData) => async (dispatch) => {
         // }
 
         // const { data } = await axios.post (link, dataToSend)
-        const { data } = await axios.post(link, videoData)
 
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+
+        const { data } = await axios.post(link, videoData, config)
+        console.log("Update Data : ", data)
         dispatch({
             type: UPDATE_VIDEO_SUCCESS,
             payload: data
         })
         // console.log ("check")
-        console.log(videoData)
+        console.log("Video Data : ", videoData)
 
     } catch (error) {
         dispatch({

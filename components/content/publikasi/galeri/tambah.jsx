@@ -17,6 +17,7 @@ import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.act
 
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from "../../../LoadingPage";
+import { Col, Row } from 'react-bootstrap';
 
 const thumbsContainer = {
     display: 'flex',
@@ -76,7 +77,7 @@ const TambahGaleri = () => {
 
     const thumbs = files.map(file => (
         <div style={thumb} key={file.name}>
-            {console.log("IMAGE : ", file)}
+            {/* {console.log("IMAGE : ", file.preview)} */}
             <div style={thumbInner}>
                 <Image
                     loader={() => file.preview}
@@ -92,8 +93,8 @@ const TambahGaleri = () => {
                 {/* <img
                     src={file.preview}
                     alt="thumb"
-                    width= '10vh'
-                    height= '10vh'>
+                    width= '250px'
+                    height= '250px'>
                 </img> */}
 
                 {/* {
@@ -102,6 +103,37 @@ const TambahGaleri = () => {
             </div>
         </div>
     ));
+    console.log("DATA FILES : ", files)
+
+    // const onAddImage = (e) => {
+    //     console.log("BUTTON IMAGE : ", e)
+    //     e.preventDefault()
+    //     const type = ["image/jpg", "image/png", "image/jpeg"]
+    //     // console.log (e.target.files[0].type)
+    //     // console.log (e.target.files[0])
+    //     // console.log ("check")
+
+    //     if (type.includes(e.target.files[0].type)) {
+    //         const reader = new FileReader();
+    //         reader.onload = () => {
+    //             if (reader.readyState === 2) {
+    //                 setFiles(reader.result);
+    //                 //   setGambarPreview(reader.result);
+    //             }
+    //         };
+    //         reader.readAsDataURL(e.target.files[0])
+    //         // console.log (reader.readAsDataURL(e.target.files[0]))
+    //         //   setGambarName(e.target.files[0].name)
+    //     }
+    //     else {
+    //         e.target.value = null
+    //         Swal.fire(
+    //             'Oops !',
+    //             'Data yang bisa dimasukkan hanya berupa data gambar.',
+    //             'error'
+    //         )
+    //     }
+    // }
 
     useEffect(() => {
         dispatch(getAllKategori());
@@ -207,7 +239,7 @@ const TambahGaleri = () => {
             }
 
             dispatch(newGaleri(data))
-            console.log("Non Publish data : ",data)
+            // console.log("Non Publish data : ",data)
         } else {
             const data = {
                 judul,
@@ -284,9 +316,35 @@ const TambahGaleri = () => {
                                         <p className='text-center my-auto'>Seret gambar ke sini atau klik untuk memilih.</p>
                                         <p className='text-center my-auto'>Untuk memilih banyak gambar klik dengan menekan tombol CTRL atau seret gambar dengan menekan Shift</p>
                                     </div>
+                                    {/* <div className="row align-items-center mt-5 ms-5"> */}
                                     <aside style={thumbsContainer}>
                                         {thumbs}
                                     </aside>
+                                    {/* <label class="custom-file-upload">
+                                            <input type="file" className='btn btn-primary-rounded-full rounded-pill btn-sm' onChange={()=>onAddImage(...getInputProps())}/>
+                                            Tambah Gambar
+                                        </label> */}
+                                    {/* <label className="circle-top" htmlFor="inputGroupFile04">
+                                            <i className="ri-add-line text-dark"></i>
+                                        </label>
+                                        <input
+                                            type="file"
+                                            name="gambar"
+                                            className="custom-file-input"
+                                            id="inputGroupFile04"
+                                            onChange={onAddImage}
+                                            // onChange={(e) => onChangeGambar(e)}
+                                            accept="image/*"
+                                            onBlur={() =>
+                                                simpleValidator.current.showMessageFor("gambar")
+                                            }
+                                            style={{ display: "none" }}
+                                        /> */}
+                                    {/* <button type="button" className='btn btn-primary-rounded-full rounded-pill btn-sm' onClick={onAddImage}>
+                                            <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                            Tambah Gambar
+                                        </button> */}
+                                    {/* </div> */}
                                 </div>
                             </div>
                             {/* {

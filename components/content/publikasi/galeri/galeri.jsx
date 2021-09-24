@@ -591,7 +591,7 @@ const Galeri = () => {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     galeri && galeri.gallery.map((row, i) => {
-                                                        { console.log("INI ROWW ID : ", row) }
+                                                        // { console.log("INI ROWW ID : ", row) }
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -621,7 +621,7 @@ const Galeri = () => {
                                                                     }
                                                                     width={80} height={50} />
                                                             </td>
-                                                            <td className='align-middle'>{row.kategori_id}</td>
+                                                            <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.judul}</td>
                                                             <td className='align-middle'>{
                                                                 row.status === 1 ? (
@@ -792,7 +792,7 @@ const Galeri = () => {
                                     {
                                         galeri && galeri.gallery.length !== 0 ?
                                             galeri.gallery.map((row, i) => {
-                                                // { console.log("Galeri Map : ", row) }
+                                                { console.log("Galeri Map : ", row.gambar) }
                                                 return (
                                                     <Image
                                                         key={i}

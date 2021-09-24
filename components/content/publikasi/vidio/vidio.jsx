@@ -404,7 +404,7 @@ const Vidio = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/video/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
-                                    <i className="ri-add-fill pb-1 text-white mr-2 "></i>
+                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
                                     Tambah Video
                                 </a>
                             </Link>
@@ -655,6 +655,7 @@ const Vidio = () => {
                                                 !video || video && video.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     video && video.video.map((row, i) => {
+                                                        // {console.log("Video :", row.gambar)}
                                                         return <tr key={row.id}>
                                                             {/* <td className="align-middle text-center">
                                                                 <span className="badge badge-secondary text-muted">

@@ -96,12 +96,6 @@ export const newArtikel = (artikelData, token) => async (dispatch) => {
       },
     };
 
-    const config = {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    };
-
     const { data } = await axios.post(
       process.env.END_POINT_API_PUBLIKASI + "api/artikel",
       artikelData,
