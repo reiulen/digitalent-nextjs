@@ -27,20 +27,21 @@ const EditImagetron = () => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+    const [, forceUpdate] = useState();
     const { imagetron } = useSelector((state) => state.detailImagetron);
-    const { 
-        error, 
-        success, 
-        loading 
+    const {
+        error,
+        success,
+        loading
     } = useSelector(
         (state) => state.updatedImagetron
-      );
+    );
 
     const {
         loading: allLoading,
         error: allError,
         kategori,
-      } = useSelector((state) => state.allKategori);
+    } = useSelector((state) => state.allKategori);
 
     useEffect(() => {
 
@@ -48,10 +49,10 @@ const EditImagetron = () => {
 
         if (success) {
             router.push({
-              pathname: `/publikasi/imagetron`,
-              query: { success: true },
+                pathname: `/publikasi/imagetron`,
+                query: { successEdit: true },
             });
-          }
+        }
 
         // if (error) {
         //     dispatch(clearErrors())
@@ -73,15 +74,15 @@ const EditImagetron = () => {
     // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
     const [iconPlus, setIconPlus] = useState(
         "/assets/icon/Add.svg"
-      );
+    );
     const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + imagetron.gambar);
     const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + imagetron.gambar);
-    const [gambarName, setGambarName] = useState (imagetron.gambar)
+    const [gambarName, setGambarName] = useState(imagetron.gambar)
     const [url_link, setUrlRedirect] = useState(imagetron.url_link)
     const [publish, setPublish] = useState(imagetron.publish)
     const [users_id, setUserId] = useState(3)
     const [_method, setMethod] = useState("put");
-    const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date (imagetron.tanggal_publish) : null);
+    const [publishDate, setPublishDate] = useState(imagetron.tanggal_publish ? new Date(imagetron.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(imagetron.publish === 0 ? true : false)
 
     const onChangeGambar = (e) => {
@@ -97,17 +98,18 @@ const EditImagetron = () => {
             setGambarName(e.target.files[0].name)
         }
     }
+    // console.log("IMAGE PREVIEW : ",gambarPreview)
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
 
-        if (e.target.checked === false){
-            setPublishDate (null)
-            setPublish (0)
+        if (e.target.checked === false) {
+            setPublishDate(null)
+            setPublish(0)
         } else {
-            setPublish (1)
+            setPublish(1)
         }
     };
 
@@ -126,7 +128,7 @@ const EditImagetron = () => {
             if (error) {
                 dispatch(clearErrors())
             }
-            
+
             if (success) {
                 dispatch({
                     // type: NEW_ARTIKEL_RESET
@@ -136,7 +138,7 @@ const EditImagetron = () => {
 
             if (gambarDB !== gambar) {
 
-                if (publishDate === null){
+                if (publishDate === null) {
                     let today = new Date
 
                     const data = {
@@ -148,7 +150,7 @@ const EditImagetron = () => {
                         publish,
                         users_id,
                         _method,
-                        tanggal_publish : moment(today).format("YYYY-MM-DD")
+                        tanggal_publish: moment(today).format("YYYY-MM-DD")
                     };
 
                     Swal.fire({
@@ -161,13 +163,13 @@ const EditImagetron = () => {
                         confirmButtonText: "Ya !",
                         cancelButtonText: "Batal",
                     })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-            
-                        dispatch(updateImagetron(data));
-                        // console.log(data)
-                        }
-                    });
+                        .then((result) => {
+                            if (result.isConfirmed) {
+
+                                dispatch(updateImagetron(data));
+                                // console.log(data)
+                            }
+                        });
                 } else {
                     const data = {
                         id,
@@ -178,7 +180,7 @@ const EditImagetron = () => {
                         publish,
                         users_id,
                         _method,
-                        tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                        tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
                     };
 
                     Swal.fire({
@@ -191,19 +193,19 @@ const EditImagetron = () => {
                         confirmButtonText: "Ya !",
                         cancelButtonText: "Batal",
                     })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-            
-                        dispatch(updateImagetron(data));
-                        // console.log(data)
-                        }
-                    });
+                        .then((result) => {
+                            if (result.isConfirmed) {
+
+                                dispatch(updateImagetron(data));
+                                // console.log(data)
+                            }
+                        });
                 }
 
-                
+
             } else {
 
-                if (publishDate === null){
+                if (publishDate === null) {
                     let today = new Date
 
                     const data = {
@@ -215,9 +217,9 @@ const EditImagetron = () => {
                         publish,
                         users_id,
                         _method,
-                        tanggal_publish : moment(today).format("YYYY-MM-DD")
+                        tanggal_publish: moment(today).format("YYYY-MM-DD")
                     };
-    
+
                     Swal.fire({
                         title: "Apakah anda yakin ?",
                         text: "Data ini akan diedit !",
@@ -228,13 +230,13 @@ const EditImagetron = () => {
                         confirmButtonText: "Ya !",
                         cancelButtonText: "Batal",
                     })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-            
-                        dispatch(updateImagetron(data));
-                        // console.log(data)
-                        }
-                    });
+                        .then((result) => {
+                            if (result.isConfirmed) {
+
+                                dispatch(updateImagetron(data));
+                                // console.log(data)
+                            }
+                        });
                 } else {
                     const data = {
                         id,
@@ -245,9 +247,9 @@ const EditImagetron = () => {
                         publish,
                         users_id,
                         _method,
-                        tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                        tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
                     };
-    
+
                     Swal.fire({
                         title: "Apakah anda yakin ?",
                         text: "Data ini akan diedit !",
@@ -258,16 +260,24 @@ const EditImagetron = () => {
                         confirmButtonText: "Ya !",
                         cancelButtonText: "Batal",
                     })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-            
-                        dispatch(updateImagetron(data));
-                        // console.log(data)
-                        }
-                    });
+                        .then((result) => {
+                            if (result.isConfirmed) {
+
+                                dispatch(updateImagetron(data));
+                                // console.log(data)
+                            }
+                        });
                 }
             }
-        }
+        }else {
+            simpleValidator.current.showMessages();
+            forceUpdate(1);
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Isi data dengan benar !",
+            });
+          }
         // e.preventDefault()
         // if (error) {
         //     dispatch(clearErrors())
@@ -295,7 +305,7 @@ const EditImagetron = () => {
     return (
         <PageWrapper>
             {
-                console.log (imagetron)
+                console.log(imagetron)
             }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -337,42 +347,42 @@ const EditImagetron = () => {
                                 </label>
                                 <div className="col-sm-12">
                                     <select
-                                    name=""
-                                    id=""
-                                    className="form-control"
-                                    value={kategori_id}
-                                    onChange={(e) => setKategoriId(e.target.value)}
-                                    onBlur={(e) => {
-                                        setKategoriId(e.target.value);
-                                        simpleValidator.current.showMessageFor("kategori_id");
-                                    }}
+                                        name=""
+                                        id=""
+                                        className="form-control"
+                                        value={kategori_id}
+                                        onChange={(e) => setKategoriId(e.target.value)}
+                                        onBlur={(e) => {
+                                            setKategoriId(e.target.value);
+                                            simpleValidator.current.showMessageFor("kategori_id");
+                                        }}
                                     >
-                                    <option selected disabled value="">
-                                        -- Kategori --
-                                    </option>
-                                    {!kategori || (kategori && kategori.length === 0) ? (
-                                        <option value="">Data kosong</option>
-                                    ) : (
-                                        kategori &&
-                                        kategori.kategori &&
-                                        kategori.kategori.map((row) => {
-                                            return (
-                                                row.jenis_kategori == "Imagetron" ?
-                                                    <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
-                                                    {row.nama_kategori}
-                                                    </option>
-                                                :
-                                                    null
+                                        <option selected disabled value="">
+                                            -- Kategori --
+                                        </option>
+                                        {!kategori || (kategori && kategori.length === 0) ? (
+                                            <option value="">Data kosong</option>
+                                        ) : (
+                                            kategori &&
+                                            kategori.kategori &&
+                                            kategori.kategori.map((row) => {
+                                                return (
+                                                    row.jenis_kategori == "Imagetron" ?
+                                                        <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                                            {row.nama_kategori}
+                                                        </option>
+                                                        :
+                                                        null
                                                     // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
-                                            )
-                                        })
-                                    )}
+                                                )
+                                            })
+                                        )}
                                     </select>
                                     {simpleValidator.current.message(
-                                    "kategori_id",
-                                    kategori_id,
-                                    "required",
-                                    { className: "text-danger" }
+                                        "kategori_id",
+                                        kategori_id,
+                                        "required",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
@@ -380,11 +390,11 @@ const EditImagetron = () => {
                             <div className="form-group ">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul} onChange={(e) => setJudulImagetron(e.target.value) } onBlur={() => simpleValidator.current.showMessageFor("judul")}/>
+                                    <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul} onChange={(e) => setJudulImagetron(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul")} />
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
-                                        "required|min:5|max:50",
+                                        "required||min:5|max:50",
                                         { className: "text-danger" }
                                     )}
                                 </div>
@@ -399,66 +409,66 @@ const EditImagetron = () => {
                                 </label>
                                 <div className="ml-3 row">
                                     <figure
-                                    className="avatar item-rtl"
-                                    data-toggle="modal"
-                                    data-target="#exampleModalCenter"
+                                        className="avatar item-rtl"
+                                        data-toggle="modal"
+                                        data-target="#exampleModalCenter"
                                     >
-                                    <Image
-                                        src={gambarPreview}
-                                        alt="image"
-                                        width={160}
-                                        height={160}
-                                        objectFit="cover"
-                                    />
+                                        <Image
+                                            src={gambarPreview}
+                                            alt="image"
+                                            width={160}
+                                            height={160}
+                                            objectFit="cover"
+                                        />
                                     </figure>
                                     <div>
-                                    <label htmlFor="inputGroupFile04" className="icon-plus">
-                                        <Image
-                                        src={iconPlus}
-                                        alt="plus"
-                                        width={60}
-                                        height={60} 
+                                        <label htmlFor="inputGroupFile04" className="icon-plus">
+                                            <Image
+                                                src={iconPlus}
+                                                alt="plus"
+                                                width={60}
+                                                height={60}
+                                            />
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            name="gambar"
+                                            className="custom-file-input"
+                                            id="inputGroupFile04"
+                                            onChange={onChangeGambar}
+                                            accept="image/*"
+                                            onBlur={() =>
+                                                simpleValidator.current.showMessageFor("gambar")
+                                            }
+                                            style={{ display: "none" }}
                                         />
-                                    </label>
-                                    
-                                    <input
-                                        type="file"
-                                        name="gambar"
-                                        className="custom-file-input"
-                                        id="inputGroupFile04"
-                                        onChange={onChangeGambar}
-                                        accept="image/*"
-                                        onBlur={() =>
-                                        simpleValidator.current.showMessageFor("gambar")
-                                        }
-                                        style={{display: "none"}}
-                                    />
                                     </div>
-                                    
+
                                 </div>
 
                                 <div className="ml-3">
                                     {simpleValidator.current.message(
-                                    "gambar",
-                                    gambar,
-                                    "required",
-                                    { className: "text-danger" }
+                                        "gambar",
+                                        gambar,
+                                        "required",
+                                        { className: "text-danger" }
                                     )}
                                     {
-                                    gambarName !== null ?
-                                        <small className="text-danger">{gambarName}</small>
-                                    :
-                                        null
+                                        gambarName !== null ?
+                                            <small className="text-danger">{gambarName}</small>
+                                            :
+                                            null
                                     }
                                 </div>
 
                                 <div className="mt-3 col-sm-3 text-muted">
                                     <p>
-                                    Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
+                                        Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
-                                    
+
                                 </div>
-                                
+
                             </div>
 
                             {/* <div className="form-group">
@@ -480,14 +490,14 @@ const EditImagetron = () => {
                                         {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
                                         </div> */}
-                                        <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")}/>
-                                        
+                                        <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")} />
+
                                     </div>
                                     {simpleValidator.current.message(
-                                    "url_link",
-                                    url_link,
-                                    "required|url",
-                                    { className: "text-danger" }
+                                        "url_link",
+                                        url_link,
+                                        "required|url",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
@@ -497,26 +507,25 @@ const EditImagetron = () => {
                                     htmlFor="staticEmail"
                                     className="ml-5 pl-4 font-weight-bolder"
                                 >
-                                    Publish 
+                                    Publish
                                 </label>
                                 <div className="col-sm-1 ml-4">
                                     <div className="">
-                                    <label className="switches">
-                                        <input
-                                        // required
-                                        className="checkbox"
-                                        checked={publish}
-                                        type="checkbox"
-                                        // onChange={(checked) => setPublish(checked)}
-                                        onChange={(e) => handleChangePublish(e)}
-                                        />
-                                        <span
-                                        className={`sliders round ${
-                                            publish ? "text-white" : "pl-2"
-                                        }`}
-                                        >
-                                        </span>
-                                    </label>
+                                        <label className="switches">
+                                            <input
+                                                // required
+                                                className="checkbox"
+                                                checked={publish}
+                                                type="checkbox"
+                                                // onChange={(checked) => setPublish(checked)}
+                                                onChange={(e) => handleChangePublish(e)}
+                                            />
+                                            <span
+                                                className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                    }`}
+                                            >
+                                            </span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -527,29 +536,29 @@ const EditImagetron = () => {
                                         <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
                                         <div className="col-sm-12">
                                             <div className="input-group">
-                                            <DatePicker
-                                                className="form-search-date form-control-sm form-control"
-                                                selected={publishDate}
-                                                onChange={(date) => handlePublishDate(date)}
-                                                // onChange={(date) => setPublishDate(date)}
-                                                selectsStart
-                                                startDate={publishDate}
-                                                // endDate={endDate}
-                                                dateFormat="dd/MM/yyyy"
-                                                placeholderText="Silahkan Isi Tanggal Publish"
-                                                wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                // minDate={moment().toDate()}
-                                            // minDate={addDays(new Date(), 20)}
-                                                disabled = {disablePublishDate === true || disablePublishDate === null}
-                                            />
+                                                <DatePicker
+                                                    className="form-search-date form-control-sm form-control"
+                                                    selected={publishDate}
+                                                    onChange={(date) => handlePublishDate(date)}
+                                                    // onChange={(date) => setPublishDate(date)}
+                                                    selectsStart
+                                                    startDate={publishDate}
+                                                    // endDate={endDate}
+                                                    dateFormat="dd/MM/yyyy"
+                                                    placeholderText="Silahkan Isi Tanggal Publish"
+                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                    // minDate={moment().toDate()}
+                                                    // minDate={addDays(new Date(), 20)}
+                                                    disabled={disablePublishDate === true || disablePublishDate === null}
+                                                />
                                             </div>
                                         </div>
                                     </div>
-                                :
+                                    :
                                     null
                             }
 
-                            
+
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>
                                 <div className="col-sm-10 text-right">

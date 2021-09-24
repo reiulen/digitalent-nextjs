@@ -170,14 +170,14 @@ export const updateVideo= (videoData, token) => async (dispatch) => {
             },
         };
 
-        const { data } = await axios.post (link, videoData, config)
-
+        const { data } = await axios.post(link, videoData, config)
+        // console.log("Update Data : ", data)
         dispatch({
             type: UPDATE_VIDEO_SUCCESS,
             payload: data
         })
         // console.log ("check")
-        console.log(videoData)
+        // console.log("Video Data : ", videoData)
 
     } catch (error) {
         dispatch({
