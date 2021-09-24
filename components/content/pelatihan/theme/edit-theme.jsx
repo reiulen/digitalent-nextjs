@@ -23,7 +23,10 @@ const EditTheme = () => {
   const [, forceUpdate] = useState();
 
   const [name, setName] = useState("");
-  const [academy, setAcademy] = useState("");
+  const [academy, setAcademy] = useState({
+    value: "strawberry",
+    label: "Strawberry",
+  });
   const [description, setDescription] = useState("");
 
   const [status, setStatus] = useState();
