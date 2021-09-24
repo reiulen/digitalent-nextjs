@@ -54,7 +54,7 @@ const img = {
     height: '100%'
 };
 
-const EditGaleri = () => {
+const EditGaleri = ({ token }) => {
     const dispatch = useDispatch();
     const router = useRouter();
 
