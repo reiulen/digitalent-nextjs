@@ -435,9 +435,9 @@ const EditVideo = ({token}) => {
     return (
         <>
             <PageWrapper>
-                {/* {
+                {
                     console.log (video)
-                } */}
+                }
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                         <div className="alert-icon"><i className="flaticon-warning"></i></div>
