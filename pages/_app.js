@@ -57,10 +57,10 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       {pageProps.data !== "auth" ? (
-        // <Layout title={pageProps.title}>
-        <Component {...pageProps} />
+        <Layout title={pageProps.title}>
+          <Component {...pageProps} />
+        </Layout>
       ) : (
-        // </Layout>
         <Component {...pageProps} />
       )}
     </>
