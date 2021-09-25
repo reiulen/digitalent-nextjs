@@ -8,6 +8,8 @@ import {
   SET_LIMIT_TD,
   SUCESS_DELETE_TD,
   SEARCH_BY_KEY_TTD,
+  FETCH_OPTION_TTD_ADMIN,
+  FETCH_TTD_PARTNER_BY_ID,
 } from "../../types/partnership/tandaTangan.type";
 
 const statuslist = {
@@ -24,6 +26,8 @@ const initialState = {
   limit: 5,
   page: 1,
   reload_table: "",
+  optionTtdAdmin: [],
+  ttdPartner: [],
 };
 
 export const allTandaTanganReducer = (state = initialState, action) => {
@@ -76,6 +80,16 @@ export const allTandaTanganReducer = (state = initialState, action) => {
         ...state,
         keyword: action.value,
         page: 1,
+      };
+    case FETCH_OPTION_TTD_ADMIN:
+      return {
+        ...state,
+        optionTtdAdmin: action.payload,
+      };
+    case FETCH_TTD_PARTNER_BY_ID:
+      return {
+        ...state,
+        ttdPartner: action.payload,
       };
 
     default:

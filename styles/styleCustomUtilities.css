@@ -480,6 +480,15 @@ margin-top: 1rem;
   transition: transform 0.3s;
 }
 
+/* drag ttd partnership */
+.cardss{
+  width: 100px;
+  height: 100px;
+  background-color: cyan;
+  margin: 5px;
+  cursor: move;
+}
+
 
 
 

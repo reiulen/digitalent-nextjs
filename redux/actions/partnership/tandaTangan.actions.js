@@ -8,6 +8,8 @@ import {
   SET_LIMIT_TD,
   SUCESS_DELETE_TD,
   SEARCH_BY_KEY_TTD,
+  FETCH_OPTION_TTD_ADMIN,
+  FETCH_TTD_PARTNER_BY_ID,
 } from "../../types/partnership/tandaTangan.type";
 
 import axios from "axios";
@@ -90,3 +92,39 @@ export const searchByKey = (value) => {
     value,
   };
 };
+
+export const fetchOptionTtdAdmin = () => {
+  return async (dispatch) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/seremonial/option-admin`
+      );
+      console.log("data fetchOptionTtdAdmin", data);
+      dispatch({
+        type: FETCH_OPTION_TTD_ADMIN,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("eror fetchOptionTtdAdmin", error);
+    }
+  };
+};
+export const fetchTtdPartner = (id) => {
+  return async (dispatch) => {
+    try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/seremonial/option-mitra/${id}`
+      );
+      console.log("data fetchTtdPartner", data);
+      dispatch({
+        type: FETCH_TTD_PARTNER_BY_ID,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("eror fetchTtdPartner", error);
+    }
+  };
+};
+
+// FETCH_OPTION_TTD_ADMIN,
+//   FETCH_TTD_PARTNER_BY_ID,
