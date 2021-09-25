@@ -12,7 +12,7 @@ import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 import ModalPreview from "../components/modal-preview-form.component";
 
-const AddRegistrationStep2 = () => {
+const EditRegistrationStep2 = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -319,7 +319,7 @@ const AddRegistrationStep2 = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-form-komitmen");
+    router.push("/pelatihan/pelatihan/edit-pelatihan/edit-form-komitmen");
     const data = {
       title,
       formBuilder,
@@ -341,9 +341,9 @@ const AddRegistrationStep2 = () => {
     <PageWrapper>
       <StepInputPelatihan
         step={2}
-        title1="Tambah Pelatihan"
-        title2="Tambah Form Pendaftaran"
-        title3="Tambah Form Komitmen"
+        title1="Edit Pelatihan"
+        title2="Edit Form Pendaftaran"
+        title3="Edit Form Komitmen"
       />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -528,4 +528,4 @@ const AddRegistrationStep2 = () => {
   );
 };
 
-export default AddRegistrationStep2;
+export default EditRegistrationStep2;

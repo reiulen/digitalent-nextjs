@@ -11,7 +11,7 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 
-const AddCommitmentStep3 = () => {
+const EditCommitmentStep3 = () => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -66,9 +66,9 @@ const AddCommitmentStep3 = () => {
     <PageWrapper>
       <StepInputPelatihan
         step={3}
-        title1="Tambah Pelatihan"
-        title2="Tambah Form Pendaftaran"
-        title3="Tambah Form Komitmen"
+        title1="Edit Pelatihan"
+        title2="Edit Form Pendaftaran"
+        title3="Edit Form Komitmen"
       />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -171,4 +171,4 @@ const AddCommitmentStep3 = () => {
   );
 };
 
-export default AddCommitmentStep3;
+export default EditCommitmentStep3;

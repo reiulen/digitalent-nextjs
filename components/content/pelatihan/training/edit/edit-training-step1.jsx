@@ -12,7 +12,7 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 
-const AddTrainingStep1 = () => {
+const EditTrainingStep1 = () => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -85,7 +85,7 @@ const AddTrainingStep1 = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-registrasi");
+    router.push("/pelatihan/pelatihan/edit-pelatihan/edit-registrasi");
     if (simpleValidator.current.allValid()) {
       const data = {
         program,
@@ -197,9 +197,9 @@ const AddTrainingStep1 = () => {
     <PageWrapper>
       <StepInputPelatihan
         step={1}
-        title1="Tambah Pelatihan"
-        title2="Tambah Form Pendaftaran"
-        title3="Tambah Form Komitmen"
+        title1="Edit Pelatihan"
+        title2="Edit Form Pendaftaran"
+        title3="Edit Form Komitmen"
       />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -1176,4 +1176,4 @@ const AddTrainingStep1 = () => {
   );
 };
 
-export default AddTrainingStep1;
+export default EditTrainingStep1;

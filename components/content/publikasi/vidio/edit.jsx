@@ -67,18 +67,19 @@ const EditVideo = ({token}) => {
     // const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg') //belum
     const [iconPlus, setIconPlus] = useState(
         "/assets/icon/Add.svg"
-      );
+    );
     const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
     const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + video.gambar);
-    const [gambarName, setGambarName] = useState (video.gambar)
+    const [gambarName, setGambarName] = useState(video.gambar)
     // const [kategori_id, setKategoriId] = useState(video.kategori) 
-    const [kategori_id, setKategoriId] = useState(video.kategori_id) 
+    const [kategori_id, setKategoriId] = useState(video.kategori_id)
     const [users_id, setUserId] = useState(video.users_id)
     const [tag, setTag] = useState(video.tag)
     const [publish, setPublish] = useState(video.publish === 1 ? true : false)
     const [_method, setMethod] = useState("put")
-    const [publishDate, setPublishDate] = useState(new Date (video.tanggal_publish));
+    const [publishDate, setPublishDate] = useState(new Date(video.tanggal_publish));
     const [disablePublishDate, setDisablePublishDate] = useState(video.publish === 0 ? true : false)
+    console.log("PREVIEW :", gambarPreview)
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -86,19 +87,20 @@ const EditVideo = ({token}) => {
         // console.log (e.target.files[0])
         // console.log ("check")
 
-        if (type.includes (e.target.files[0].type)){
+        if (type.includes(e.target.files[0].type)) {
             const reader = new FileReader();
             reader.onload = () => {
-            if (reader.readyState === 2) {
-                console.log (reader)
-                setGambar(reader.result);
-                setGambarPreview(reader.result);
-            }
+                if (reader.readyState === 2) {
+                    console.log(reader)
+                    setGambar(reader.result);
+                    setGambarPreview(reader.result);
+                }
             };
+            console.log(reader.onload)
             reader.readAsDataURL(e.target.files[0])
             // console.log (reader.readAsDataURL(e.target.files[0]))
             setGambarName(e.target.files[0].name)
-        } 
+        }
         else {
             // setGambar("")
             // setGambarPreview("/assets/media/default.jpg")
@@ -107,9 +109,9 @@ const EditVideo = ({token}) => {
             // forceUpdate(1);
             e.target.value = null
             Swal.fire(
-            'Oops !',
-            'Data yang bisa dimasukkan hanya berupa data gambar.',
-            'error'
+                'Oops !',
+                'Data yang bisa dimasukkan hanya berupa data gambar.',
+                'error'
             )
         }
     };
@@ -119,11 +121,11 @@ const EditVideo = ({token}) => {
         setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
 
-        if (e.target.checked === false){
-            setPublishDate (null)
-            setPublish (0)
+        if (e.target.checked === false) {
+            setPublishDate(null)
+            setPublish(0)
         } else {
-            setPublish (1)
+            setPublish(1)
         }
     };
 
@@ -139,53 +141,53 @@ const EditVideo = ({token}) => {
     const onSubmit = (e) => {
         e.preventDefault();
         if (simpleValidator.current.allValid()) {
-          if (error) {
-            dispatch(clearErrors());
-          }
-      
-          if (success) {
-            dispatch({
-              // type: NEW_ARTIKEL_RESET
-              type: UPDATE_VIDEO_RESET,
-            });
-          }
+            if (error) {
+                dispatch(clearErrors());
+            }
 
-          if (publish === true) {
-            setPublish(1)
-          
-          } else if (publish === false) {
-            setPublish(0)
-          }
-    
+            if (success) {
+                dispatch({
+                    // type: NEW_ARTIKEL_RESET
+                    type: UPDATE_VIDEO_RESET,
+                });
+            }
+
+            if (publish === true) {
+                setPublish(1)
+
+            } else if (publish === false) {
+                setPublish(0)
+            }
+
             if (gambarDB !== gambar) {
-                if (publishDate === null){
+                if (publishDate === null) {
                     let today = new Date
 
                     const data = {
-                    judul_video,
-                    isi_video,
-                    gambar,
-                    kategori_id,
-                    users_id,
-                    tag,
-                    publish,
-                    id,
-                    _method,
-                    tanggal_publish : moment(today).format("YYYY-MM-DD"),
-                    url_video
+                        judul_video,
+                        isi_video,
+                        gambar,
+                        kategori_id,
+                        users_id,
+                        tag,
+                        publish,
+                        id,
+                        _method,
+                        tanggal_publish: moment(today).format("YYYY-MM-DD"),
+                        url_video
                     };
-            
+
                     // dispatch(updateArtikel(data));
-                    
+
                     Swal.fire({
-                    title: "Apakah anda yakin ?",
-                    text: "Data ini akan diedit !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya !",
-                    cancelButtonText: "Batal",
+                        title: "Apakah anda yakin ?",
+                        text: "Data ini akan diedit !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya !",
+                        cancelButtonText: "Batal",
                     })
                     .then((result) => {
                         if (result.isConfirmed) {
@@ -201,32 +203,32 @@ const EditVideo = ({token}) => {
                         }
                     });
                 } else {
-                    
+
                     const data = {
-                    judul_video,
-                    isi_video,
-                    gambar,
-                    kategori_id,
-                    users_id,
-                    tag,
-                    publish,
-                    id,
-                    _method,
-                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD"),
-                    url_video
+                        judul_video,
+                        isi_video,
+                        gambar,
+                        kategori_id,
+                        users_id,
+                        tag,
+                        publish,
+                        id,
+                        _method,
+                        tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
+                        url_video
                     };
-            
+
                     // dispatch(updateArtikel(data));
-                    
+
                     Swal.fire({
-                    title: "Apakah anda yakin ?",
-                    text: "Data ini akan diedit !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya !",
-                    cancelButtonText: "Batal",
+                        title: "Apakah anda yakin ?",
+                        text: "Data ini akan diedit !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya !",
+                        cancelButtonText: "Batal",
                     })
                     .then((result) => {
                         if (result.isConfirmed) {
@@ -242,28 +244,28 @@ const EditVideo = ({token}) => {
                         }
                     });
                 }
-                
-        
+
+
             } else {
-                if (publishDate === null){
+                if (publishDate === null) {
                     let today = new Date
 
                     const data = {
                         judul_video,
                         isi_video,
-                        gambar : "",
+                        gambar: "",
                         kategori_id,
                         users_id,
                         tag,
                         publish,
                         id,
                         _method,
-                        tanggal_publish : moment(today).format("YYYY-MM-DD"),
+                        tanggal_publish: moment(today).format("YYYY-MM-DD"),
                         url_video
                     };
-                
+
                     // dispatch(updateArtikel(data));
-                    
+
                     Swal.fire({
                         title: "Apakah anda yakin ?",
                         text: "Data ini akan diedit !",
@@ -290,30 +292,30 @@ const EditVideo = ({token}) => {
 
                 } else {
                     const data = {
-                    judul_video,
-                    isi_video,
-                    gambar : "",
-                    kategori_id,
-                    users_id,
-                    tag,
-                    publish,
-                    id,
-                    _method,
-                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD"),
-                    url_video
+                        judul_video,
+                        isi_video,
+                        gambar: "",
+                        kategori_id,
+                        users_id,
+                        tag,
+                        publish,
+                        id,
+                        _method,
+                        tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
+                        url_video
                     };
-            
+
                     // dispatch(updateArtikel(data));
-                    
+
                     Swal.fire({
-                    title: "Apakah anda yakin ?",
-                    text: "Data ini akan diedit !",
-                    icon: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Ya !",
-                    cancelButtonText: "Batal",
+                        title: "Apakah anda yakin ?",
+                        text: "Data ini akan diedit !",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Ya !",
+                        cancelButtonText: "Batal",
                     })
                     .then((result) => {
                         if (result.isConfirmed) {
@@ -329,9 +331,9 @@ const EditVideo = ({token}) => {
                         }
                     });
                 }
-                
+
             }
-        
+
             // const data = {
             //   judul_artikel,
             //   isi_artikel,
@@ -343,9 +345,9 @@ const EditVideo = ({token}) => {
             //   id,
             //   _method,
             // };
-        
+
             // // dispatch(updateArtikel(data));
-            
+
             // Swal.fire({
             //   title: "Apakah anda yakin ?",
             //   text: "Data ini akan diedit !",
@@ -364,27 +366,27 @@ const EditVideo = ({token}) => {
             //       //     type: UPDATE_ARTIKEL_RESET,
             //       //   });
             //       // }
-        
+
             //       dispatch(updateArtikel(data));
             //       console.log(data)
             //     }
             // });
-          
+
         } else {
-          simpleValidator.current.showMessages();
-          forceUpdate(1);
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Isi data dengan benar !",
-          });
+            simpleValidator.current.showMessages();
+            forceUpdate(1);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
+            });
         }
-        
+
     };
 
     const onNewReset = () => {
-        dispatch({ 
-            type: UPDATE_VIDEO_RESET 
+        dispatch({
+            type: UPDATE_VIDEO_RESET
         })
     }
 
@@ -399,7 +401,7 @@ const EditVideo = ({token}) => {
     //         confirmButtonText: "Ya !",
     //         cancelButtonText: "Batal",
     //       })
-          
+
     //       .then((result) => {
     //         if (result.isConfirmed) {
     //           Swal.fire(
@@ -407,7 +409,7 @@ const EditVideo = ({token}) => {
     //             'Status publikasi telah diubah',
     //             'success'
     //           )
-                
+
     //         //   console.log (e)
     //           setPublish(e)
 
@@ -422,7 +424,7 @@ const EditVideo = ({token}) => {
     //             setPublish(!e)
     //         }
     //       })
-          
+
     //     // Swal.fire (
     //     //     'Berhasil',
     //     //     'Status publikasi telah diubah',
@@ -478,7 +480,7 @@ const EditVideo = ({token}) => {
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")}/>
+                                        <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")} />
                                         {simpleValidator.current.message(
                                             "judul_video",
                                             judul_video,
@@ -491,8 +493,8 @@ const EditVideo = ({token}) => {
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
                                     <div className="col-sm-12">
-                                        <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}/>
-                                        {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:5",{ className: "text-danger" })}
+                                        <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("isi_video")} />
+                                        {simpleValidator.current.message("isi_video", isi_video, "required|max:160|min:5", { className: "text-danger" })}
                                         {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                     </div>
                                 </div>
@@ -506,66 +508,65 @@ const EditVideo = ({token}) => {
                                     </label>
                                     <div className="ml-3 row">
                                         <figure
-                                        className="avatar item-rtl"
-                                        data-toggle="modal"
-                                        data-target="#exampleModalCenter"
+                                            className="avatar item-rtl"
+                                            data-toggle="modal"
+                                            data-target="#exampleModalCenter"
                                         >
-                                        <Image
-                                            src={gambarPreview}
-                                            alt="image"
-                                            width={160}
-                                            height={160}
-                                            objectFit="cover"
-                                        />
+                                            <Image
+                                                src={gambarPreview}
+                                                alt="image"
+                                                width={160}
+                                                height={160}
+                                                objectFit="cover"
+                                            />
                                         </figure>
                                         <div>
-                                        <label htmlFor="inputGroupFile04" className="icon-plus">
-                                            <Image
-                                            src={iconPlus}
-                                            alt="plus"
-                                            width={60}
-                                            height={60} 
+                                            <label htmlFor="inputGroupFile04" className="icon-plus">
+                                                <Image
+                                                    src={iconPlus}
+                                                    alt="plus"
+                                                    width={60}
+                                                    height={60}
+                                                />
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                name="gambar"
+                                                className="custom-file-input"
+                                                id="inputGroupFile04"
+                                                onChange={onChangeGambar}
+                                                accept="image/*"
+                                                onBlur={() =>
+                                                    simpleValidator.current.showMessageFor("gambar")
+                                                }
+                                                style={{ display: "none" }}
                                             />
-                                        </label>
-                                        
-                                        <input
-                                            type="file"
-                                            name="gambar"
-                                            className="custom-file-input"
-                                            id="inputGroupFile04"
-                                            onChange={onChangeGambar}
-                                            accept="image/*"
-                                            onBlur={() =>
-                                            simpleValidator.current.showMessageFor("gambar")
-                                            }
-                                            style={{display: "none"}}
-                                        />
                                         </div>
-                                        
+
                                     </div>
 
                                     <div className="ml-3">
                                         {simpleValidator.current.message(
-                                        "gambar",
-                                        gambar,
-                                        "required",
-                                        { className: "text-danger" }
+                                            "gambar",
+                                            gambar,
+                                            "required",
+                                            { className: "text-danger" }
                                         )}
                                         {
-                                        gambarName !== null ?
-                                            <small className="text-danger">{gambarName}</small>
-                                        :
-                                            null
+                                            gambarName !== null ?
+                                                <small className="text-danger">{gambarName}</small>
+                                                :
+                                                null
                                         }
                                     </div>
 
                                     <div className="mt-3 col-sm-3 text-muted">
                                         <p>
-                                        Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
+                                            Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                         </p>
-                                        
                                     </div>
-                                    
+
                                 </div>
 
                                 <div className="form-group">
@@ -574,16 +575,16 @@ const EditVideo = ({token}) => {
                                         {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
                                         </div> */}
-                                        <input type="text" className="form-control ml-4" placeholder="Example" value={url_video} onChange={(e) => setUrlVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("url_video")}/>
+                                        <input type="text" className="form-control ml-4" placeholder="Example" value={url_video} onChange={(e) => setUrlVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("url_video")} />
                                     </div>
 
                                     {simpleValidator.current.message(
-                                    "url_video",
-                                    url_video,
-                                    "required|url",
-                                    { className: "text-danger" }
+                                        "url_video",
+                                        url_video,
+                                        "required|url",
+                                        { className: "text-danger" }
                                     )}
-                                    
+
                                 </div>
 
                                 {/* {
@@ -607,13 +608,13 @@ const EditVideo = ({token}) => {
                                                 kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                     return (
                                                         row.jenis_kategori == "Video" ?
-                                                          <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
-                                                            {row.nama_kategori}
-                                                          </option>
-                                                          
-                                                        :
-                                                          null
-                                                      );
+                                                            <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
+                                                                {row.nama_kategori}
+                                                            </option>
+
+                                                            :
+                                                            null
+                                                    );
                                                 })
                                             )}
 
@@ -641,26 +642,25 @@ const EditVideo = ({token}) => {
                                         htmlFor="staticEmail"
                                         className="ml-5 pl-4 font-weight-bolder"
                                     >
-                                        Publish 
+                                        Publish
                                     </label>
                                     <div className="col-sm-1 ml-4">
                                         <div className="">
-                                        <label className="switches">
-                                            <input
-                                            // required
-                                            className="checkbox"
-                                            checked={publish}
-                                            type="checkbox"
-                                            // onChange={(checked) => setPublish(checked)}
-                                            onChange={(e) => handleChangePublish(e)}
-                                            />
-                                            <span
-                                            className={`sliders round ${
-                                                publish ? "text-white" : "pl-2"
-                                            }`}
-                                            >
-                                            </span>
-                                        </label>
+                                            <label className="switches">
+                                                <input
+                                                    // required
+                                                    className="checkbox"
+                                                    checked={publish}
+                                                    type="checkbox"
+                                                    // onChange={(checked) => setPublish(checked)}
+                                                    onChange={(e) => handleChangePublish(e)}
+                                                />
+                                                <span
+                                                    className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                        }`}
+                                                >
+                                                </span>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -701,10 +701,10 @@ const EditVideo = ({token}) => {
                                                         placeholderText="Silahkan Isi Tanggal Publish"
                                                         wrapperClassName="col-12 col-lg-12 col-xl-12"
                                                         // minDate={moment().toDate()}
-                                                        disabled = {disablePublishDate === true || disablePublishDate === null}
+                                                        disabled={disablePublishDate === true || disablePublishDate === null}
                                                     // minDate={addDays(new Date(), 20)}
                                                     />
-                                                    
+
                                                 </div>
 
                                                 {/* {
@@ -715,12 +715,12 @@ const EditVideo = ({token}) => {
                                                 } */}
                                             </div>
                                         </div>
-                                    :
+                                        :
                                         null
 
                                 }
 
-                                
+
 
                                 <div className="form-group row">
                                     <div className="col-sm-2"></div>
