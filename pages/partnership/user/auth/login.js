@@ -1,4 +1,5 @@
 import LoginUser from "../../../../components/content/partnership/user/auth/login";
+import { getSession } from "next-auth/client";
 
 export default function LoginMitra() {
   return (
@@ -8,4 +9,22 @@ export default function LoginMitra() {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession({ req: context.req });
+  if (session) {
+    return {
+      redirect: {
+        destination: "/subvit",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      data: "auth",
+    },
+  };
 }
