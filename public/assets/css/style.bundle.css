@@ -66,6 +66,11 @@
   box-sizing: border-box;
 }
 
+.row-eq-height {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
 html {
   font-family: Poppins !important;
   line-height: 1.15;

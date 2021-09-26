@@ -1,6 +1,6 @@
 import React from "react";
 
-const StepInputPelatihan = ({ step }) => {
+const StepInputPelatihan = ({ step, title1, title2, title3 }) => {
   let stepBg1 = "bg-neutral";
   let stepBg2 = "bg-neutral";
   let stepBg3 = "bg-neutral";
@@ -50,7 +50,7 @@ const StepInputPelatihan = ({ step }) => {
                   </h1>
                 </div>
                 <div className="my-5">
-                  <h5 className={`${textHeader1}`}>Tambah Pelatihan</h5>
+                  <h5 className={`${textHeader1}`}>{title1}</h5>
                   <p className={`${textDesc1}`}>Masukan Informasi Pelatihan</p>
                 </div>
               </div>
@@ -67,7 +67,7 @@ const StepInputPelatihan = ({ step }) => {
                   </h1>
                 </div>
                 <div className="my-5">
-                  <h5 className={`${textHeader2}`}>Tambah Form Pendaftaran</h5>
+                  <h5 className={`${textHeader2}`}>{title2}</h5>
                   <p className={`${textDesc2}`}>Buat Form Pendaftaran</p>
                 </div>
               </div>
@@ -84,7 +84,7 @@ const StepInputPelatihan = ({ step }) => {
                   </h1>
                 </div>
                 <div className="my-5">
-                  <h5 className={`${textHeader3}`}>Tambah Form Komitmen</h5>
+                  <h5 className={`${textHeader3}`}>{title3}</h5>
                   <p className={`${textDesc3}`}>Buat Form Komitmen</p>
                 </div>
               </div>

@@ -5,12 +5,12 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
-import Select from "react-select";
-import { Modal, Button } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
+import ModalPreview from "../components/modal-preview-form.component";
 
 const AddRegistrationStep2 = () => {
   const dispatch = useDispatch();
@@ -293,173 +293,6 @@ const AddRegistrationStep2 = () => {
     }
   };
 
-  const readerElementHandler = (row, i) => {
-    switch (row.element) {
-      case "text":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <input
-              type={row.element}
-              name=""
-              className="form-control"
-              required={row.required}
-            />
-          </div>
-        );
-        break;
-      case "select":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <select name="" className="form-control" required={row.required}>
-              {modalShow === true
-                ? row.option === "manual"
-                  ? row.dataOption.map((dat, i) => (
-                      <option value={dat} key={i}>
-                        {dat}
-                      </option>
-                    ))
-                  : ""
-                : ""}
-            </select>
-          </div>
-        );
-        break;
-      case "checkbox":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <div className="my-auto">
-              {modalShow === true
-                ? row.option === "manual"
-                  ? row.dataOption.map((dat, i) => (
-                      <div className="form-check pb-3" key={i}>
-                        <input
-                          type="checkbox"
-                          name="plotRegistration"
-                          className="form-check-input"
-                          required={row.required}
-                          value={dat}
-                        />
-                        <label className="form-check-label">{dat}</label>
-                      </div>
-                    ))
-                  : ""
-                : ""}
-            </div>
-          </div>
-        );
-        break;
-      case "textarea":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <textarea
-              name=""
-              cols="30"
-              rows="5"
-              className="form-control"
-              required={row.required}
-            />
-          </div>
-        );
-        break;
-      case "radio":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <div className="my-auto">
-              {modalShow === true
-                ? row.option === "manual"
-                  ? row.dataOption.map((dat, i) => (
-                      <div className="form-check pb-3" key={i}>
-                        <input
-                          type="radio"
-                          name={row.name}
-                          className="form-check-input"
-                          value={dat}
-                          required={row.required}
-                        />
-                        <label className="form-check-label">{dat}</label>
-                      </div>
-                    ))
-                  : ""
-                : ""}
-            </div>
-          </div>
-        );
-        break;
-      case "file_image":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <div className="custom-file">
-              <input
-                type="file"
-                className="custom-file-input"
-                accept="image/png, image/jpeg , image/jpg"
-                required={row.required}
-              />
-              <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
-              </label>
-            </div>
-          </div>
-        );
-        break;
-      case "file_doc":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <div className="custom-file">
-              <input
-                type="file"
-                className="custom-file-input"
-                accept="application/pdf"
-                required={row.required}
-              />
-              <label className="custom-file-label" htmlFor="customFile">
-                Belum ada File
-              </label>
-            </div>
-          </div>
-        );
-        break;
-      case "date":
-        return (
-          <div className={`form-group mt-0 mb-0 ${row.size}`}>
-            <label className="col-form-label font-weight-bold">
-              {row.name}
-            </label>
-            <input
-              type={row.element}
-              name=""
-              className="form-control"
-              required={row.required}
-            />
-          </div>
-        );
-        break;
-      default:
-        break;
-    }
-  };
-
   const showPreviewHandler = () => {
     let list = [...formBuilder];
     list.forEach((row, i) => {
@@ -506,7 +339,12 @@ const AddRegistrationStep2 = () => {
 
   return (
     <PageWrapper>
-      <StepInputPelatihan step={2} />
+      <StepInputPelatihan
+        step={2}
+        title1="Tambah Pelatihan"
+        title2="Tambah Form Pendaftaran"
+        title3="Tambah Form Komitmen"
+      />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
@@ -678,31 +516,13 @@ const AddRegistrationStep2 = () => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header>
-          <Modal.Title id="contained-modal-title-vcenter">{title}</Modal.Title>
-          <button type="button" className="close" onClick={closePreviewHandler}>
-            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
-          </button>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="row">
-            {formBuilder.map((row, i) => (
-              <>{readerElementHandler(row, i)}</>
-            ))}
-          </div>
-        </Modal.Body>
-        <Modal.Footer className="py-2">
-          <div className="float-right">
-            <button
-              className="btn btn-warning"
-              type="button"
-              style={{ borderRadius: "30px", fontWeight: "600" }}
-              onClick={closePreviewHandler}
-            >
-              Kembali
-            </button>
-          </div>
-        </Modal.Footer>
+        <ModalPreview
+          propsTitle={title}
+          propsForm={formBuilder}
+          propsModalShow={modalShow}
+          sendPropsFormBuilder={(form) => setFormBuilder(form)}
+          sendPropsModalShow={(value) => setModalShow(value)}
+        />
       </Modal>
     </PageWrapper>
   );

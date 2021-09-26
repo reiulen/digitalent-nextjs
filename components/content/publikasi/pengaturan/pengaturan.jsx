@@ -64,9 +64,9 @@ const Pengaturan = () => {
     }, [dispatch, error, success]);
 
 
-    const [upload_image, setUploadImage] = useState( setting ? (parseInt((setting[0].max_size).split(" ")[0])) : null)
+    const [upload_image, setUploadImage] = useState(setting ? (parseInt((setting[0].max_size).split(" ")[0])) : null)
     const [upload_imagetron, setUploadImagetron] = useState(setting ? (parseInt((setting[1].max_size).split(" ")[0])) : null)
-    const [batas_slider, setBatasSlider] = useState( setting ?  (parseInt((setting[2].max_size))) : null)
+    const [batas_slider, setBatasSlider] = useState(setting ? (parseInt((setting[2].max_size))) : null)
     const [maxfaq, setMaxfaq] = useState(setting ? (parseInt((setting[3].max_size))) : null)
 
     const submitImagePublikasi = (e) => {
@@ -117,7 +117,7 @@ const Pengaturan = () => {
             }
 
             dispatch(updateSettingSliderPublikasi(batas_slider))
-        
+
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
@@ -160,7 +160,7 @@ const Pengaturan = () => {
     //         dispatch(updateSettingImagetronPublikasi(upload_imagetron))
     //         dispatch(updateSettingSliderPublikasi(batas_slider))
     //         dispatch(updateSettingFaqPublikasi(maxfaq))
-    
+
     //     } else {
     //         simpleValidator.current.showMessages();
     //         forceUpdate(1);
@@ -170,7 +170,7 @@ const Pengaturan = () => {
     //           text: "Isi data dengan benar !",
     //         });
     //       }
-        
+
     // }
 
     const onNewReset = () => {
@@ -180,7 +180,7 @@ const Pengaturan = () => {
     return (
         <PageWrapper>
             {
-                console.log (setting)
+                console.log(setting)
             }
 
             {/* {
@@ -224,16 +224,16 @@ const Pengaturan = () => {
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Image</label>
                                         <div className="col-sm-3">
-                                        <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("upload_image")}/> MB
+                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("upload_image")} /> MB
                                             {/* <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} min='0' onBlur={() =>simpleValidator.current.showMessageFor("upload_image")}/> MB */}
-                                            
+
                                             {simpleValidator.current.message(
                                                 "upload_image",
                                                 upload_image,
-                                                "required|numeric|min:1,num",
+                                                "required|numeric|max:5,num",
                                                 { className: "text-danger" }
                                             )}
-                                            
+
                                         </div>
                                         <button
                                             className="btn btn-link-action text-white"
@@ -246,39 +246,39 @@ const Pengaturan = () => {
                                                 alt="IconSave"
                                             />
                                         </button>
-                                    
+
                                     </div>
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Imagetron</label>
                                         <div className="col-sm-3">
-                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_imagetron} onChange={(e) => setUploadImagetron(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("upload_imagetron")}/> MB
+                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_imagetron} onChange={(e) => setUploadImagetron(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("upload_imagetron")} /> MB
                                             {simpleValidator.current.message(
                                                 "upload_imagetron",
                                                 upload_imagetron,
-                                                "required|numeric|min:1,num",
+                                                "required|numeric|max:10,num",
                                                 { className: "text-danger" }
                                             )}
                                         </div>
                                         <button
-                                                className="btn btn-link-action text-white"
-                                                onClick={submitImagetron}
-                                            >
-                                                <Image
-                                                    src={`/assets/icon/save.svg`}
-                                                    width={40}
-                                                    height={40}
-                                                    alt="IconSave"
-                                                />
+                                            className="btn btn-link-action text-white"
+                                            onClick={submitImagetron}
+                                        >
+                                            <Image
+                                                src={`/assets/icon/save.svg`}
+                                                width={40}
+                                                height={40}
+                                                alt="IconSave"
+                                            />
                                         </button>
                                     </div>
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Batas Slider</label>
                                         <div className="col-sm-3">
-                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={batas_slider} onChange={(e) => setBatasSlider(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("batas_slider")}/> Page
+                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={batas_slider} onChange={(e) => setBatasSlider(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("batas_slider")} /> Page
                                             {simpleValidator.current.message(
                                                 "batas_slider",
                                                 batas_slider,
-                                                "required|numeric|min:1,num",
+                                                "required|numeric|max:7,num",
                                                 { className: "text-danger" }
                                             )}
                                         </div>
@@ -297,11 +297,11 @@ const Pengaturan = () => {
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Maksimal FAQ</label>
                                         <div className="col-sm-3">
-                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={maxfaq} onChange={(e) => setMaxfaq(e.target.value)} onBlur={() =>simpleValidator.current.showMessageFor("maxfaq")}/> Page
+                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={maxfaq} onChange={(e) => setMaxfaq(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("maxfaq")} /> Page
                                             {simpleValidator.current.message(
                                                 "maxfaq",
                                                 maxfaq,
-                                                "required|numeric|min:1,num",
+                                                "required|numeric|max:5,num",
                                                 { className: "text-danger" }
                                             )}
                                         </div>
@@ -325,17 +325,17 @@ const Pengaturan = () => {
                                                 <a className='btn btn-white-ghost-rounded-full mr-2 btn-sm rounded-pill'>Kembali</a>
                                             </Link>
                                         </div>
-                                        
+
                                     </div>
                                 </form>
                             </div>
                         </div>
-                    :
+                        :
                         <LoadingTable loading={updateLoading} />
-                        
-                    
+
+
                 }
-                
+
             </div>
         </PageWrapper>
     )

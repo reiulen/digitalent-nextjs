@@ -792,7 +792,7 @@ const Galeri = ({ token }) => {
                                     {
                                         galeri && galeri.gallery.length !== 0 ?
                                             galeri.gallery.map((row, i) => {
-                                                // { console.log("Galeri Map : ", row) }
+                                                { console.log("Galeri Map : ", row.gambar) }
                                                 return (
                                                     <Image
                                                         key={i}

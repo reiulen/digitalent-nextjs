@@ -92,7 +92,7 @@ export const newArtikel = (artikelData, token) => async (dispatch) => {
 
     const config = {
       headers: {
-        Authorization: 'Bearer ' + token,
+        Authorization: "Bearer " + token,
       },
     };
 

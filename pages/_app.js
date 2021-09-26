@@ -49,7 +49,7 @@ function MyApp({ Component, pageProps }) {
     size: ":attribute harus :size:type.",
     string: ":attribute harus berupa string.",
     typeof: ":attribute tidak cocok dengan tipe :type.",
-    url: ":attribute yang valid.",
+    url: "Harus :attribute yang valid.",
     // url: ":attribute harus berupa url.",
   });
 
