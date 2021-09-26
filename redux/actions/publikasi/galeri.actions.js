@@ -115,15 +115,21 @@ export const newGaleri = (galeriData, token) => async (dispatch) => {
             },
         };
 
+        
+
         const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/gallery', galeriData, config)
-        console.log("Link Image : ", data)
+        // const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/gallery', galeriData)
+        // console.log("Link Image : ", data)
+        // const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/gallery', galeriDatas, config)
+
+        // console.log (`Gambar: ${galeriData.gambar}`)
 
         dispatch({
             type: NEW_GALERI_SUCCESS,
             payload: data
         })
 
-        console.log(data)
+        // console.log(data)
 
     } catch (error) {
         dispatch({
@@ -131,7 +137,7 @@ export const newGaleri = (galeriData, token) => async (dispatch) => {
             payload: error.response.data.message
         })
 
-        console.log(error)
+        // console.log(error)
     }
 }
 

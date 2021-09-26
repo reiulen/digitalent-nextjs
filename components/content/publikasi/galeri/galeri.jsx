@@ -591,7 +591,7 @@ const Galeri = ({ token }) => {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     galeri && galeri.gallery.map((row, i) => {
-                                                        { console.log("INI ROWW ID : ", row) }
+                                                        // { console.log("INI ROWW ID : ", row) }
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
