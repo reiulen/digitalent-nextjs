@@ -26,9 +26,9 @@ const Tambah = () => {
   const [agency_logo_api, setAgency_logo_api] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
-  console.log("indonesia_provinces_id",indonesia_provinces_id)
+  // console.log("indonesia_provinces_id",indonesia_provinces_id)
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
-  console.log("indonesia_cities_id",indonesia_cities_id)
+  // console.log("indonesia_cities_id",indonesia_cities_id)
   const [postal_code, setPostal_code] = useState("");
   const [pic_name, setPic_name] = useState("");
   const [pic_contact_number, setPic_contact_number] = useState("");
@@ -49,6 +49,16 @@ const Tambah = () => {
   });
 
   const submit = (e) => {
+    // console.log("institution_name",institution_name)
+    // console.log("agency_logo",agency_logo)
+    // console.log("wesite",wesite)
+    // console.log("address",address)
+    // console.log("indonesia_cities_id",indonesia_cities_id)
+    // console.log("indonesia_provinces_id",indonesia_provinces_id)
+    // console.log("postal_code",postal_code)
+    // console.log("pic_name",pic_name)
+    // console.log("pic_contact_number",pic_contact_number)
+    // console.log("pic_email",pic_email)
     e.preventDefault();
     if (institution_name === "") {
       setError({
@@ -65,15 +75,18 @@ const Tambah = () => {
     }
 
     // jika pertama kali data profile kosong
-    else if (agency_logo_api === "") {
-      if (agency_logo === "") {
+    // else if (agency_logo_api === "") {
+      else if ((agency_logo === "") && agency_logo_api) {
         setError({
           ...error,
           agency_logo: "Harus isi gambar logo dengan format png",
         });
         notify("Harus isi gambar logo dengan format png");
       }
-    } else if (address === "") {
+    // } 
+    
+    
+    else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
       notify("Harus isi alamat");
     } else if (indonesia_provinces_id === "") {
@@ -123,17 +136,21 @@ const Tambah = () => {
         if (result.value) {
           let formData = new FormData();
           formData.append("institution_name", institution_name);
-          // formData.append("_method", "PUT");
-          // formData.append("email", email);
+
+
           if (agency_logo === "") {
             console.log("no send image");
           } else {
             formData.append("agency_logo", agency_logo);
           }
+          // formData.append("agency_logo", agency_logo);
+
+
+
           formData.append("website", wesite);
           formData.append("address", address);
 
-          if(typeof indonesia_provinces_id === "object" && typeof indonesia_cities_id === "object" ){
+          if((typeof indonesia_provinces_id === "object") && (typeof indonesia_cities_id === "object") ){
           formData.append("indonesia_cities_id", indonesia_cities_id.id);
           formData.append("indonesia_provinces_id", indonesia_provinces_id.id);
           }else{
@@ -272,13 +289,15 @@ const Tambah = () => {
         setInstitution_name(
           data.data.institution_name === "-" ? "" : data.data.institution_name
         );
-        if (data.data.city && data.data.province) {
+        if ((data.data.city.id !== "-") && data.data.province.id !== "-") {
           let citiesss = {...data.data.city,label:data.data.city.name,value:data.data.city.id}
           let provinciesss = {...data.data.province,label:data.data.province.name,value:data.data.province.id}
           setIndonesia_cities_id(citiesss);
           setIndonesia_provinces_id(provinciesss);
         } else {
-          console.log("object");
+          // setIndonesia_cities_id(data.data.province === "-" ? "" : data.data.province);
+          // setIndonesia_provinces_id(data.data.city === "-" ? "" : data.data.city);
+          console.log("log")
         }
       }
     } catch (error) {
@@ -380,11 +399,11 @@ const Tambah = () => {
           </div>
           <div className="card-body">
             <form
-              id="kt_docs_formvalidation_text"
-              className="form"
-              action="#"
-              autoComplete="off"
-              onSubmit={submit}
+              // id="kt_docs_formvalidation_text"
+              // className="form"
+              // action="#"
+              // autoComplete="off"
+              // onSubmit={submit}
             >
               <div className="form-group mb-10">
                 <label htmlFor="staticE mail" className="col-form-label">
@@ -455,7 +474,7 @@ const Tambah = () => {
                   Gambar Logo
                 </label>
 
-                {!isChangeLogo ? (
+                {!isChangeLogo && agency_logo_api ? (
                   <div className="position-relative overflow-hidden w-100 ">
                     <input
                       disabled
@@ -484,7 +503,7 @@ const Tambah = () => {
                   ""
                 )}
 
-                {isChangeLogo ? (
+                {isChangeLogo || !agency_logo_api ? (
                   <div className="input-group">
                     <div className="custom-file">
                       <input
@@ -752,7 +771,8 @@ const Tambah = () => {
                   </Link>
 
                   <button
-                    type="submit"
+                    type="button"
+                    onClick={(e)=>submit(e)}
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                   >
                     Simpan
