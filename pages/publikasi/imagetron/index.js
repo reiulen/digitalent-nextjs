@@ -24,9 +24,9 @@ export default function ImagetronPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Imagetron - Publikasi'>
+                {/* <Layout title='Imagetron - Publikasi'> */}
                     <Imagetron />
-                </Layout>
+                {/* </Layout> */}
             </div>
         </>
     )
@@ -43,4 +43,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ q
         };
     }
     await store.dispatch(getAllImagetron(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
+    return {
+        props: { session, title: "Imagetron - Publikasi" },
+    };
 })
