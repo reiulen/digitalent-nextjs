@@ -166,12 +166,15 @@ const EditGaleri = ({ token }) => {
 
         for (let i = 0; i < data.length; i++){
             // const reader = new FileReader();
-
+            // getBase64FromUrl(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
             let obj = {
+                id: data[i].id,
                 imageName: data[i].gambar,
                 imagePreview: process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar,
+                imageBase64: process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar,
                 // imageBase64: reader.readAsDataURL(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
-                imageBase64: getBase64Image(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
+                // imageBase64: getBase64Image(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
+                // imageBase64: getBase64FromUrl(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
             }
 
             arr.push (obj)
@@ -180,36 +183,58 @@ const EditGaleri = ({ token }) => {
         setTotalImage(data.length)
     } 
     
-    const getBase64Image = async (imgUrl) => {
-        const reader = new FileReader();
+    // const getBase64Image = (imgUrl) => {
+    //     var canvas = document.createElement("canvas");
+    //     canvas.width = imgUrl.width;
+    //     canvas.height = imgUrl.height;
+    //     var ctx = canvas.getContext("2d");
+    //     ctx.drawImage(imgUrl, 0, 0);
+    //     var dataURL = canvas.toDataURL("image/png");
+    //     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 
-        reader.readAsDataURL(imgUrl);
+    //     // reader.readAsDataURL(imgUrl);
 
-        // let blob = await fetch(imgUrl).then(r => r.blob());
-        //     console.log (blob)
-        // return new Promise(
-        //   function(resolve, reject) {
+    //     // let blob = await fetch(imgUrl).then(r => r.blob());
+    //     //     console.log (blob)
+    //     // return new Promise(
+    //     //   function(resolve, reject) {
       
-        //     var img = new Image();
-        //     img.src = imgUrl;
-        //     img.setAttribute('crossOrigin', 'anonymous');
+    //     //     var img = new Image();
+    //     //     img.src = imgUrl;
+    //     //     img.setAttribute('crossOrigin', 'anonymous');
       
-        //     img.onload = function() {
-        //       var canvas = document.createElement("canvas");
-        //       canvas.width = img.width;
-        //       canvas.height = img.height;
-        //       var ctx = canvas.getContext("2d");
-        //       ctx.drawImage(img, 0, 0);
-        //       var dataURL = canvas.toDataURL("image/png");
-        //       resolve(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
-        //     }
-        //     img.onerror = function() {
-        //       reject("The image could not be loaded.");
-        //     }
+    //     //     img.onload = function() {
+    //     //       var canvas = document.createElement("canvas");
+    //     //       canvas.width = img.width;
+    //     //       canvas.height = img.height;
+    //     //       var ctx = canvas.getContext("2d");
+    //     //       ctx.drawImage(img, 0, 0);
+    //     //       var dataURL = canvas.toDataURL("image/png");
+    //     //       resolve(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
+    //     //     }
+    //     //     img.onerror = function() {
+    //     //       reject("The image could not be loaded.");
+    //     //     }
       
-        // });
+    //     // });
       
-    }
+    // }
+
+    // const getBase64FromUrl = async (url) => {
+    //     const data = await fetch(url , {mode: "no-cors"});
+    //     const blob = await data.blob();
+    //     return new Promise((resolve) => {
+    //       const reader = new FileReader();
+    //       reader.readAsDataURL(blob); 
+    //     // reader.readAsDataURL(url); 
+    //       reader.onloadend = () => {
+    //         const base64data = reader.result;   
+    //         resolve(base64data);
+    //         console.log (reader)
+    //         console.log (base64data)
+    //       }
+    //     });
+    //   }
 
     const onChangeImage = (e, index) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
@@ -284,12 +309,13 @@ const EditGaleri = ({ token }) => {
     };
 
     const onAddImage = () => {
-        const newKey = image[image.length - 1].key + 1;
+        // const newKey = image[image.length - 1] + 1;
         setImage([
           ...image,
           {
-            index: newKey,
+            // index: image.length + 1,
             imageName: "",
+            id: ""
           },
         ]);
         setTotalImage ((totalImage) + 1)
@@ -481,9 +507,9 @@ const EditGaleri = ({ token }) => {
                 console.log(galeri)
             }    
 
-            {
+            {/* {
                 console.log (image)
-            }      
+            }       */}
 
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">

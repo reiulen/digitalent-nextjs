@@ -20,27 +20,44 @@ const ArtikelPeserta = dynamic(
     }
 );
 
-export default function ArtikelPesertaPage() {
+export default function ArtikelPesertaPage(props) {
+    const session = props.session.user.user.data;
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Artikel Peserta - Publikasi'>
-                    <ArtikelPeserta />
-                </Layout>
+                <ArtikelPeserta token={session.token}/>
             </div>
         </>
     )
 }
-
 export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
+    // await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
     const session = await getSession({ req });
     if (!session) {
         return {
             redirect: {
-                destination: "/",
-                permanent: false,
+            destination: "/",
+            permanent: false,
             },
         };
     }
-    await store.dispatch(getAllArtikelPeserta(query.role, query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
+    
+    await store.dispatch(getAllArtikelPeserta(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
+    // await store.dispatch(getAllKategori(session.user.user.data.token))
+    return {
+        props: { session, title: "Artikel - Publikasi" },
+    };
 })
+
+// export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
+//     const session = await getSession({ req });
+//     if (!session) {
+//         return {
+//             redirect: {
+//                 destination: "/",
+//                 permanent: false,
+//             },
+//         };
+//     }
+//     await store.dispatch(getAllArtikelPeserta(query.role, query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
+// })
