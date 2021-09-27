@@ -26,7 +26,9 @@ const Tambah = () => {
   const [agency_logo_api, setAgency_logo_api] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
+  console.log("indonesia_provinces_id",indonesia_provinces_id)
   const [indonesia_cities_id, setIndonesia_cities_id] = useState("");
+  console.log("indonesia_cities_id",indonesia_cities_id)
   const [postal_code, setPostal_code] = useState("");
   const [pic_name, setPic_name] = useState("");
   const [pic_contact_number, setPic_contact_number] = useState("");
@@ -60,12 +62,17 @@ const Tambah = () => {
     } else if (email === "") {
       setError({ ...error, email: "Harus isi email" });
       notify("Harus isi email");
-    } else if (agency_logo === "") {
-      setError({
-        ...error,
-        agency_logo: "Harus isi gambar logo dengan format png",
-      });
-      notify("Harus isi gambar logo dengan format png");
+    }
+
+    // jika pertama kali data profile kosong
+    else if (agency_logo_api === "") {
+      if (agency_logo === "") {
+        setError({
+          ...error,
+          agency_logo: "Harus isi gambar logo dengan format png",
+        });
+        notify("Harus isi gambar logo dengan format png");
+      }
     } else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
       notify("Harus isi alamat");
@@ -118,19 +125,20 @@ const Tambah = () => {
           formData.append("institution_name", institution_name);
           // formData.append("_method", "PUT");
           // formData.append("email", email);
-          formData.append("agency_logo", agency_logo);
+          if (agency_logo === "") {
+            console.log("no send image");
+          } else {
+            formData.append("agency_logo", agency_logo);
+          }
           formData.append("website", wesite);
           formData.append("address", address);
 
-          if (typeof indonesia_provinces_id === "object") {
-            formData.append(
-              "indonesia_provinces_id",
-              indonesia_provinces_id.id
-            );
-            formData.append("indonesia_cities_id", indonesia_cities_id.id);
-          } else {
-            formData.append("indonesia_provinces_id", indonesia_provinces_id);
+          if(typeof indonesia_provinces_id === "object" && typeof indonesia_cities_id === "object" ){
+          formData.append("indonesia_cities_id", indonesia_cities_id.id);
+          formData.append("indonesia_provinces_id", indonesia_provinces_id.id);
+          }else{
             formData.append("indonesia_cities_id", indonesia_cities_id);
+            formData.append("indonesia_provinces_id", indonesia_provinces_id);
           }
 
           formData.append("postal_code", postal_code);
@@ -225,7 +233,7 @@ const Tambah = () => {
         return { ...items, label: items.name, value: items.id };
       });
       dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-      console.log("dataNewProvinces", dataNewProvinces);
+      // console.log("dataNewProvinces", dataNewProvinces);
       setAllProvinces(dataNewProvinces);
     } catch (error) {
       console.log("gagal get province", error);
@@ -242,28 +250,45 @@ const Tambah = () => {
           },
         }
       );
-      console.log("data", data);
+
 
       if (data) {
-        setAgency_logo_api(data.data.agency_logo === "-" ? "" : data.data.agency_logo);
+        setAgency_logo_api(
+          data.data.agency_logo === "-" ? "" : data.data.agency_logo
+        );
         setAddress(data.data.address === "-" ? "" : data.data.address);
-        setPostal_code(data.data.postal_code === "-" ? "" : data.data.postal_code);
+        setPostal_code(
+          data.data.postal_code === "-" ? "" : data.data.postal_code
+        );
         setPic_name(data.data.pic_name === "-" ? "" : data.data.pic_name);
-        setPic_contact_number(data.data.pic_contact_number === "-" ? "" : data.data.pic_contact_number);
+        setPic_contact_number(
+          data.data.pic_contact_number === "-"
+            ? ""
+            : data.data.pic_contact_number
+        );
         setPic_email(data.data.pic_email === "-" ? "" : data.data.pic_email);
         setWesite(data.data.website === "-" ? "" : data.data.website);
-        setEmail(data.data.email === "-" ? "" : data.data.email );
-        setInstitution_name(data.data.institution_name === "-" ? "" : data.data.institution_name);
-        if(data.data.city && data.data.province){
-          console.log("object")
-        }else{
-          setIndonesia_cities_id(data.data.city);
-          setIndonesia_provinces_id(data.data.province);
+        setEmail(data.data.email === "-" ? "" : data.data.email);
+        setInstitution_name(
+          data.data.institution_name === "-" ? "" : data.data.institution_name
+        );
+        if (data.data.city && data.data.province) {
+          let citiesss = {...data.data.city,label:data.data.city.name,value:data.data.city.id}
+          let provinciesss = {...data.data.province,label:data.data.province.name,value:data.data.province.id}
+          setIndonesia_cities_id(citiesss);
+          setIndonesia_provinces_id(provinciesss);
+        } else {
+          console.log("object");
         }
       }
     } catch (error) {
       console.log("gagal get province", error);
     }
+  };
+
+  const [isChangeLogo, setIsChangeLogo] = useState(false);
+  const changeStatusLgo = () => {
+    setIsChangeLogo(isChangeLogo ? false : true);
   };
 
   useEffect(() => {
@@ -430,102 +455,72 @@ const Tambah = () => {
                   Gambar Logo
                 </label>
 
-                {!agency_logo ? (
-                  ""
-                ) : (
-                  <div
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                    className="shadow-image-form cursor-pointer position-relative"
-                    style={{
-                      maxWidth: "168px",
-                      maxHeight: "168px",
-                      width: "168px",
-                      height: "168px",
-                    }}
-                  >
-                    {" "}
-                    <Image
-                      src={agency_logo}
-                      alt="Picture of the author"
-                      layout="fill"
-                      objectFit="fill"
+                {!isChangeLogo ? (
+                  <div className="position-relative overflow-hidden w-100 ">
+                    <input
+                      disabled
+                      type="text"
+                      className="form-control"
+                      placeholder={`${agency_logo_api}`}
                     />
+                    <button
+                      type="button"
+                      className="btn right-center-absolute"
+                      style={{
+                        borderTopLeftRadius: "0",
+                        borderBottomLeftRadius: "0",
+                        backgroundColor: "#D7E1EA",
+                        color: "#6C6C6C",
+                      }}
+                      onClick={() =>
+                        window.open(`${process.env.END_POINT_API_IMAGE_PARTNERSHIP}partnership/images/profile-images/${agency_logo_api}
+                        `)
+                      }
+                    >
+                      Buka File
+                    </button>
                   </div>
+                ) : (
+                  ""
                 )}
 
-                {/* {!agency_logo_api ? (
+                {isChangeLogo ? (
+                  <div className="input-group">
+                    <div className="custom-file">
+                      <input
+                        onFocus={() => setError({ ...error, agency_logo: "" })}
+                        onChange={(e) => onChangeImage(e)}
+                        type="file"
+                        name="logo"
+                        className="custom-file-input cursor-pointer"
+                        id="inputGroupFile04"
+                        accept="image/png,image/jpg"
+                      />
+
+                      <label
+                        className="custom-file-label"
+                        htmlFor="inputGroupFile04"
+                      >
+                        {NamePDF ? NamePDF : "Cari Logo"}
+                      </label>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+
+                {agency_logo_api === "" ? (
                   ""
                 ) : (
-                  <div
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                    className="shadow-image-form cursor-pointer position-relative"
-                    style={{
-                      maxWidth: "168px",
-                      maxHeight: "168px",
-                      width: "168px",
-                      height: "168px",
-                    }}
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-2"
+                    onClick={() => changeStatusLgo()}
                   >
-                    {" "}
-                    <Image
-                      src={
-                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                        "partnership/images/profile-images/" +
-                        agency_logo_api
-                      }
-                      alt="images"
-                      layout="fill"
-                      objectFit="fill"
-                    />
-                  </div>
-                )} */}
+                    {isChangeLogo ? "Batal Ubah" : "Ubah Logo"}
+                  </button>
+                )}
 
-                {/* {!agency_logo ? 
-
-                <div
-                    data-toggle="modal"
-                    data-target="#exampleModalCenter"
-                    className="shadow-image-form cursor-pointer position-relative"
-                    style={{
-                      maxWidth: "168px",
-                      maxHeight: "168px",
-                      width: "168px",
-                      height: "168px",
-                    }}
-                  >
-                    {" "}
-                    <Image
-                      src={agency_logo}
-                      alt="Picture of the author"
-                      layout="fill"
-                      objectFit="fill"
-                    />
-                  </div> :""
-
-                  } */}
-
-                <div className="input-group">
-                  <div className="custom-file">
-                    <input
-                      onFocus={() => setError({ ...error, agency_logo: "" })}
-                      onChange={(e) => onChangeImage(e)}
-                      type="file"
-                      name="logo"
-                      className="custom-file-input cursor-pointer"
-                      id="inputGroupFile04"
-                      accept="image/png,image/jpg"
-                    />
-
-                    <label
-                      className="custom-file-label"
-                      htmlFor="inputGroupFile04"
-                    >
-                      {NamePDF ? NamePDF : "Cari Logo"}
-                    </label>
-                  </div>
-                </div>
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (
@@ -610,16 +605,8 @@ const Tambah = () => {
                       }
                       className="basic-single"
                       classNamePrefix="select"
-                      placeholder={`${
-                        indonesia_provinces_id === ""
-                          ? "Pilih provinsi"
-                          : indonesia_provinces_id.name
-                      } `}
-                      defaultValue={
-                        indonesia_provinces_id === ""
-                          ? allProvinces[0]
-                          : indonesia_provinces_id
-                      }
+                      placeholder={`${indonesia_provinces_id !== "" ? indonesia_provinces_id.name:"Pilih provinsi"} `}
+                      defaultValue={indonesia_provinces_id !== "" ? indonesia_provinces_id :  allProvinces[0]}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -649,15 +636,9 @@ const Tambah = () => {
                       }
                       className="basic-single"
                       classNamePrefix="select"
-                      placeholder={`${
-                        typeof indonesia_provinces_id !== "object"
-                          ? "Pilih data Kab/Kota"
-                          : !indonesia_cities_id.name
-                      } `}
-                      defaultValue={
-                        indonesia_cities_id === ""
-                          ? citiesAll[0]
-                          : indonesia_cities_id
+                      placeholder= {`${indonesia_cities_id !== "" ? indonesia_cities_id.name :"Pilih data Kab/Kota"}`}
+                          
+                      defaultValue={citiesAll[0]
                       }
                       isDisabled={false}
                       isLoading={false}
