@@ -77,11 +77,16 @@ export const setLimit = (value) => {
     value,
   };
 };
-export const deleteTandaTangan = (id) => {
+export const deleteTandaTangan = (id, token) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch({ type: SUCESS_DELETE_TD });
     } catch (error) {

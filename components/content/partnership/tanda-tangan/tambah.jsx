@@ -100,7 +100,12 @@ const TambahTandaTangan = ({token}) => {
           try {
             let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/create`,
-              formData
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
             );
             router.push({
               pathname: "/partnership/tanda-tangan",
