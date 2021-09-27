@@ -10,20 +10,24 @@ import {
   SEARCH_BY_KEY_TTD,
   FETCH_OPTION_TTD_ADMIN,
   FETCH_TTD_PARTNER_BY_ID,
+  CHANGE_STATUS_LIST_M,
 } from "../../types/partnership/tandaTangan.type";
 
 import axios from "axios";
 
-export async function fetchSignatureApi(params) {
+export async function fetchSignatureApi(params, token) {
   return await axios.get(
     `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures`,
     {
       params,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     }
   );
 }
 
-export const fetchSignature = () => {
+export const fetchSignature = (token) => {
   return async (dispatch, getState) => {
     dispatch({ type: TANDA_TANGAN_REQUEST });
     let keywordState = getState().allTandaTangan.keyword || "";
@@ -36,10 +40,10 @@ export const fetchSignature = () => {
       page: pageState,
     };
     try {
-      let { data } = await fetchSignatureApi(params);
+      let { data } = await fetchSignatureApi(params, token);
       dispatch(successFetchSignature(data));
     } catch (error) {
-      console.log("error data signature action", error);
+      console.log("error data signature action", error.response.data.message);
     }
   };
 };
@@ -123,6 +127,33 @@ export const fetchTtdPartner = (id) => {
     } catch (error) {
       console.log("eror fetchTtdPartner", error);
     }
+  };
+};
+
+export const changeStatusList = (token, value, id) => {
+  return async (dispatch, getState) => {
+    try {
+      let dataSend = { _method: "put", status: value };
+      let { data } = await axios.put(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/update-status/${id}`,
+        dataSend,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch(successChangeStatusList(value));
+    } catch (error) {
+      console.log("error change status list", error.response.data.message);
+    }
+  };
+};
+
+export const successChangeStatusList = (value) => {
+  return {
+    type: CHANGE_STATUS_LIST_M,
+    value,
   };
 };
 
