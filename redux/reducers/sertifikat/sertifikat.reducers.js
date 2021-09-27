@@ -52,7 +52,7 @@ export const newSertifikatReducer = (state = { sertifikat: {} }, action) => {
             return {
                 loading: false,
                 success: action.payload.message,
-                SERTIFIKAT: action.payload.data,
+                sertifikat: action.payload.data,
             };
 
         case NEW_SERTIFIKAT_FAIL:
@@ -84,6 +84,7 @@ export const detailSertifikatReducer = (state = { sertifikat: {} }, action) => {
             };
         case DETAIL_SERTIFIKAT_SUCCESS:
             return {
+                loading: false,
                 SERTIFIKAT: action.payload,
             };
 
@@ -93,6 +94,7 @@ export const detailSertifikatReducer = (state = { sertifikat: {} }, action) => {
             };
         case CLEAR_ERRORS:
             return {
+                ...state,
                 error: null,
             };
 

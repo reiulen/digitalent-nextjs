@@ -27,27 +27,19 @@ export default function kelolasertifikatID() {
                             <Link
                                 href={`/sertifikat/kelola-sertifikat/${query.akademi}`}
                             >
-                                <a
-                                    className="text-primary px-6 font-weight-bolder px-5 py-3 mx-5"
-                                    onClick={() => {
-                                        console.log("klik batal");
-                                    }}
-                                >
+                                <a className="btn btn-white-ghost-rounded-full rounded-pill mr-2 btn-lg">
                                     Kembali
                                 </a>
                             </Link>
-                            <Link
-                                href={`/sertifikat/master-sertifikat/${query.akademi}/${query.id}/edit`}
+                            <div
+                                // href={`/sertifikat/master-sertifikat/${query.akademi}/${query.id}/edit`}
+                                data-toggle="modal"
+                                data-target="#editModal"
                             >
-                                <a
-                                    className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
-                                    onClick={() => {
-                                        console.log("klik simpan");
-                                    }}
-                                >
+                                <button className="btn btn-primary-rounded-full rounded-pill btn-lg">
                                     Ubah
-                                </a>
-                            </Link>
+                                </button>
+                            </div>
                         </div>
                     </div>
                     {/* END HEADER */}
@@ -73,6 +65,65 @@ export default function kelolasertifikatID() {
                 </div>
 
                 {/* MODAL TANDA TANGAN */}
+                <div
+                    className="modal fade"
+                    tabIndex="-1"
+                    role="dialog"
+                    id="editModal"
+                >
+                    <div
+                        className="modal-dialog modal-dialog-centered"
+                        role="document"
+                    >
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">
+                                    Ajukan Perubahan
+                                </h5>
+                                <button
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                >
+                                    <a aria-hidden="true">&times;</a>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Alasan Perubahan</p>
+                                <div className="input-group">
+                                    <textarea
+                                        className="form-control h-100px"
+                                        aria-label="With textarea"
+                                        onChange={e => {
+                                            console.log(e.target.value);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                >
+                                    Save changes
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    data-dismiss="modal"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </PageWrapper>
     );

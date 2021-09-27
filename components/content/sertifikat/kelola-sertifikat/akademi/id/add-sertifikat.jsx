@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 
 // #Page, Component & Library
-import PageWrapper from "../../../../wrapper/page.wrapper";
+import PageWrapper from "../../../../../wrapper/page.wrapper";
 import Image from "next/image";
 // #Icon
 
@@ -45,34 +45,47 @@ export default function TambahMasterSertifikat() {
     ]);
     // #END SECTION 2
 
-    // # START IMAGE
+    // # START IMAGE 1
     const [gambar, setGambar] = useState("");
-    const [gambarName, setGambarName] = useState(null);
-
     const onChangeGambar = e => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
-        // console.log (e.target.files[0].type)
-        // console.log (e.target.files[0])
-        // console.log ("check")
 
         if (type.includes(e.target.files[0].type)) {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    console.log(reader);
                     setGambar(reader.result);
-                    // setGambarPreview(reader.result);
                 }
             };
             reader.readAsDataURL(e.target.files[0]);
-            // console.log (reader.readAsDataURL(e.target.files[0]))
-            setGambarName(e.target.files[0].name);
         } else {
-            // setGambar("")
-            // setGambarPreview("/assets/media/default.jpg")
-            // setGambarName(null)
-            // simpleValidator.current.showMessages();
-            // forceUpdate(1);
+            e.target.value = null;
+            Swal.fire(
+                "Oops !",
+                "Data yang bisa dimasukkan hanya berupa data gambar.",
+                "error"
+            );
+        }
+    };
+    // # END IMAGE
+
+    useEffect(() => {
+        console.log(gambar2, "ini gambar2");
+    }, [gambar2]);
+
+    // # START IMAGE 2
+    const [gambar2, setGambar2] = useState("");
+    const onChangeGambar2 = e => {
+        const type = ["image/jpg", "image/png", "image/jpeg"];
+        if (type.includes(e.target.files[0].type)) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setGambar2(reader.result);
+                }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        } else {
             e.target.value = null;
             Swal.fire(
                 "Oops !",
@@ -555,14 +568,18 @@ export default function TambahMasterSertifikat() {
                                 {/* START COL */}
                                 <div className="border-primary border col-8 h-500px">
                                     <div className="p-0">
-                                        {/* <Image
-                                          src="https://dts-sertifikat-dev.s3.ap-southeast-1.amazonaws.com/certificate/images/certificate-images/2d08970e-7c1a-483a-ae55-ce19e6b8d36f.jpg"
-                                          alt="fitur"
-                                          // height={495}
-                                          // width={700}
-                                          layout="fill"
-                                          objectFit="fill"
-                                      /> */}
+                                        {gambar2 ? (
+                                            <Image
+                                                src={gambar2}
+                                                alt="gambar2"
+                                                // height={495}
+                                                // width={700}
+                                                layout="fill"
+                                                objectFit="fill"
+                                            />
+                                        ) : (
+                                            ""
+                                        )}
                                     </div>
                                     <div className="row h-100">
                                         <div
@@ -822,15 +839,28 @@ export default function TambahMasterSertifikat() {
                                     {/* END TANDA TANGAN SLIDER */}
                                 </div>
                                 <div className="row mt-10 col-12">
-                                    <div className="mr-5">
-                                        <a className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
-                                            Unggah Background
-                                        </a>
-                                    </div>
-                                    <div className="card-toolbar">
-                                        <a className="btn bg-white text-blue-secondary border-secondary rounded-full font-weight-bolder px-10 py-4">
-                                            Browse Template
-                                        </a>
+                                    <div className="position-relative">
+                                        <label htmlFor="InputFile2">
+                                            <div className="mr-5">
+                                                <a className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
+                                                    Unggah Background
+                                                </a>
+                                            </div>
+                                        </label>
+                                        <input
+                                            type="file"
+                                            name="gambar2"
+                                            className="custom-file-input"
+                                            id="InputFile2"
+                                            onChange={onChangeGambar2}
+                                            accept="image/*"
+                                            onBlur={() =>
+                                                simpleValidator.current.showMessageFor(
+                                                    "gambar2"
+                                                )
+                                            }
+                                            style={{ display: "none" }}
+                                        />
                                     </div>
                                 </div>
                             </div>

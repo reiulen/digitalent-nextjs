@@ -24,7 +24,6 @@ module.exports = {
         END_POINT_API_SUBVIT: "http://api-dts-dev.majapahit.id/subvit/",
         END_POINT_API_IMAGE_SUBVIT:
             "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
-
         // partnership
         TOKEN_PARTNERSHIP_TEMP:
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMjM3ODI0MCwiZXhwIjoxMDI3MjI5MTg0MCwibmJmIjoxNjMyMzc4MjQwLCJqdGkiOiI3UXNMVktUMm1HZmNNT0hOIiwic3ViIjoxOSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyIsInVzZXIiOnsiaWQiOjE5LCJuYW1lIjoiUmFobWF0IEhpZGF5YXR1bGxhaCIsImVtYWlsIjoicmFobWF0aGlkYXlhdHVsbGFoOTk2QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkX2F0IjoiMjAyMS0wOS0yM1QwNToyNDoxOS4wMDAwMDBaIiwicmVtZW1iZXJfdG9rZW4iOiIzMTE5ODAiLCJyb2xlcyI6IlttaXRyYV0iLCJjcmVhdGVkX2F0IjoiMjAyMS0wOS0yM1QwNToxODowMS4wMDAwMDBaIiwidXBkYXRlZF9hdCI6IjIwMjEtMDktMjNUMDU6MjQ6MTkuMDAwMDAwWiJ9fQ.YsAajORDirVTHwG7IiihQrsIk8RH40bnrQ2pCEFUjgU",
@@ -37,5 +36,8 @@ module.exports = {
 
         // pelatihan
         END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",
+
+        //sertifikat
+        END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
     },
 };
