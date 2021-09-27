@@ -734,7 +734,7 @@ const Artikel = ({token}) => {
                                 )}
                               </td>
                               <td className="align-middle">Super Admin</td>
-                              <td className="align-middle d-flex">
+                              <td className="align-middle d-flex" style={{marginLeft: "-350px"}}>
 
                                 <Link
                                   href={`/publikasi/artikel/preview/${artikel.id}`}
