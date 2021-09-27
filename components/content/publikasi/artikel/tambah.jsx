@@ -207,6 +207,7 @@ const TambahArtikel = ({token}) => {
           tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
         };
 
+        
         Swal.fire({
           title: "Apakah anda yakin ?",
           text: "Data ini akan ditambahkan !",
