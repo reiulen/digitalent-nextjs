@@ -214,15 +214,41 @@ const Vidio = ({token}) => {
         }
     };
 
+    // const handleLimit = (val) => {
+    //     setLimit(val)
+    //     if (search === "") {
+    //         router.push(`${router.pathname}?page=1&limit=${val}`);
+        
+    //     } else {
+    //         router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+    //     }
+        
+    // };
+
     const handleLimit = (val) => {
         setLimit(val)
-        if (search === "") {
+        if (search === "" && publishValue === "") {
             router.push(`${router.pathname}?page=1&limit=${val}`);
-        
-        } else {
+
+        } else if (search !== "" && publishValue === "") {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+
+        } else if (search === "" && publishValue === '1') {
+            router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
+
+        } else if (search !== "" && publishValue === '1') {
+            router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
+
+        } else if (search === "" && publishValue === '0') {
+            router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
+
+        } else if (search !== "" && publishValue === '0') {
+            router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
+            
+        // } else if (search !== "" && publishValue === '0' && limit !== null) {
+        //     router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
         }
-        
+
     };
     
     const handlePublish = (val) => {
@@ -245,7 +271,8 @@ const Vidio = ({token}) => {
               router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
       
           } else if ( startDate === null && endDate === null && limit === null && search !== null) {
-              router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+              router.push(`${router.pathname}?publish=${val}`);
+            //   router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
           
           } else if ( startDate === null && endDate === null && limit !== null && search !== null) {
               router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
