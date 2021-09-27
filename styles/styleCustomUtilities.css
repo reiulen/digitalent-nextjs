@@ -447,9 +447,6 @@ margin-top: 1rem;
   padding: 12px 32px;
   font-weight: 600;
 }
-.form-group{
-  position: relative;
-}
 /* btn link dan action */
 .btn-link-action{
   display: flex;
@@ -457,8 +454,6 @@ margin-top: 1rem;
   border-radius: 8px;
   padding: 8px 8px;
   max-width: max-content;
-  position: absolute;
-  left: 350px;
 }
 .w-max-content{
   width: max-content;

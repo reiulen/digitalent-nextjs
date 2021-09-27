@@ -91,12 +91,12 @@ const EditVideo = ({token}) => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
-                    console.log(reader)
+                    // console.log(reader)
                     setGambar(reader.result);
                     setGambarPreview(reader.result);
                 }
             };
-            console.log(reader.onload)
+            // console.log(reader.onload)
             reader.readAsDataURL(e.target.files[0])
             // console.log (reader.readAsDataURL(e.target.files[0]))
             setGambarName(e.target.files[0].name)
