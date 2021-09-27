@@ -560,6 +560,20 @@ const Sidebar = () => {
                         </a>
                       </Link>
                     </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/pelatihan/review">
+                        <a className="menu-link">
+                          <span className="menu-text">Review Pelatihan</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/pelatihan/rekap-pendaftaran">
+                        <a className="menu-link">
+                          <span className="menu-text">Rekap Pendaftaran</span>
+                        </a>
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -1084,7 +1098,9 @@ const Sidebar = () => {
                       />
                     </svg>
                   </span>
-                  <span className="menu-text">Site Management</span>
+                  <Link href="/site-management/">
+                    <span className="menu-text">Site Management</span>
+                  </Link>
                   <i className="menu-arrow"></i>
                 </a>
                 <div className="menu-submenu">
@@ -1095,13 +1111,52 @@ const Sidebar = () => {
                       aria-haspopup="true"
                     >
                       <span className="menu-link">
-                        <span className="menu-text">Site Management</span>
+                        <Link href="/site-management/">
+                          <span className="menu-text">Site Management</span>
+                        </Link>
                       </span>
                     </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <a className="menu-link">
-                        <span className="menu-text">Sample Link</span>
+                    <li
+                      className={`menu-item menu-item-submenu ${menuItem8}`}
+                      onClick={onSetMenuItem8}
+                      aria-haspopup="true"
+                      data-menu-toggle="hover"
+                    >
+                      <a href="javascript:;" className="menu-link menu-toggle">
+                        <Link href="/site-management/user/">
+                          <span className="menu-text">User</span>
+                        </Link>
+                        <i className="menu-arrow"></i>
                       </a>
+                      <div className="menu-submenu">
+                        <i className="menu-arrow"></i>
+                        <ul className="menu-subnav">
+                          <li
+                            className="menu-item menu-item-parent"
+                            aria-haspopup="true"
+                          >
+                            <span className="menu-link">
+                              <Link href="/site-management/user/">
+                                <span className="menu-text">User</span>
+                              </Link>
+                            </span>
+                          </li>
+                          <li className="menu-item" aria-haspopup="true">
+                            <a className="menu-link">
+                              <Link href="/site-management/peserta/">
+                                <span className="menu-text">Peserta DTS</span>
+                              </Link>
+                            </a>
+                          </li>
+                          <li className="menu-item" aria-haspopup="true">
+                            <a className="menu-link">
+                              <Link href="/site-management/administrator/">
+                                <span className="menu-text">Administrator</span>
+                              </Link>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                     </li>
                   </ul>
                 </div>

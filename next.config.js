@@ -19,20 +19,19 @@ module.exports = {
         END_POINT_API_IMAGE_PUBLIKASI:
             "http://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
-        //subvit
-        // END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
-        END_POINT_API_SUBVIT: "http://api-dts-dev.majapahit.id/subvit/",
-        END_POINT_API_IMAGE_SUBVIT:
-            "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
-        // partnership
-        TOKEN_PARTNERSHIP_TEMP:
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMjM3ODI0MCwiZXhwIjoxMDI3MjI5MTg0MCwibmJmIjoxNjMyMzc4MjQwLCJqdGkiOiI3UXNMVktUMm1HZmNNT0hOIiwic3ViIjoxOSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyIsInVzZXIiOnsiaWQiOjE5LCJuYW1lIjoiUmFobWF0IEhpZGF5YXR1bGxhaCIsImVtYWlsIjoicmFobWF0aGlkYXlhdHVsbGFoOTk2QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkX2F0IjoiMjAyMS0wOS0yM1QwNToyNDoxOS4wMDAwMDBaIiwicmVtZW1iZXJfdG9rZW4iOiIzMTE5ODAiLCJyb2xlcyI6IlttaXRyYV0iLCJjcmVhdGVkX2F0IjoiMjAyMS0wOS0yM1QwNToxODowMS4wMDAwMDBaIiwidXBkYXRlZF9hdCI6IjIwMjEtMDktMjNUMDU6MjQ6MTkuMDAwMDAwWiJ9fQ.YsAajORDirVTHwG7IiihQrsIk8RH40bnrQ2pCEFUjgU",
-        END_POINT_API_PARTNERSHIP: "http://dts-partnership-dev.majapahit.id",
-        // END_POINT_API_PARTNERSHIP: "http://api-dts-dev.majapahit.id/partnership/",
-        END_POINT_API_IMAGE_PARTNERSHIP:
-            "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
+    //subvit
+    END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
+    // END_POINT_API_SUBVIT: "http://api-dts-dev.majapahit.id/subvit/",
+    END_POINT_API_IMAGE_SUBVIT:
+      "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
 
-        NEXTAUTH_URL: "http://dts-dev.majapahit.id/",
+    // partnership
+    TOKEN_PARTNERSHIP_TEMP:
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMjcwNjM3MSwiZXhwIjoxMDI3MjYxOTk3MSwibmJmIjoxNjMyNzA2MzcxLCJqdGkiOiJ5U2dFSDdjRE9ybTQ3SXJEIiwic3ViIjo2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwidXNlciI6eyJpZCI6NiwibmFtZSI6IlJhaG1hdCBIaWRheWF0dWxsYWgiLCJlbWFpbCI6InJhaG1hdGhpZGF5YXR1bGxhaDk5NkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZF9hdCI6IjIwMjEtMDktMjZUMTQ6MzU6MjYuMDAwMDAwWiIsInJlbWVtYmVyX3Rva2VuIjoiODI1MjU4Iiwicm9sZXMiOiJbbWl0cmFdIiwiY3JlYXRlZF9hdCI6IjIwMjEtMDktMjZUMTQ6MTc6MTIuMDAwMDAwWiIsInVwZGF0ZWRfYXQiOiIyMDIxLTA5LTI2VDE0OjM1OjI2LjAwMDAwMFoifX0.hgUflpBq6iKIHfKmzlr7Hykb1s2I-6yrfBirB1xzv3E",
+    END_POINT_API_PARTNERSHIP: "http://dts-partnership-dev.majapahit.id",
+    // END_POINT_API_PARTNERSHIP: "http://api-dts-dev.majapahit.id/partnership/",
+    END_POINT_API_IMAGE_PARTNERSHIP:
+      "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
 
         // pelatihan
         END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",

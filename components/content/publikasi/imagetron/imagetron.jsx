@@ -54,7 +54,8 @@ const Imagetron = () => {
     const [disableEndDate, setDisableEndDate] = useState(true)
 
     let loading = false;
-    let { page = 1, keyword, success } = router.query;
+    let { page = 1, keyword, success, successEdit } = router.query;
+    // let { page = 1, keyword } = router.query;
     if (allLoading) {
         loading = allLoading;
     } else if (deleteLoading) {
@@ -317,6 +318,32 @@ const Imagetron = () => {
                         <i className="flaticon2-checkmark"></i>
                     </div>
                     <div className="alert-text">Berhasil Menyimpan Data !</div>
+                    <div className="alert-close">
+                        <button
+                            type="button"
+                            className="close"
+                            data-dismiss="alert"
+                            aria-label="Close"
+                            onClick={onNewReset}
+                        >
+                            <span aria-hidden="true">
+                                <i className="ki ki-close"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            ) : (
+                ""
+            )}
+            {successEdit ? (
+                <div
+                    className="alert alert-custom alert-light-success fade show mb-5"
+                    role="alert"
+                >
+                    <div className="alert-icon">
+                        <i className="flaticon2-checkmark"></i>
+                    </div>
+                    <div className="alert-text">Berhasil Menyimpan Data Perubahan !</div>
                     <div className="alert-close">
                         <button
                             type="button"
@@ -640,7 +667,6 @@ const Imagetron = () => {
                                                 !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
                                                 <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                 imagetron && imagetron.data.imagetron.map((row, i) => {
-                                                        {console.log("DATA IMAGETRON : ", row.gambar)}
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {

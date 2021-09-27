@@ -480,6 +480,21 @@ margin-top: 1rem;
   transition: transform 0.3s;
 }
 
+/* drag ttd partnership */
+.image-card-1{
+  width: 100%;
+  height: 100%;
+}
+.cardss{
+  width: 100px;
+  height: 100px;
+  background-color: transparent;
+  margin: 5px;
+  cursor: move;
+  position: absolute;
+  z-index: 99;
+}
+
 
 
 

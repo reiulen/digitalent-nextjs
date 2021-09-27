@@ -134,11 +134,11 @@ export const updateArtikel = (artikelData, token) => async dispatch => {
             },
         };
 
-        let link =
-            process.env.END_POINT_API_PUBLIKASI +
-            `api/artikel/${artikelData.id}`;
-
-        const { data } = await axios.post(link, artikelData, config);
+        const { data } = await axios.post(
+            process.env.END_POINT_API_PUBLIKASI + "api/artikel",
+            artikelData,
+            config
+        );
 
         dispatch({
             type: UPDATE_ARTIKEL_SUCCESS,
