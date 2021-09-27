@@ -14,7 +14,7 @@ import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
 
-const ListTraining = () => {
+const DetailSummary = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -106,7 +106,7 @@ const ListTraining = () => {
             color="#FFFFFF"
             value={0}
             titleValue=""
-            title="Selesai"
+            title="Pendaftar"
             publishedVal=""
             routePublish={() => handlePublish("")}
           />
@@ -116,7 +116,7 @@ const ListTraining = () => {
             color="#FFFFFF"
             value={0}
             titleValue=""
-            title="Disetujui"
+            title="Verivied Administrasi"
             publishedVal="sudah-mengerjakan"
             routePublish={() => handlePublish("sudah-mengerjakan")}
           />
@@ -126,7 +126,7 @@ const ListTraining = () => {
             color="#FFFFFF"
             value={0}
             titleValue=""
-            title="Revisi"
+            title="Lulus Tes Substansi"
             publishedVal="sedang-mengerjakan"
             routePublish={() => handlePublish("sedang-mengerjakan")}
           />
@@ -136,7 +136,7 @@ const ListTraining = () => {
             color="#FFFFFF"
             value={0}
             titleValue=""
-            title="Menunggu Review"
+            title="Verified Administrasi Lulus Tes Substansi"
             publishedVal="belum-mengerjakan"
             routePublish={() => handlePublish("belum-mengerjakan")}
           />
@@ -146,10 +146,58 @@ const ListTraining = () => {
             color="#FFFFFF"
             value={0}
             titleValue=""
-            title="Berjalan"
+            title="Diterima"
             publishedVal="gagal-test"
             routePublish={() => handlePublish("gagal-test")}
           />
+        </div>
+      </div>
+
+      <div className="col-lg-12 order-1 px-0">
+        <div className="card card-custom card-stretch gutter-b">
+          <div className="card-header mt-3">
+            <h1
+              className="card-title text-dark mt-2"
+              style={{ fontSize: "24px" }}
+            >
+              Fresh Graduate Academy / Android Developer / _nama pelatihan_
+            </h1>
+          </div>
+
+          <div className="card-body ">
+            <div className="row">
+              <div className="col-md-6">
+                <p className="text-neutral-body my-0">Kuota Pendaftaran</p>
+                <p className="text-success">1500 Pendaftar</p>
+              </div>
+              <div className="col-md-6">
+                <p className="text-neutral-body my-0">Kuota Peserta</p>
+                <p className="text-success">150 Pendaftar</p>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <p className="text-neutral-body my-0">Jadwal Pendaftaran</p>
+                <p className="text-neutral-body">
+                  1 Oktober 2021 sampai 5 Oktober 2021
+                </p>
+              </div>
+              <div className="col-md-6">
+                <p className="text-neutral-body my-0">Jadwal Pelatihan</p>
+                <p className="text-neutral-body">
+                  1 Oktober 2021 sampai 5 Oktober 2021
+                </p>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <p className="text-neutral-body my-0">Alur Pendaftaran</p>
+                <p className="text-neutral-body">
+                  Administrasi {">"} Test Substansi
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -160,22 +208,14 @@ const ListTraining = () => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Pelatihan
+              List Peserta
             </h1>
-            <div className="card-toolbar">
-              <Link href="/pelatihan/pelatihan/tambah-pelatihan">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i className="ri-pencil-fill"></i>
-                  Tambah Pelatihan
-                </a>
-              </Link>
-            </div>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-6 col-xl-6">
+                <div className="col-lg-4 col-xl-4">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -220,6 +260,16 @@ const ListTraining = () => {
 
                 <div className="col-md-2">
                   <button
+                    className="btn w-100 btn-rounded-full bg-success text-white mt-2"
+                    type="button"
+                    onClick={handleExportReport}
+                  >
+                    <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
+                    Import
+                  </button>
+                </div>
+                <div className="col-md-2">
+                  <button
                     className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
                     type="button"
                     onClick={handleExportReport}
@@ -239,28 +289,29 @@ const ListTraining = () => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center ">No</th>
-                      <th>ID Pelatihan</th>
-                      <th>Pelatihan</th>
-                      <th>Jadwal</th>
-                      <th>Status Substansi</th>
-                      <th>Status Pelatihan</th>
+                      <th>Peserta</th>
+                      <th>Pelatihan Sebelumnya</th>
+                      <th>Test Substansi</th>
+                      <th>Berkas</th>
+                      <th>Status Peserta</th>
+                      <th>Updated</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td className="text-center">1</td>
-                      <td>CC001</td>
                       <td>
                         <p className="font-weight-bolder my-0">
-                          Android Developer
+                          Cristiano Messi
                         </p>
-                        <p className="my-0">IBM</p>
-                        <p className="my-0">DKI</p>
+                        <p className="my-0">00019989893</p>
                       </td>
+                      <td>3</td>
                       <td>
-                        <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
-                        <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
+                        <p className="my-0 text-success">Lulus</p>
+                        <p className="my-0">90</p>
+                        <p className="my-0">00:50:21</p>
                       </td>
                       <td>
                         <span className="label label-inline label-light-success font-weight-bold">
@@ -273,19 +324,14 @@ const ListTraining = () => {
                         </span>
                       </td>
                       <td>
+                        <p className="font-weight-bolder my-0">
+                          Admin Verifikasi
+                        </p>
+                        <p className="my-0">1 Oktober 2021</p>
+                        <p className="my-0">00:50:21</p>
+                      </td>
+                      <td>
                         <div className="d-flex">
-                          <Link
-                            href={`/pelatihan/pelatihan/edit-pelatihan/${1}`}
-                          >
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Edit"
-                            >
-                              <i className="ri-pencil-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
                           <Link
                             href={`/pelatihan/pelatihan/view-pelatihan/${1}`}
                           >
@@ -298,66 +344,6 @@ const ListTraining = () => {
                               <i className="ri-eye-fill text-white p-0"></i>
                             </a>
                           </Link>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                            onClick={() => handleModalRevisi(1)}
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Revisi"
-                          >
-                            <i className="ri-draft-line p-0 text-white"></i>
-                          </button>
-                          <Link
-                            href={`/pelatihan/pelatihan/tambah-form-lpj/${1}`}
-                          >
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Upload LPJ"
-                            >
-                              <i className="ri-file-text-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="User"
-                            >
-                              <i className="ri-user-3-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <Link href={`/pelatihan/pelatihan/upload-evidence`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Upload Evidence"
-                            >
-                              <i className="ri-folder-upload-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Clone"
-                            >
-                              <i className="ri-send-backward p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary text-white"
-                            onClick={() => handleDelete(1)}
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Hapus"
-                          >
-                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                          </button>
                         </div>
                       </td>
                     </tr>
@@ -478,4 +464,4 @@ const ListTraining = () => {
   );
 };
 
-export default ListTraining;
+export default DetailSummary;
