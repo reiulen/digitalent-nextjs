@@ -81,6 +81,7 @@ const Table = ({ token }) => {
         setIsStatusBar(true);
         setDeleteBar(false);
         // setIsChangeOption(true);
+        
         router.replace("/partnership/tanda-tangan", undefined, { shallow: true })
       } else {
         dispatch(reloadTable());
