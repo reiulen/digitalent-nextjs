@@ -661,7 +661,7 @@ const Vidio = ({token}) => {
                                                 !video || video && video.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     video && video.video.map((row, i) => {
-                                                        // {console.log("Video :", row.gambar)}
+                                                        {console.log("Video :", row.gambar)}
                                                         return <tr key={row.id}>
                                                             {/* <td className="align-middle text-center">
                                                                 <span className="badge badge-secondary text-muted">
