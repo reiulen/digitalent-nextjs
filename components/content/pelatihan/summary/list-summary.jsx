@@ -10,11 +10,10 @@ import { Modal } from "react-bootstrap";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
-import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
 
-const ListTraining = () => {
+const ListSummary = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -98,61 +97,6 @@ const ListTraining = () => {
 
   return (
     <PageWrapper>
-      <div className="col-lg-12 col-md-12 col-sm-12">
-        <div className="row">
-          <CardPage
-            background="bg-primary"
-            icon="new/add-user.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Selesai"
-            publishedVal=""
-            routePublish={() => handlePublish("")}
-          />
-          <CardPage
-            background="bg-secondary"
-            icon="new/done-circle.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Disetujui"
-            publishedVal="sudah-mengerjakan"
-            routePublish={() => handlePublish("sudah-mengerjakan")}
-          />
-          <CardPage
-            background="bg-success"
-            icon="new/open-book.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Revisi"
-            publishedVal="sedang-mengerjakan"
-            routePublish={() => handlePublish("sedang-mengerjakan")}
-          />
-          <CardPage
-            background="bg-warning"
-            icon="new/mail-white.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Menunggu Review"
-            publishedVal="belum-mengerjakan"
-            routePublish={() => handlePublish("belum-mengerjakan")}
-          />
-          <CardPage
-            background="bg-extras"
-            icon="new/block-white.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Berjalan"
-            publishedVal="gagal-test"
-            routePublish={() => handlePublish("gagal-test")}
-          />
-        </div>
-      </div>
-
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 mt-3">
@@ -160,16 +104,8 @@ const ListTraining = () => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Pelatihan
+              List Rekap Pendaftaran
             </h1>
-            <div className="card-toolbar">
-              <Link href="/pelatihan/pelatihan/tambah-pelatihan">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i className="ri-pencil-fill"></i>
-                  Tambah Pelatihan
-                </a>
-              </Link>
-            </div>
           </div>
 
           <div className="card-body pt-0">
@@ -242,7 +178,6 @@ const ListTraining = () => {
                       <th>ID Pelatihan</th>
                       <th>Pelatihan</th>
                       <th>Jadwal</th>
-                      <th>Status Substansi</th>
                       <th>Status Pelatihan</th>
                       <th>Aksi</th>
                     </tr>
@@ -268,14 +203,9 @@ const ListTraining = () => {
                         </span>
                       </td>
                       <td>
-                        <span className="label label-inline label-light-success font-weight-bold">
-                          Publish
-                        </span>
-                      </td>
-                      <td>
                         <div className="d-flex">
                           <Link
-                            href={`/pelatihan/pelatihan/edit-pelatihan/${1}`}
+                            href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${1}`}
                           >
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -283,7 +213,7 @@ const ListTraining = () => {
                               data-placement="bottom"
                               title="Edit"
                             >
-                              <i className="ri-pencil-fill p-0 text-white"></i>
+                              <i className="ri-eye-fill text-white p-0"></i>
                             </a>
                           </Link>
                           <Link
@@ -295,69 +225,9 @@ const ListTraining = () => {
                               data-placement="bottom"
                               title="Detail"
                             >
-                              <i className="ri-eye-fill text-white p-0"></i>
+                              <i className="ri-registered-fill text-white p-0"></i>
                             </a>
                           </Link>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                            onClick={() => handleModalRevisi(1)}
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Revisi"
-                          >
-                            <i className="ri-draft-line p-0 text-white"></i>
-                          </button>
-                          <Link
-                            href={`/pelatihan/pelatihan/tambah-form-lpj/${1}`}
-                          >
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Upload LPJ"
-                            >
-                              <i className="ri-file-text-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="User"
-                            >
-                              <i className="ri-user-3-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <Link href={`/pelatihan/pelatihan/upload-evidence`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Upload Evidence"
-                            >
-                              <i className="ri-folder-upload-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Clone"
-                            >
-                              <i className="ri-send-backward p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary text-white"
-                            onClick={() => handleDelete(1)}
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Hapus"
-                          >
-                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                          </button>
                         </div>
                       </td>
                     </tr>
@@ -478,4 +348,4 @@ const ListTraining = () => {
   );
 };
 
-export default ListTraining;
+export default ListSummary;
