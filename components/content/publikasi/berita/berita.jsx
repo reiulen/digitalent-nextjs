@@ -687,7 +687,7 @@ const Berita = ({token}) => {
 
                                                             </td>
                                                             <td className='align-middle'>Super Admin</td>
-                                                            <td className="align-middle d-flex" style={{marginLeft: "-350px"}}>
+                                                            <td className="align-middle d-flex">
 
                                                                 <Link
                                                                 href={`/publikasi/berita/preview/${row.id}`}
