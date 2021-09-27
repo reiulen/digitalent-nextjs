@@ -14,7 +14,7 @@ import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
 
-const ListTraining = () => {
+const ListReview = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -101,26 +101,6 @@ const ListTraining = () => {
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row">
           <CardPage
-            background="bg-primary"
-            icon="new/add-user.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Selesai"
-            publishedVal=""
-            routePublish={() => handlePublish("")}
-          />
-          <CardPage
-            background="bg-secondary"
-            icon="new/done-circle.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Disetujui"
-            publishedVal="sudah-mengerjakan"
-            routePublish={() => handlePublish("sudah-mengerjakan")}
-          />
-          <CardPage
             background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
@@ -142,13 +122,23 @@ const ListTraining = () => {
           />
           <CardPage
             background="bg-extras"
-            icon="new/block-white.svg"
+            icon="new/done-circle.svg"
             color="#FFFFFF"
             value={0}
             titleValue=""
-            title="Berjalan"
+            title="Disetujui"
             publishedVal="gagal-test"
             routePublish={() => handlePublish("gagal-test")}
+          />
+          <CardPage
+            background="bg-danger"
+            icon="new/error-circle.svg"
+            color="#FFFFFF"
+            value={0}
+            titleValue=""
+            title="Ditolak"
+            publishedVal=""
+            routePublish={() => handlePublish("")}
           />
         </div>
       </div>
@@ -160,22 +150,14 @@ const ListTraining = () => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Pelatihan
+              List Review Pelatihan
             </h1>
-            <div className="card-toolbar">
-              <Link href="/pelatihan/pelatihan/tambah-pelatihan">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i className="ri-pencil-fill"></i>
-                  Tambah Pelatihan
-                </a>
-              </Link>
-            </div>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-6 col-xl-6">
+                <div className="col-lg-8 col-xl-8">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -217,17 +199,6 @@ const ListTraining = () => {
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
-
-                <div className="col-md-2">
-                  <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    Export
-                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                  </button>
-                </div>
               </div>
             </div>
 
@@ -242,8 +213,9 @@ const ListTraining = () => {
                       <th>ID Pelatihan</th>
                       <th>Pelatihan</th>
                       <th>Jadwal</th>
-                      <th>Status Substansi</th>
-                      <th>Status Pelatihan</th>
+                      <th>Kuota</th>
+                      <th>Status</th>
+                      <th>Revisi</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -263,32 +235,18 @@ const ListTraining = () => {
                         <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
                       </td>
                       <td>
-                        <span className="label label-inline label-light-success font-weight-bold">
-                          Disetujui
-                        </span>
+                        <p className="font-weight-bolder my-0">Kuota 300</p>
+                        <p className="my-0">Peserta 100</p>
                       </td>
                       <td>
                         <span className="label label-inline label-light-success font-weight-bold">
                           Publish
                         </span>
                       </td>
+                      <td>1x</td>
                       <td>
                         <div className="d-flex">
-                          <Link
-                            href={`/pelatihan/pelatihan/edit-pelatihan/${1}`}
-                          >
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Edit"
-                            >
-                              <i className="ri-pencil-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <Link
-                            href={`/pelatihan/pelatihan/view-pelatihan/${1}`}
-                          >
+                          <Link href={`/pelatihan/review/view-pelatihan/${1}`}>
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
@@ -298,66 +256,6 @@ const ListTraining = () => {
                               <i className="ri-eye-fill text-white p-0"></i>
                             </a>
                           </Link>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                            onClick={() => handleModalRevisi(1)}
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Revisi"
-                          >
-                            <i className="ri-draft-line p-0 text-white"></i>
-                          </button>
-                          <Link
-                            href={`/pelatihan/pelatihan/tambah-form-lpj/${1}`}
-                          >
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Upload LPJ"
-                            >
-                              <i className="ri-file-text-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="User"
-                            >
-                              <i className="ri-user-3-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <Link href={`/pelatihan/pelatihan/upload-evidence`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Upload Evidence"
-                            >
-                              <i className="ri-folder-upload-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Clone"
-                            >
-                              <i className="ri-send-backward p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary text-white"
-                            onClick={() => handleDelete(1)}
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Hapus"
-                          >
-                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                          </button>
                         </div>
                       </td>
                     </tr>
@@ -478,4 +376,4 @@ const ListTraining = () => {
   );
 };
 
-export default ListTraining;
+export default ListReview;
