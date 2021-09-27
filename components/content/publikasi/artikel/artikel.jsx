@@ -636,7 +636,7 @@ const Artikel = ({token}) => {
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
-                    <thead style={{ background: "#F3F6F9" }}>
+                    <thead style={{ background: "#F3F6F9"}}>
                       <tr>
                         <th className="text-center">No</th>
                         <th>Thumbnail</th>
@@ -652,7 +652,7 @@ const Artikel = ({token}) => {
                     <tbody>
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
                         <tr>
-                          <td className="text-center" colSpan={6}>
+                          <td className="text-center">
                             Data Masih Kosong
                           </td>
                         </tr>
@@ -734,7 +734,7 @@ const Artikel = ({token}) => {
                                 )}
                               </td>
                               <td className="align-middle">Super Admin</td>
-                              <td className="align-middle d-flex" style={{marginLeft: "-350px"}}>
+                              <td className="align-middle d-flex">
 
                                 <Link
                                   href={`/publikasi/artikel/preview/${artikel.id}`}
