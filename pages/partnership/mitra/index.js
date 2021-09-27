@@ -2,6 +2,7 @@
 // import Table from "../../../components/content/partnership/mitra/tableMitra";
 
 // import LoadingPage from "../../../components/LoadingPage";
+
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
