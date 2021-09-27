@@ -1051,7 +1051,16 @@ const Table = ({token}) => {
                                     <div className="d-flex align-items-center">
 
 
-                                      <Link href="/partnership/tanda-tangan" passHref>
+                                      <Link href={{
+
+
+                                        pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
+                                        // pathname:"/partnership/tanda-tangan/ttdTolkit",
+
+
+
+                                        query:{id:items.id}
+                                      }} passHref>
                                       
                                       <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
 

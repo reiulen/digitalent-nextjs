@@ -8,6 +8,7 @@ import {
   SET_LIMIT_TD,
   SUCESS_DELETE_TD,
   SEARCH_BY_KEY_TTD,
+  CHANGE_STATUS_LIST_M,
 } from "../../../types/partnership/user/tanda-tangan.type";
 
 const statuslist = {
@@ -76,6 +77,12 @@ export const allTandaTanganUserReducer = (state = initialState, action) => {
         ...state,
         keyword: action.value,
         page: 1,
+      };
+
+    case CHANGE_STATUS_LIST_M:
+      return {
+        ...state,
+        status_reload: state.status_reload === "" ? "reload" : "",
       };
 
     default:

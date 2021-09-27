@@ -195,7 +195,12 @@ const AddTrainingStep1 = () => {
 
   return (
     <PageWrapper>
-      <StepInputPelatihan step={1} />
+      <StepInputPelatihan
+        step={1}
+        title1="Tambah Pelatihan"
+        title2="Tambah Form Pendaftaran"
+        title3="Tambah Form Komitmen"
+      />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">

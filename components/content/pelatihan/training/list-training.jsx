@@ -24,6 +24,7 @@ const ListTraining = () => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showModalRevisi, setShowModalRevisi] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
 
   const handlePagination = (pageNumber) => {
@@ -89,6 +90,10 @@ const ListTraining = () => {
     if (error) {
       dispatch(clearErrors());
     }
+  };
+
+  const handleModalRevisi = (id) => {
+    setShowModalRevisi(true);
   };
 
   return (
@@ -269,7 +274,9 @@ const ListTraining = () => {
                       </td>
                       <td>
                         <div className="d-flex">
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                          <Link
+                            href={`/pelatihan/pelatihan/edit-pelatihan/${1}`}
+                          >
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
@@ -279,7 +286,9 @@ const ListTraining = () => {
                               <i className="ri-pencil-fill p-0 text-white"></i>
                             </a>
                           </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                          <Link
+                            href={`/pelatihan/pelatihan/view-pelatihan/${1}`}
+                          >
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
@@ -289,14 +298,25 @@ const ListTraining = () => {
                               <i className="ri-eye-fill text-white p-0"></i>
                             </a>
                           </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                          <button
+                            className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                            onClick={() => handleModalRevisi(1)}
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Revisi"
+                          >
+                            <i className="ri-draft-line p-0 text-white"></i>
+                          </button>
+                          <Link
+                            href={`/pelatihan/pelatihan/tambah-form-lpj/${1}`}
+                          >
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
                               data-placement="bottom"
-                              title="Report"
+                              title="Upload LPJ"
                             >
-                              <i className="ri-draft-line p-0 text-white"></i>
+                              <i className="ri-file-text-fill p-0 text-white"></i>
                             </a>
                           </Link>
                           <Link href={`/pelatihan/pelatihan/${1}`}>
@@ -309,12 +329,12 @@ const ListTraining = () => {
                               <i className="ri-user-3-fill p-0 text-white"></i>
                             </a>
                           </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                          <Link href={`/pelatihan/pelatihan/upload-evidence`}>
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
                               data-placement="bottom"
-                              title="User"
+                              title="Upload Evidence"
                             >
                               <i className="ri-folder-upload-fill p-0 text-white"></i>
                             </a>
@@ -324,7 +344,7 @@ const ListTraining = () => {
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
                               data-placement="bottom"
-                              title="User"
+                              title="Clone"
                             >
                               <i className="ri-send-backward p-0 text-white"></i>
                             </a>
@@ -405,6 +425,41 @@ const ListTraining = () => {
               <label className="p-0">Tanggal Pelaksanaan</label>
               <input type="date" name="" id="" className="form-control" />
             </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button
+            className="btn btn-light-ghost-rounded-full mr-2"
+            type="reset"
+          >
+            Reset
+          </button>
+          <button className="btn btn-primary-rounded-full" type="button">
+            Terapkan
+          </button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal
+        show={showModalRevisi}
+        onHide={() => setShowModalRevisi(false)}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header>
+          <Modal.Title>Catatan Revisi</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setShowModalRevisi(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="form-group mb-5">
+            <label className="p-0">Isi Catatan</label>
+            <textarea rows="5" className="form-control"></textarea>
           </div>
         </Modal.Body>
         <Modal.Footer>

@@ -883,7 +883,12 @@ const Table = () => {
                                           Detail
                                         </div>
                                       </button>
-                                      <button
+                                      <Link href={{
+                                         pathname:"/partnership/user/kerjasama/hasil",
+                                         query:{statusKerjasama:items.status.name,id:items.id}
+                                       }}>
+
+                                      <a
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         // onClick={() =>
                                         //   router.push(
@@ -896,7 +901,8 @@ const Table = () => {
                                         <div className="text-hover-show-hapus">
                                           Review
                                         </div>
-                                      </button>
+                                      </a>
+                                      </Link>
                                       </div>
                                   ) : items.status.name === "aktif" &&
                                     moment(items.period_date_start).format(
