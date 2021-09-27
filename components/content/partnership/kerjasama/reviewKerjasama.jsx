@@ -42,6 +42,7 @@ const ReviewKerjasama = ({ token }) => {
   const [periodView, setPeriodView] = useState("");
   const [periodUnitView, setPeriodUnitView] = useState("tahun");
   const [noteView, setNoteView] = useState("");
+  const [mitra, setMitra] = useState("")
 
   // cek review card-version
   const setDataSingleSelesaiReview = async (id, version) => {
@@ -56,6 +57,7 @@ const ReviewKerjasama = ({ token }) => {
       setPeriodUnitView(data.data.period_unit);
       setAllCooperationView(data.data.cooperation_category.data_content);
       setNoteView(data.data.note);
+      setMitra(data.data.mitra);
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
@@ -175,7 +177,7 @@ const ReviewKerjasama = ({ token }) => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Review Kerjasama
+              Review Kerjasama {mitra && mitra}
             </h3>
           </div>
           <div className="card-body">

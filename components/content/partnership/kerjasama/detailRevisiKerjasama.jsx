@@ -5,7 +5,7 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-const DetailRevisiKerjasama = () => {
+const DetailRevisiKerjasama = ({token}) => {
 
   const router = useRouter();
   const [title, setTitle] = useState("");
@@ -17,7 +17,7 @@ const DetailRevisiKerjasama = () => {
   const [note, setNote] = useState("");
 
 
-  const handleSubmit = async ({token}) => {
+  const handleSubmit =  () => {
     // e.preventDefault();
     Swal.fire({
       title: "Apakah anda yakin ingin simpan ?",

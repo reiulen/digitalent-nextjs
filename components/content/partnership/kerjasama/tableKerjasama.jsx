@@ -1139,7 +1139,7 @@ const Table = ({token}) => {
                                   ) : (
                                     <div className="d-flex align-items-center">
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                         onClick={() =>
                                           router.push(
                                             `/partnership/kerjasama/view/${items.id}`
@@ -1155,7 +1155,7 @@ const Table = ({token}) => {
                                           Detail
                                         </div>
                                       </button>
-                                      <button
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                         onClick={() =>
                                           router.push(
@@ -1168,7 +1168,7 @@ const Table = ({token}) => {
                                         <div className="text-hover-show-hapus">
                                           Ubah
                                         </div>
-                                      </button>
+                                      </button> */}
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
