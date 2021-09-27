@@ -161,7 +161,7 @@ const Berita = ({token}) => {
         if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
             Swal.fire(
                 'Oops !',
-                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+                'Tanggal Dari tidak boleh melebihi Tanggal Sampai.',
                 'error'
             )
             setStartDate (null)
@@ -170,7 +170,7 @@ const Berita = ({token}) => {
         } else if (startDate === null && endDate !== null) {
             Swal.fire(
                 'Oops !',
-                'Tanggal sebelum tidak boleh kosong',
+                'Tanggal Dari tidak boleh kosong',
                 'error'
             )
             setStartDate (null)
@@ -179,7 +179,7 @@ const Berita = ({token}) => {
         } else if (startDate !== null && endDate === null) {
             Swal.fire(
                 'Oops !',
-                'Tanggal sesudah tidak boleh kosong',
+                'Tanggal Sampai tidak boleh kosong',
                 'error'
             )
             setStartDate (null)
@@ -687,7 +687,7 @@ const Berita = ({token}) => {
 
                                                             </td>
                                                             <td className='align-middle'>Super Admin</td>
-                                                            <td className="align-middle d-flex">
+                                                            <td className="align-middle d-flex" style={{marginLeft: "-350px"}}>
 
                                                                 <Link
                                                                 href={`/publikasi/berita/preview/${row.id}`}
