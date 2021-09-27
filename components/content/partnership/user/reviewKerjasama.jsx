@@ -69,6 +69,12 @@ function ReviewKerjasama() {
       console.log("data",data)
 
       // console.log("data a a a ssss", data.data.status_migrates_id.status);
+      if(data.data.status_migrates_id.status === "pengajuan-revisi"){
+        router.push({
+          pathname:"/partnership/user/kerjasama/review-kerjasama-2",
+          query:{id:router.query.id}
+        })
+      }
       if(data.data.status_migrates_id.status === "pengajuan-selesai"){
         router.push({
           pathname:"/partnership/user/kerjasama/pembahasan-2",
@@ -82,6 +88,8 @@ function ReviewKerjasama() {
   };
 
   useEffect(() => {
+
+
 
     cekProgresStatus(router.query.id);
 

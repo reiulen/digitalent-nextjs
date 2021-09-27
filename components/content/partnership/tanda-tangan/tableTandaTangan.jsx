@@ -23,6 +23,7 @@ import AlertBar from "../components/BarAlert";
 import IconArrow from "../../../assets/icon/Arrow";
 
 const Table = ({ token }) => {
+  console.log("token",token)
   let dispatch = useDispatch();
   let router = useRouter();
   const { success, update } = router.query;
@@ -37,7 +38,7 @@ const Table = ({ token }) => {
     dispatch(searchByKey(keyWord));
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = (id,token) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data tanda tangan ?",
       icon: "warning",
@@ -49,7 +50,7 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteTandaTangan(id));
+        dispatch(deleteTandaTangan(id,token));
         setSuccessDelete(true);
         router.replace(`/partnership/tanda-tangan`);
       }
@@ -316,7 +317,7 @@ const Table = ({ token }) => {
                                     </BtnIcon>
                                     <BtnIcon
                                       className="bg-blue-secondary"
-                                      onClick={() => handleDelete(items.id)}
+                                      onClick={() => handleDelete(items.id,token)}
                                     >
                                       <IconDelete width="16" height="16" />
                                       <div className="text-hover-show-hapus">

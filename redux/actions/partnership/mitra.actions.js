@@ -23,6 +23,7 @@ import {
   RELOAD_TABLE_DETAIL,
   SUCCESS_DELETE_COOPERATION_M_DETAIL,
   CHANGE_STATUS_LIST_M_DETAIL,
+  CHANGE_STATUS_LIST_M,
 } from "../../types/partnership/mitra.type";
 import router from "next/router";
 
@@ -322,11 +323,11 @@ export const reloadTable = () => {
   };
 };
 
-export const changeStatusList = (value, id) => {
+export const changeStatusList = (token, value, id) => {
   return async (dispatch, getState) => {
     try {
-      let dataSend = { status: value };
-      let { data } = await axios.put(
+      let dataSend = { _method: "put", status: value };
+      let { data } = await axios.post(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/update-status/${id}`,
         dataSend
       );
@@ -343,3 +344,30 @@ export const successChangeStatusList = (value) => {
     value,
   };
 };
+
+// export const changeStatusList = (token, value, id) => {
+//   return async (dispatch, getState) => {
+//     try {
+//       let dataSend = { _method: "put", status: value };
+//       let { data } = await axios.put(
+//         `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/update-status/${id}`,
+//         dataSend,
+//         {
+//           headers: {
+//             authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+//       dispatch(successChangeStatusList(value));
+//     } catch (error) {
+//       console.log("error change status list", error.response.data.message);
+//     }
+//   };
+// };
+
+// export const successChangeStatusList = (value) => {
+//   return {
+//     type: CHANGE_STATUS_LIST_M,
+//     value,
+//   };
+// };
