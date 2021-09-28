@@ -1,5 +1,3 @@
-import debounce from "debounce-promise";
-
 import {
   MK_COOPORATION_REQUEST,
   MK_COOPORATION_SUCCESS,
@@ -7,25 +5,19 @@ import {
   SEARCH_COORPORATION,
   LIMIT_CONFIGURATION,
   SUCCESS_GET_SINGLE_COOPORATION,
+  FAIL_GET_SINGLE_COOPORATION,
   SUCCESS_DELETE_COOPORATION_REQUEST,
-  SUCCESS_CHANGE_STATUS_LIST,
+  ERROR_DELETE_COOPORATION_REQUEST,
   SET_PAGE,
 } from "../../types/partnership/mk_cooporation.type";
-import axios from "axios";
 
-// func get data from api
-export async function getAllMKCooporation(params) {
-  return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations`,
-    {
-      params,
-    }
-  );
-}
-let debouncedFetchProduct = debounce(getAllMKCooporation, 0);
+import {
+  getAllMasterCategory,
+  masterCategorySingle,
+  deleteMasterCategory,
+} from "./api/master-category";
 
-// func fetch data and validate
-export const fetchAllMKCooporation = (keyword) => {
+export const fetchAllMKCooporation = (token) => {
   return async (dispatch, getState) => {
     dispatch({ type: MK_COOPORATION_REQUEST });
     let keywordState = getState().allMKCooporation.keyword || "";
@@ -33,16 +25,16 @@ export const fetchAllMKCooporation = (keyword) => {
     let pageState = getState().allMKCooporation.page || 1;
 
     const params = {
-      keyword: keyword === "clear keyword" ? "" : keywordState,
+      keyword: keywordState,
       limit: limitState,
       page: pageState,
     };
 
     try {
-      const { data } = await debouncedFetchProduct(params);
+      const { data } = await getAllMasterCategory(params, token);
       dispatch(successFetchAllMKCooporation(data));
     } catch (error) {
-      dispatch(errorfetchAllMKCooporation());
+      dispatch(errorfetchAllMKCooporation(error.response.data.message));
     }
   };
 };
@@ -53,9 +45,10 @@ export const successFetchAllMKCooporation = (data) => {
     data,
   };
 };
-export const errorfetchAllMKCooporation = () => {
+export const errorfetchAllMKCooporation = (data) => {
   return {
     type: MK_COOPORATION_FAIL,
+    data,
   };
 };
 
@@ -73,14 +66,14 @@ export const limitCooporation = (value) => {
   };
 };
 
-export const getSingleCooporation = (id) => {
-  return async (dispatch, getState) => {
+export const getSingleCooporation = (token, id) => {
+  return async (dispatch) => {
     try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`
-      );
+      let { data } = await masterCategorySingle(token, id);
       dispatch(successGetSingleCooporation(data));
-    } catch (error) {}
+    } catch (error) {
+      dispatch(failGetSingleCooporation(error.response.data.message));
+    }
   };
 };
 
@@ -90,20 +83,20 @@ export const successGetSingleCooporation = (data) => {
     data,
   };
 };
+export const failGetSingleCooporation = (data) => {
+  return {
+    type: FAIL_GET_SINGLE_COOPORATION,
+    data,
+  };
+};
 
-export const deleteCooporation = (id) => {
-  return async (dispatch, getState) => {
+export const deleteCooporation = (token, formData, id) => {
+  return async (dispatch) => {
     try {
-      let formData = new FormData();
-      formData.append("_method", "PUT");
-
-      let { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/delete/${id}`,
-        formData
-      );
+      let { data } = await deleteMasterCategory(token, formData, id);
       dispatch(successDeleteCooporation(data));
     } catch (error) {
-      console.log(error);
+      dispatch(errorDeleteCooporation(error.response.data.message));
     }
   };
 };
@@ -114,64 +107,16 @@ export const successDeleteCooporation = (data) => {
     data,
   };
 };
-
-export const changeStatusList = (value, id, index_list) => {
-  return async (dispatch, getState) => {
-    try {
-      let dataSend = { status: value };
-      let { data } = await axios.put(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/update-status/${id}`,
-        dataSend
-      );
-      dispatch(successChangeStatusList(data, index_list));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const successChangeStatusList = (data, index_list) => {
+export const errorDeleteCooporation = (data) => {
   return {
-    type: SUCCESS_CHANGE_STATUS_LIST,
+    type: ERROR_DELETE_COOPORATION_REQUEST,
     data,
-    index_list,
   };
 };
+
 export const setPage = (page) => {
   return {
     type: SET_PAGE,
     page,
   };
 };
-
-// export const getAllMKCooporation = () => async (dispatch, getState) => {
-//   try {
-//     dispatch({ type: MK_COOPORATION_REQUEST });
-
-//     let keyword = getState().allMKCooporation.keyword || "";
-
-//     let link = process.env.END_POINT_API_PARTNERSHIP + `api/cooperation`;
-//     // if (keyword) link = link.concat(`&keyword=${keyword}`)
-//     // if (limit) link = link.concat(`&limit=${limit}`)
-
-//     // const config = {
-//     //     headers: {
-//     //         'Authorization': 'Bearer ' + process.env.END_POINT_TOKEN_API,
-//     //         'Access-Control-Allow-Origin': '*',
-//     //         'apikey': process.env.END_POINT_KEY_AUTH
-//     //     }
-//     // }
-
-//     const { data } = await axios.get(link);
-
-//     dispatch({
-//       type: MK_COOPORATION_SUCCESS,
-//       payload: data,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: MK_COOPORATION_FAIL,
-//       payload: error.message,
-//     });
-//   }
-// };

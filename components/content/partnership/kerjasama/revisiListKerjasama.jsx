@@ -33,7 +33,11 @@ function RevisiList({ token }) {
   const getCardREviewList = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/card-review/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/card-review/${id}`,{
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setListCardREvisi(data.data);

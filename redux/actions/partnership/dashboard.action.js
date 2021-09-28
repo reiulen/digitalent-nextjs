@@ -6,15 +6,19 @@ import {
 
 import axios from "axios";
 
-export const fetchDashboard = () => {
-  return async (dispatch, getState) => {
+export const fetchDashboard = (token) => {
+  return async (dispatch) => {
     dispatch({ type: DASHBOARD_REQUEST });
 
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/dashbord`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/dashbord`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
-      console.log("data", data);
       dispatch(successFetchDashboard(data));
     } catch (error) {
       dispatch({ type: DASHBOARD_FAIL });

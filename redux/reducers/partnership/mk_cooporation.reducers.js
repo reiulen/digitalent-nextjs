@@ -5,8 +5,10 @@ import {
   SEARCH_COORPORATION,
   LIMIT_CONFIGURATION,
   SUCCESS_GET_SINGLE_COOPORATION,
+  FAIL_GET_SINGLE_COOPORATION,
   DELETE_COOPORATION_REQUEST,
   SUCCESS_DELETE_COOPORATION_REQUEST,
+  ERROR_DELETE_COOPORATION_REQUEST,
   SUCCESS_CHANGE_STATUS_LIST,
   SET_PAGE,
 } from "../../types/partnership/mk_cooporation.type";
@@ -20,6 +22,7 @@ const statuslist = {
 
 const initialState = {
   status: statuslist.idle,
+  error: "",
   mk_cooporation: [],
   mk_single_cooporation: [],
   keyword: "",
@@ -48,11 +51,9 @@ export const allMKCooporationReducer = (state = initialState, action) => {
       return {
         ...state,
         status: statuslist.error,
-        error: action.payload,
+        error: data,
       };
     case SEARCH_COORPORATION:
-      console.log("action.text ??");
-      console.log(action.text);
       return {
         ...state,
         page: 1,
@@ -72,6 +73,18 @@ export const allMKCooporationReducer = (state = initialState, action) => {
         status: statuslist.success,
         mk_single_cooporation: action.data,
       };
+    case FAIL_GET_SINGLE_COOPORATION:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: data,
+      };
+    case ERROR_DELETE_COOPORATION_REQUEST:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: data,
+      };
 
     case SUCCESS_DELETE_COOPORATION_REQUEST:
       return {
@@ -84,28 +97,6 @@ export const allMKCooporationReducer = (state = initialState, action) => {
       return {
         ...state,
         page: action.page,
-      };
-
-    case SUCCESS_CHANGE_STATUS_LIST:
-      // console.log("action");
-      // console.log(action.data, action.index_list);
-      // console.log("state");
-      // console.log(state.mk_cooporation);
-
-      // state.mk_cooporation.data.cooperation_categories.map(
-      //   (cooperation_categorie, index) => {
-      //     if (index === action.index_list) {
-      //       cooperation_categorie.status = action.data.data.status;
-      //     }
-      //     return cooperation_categorie;
-      //   }
-      // );
-      // console.log("state new");
-      // console.log(state.mk_cooporation);
-
-      return {
-        ...state,
-        status_delete: state.status_delete === "" ? statuslist.success : "",
       };
 
     default:

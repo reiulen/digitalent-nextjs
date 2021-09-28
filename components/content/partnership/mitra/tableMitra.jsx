@@ -81,7 +81,7 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteMitra(id));
+        dispatch(deleteMitra(token,id));
         setSuccessDelete(true);
         router.replace(`/partnership/mitra`);
       }
@@ -93,8 +93,8 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchMitra());
-    dispatch(cancelChangeProvinces());
+    dispatch(fetchMitra(token));
+    dispatch(cancelChangeProvinces(token));
   }, [
     dispatch,
     allMitra.keyword,
@@ -103,6 +103,7 @@ const Table = ({ token }) => {
     allMitra.limit,
     allMitra.card,
     update,
+    token
   ]);
 
   return (
@@ -252,7 +253,7 @@ const Table = ({ token }) => {
 
                     <button
                       type="button"
-                      onClick={() => dispatch(exportFileCSV())}
+                      onClick={() => dispatch(exportFileCSV(token))}
                       className="btn btn-rounded-full bg-blue-secondary text-white ml-0"
                       style={{ width: "max-content" }}
                     >

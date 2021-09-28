@@ -17,7 +17,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 
-const EditMitra = ({token}) => {
+const EditMitra = ({ token }) => {
   const router = useRouter();
   const dispatch = useDispatch();
   const allMitra = useSelector((state) => state.allMitra);
@@ -62,7 +62,12 @@ const EditMitra = ({token}) => {
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setInstitution_name(data.data.institution_name);
 
@@ -108,7 +113,7 @@ const EditMitra = ({token}) => {
     setIndonesia_provinces_id("");
     setStatuLoadCities(true);
 
-    dispatch(getProvinces());
+    dispatch(getProvinces(token));
   };
 
   const [showImage, setShowImage] = useState(false);
@@ -230,7 +235,12 @@ const EditMitra = ({token}) => {
           try {
             let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${router.query.id}`,
-              formData
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
             );
             router.push(
               {
@@ -399,7 +409,6 @@ const EditMitra = ({token}) => {
                       height: "168px",
                     }}
                   >
-
                     <Image
                       src={agency_logo}
                       alt="Picture of the author"
@@ -487,38 +496,35 @@ const EditMitra = ({token}) => {
                         className="modal-body text-left p-0"
                         style={{ height: "400px" }}
                       >
-                        {
-                          agency_logo ? (
-
-                            <div
-                              className="w-100 h-100 position-relative"
-                              style={{ padding: "6px" }}
-                            >
-                              <Image
-                                src={agency_logo}
-                                alt="images"
-                                layout="fill"
-                                objectFit="fill"
-                              />
-                            </div>
-                          ) : (
-                            <div
-                              className="w-100 h-100 position-relative"
-                              style={{ padding: "6px" }}
-                            >
-                              <Image
-                                src={
-                                  process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                                  "partnership/images/profile-images/" +
-                                  imageview
-                                }
-                                alt="images"
-                                layout="fill"
-                                objectFit="fill"
-                              />
-                            </div>
-                          )
-                        }
+                        {agency_logo ? (
+                          <div
+                            className="w-100 h-100 position-relative"
+                            style={{ padding: "6px" }}
+                          >
+                            <Image
+                              src={agency_logo}
+                              alt="images"
+                              layout="fill"
+                              objectFit="fill"
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            className="w-100 h-100 position-relative"
+                            style={{ padding: "6px" }}
+                          >
+                            <Image
+                              src={
+                                process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                                "partnership/images/profile-images/" +
+                                imageview
+                              }
+                              alt="images"
+                              layout="fill"
+                              objectFit="fill"
+                            />
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -543,7 +549,7 @@ const EditMitra = ({token}) => {
                     </label>
                   </div>
                 </div>
-               
+
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (

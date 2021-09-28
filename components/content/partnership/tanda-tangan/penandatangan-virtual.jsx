@@ -37,7 +37,7 @@ const choiceTtdAdmin = (e) => {
   console.log(e.target.value);
 };
 
-export default function PenandatanganVirtual() {
+export default function PenandatanganVirtual({token}) {
   const cardRef = useRef(null);
   useDraggable(cardRef);
   const router = useRouter();
@@ -74,8 +74,8 @@ export default function PenandatanganVirtual() {
   ));
 
   useEffect(() => {
-    dispatch(fetchOptionTtdAdmin());
-    dispatch(fetchTtdPartner(router.query.id));
+    dispatch(fetchOptionTtdAdmin(token));
+    dispatch(fetchTtdPartner(token,router.query.id));
   }, [dispatch, router.query.id]);
 
   return (

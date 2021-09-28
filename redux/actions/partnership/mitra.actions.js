@@ -50,7 +50,7 @@ export async function getStatus() {
 
 let debouncedFetchMitra = debounce(getAllMitra, 0);
 
-export const fetchMitra = (keyword) => {
+export const fetchMitra = (token) => {
   return async (dispatch, getState) => {
     dispatch({ type: MITRA_REQUEST });
     let keywordState = getState().allMitra.keyword || "";
@@ -64,7 +64,15 @@ export const fetchMitra = (keyword) => {
     };
 
     try {
-      const { data } = await debouncedFetchMitra(params);
+      const { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners`,
+        {
+          params,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
       dispatch(successFetchMitra(data, data.data.total));
     } catch (error) {
       dispatch(errorFetchMitra());
@@ -91,11 +99,16 @@ export const searchByKey = (value) => {
     value,
   };
 };
-export const deleteMitra = (id) => {
+export const deleteMitra = (token, id) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch({ type: SUCESS_DELETE_MITRA });
     } catch (error) {
@@ -118,11 +131,16 @@ export const setLimit = (value) => {
   };
 };
 
-export const getProvinces = () => {
+export const getProvinces = (token) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       let dataNewProvinces = data.data.map((items) => {
@@ -150,11 +168,16 @@ export const cancelChangeProvinces = () => {
   };
 };
 
-export const exportFileCSV = () => {
-  return async (dispatch, getState) => {
+export const exportFileCSV = (token) => {
+  return async () => {
     try {
       let urlExport = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       router.push(urlExport.config.url);
     } catch (error) {
@@ -171,7 +194,7 @@ export async function getAllMitraDetail(paramsID, id) {
   );
 }
 
-export const getSingleValue = (id) => {
+export const getSingleValue = (token, id) => {
   return async (dispatch, getState) => {
     dispatch({ type: MITRA_REQUEST_DETAIL });
     let keywordState = getState().allMitra.keywordDetail || "";
@@ -189,7 +212,14 @@ export const getSingleValue = (id) => {
     };
 
     try {
-      let { data } = await getAllMitraDetail(paramsID, id);
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/cooperation/${id}?categories_cooporation=${paramsID.categories_cooporation}&status=${paramsID.status}&page=${paramsID.page}&limit=${paramsID.limit}&keyword=${paramsID.keyword}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
       dispatch(successGetSingleValue(data, data.data.total));
     } catch (error) {
       dispatch({ type: MITRA_FAIL_DETAIL });
@@ -225,13 +255,18 @@ export const setLimitDetail = (value) => {
   };
 };
 
-export const exportFileCSVDetail = (id) => {
+export const exportFileCSVDetail = (token, id) => {
   return async (dispatch, getState) => {
     let statusState = getState().allMitra.statusDetail || "";
     let cooperationState = getState().allMitra.categories_cooporation || "";
     try {
       let urlExport = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export-cooperation/${id}?categories_cooporation=${statusState}&status=${cooperationState}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/excel/export-cooperation/${id}?categories_cooporation=${statusState}&status=${cooperationState}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       router.push(urlExport.config.url);
     } catch (error) {
@@ -239,10 +274,17 @@ export const exportFileCSVDetail = (id) => {
     }
   };
 };
-export const fetchListSelectCooperation = () => {
+export const fetchListSelectCooperation = (token) => {
   return async (dispatch, getState) => {
     try {
-      const { data } = await getCooperation();
+      const { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
       let dataNewKerjasama = data.data.map((items) => {
         return {
           ...items,
@@ -262,10 +304,17 @@ export const successFetchListSelectCooperation = (data) => {
     data,
   };
 };
-export const fetchListSelectStatus = () => {
+export const fetchListSelectStatus = (token) => {
   return async (dispatch, getState) => {
     try {
-      const { data } = await getStatus();
+      const { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/status`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
       let dataNewStateus = data.data.map((items) => {
         return {
           ...items,
@@ -298,11 +347,16 @@ export const changeValueStatus = (value) => {
   };
 };
 
-export const deleteCooperation = (id) => {
+export const deleteCooperation = (token, id) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(successDeleteCooperation());
     } catch (error) {
@@ -329,7 +383,12 @@ export const changeStatusList = (token, value, id) => {
       let dataSend = { _method: "put", status: value };
       let { data } = await axios.post(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/update-status/${id}`,
-        dataSend
+        dataSend,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       dispatch(successChangeStatusList(value));
     } catch (error) {
