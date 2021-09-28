@@ -142,6 +142,16 @@ import {
 } from "./subvit/trivia-question-detail.reducers";
 // ============== trivia ===============
 
+// ============== sertifikat ===============
+import {
+  allSertifikatReducers,
+  deleteSertifikatReducer,
+  detailSertifikatReducer,
+  newSertifikatReducer,
+  updateSertifikatReducer,
+} from "./sertifikat/sertifikat.reducers";
+// ============== sertifikat ===============
+
 // start Partnership
 import { allMitraReducer } from "./partnership/mitra.reducers";
 
@@ -284,6 +294,14 @@ const reducer = combineReducers({
   importFileTriviaQuestionDetail: importFileTriviaQuestionDetailReducer,
   importImagesTriviaQuestionDetail: importImagesTriviaQuestionDetailReducer,
   // =============== end trivia ==================
+
+  // =============== sertifikat ==================
+  allSertifikat: allSertifikatReducers,
+  newSertifikat: newSertifikatReducer,
+  detailSertifikat: detailSertifikatReducer,
+  deleteSertifikat: deleteSertifikatReducer,
+  updateSertifikat: updateSertifikatReducer,
+  // =============== end sertifikat ==================
 
   // PARTNERSHIP
   // ================================= => admin

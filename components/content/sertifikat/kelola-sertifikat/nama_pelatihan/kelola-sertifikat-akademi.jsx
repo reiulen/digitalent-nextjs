@@ -18,6 +18,7 @@ import IconFilter from "../../../../assets/icon/Filter";
 export default function KelolaSertifikat() {
     const router = useRouter();
     const { query } = router;
+    console.log(router, "INI QUERY");
     // #DatePicker
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -429,7 +430,7 @@ export default function KelolaSertifikat() {
                                                                     "draft" ? (
                                                                         <>
                                                                             <Link
-                                                                                href={`/sertifikat/kelola-sertifikat/${query.akademi}/${artikel.id}`}
+                                                                                href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${artikel.id}`}
                                                                             >
                                                                                 <a
                                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -441,7 +442,7 @@ export default function KelolaSertifikat() {
                                                                                 </a>
                                                                             </Link>
                                                                             <Link
-                                                                                href={`/sertifikat/kelola-sertifikat/${query.akademi}/${artikel.id}/edit`}
+                                                                                href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${artikel.id}/edit`}
                                                                             >
                                                                                 <a
                                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -457,7 +458,7 @@ export default function KelolaSertifikat() {
                                                                       "publish" ? (
                                                                         <>
                                                                             <Link
-                                                                                href={`/sertifikat/kelola-sertifikat/${query.akademi}/${artikel.id}`}
+                                                                                href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${artikel.id}`}
                                                                             >
                                                                                 <a
                                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -470,7 +471,7 @@ export default function KelolaSertifikat() {
                                                                             </Link>
 
                                                                             <Link
-                                                                                href={`/sertifikat/kelola-sertifikat/${artikel.id}`}
+                                                                                href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/listPeserta`}
                                                                             >
                                                                                 <a
                                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -617,51 +618,6 @@ export default function KelolaSertifikat() {
                         {/* END TABLE */}
                     </div>
                     {/* START MODAL */}
-                    <div
-                        className="modal fade"
-                        id="historyModal"
-                        tabIndex="-1"
-                        role="dialog"
-                        aria-labelledby="exampleModalCenterTitle"
-                        aria-hidden="true"
-                    >
-                        <div
-                            className="modal-dialog modal-dialog-centered"
-                            role="document"
-                        >
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5
-                                        className="modal-title"
-                                        id="exampleModalLongTitle"
-                                    >
-                                        Pratinjau Gambar
-                                    </h5>
-                                    <button
-                                        type="button"
-                                        className="close"
-                                        data-dismiss="modal"
-                                        aria-label="Close"
-                                    >
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div
-                                    className="modal-body text-center"
-                                    style={{ height: "400px" }}
-                                ></div>
-                                <div className="modal-footer">
-                                    <button
-                                        type="button"
-                                        className="btn btn-secondary"
-                                        data-dismiss="modal"
-                                    >
-                                        Tutup
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </PageWrapper>

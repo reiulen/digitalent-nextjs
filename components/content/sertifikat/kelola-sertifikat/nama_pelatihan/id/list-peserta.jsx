@@ -4,28 +4,21 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 // #Page, Component & Library
-import PageWrapper from "../../../wrapper/page.wrapper";
+import PageWrapper from "../../../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
-import LoadingTable from "../../../LoadingTable";
+import LoadingTable from "../../../../../LoadingTable";
 import Pagination from "react-js-pagination";
-import Image from "next/image";
+
 // #Icon
-import IconArrow from "../../../assets/icon/Arrow";
-import IconClose from "../../../assets/icon/Close";
-import IconFilter from "../../../assets/icon/Filter";
+import IconArrow from "../../../../../assets/icon/Arrow";
+import IconClose from "../../../../../assets/icon/Close";
+import IconFilter from "../../../../../assets/icon/Filter";
 
-export default function MasterSertifikat() {
+export default function KelolaSertifikat() {
     const router = useRouter();
-
-    const handleLimit = () => {
-        console.log("");
-    };
-
-    const handleSearch = () => {
-        console.log("");
-    };
-
+    const { query } = router;
+    console.log(router, "INI QUERY");
     // #DatePicker
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
@@ -35,7 +28,9 @@ export default function MasterSertifikat() {
     };
     // #DatePicker
 
+    // #Pagination
     const [limit, setLimit] = useState(null);
+    // #Pagination
 
     const loading = false;
     let { page = 1, keyword, success } = router.query;
@@ -48,8 +43,9 @@ export default function MasterSertifikat() {
                 akademi: "FGA",
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat A",
-                jenis_sertifikat: "1 sisi",
+                jenis_sertifikat: 1,
                 status: "belum tersedia",
+                nama_peserta: "Bradley Cooper",
             },
             {
                 id: 111,
@@ -57,7 +53,8 @@ export default function MasterSertifikat() {
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat B",
                 jenis_sertifikat: "1 sisi",
-                status: "review",
+                status: "belum tersedia",
+                nama_peserta: "Jhony Kiwak",
             },
             {
                 id: 112,
@@ -65,7 +62,9 @@ export default function MasterSertifikat() {
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat C",
                 jenis_sertifikat: "1 sisi",
-                status: "draft",
+                status: "tersedia",
+                created_by: "Firaz",
+                nama_peserta: "Kuls Arwana",
             },
             {
                 id: 112,
@@ -73,7 +72,9 @@ export default function MasterSertifikat() {
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat C",
                 jenis_sertifikat: "1 sisi",
-                status: "publish",
+                status: "belum tersedia",
+                created_by: "Jhony",
+                nama_peserta: "Ken Aisa",
             },
             {
                 id: 112,
@@ -81,7 +82,9 @@ export default function MasterSertifikat() {
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat C",
                 jenis_sertifikat: "1 sisi",
-                status: "ditolak",
+                status: "tersedia",
+                created_by: "Indro",
+                nama_peserta: "Mahmud Amin Setiawan",
             },
             {
                 id: 112,
@@ -89,9 +92,19 @@ export default function MasterSertifikat() {
                 nama_pelatihan: "Security Awareness",
                 nama_sertifikat: "Sertifikat C",
                 jenis_sertifikat: "1 sisi",
-                status: "revisi",
+                status: "belum tersedia",
+                created_by: "Alvin",
+                nama_peserta: "Sushi Ilane",
             },
         ],
+    };
+
+    const handleLimit = () => {
+        console.log("");
+    };
+
+    const handleSearch = () => {
+        console.log("");
     };
 
     return (
@@ -102,19 +115,11 @@ export default function MasterSertifikat() {
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header border-0">
                         <h3 className="card-title font-weight-bolder text-dark">
-                            Master Sertifikat
+                            Kelola Sertifikataa
                         </h3>
-                        <div className="card-toolbar">
-                            <Link href="/sertifikat/master-sertifikat/tambah">
-                                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                                    <i className="ri-pencil-fill"></i>
-                                    Buat Design
-                                </a>
-                            </Link>
-                        </div>
                     </div>
+
                     <div className="card-body pt-0">
-                        {/* START SEARCHBAR */}
                         <div className="table-filter">
                             <div className="row align-items-center">
                                 <div className="col-lg-6 col-xl-6 col-sm-9">
@@ -143,7 +148,6 @@ export default function MasterSertifikat() {
                                         </button>
                                     </div>
                                 </div>
-                                {/* START MODAL */}
                                 <div className="col-lg-6 col-xl-6 col-sm-9">
                                     <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                                         {/* sortir by modal */}
@@ -158,7 +162,7 @@ export default function MasterSertifikat() {
                                         >
                                             <div className="d-flex align-items-center">
                                                 <IconFilter className="mr-3" />
-                                                Pilih Akademi
+                                                Pilih Filter
                                             </div>
                                             <IconArrow
                                                 fill="#E4E6EF"
@@ -315,67 +319,163 @@ export default function MasterSertifikat() {
                                 </div>
                             </div>
                         </div>
-                        {/* END SEARCHBAR */}
-                        {/* START CONTENT */}
-                        <div className="mt-5">
-                            <div className="row justify-content-start">
-                                {/* START LOOP */}
-                                <div className="col-lg-4 p-10 col-sm-6">
-                                    <div className="my-10 justify-content-center d-flex">
-                                        <Image
-                                            src="https://dts-sertifikat-dev.s3.ap-southeast-1.amazonaws.com/certificate/images/certificate-images/2d08970e-7c1a-483a-ae55-ce19e6b8d36f.jpg"
-                                            alt="fitur"
-                                            height={191}
-                                            width={270}
-                                        />
-                                    </div>
-                                    <div className="align-self-center text-center my-5">
-                                        Sertifikat A
-                                    </div>
-                                    <div className="d-flex justify-content-center">
-                                        <Link
-                                            href={`/subvit/substansi/${""}`}
-                                            // isi id
+                        {/* START TABLE */}
+                        <div className="table-page mt-5">
+                            <div className="table-responsive">
+                                <LoadingTable
+                                // UNFISNISH
+                                // loading={loading}
+                                // Isi dengan loading dari dispatch
+                                />
+
+                                {loading === false ? (
+                                    <table className="table table-separate table-head-custom table-checkable">
+                                        <thead
+                                            style={{ background: "#F3F6F9" }}
                                         >
-                                            <a
-                                                className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                                data-toggle="tooltip"
-                                                data-placement="bottom"
-                                                title="Detail"
-                                            >
-                                                <i className="ri-eye-fill p-0 text-white"></i>
-                                            </a>
-                                        </Link>
-                                        <Link
-                                            href={`/subvit/substansi/edit?id=${""}`}
-                                            // isi id
-                                        >
-                                            <a
-                                                className="btn btn-link-action bg-warning text-white mr-2"
-                                                data-toggle="tooltip"
-                                                data-placement="bottom"
-                                                title="Edit"
-                                            >
-                                                <i className="ri-pencil-fill p-0 text-white"></i>
-                                            </a>
-                                        </Link>
-                                        <button
-                                            className="btn btn-link-action bg-danger text-white"
-                                            onClick={() =>
-                                                // handleDelete(subtance.id)
-                                                console.log("")
-                                            }
-                                            data-toggle="tooltip"
-                                            data-placement="bottom"
-                                            title="Hapus"
-                                        >
-                                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                {/* END LOOP */}
+                                            <tr>
+                                                <th className="text-center">
+                                                    No
+                                                </th>
+                                                <th>Nama Peserta</th>
+                                                <th>Akademi</th>
+                                                <th>Nama Pelatihan</th>
+                                                <th>Status</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {!artikel ||
+                                            (artikel &&
+                                                artikel.artikel.length ===
+                                                    0) ? (
+                                                <tr>
+                                                    <td
+                                                        className="text-center"
+                                                        colSpan={6}
+                                                    >
+                                                        Data Masih Kosong
+                                                    </td>
+                                                </tr>
+                                            ) : (
+                                                artikel &&
+                                                // artikel.artikel &&
+                                                artikel.artikel.map(
+                                                    (artikel, i) => {
+                                                        return (
+                                                            <tr
+                                                                key={artikel.id}
+                                                            >
+                                                                <td className="align-middle text-center">
+                                                                    {limit ===
+                                                                    null ? (
+                                                                        <span className="badge badge-secondary text-muted">
+                                                                            {i +
+                                                                                1 *
+                                                                                    (page *
+                                                                                        5) -
+                                                                                (5 -
+                                                                                    1)}
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className="badge badge-secondary text-muted">
+                                                                            {i +
+                                                                                1 *
+                                                                                    (page *
+                                                                                        limit) -
+                                                                                (limit -
+                                                                                    1)}
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+                                                                {/* START TABLE DATA */}
+                                                                <td className="align-middle">
+                                                                    {
+                                                                        artikel.nama_peserta
+                                                                    }
+                                                                </td>
+                                                                <td className="align-middle">
+                                                                    {
+                                                                        artikel.akademi
+                                                                    }
+                                                                </td>
+                                                                <td className="align-middle">
+                                                                    {
+                                                                        artikel.nama_pelatihan
+                                                                    }
+                                                                </td>
+
+                                                                <td className="align-middle text-capitalize">
+                                                                    {artikel.status ==
+                                                                    "tersedia" ? (
+                                                                        <span className="label label-inline label-light-success font-weight-bold">
+                                                                            tersedia
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className="label label-inline label-light-danger font-weight-bold">
+                                                                            belum
+                                                                            tersedia
+                                                                        </span>
+                                                                    )}
+                                                                </td>
+                                                                {/* START AKSI sertifikat */}
+                                                                <td className="align-middle d-flex">
+                                                                    {artikel.status ==
+                                                                    "tersedia" ? (
+                                                                        <>
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${artikel.id}`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-eye-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+
+                                                                            <Link
+                                                                                href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/listPeserta`}
+                                                                            >
+                                                                                <a
+                                                                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="bottom"
+                                                                                    title="Detail"
+                                                                                >
+                                                                                    <i className="ri-file-user-fill p-0 text-white"></i>
+                                                                                </a>
+                                                                            </Link>
+                                                                        </>
+                                                                    ) : (
+                                                                        <Link
+                                                                            href={`/sertifikat/kelola-sertifikat/add`}
+                                                                        >
+                                                                            <a
+                                                                                className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                                                                data-toggle="tooltip"
+                                                                                data-placement="bottom"
+                                                                                title="Tambah"
+                                                                            >
+                                                                                <i className="ri-add-circle-fill p-0 text-white"></i>
+                                                                            </a>
+                                                                        </Link>
+                                                                    )}
+                                                                </td>
+                                                                {/* END TABLE DATA */}
+                                                            </tr>
+                                                        );
+                                                    }
+                                                )
+                                            )}
+                                        </tbody>
+                                    </table>
+                                ) : (
+                                    ""
+                                )}
                             </div>
-                            {/* END CONTENT*/}
                             {/* START Pagination */}
                             <div className="row">
                                 {artikel && artikel.perPage < artikel.total && (
@@ -482,6 +582,52 @@ export default function MasterSertifikat() {
                             {/* End Pagination */}
                         </div>
                         {/* END TABLE */}
+                    </div>
+                    {/* START MODAL */}
+                    <div
+                        className="modal fade"
+                        id="historyModal"
+                        tabIndex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalCenterTitle"
+                        aria-hidden="true"
+                    >
+                        <div
+                            className="modal-dialog modal-dialog-centered"
+                            role="document"
+                        >
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5
+                                        className="modal-title"
+                                        id="exampleModalLongTitle"
+                                    >
+                                        Pratinjau Gambar
+                                    </h5>
+                                    <button
+                                        type="button"
+                                        className="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close"
+                                    >
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div
+                                    className="modal-body text-center"
+                                    style={{ height: "400px" }}
+                                ></div>
+                                <div className="modal-footer">
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        data-dismiss="modal"
+                                    >
+                                        Tutup
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

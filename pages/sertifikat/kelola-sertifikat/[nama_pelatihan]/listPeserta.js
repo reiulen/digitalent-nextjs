@@ -1,16 +1,15 @@
 import dynamic from "next/dynamic";
-import Layout from "../../../../../components/templates/layout.component";
-import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
 
-const KelolaSertifikatID = dynamic(
+const ListPeserta = dynamic(
     () =>
         import(
-            "../../../../../components/content/sertifikat/kelola-sertifikat/akademi/id/kelola-sertifikat-ID"
+            "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/list-peserta"
         ),
     {
         loading: function loadingNow() {
@@ -24,7 +23,8 @@ export default function KelokaSertifikatPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <KelolaSertifikatID />
+                {/* <KelolaSertifikatKategori /> */}
+                <ListPeserta />
             </div>
         </>
     );

@@ -10,7 +10,7 @@ import Pagination from "react-js-pagination";
 const KelolaSertifikatKategori = dynamic(
     () =>
         import(
-            "../../../../components/content/sertifikat/kelola-sertifikat/akademi/kelola-sertifikat-akademi"
+            "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/kelola-sertifikat-akademi"
         ),
     {
         loading: function loadingNow() {
