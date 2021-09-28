@@ -10,11 +10,10 @@ import { Modal } from "react-bootstrap";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
-import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
 
-const DetailSummary = () => {
+const ListReport = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -98,109 +97,6 @@ const DetailSummary = () => {
 
   return (
     <PageWrapper>
-      <div className="col-lg-12 col-md-12 col-sm-12">
-        <div className="row">
-          <CardPage
-            background="bg-primary"
-            icon="new/add-user.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Pendaftar"
-            publishedVal=""
-            routePublish={() => handlePublish("")}
-          />
-          <CardPage
-            background="bg-secondary"
-            icon="new/done-circle.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Verivied Administrasi"
-            publishedVal="sudah-mengerjakan"
-            routePublish={() => handlePublish("sudah-mengerjakan")}
-          />
-          <CardPage
-            background="bg-success"
-            icon="new/open-book.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Lulus Tes Substansi"
-            publishedVal="sedang-mengerjakan"
-            routePublish={() => handlePublish("sedang-mengerjakan")}
-          />
-          <CardPage
-            background="bg-warning"
-            icon="new/mail-white.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Verified Administrasi Lulus Tes Substansi"
-            publishedVal="belum-mengerjakan"
-            routePublish={() => handlePublish("belum-mengerjakan")}
-          />
-          <CardPage
-            background="bg-extras"
-            icon="new/block-white.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Diterima"
-            publishedVal="gagal-test"
-            routePublish={() => handlePublish("gagal-test")}
-          />
-        </div>
-      </div>
-
-      <div className="col-lg-12 order-1 px-0">
-        <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header mt-3">
-            <h1
-              className="card-title text-dark mt-2"
-              style={{ fontSize: "24px" }}
-            >
-              Fresh Graduate Academy / Android Developer / _nama pelatihan_
-            </h1>
-          </div>
-
-          <div className="card-body ">
-            <div className="row">
-              <div className="col-md-6">
-                <p className="text-neutral-body my-0">Kuota Pendaftaran</p>
-                <p className="text-success">1500 Pendaftar</p>
-              </div>
-              <div className="col-md-6">
-                <p className="text-neutral-body my-0">Kuota Peserta</p>
-                <p className="text-success">150 Pendaftar</p>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <p className="text-neutral-body my-0">Jadwal Pendaftaran</p>
-                <p className="text-neutral-body">
-                  1 Oktober 2021 sampai 5 Oktober 2021
-                </p>
-              </div>
-              <div className="col-md-6">
-                <p className="text-neutral-body my-0">Jadwal Pelatihan</p>
-                <p className="text-neutral-body">
-                  1 Oktober 2021 sampai 5 Oktober 2021
-                </p>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <p className="text-neutral-body my-0">Alur Pendaftaran</p>
-                <p className="text-neutral-body">
-                  Administrasi {">"} Test Substansi
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 mt-3">
@@ -208,14 +104,14 @@ const DetailSummary = () => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Peserta
+              List Report Pelatihan
             </h1>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-4 col-xl-4">
+                <div className="col-lg-8 col-xl-8">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -257,25 +153,6 @@ const DetailSummary = () => {
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
-
-                <div className="col-md-2">
-                  <Link href="/pelatihan/rekap-pendaftaran/import-peserta">
-                    <a className="btn w-100 btn-rounded-full bg-success text-white mt-2">
-                      <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
-                      Import
-                    </a>
-                  </Link>
-                </div>
-                <div className="col-md-2">
-                  <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    Export
-                    <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
-                  </button>
-                </div>
               </div>
             </div>
 
@@ -287,29 +164,32 @@ const DetailSummary = () => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-center ">No</th>
-                      <th>Peserta</th>
-                      <th>Pelatihan Sebelumnya</th>
-                      <th>Test Substansi</th>
-                      <th>Berkas</th>
-                      <th>Status Peserta</th>
-                      <th>Updated</th>
+                      <th>ID Pelatihan</th>
+                      <th>Pelatihan</th>
+                      <th>Jadwal</th>
+                      <th>Kuota</th>
+                      <th>Status Pelatihan</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td className="text-center">1</td>
+                      <td>CC001</td>
                       <td>
                         <p className="font-weight-bolder my-0">
-                          Cristiano Messi
+                          Android Developer
                         </p>
-                        <p className="my-0">00019989893</p>
+                        <p className="my-0">IBM</p>
+                        <p className="my-0">DKI</p>
                       </td>
-                      <td>3</td>
                       <td>
-                        <p className="my-0 text-success">Lulus</p>
-                        <p className="my-0">90</p>
-                        <p className="my-0">00:50:21</p>
+                        <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
+                        <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
+                      </td>
+                      <td>
+                        <p className="my-0">300 Pendaftar </p>
+                        <p className="my-0">100 Peserta </p>
                       </td>
                       <td>
                         <span className="label label-inline label-light-success font-weight-bold">
@@ -317,21 +197,9 @@ const DetailSummary = () => {
                         </span>
                       </td>
                       <td>
-                        <span className="label label-inline label-light-success font-weight-bold">
-                          Publish
-                        </span>
-                      </td>
-                      <td>
-                        <p className="font-weight-bolder my-0">
-                          Admin Verifikasi
-                        </p>
-                        <p className="my-0">1 Oktober 2021</p>
-                        <p className="my-0">00:50:21</p>
-                      </td>
-                      <td>
                         <div className="d-flex">
                           <Link
-                            href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta/${1}`}
+                            href={`/pelatihan/report-pelatihan/detail-report-pelatihan/${1}`}
                           >
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -340,6 +208,30 @@ const DetailSummary = () => {
                               title="Detail"
                             >
                               <i className="ri-eye-fill text-white p-0"></i>
+                            </a>
+                          </Link>
+                          <Link
+                            href={`/pelatihan/pelatihan/view-pelatihan/${1}`}
+                          >
+                            <a
+                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Download As Word"
+                            >
+                              <i className="ri-file-word-fill text-white p-0"></i>
+                            </a>
+                          </Link>
+                          <Link
+                            href={`/pelatihan/pelatihan/view-pelatihan/${1}`}
+                          >
+                            <a
+                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                              data-toggle="tooltip"
+                              data-placement="bottom"
+                              title="Download As PDF"
+                            >
+                              <i className="ri-file-ppt-fill text-white p-0"></i>
                             </a>
                           </Link>
                         </div>
@@ -462,4 +354,4 @@ const DetailSummary = () => {
   );
 };
 
-export default DetailSummary;
+export default ListReport;
