@@ -401,6 +401,25 @@ const EditImagetron = () => {
                             </div>
 
                             <div className="form-group">
+                                <label className='col-sm-2 col-form-label font-weight-bolder'>Link URL</label>
+                                <div className="col-sm-12">
+                                    <div className="input-group">
+                                        {/* <div className="input-group-prepend">
+                                            <div className="input-group-text">https://</div>
+                                        </div> */}
+                                        <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")} />
+
+                                    </div>
+                                    {simpleValidator.current.message(
+                                        "url_link",
+                                        url_link,
+                                        "required|url",
+                                        { className: "text-danger" }
+                                    )}
+                                </div>
+                            </div>
+                            
+                            <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"
                                     className="col-sm-2 col-form-label font-weight-bolder"
@@ -483,24 +502,6 @@ const EditImagetron = () => {
                                 </div>
                             </div> */}
 
-                            <div className="form-group">
-                                <label className='col-sm-2 col-form-label font-weight-bolder'>Link URL</label>
-                                <div className="col-sm-12">
-                                    <div className="input-group">
-                                        {/* <div className="input-group-prepend">
-                                            <div className="input-group-text">https://</div>
-                                        </div> */}
-                                        <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")} />
-
-                                    </div>
-                                    {simpleValidator.current.message(
-                                        "url_link",
-                                        url_link,
-                                        "required|url",
-                                        { className: "text-danger" }
-                                    )}
-                                </div>
-                            </div>
 
                             <div className="form-group row">
                                 <label

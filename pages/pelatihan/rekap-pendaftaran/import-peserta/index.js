@@ -1,17 +1,17 @@
 import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
-import DataParticipant from "../../../../../components/content/pelatihan/summary/data-participant";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import ImportSummary from "../../../../components/content/pelatihan/summary/import-participant";
 
-import { wrapper } from "../../../../../redux/store";
+import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function DataParticipantPage() {
+export default function ImportSummaryPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DataParticipant />
+        <ImportSummary />
       </div>
     </>
   );
@@ -31,7 +31,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { session, title: "Data Peserta - Pelatihan" },
+        props: { session, title: "Import Peserta - Pelatihan" },
       };
     }
 );

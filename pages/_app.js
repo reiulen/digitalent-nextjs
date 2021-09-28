@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../components/Table/tableStyle.css";
 import "remixicon/fonts/remixicon.css";
 import "react-toastify/dist/ReactToastify.css";
-
+import "../components/content/sertifikat/style.css";
 import SimpleReactValidator from "simple-react-validator";
 import { wrapper } from "../redux/store";
 
