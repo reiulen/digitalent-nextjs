@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import IconCalender from "../../../assets/icon/Calender";
 import DatePicker from "react-datepicker";
@@ -13,6 +14,7 @@ import { addDays } from "date-fns";
 
 function ReviewDokumenKerjasama() {
   const router = useRouter();
+  const {revisiDone} = router.query
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -112,6 +114,17 @@ function ReviewDokumenKerjasama() {
     setNamePDF(null);
   };
 
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
 
 
   const handleSubmit = async () => {
@@ -152,15 +165,37 @@ function ReviewDokumenKerjasama() {
 
           console.log("data sukses",data)
 
+          // router.push({
+          //   pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama",
+          //   query: { id: router.query.id },
+          // });
+
+
+          // router.push({
+          //   pathname: "/partnership/user/kerjasama/",
+          //   query: { successSubmitDokumentKerjasama: true },
+          // });
+
+
           router.push({
-            pathname: "/partnership/user/kerjasama/",
-            query: { successSubmitDokumentKerjasama: true },
+            pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama/",
+            query: { revisiDone: true },
           });
+
+
+
+
         } catch (error) {
+          console.log("object skdmksdmksdmksdmkk")
+          // console.log("sdfsddfs",error.response.data.message);
           notify(error.response.data.message);
         }
       }
     });
+  };
+
+  const onNewReset = () => {
+    router.replace("/partnership/user/kerjasama/review-dokumen-kerjasama", undefined, { shallow: true });
   };
 
 
@@ -172,6 +207,46 @@ function ReviewDokumenKerjasama() {
 
   return (
     <PageWrapper>
+      {revisiDone ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil merevisi data
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -235,7 +310,7 @@ function ReviewDokumenKerjasama() {
               </div>
             </div>
 
-            {note === "-" ? (
+            {(note === "-") || revisiDone ? (
               <div className={`row mt-20`}>
                 <div className="col-12 col-sm-6">
                   <Image
@@ -384,7 +459,9 @@ function ReviewDokumenKerjasama() {
                     />
                   </div>
                 </div>
-                <div className="col-12 col-sm-6">
+                </div>
+<div className="row">
+                 <div className="col-12">
                   {/* <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Dokumen Kerjasama
@@ -424,7 +501,7 @@ function ReviewDokumenKerjasama() {
                 {/* start action show and upload */}
                 <div className="row">
                   <div className="col-sm-12">
-                    <div className="d-flex flex-wrap align-items-center">
+                    <div className="d-flex flex-wrap align-items-center mb-4">
                     <button
                       type="button"
                       className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
@@ -507,7 +584,7 @@ function ReviewDokumenKerjasama() {
               </div>
               {/* end dokument */}
                 </div>
-              </div>
+             </div>
 
                 <div className="row">
                   <div className="col-12">

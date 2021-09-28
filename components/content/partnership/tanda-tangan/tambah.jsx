@@ -8,12 +8,13 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-import axios from "axios";
+import {addTttd} from '../../../../redux/actions/partnership/tandaTangan.actions'
+import {useDispatch,useSelector} from 'react-redux'
 
 const TambahTandaTangan = ({token}) => {
   const signCanvas = useRef({});
   const router = useRouter();
+  const dispatch = useDispatch()
 
   const clear = () => {
     Swal.fire({
@@ -97,18 +98,9 @@ const TambahTandaTangan = ({token}) => {
           formData.append("position", jabatan);
           formData.append("signature_image", tandaTangan);
 
-          try {
-            let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/create`,
-              formData
-            );
-            router.push({
-              pathname: "/partnership/tanda-tangan",
-              query: { success: true },
-            });
-          } catch (error) {
-            notify(error.response.data.message);
-          }
+          // dispatch add ttd here
+          dispatch(addTttd(token,formData))
+
         }
       });
     }

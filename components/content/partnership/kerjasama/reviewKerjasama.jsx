@@ -21,7 +21,13 @@ const ReviewKerjasama = ({ token }) => {
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+        
       );
       console.log("data sdfsdf", data);
       setTitle(data.data.title);
@@ -42,12 +48,18 @@ const ReviewKerjasama = ({ token }) => {
   const [periodView, setPeriodView] = useState("");
   const [periodUnitView, setPeriodUnitView] = useState("tahun");
   const [noteView, setNoteView] = useState("");
+  const [mitra, setMitra] = useState("")
 
   // cek review card-version
   const setDataSingleSelesaiReview = async (id, version) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setTitleView(data.data.title);
       setDateView(data.data.date);
@@ -56,6 +68,7 @@ const ReviewKerjasama = ({ token }) => {
       setPeriodUnitView(data.data.period_unit);
       setAllCooperationView(data.data.cooperation_category.data_content);
       setNoteView(data.data.note);
+      setMitra(data.data.mitra);
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
@@ -100,7 +113,12 @@ const ReviewKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept/${router.query.id}`
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept/${router.query.id}`,
+            {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
           );
           console.log("data", data);
           router.push({
@@ -132,7 +150,12 @@ const ReviewKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`,
+            {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
           );
 
           console.log("data asdasd", data);
@@ -175,7 +198,7 @@ const ReviewKerjasama = ({ token }) => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Review Kerjasama
+              Review Kerjasama {mitra && mitra}
             </h3>
           </div>
           <div className="card-body">

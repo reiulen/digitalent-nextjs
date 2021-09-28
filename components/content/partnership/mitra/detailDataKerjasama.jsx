@@ -134,8 +134,8 @@ const DetailDataKerjasama = ({token}) => {
   useEffect(() => {
     if (router.query.id) {
       setgetId(router.query.id);
-      dispatch(getSingleValue(router.query.id));
-      dispatch(fetchListSelectCooperation());
+      dispatch(getSingleValue(token,router.query.id));
+      dispatch(fetchListSelectCooperation(token));
       dispatch(fetchListSelectStatus());
     }
   }, [
@@ -147,6 +147,7 @@ const DetailDataKerjasama = ({token}) => {
     mitraDetailAll.statusDetail,
     mitraDetailAll.categories_cooporation,
     mitraDetailAll.status_reload,
+    token
   ]);
 
   return (
@@ -418,7 +419,7 @@ const DetailDataKerjasama = ({token}) => {
 
                     <button
                       type="button"
-                      onClick={() => dispatch(exportFileCSVDetail(getId))}
+                      onClick={() => dispatch(exportFileCSVDetail(token,getId))}
                       className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
                       style={{ width: "max-content" }}
                     >
