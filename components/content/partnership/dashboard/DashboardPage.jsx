@@ -30,7 +30,12 @@ export default function DashboardPage({ token }) {
   const fetchDashboards = async () => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/dashbord`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/dashbord`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setDataPieChartPengajuanDisetujui([
         {
@@ -59,7 +64,7 @@ export default function DashboardPage({ token }) {
 
   useEffect(() => {
     fetchDashboards();
-    dispatch(fetchDashboard());
+    dispatch(fetchDashboard(token));
   }, [dispatch]);
   return (
     <PageWrapper>

@@ -13,7 +13,7 @@ import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const SubmitKerjasama = ({token}) => {
+const SubmitKerjasama = ({ token }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   // pdf file
@@ -66,7 +66,6 @@ const SubmitKerjasama = ({token}) => {
   };
 
   const submit = (e) => {
-
     e.preventDefault();
 
     if (period_date_start === "") {
@@ -133,7 +132,12 @@ const SubmitKerjasama = ({token}) => {
           try {
             let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal`,
-              formData
+              formData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
             );
             sessionStorage.removeItem("dataBefore");
             router.push({
@@ -213,7 +217,6 @@ const SubmitKerjasama = ({token}) => {
     setPeriodUnit(datas[0].periodUnit);
     setCooperationC_id(datas[0].cooperationC_id);
     setAllCooperation(datas[0].AllCooperation);
-
     setPeriodValue(datas[0].period);
     setPeriodUnitValue(datas[0].periodUnit);
   }, []);

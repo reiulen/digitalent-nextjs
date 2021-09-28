@@ -164,7 +164,12 @@ const EditDokumentKerjasamaById = ({ token }) => {
         try {
           let { data } = await axios.post(
             `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${router.query.id}`,
-            formData
+            formData,
+            {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
           );
 
           //           Swal.fire(
@@ -191,7 +196,12 @@ const EditDokumentKerjasamaById = ({ token }) => {
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setIsntitusiName(data.data.institution_name);
       setTitle(data.data.title);
@@ -268,11 +278,11 @@ const EditDokumentKerjasamaById = ({ token }) => {
     dispatch(cancelChangeNamaLembaga());
   }, [dispatch, router.query.id]);
   useEffect(() => {
-    dispatch(fetchListCooperationSelectById(cooperationC_id));
-  }, [dispatch, allMK.idCooporationSelect, cooperationC_id]);
+    dispatch(fetchListCooperationSelectById(token,cooperationC_id));
+  }, [dispatch, allMK.idCooporationSelect, cooperationC_id,token]);
   useEffect(() => {
-    dispatch(fetchDataEmail());
-  }, [dispatch, allMK.institution_name, allMK.stateListMitra]);
+    dispatch(fetchDataEmail(token));
+  }, [dispatch, allMK.institution_name, allMK.stateListMitra,token]);
 
   useEffect(() => {
     function periodCheck(date) {
@@ -370,7 +380,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                       <button
                         type="button"
                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2 w-100 d-flex justify-content-center"
-                        onClick={() => dispatch(fetchListCooperationSelect())}
+                        onClick={() => dispatch(fetchListCooperationSelect(token))}
                       >
                         Ubah Kategory
                       </button>

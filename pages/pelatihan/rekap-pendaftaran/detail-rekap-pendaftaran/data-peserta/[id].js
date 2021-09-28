@@ -2,16 +2,16 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
-import DataPeserta from "../../../../../components/content/pelatihan/summary/detail-summary";
+import DataParticipant from "../../../../../components/content/pelatihan/summary/data-participant";
 
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function DataPesertaPage() {
+export default function DataParticipantPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <DataPeserta />
+        <DataParticipant />
       </div>
     </>
   );
@@ -31,7 +31,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { session, title: "View Parameter - Pelatihan" },
+        props: { session, title: "Data Peserta - Pelatihan" },
       };
     }
 );

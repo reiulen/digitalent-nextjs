@@ -1,19 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 
-import Link from 'next/link'
-import Image from 'next/image'
+import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
-import DatePicker from 'react-datepicker'
+import DatePicker from "react-datepicker";
 
-import { newImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
+import {
+    newImagetron,
+    clearErrors,
+} from "../../../../redux/actions/publikasi/imagetron.actions";
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
-import { NEW_IMAGETRON_RESET } from '../../../../redux/types/publikasi/imagetron.type'
-import PageWrapper from '../../../wrapper/page.wrapper';
+import { NEW_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron.type";
+import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
 const TambahImagetron = () => {
@@ -558,4 +561,4 @@ const TambahImagetron = () => {
   )
 }
 
-export default TambahImagetron
+export default TambahImagetron;

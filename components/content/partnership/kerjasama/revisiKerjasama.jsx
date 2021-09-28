@@ -41,7 +41,12 @@ const RevisiKerjasama = ({ token }) => {
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setPeriod_start(data.data.period_date_start);
       setPeriod_end(data.data.period_date_end);
@@ -70,7 +75,12 @@ const RevisiKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept-document/${router.query.id}`
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept-document/${router.query.id}`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
           );
           router.push({
             pathname: "/partnership/kerjasama/",
@@ -98,7 +108,12 @@ const RevisiKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
           );
           router.push({
             pathname: "/partnership/kerjasama/",
@@ -134,7 +149,12 @@ const RevisiKerjasama = ({ token }) => {
             formData.append("note", catatanREvisi);
             let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi-document/${router.query.id}`,
-              formData
+              formData,
+              {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
             );
             router.push({
               pathname: "/partnership/kerjasama/",

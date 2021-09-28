@@ -4,20 +4,25 @@ import { getSession } from "next-auth/client";
 // import Layout from "../../../components/templates/layout.component";
 // import Berita from "../../../components/content/publikasi/berita/berita";
 
-import { getAllDashboardPublikasi } from "../../../redux/actions/publikasi/dashboard-publikasi.actions"
-import { wrapper } from "../../../redux/store"
+import { getAllDashboardPublikasi } from "../../../redux/actions/publikasi/dashboard-publikasi.actions";
+import { wrapper } from "../../../redux/store";
 // import { getSession } from "next-auth/client";
 
 // import LoadingPage from "../../../components/LoadingPage";
-import LoadingSkeleton from "../../../components/LoadingSkeleton"
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 const DashboardPublikasi = dynamic(
-    () => import("../../../components/content/publikasi/dashboard-publikasi/dashboard-publikasi"),
+    () =>
+        import(
+            "../../../components/content/publikasi/dashboard-publikasi/dashboard-publikasi"
+        ),
     {
         // suspense: true,
-        // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow() { return <LoadingSkeleton /> },
-        ssr: false
+        // loading: () => <LoadingSkeleton />,
+        loading: function loadingNow() {
+            return <LoadingSkeleton />;
+        },
+        ssr: false,
     }
 );
 
@@ -26,25 +31,30 @@ export default function DashboardPage(props) {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <DashboardPublikasi token={session.token}/>
+                <DashboardPublikasi token={session.token} />
             </div>
         </>
-    )
+    );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
-    const session = await getSession({ req });
-    if (!session) {
-        return {
-            redirect: {
-            destination: "/",
-            permanent: false,
-            },
-        };
-    }
-    
-    await store.dispatch (getAllDashboardPublikasi(session.user.user.data.token))
-    return {
-        props: { session, title: "Dashboard - Publikasi" },
-    };
-})
+export const getServerSideProps = wrapper.getServerSideProps(
+    store =>
+        async ({ query, req }) => {
+            const session = await getSession({ req });
+            if (!session) {
+                return {
+                    redirect: {
+                        destination: "/",
+                        permanent: false,
+                    },
+                };
+            }
+
+            await store.dispatch(
+                getAllDashboardPublikasi(session.user.user.data.token)
+            );
+            return {
+                props: { session, title: "Dashboard - Publikasi" },
+            };
+        }
+);
