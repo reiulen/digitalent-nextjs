@@ -148,18 +148,19 @@ const Tambah = ({token}) => {
   };
 
   useEffect(() => {
-    dispatch(fetchDataEmail());
-    dispatch(fetchListSelectCooperation());
+    dispatch(fetchDataEmail(token));
+    dispatch(fetchListSelectCooperation(token));
     // get cooperation active select
-    dispatch(fetchListCooperationSelect());
-    dispatch(fetchListCooperationSelectById(cooperationC_id));
-    dispatch(fetchListSelectMitra());
+    dispatch(fetchListCooperationSelect(token));
+    dispatch(fetchListCooperationSelectById(token,cooperationC_id));
+    dispatch(fetchListSelectMitra(token));
     setDate(moment(new Date()).format("YYYY-MM-DD"));
   }, [
     dispatch,
     allMK.institution_name,
     allMK.idCooporationSelect,
     cooperationC_id,
+    token
   ]);
   return (
     <PageWrapper>

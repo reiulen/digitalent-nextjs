@@ -158,7 +158,12 @@ const EditDokumentKerjasama = ({ token }) => {
         try {
           let { data } = await axios.post(
             `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${router.query.id}`,
-            formData
+            formData,
+            {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
           );
 
           router.push({
@@ -200,7 +205,12 @@ const EditDokumentKerjasama = ({ token }) => {
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setIsntitusiName(data.data.institution_name);
       setTitle(data.data.title);
@@ -254,10 +264,10 @@ const EditDokumentKerjasama = ({ token }) => {
     dispatch(cancelChangeNamaLembaga());
   }, [dispatch, router.query.id]);
   useEffect(() => {
-    dispatch(fetchListCooperationSelectById(cooperationC_id));
+    dispatch(fetchListCooperationSelectById(token,cooperationC_id));
   }, [dispatch, allMK.idCooporationSelect, cooperationC_id]);
   useEffect(() => {
-    dispatch(fetchDataEmail());
+    dispatch(fetchDataEmail(token));
   }, [dispatch, allMK.institution_name, allMK.stateListMitra]);
 
   useEffect(() => {
@@ -354,7 +364,7 @@ const EditDokumentKerjasama = ({ token }) => {
                       <button
                         type="button"
                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white w-100 d-flex justify-content-center mt-2"
-                        onClick={() => dispatch(fetchListCooperationSelect())}
+                        onClick={() => dispatch(fetchListCooperationSelect(token))}
                       >
                         Ubah Kategory
                       </button>

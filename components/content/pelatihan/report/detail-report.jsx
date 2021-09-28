@@ -10,11 +10,10 @@ import { Modal } from "react-bootstrap";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
-import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
 
-const DetailSummary = () => {
+const DetailReport = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -24,7 +23,7 @@ const DetailSummary = () => {
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [showModalRevisi, setShowModalRevisi] = useState(false);
+  const [showModalSertifikasi, setShowModalSertifikasi] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
 
   const handlePagination = (pageNumber) => {
@@ -93,114 +92,11 @@ const DetailSummary = () => {
   };
 
   const handleModalRevisi = (id) => {
-    setShowModalRevisi(true);
+    setShowModalSertifikasi(true);
   };
 
   return (
     <PageWrapper>
-      <div className="col-lg-12 col-md-12 col-sm-12">
-        <div className="row">
-          <CardPage
-            background="bg-primary"
-            icon="new/add-user.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Pendaftar"
-            publishedVal=""
-            routePublish={() => handlePublish("")}
-          />
-          <CardPage
-            background="bg-secondary"
-            icon="new/done-circle.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Verivied Administrasi"
-            publishedVal="sudah-mengerjakan"
-            routePublish={() => handlePublish("sudah-mengerjakan")}
-          />
-          <CardPage
-            background="bg-success"
-            icon="new/open-book.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Lulus Tes Substansi"
-            publishedVal="sedang-mengerjakan"
-            routePublish={() => handlePublish("sedang-mengerjakan")}
-          />
-          <CardPage
-            background="bg-warning"
-            icon="new/mail-white.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Verified Administrasi Lulus Tes Substansi"
-            publishedVal="belum-mengerjakan"
-            routePublish={() => handlePublish("belum-mengerjakan")}
-          />
-          <CardPage
-            background="bg-extras"
-            icon="new/block-white.svg"
-            color="#FFFFFF"
-            value={0}
-            titleValue=""
-            title="Diterima"
-            publishedVal="gagal-test"
-            routePublish={() => handlePublish("gagal-test")}
-          />
-        </div>
-      </div>
-
-      <div className="col-lg-12 order-1 px-0">
-        <div className="card card-custom card-stretch gutter-b">
-          <div className="card-header mt-3">
-            <h1
-              className="card-title text-dark mt-2"
-              style={{ fontSize: "24px" }}
-            >
-              Fresh Graduate Academy / Android Developer / _nama pelatihan_
-            </h1>
-          </div>
-
-          <div className="card-body ">
-            <div className="row">
-              <div className="col-md-6">
-                <p className="text-neutral-body my-0">Kuota Pendaftaran</p>
-                <p className="text-success">1500 Pendaftar</p>
-              </div>
-              <div className="col-md-6">
-                <p className="text-neutral-body my-0">Kuota Peserta</p>
-                <p className="text-success">150 Pendaftar</p>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <p className="text-neutral-body my-0">Jadwal Pendaftaran</p>
-                <p className="text-neutral-body">
-                  1 Oktober 2021 sampai 5 Oktober 2021
-                </p>
-              </div>
-              <div className="col-md-6">
-                <p className="text-neutral-body my-0">Jadwal Pelatihan</p>
-                <p className="text-neutral-body">
-                  1 Oktober 2021 sampai 5 Oktober 2021
-                </p>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <p className="text-neutral-body my-0">Alur Pendaftaran</p>
-                <p className="text-neutral-body">
-                  Administrasi {">"} Test Substansi
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 mt-3">
@@ -208,14 +104,14 @@ const DetailSummary = () => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Peserta
+              Detail Report Pelatihan - VGA - Android Developers
             </h1>
           </div>
 
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-4 col-xl-4">
+                <div className="col-lg-6 col-xl-6">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -259,14 +155,6 @@ const DetailSummary = () => {
                 </div>
 
                 <div className="col-md-2">
-                  <Link href="/pelatihan/rekap-pendaftaran/import-peserta">
-                    <a className="btn w-100 btn-rounded-full bg-success text-white mt-2">
-                      <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
-                      Import
-                    </a>
-                  </Link>
-                </div>
-                <div className="col-md-2">
                   <button
                     className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
                     type="button"
@@ -288,60 +176,52 @@ const DetailSummary = () => {
                     <tr>
                       <th className="text-center ">No</th>
                       <th>Peserta</th>
-                      <th>Pelatihan Sebelumnya</th>
+                      <th>Alamat</th>
                       <th>Test Substansi</th>
-                      <th>Berkas</th>
+                      <th>Administrasi</th>
                       <th>Status Peserta</th>
-                      <th>Updated</th>
-                      <th>Aksi</th>
+                      <th>Sertifikasi</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
                       <td className="text-center">1</td>
-                      <td>
+                      <td className="align-middle">
                         <p className="font-weight-bolder my-0">
                           Cristiano Messi
                         </p>
-                        <p className="my-0">00019989893</p>
+                        <p className="my-0">00363178267823</p>
+                        <p className="my-0">345272826837383</p>
                       </td>
-                      <td>3</td>
-                      <td>
-                        <p className="my-0 text-success">Lulus</p>
+                      <td className="align-middle">Bandung</td>
+                      <td className="align-middle">
+                        <p className="my-0 text-success">Lulus </p>
                         <p className="my-0">90</p>
-                        <p className="my-0">00:50:21</p>
+                        <p className="my-0">00:59:00</p>
                       </td>
-                      <td>
-                        <span className="label label-inline label-light-success font-weight-bold">
-                          Disetujui
+                      <td className="align-middle">
+                        <span className="label label-inline label-light-danger font-weight-bold">
+                          Incomplete
                         </span>
                       </td>
-                      <td>
-                        <span className="label label-inline label-light-success font-weight-bold">
-                          Publish
+                      <td className="align-middle">
+                        <span className="label label-inline label-light-danger font-weight-bold">
+                          Ditolak
                         </span>
                       </td>
-                      <td>
-                        <p className="font-weight-bolder my-0">
-                          Admin Verifikasi
-                        </p>
-                        <p className="my-0">1 Oktober 2021</p>
-                        <p className="my-0">00:50:21</p>
-                      </td>
-                      <td>
-                        <div className="d-flex">
-                          <Link
-                            href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta/${1}`}
+                      <td className="align-middle">
+                        <div className="d-flex align-items-center">
+                          Tidak Ada
+                          <button
+                            className="btn btn-link-action bg-blue-primary text-white ml-3"
+                            data-toggle="tooltip"
+                            data-placement="bottom"
+                            title="Tambah Sertifikasi"
+                            onClick={() => setShowModalSertifikasi(true)}
+                            type="button"
                           >
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Detail"
-                            >
-                              <i className="ri-eye-fill text-white p-0"></i>
-                            </a>
-                          </Link>
+                            <i className="ri-add-fill text-white p-0"></i>
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -371,44 +251,28 @@ const DetailSummary = () => {
         </Modal.Header>
         <Modal.Body>
           <div className="form-group mb-5">
-            <label className="p-0">Penyelenggara</label>
+            <label className="p-0">Status Administrasi</label>
             <select className="form-control">
               <option>Semua</option>
             </select>
           </div>
           <div className="form-group mb-5">
-            <label className="p-0">Akademi</label>
+            <label className="p-0">Status Test Substansi</label>
             <select className="form-control">
               <option>Semua</option>
             </select>
           </div>
           <div className="form-group mb-5">
-            <label className="p-0">Tema</label>
+            <label className="p-0">Status Peserta</label>
             <select className="form-control">
               <option>Semua</option>
             </select>
           </div>
           <div className="form-group mb-5">
-            <label className="p-0">Status Substansi</label>
+            <label className="p-0">Sertifikasi</label>
             <select className="form-control">
               <option>Semua</option>
             </select>
-          </div>
-          <div className="form-group mb-5">
-            <label className="p-0">Status Pelatihan</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
-          </div>
-          <div className="row">
-            <div className="form-group mb-5 col-md-6">
-              <label className="p-0">Tanggal Pendaftaran</label>
-              <input type="date" name="" id="" className="form-control" />
-            </div>
-            <div className="form-group mb-5 col-md-6">
-              <label className="p-0">Tanggal Pelaksanaan</label>
-              <input type="date" name="" id="" className="form-control" />
-            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -425,36 +289,77 @@ const DetailSummary = () => {
       </Modal>
 
       <Modal
-        show={showModalRevisi}
-        onHide={() => setShowModalRevisi(false)}
+        show={showModalSertifikasi}
+        onHide={() => setShowModalSertifikasi(false)}
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        size="lg"
       >
         <Modal.Header>
-          <Modal.Title>Catatan Revisi</Modal.Title>
+          <Modal.Title>Tambah Sertifikasi</Modal.Title>
           <button
             type="button"
             className="close"
-            onClick={() => setShowModalRevisi(false)}
+            onClick={() => setShowModalSertifikasi(false)}
           >
             <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
           </button>
         </Modal.Header>
         <Modal.Body>
-          <div className="form-group mb-5">
-            <label className="p-0">Isi Catatan</label>
-            <textarea rows="5" className="form-control"></textarea>
+          <div className="form-group row mb-4">
+            <label className="col-form-label font-weight-bold col-sm-3 pr-0 text-center">
+              Status Sertifikasi
+            </label>
+            <div className="col-sm-9 mt-3">
+              <div className="form-check ">
+                <input
+                  type="radio"
+                  name="status"
+                  className="form-check-input"
+                  value="Ya"
+                />
+                <label className="form-check-label">
+                  Lulus / Certifed / Kompeten
+                </label>
+              </div>
+              <div className="form-check ">
+                <input
+                  type="radio"
+                  name="status"
+                  value="Tidak"
+                  className="form-check-input"
+                />
+                <label className="form-check-label">
+                  Tidak Lulus / Not Certifed / Belum Kompeten
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div className="form-group mb-3 px-11">
+            <label className="col-form-label font-weight-bold">
+              Upload Sertifikasi (Optional)
+            </label>
+            <div className="d-flex">
+              <div className="custom-file">
+                <input
+                  type="file"
+                  className="custom-file-input"
+                  accept="image/png, image/jpeg , image/jpg"
+                />
+                <label className="custom-file-label" htmlFor="customFile">
+                  Pilih File
+                </label>
+              </div>
+            </div>
+            <small className="text-muted">
+              Format File (.pdf/.jpg) & Max size 5 mb
+            </small>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button
-            className="btn btn-light-ghost-rounded-full mr-2"
-            type="reset"
-          >
-            Reset
-          </button>
           <button className="btn btn-primary-rounded-full" type="button">
-            Terapkan
+            Upload
           </button>
         </Modal.Footer>
       </Modal>
@@ -462,4 +367,4 @@ const DetailSummary = () => {
   );
 };
 
-export default DetailSummary;
+export default DetailReport;
