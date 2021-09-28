@@ -259,14 +259,12 @@ const DetailSummary = () => {
                 </div>
 
                 <div className="col-md-2">
-                  <button
-                    className="btn w-100 btn-rounded-full bg-success text-white mt-2"
-                    type="button"
-                    onClick={handleExportReport}
-                  >
-                    <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
-                    Import
-                  </button>
+                  <Link href="/pelatihan/rekap-pendaftaran/import-peserta">
+                    <a className="btn w-100 btn-rounded-full bg-success text-white mt-2">
+                      <i className="ri-download-2-line mr-2 mt-1 text-white"></i>
+                      Import
+                    </a>
+                  </Link>
                 </div>
                 <div className="col-md-2">
                   <button
@@ -333,7 +331,7 @@ const DetailSummary = () => {
                       <td>
                         <div className="d-flex">
                           <Link
-                            href={`/pelatihan/pelatihan/view-pelatihan/${1}`}
+                            href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/data-peserta/${1}`}
                           >
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"

@@ -40,7 +40,7 @@ const Kategori = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [publishValue, setPublishValue] = useState(null);
-    const [searchKategori, setSearchKategori] = useState('')
+    const [searchKategori, setSearchKategori] = useState(null)
 
     // useEffect (() => {
     //     dispatch (getAllKategori())
@@ -161,11 +161,9 @@ const Kategori = () => {
                 'Harap memilih kategori terlebih dahulu.',
                 'error'
             )
-            setSearchKategori(null)
-
         } else {
-            if (limit != null && searchKategori === null) {
-                router.push(`${router.pathname}?page=1&keyword=${searchKategori}&limit=${limit}`)
+            if (searchKategori === null) {
+                router.push(`${router.pathname}?page=1&limit=${limit}`)
             } else {
                 router.push(`${router.pathname}?page=1&keyword=${searchKategori}`)
             }
@@ -173,44 +171,44 @@ const Kategori = () => {
     }
 
     const handlePagination = (pageNumber) => {
-        if (limit !== null && search === "" && startDate === null && endDate === null && publishValue === null) {
+        if (limit !== null && search === "" && searchKategori === null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}`)
 
-        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue === null) {
+        } else if (limit !== null && search !== "" && searchKategori === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}`)
 
-        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue === null) {
+        } else if (limit === null && search !== "" && searchKategori === null) {
             router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}`)
 
-        } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue === null) {
-            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        } else if (limit !== null && search === "" && searchKategori !== null) {
+            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${searchKategori}`)
 
-        } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        // } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-        } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        // } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-        } else if (limit !== null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
+        // } else if (limit !== null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+        //     router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
 
-        } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
+        // } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
 
-        } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
+        // } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
 
-        } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+        // } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+        //     router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
 
-        } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        // } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+        //     router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-        } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        // } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-        } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-            router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+        // } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
@@ -229,62 +227,79 @@ const Kategori = () => {
             router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
     };
-    // console.log("KATERGORIIII : ",handleSearch)
 
     const handleLimit = (val) => {
         setLimit(val)
-        if (search === "") {
+        if (search === "" && searchKategori === null) {
             router.push(`${router.pathname}?page=1&limit=${val}`);
 
-        } else {
-            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        } else if (search !== "" && searchKategori === null) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+            
+        } else if (search === "" && searchKategori !== null) {
+            router.push(`${router.pathname}?page=1&keyword=${searchKategori}&limit=${val}`)
+        } 
+        else if(search !== "" && searchKategori !== null){
+            router.push(`${router.pathname}?page=1&keyword=${searchKategori}&limit=${val}`)
         }
 
     };
 
-    const handlePublish = (val) => {
-        if (val !== null || val !== "") {
-            setPublishValue(val)
+    // const handleLimit = (val) => {
+    //     setLimit(val)
+    //     if (search === "") {
+    //         router.push(`${router.pathname}?page=1&limit=${val}`);
 
-            if (startDate === null && endDate === null && limit === null && search === null) {
-                router.push(`${router.pathname}?publish=${val}`);
+    //     } else {
+    //         router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+    //     }
 
-            } else if (startDate !== null && endDate !== null && limit === null && search === null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+    // };
 
-            } else if (startDate !== null && endDate !== null && limit !== null && search === null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+    // const handlePublish = (val) => {
+    //     if (val !== null || val !== "") {
+    //         setPublishValue(val)
 
-            } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+    //         if (startDate === null && endDate === null && limit === null && search === null) {
+    //             router.push(`${router.pathname}?publish=${val}`);
 
-            } else if (startDate === null && endDate === null && limit !== null && search === null) {
-                router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+    //         } else if (startDate !== null && endDate !== null && limit === null && search === null) {
+    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-            } else if (startDate === null && endDate === null && limit === null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+    //         } else if (startDate !== null && endDate !== null && limit !== null && search === null) {
+    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
 
-            } else if (startDate === null && endDate === null && limit !== null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+    //         } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
+    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
 
-            } else if (startDate !== null && endDate !== null && limit !== null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-            }
-        }
+    //         } else if (startDate === null && endDate === null && limit !== null && search === null) {
+    //             router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
 
-    }
+    //         } else if (startDate === null && endDate === null && limit === null && search !== null) {
+    //             router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+
+    //         } else if (startDate === null && endDate === null && limit !== null && search !== null) {
+    //             router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+
+    //         } else if (startDate !== null && endDate !== null && limit !== null && search !== null) {
+    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+    //         }
+    //     }
+
+    // }
 
     const resetValueSort = () => {
         setSearchKategori(null)
+        $('#selectKategori').prop('selectedIndex', 0);
     }
 
     return (
         <PageWrapper>
             {
-                console.log (kategori)
+                console.log(kategori)
             }
             {
-                console.log (paginateKategori)
+                console.log(paginateKategori)
             }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -414,6 +429,7 @@ const Kategori = () => {
                                                         >
                                                             <div className="mb-10 col-12">
                                                                 <select
+                                                                    id="selectKategori"
                                                                     value={searchKategori}
                                                                     className='form-control'
                                                                     onChange={e => setSearchKategori(e.target.value)}

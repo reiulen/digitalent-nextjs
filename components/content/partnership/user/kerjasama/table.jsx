@@ -353,7 +353,7 @@ const Table = () => {
                   Tambah kerjasama
                 </a>
               </Link>
-            ) : (
+             ) : (
               <Link
                 href="/partnership/user/kerjasama/submit-kerjasama"
                 passHref
@@ -363,7 +363,7 @@ const Table = () => {
                   Tambah kerjasama
                 </a>
               </Link>
-            )}
+            )} 
           </div>
 
           <div className="card-body pt-0">
@@ -896,8 +896,7 @@ const Table = () => {
                                         //   )
                                         // }
                                       >
-                                        <IconTodoLine
-                                        />
+                                        <IconReview />
                                         <div className="text-hover-show-hapus">
                                           Review
                                         </div>

@@ -46,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
             }
             await store.dispatch(getDetailKategori(params.id, session.user.user.data.token));
             return {
-                props: { session, title: "Kategori" },
+                props: { session, title: "Ubah Kategori - Publikasi" },
             };
         }
 );

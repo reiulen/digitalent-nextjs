@@ -5,10 +5,13 @@ import {
   SEARCH_COORPORATION,
   LIMIT_CONFIGURATION,
   SUCCESS_GET_SINGLE_COOPORATION,
+  FAIL_GET_SINGLE_COOPORATION,
   DELETE_COOPORATION_REQUEST,
   SUCCESS_DELETE_COOPORATION_REQUEST,
-  SUCCESS_CHANGE_STATUS_LIST,
+  ERROR_DELETE_COOPORATION_REQUEST,
   SET_PAGE,
+  SUCCESS_UPDATE_MASTER_CATEGORY,
+  ERROR_UPDATE_MASTER_CATEGORY,
 } from "../../types/partnership/mk_cooporation.type";
 
 const statuslist = {
@@ -20,6 +23,7 @@ const statuslist = {
 
 const initialState = {
   status: statuslist.idle,
+  error: "",
   mk_cooporation: [],
   mk_single_cooporation: [],
   keyword: "",
@@ -27,6 +31,7 @@ const initialState = {
   status_list: "",
   limit: 5,
   page: 1,
+  success: "",
 };
 
 export const allMKCooporationReducer = (state = initialState, action) => {
@@ -48,11 +53,9 @@ export const allMKCooporationReducer = (state = initialState, action) => {
       return {
         ...state,
         status: statuslist.error,
-        error: action.payload,
+        error: data,
       };
     case SEARCH_COORPORATION:
-      console.log("action.text ??");
-      console.log(action.text);
       return {
         ...state,
         page: 1,
@@ -72,40 +75,40 @@ export const allMKCooporationReducer = (state = initialState, action) => {
         status: statuslist.success,
         mk_single_cooporation: action.data,
       };
+    case FAIL_GET_SINGLE_COOPORATION:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: action.data,
+      };
+    case ERROR_DELETE_COOPORATION_REQUEST:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: action.data,
+      };
 
     case SUCCESS_DELETE_COOPORATION_REQUEST:
       return {
         ...state,
         status_delete: state.status_delete === "" ? "delete" : "",
       };
+    case SUCCESS_UPDATE_MASTER_CATEGORY:
+      return {
+        ...state,
+        status: statuslist.success,
+        success: action.data,
+      };
+    case ERROR_UPDATE_MASTER_CATEGORY:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: action.data,
+      };
     case SET_PAGE:
-      console.log("sdfasf");
-      console.log(action);
       return {
         ...state,
         page: action.page,
-      };
-
-    case SUCCESS_CHANGE_STATUS_LIST:
-      // console.log("action");
-      // console.log(action.data, action.index_list);
-      // console.log("state");
-      // console.log(state.mk_cooporation);
-
-      // state.mk_cooporation.data.cooperation_categories.map(
-      //   (cooperation_categorie, index) => {
-      //     if (index === action.index_list) {
-      //       cooperation_categorie.status = action.data.data.status;
-      //     }
-      //     return cooperation_categorie;
-      //   }
-      // );
-      // console.log("state new");
-      // console.log(state.mk_cooporation);
-
-      return {
-        ...state,
-        status_delete: state.status_delete === "" ? statuslist.success : "",
       };
 
     default:

@@ -59,7 +59,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getAllKategori(session.user.user.data.token))
 
       return {
-        props: { session, title: "Edit Artikel - Publikasi" },
+        props: { session, title: "Ubah Artikel - Publikasi" },
     };
     }
 );

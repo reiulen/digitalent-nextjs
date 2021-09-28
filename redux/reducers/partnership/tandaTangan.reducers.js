@@ -10,6 +10,9 @@ import {
   SEARCH_BY_KEY_TTD,
   FETCH_OPTION_TTD_ADMIN,
   FETCH_TTD_PARTNER_BY_ID,
+  CHANGE_STATUS_LIST_M,
+  SUCCESS_ADD_TTD,
+  FAIL_ADD_TTD,
 } from "../../types/partnership/tandaTangan.type";
 
 const statuslist = {
@@ -90,6 +93,22 @@ export const allTandaTanganReducer = (state = initialState, action) => {
       return {
         ...state,
         ttdPartner: action.payload,
+      };
+
+    case CHANGE_STATUS_LIST_M:
+      return {
+        ...state,
+        status_reload: state.status_reload === "" ? "delete" : "",
+      };
+    case SUCCESS_ADD_TTD:
+      return {
+        ...state,
+        status: statuslist.success,
+      };
+    case FAIL_ADD_TTD:
+      return {
+        ...state,
+        status: statuslist.error,
       };
 
     default:

@@ -10,20 +10,21 @@ import {
   SEARCH_BY_KEY_TTD,
   FETCH_OPTION_TTD_ADMIN,
   FETCH_TTD_PARTNER_BY_ID,
+  CHANGE_STATUS_LIST_M,
+  SUCCESS_ADD_TTD,
+  FAIL_ADD_TTD,
 } from "../../types/partnership/tandaTangan.type";
 
-import axios from "axios";
+import {
+  fetchSignatureApi,
+  deleteTtd,
+  getOptionTtdAdmin,
+  getOptionTtdPartner,
+  statusListChange,
+  ttdAdd,
+} from "../partnership/api/tanda-tangan";
 
-export async function fetchSignatureApi(params) {
-  return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures`,
-    {
-      params,
-    }
-  );
-}
-
-export const fetchSignature = () => {
+export const fetchSignature = (token) => {
   return async (dispatch, getState) => {
     dispatch({ type: TANDA_TANGAN_REQUEST });
     let keywordState = getState().allTandaTangan.keyword || "";
@@ -36,10 +37,10 @@ export const fetchSignature = () => {
       page: pageState,
     };
     try {
-      let { data } = await fetchSignatureApi(params);
+      let { data } = await fetchSignatureApi(params, token);
       dispatch(successFetchSignature(data));
     } catch (error) {
-      console.log("error data signature action", error);
+      console.log("error data signature action", error.response.data.message);
     }
   };
 };
@@ -50,11 +51,12 @@ export const successFetchSignature = (data) => {
     data,
   };
 };
-export const errorFetchSignature = (data) => {
+export const errorFetchSignature = () => {
   return {
     type: TANDA_TANGAN_FAIL,
   };
 };
+
 export const reloadTable = () => {
   return {
     type: RELOAD_TABLE,
@@ -73,12 +75,11 @@ export const setLimit = (value) => {
     value,
   };
 };
-export const deleteTandaTangan = (id) => {
-  return async (dispatch, getState) => {
+
+export const deleteTandaTangan = (id, token) => {
+  return async (dispatch) => {
     try {
-      let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`
-      );
+      let { data } = await deleteTtd(id, token);
       dispatch({ type: SUCESS_DELETE_TD });
     } catch (error) {
       console.log("gagal delete ttd", error);
@@ -93,13 +94,10 @@ export const searchByKey = (value) => {
   };
 };
 
-export const fetchOptionTtdAdmin = () => {
+export const fetchOptionTtdAdmin = (token) => {
   return async (dispatch) => {
     try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/seremonial/option-admin`
-      );
-      console.log("data fetchOptionTtdAdmin", data);
+      let { data } = await getOptionTtdAdmin(token);
       dispatch({
         type: FETCH_OPTION_TTD_ADMIN,
         payload: data,
@@ -109,19 +107,52 @@ export const fetchOptionTtdAdmin = () => {
     }
   };
 };
-export const fetchTtdPartner = (id) => {
+export const fetchTtdPartner = (token, id) => {
   return async (dispatch) => {
     try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/seremonial/option-mitra/${id}`
-      );
-      console.log("data fetchTtdPartner", data);
+      let { data } = await getOptionTtdPartner(token, id);
       dispatch({
         type: FETCH_TTD_PARTNER_BY_ID,
         payload: data,
       });
     } catch (error) {
       console.log("eror fetchTtdPartner", error);
+    }
+  };
+};
+
+export const changeStatusList = (token, value, id) => {
+  return async (dispatch) => {
+    try {
+      let dataSend = { _method: "put", status: value };
+      let { data } = await statusListChange(token, dataSend, id);
+      dispatch(successChangeStatusList());
+    } catch (error) {
+      console.log("error change status list", error.response.data.message);
+    }
+  };
+};
+
+export const successChangeStatusList = () => {
+  return {
+    type: CHANGE_STATUS_LIST_M,
+  };
+};
+
+export const addTttd = (token, formData) => {
+  return async (dispatch) => {
+    try {
+      let { data } = await ttdAdd(token, formData);
+      // router.push({
+      //   pathname: "/partnership/tanda-tangan",
+      //   query: { success: true },
+      // });
+      dispatch({
+        type: SUCCESS_ADD_TTD,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("error.response.data.message", error.response.data.message);
     }
   };
 };
