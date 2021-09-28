@@ -9,8 +9,9 @@ import {
   DELETE_COOPORATION_REQUEST,
   SUCCESS_DELETE_COOPORATION_REQUEST,
   ERROR_DELETE_COOPORATION_REQUEST,
-  SUCCESS_CHANGE_STATUS_LIST,
   SET_PAGE,
+  SUCCESS_UPDATE_MASTER_CATEGORY,
+  ERROR_UPDATE_MASTER_CATEGORY,
 } from "../../types/partnership/mk_cooporation.type";
 
 const statuslist = {
@@ -30,6 +31,7 @@ const initialState = {
   status_list: "",
   limit: 5,
   page: 1,
+  success: "",
 };
 
 export const allMKCooporationReducer = (state = initialState, action) => {
@@ -77,13 +79,13 @@ export const allMKCooporationReducer = (state = initialState, action) => {
       return {
         ...state,
         status: statuslist.error,
-        error: data,
+        error: action.data,
       };
     case ERROR_DELETE_COOPORATION_REQUEST:
       return {
         ...state,
         status: statuslist.error,
-        error: data,
+        error: action.data,
       };
 
     case SUCCESS_DELETE_COOPORATION_REQUEST:
@@ -91,9 +93,19 @@ export const allMKCooporationReducer = (state = initialState, action) => {
         ...state,
         status_delete: state.status_delete === "" ? "delete" : "",
       };
+    case SUCCESS_UPDATE_MASTER_CATEGORY:
+      return {
+        ...state,
+        status: statuslist.success,
+        success: action.data,
+      };
+    case ERROR_UPDATE_MASTER_CATEGORY:
+      return {
+        ...state,
+        status: statuslist.error,
+        error: action.data,
+      };
     case SET_PAGE:
-      console.log("sdfasf");
-      console.log(action);
       return {
         ...state,
         page: action.page,

@@ -25,3 +25,11 @@ export async function deleteMasterCategory(token, formData, id) {
     },
   });
 }
+
+export async function masterCategoryUpdate(token, formData, id) {
+  return await axios.post(`${config}api/cooperations/${id}`, formData, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+}

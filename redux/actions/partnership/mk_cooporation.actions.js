@@ -9,12 +9,15 @@ import {
   SUCCESS_DELETE_COOPORATION_REQUEST,
   ERROR_DELETE_COOPORATION_REQUEST,
   SET_PAGE,
+  SUCCESS_UPDATE_MASTER_CATEGORY,
+  ERROR_UPDATE_MASTER_CATEGORY,
 } from "../../types/partnership/mk_cooporation.type";
 
 import {
   getAllMasterCategory,
   masterCategorySingle,
   deleteMasterCategory,
+  masterCategoryUpdate,
 } from "./api/master-category";
 
 export const fetchAllMKCooporation = (token) => {
@@ -110,6 +113,31 @@ export const successDeleteCooporation = (data) => {
 export const errorDeleteCooporation = (data) => {
   return {
     type: ERROR_DELETE_COOPORATION_REQUEST,
+    data,
+  };
+};
+
+export const updateMasterCategory = (token, formData, id) => {
+  console.log(token);
+  return async (dispatch) => {
+    try {
+      let { data } = await masterCategoryUpdate(token, formData, id);
+      dispatch(succesUpdateMasterCategory(data));
+    } catch (error) {
+      dispatch(errorUpdateMasterCategory(error.response.data.message));
+    }
+  };
+};
+
+export const succesUpdateMasterCategory = (data) => {
+  return {
+    type: SUCCESS_UPDATE_MASTER_CATEGORY,
+    data,
+  };
+};
+export const errorUpdateMasterCategory = (data) => {
+  return {
+    type: ERROR_UPDATE_MASTER_CATEGORY,
     data,
   };
 };

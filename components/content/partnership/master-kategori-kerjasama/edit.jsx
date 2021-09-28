@@ -6,9 +6,12 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {updateMasterCategory} from '../../../../redux/actions/partnership/mk_cooporation.actions'
+import {useDispatch,useSelector} from 'react-redux'
 
 const Edit = ({ token }) => {
   const router = useRouter();
+  let dispatch = useDispatch()
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [stateDataSingleOld, setStateDataSingleOld] = useState([]);
   const [stateDataSingle, setStateDataSingle] = useState([]);
@@ -100,24 +103,26 @@ const Edit = ({ token }) => {
             formData.append("status", statusPro);
           }
         }
-        try {
-          let id = router.query.id;
-          let { data } = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`,
-            formData,
-            {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          router.push({
-            pathname: "/partnership/master-kategori-kerjasama",
-            query: { update: true },
-          });
-        } catch (error) {
-          notify(error.response.data.message);
-        }
+        // console.log("object",token)
+        dispatch(updateMasterCategory(token))
+        // try {
+        //   let id = router.query.id;
+        //   let { data } = await axios.post(
+        //     `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`,
+        //     formData,
+        //     {
+        //       headers: {
+        //         authorization: `Bearer ${token}`,
+        //       },
+        //     }
+        //   );
+        //   router.push({
+        //     pathname: "/partnership/master-kategori-kerjasama",
+        //     query: { update: true },
+        //   });
+        // } catch (error) {
+        //   notify(error.response.data.message);
+        // }
       }
     });
   };
