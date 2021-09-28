@@ -45,7 +45,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Preview Artikel - Publikasi" },
+        props: { session, title: "Preview Artikel - Publikasi", data: "auth", },
       };
     }
 );
