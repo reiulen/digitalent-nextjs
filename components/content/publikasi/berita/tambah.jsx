@@ -365,7 +365,7 @@ const TambahBerita = () => {
                                         {simpleValidator.current.message(
                                             "isi_berita",
                                             isi_berita,
-                                            "required|min:100",
+                                            "required|min:100|max:2500",
                                             { className: "text-danger" }
                                         )}
                                     </div>

@@ -23,7 +23,7 @@ const Footer = () => {
         //     {/* // <!--end::Footer--> */}
         // </>
         <>
-            <div className="footer bg-primary-shade d-flex flex-lg-column col-lg-12 col-xxl-12">
+            <div className="bg-primary-shade navbar-fixed-bottom">
                 <div className="card card-custom card-stretch gutter-b bg-primary-shade">
                     <div className="card-header border-bottom border-gray">
                         <div className="col-lg-4 col-xxl-4 py-4 text-center">
