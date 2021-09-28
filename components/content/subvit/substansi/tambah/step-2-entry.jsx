@@ -494,13 +494,15 @@ const StepTwo = ({ token }) => {
                       -- Tipe Soal --
                     </option>
                     {subtance_question_type.list_types.length != 0 ? (
-                      subtance_question_type.list_types.map((row) => {
-                        return (
-                          <option key={row.id} value={row.id}>
-                            {row.name}
-                          </option>
-                        );
-                      })
+                      subtance_question_type.list_types
+                        .filter((row) => row.status === 1)
+                        .map((row) => {
+                          return (
+                            <option key={row.id} value={row.id}>
+                              {row.name}
+                            </option>
+                          );
+                        })
                     ) : (
                       <option disabled>Tipe soal masih kosong</option>
                     )}
