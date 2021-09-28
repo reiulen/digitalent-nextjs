@@ -191,8 +191,10 @@ const TambahMitra = ({token}) => {
     setShowImage(showImage ? false : true);
   };
 
-  const getDataProvinces = async () => {
-    try {
+
+  useEffect(() => {
+    async function getDataProvinces (token){
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`,
         {
@@ -209,9 +211,8 @@ const TambahMitra = ({token}) => {
     } catch (error) {
       console.log("gagal get province", error);
     }
-  };
 
-  useEffect(() => {
+    }
     getDataProvinces(token);
   }, [token]);
 

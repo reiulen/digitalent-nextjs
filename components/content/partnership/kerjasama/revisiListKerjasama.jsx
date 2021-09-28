@@ -30,8 +30,9 @@ function RevisiList({ token }) {
 
   const [listCardREvisi, setListCardREvisi] = useState([]);
 
-  const getCardREviewList = async (id) => {
-    try {
+  useEffect(() => {
+    async function getCardREviewList (id,token){
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/card-review/${id}`,{
           headers: {
@@ -44,10 +45,10 @@ function RevisiList({ token }) {
     } catch (error) {
       console.log("action getCardREviewList", error);
     }
-  };
-  useEffect(() => {
-    getCardREviewList(router.query.id);
-  }, [router.query.id]);
+
+    }
+    getCardREviewList(router.query.id,token);
+  }, [router.query.id,token]);
 
   return (
     <PageWrapper>

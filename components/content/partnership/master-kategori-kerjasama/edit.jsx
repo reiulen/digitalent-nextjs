@@ -6,12 +6,14 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {updateMasterCategory} from '../../../../redux/actions/partnership/mk_cooporation.actions'
-import {useDispatch,useSelector} from 'react-redux'
+import { updateMasterCategory } from "../../../../redux/actions/partnership/mk_cooporation.actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const Edit = ({ token }) => {
   const router = useRouter();
-  let dispatch = useDispatch()
+  let dispatch = useDispatch();
+  const allMKCooporation = useSelector((state) => state.allMKCooporation);
+  console.log("allMKCooporation", allMKCooporation);
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [stateDataSingleOld, setStateDataSingleOld] = useState([]);
   const [stateDataSingle, setStateDataSingle] = useState([]);
@@ -103,32 +105,27 @@ const Edit = ({ token }) => {
             formData.append("status", statusPro);
           }
         }
-        // console.log("object",token)
-        dispatch(updateMasterCategory(token))
-        // try {
-        //   let id = router.query.id;
-        //   let { data } = await axios.post(
-        //     `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`,
-        //     formData,
-        //     {
-        //       headers: {
-        //         authorization: `Bearer ${token}`,
-        //       },
-        //     }
-        //   );
-        //   router.push({
-        //     pathname: "/partnership/master-kategori-kerjasama",
-        //     query: { update: true },
-        //   });
-        // } catch (error) {
-        //   notify(error.response.data.message);
-        // }
+        dispatch(updateMasterCategory(token, formData, router.query.id));
       }
     });
   };
 
-  const getSingleData = async (id) => {
-    try {
+  
+
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+  useEffect(() => {
+    async function getSingleData (id,token) {
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`,
         {
@@ -156,22 +153,16 @@ const Edit = ({ token }) => {
     } catch (error) {
       console.log(error);
     }
-  };
 
-  const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
-  useEffect(() => {
-    getSingleData(router.query.id);
-  }, [router.query.id]);
+    } 
+    getSingleData(router.query.id,token);
+    if (allMKCooporation.status === "success") {
+      router.push({
+        pathname: "/partnership/master-kategori-kerjasama",
+        query: { update: true },
+      });
+    }
+  }, [router.query.id, allMKCooporation.status,router,token]);
   return (
     <PageWrapper>
       <ToastContainer
