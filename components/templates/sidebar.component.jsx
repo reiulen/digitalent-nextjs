@@ -574,6 +574,13 @@ const Sidebar = () => {
                         </a>
                       </Link>
                     </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/pelatihan/report-pelatihan">
+                        <a className="menu-link">
+                          <span className="menu-text">Report Pelatihan</span>
+                        </a>
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </li>

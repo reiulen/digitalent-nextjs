@@ -6,10 +6,10 @@ import { useRouter } from "next/router";
 
 import Pagination from "react-js-pagination";
 
-const Tambah = dynamic(
+const ListPeserta = dynamic(
     () =>
         import(
-            "../../../../components/content/sertifikat/master-sertifikat/tambah/tambah"
+            "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/list-peserta"
         ),
     {
         loading: function loadingNow() {
@@ -19,11 +19,12 @@ const Tambah = dynamic(
     }
 );
 
-export default function TambahMasterSertifikatPage() {
+export default function KelokaSertifikatPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Tambah />
+                {/* <KelolaSertifikatKategori /> */}
+                <ListPeserta />
             </div>
         </>
     );
