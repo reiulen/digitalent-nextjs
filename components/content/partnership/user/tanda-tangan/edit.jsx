@@ -56,7 +56,7 @@ const EditTandaTangan = () => {
   };
 
   const [isUpdate, setIsUpdate] = useState(false);
-  const submit = async (e) => {
+  const submit =  (e) => {
     e.preventDefault();
     if (signCanvas.current.isEmpty()) {
       Swal.fire({
@@ -73,13 +73,19 @@ const EditTandaTangan = () => {
         if (result.value) {
           try {
             let sendData = {
+              _method:"PUT",
               name: nama,
               position: jabatan,
               signature_image: signature !== "" ? signature : "",
             };
             let { data } = await axios.put(
               `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
-              sendData
+              sendData,
+              {
+                headers: {
+                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                },
+              }
             );
 
             router.push({
@@ -107,6 +113,7 @@ const EditTandaTangan = () => {
           if (result.value) {
             try {
               let sendData = {
+                _method:"PUT",
                 name: nama,
                 position: jabatan,
                 signature_image: signature !== "" ? signature : "",

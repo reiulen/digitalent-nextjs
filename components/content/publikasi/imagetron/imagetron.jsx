@@ -238,16 +238,65 @@ const Imagetron = () => {
         }
     };
 
+    // const handleLimit = (val) => {
+    //     setLimit(val)
+    //     if (search === "") {
+    //         router.push(`${router.pathname}?page=1&limit=${val}`);
+
+    //     } else {
+    //         router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+    //     }
+
+    // };
+
     const handleLimit = (val) => {
         setLimit(val)
-        if (search === "") {
+        if (search === "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&limit=${val}`);
 
-        } else {
+        } else if (search !== "" && publishValue === "") {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+
+        } else if (search === "" && publishValue === '1') {
+            router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
+
+        } else if (search === "" && publishValue === '0') {
+            router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
         }
 
     };
+
+    // const handlePublish = (val) => {
+    //     if (val !== null || val !== "") {
+    //         setPublishValue(val)
+
+    //         if (startDate === null && endDate === null && limit === null && search === null) {
+    //             router.push(`${router.pathname}?publish=${val}`);
+
+    //         } else if (startDate !== null && endDate !== null && limit === null && search === null) {
+    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+
+    //         } else if (startDate !== null && endDate !== null && limit !== null && search === null) {
+    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
+
+    //         } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
+    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
+
+    //         } else if (startDate === null && endDate === null && limit !== null && search === null) {
+    //             router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
+
+    //         } else if (startDate === null && endDate === null && limit === null && search !== null) {
+    //             router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+
+    //         } else if (startDate === null && endDate === null && limit !== null && search !== null) {
+    //             router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
+
+    //         } else if (startDate !== null && endDate !== null && limit !== null && search !== null) {
+    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
+    //         }
+    //     }
+
+    // }
 
     const handlePublish = (val) => {
         if (val !== null || val !== "") {
@@ -269,7 +318,8 @@ const Imagetron = () => {
                 router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
 
             } else if (startDate === null && endDate === null && limit === null && search !== null) {
-                router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
+                router.push(`${router.pathname}?publish=${val}`);
+                // router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
 
             } else if (startDate === null && endDate === null && limit !== null && search !== null) {
                 router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
@@ -665,8 +715,8 @@ const Imagetron = () => {
                                         <tbody>
                                             {
                                                 !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
-                                                <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                imagetron && imagetron.data.imagetron.map((row, i) => {
+                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    imagetron && imagetron.data.imagetron.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {

@@ -8,6 +8,7 @@ import {
   SET_LIMIT_TD,
   SUCESS_DELETE_TD,
   SEARCH_BY_KEY_TTD,
+  CHANGE_STATUS_LIST_M,
 } from "../../../types/partnership/user/tanda-tangan.type";
 
 import axios from "axios";
@@ -95,6 +96,34 @@ export const deleteTandaTangan = (id) => {
 export const searchByKey = (value) => {
   return {
     type: SEARCH_BY_KEY_TTD,
+    value,
+  };
+};
+
+export const changeStatusList = (value, id) => {
+  console.log("value", value, "id", id);
+  return async (dispatch, getState) => {
+    try {
+      let dataSend = { _method: "put", status: value };
+      let { data } = await axios.post(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/update-status/${id}`,
+        dataSend,
+        {
+          headers: {
+            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+          },
+        }
+      );
+      dispatch(successChangeStatusList(value));
+    } catch (error) {
+      console.log("error change status list,", error.response.data.message);
+    }
+  };
+};
+
+export const successChangeStatusList = (value) => {
+  return {
+    type: CHANGE_STATUS_LIST_M,
     value,
   };
 };

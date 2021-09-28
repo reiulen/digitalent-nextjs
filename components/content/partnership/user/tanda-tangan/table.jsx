@@ -11,6 +11,8 @@ import {
   setPage,
   setLimit,
   deleteTandaTangan,
+  changeStatusList,
+  reloadTable,
   searchByKey,
 } from "../../../../../redux/actions/partnership/user/tanda-tangan.actions";
 
@@ -20,10 +22,11 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
+import IconArrow from "../../../../assets/icon/Arrow";
 
 const Table = () => {
-  const dispatch = useDispatch();
-  const router = useRouter();
+  let dispatch = useDispatch();
+  let router = useRouter();
   const { success, update } = router.query;
 
   const allTandaTanganUser = useSelector(state => state.allTandaTanganUser)
@@ -61,11 +64,37 @@ const Table = () => {
     router.replace("/partnership/user/tanda-tangan-digital", undefined, { shallow: true });
   };
 
+  const [isStatusBar, setIsStatusBar] = useState(false);
+  const changeListStatus = (e, id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ingin merubah status ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        console.log("e.target.value",e.target.value)
+        console.log("id",id)
+        dispatch(changeStatusList(e.target.value, id));
+        setIsStatusBar(true);
+        // setDeleteBar(false);
+        // setIsChangeOption(true);
+        router.replace("/partnership/user/tanda-tangan-digital", undefined, { shallow: true })
+      } else {
+        dispatch(reloadTable());
+      }
+    });
+  };
 
   useEffect(() => {
     dispatch(fetchSignature())
   }, [dispatch,
     allTandaTanganUser.keyword,
+    allTandaTanganUser.reload_table,
     allTandaTanganUser.status_reload,
     allTandaTanganUser.page,
     allTandaTanganUser.limit,])
@@ -159,6 +188,35 @@ const Table = () => {
       ) : (
         ""
       )}
+      {isStatusBar ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil mengubah status
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -227,6 +285,7 @@ const Table = () => {
                         <th className="text-left">No</th>
                         <th className="text-left align-middle">Nama</th>
                         <th className="text-left align-middle">Jabatan</th>
+                        <th className="text-left align-middle">Status</th>
                         <th className="text-left align-middle">Aksi</th>
                       </tr>
                     </thead>
@@ -259,6 +318,60 @@ const Table = () => {
                                 </td>
                                 <td className="align-middle text-left">
                                   {items.position}
+                                </td>
+                                <td className="align-middle text-left">
+                                  {items.status == "1" ? 
+                                  <div className="position-relative w-max-content">
+                                      <select
+                                        name=""
+                                        id=""
+                                        className="form-control remove-icon-default dropdown-arrows-green"
+                                        key={index}
+                                        onChange={(e) =>
+                                          changeListStatus(
+                                            e,
+                                            items.id,
+                                          )
+                                        }
+                                      >
+                                        <option value="1">
+                                          Aktif
+                                        </option>
+                                        <option value="0">Tidak Aktif</option>
+                                      </select>
+                                      <IconArrow
+                                        className="right-center-absolute"
+                                        style={{ right: "10px" }}
+                                        width="7"
+                                        height="7"
+                                      />
+                                    </div>
+                                    : <div className="position-relative w-max-content">
+                                      <select
+                                        name=""
+                                        id=""
+                                        className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
+                                        key={index}
+                                        onChange={(e) =>
+                                          changeListStatus(
+                                            e,
+                                            items.id,
+                                          )
+                                        }
+                                      >
+                                        <option value="0">
+                                          Tidak Aktif
+                                        </option>
+                                        <option value="1">Aktif</option>
+                                      </select>
+                                      <IconArrow
+                                        className="right-center-absolute"
+                                        style={{ right: "10px" }}
+                                        fill="#F65464"
+                                        width="7"
+                                        height="7"
+                                      />
+                                    </div>}
                                 </td>
                                 <td className="align-middle text-left">
                                   <div className="d-flex align-items-center">

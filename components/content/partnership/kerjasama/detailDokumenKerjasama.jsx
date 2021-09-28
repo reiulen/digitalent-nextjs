@@ -22,7 +22,12 @@ const DetailDokumenKerjasama = ({token}) => {
   const getSingleValue = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setPdfFIle(data.data.document_file);
     } catch (error) {
@@ -32,8 +37,8 @@ const DetailDokumenKerjasama = ({token}) => {
 
   useEffect(() => {
     getSingleValue(router.query.id);
-    dispatch(getSingleCooperation(router.query.id));
-  }, [dispatch, router.query.id]);
+    dispatch(getSingleCooperation(token,router.query.id));
+  }, [dispatch, router.query.id,token]);
 
   return (
     <PageWrapper>

@@ -104,6 +104,10 @@ const EditGaleri = ({ token }) => {
         </div>
     ));
 
+    useEffect (() => {
+        handleDataToArr(galeri.gambar)
+    }, [])
+
     useEffect(() => {
 
     // dispatch(getAllKategori())
@@ -116,20 +120,19 @@ const EditGaleri = ({ token }) => {
         //     })
         // }
 
-        let temps = []
+        // let temps = []
 
-        for (let i = 0; i < files.length; i++) {
-            const reader = new FileReader()
+        // for (let i = 0; i < files.length; i++) {
+        //     const reader = new FileReader()
 
-            reader.onload = () => {
-                temps.push(reader.result)
-            }
+        //     reader.onload = () => {
+        //         temps.push(reader.result)
+        //     }
 
-            reader.readAsDataURL(files[i])
-        }
+        //     reader.readAsDataURL(files[i])
+        // }
 
-        setGambar(temps)
-
+        // setGambar(temps)
 
         if (success) {
             router.push({
@@ -140,6 +143,7 @@ const EditGaleri = ({ token }) => {
     }, [dispatch, error, success, files, router]);
 
     const [id, setId] = useState(galeri.id_gallery);
+    // const [id, setId] = useState(galeri.id);
     const [judul, setJudulGaleri] = useState(galeri.judul);
     const [isi_galleri, setIsiGaleri] = useState(galeri.isi_galeri);
     const [gambar, setGambar] = useState(galeri.gambar);
@@ -153,6 +157,117 @@ const EditGaleri = ({ token }) => {
     const [_method, setMethod] = useState("put");
     const [publishDate, setPublishDate] = useState(galeri.tanggal_publish ? new Date(galeri.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(galeri.publish === 0 ? true : false)
+    const [image, setImage] = useState (null)
+    const [ totalImage, setTotalImage ] = useState(1)
+
+    const handleDataToArr = (data) => {
+        let arr = []
+        
+
+        for (let i = 0; i < data.length; i++){
+            // const reader = new FileReader();
+            // getBase64FromUrl(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
+            let obj = {
+                id: data[i].id,
+                imageName: data[i].gambar,
+                imagePreview: process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar,
+                imageBase64: process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar,
+                // imageBase64: reader.readAsDataURL(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
+                // imageBase64: getBase64Image(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
+                // imageBase64: getBase64FromUrl(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
+            }
+
+            arr.push (obj)
+        }
+        setImage(arr)
+        setTotalImage(data.length)
+    } 
+    
+    // const getBase64Image = (imgUrl) => {
+    //     var canvas = document.createElement("canvas");
+    //     canvas.width = imgUrl.width;
+    //     canvas.height = imgUrl.height;
+    //     var ctx = canvas.getContext("2d");
+    //     ctx.drawImage(imgUrl, 0, 0);
+    //     var dataURL = canvas.toDataURL("image/png");
+    //     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+
+    //     // reader.readAsDataURL(imgUrl);
+
+    //     // let blob = await fetch(imgUrl).then(r => r.blob());
+    //     //     console.log (blob)
+    //     // return new Promise(
+    //     //   function(resolve, reject) {
+      
+    //     //     var img = new Image();
+    //     //     img.src = imgUrl;
+    //     //     img.setAttribute('crossOrigin', 'anonymous');
+      
+    //     //     img.onload = function() {
+    //     //       var canvas = document.createElement("canvas");
+    //     //       canvas.width = img.width;
+    //     //       canvas.height = img.height;
+    //     //       var ctx = canvas.getContext("2d");
+    //     //       ctx.drawImage(img, 0, 0);
+    //     //       var dataURL = canvas.toDataURL("image/png");
+    //     //       resolve(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
+    //     //     }
+    //     //     img.onerror = function() {
+    //     //       reject("The image could not be loaded.");
+    //     //     }
+      
+    //     // });
+      
+    // }
+
+    // const getBase64FromUrl = async (url) => {
+    //     const data = await fetch(url , {mode: "no-cors"});
+    //     const blob = await data.blob();
+    //     return new Promise((resolve) => {
+    //       const reader = new FileReader();
+    //       reader.readAsDataURL(blob); 
+    //     // reader.readAsDataURL(url); 
+    //       reader.onloadend = () => {
+    //         const base64data = reader.result;   
+    //         resolve(base64data);
+    //         console.log (reader)
+    //         console.log (base64data)
+    //       }
+    //     });
+    //   }
+
+    const onChangeImage = (e, index) => {
+        const type = ["image/jpg", "image/png", "image/jpeg"];
+        let list = [...image];
+        if (type.includes(e.target.files[0].type)) {
+        // list[index].imageFile = e.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+            list[index].imagePreview = reader.result;
+            list[index].imageBase64 = reader.result;
+            }
+            // router.reload(window.location.pathname)
+            setImage([
+            ...image,
+            ]);
+        };
+        
+        reader.readAsDataURL(e.target.files[0]);
+        list[index].imageName = e.target.files[0].name;
+        setImage(list);
+
+
+        } else {
+            e.target.value = null;
+            Swal.fire(
+                "Oops !",
+                "Data yang bisa dimasukkan hanya berupa data gambar.",
+                "error"
+            );
+        }
+    };
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
@@ -176,16 +291,89 @@ const EditGaleri = ({ token }) => {
         }
     }
 
+    const onDeleteImage = (index) => {
+
+        if (totalImage === 1){
+            Swal.fire(
+                "Oops !",
+                "Harus memasukkan minimal 1 Gambar !",
+                "error"
+            );
+        } else {
+            const list = [...image];
+            list.splice(index, 1);
+            setImage(list);
+            setTotalImage ((totalImage) - 1)
+        }   
+        
+    };
+
+    const onAddImage = () => {
+        // const newKey = image[image.length - 1] + 1;
+        setImage([
+          ...image,
+          {
+            // index: image.length + 1,
+            imageName: "",
+            id: ""
+          },
+        ]);
+        setTotalImage ((totalImage) + 1)
+    };
+
+    const handleData = (temps, onCall) => {
+        if (publishDate === null) {
+            let today = new Date
+
+            const data = {
+                judul,
+                isi_galleri,
+                // gambar,
+                gambar: temps,
+                kategori_id: Number(kategori_id),
+                users_id,
+                tag,
+                publish,
+                tanggal_publish: moment(today).format("YYYY-MM-DD"),
+                id,
+                _method,
+            }
+
+            // dispatch(newGaleri(data, token))
+            dispatch (onCall (data, token))
+            console.log(data)
+            // console.log(image)
+
+        } else {
+            const data = {
+                judul,
+                isi_galleri,
+                // gambar,
+                gambar: temps,
+                kategori_id: Number(kategori_id),
+                users_id,
+                tag,
+                publish,
+                tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
+                id,
+                _method,
+            }
+
+            dispatch(onCall(data, token))
+            console.log(data)
+            // console.log(image)
+        }
+    }
+
     const onSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
         if (error) {
-            dispatch(clearErrors());
+            dispatch(clearErrors())
         }
 
         if (success) {
             dispatch({
-                // type: NEW_ARTIKEL_RESET
-                type: UPDATE_GALERI_RESET,
+                type: NEW_GALERI_RESET,
             });
         }
 
@@ -194,48 +382,84 @@ const EditGaleri = ({ token }) => {
 
         } else if (publish === false) {
             setPublish(0)
-
         }
 
-        if (publishDate === null) {
-            let today = new Date
+        let temps = []
 
-            const data = {
-                judul,
-                isi_galleri,
-                gambar,
-                kategori_id,
-                users_id,
-                tag,
-                publish,
-                id,
-                _method,
-                tanggal_publish: moment(today).format("YYYY-MM-DD")
-            };
+        let flag = 0 
 
-            dispatch(updateGaleri(data));
-            console.log(data)
+        for (let i = 0; i < image.length; i++){
+            flag += 1
 
-        } else {
-            const data = {
-                judul,
-                isi_galleri,
-                gambar,
-                kategori_id,
-                users_id,
-                tag,
-                publish,
-                id,
-                _method,
-                tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
-            };
+            temps.push (image[i].imageBase64)
 
-            dispatch(updateGaleri(data));
-            console.log(data)
+            if (flag === image.length){
+                handleData (temps, updateGaleri)
+            }
         }
 
+    }
 
-    };
+    // const onSubmit = (e) => {
+    //     e.preventDefault();
+    //     if (error) {
+    //         dispatch(clearErrors());
+    //     }
+
+    //     if (success) {
+    //         dispatch({
+    //             // type: NEW_ARTIKEL_RESET
+    //             type: UPDATE_GALERI_RESET,
+    //         });
+    //     }
+
+    //     if (publish === true) {
+    //         setPublish(1)
+
+    //     } else if (publish === false) {
+    //         setPublish(0)
+
+    //     }
+
+    //     if (publishDate === null) {
+    //         let today = new Date
+
+    //         const data = {
+    //             judul,
+    //             isi_galleri,
+    //             gambar,
+    //             kategori_id,
+    //             users_id,
+    //             tag,
+    //             publish,
+    //             id,
+    //             _method,
+    //             tanggal_publish: moment(today).format("YYYY-MM-DD")
+    //         };
+
+    //         dispatch(updateGaleri(data));
+    //         console.log(data)
+
+    //     } else {
+    //         const data = {
+    //             judul,
+    //             isi_galleri,
+    //             gambar,
+    //             kategori_id,
+    //             users_id,
+    //             tag,
+    //             publish,
+    //             id,
+    //             _method,
+    //             tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
+    //         };
+
+    //         dispatch(updateGaleri(data));
+    //         console.log(data)
+    //     }
+
+
+    // };
 
     const onNewReset = () => {
         dispatch({
@@ -280,8 +504,12 @@ const EditGaleri = ({ token }) => {
     return (
         <PageWrapper>
             {
-                console.log("INI GALERI : ", galeri)
-            }
+                console.log(galeri)
+            }    
+
+            {/* {
+                console.log (image)
+            }       */}
 
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -347,7 +575,7 @@ const EditGaleri = ({ token }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Upload Gambar</label>
-                                <div className="col-sm-12">
+                                {/* <div className="col-sm-12">
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
                                         <p className='text-center my-auto'>Seret gambar ke sini atau klik untuk memilih.</p>
@@ -356,7 +584,102 @@ const EditGaleri = ({ token }) => {
                                     <aside style={thumbsContainer}>
                                         {thumbs}
                                     </aside>
-                                </div>
+                                </div> */}
+
+                                {
+                                    image ?
+                                        <div className="form-group mb-4">
+                                            <div className="row align-items-center">
+                                                {image.map((row, i) => (
+                                                    <div className="col-4 col-md-2 col-lg-2 p-0 ml-5">
+                                                    <div
+                                                        className="position-relative mx-auto mt-5"
+                                                        style={{ maxWidth: "max-content" }}
+                                                    >
+                                                        <figure
+                                                        className="avatar item-rtl position-relative"
+                                                        data-toggle="modal"
+                                                        data-target="#exampleModalCenter"
+                                                        >
+                                                            <Image
+                                                                src={row.imagePreview ? row.imagePreview : "/assets/media/default.jpg"}
+                                                                alt="image"
+                                                                width={160}
+                                                                height={160}
+                                                                objectFit="cover"
+                                                                id={row.imagePreview}
+                                                            />
+                                                    
+                                                            <label className="circle-top" htmlFor={`inputGroupFile${i}`}>
+                                                                {
+                                                                    row.imageName ?
+                                                                        <i className="ri-pencil-fill text-dark"></i>
+                                                                    :
+                                                                        <i className="ri-add-line text-dark"></i>
+                                                                }
+                                                            </label>
+                                                            <input
+                                                                type="file"
+                                                                name="gambar"
+                                                                className="custom-file-input"
+                                                                id={`inputGroupFile${i}`}
+                                                                accept="image/*"
+                                                                style={{ display: "none" }}
+                                                                onChange={(e) => onChangeImage(e, i)}
+                                                            />
+                                                        
+                                                        </figure>
+
+                                                        <div className="position-relative">
+                                                            <label
+                                                                className="circle-bottom"
+                                                                // htmlFor={`inputGroupFile${i}`}
+                                                                onClick={() => onDeleteImage(i)}
+                                                            >   
+                                                                <i className="ri-delete-bin-fill text-dark"></i>
+                                                            </label>
+                                                            {/* <input
+                                                                type="file"
+                                                                name="gambar"
+                                                                className="custom-file-input"
+                                                                id={`inputGroupFile${i}`}
+                                                                accept="image/*"
+                                                                style={{ display: "none" }}
+                                                                onChange={(e) => onChangeImage(e, i)}
+                                                            /> */}
+                                                        </div>
+                                                        
+                                                        {
+                                                            image[i].imageName !== "" ?
+                                                                
+                                                                <div className="mt-3 ml-3 text-danger">
+                                                                    <small className="text-danger">{image[i].imageName}</small>
+                                                                </div>
+                                                            :
+                                                                null
+                                                        }
+                                                    </div>
+                                                </div>
+                                            ))}
+
+                                            <button
+                                                className="btn btn-primary-rounded-full text-white ml-5 mt-5"
+                                                onClick={onAddImage}
+                                                type="button"
+                                                disabled={totalImage === 6 ? true : false}
+                                            >
+                                                <i className="ri-add-line text-white"></i> Tambah Gambar
+                                            </button>
+                                            </div>
+
+                                            <div className="mt-3 col-sm-3 text-muted">
+                                            <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
+                                            </div>
+                                        </div>
+                                    :
+                                        null
+                                }
+                                
                             </div>
 
                             <div className="form-group">

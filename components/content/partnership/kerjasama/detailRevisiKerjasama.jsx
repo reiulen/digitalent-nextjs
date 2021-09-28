@@ -5,19 +5,17 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-const DetailRevisiKerjasama = () => {
-
+const DetailRevisiKerjasama = ({ token }) => {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [cooperationID, setCooperationID] = useState("");
-  const [allCooperation, setAllCooperation] = useState([])
+  const [allCooperation, setAllCooperation] = useState([]);
   const [period, setPeriod] = useState("");
   const [periodUnit, setPeriodUnit] = useState("tahun");
   const [note, setNote] = useState("");
 
-
-  const handleSubmit = async ({token}) => {
+  const handleSubmit = () => {
     // e.preventDefault();
     Swal.fire({
       title: "Apakah anda yakin ingin simpan ?",
@@ -30,7 +28,6 @@ const DetailRevisiKerjasama = () => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-
         let formData = new FormData();
 
         const method = "PUT";
@@ -48,12 +45,17 @@ const DetailRevisiKerjasama = () => {
         try {
           let { data } = await axios.post(
             `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi/${router.query.id}/${router.query.varsion}`,
-            formData
+            formData,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
           );
 
           router.push({
             pathname: `/partnership/kerjasama/revisi-kerjasama/`,
-            query: { id:router.query.id },
+            query: { id: router.query.id },
           });
         } catch (error) {
           notify(error.response.data.message);
@@ -62,22 +64,23 @@ const DetailRevisiKerjasama = () => {
     });
   };
 
-  
-
-
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setTitle(data.data.title);
       setDate(data.data.submission_date);
-      setAllCooperation(data.data.cooperation_category.data_content)
+      setAllCooperation(data.data.cooperation_category.data_content);
       setCooperationID(data.data.cooperation_category);
       setPeriod(data.data.period);
       setPeriodUnit(data.data.period_unit);
-      setNote(data.data.note)
-
+      setNote(data.data.note);
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
@@ -89,15 +92,16 @@ const DetailRevisiKerjasama = () => {
   };
   useEffect(() => {
     setDataSingle(router.query.id);
-  }, [router.query.id])
-
+  }, [router.query.id]);
 
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title fz-20 fw-500 text-dark">Detail Kerjasama Revisi</h3>
+            <h3 className="card-title fz-20 fw-500 text-dark">
+              Detail Kerjasama Revisi
+            </h3>
           </div>
 
           <div className="card-body">
@@ -108,7 +112,7 @@ const DetailRevisiKerjasama = () => {
                   <input
                     placeholder="Pilih Tanggal"
                     readOnly
-                    value={date&&date}
+                    value={date && date}
                     type="date"
                     className="form-control mb-3 mb-lg-0"
                   />
@@ -122,7 +126,7 @@ const DetailRevisiKerjasama = () => {
                     <input
                       placeholder="Masukan Judul Kerjasama"
                       readOnly
-                      value={title&&title}
+                      value={title && title}
                       type="text"
                       className="form-control mb-3 mb-lg-0"
                     />
@@ -131,8 +135,13 @@ const DetailRevisiKerjasama = () => {
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2">Kategori Kerjasama</label>
-                    <select className="form-control remove-icon-default" disabled>
-                      <option value="">{cooperationID&&cooperationID.name}</option>
+                    <select
+                      className="form-control remove-icon-default"
+                      disabled
+                    >
+                      <option value="">
+                        {cooperationID && cooperationID.name}
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -145,7 +154,7 @@ const DetailRevisiKerjasama = () => {
                     <input
                       placeholder="Masukan Lama Kerjasama"
                       readOnly
-                      value={period&&period}
+                      value={period && period}
                       type="number"
                       className="form-control mb-3 mb-lg-0"
                     />
@@ -161,55 +170,60 @@ const DetailRevisiKerjasama = () => {
                 </div>
               </div>
 
-
               {/* start loop */}
 
-              {!allCooperation.length ? "" : allCooperation.map((items,index)=>{
-                return(
-                    <div className="row" key={index}>
-                <div className="col-12 col-sm-6">
-                  <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      {items.cooperation_form}
-                    </label>
-                    <div>
-                      <textarea
-                        name="cooperation"
-                        id=""
-                        readOnly
-                        cols="30"
-                        rows="5"
-                        value={items.form_content}
-                        className="form-control"
-                        placeholder="Tuliskan Tujuan Kerjasama"
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6">
-                  <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Catatan Revisi
-                    </label>
-                    <div>
-                      <textarea
-                      onChange={(e) => handleChange(e, index)}
-                      value={items.form_content_review}
-                        name="cooperation"
-                        id=""
-                        cols="30"
-                        rows="5"
-                        className="form-control"
-                        placeholder="Tuliskan Catatan Revisi"
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-                )
-              })}
+              {!allCooperation.length
+                ? ""
+                : allCooperation.map((items, index) => {
+                    return (
+                      <div className="row" key={index}>
+                        <div className="col-12 col-sm-6">
+                          <div className="form-group">
+                            <label
+                              htmlFor="staticEmail"
+                              className="col-form-label"
+                            >
+                              {items.cooperation_form}
+                            </label>
+                            <div>
+                              <textarea
+                                name="cooperation"
+                                id=""
+                                readOnly
+                                cols="30"
+                                rows="5"
+                                value={items.form_content}
+                                className="form-control"
+                                placeholder="Tuliskan Tujuan Kerjasama"
+                              ></textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="col-12 col-sm-6">
+                          <div className="form-group">
+                            <label
+                              htmlFor="staticEmail"
+                              className="col-form-label"
+                            >
+                              Catatan Revisi
+                            </label>
+                            <div>
+                              <textarea
+                                onChange={(e) => handleChange(e, index)}
+                                value={items.form_content_review}
+                                name="cooperation"
+                                id=""
+                                cols="30"
+                                rows="5"
+                                className="form-control"
+                                placeholder="Tuliskan Catatan Revisi"
+                              ></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
 
               {/* end loop */}
 
@@ -219,10 +233,10 @@ const DetailRevisiKerjasama = () => {
                 </label>
                 <div>
                   <textarea
-                  onChange={(e)=>setNote(e.target.value)}
+                    onChange={(e) => setNote(e.target.value)}
                     name="cooperation"
                     id=""
-                    value={note&&note}
+                    value={note && note}
                     cols="30"
                     rows="5"
                     className="form-control"
@@ -233,10 +247,12 @@ const DetailRevisiKerjasama = () => {
 
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href={{
-                    pathname: `/partnership/kerjasama/revisi-kerjasama/`,
-                    query:{id:router.query.id}
-                  }}>
+                  <Link
+                    href={{
+                      pathname: `/partnership/kerjasama/revisi-kerjasama/`,
+                      query: { id: router.query.id },
+                    }}
+                  >
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>

@@ -33,7 +33,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         await store.dispatch(getDetailArtikel(params.id,  session.user.user.data.token));
   
         return {
-          props: { session, title: "Preview Artikel - Publikasi" },
+          props: { session, title: "Pratinjau Artikel - Publikasi", data: "auth", },
       };
     }
 );
