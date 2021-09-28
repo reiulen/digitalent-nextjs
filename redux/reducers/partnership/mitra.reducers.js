@@ -22,6 +22,7 @@ import {
   SUCCESS_DELETE_COOPERATION_M_DETAIL,
   CHANGE_STATUS_LIST_M_DETAIL,
   RESET_VALUE_SORTIR,
+  CHANGE_STATUS_LIST_M,
 } from "../../types/partnership/mitra.type";
 
 const statuslist = {
@@ -98,6 +99,12 @@ export const allMitraReducer = (state = initialState, action) => {
       return {
         ...state,
         status_reload: state.status_reload === "" ? "reload" : "",
+      };
+
+    case CHANGE_STATUS_LIST_M:
+      return {
+        ...state,
+        status_reload: state.status_reload === "" ? "delete" : "",
       };
 
     case SUCESS_PROVINCE:

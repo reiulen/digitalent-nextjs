@@ -18,9 +18,9 @@ export default function PengaturanPublikasiPage() {
     return (
         <>
             <div className="d-flex flex-column flex-root">
-                <Layout title='Pengaturan - Publikasi'>
+                {/* <Layout title='Pengaturan - Publikasi'> */}
                     <PengaturanPublikasi />
-                </Layout>
+                {/* </Layout> */}
             </div>
         </>
     )
@@ -37,4 +37,8 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ q
         };
     }
     await store.dispatch(getSettingPublikasi(session.user.user.data.token))
+    
+    return {
+        props: { session, title: "Pengaturan - Publikasi" },
+    };
 })

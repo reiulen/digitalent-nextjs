@@ -27,10 +27,16 @@ export default function DashboardPage({ token }) {
 
   const [errorGetData, setErrorGetData] = useState("");
 
-  const fetchDashboards = async () => {
-    try {
+  useEffect(() => {
+    async function fetchDashboards(){
+      try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/dashbord`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/dashbord`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setDataPieChartPengajuanDisetujui([
         {
@@ -55,12 +61,10 @@ export default function DashboardPage({ token }) {
     } catch (error) {
       setErrorGetData(error);
     }
-  };
-
-  useEffect(() => {
+    }
     fetchDashboards();
-    dispatch(fetchDashboard());
-  }, [dispatch]);
+    dispatch(fetchDashboard(token));
+  }, [dispatch,token]);
   return (
     <PageWrapper>
       {/* head content */}

@@ -104,8 +104,8 @@ const DashbardPublikasi = ({token}) => {
                 {/* {console.log (dataDashboardGallery)} */}
                 <div className="row">
                     <div className="col-lg-12 col-xxl-12 mt-4">
-                        <div className="card card-custom bg-light-primary">
-                            <div className="card-body pt-2" style={{ backgroundPosition: 'left bottom', backgroundImage: "url('/assets/media/jukut.svg')", backgroundRepeat: 'no-repeat' }}>
+                        <div className="card card-custom bg-white">
+                            <div className="card-body pt-2" style={{ backgroundPosition: 'left bottom', backgroundImage: "url('/assets/media/Frame-White.svg')", backgroundRepeat: 'no-repeat' }}>
                                 <div className="d-flex align-items-center mb-10" >
                                     <div className="d-flex flex-column flex-grow-1 font-weight-bold"  >
                                         <div className="row">
@@ -137,10 +137,10 @@ const DashbardPublikasi = ({token}) => {
                     </div>
                     <div className="col-lg-6 col-xxl-6 my-5">
                         <div className="card card-custom card-stretch gutter-b">
-                            <div className="card-body pt-2" style={{backgroundColor: "#215480"}}>
-                                <h3 className="card-title font-weight-bolder text-light mt-5">Total Publish dan Unpublish</h3>
-                                <div className="d-flex align-items-center justify-content-center">
-                                    <BarChart width={450} height={350} data={dataBarChart}>
+                            <div className="card-body pt-2" style={{backgroundColor: "#215480", borderRadius:"6px"}}>
+                                <h3 className="card-title font-weight-bolder text-light mt-5">Total Publish dan Belum Dipublish</h3>
+                                <div className="d-flex align-items-center justify-content-center col-sm-12">
+                                    <BarChart width={350} height={350} data={dataBarChart}>
                                         <XAxis dataKey="name" hide={true}/>
                                         <Bar 
                                             dataKey="publish" 
@@ -206,7 +206,7 @@ const DashbardPublikasi = ({token}) => {
                         <div className="card card-custom card-stretch gutter-b">
                             <div className="card-body pt-2">
                                 <h3 className="card-title font-weight-bolder text-dark mt-5">Total Author, Peserta DTS dan Admin Publikasi </h3>
-                                <div className="text-muted">
+                                <div className="text-muted" style={{marginTop: "-20px"}}>
                                     Total User
                                 </div>
                                 
@@ -240,7 +240,7 @@ const DashbardPublikasi = ({token}) => {
                                     
                                 </div>
 
-                                <div className="d-flex align-items-center justify-content-center" style={{marginTop:"-28vh"}}>
+                                <div className="d-flex align-items-center justify-content-center" style={{marginTop:"-200px"}}>
                                     <h1 className="font-weight-bolder display-2">
                                         133
                                     </h1>
@@ -370,7 +370,7 @@ const DashbardPublikasi = ({token}) => {
                                                         {/* <!--end::Symbol--> */}
                                                         {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_berita}</p>
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_artikel}</p>
                                                             <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
                                                             <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
                                                         </div>
@@ -471,7 +471,7 @@ const DashbardPublikasi = ({token}) => {
                                                         {/* <!--end::Symbol--> */}
                                                         {/* <!--begin::Text--> */}
                                                         <div className="d-flex flex-column flex-grow-1 font-weight-bold">
-                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_berita}</p>
+                                                            <p className="text-dark text-hover-primary mb-1 font-size-lg">{el.judul_video}</p>
                                                             <span className="text-muted">Kategori : <span className='text-primary'>{el.kategori}</span></span>
                                                             <span className="text-muted">Created By : <span className='text-primary'>{el.dibuat}</span></span>
                                                         </div>

@@ -161,7 +161,7 @@ const Berita = ({token}) => {
         if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
             Swal.fire(
                 'Oops !',
-                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+                'Tanggal Dari tidak boleh melebihi Tanggal Sampai.',
                 'error'
             )
             setStartDate (null)
@@ -170,7 +170,7 @@ const Berita = ({token}) => {
         } else if (startDate === null && endDate !== null) {
             Swal.fire(
                 'Oops !',
-                'Tanggal sebelum tidak boleh kosong',
+                'Tanggal Dari tidak boleh kosong',
                 'error'
             )
             setStartDate (null)
@@ -179,7 +179,7 @@ const Berita = ({token}) => {
         } else if (startDate !== null && endDate === null) {
             Swal.fire(
                 'Oops !',
-                'Tanggal sesudah tidak boleh kosong',
+                'Tanggal Sampai tidak boleh kosong',
                 'error'
             )
             setStartDate (null)
@@ -226,11 +226,17 @@ const Berita = ({token}) => {
 
     const handleLimit = (val) => {
         setLimit(val)
-        if (search === "") {
-            router.push(`${router.pathname}?page=1&limit=${val}`);
+        if (search === "" && publishValue === null) {
+          router.push(`${router.pathname}?page=1&limit=${val}`);
+    
+        } else if (search !== "" && publishValue === null) {
+          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
         
-        } else {
-            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        } else if (search === "" && publishValue !== null) {
+          router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
+        
+        } else if (search !== "" && publishValue !== null) {
+          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
         }
     
     };
@@ -671,8 +677,8 @@ const Berita = ({token}) => {
                                                                 }
                                                             </td>
                                                             <td className='align-middle'>
-                                                                {/* {row.dibuat} */}
-                                                                Super Admin
+                                                                {row.dibuat}
+                                                                {/* Super Admin */}
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
@@ -686,7 +692,7 @@ const Berita = ({token}) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>Super Admin</td>
+                                                            <td className='align-middle'>{row.role}</td>
                                                             <td className="align-middle d-flex">
 
                                                                 <Link

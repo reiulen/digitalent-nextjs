@@ -574,6 +574,13 @@ const Sidebar = () => {
                         </a>
                       </Link>
                     </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/pelatihan/report-pelatihan">
+                        <a className="menu-link">
+                          <span className="menu-text">Report Pelatihan</span>
+                        </a>
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </li>
@@ -1098,7 +1105,7 @@ const Sidebar = () => {
                       />
                     </svg>
                   </span>
-                  <Link href="/site-management/">
+                  <Link href="/site-management/" passHref>
                     <span className="menu-text">Site Management</span>
                   </Link>
                   <i className="menu-arrow"></i>
@@ -1111,7 +1118,7 @@ const Sidebar = () => {
                       aria-haspopup="true"
                     >
                       <span className="menu-link">
-                        <Link href="/site-management/">
+                        <Link href="/site-management/" passHref>
                           <span className="menu-text">Site Management</span>
                         </Link>
                       </span>
@@ -1123,7 +1130,7 @@ const Sidebar = () => {
                       data-menu-toggle="hover"
                     >
                       <a href="javascript:;" className="menu-link menu-toggle">
-                        <Link href="/site-management/user/">
+                        <Link href="/site-management/user/" passHref>
                           <span className="menu-text">User</span>
                         </Link>
                         <i className="menu-arrow"></i>
@@ -1136,21 +1143,21 @@ const Sidebar = () => {
                             aria-haspopup="true"
                           >
                             <span className="menu-link">
-                              <Link href="/site-management/user/">
+                              <Link href="/site-management/user/" passHref>
                                 <span className="menu-text">User</span>
                               </Link>
                             </span>
                           </li>
                           <li className="menu-item" aria-haspopup="true">
                             <a className="menu-link">
-                              <Link href="/site-management/peserta/">
+                              <Link href="/site-management/peserta/" passHref>
                                 <span className="menu-text">Peserta DTS</span>
                               </Link>
                             </a>
                           </li>
                           <li className="menu-item" aria-haspopup="true">
                             <a className="menu-link">
-                              <Link href="/site-management/administrator/">
+                              <Link href="/site-management/administrator/" passHref>
                                 <span className="menu-text">Administrator</span>
                               </Link>
                             </a>

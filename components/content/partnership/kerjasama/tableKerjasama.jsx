@@ -53,6 +53,7 @@ const Table = ({token}) => {
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
+  console.log("allMK",allMK)
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
@@ -92,7 +93,7 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(changeStatusList(e.target.value, id));
+        dispatch(changeStatusList(token,e.target.value, id));
         setIsStatusBar(true);
         setDeleteBar(false);
         setIsChangeOption(true);
@@ -115,7 +116,7 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteCooperation(id));
+        dispatch(deleteCooperation(token,id));
         setDeleteBar(true);
         setIsStatusBar(false);
         router.replace("/partnership/kerjasama");
@@ -134,7 +135,7 @@ const Table = ({token}) => {
   };
 
   useEffect(() => {
-    dispatch(fetchAllMK());
+    dispatch(fetchAllMK(token));
   }, [
     dispatch,
     allMK.keyword,
@@ -146,20 +147,11 @@ const Table = ({token}) => {
     allMK.card,
     allMK.status_delete,
     allMK.status_list,
-    
+    token
   ]);
 
   const [sumWillExpire, setSumWillExpire] = useState(0);
-  const getWillExpire = async () => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`
-      );
-      setSumWillExpire(data.data.total);
-    } catch (error) {
-      console.log("object", error);
-    }
-  };
+  
 
   const cooperationRejection = (id) =>{
     Swal.fire({
@@ -173,7 +165,7 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(rejectCooperation(id));
+        dispatch(rejectCooperation(token,id));
         setIsStatusBar(true);
       } else {
         dispatch(reloadTable());
@@ -183,11 +175,26 @@ const Table = ({token}) => {
   }
 
   useEffect(() => {
-    dispatch(fetchListSelectMitra());
-    dispatch(fetchListSelectCooperation());
-    dispatch(fetchListSelectStatus());
-    getWillExpire();
-  }, [dispatch]);
+    dispatch(fetchListSelectMitra(token));
+    dispatch(fetchListSelectCooperation(token));
+    dispatch(fetchListSelectStatus(token));
+    async function getWillExpire (token){
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setSumWillExpire(data.data.total);
+    } catch (error) {
+      console.log("object", error);
+    }
+    }
+    getWillExpire(token);
+  }, [dispatch,token]);
   return (
     <PageWrapper>
 
@@ -610,7 +617,7 @@ const Table = ({token}) => {
                           <button
                             className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
                             type="button"
-                            onClick={() => dispatch(exportFileCSV())}
+                            onClick={() => dispatch(exportFileCSV(token))}
                           >
                             Export .xlsx
                           </button>
@@ -1052,7 +1059,13 @@ const Table = ({token}) => {
 
 
                                       <Link href={{
-                                        pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
+
+
+                                        // pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
+                                        pathname:"/partnership/tanda-tangan/ttdTolkit",
+
+
+
                                         query:{id:items.id}
                                       }} passHref>
                                       
@@ -1133,7 +1146,7 @@ const Table = ({token}) => {
                                   ) : (
                                     <div className="d-flex align-items-center">
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                         onClick={() =>
                                           router.push(
                                             `/partnership/kerjasama/view/${items.id}`
@@ -1149,7 +1162,7 @@ const Table = ({token}) => {
                                           Detail
                                         </div>
                                       </button>
-                                      <button
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                         onClick={() =>
                                           router.push(
@@ -1162,7 +1175,7 @@ const Table = ({token}) => {
                                         <div className="text-hover-show-hapus">
                                           Ubah
                                         </div>
-                                      </button>
+                                      </button> */}
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>

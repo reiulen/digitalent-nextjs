@@ -42,11 +42,11 @@ export const getAllSubtanceQuestionDetail =
 
       let link =
         process.env.END_POINT_API_SUBVIT +
-        `api/subtance-question-bank-details/all/152?`;
+        `api/subtance-question-bank-details/all/${id}?`;
       if (page) link = link.concat(`&page=${page}`);
       if (limit) link = link.concat(`&limit=${limit}`);
       if (keyword) link = link.concat(`&keyword=${keyword}`);
-      //   if (status) link = link.concat(`&status=${status}`);
+      if (status) link = link.concat(`&status=${status}`);
       if (category) link = link.concat(`&category=${category}`);
       if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
 

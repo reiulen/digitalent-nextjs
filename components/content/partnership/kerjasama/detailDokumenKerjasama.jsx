@@ -19,21 +19,42 @@ const DetailDokumenKerjasama = ({token}) => {
 
   const [pdfFIle, setPdfFIle] = useState("");
 
-  const getSingleValue = async (id) => {
-    try {
+  // const getSingleValue = async (id) => {
+  //   try {
+  //     let { data } = await axios.get(
+  //       `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+  //       {
+  //         headers: {
+  //           authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     setPdfFIle(data.data.document_file);
+  //   } catch (error) {
+  //     console.log("action getSingleValue gagal", error);
+  //   }
+  // };
+
+  useEffect(() => {
+    async function getSingleValue(id){
+      try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setPdfFIle(data.data.document_file);
     } catch (error) {
       console.log("action getSingleValue gagal", error);
     }
-  };
-
-  useEffect(() => {
+    }
+    
     getSingleValue(router.query.id);
-    dispatch(getSingleCooperation(router.query.id));
-  }, [dispatch, router.query.id]);
+    dispatch(getSingleCooperation(token,router.query.id));
+  }, [dispatch, router.query.id,token]);
 
   return (
     <PageWrapper>

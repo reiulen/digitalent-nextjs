@@ -76,7 +76,8 @@ const EditBerita = () => {
     const [kategori_id, setKategoriId] = useState(berita.kategori_id)
     const [users_id, setUserId] = useState(berita.users_id)
     const [tag, setTag] = useState(berita.tag)
-    const [publish, setPublish] = useState(berita.publish === 1 ? true : false)
+    const [publish, setPublish] = useState(berita.publish)
+    // const [publish, setPublish] = useState(berita.publish === 1 ? true : false)
     const [_method, setMethod] = useState("put")
     // const [publishDate, setPublishDate] = useState(null);
     const [publishDate, setPublishDate] = useState(berita.tanggal_publish ? (new Date (berita.tanggal_publish)) : null);
@@ -294,6 +295,14 @@ const EditBerita = () => {
                 }
                 
             }
+        } else {
+            simpleValidator.current.showMessages();
+            forceUpdate(1);
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
+            });
         }
     }
 
@@ -377,7 +386,7 @@ const EditBerita = () => {
                                                 onChange={(event, editor) => {
                                                     const data = editor.getData()
                                                     setIsiBerita(data);
-                                                    console.log({ event, editor, data })
+                                                    // console.log({ event, editor, data })
                                                 }}
                                                 onBlur={() =>
                                                     simpleValidator.current.showMessageFor(
@@ -389,7 +398,7 @@ const EditBerita = () => {
                                             {simpleValidator.current.message(
                                                 "isi_berita",
                                                 isi_berita,
-                                                "required|min:100",
+                                                "required|min:100|max:2500",
                                                 { className: "text-danger" }
                                             )}
                                         </div>

@@ -23,9 +23,9 @@ export default function EditImagetronPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Ubah Imagetron">
+        {/* <Layout title="Ubah Imagetron"> */}
           <EditImagetron />
-        </Layout>
+        {/* </Layout> */}
       </div>
     </>
   );
@@ -44,5 +44,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       await store.dispatch(getDetailImagetron(params.id, session.user.user.data.token));
+      return {
+        props: { session, title: "Ubah Imagetron - Publikasi" },
+    };
     }
 );

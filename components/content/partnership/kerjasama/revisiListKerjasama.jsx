@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Link from 'next/link'
+import Link from "next/link";
 
-function RevisiList({token}) {
+function RevisiList({ token }) {
   const router = useRouter();
   const cardContainer = {
     background: "#FFFFFF",
@@ -14,36 +14,41 @@ function RevisiList({token}) {
     borderRadius: "12px",
   };
   const labelStyle = {
-    color: "#04AA77",
+    color: "#E69700",
     fontSize: "14px",
     fontWeight: "600",
-    background: "#E6F7F1",
+    background: "#FFF6E6",
     borderRadius: "4px",
-    padding:"4px 10px"
+    padding: "4px 10px",
   };
 
   const styleList = {
-    listStyle :"none",
-    margin:"0",
-    padding:"0"
-  }
+    listStyle: "none",
+    margin: "0",
+    padding: "0",
+  };
 
   const [listCardREvisi, setListCardREvisi] = useState([]);
 
-  const getCardREviewList = async (id) => {
-    try {
+  useEffect(() => {
+    async function getCardREviewList (id,token){
+      try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/card-review/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/card-review/${id}`,{
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setListCardREvisi(data.data);
     } catch (error) {
       console.log("action getCardREviewList", error);
     }
-  };
-  useEffect(() => {
-    getCardREviewList(router.query.id);
-  }, [router.query.id]);
+
+    }
+    getCardREviewList(router.query.id,token);
+  }, [router.query.id,token]);
 
   return (
     <PageWrapper>
@@ -57,41 +62,65 @@ function RevisiList({token}) {
 
           <div className="card-body pb-28">
             <ul style={styleList}>
-              {listCardREvisi.length === 0 ? "" : listCardREvisi.map((items,index)=>{
-                return(
-                  <li key={index} className="mt-5">
-                <div
-                  className="d-flex align-items-center justify-content-between"
-                  style={cardContainer}
-                >
-                  <div>
-                    <h1 className="fw-500 fz-20" style={{ color: "#6C6C6C" }}>
-                      {items.title}
-                    </h1>
-                    <p className="mt-4" style={{ color: "#ADB5BD" }}>
-                      {items.information1}
-                    </p>
-                    <p style={{ color: "#ADB5BD" }}>Revisi Versi.{items.version}</p>
-                  </div>
+              {listCardREvisi.length === 0
+                ? ""
+                : listCardREvisi.map((items, index) => {
+                    return (
+                      <li key={index} className="mt-5">
+                        <div
+                          className="d-flex align-items-center justify-content-between"
+                          style={cardContainer}
+                        >
+                          <div>
+                            <h1
+                              className="fw-500 fz-20"
+                              style={{ color: "#6C6C6C" }}
+                            >
+                              {items.title}
+                            </h1>
+                            <p className="mt-4" style={{ color: "#ADB5BD" }}>
+                              {items.information1}
+                            </p>
+                            <p style={{ color: "#ADB5BD" }}>
+                              Revisi Versi.{items.version}
+                            </p>
+                          </div>
 
-                  {items.information2 === "Sudah direvisi" ? <Link href={{
-                    pathname:"/partnership/kerjasama/review-kerjasama",
-                    query:{id:router.query.id,version:items.version,statusInfo:items.information2}
-                  }}>
-                 <a style={labelStyle}>{items.information2}</a> 
-                  </Link> :<Link href={{
-                    pathname:"/partnership/kerjasama/review-kerjasama",
-                    query:{id:router.query.id,version:items.version,statusInfo:items.information2}
-                  }}>
-                 <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">{items.information2}</a> 
-                  </Link>}
-                  
-                </div>
-              </li>
-                )
-              })
-              
-                }
+                          {items.information2 === "Menunggu Mitra" ? (
+                            <Link
+                              href={{
+                                pathname:
+                                  "/partnership/kerjasama/review-kerjasama",
+                                query: {
+                                  id: router.query.id,
+                                  version: items.version,
+                                  statusInfo: items.information2,
+                                },
+                              }}
+                            >
+                              <a style={labelStyle}>{items.information2}</a>
+                            </Link>
+                          ) : (
+                            <Link
+                              href={{
+                                pathname:
+                                  "/partnership/kerjasama/review-kerjasama",
+                                query: {
+                                  id: router.query.id,
+                                  version: items.version,
+                                  statusInfo: items.information2,
+                                },
+                              }}
+                            >
+                              <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                                {items.information2}
+                              </a>
+                            </Link>
+                          )}
+                        </div>
+                      </li>
+                    );
+                  })}
             </ul>
           </div>
         </div>

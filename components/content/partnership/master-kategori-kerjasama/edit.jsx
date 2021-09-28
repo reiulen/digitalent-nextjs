@@ -6,9 +6,14 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { updateMasterCategory } from "../../../../redux/actions/partnership/mk_cooporation.actions";
+import { useDispatch, useSelector } from "react-redux";
 
-const Edit = ({token}) => {
+const Edit = ({ token }) => {
   const router = useRouter();
+  let dispatch = useDispatch();
+  const allMKCooporation = useSelector((state) => state.allMKCooporation);
+  console.log("allMKCooporation", allMKCooporation);
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [stateDataSingleOld, setStateDataSingleOld] = useState([]);
   const [stateDataSingle, setStateDataSingle] = useState([]);
@@ -100,27 +105,34 @@ const Edit = ({token}) => {
             formData.append("status", statusPro);
           }
         }
-        try {
-          let id = router.query.id;
-          let { data } = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`,
-            formData
-          );
-          router.push({
-            pathname: "/partnership/master-kategori-kerjasama",
-            query: { update: true },
-          });
-        } catch (error) {
-          notify(error.response.data.message);
-        }
+        dispatch(updateMasterCategory(token, formData, router.query.id));
       }
     });
   };
 
-  const getSingleData = async (id) => {
-    try {
+  
+
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+  useEffect(() => {
+    async function getSingleData (id,token) {
+      try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       let arr = [],
@@ -141,22 +153,16 @@ const Edit = ({token}) => {
     } catch (error) {
       console.log(error);
     }
-  };
 
-  const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-
-  useEffect(() => {
-    getSingleData(router.query.id);
-  }, [router.query.id]);
+    } 
+    getSingleData(router.query.id,token);
+    if (allMKCooporation.status === "success") {
+      router.push({
+        pathname: "/partnership/master-kategori-kerjasama",
+        query: { update: true },
+      });
+    }
+  }, [router.query.id, allMKCooporation.status,router,token]);
   return (
     <PageWrapper>
       <ToastContainer
@@ -173,27 +179,27 @@ const Edit = ({token}) => {
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark" style={{fontSize:"24px"}}>
+            <h3
+              className="card-title font-weight-bolder text-dark"
+              style={{ fontSize: "24px" }}
+            >
               Ubah Master Kategori Kerjasama
             </h3>
           </div>
           <div className="card-body">
             <form>
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Kategori Kerjasama
                 </label>
-                  <input
-                    required
-                    type="text"
-                    className="form-control"
-                    placeholder="Masukkan Kategori Lembaga"
-                    value={categoryCooporation}
-                    onChange={(e) => setCategoryCooporation(e.target.value)}
-                  />
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  placeholder="Masukkan Kategori Lembaga"
+                  value={categoryCooporation}
+                  onChange={(e) => setCategoryCooporation(e.target.value)}
+                />
               </div>
 
               {/* start loop */}
@@ -227,7 +233,20 @@ const Edit = ({token}) => {
                                 className="btn position-absolute"
                                 style={{ top: "0", right: "10px" }}
                               >
-                                <svg className="position-relative" style={{bottom:"2px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z" fill="#ADB5BD"/></svg>
+                                <svg
+                                  className="position-relative"
+                                  style={{ bottom: "2px" }}
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  width="24"
+                                  height="24"
+                                >
+                                  <path fill="none" d="M0 0h24v24H0z" />
+                                  <path
+                                    d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"
+                                    fill="#ADB5BD"
+                                  />
+                                </svg>
                               </button>
                             )}
                           </div>
@@ -250,15 +269,15 @@ const Edit = ({token}) => {
                           >
                             {index === 0 ? "Form Kerjasama" : ""}
                           </label>
-                            <input
-                              required
-                              type="text"
-                              name="cooperation_form"
-                              className="form-control"
-                              placeholder="Tujuan Kerjasama"
-                              value={item.cooperation_form}
-                              onChange={(e) => handleChange(e, index)}
-                            />
+                          <input
+                            required
+                            type="text"
+                            name="cooperation_form"
+                            className="form-control"
+                            placeholder="Tujuan Kerjasama"
+                            value={item.cooperation_form}
+                            onChange={(e) => handleChange(e, index)}
+                          />
                         </div>
                       </div>
                     );
@@ -266,17 +285,14 @@ const Edit = ({token}) => {
               {/* end loop old */}
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                ></label>
+                <label htmlFor="staticEmail" className="col-form-label"></label>
 
                 <p
                   className="btn btn-rounded-full bg-blue-primary text-white"
                   style={{
                     backgroundColor: "#40A9FF",
                     color: "#FFFFFF",
-                    width:"max-content"
+                    width: "max-content",
                   }}
                   onClick={() => handleAddInput()}
                 >
@@ -285,33 +301,32 @@ const Edit = ({token}) => {
               </div>
 
               <div className="form-group">
-                <label
-                  htmlFor="staticEmail"
-                  className="col-form-label"
-                >
+                <label htmlFor="staticEmail" className="col-form-label">
                   Status kerjasama
                 </label>
                 <div className="row mt-5">
-                <div className="col-12 d-flex align-items-center">
-                  <label className="switches mr-5">
-                    <input
-                      required
-                      className="checkbox"
-                      checked={status}
-                      type="checkbox"
-                      onChange={(e) => handleChangeStatus(e)}
-                    />
-                    <span
-                      className={`sliders round ${
-                        status ? "text-white" : "pl-2"
-                      }`}
+                  <div className="col-12 d-flex align-items-center">
+                    <label className="switches mr-5">
+                      <input
+                        required
+                        className="checkbox"
+                        checked={status}
+                        type="checkbox"
+                        onChange={(e) => handleChangeStatus(e)}
+                      />
+                      <span
+                        className={`sliders round ${
+                          status ? "text-white" : "pl-2"
+                        }`}
+                      ></span>
+                    </label>
+                    <p
+                      className="position-relative mb-0"
+                      style={{ bottom: "5px" }}
                     >
-                    </span>
-                  </label>
-                  <p className="position-relative mb-0" style={{bottom:"5px"}}>
                       {status ? "Aktif" : "Tidak aktif"}
-                  </p>
-                </div>
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -324,10 +339,10 @@ const Edit = ({token}) => {
                   </Link>
                   <button
                     type="button"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                      onClick={(e) => handleSubmit(e)}
-                    >
-                      Simpan
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                    onClick={(e) => handleSubmit(e)}
+                  >
+                    Simpan
                   </button>
                 </div>
               </div>

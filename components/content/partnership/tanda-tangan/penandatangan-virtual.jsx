@@ -22,7 +22,8 @@ const wrapperBox = {
   boxShadow: "inset 10px 10px 40px rgba(0, 0, 0, 0.08)",
   borderRadius: "10px",
   maxWidth: "80%",
-  height: "70vh",
+  height: "max-content",
+  padding:"2rem 0"
 };
 
 const DraggableCard = () => {
@@ -33,15 +34,16 @@ const DraggableCard = () => {
 };
 
 const choiceTtdAdmin = (e) => {
-  console.log(e.target.value)
-}
+  console.log(e.target.value);
+};
 
-export default function PenandatanganVirtual() {
+export default function PenandatanganVirtual({token}) {
   const cardRef = useRef(null);
   useDraggable(cardRef);
   const router = useRouter();
   const dispatch = useDispatch();
   const allTandaTangan = useSelector((state) => state.allTandaTangan);
+  console.log("allTandaTangan dd",allTandaTangan.ttdPartner)
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: ".pdf",
@@ -57,25 +59,24 @@ export default function PenandatanganVirtual() {
   });
 
   const images = files.map((file) => (
-    <div className="w-100" key={file.name}>
-      <div className="w-100">
-        {/* <img src={file.preview} className="w-100" alt="preview" /> */}
-        <iframe
-          style={{ border: "1px solid black" }}
-          src={file.preview}
-          frameBorder="0"
-          scrolling="auto"
-          height={file.preview ? "500px" : ""}
-          width="100%"
-        ></iframe>
-      </div>
+    <div className="h-100 w-100" key={file.name}>
+      {/* <img src={file.preview} className="w-100 h-100" alt="preview" /> */}
+      <iframe
+      className="w-100"
+        style={{ border: "1px solid black",minHeight:"100vh" }}
+        src={file.preview}
+        // frameBorder="0"
+        // scrolling="auto"
+        // height={file.preview ? "500px" : ""}
+        // width="100%"
+      ></iframe>
     </div>
   ));
 
   useEffect(() => {
-    dispatch(fetchOptionTtdAdmin());
-    dispatch(fetchTtdPartner(router.query.id));
-  }, [dispatch,router.query.id]);
+    dispatch(fetchOptionTtdAdmin(token));
+    dispatch(fetchTtdPartner(token,router.query.id));
+  }, [dispatch, router.query.id,token]);
 
   return (
     <PageWrapper>
@@ -87,7 +88,6 @@ export default function PenandatanganVirtual() {
               style={{ fontSize: "24px" }}
             >
               Penandatangan Virtual
-              
             </h3>
           </div>
 
@@ -97,59 +97,67 @@ export default function PenandatanganVirtual() {
             <div
               style={wrapperBox}
               className="mx-auto border my-10 d-flex align-items-center justify-content-center"
-              {...getRootProps()}
             >
               {images}
+              {/* card ttd */}
               <div className="cardss" ref={cardRef}>
-                {allTandaTangan.ttdPartner.length === 0 ? (
-                  "sdf"
+                {(allTandaTangan.ttdPartner.length === 0) || (allTandaTangan.ttdPartner.data.length === 0)  ? (
+                  ""
                 ) : (
-                  <Image
-                    src={
-                      process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                      "partnership/images/signatures/" +
-                      allTandaTangan.ttdPartner.data[0].signature_image
-                    }
-                    width={400}
-                    height={400}
-                    alt="logo"
-                  />
+                  <div className="image-card-1">
+                    <Image
+                      src={
+                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        "partnership/images/signatures/" +
+                        allTandaTangan.ttdPartner.data[0].signature_image
+                      }
+                      width={400}
+                      height={400}
+                      alt="logo"
+                    />
+                  </div>
+                  
                 )}
               </div>
-              {/* btn upload */}
+              {images.length === 0 ? 
+              <div>
+                {/* btn upload */}
 
-              <div className="border px-5 py-8 d-flex flex-column align-items-center justify-content-center">
-                {/* icon */}
-                <Image
-                  src="/assets/icon/uploadDrag.svg"
-                  alt="upload"
-                  width="40"
-                  height="40"
-                />
-
-                {/* <div className="position-relative">
-                  <input
-                    type="file"
-                    className="position-absolute w-100 h-100 cursor-pointer"
-                    style={{ zIndex: 1, opacity: "0" }}
-                    {...getInputProps()}
+                <div className="border px-5 py-8 d-flex flex-column align-items-center justify-content-center">
+                  {/* icon */}
+                  <Image
+                    src="/assets/icon/uploadDrag.svg"
+                    alt="upload"
+                    width="40"
+                    height="40"
                   />
-                  <button
-                    className="fw-400 fz-16 btn label-dark mt-5"
-                    style={{ color: "#000000" }}
-                  >
-                    Click or drag file to this area to upload
-                  </button>
-                </div> */}
 
-                <p className="fw-400 fz-14 mb-0" style={{ color: "gray" }}>
-                  Support for a single upload. Strictly prohibit from uploading
-                </p>
-                <p className="fw-400 fz-14" style={{ color: "gray" }}>
-                  company data or other band files
-                </p>
+                  <div className="position-relative" {...getRootProps()}>
+                    <input
+                      type="file"
+                      className="position-absolute w-100 h-100 cursor-pointer"
+                      style={{ zIndex: 1, opacity: "0" }}
+                      {...getInputProps()}
+                    />
+                    <button
+                      className="fw-400 fz-16 btn label-dark mt-5"
+                      style={{ color: "#000000" }}
+                    >
+                      Click or drag file to this area to upload
+                    </button>
+                  </div>
+
+                  <p className="fw-400 fz-14 mb-0" style={{ color: "gray" }}>
+                    Support for a single upload. Strictly prohibit from
+                    uploading
+                  </p>
+                  <p className="fw-400 fz-14" style={{ color: "gray" }}>
+                    company data or other band files
+                  </p>
+                </div>
               </div>
-            </div>
+           :""}
+           </div>
             {/* end container sub */}
 
             <div className="mx-auto" style={{ maxWidth: "80%" }}>
@@ -163,15 +171,21 @@ export default function PenandatanganVirtual() {
                         className="form-control form-control-lg"
                         placeholder="Nanang Ismail"
                       /> */}
-                      <select className="form-control form-control-lg"
-                      onChange={(e)=>choiceTtdAdmin(e)}
+                      <select
+                        className="form-control form-control-lg"
+                        onChange={(e) => choiceTtdAdmin(e)}
                       >
                         {allTandaTangan.optionTtdAdmin.length === 0
                           ? ""
                           : allTandaTangan.optionTtdAdmin.data.map(
                               (items, index) => {
                                 return (
-                                  <option value={items.signature_image} key={index}>{items.name}</option>
+                                  <option
+                                    value={items.signature_image}
+                                    key={index}
+                                  >
+                                    {items.name}
+                                  </option>
                                 );
                               }
                             )}
@@ -191,17 +205,18 @@ export default function PenandatanganVirtual() {
                   <div className="d-flex aling-items-end justify-content-between">
                     <div className="form-group">
                       <label>Pihak 1 Mitra</label>
+
+                      {(allTandaTangan.ttdPartner.length === 0) || (allTandaTangan.ttdPartner.data.length === 0) ? <p className="fw-700">Belom ada data ttd mitra !</p> :
+                      
                       <input
                         readOnly
-                        value={
-                          allTandaTangan.ttdPartner.length === 0
-                            ? ""
-                            : allTandaTangan.ttdPartner.data[0].name
+                        value={allTandaTangan.ttdPartner.data[0].name
                         }
                         type="text"
                         className="form-control form-control-lg"
                         placeholder="Nanang Ismail"
                       />
+                      }
                     </div>
                     <div className="d-flex align-items-center">
                       <button className="btn btn-rounded-full bg-red-primary text-white mr-3">

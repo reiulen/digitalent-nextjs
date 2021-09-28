@@ -95,10 +95,32 @@ const EditDokumentKerjasamaById = ({ token }) => {
     }
   };
 
-  const setDataSingle = async (id) => {
-    try {
+  
+
+  const [AllCooperation, setAllCooperation] = useState("");
+  const changeFormCooporation = (index, e) => {
+    let dataaa = [...allMK.singleCooporationSelect.data.option];
+    dataaa[index].cooperation = e.target.value;
+    setAllCooperation(dataaa);
+  };
+
+  // onchange textarea default cooperationID
+  const changeDataContentDefault = (event, i) => {
+    let dataCoopertaion = { ...cooperationID };
+    dataCoopertaion.data_content[i].form_content = event.target.value;
+    setCooperationID(dataCoopertaion);
+  };
+
+  useEffect(() => {
+    async function setDataSingle (id,token){
+      try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       setIsntitusiName(data.data.institution_name);
       setTitle(data.data.title);
@@ -116,33 +138,18 @@ const EditDokumentKerjasamaById = ({ token }) => {
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
-  };
 
-  const [AllCooperation, setAllCooperation] = useState("");
-  const changeFormCooporation = (index, e) => {
-    let dataaa = [...allMK.singleCooporationSelect.data.option];
-    dataaa[index].cooperation = e.target.value;
-    setAllCooperation(dataaa);
-  };
-
-  // onchange textarea default cooperationID
-  const changeDataContentDefault = (event, i) => {
-    let dataCoopertaion = { ...cooperationID };
-    dataCoopertaion.data_content[i].form_content = event.target.value;
-    setCooperationID(dataCoopertaion);
-  };
-
-  useEffect(() => {
-    setDataSingle(router.query.id);
+    } 
+    setDataSingle(router.query.id,token);
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
-  }, [dispatch, router.query.id]);
+  }, [dispatch, router.query.id,token]);
   useEffect(() => {
-    dispatch(fetchListCooperationSelectById(cooperationC_id));
-  }, [dispatch, allMK.idCooporationSelect, cooperationC_id]);
+    dispatch(fetchListCooperationSelectById(token,cooperationC_id));
+  }, [dispatch, allMK.idCooporationSelect, cooperationC_id,token]);
   useEffect(() => {
-    dispatch(fetchDataEmail());
-  }, [dispatch, allMK.institution_name, allMK.stateListMitra]);
+    dispatch(fetchDataEmail(token));
+  }, [dispatch, allMK.institution_name, allMK.stateListMitra,token]);
   return (
     <PageWrapper>
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">

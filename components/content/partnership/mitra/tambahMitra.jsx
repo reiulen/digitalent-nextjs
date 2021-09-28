@@ -125,7 +125,12 @@ const TambahMitra = ({token}) => {
           try {
             let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/create`,
-              formData
+              formData,
+              {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
             );
             router.push({
               pathname: "/partnership/mitra",
@@ -186,10 +191,17 @@ const TambahMitra = ({token}) => {
     setShowImage(showImage ? false : true);
   };
 
-  const getDataProvinces = async () => {
-    try {
+
+  useEffect(() => {
+    async function getDataProvinces (token){
+      try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       let dataNewProvinces = data.data.map((items) => {
         return { ...items, label: items.name, value: items.id };
@@ -199,11 +211,10 @@ const TambahMitra = ({token}) => {
     } catch (error) {
       console.log("gagal get province", error);
     }
-  };
 
-  useEffect(() => {
-    getDataProvinces();
-  }, []);
+    }
+    getDataProvinces(token);
+  }, [token]);
 
   useEffect(() => {
     // get data cities
@@ -213,7 +224,12 @@ const TambahMitra = ({token}) => {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cities/${indonesia_provinces_id}`
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cities/${indonesia_provinces_id}`,
+            {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
           );
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };
@@ -227,7 +243,7 @@ const TambahMitra = ({token}) => {
 
       fetchAPI();
     }
-  }, [indonesia_provinces_id]);
+  }, [indonesia_provinces_id,token]);
 
   return (
     <PageWrapper>

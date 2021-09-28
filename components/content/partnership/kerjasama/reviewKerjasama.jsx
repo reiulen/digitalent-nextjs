@@ -18,21 +18,7 @@ const ReviewKerjasama = ({ token }) => {
   const [periodUnit, setPeriodUnit] = useState("tahun");
 
   // cek progress
-  const setDataSingle = async (id) => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`
-      );
-      console.log("data sdfsdf", data);
-      setTitle(data.data.title);
-      setDate(data.data.submission_date);
-      setCooperationID(data.data.cooperation_category);
-      setPeriod(data.data.period);
-      setPeriodUnit(data.data.period_unit);
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
-    }
-  };
+  
 
   // state cek review card-version
   const [allCooperationView, setAllCooperationView] = useState([]);
@@ -42,24 +28,10 @@ const ReviewKerjasama = ({ token }) => {
   const [periodView, setPeriodView] = useState("");
   const [periodUnitView, setPeriodUnitView] = useState("tahun");
   const [noteView, setNoteView] = useState("");
+  const [mitra, setMitra] = useState("")
 
   // cek review card-version
-  const setDataSingleSelesaiReview = async (id, version) => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`
-      );
-      setTitleView(data.data.title);
-      setDateView(data.data.date);
-      setCooperationIDView(data.data.cooperation_category);
-      setPeriodView(data.data.period);
-      setPeriodUnitView(data.data.period_unit);
-      setAllCooperationView(data.data.cooperation_category.data_content);
-      setNoteView(data.data.note);
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
-    }
-  };
+  
 
   const ajukanRevisi = (e) => {
     e.preventDefault();
@@ -100,7 +72,12 @@ const ReviewKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept/${router.query.id}`
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept/${router.query.id}`,
+            {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
           );
           console.log("data", data);
           router.push({
@@ -132,7 +109,12 @@ const ReviewKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`
+            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`,
+            {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
           );
 
           console.log("data asdasd", data);
@@ -148,12 +130,59 @@ const ReviewKerjasama = ({ token }) => {
   };
   const [statusInfo, setstatusInfo] = useState("");
   useEffect(() => {
-    setDataSingle(router.query.id);
-    setDataSingleSelesaiReview(router.query.id, router.query.version);
+    async function setDataSingle (id,token){
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+        
+      );
+      console.log("data sdfsdf", data);
+      setTitle(data.data.title);
+      setDate(data.data.submission_date);
+      setCooperationID(data.data.cooperation_category);
+      setPeriod(data.data.period);
+      setPeriodUnit(data.data.period_unit);
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+
+    }
+    setDataSingle(router.query.id,token);
+
+    async function setDataSingleSelesaiReview (id,version,token){
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setTitleView(data.data.title);
+      setDateView(data.data.date);
+      setCooperationIDView(data.data.cooperation_category);
+      setPeriodView(data.data.period);
+      setPeriodUnitView(data.data.period_unit);
+      setAllCooperationView(data.data.cooperation_category.data_content);
+      setNoteView(data.data.note);
+      setMitra(data.data.mitra);
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+
+    }
+
+    setDataSingleSelesaiReview(router.query.id, router.query.version,token);
     if (router.query.statusInfo) {
       setstatusInfo(router.query.statusInfo);
     }
-  }, [router.query.id, router.query.version, router.query.statusInfo]);
+  }, [router.query.id, router.query.version, router.query.statusInfo,token]);
 
   return (
     <PageWrapper>
@@ -175,7 +204,7 @@ const ReviewKerjasama = ({ token }) => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              Review Kerjasama
+              Review Kerjasama {mitra && mitra}
             </h3>
           </div>
           <div className="card-body">

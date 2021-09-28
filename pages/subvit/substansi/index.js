@@ -22,7 +22,7 @@ export default function Substansi(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
@@ -33,6 +33,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      console.log(store);
 
       await store.dispatch(
         getAllSubtanceQuestionBanks(

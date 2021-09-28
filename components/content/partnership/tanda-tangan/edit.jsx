@@ -69,13 +69,19 @@ const EditTandaTangan = ({ token }) => {
         if (result.value) {
           try {
             let sendData = {
+              _method:"PUT",
               name: nama,
               position: jabatan,
               signature_image: signature !== "" ? signature : "",
             };
-            let { data } = await axios.put(
+            let { data } = await axios.post(
               `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
-              sendData
+              sendData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
             );
 
             router.push({
@@ -83,7 +89,7 @@ const EditTandaTangan = ({ token }) => {
               query: { update: true },
             });
           } catch (error) {
-            console.log("error put api ttd", error.response);
+            console.log("error put api ttd", error.response.data.message);
           }
         }
       });
@@ -102,13 +108,19 @@ const EditTandaTangan = ({ token }) => {
           if (result.value) {
             try {
               let sendData = {
+                _method:"PUT",
                 name: nama,
                 position: jabatan,
                 signature_image: signature !== "" ? signature : "",
               };
-              let { data } = await axios.put(
+              let { data } = await axios.post(
                 `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
-                sendData
+                sendData,
+                {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
               );
 
               router.push({
@@ -139,10 +151,15 @@ const EditTandaTangan = ({ token }) => {
   const [jabatan, setJabatan] = useState("");
   const [tandaTangan, setTandaTangan] = useState("");
 
-  const setDataSingle = async (id) => {
+  const setDataSingle = async (id, token) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       setNama(data.data.name);
@@ -154,8 +171,8 @@ const EditTandaTangan = ({ token }) => {
   };
 
   useEffect(() => {
-    setDataSingle(router.query.id);
-  }, [router.query.id]);
+    setDataSingle(router.query.id, token);
+  }, [router.query.id, token]);
 
   return (
     <PageWrapper>

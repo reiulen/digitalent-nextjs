@@ -158,7 +158,12 @@ const EditDokumentKerjasama = ({ token }) => {
         try {
           let { data } = await axios.post(
             `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${router.query.id}`,
-            formData
+            formData,
+            {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
           );
 
           router.push({
@@ -197,32 +202,6 @@ const EditDokumentKerjasama = ({ token }) => {
       setPeriodDateEnd(futureYear);
     }
   };
-  const setDataSingle = async (id) => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`
-      );
-      setIsntitusiName(data.data.institution_name);
-      setTitle(data.data.title);
-      setDate(data.data.submission_date);
-      setCooperationID(data.data.cooperation_category);
-      //
-      setPeriod(data.data.period);
-      setPeriodUnit(data.data.period_unit);
-      //
-      setPeriodDateStart(data.data.period_date_start);
-      setPeriodDateEnd(data.data.period_date_end);
-      //
-      setAggrementNumber(data.data.agreement_number_partner);
-      setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
-      setSigninDate(data.data.signing_date);
-      setDocument(data.data.document_file);
-      setEmail(data.data.email);
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
-    }
-  };
-
   const [AllCooperation, setAllCooperation] = useState("");
   const changeFormCooporation = (index, e) => {
     let dataaa = [...allMK.singleCooporationSelect.data.option];
@@ -249,16 +228,46 @@ const EditDokumentKerjasama = ({ token }) => {
     });
 
   useEffect(() => {
+    async function setDataSingle (id) {
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setIsntitusiName(data.data.institution_name);
+      setTitle(data.data.title);
+      setDate(data.data.submission_date);
+      setCooperationID(data.data.cooperation_category);
+      //
+      setPeriod(data.data.period);
+      setPeriodUnit(data.data.period_unit);
+      //
+      setPeriodDateStart(data.data.period_date_start);
+      setPeriodDateEnd(data.data.period_date_end);
+      //
+      setAggrementNumber(data.data.agreement_number_partner);
+      setAggrementNumberInfo(data.data.agreement_number_kemkominfo);
+      setSigninDate(data.data.signing_date);
+      setDocument(data.data.document_file);
+      setEmail(data.data.email);
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+    }
     setDataSingle(router.query.id);
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
-  }, [dispatch, router.query.id]);
+  }, [dispatch, router.query.id,token]);
   useEffect(() => {
-    dispatch(fetchListCooperationSelectById(cooperationC_id));
-  }, [dispatch, allMK.idCooporationSelect, cooperationC_id]);
+    dispatch(fetchListCooperationSelectById(token,cooperationC_id));
+  }, [dispatch, allMK.idCooporationSelect, cooperationC_id,token]);
   useEffect(() => {
-    dispatch(fetchDataEmail());
-  }, [dispatch, allMK.institution_name, allMK.stateListMitra]);
+    dispatch(fetchDataEmail(token));
+  }, [dispatch, allMK.institution_name, allMK.stateListMitra,token]);
 
   useEffect(() => {
     function periodCheck(date) {
@@ -354,7 +363,7 @@ const EditDokumentKerjasama = ({ token }) => {
                       <button
                         type="button"
                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white w-100 d-flex justify-content-center mt-2"
-                        onClick={() => dispatch(fetchListCooperationSelect())}
+                        onClick={() => dispatch(fetchListCooperationSelect(token))}
                       >
                         Ubah Kategory
                       </button>

@@ -72,7 +72,7 @@ const TambahArtikel = ({token}) => {
   const [kategori_id, setKategoriId] = useState("");
   const [users_id, setUserId] = useState(3);
   const [tag, setTag] = useState([]);
-  const [publish, setPublish] = useState(false);
+  const [publish, setPublish] = useState(0);
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
   // const [disablePublishDate, setDisablePublishDate] = useState(null)
@@ -104,7 +104,7 @@ const TambahArtikel = ({token}) => {
       e.target.value = null
       Swal.fire(
         'Oops !',
-        'Data yang bisa dimasukkan hanya berupa data gambar.',
+        'Thumbnail harus berupa data gambar.',
         'error'
       )
     }
@@ -207,6 +207,7 @@ const TambahArtikel = ({token}) => {
           tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
         };
 
+        
         Swal.fire({
           title: "Apakah anda yakin ?",
           text: "Data ini akan ditambahkan !",
@@ -348,7 +349,7 @@ const TambahArtikel = ({token}) => {
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100",
+                        "required|min:100|max:2500",
                         { className: "text-danger" }
                       )}
                     </div>

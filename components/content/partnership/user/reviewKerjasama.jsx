@@ -12,6 +12,8 @@ import {
   reloadTable
 } from "../../../../redux/actions/partnership/user/cooperation.actions";
 
+import axios from "axios";
+
 function ReviewKerjasama() {
   const router = useRouter()
   let dispatch = useDispatch();
@@ -52,6 +54,49 @@ function ReviewKerjasama() {
     });
 
   }
+
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+
+    async function cekProgresStatus(id){
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+          },
+        }
+      );
+      console.log("data",data)
+
+      // console.log("data a a a ssss", data.data.status_migrates_id.status);
+      if(data.data.status_migrates_id.status === "pengajuan-revisi"){
+        router.push({
+          pathname:"/partnership/user/kerjasama/review-kerjasama-2",
+          query:{id:router.query.id}
+        })
+      }
+      if(data.data.status_migrates_id.status === "pengajuan-selesai"){
+        router.push({
+          pathname:"/partnership/user/kerjasama/pembahasan-2",
+          query:{id:router.query.id}
+        })
+      }
+      setStatus(data.data.status_migrates_id.status);
+    } catch (error) {
+      console.log("gagal get province", error);
+    }
+
+    }
+
+
+
+    cekProgresStatus(router.query.id);
+
+
+  }, [router.query.id,router])
 
   // const onNewReset = () => {
   //   router.replace(`/partnership/user/kerjasama/review-kerjasama-1`);
@@ -169,12 +214,14 @@ function ReviewKerjasama() {
 
                 <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
+
                   <Link href="/partnership/user/kerjasama" passHref>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                       Kembali
                     </a>
                   </Link>
-                  <button
+
+                      <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-red-primary text-white"
                     onClick={() =>
@@ -183,6 +230,12 @@ function ReviewKerjasama() {
                   >
                     Batalkan Kerjasama
                   </button>
+
+
+
+                  
+
+
                 </div>
               </div>
 

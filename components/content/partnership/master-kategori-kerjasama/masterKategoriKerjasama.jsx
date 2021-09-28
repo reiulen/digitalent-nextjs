@@ -19,7 +19,7 @@ import IconAdd from "../../../assets/icon/Add";
 
 import IconSearch from "../../../assets/icon/Search";
 
-const Table = ({token}) => {
+const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
   let { success, update } = router.query;
@@ -47,14 +47,16 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteCooporation(id));
+        let formData = new FormData();
+        formData.append("_method", "put");
+        dispatch(deleteCooporation(token, formData, id));
         setSuccessDelete(true);
         router.replace(`/partnership/master-kategori-kerjasama`);
       }
     });
   };
   useEffect(() => {
-    dispatch(fetchAllMKCooporation());
+    dispatch(fetchAllMKCooporation(token));
   }, [
     dispatch,
     allMKCooporation.keyword,
@@ -62,11 +64,14 @@ const Table = ({token}) => {
     allMKCooporation.page,
     allMKCooporation.status_delete,
     allMKCooporation.status_list,
+    token
   ]);
 
   const onNewReset = () => {
     setSuccessDelete(false);
-    router.replace("/partnership/master-kategori-kerjasama", undefined, { shallow: true });
+    router.replace("/partnership/master-kategori-kerjasama", undefined, {
+      shallow: true,
+    });
   };
 
   return (
@@ -75,18 +80,13 @@ const Table = ({token}) => {
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
-          style={{ backgroundColor:  "#C9F7F5" }}
+          style={{ backgroundColor: "#C9F7F5" }}
         >
           <div className="alert-icon">
-            <i
-              className="flaticon2-checkmark"
-              style={{ color:  "#1BC5BD" }}
-            ></i>
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
-          <div
-            className="alert-text"
-            style={{ color:  "#1BC5BD" }}
-          >Berhasil menghapus data
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil menghapus data
           </div>
           <div className="alert-close">
             <button
@@ -112,16 +112,10 @@ const Table = ({token}) => {
           style={{ backgroundColor: "#f7c9c9" }}
         >
           <div className="alert-icon">
-            <i
-              className="flaticon2-checkmark"
-              style={{ color:  "#c51b1b" }}
-            ></i>
+            <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
           </div>
-          <div
-            className="alert-text"
-            style={{ color:  "#c51b1b" }}
-          >
-              Berhasil menyimpan data
+          <div className="alert-text" style={{ color: "#c51b1b" }}>
+            Berhasil menyimpan data
           </div>
           <div className="alert-close">
             <button
@@ -170,7 +164,6 @@ const Table = ({token}) => {
         ""
       )}
 
-      
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -183,7 +176,7 @@ const Table = ({token}) => {
             <div className="card-toolbar">
               <Link href="/partnership/master-kategori-kerjasama/tambah">
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
-                  <IconAdd  className="mr-3" width="14" height="14" />
+                  <IconAdd className="mr-3" width="14" height="14" />
                   Tambah Kategori Kerjasama
                 </a>
               </Link>
@@ -248,26 +241,27 @@ const Table = ({token}) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allMKCooporation.mk_cooporation.data && allMKCooporation.mk_cooporation.data.list_cooperation_categories.length === 0  ? (
+                      {allMKCooporation.mk_cooporation.data &&
+                      allMKCooporation.mk_cooporation.data
+                        .list_cooperation_categories.length === 0 ? (
                         <tr>
                           <td colSpan="4" className="text-center">
                             <h4>Data tidak ditemukan</h4>
                           </td>
                         </tr>
                       ) : (
-                        allMKCooporation.mk_cooporation.data && allMKCooporation.mk_cooporation.data.list_cooperation_categories.map(
+                        allMKCooporation.mk_cooporation.data &&
+                        allMKCooporation.mk_cooporation.data.list_cooperation_categories.map(
                           (cooperation_categorie, index) => {
                             return (
                               <tr key={index}>
                                 <td className="align-middle text-left">
-                                 
-                                    {allMKCooporation.page === 1
-                                      ? index + 1
-                                      : (allMKCooporation.page - 1) *
-                                          allMKCooporation.limit +
-                                        (index + 1)}
-                                    {/* {index + 1} */}
-                                 
+                                  {allMKCooporation.page === 1
+                                    ? index + 1
+                                    : (allMKCooporation.page - 1) *
+                                        allMKCooporation.limit +
+                                      (index + 1)}
+                                  {/* {index + 1} */}
                                 </td>
                                 <td className="align-middle text-left">
                                   {cooperation_categorie.cooperation_categories}
@@ -283,9 +277,13 @@ const Table = ({token}) => {
                                       className="cursor-pointer"
                                     >
                                       <p
-                                        className={`${allMKCooporation.mk_cooporation.data
-                                          .list_cooperation_categories[index]
-                                          .status === 0 ? "status-div-red" :"status-div-green"}`}
+                                        className={`${
+                                          allMKCooporation.mk_cooporation.data
+                                            .list_cooperation_categories[index]
+                                            .status === 0
+                                            ? "status-div-red"
+                                            : "status-div-green"
+                                        }`}
                                         style={{ width: "max-content" }}
                                       >
                                         {allMKCooporation.mk_cooporation.data
@@ -299,7 +297,6 @@ const Table = ({token}) => {
                                 </td>
                                 <td className="text-left align-middle">
                                   <div className="d-flex align-items-center">
-
                                     <button
                                       className="btn btn-link-action bg-blue-secondary mr-3 position-relative btn-delete"
                                       onClick={() =>
@@ -310,8 +307,8 @@ const Table = ({token}) => {
                                     >
                                       <IconPencil width="16" height="16" />
                                       <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
+                                        Ubah
+                                      </div>
                                     </button>
 
                                     <button
@@ -324,8 +321,8 @@ const Table = ({token}) => {
                                     >
                                       <IconDelete width="16" height="16" />
                                       <div className="text-hover-show-hapus">
-                                      Hapus
-                                    </div>
+                                        Hapus
+                                      </div>
                                     </button>
                                   </div>
                                 </td>
@@ -338,8 +335,6 @@ const Table = ({token}) => {
                   </table>
                 )}
               </div>
-
-              
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
