@@ -254,8 +254,8 @@ const Table = ({ token }) => {
                     prevPageText={"<"}
                     firstPageText={"<<"}
                     lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
+                    itemclassName="page-item"
+                    linkclassName="page-link"
                   /> */}
                 </div>
 

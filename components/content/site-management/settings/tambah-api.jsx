@@ -34,75 +34,75 @@ const TambahApi = ({ token }) => {
           </div>
           <div className="card-body pt-0">
             <form>
-              <div class="form-group">
+              <div className="form-group">
                 <label>Nama API</label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Placeholder"
                 />
-                <span class="form-text text-muted">
+                <span className="form-text text-muted">
                     Please enter your full name
                   </span>
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label>Nama Pengguna</label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   placeholder="Placeholder"
                 />
-                <span class="form-text text-muted">
+                <span className="form-text text-muted">
                     Please enter your full name
                   </span>
               </div>
-              <div class="form-group">
-                <label for="exampleSelect1">Status</label>
-                <select class="form-control" id="exampleSelect1">
+              <div className="form-group">
+                <label htmlFor="exampleSelect1">Status</label>
+                <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                <span class="form-text text-muted">
+                <span className="form-text text-muted">
                     Please enter your full name
                   </span>
               </div>
-              <div class="form-group">
-                <label for="exampleSelect1">Pilih API</label>
-                <select class="form-control" id="exampleSelect1">
+              <div className="form-group">
+                <label htmlFor="exampleSelect1">Pilih API</label>
+                <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                <span class="form-text text-muted">
+                <span className="form-text text-muted">
                     Please enter your full name
                   </span>
               </div>
-              <div class="form-group">
-                <label for="exampleSelect1">Field</label>
-                <select class="form-control" id="exampleSelect1">
+              <div className="form-group">
+                <label htmlFor="exampleSelect1">Field</label>
+                <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                <span class="form-text text-muted">
+                <span className="form-text text-muted">
                     Please enter your full name
                   </span>
               </div>
-              <div class="form-group row">
-                <div class="col-lg-6">
+              <div className="form-group row">
+                <div className="col-lg-6">
                   <label>From</label>
                   <input
                     type="date"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Enter full name"
                   />
-                  <span class="form-text text-muted">
+                  <span className="form-text text-muted">
                     Please enter your full name
                   </span>
                 </div>
-                <div class="col-lg-6">
+                <div className="col-lg-6">
                   <label>To</label>
                   <input
                     type="date"
-                    class="form-control"
+                    className="form-control"
                     placeholder="Enter contact number"
                   />
-                  <span class="form-text text-muted">
+                  <span className="form-text text-muted">
                     Please enter your contact number
                   </span>
                 </div>
