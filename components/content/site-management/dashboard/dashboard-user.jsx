@@ -37,6 +37,16 @@ const DashboardUser = () => {
               link="/site-management"
             ></CardDashboardSiteManagement>
           </div>
+          <div className="col-6 col-md">
+            <CardDashboardSiteManagement
+              background="bg-white"
+              backgroundImage="/assets/icon/taieri-light.svg"
+              icon="/assets/icon/user-plus-grey.svg"
+              color="text-muted"
+              title="Mitra"
+              link="/site-management"
+            ></CardDashboardSiteManagement>
+          </div>
           <div className="col-6 col-md"></div>
           <div className="col-6 col-md"></div>
           <div className="col-6 col-md"></div>
