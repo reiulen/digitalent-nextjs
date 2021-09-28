@@ -226,11 +226,17 @@ const Berita = ({token}) => {
 
     const handleLimit = (val) => {
         setLimit(val)
-        if (search === "") {
-            router.push(`${router.pathname}?page=1&limit=${val}`);
+        if (search === "" && publishValue === null) {
+          router.push(`${router.pathname}?page=1&limit=${val}`);
+    
+        } else if (search !== "" && publishValue === null) {
+          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
         
-        } else {
-            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        } else if (search === "" && publishValue !== null) {
+          router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
+        
+        } else if (search !== "" && publishValue !== null) {
+          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
         }
     
     };

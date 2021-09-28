@@ -231,11 +231,17 @@ const Artikel = ({token}) => {
 
   const handleLimit = (val) => {
     setLimit(val)
-    if (search === "") {
+    if (search === "" && publishValue === null) {
       router.push(`${router.pathname}?page=1&limit=${val}`);
 
-    } else {
+    } else if (search !== "" && publishValue === null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+    
+    } else if (search === "" && publishValue !== null) {
+      router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
+    
+    } else if (search !== "" && publishValue !== null) {
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
     }
 
   };
