@@ -38,10 +38,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       };
     }
 );
-//     await store.dispatch(getDetailArtikel(params.id,  session.user.user.data.token));
-//     return {
-//       props: { session, title: "Pratinjau Artikel - Publikasi", data: "auth", },
-//   };
+//   await store.dispatch(getDetailArtikel(params.id,  session.user.user.data.token));
+//   return {
+//     props: { session, title: "Pratinjau Artikel - Publikasi", data: "auth", },
+// };
 
 // export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params }) => {
 //     await store.dispatch(getDetailArtikel(params.id))

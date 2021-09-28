@@ -11,8 +11,6 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import SignaturePad from "react-signature-pad-wrapper";
 import SimpleReactValidator from "simple-react-validator";
 
-import Italic from "@ckeditor/ckeditor5-basic-styles/src/italic";
-
 export default function TambahMasterSertifikat() {
   const router = useRouter();
   const [signature, setSignature] = useState(1);
