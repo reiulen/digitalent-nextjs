@@ -39,5 +39,8 @@ module.exports = {
 
     // pelatihan
     END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",
+
+    //sertifikat
+    END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
   },
 };
