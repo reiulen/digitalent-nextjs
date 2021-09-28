@@ -4,7 +4,21 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 const convertBreadcrumb = (string) => {
-  return ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /`;
+  let newStr = string.replace ("-", " ")
+  // return newStr
+  let result = ""
+
+  // console.log (newStr)
+
+  for (let i = 0; i < newStr.length; i++){
+    result = newStr.charAt(0).toUpperCase() + newStr.slice(1).split("?")[0] + " /"
+  }
+  // result.join (" ")
+
+  return result
+
+  // return ` ${newStr.charAt(0).toUpperCase() + newStr.slice(1).split("?")[0]} /` ;
+  // return ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /` ;
   // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
 };
 

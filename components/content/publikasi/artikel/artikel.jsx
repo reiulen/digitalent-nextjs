@@ -719,8 +719,8 @@ const Artikel = ({token}) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {/* {artikel.dibuat} */}
-                                Super Admin
+                                {artikel.dibuat}
+                                {/* Super Admin */}
                               </td>
                               <td className="align-middle">
                                 {artikel.publish === 1 ? (
@@ -733,7 +733,7 @@ const Artikel = ({token}) => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">Super Admin</td>
+                              <td className="align-middle">{artikel.role}</td>
                               <td className="align-middle d-flex">
 
                                 <Link
