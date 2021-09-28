@@ -8,36 +8,40 @@ import { wrapper } from "../../../../redux/store";
 // import { getSession } from "next-auth/client";
 
 export default function PreviewArtikel(props) {
-    const session = props.session.user.user.data;
-    return (
-        <div className="d-flex flex-column flex-root">
-            <Preview token={session.token} />
-            <Footer />
-        </div>
-    );
+  const session = props.session.user.user.data;
+  return (
+    <div className="d-flex flex-column flex-root">
+      <Preview token={session.token} />
+      <Footer />
+    </div>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-    store =>
-        async ({ params, req }) => {
-            const session = await getSession({ req });
-            if (!session) {
-                return {
-                    redirect: {
-                        destination: "/",
-                        permanent: false,
-                    },
-                };
-            }
-            await store.dispatch(
-                getDetailArtikel(params.id, session.user.user.data.token)
-            );
+  store =>
+    async ({ params, req }) => {
+      const session = await getSession({ req });
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        };
+      }
+      await store.dispatch(
+        getDetailArtikel(params.id, session.user.user.data.token)
+      );
 
-            return {
-                props: { session, title: "Preview Artikel - Publikasi" },
-            };
-        }
+      return {
+        props: { session, title: "Preview Artikel - Publikasi" },
+      };
+    }
 );
+//     await store.dispatch(getDetailArtikel(params.id,  session.user.user.data.token));
+//     return {
+//       props: { session, title: "Pratinjau Artikel - Publikasi", data: "auth", },
+//   };
 
 // export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params }) => {
 //     await store.dispatch(getDetailArtikel(params.id))

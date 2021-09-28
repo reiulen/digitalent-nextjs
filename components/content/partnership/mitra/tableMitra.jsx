@@ -11,6 +11,7 @@ import IconEye from "../../../assets/icon/Eye";
 import IconDelete from "../../../assets/icon/Delete";
 import IconPencil from "../../../assets/icon/Pencil";
 import IconAdd from "../../../assets/icon/Add";
+import IconArrow from "../../../assets/icon/Arrow";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import {
@@ -21,6 +22,8 @@ import {
   setLimit,
   exportFileCSV,
   cancelChangeProvinces,
+  changeStatusList,
+  reloadTable
 } from "../../../../redux/actions/partnership/mitra.actions";
 import LoadingTable from "../../../LoadingTable";
 
@@ -38,6 +41,31 @@ const Table = ({ token }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(searchByKey(keyWord));
+  };
+
+  const [isStatusBar, setIsStatusBar] = useState(false);
+  const changeListStatus = (token,e, id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ingin merubah status ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then( (result) => {
+      if (result.value) {
+        console.log("e.target.value",e.target.value)
+        console.log("id",id)
+        dispatch(changeStatusList(token,e.target.value, id));
+        setSuccessDelete(false);
+        // setIsChangeOption(true);
+        router.replace("/partnership/mitra", undefined, { shallow: true })
+      } else {
+        dispatch(reloadTable());
+      }
+    });
   };
 
   const [successDelete, setSuccessDelete] = useState(false);
@@ -243,6 +271,7 @@ const Table = ({ token }) => {
                     <th className="text-left align-middle">Mitra</th>
                     <th className="text-left align-middle">Website</th>
                     <th className="text-left align-middle">Kerjasama</th>
+                    <th className="text-left align-middle">Status</th>
                     <th className="text-left align-middle">Aksi</th>
                   </tr>
                 }
@@ -290,6 +319,62 @@ const Table = ({ token }) => {
                           </td>
                           <td className="align-middle text-left">
                             {item.cooperations_count} Kerjasama
+                          </td>
+                          <td className="align-middle text-left">
+                            {item.status == "1" ? 
+                                  <div className="position-relative w-max-content">
+                                      <select
+                                        name=""
+                                        id=""
+                                        className="form-control remove-icon-default dropdown-arrows-green"
+                                        key={index}
+                                        onChange={(e) =>
+                                          changeListStatus(
+                                            token,
+                                            e,
+                                            item.id,
+                                          )
+                                        }
+                                      >
+                                        <option value="1">
+                                          Aktif
+                                        </option>
+                                        <option value="0">Tidak Aktif</option>
+                                      </select>
+                                      <IconArrow
+                                        className="right-center-absolute"
+                                        style={{ right: "10px" }}
+                                        width="7"
+                                        height="7"
+                                      />
+                                    </div>
+                                    : <div className="position-relative w-max-content">
+                                      <select
+                                        name=""
+                                        id=""
+                                        className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
+                                        key={index}
+                                        onChange={(e) =>
+                                          changeListStatus(
+                                            token,
+                                            e,
+                                            item.id,
+                                          )
+                                        }
+                                      >
+                                        <option value="0">
+                                          Tidak Aktif
+                                        </option>
+                                        <option value="1">Aktif</option>
+                                      </select>
+                                      <IconArrow
+                                        className="right-center-absolute"
+                                        style={{ right: "10px" }}
+                                        fill="#F65464"
+                                        width="7"
+                                        height="7"
+                                      />
+                                    </div>}
                           </td>
                           <td className="align-middle text-left">
                             <div className="d-flex align-items-center">

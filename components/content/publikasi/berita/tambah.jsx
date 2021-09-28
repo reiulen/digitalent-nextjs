@@ -80,7 +80,7 @@ const TambahBerita = () => {
     const [isi_berita, setIsiBerita] = useState('');
     const [gambar, setGambar] = useState('')
     const [gambarName, setGambarName] = useState (null)
-    const [publish, setPublish] = useState(false)
+    const [publish, setPublish] = useState(0)
     const [tag, setTag] = useState([])
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
     const [iconPlus, setIconPlus] = useState(
@@ -165,7 +165,7 @@ const TambahBerita = () => {
             
             }
 
-            if (publishDate === false){
+            if (publishDate === null){
                 let today = new Date
 
                 const data = {

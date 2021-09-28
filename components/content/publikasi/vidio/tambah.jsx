@@ -29,9 +29,9 @@ const TambahVidio = ({ token }) => {
     })
     const simpleValidator = useRef(new SimpleReactValidator({ 
         locale: "id",
-        messages: {
-           url: "Format url berupa: https://www.example.com"
-        }
+        // messages: {
+        //    url: "Format url berupa: https://www.example.com"
+        // }
     }));
     const [, forceUpdate] = useState();
 

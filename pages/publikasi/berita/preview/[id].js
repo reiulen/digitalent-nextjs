@@ -26,4 +26,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ p
         };
     }
     await store.dispatch(getDetailBerita(params.id, session.user.user.data.token))
+    return {
+        props: { session, title: "Pratinjau Berita - Publikasi", data: "auth", },
+    };
 })
