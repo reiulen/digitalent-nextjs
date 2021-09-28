@@ -11,11 +11,12 @@ const TtdVirtual = dynamic(
   { loading: () => <LoadingPage /> }
 );
 
-export default function TambahPage() {
+export default function TambahPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <TtdVirtual />
+        <TtdVirtual token={session.token} />
       </div>
     </>
   );

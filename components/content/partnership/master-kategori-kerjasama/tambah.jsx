@@ -64,7 +64,12 @@ const Tambah = ({ token }) => {
         try {
           let { data } = await axios.post(
             `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/create`,
-            formData
+            formData,
+            {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
           );
 
           router.push({
