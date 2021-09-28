@@ -64,8 +64,15 @@ const DetailRevisiKerjasama = ({ token }) => {
     });
   };
 
-  const setDataSingle = async (id) => {
-    try {
+  
+  const handleChange = (e, index) => {
+    let dataaa = [...allCooperation];
+    dataaa[index].form_content_review = e.target.value;
+    setAllCooperation(dataaa);
+  };
+  useEffect(() => {
+    async function setDataSingle(id){
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
         {
@@ -84,15 +91,10 @@ const DetailRevisiKerjasama = ({ token }) => {
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
-  };
-  const handleChange = (e, index) => {
-    let dataaa = [...allCooperation];
-    dataaa[index].form_content_review = e.target.value;
-    setAllCooperation(dataaa);
-  };
-  useEffect(() => {
+
+    }
     setDataSingle(router.query.id);
-  }, [router.query.id]);
+  }, [router.query.id,token]);
 
   return (
     <PageWrapper>
