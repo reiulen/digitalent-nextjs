@@ -115,7 +115,7 @@ const TambahKategori = (token) => {
                                         success ? 
                                             null
                                         :
-                                            simpleValidator.current.message("nama kategori", nama, "required|min:5|max:25|string", { className: "text-danger" })
+                                            simpleValidator.current.message("nama kategori", nama, "required|min:1|max:100|string", { className: "text-danger" })
                                     }
                                 </div>
                             </div>
