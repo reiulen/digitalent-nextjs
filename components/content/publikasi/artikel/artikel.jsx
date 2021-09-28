@@ -231,11 +231,17 @@ const Artikel = ({token}) => {
 
   const handleLimit = (val) => {
     setLimit(val)
-    if (search === "") {
+    if (search === "" && publishValue === null) {
       router.push(`${router.pathname}?page=1&limit=${val}`);
 
-    } else {
+    } else if (search !== "" && publishValue === null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+    
+    } else if (search === "" && publishValue !== null) {
+      router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
+    
+    } else if (search !== "" && publishValue !== null) {
+      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
     }
 
   };
@@ -719,8 +725,8 @@ const Artikel = ({token}) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {/* {artikel.dibuat} */}
-                                Super Admin
+                                {artikel.dibuat}
+                                {/* Super Admin */}
                               </td>
                               <td className="align-middle">
                                 {artikel.publish === 1 ? (
@@ -733,7 +739,7 @@ const Artikel = ({token}) => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">Super Admin</td>
+                              <td className="align-middle">{artikel.role}</td>
                               <td className="align-middle d-flex">
 
                                 <Link

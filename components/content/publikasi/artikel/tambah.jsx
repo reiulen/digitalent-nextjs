@@ -349,7 +349,7 @@ const TambahArtikel = ({token}) => {
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100",
+                        "required|min:100|max:2500",
                         { className: "text-danger" }
                       )}
                     </div>
