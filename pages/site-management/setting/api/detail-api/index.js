@@ -7,7 +7,7 @@ import LoadingPage from "../../../../../components/LoadingPage";
 const DetailApi = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/settings/detail-api"
+      "../../../../../components/content/site-management/settings/api/detail-api"
     ),
   {
     loading: function loadingNow() {
