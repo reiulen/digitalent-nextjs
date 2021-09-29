@@ -254,7 +254,7 @@ const Imagetron = () => {
         if (search === "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&limit=${val}`);
 
-        } else if (search !== "" && publishValue === "") {
+        } else if (search !== "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
 
         } else if (search === "" && publishValue === '1') {

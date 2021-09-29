@@ -407,7 +407,7 @@ const EditImagetron = () => {
                                         {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
                                         </div> */}
-                                        <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")} />
+                                        <input type="text" className="form-control" value={url_link} onChange={e => setUrlRedirect(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url_link")} />
 
                                     </div>
                                     {simpleValidator.current.message(

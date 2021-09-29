@@ -72,20 +72,11 @@ const Pengaturan = () => {
     const submitImagePublikasi = (e) => {
         e.preventDefault()
         if ((simpleValidator.current.allValid())) {
-            // console.log("Cek Target : ", upload_image)
             if (error) {
                 dispatch(clearErrors())
-            } else if (upload_image > 5) {
-                simpleValidator.current.showMessages();
-                forceUpdate(1);
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Isi data dengan benar !",
-                });
             } else if (upload_image < 1) {
                 simpleValidator.current.showMessages();
-                forceUpdate(1);
+                // forceUpdate(1);
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
@@ -114,17 +105,9 @@ const Pengaturan = () => {
         if ((simpleValidator.current.allValid())) {
             if (error) {
                 dispatch(clearErrors())
-            } else if (upload_imagetron > 5) {
-                simpleValidator.current.showMessages();
-                forceUpdate(1);
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Isi data dengan benar !",
-                });
             } else if (upload_imagetron < 1) {
                 simpleValidator.current.showMessages();
-                forceUpdate(1);
+                // forceUpdate(1);
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
@@ -154,14 +137,6 @@ const Pengaturan = () => {
         if ((simpleValidator.current.allValid())) {
             if (error) {
                 dispatch(clearErrors())
-            } else if (batas_slider > 7) {
-                simpleValidator.current.showMessages();
-                forceUpdate(1);
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Isi data dengan benar !",
-                });
             } else if (batas_slider < 1) {
                 simpleValidator.current.showMessages();
                 forceUpdate(1);
@@ -171,7 +146,7 @@ const Pengaturan = () => {
                     text: "Batas slider minimal 1 !",
                 });
             } else {
-                dispatch(updateSettingImagetronPublikasi(batas_slider))
+                dispatch(updateSettingSliderPublikasi(batas_slider))
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -194,14 +169,6 @@ const Pengaturan = () => {
         if ((simpleValidator.current.allValid())) {
             if (error) {
                 dispatch(clearErrors())
-            } else if (maxfaq > 5) {
-                simpleValidator.current.showMessages();
-                forceUpdate(1);
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Isi data dengan benar !",
-                });
             } else if (maxfaq < 1) {
                 simpleValidator.current.showMessages();
                 forceUpdate(1);
@@ -211,7 +178,7 @@ const Pengaturan = () => {
                     text: "Max Faq minimal 1 !",
                 });
             } else {
-                dispatch(updateSettingImagetronPublikasi(maxfaq))
+                dispatch(updateSettingFaqPublikasi(maxfaq))
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -257,11 +224,18 @@ const Pengaturan = () => {
         dispatch({ type: UPDATE_SETTING_RESET })
     }
 
+    // disable enter on input
+    $("input").keydown(function(event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+        }
+    });
+    
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(setting)
-            }
+            } */}
 
             {/* {
                 console.log (isUpdated)
@@ -309,7 +283,6 @@ const Pengaturan = () => {
                                                 className="form-control mr-4"
                                                 value={upload_image}
                                                 onChange={(e) => setUploadImage(e.target.value)}
-                                                // onChange={(e) => setUploadImage(e.target.value)}
                                                 onBlur={() => simpleValidator.current.showMessageFor("upload_image")}
                                             /> MB
                                             {/* <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} min='0' onBlur={() =>simpleValidator.current.showMessageFor("upload_image")}/> MB */}
