@@ -80,26 +80,26 @@ const TambahPage = ({ token }) => {
                 Page Attributes
               </h3>
               <form className="w-100">
-              <div className="form-group">
-                <label style={{ fontSize: "16px" }}>Page Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Placeholder"
-                />
-                <span className="form-text text-muted">
+                <div className="form-group">
+                  <label style={{ fontSize: "16px" }}>Page Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Placeholder"
+                  />
+                  <span className="form-text text-muted">
                     Please enter your full name
                   </span>
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleSelect1">Page Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleSelect1">Page Status</label>
+                  <select className="form-control" id="exampleSelect1">
+                    <option>Placeholder</option>
+                  </select>
+                  <span className="form-text text-muted">
                     Please enter your full name
                   </span>
-              </div>
+                </div>
               </form>
             </div>
           </div>

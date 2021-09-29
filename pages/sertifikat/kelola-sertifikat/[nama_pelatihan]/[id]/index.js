@@ -8,24 +8,24 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 
 const KelolaSertifikatID = dynamic(
-    () =>
-        import(
-            "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/kelola-sertifikat-ID"
-        ),
-    {
-        loading: function loadingNow() {
-            return <LoadingSkeleton />;
-        },
-        ssr: false,
-    }
+  () =>
+    import(
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/kelola-sertifikat-ID"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
 );
 
 export default function KelokaSertifikatPage() {
-    return (
-        <>
-            <div className="d-flex flex-column flex-root">
-                <KelolaSertifikatID />
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className="d-flex flex-column flex-root">
+        <KelolaSertifikatID />
+      </div>
+    </>
+  );
 }

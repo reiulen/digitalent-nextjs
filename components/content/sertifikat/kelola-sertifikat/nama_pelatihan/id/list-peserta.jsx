@@ -15,7 +15,7 @@ import IconArrow from "../../../../../assets/icon/Arrow";
 import IconClose from "../../../../../assets/icon/Close";
 import IconFilter from "../../../../../assets/icon/Filter";
 
-export default function KelolaSertifikat() {
+export default function ListPeserta() {
     const router = useRouter();
     const { query } = router;
     console.log(router, "INI QUERY");
