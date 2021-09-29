@@ -168,6 +168,26 @@ import { dashboardReducer } from "./partnership/dashboard.reducer";
 import { allTandaTanganUserReducer } from "./partnership/user/tanda-tangan.reducer";
 // end Partnership
 
+// Site Management
+// ============== role ===============
+import {
+  allRolesReducer,
+  newRolesReducer,
+  detailRolesReducer,
+  updateRoleReducer,
+  deleteRolesReducer,
+} from "./site-management/role.reducers";
+
+// ============== master-satuan-penyelenggara ===============
+import {
+  allMasterSatuanKerjaPenyelenggarasReducer,
+  newMasterSatuanKerjaPenyelenggarasReducer,
+  detailMasterSatuanKerjaPenyelenggarasReducer,
+  updateMasterSatuanKerjaPenyelenggaraReducer,
+  deleteMasterSatuanKerjaPenyelenggarasReducer,
+} from "./site-management/master-satuan-kerja-penyelenggara.reducers";
+// End Site Management
+
 // functional reducer
 
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
@@ -323,6 +343,21 @@ const reducer = combineReducers({
   allProvinsi: allProvinsiReducer,
   allKota: allKotaReducer,
   allFunctionls: reducerFunctionals,
+
+  // SITE MANAGEMENT
+  // ============== ROLE ============
+  allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
+  newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,
+  deleteMasterSatuanKerjaPenyelenggaras:
+    deleteMasterSatuanKerjaPenyelenggarasReducer,
+  detailMasterSatuanKerjaPenyelenggaras:
+    detailMasterSatuanKerjaPenyelenggarasReducer,
+  updateMasterSatuanKerjaPenyelenggara:
+    updateMasterSatuanKerjaPenyelenggaraReducer,
+
+  // ============== END ROLE ============
+
+  // END SITE MANAGEMENT
 });
 
 export default reducer;
