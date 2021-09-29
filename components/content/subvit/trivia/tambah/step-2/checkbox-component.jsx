@@ -14,10 +14,38 @@ const CheckboxComponent = ({
   });
 
   const [answer, setSoalList] = useState([
-    { key: "A", value: "", option: "", image: "", is_right: false },
-    { key: "B", value: "", option: "", image: "", is_right: false },
-    { key: "C", value: "", option: "", image: "", is_right: false },
-    { key: "D", value: "", option: "", image: "", is_right: false },
+    {
+      key: "A",
+      value: "",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "B",
+      value: "",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "C",
+      value: "",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
+    {
+      key: "D",
+      value: "",
+      option: "",
+      image: "",
+      imageName: "Pilih Gambar",
+      is_right: false,
+    },
   ]);
   const [answer_key, setAnswerKey] = useState("");
   const [duration, setDuration] = useState(null);
@@ -27,6 +55,7 @@ const CheckboxComponent = ({
     const list = [...answer];
     list[index][name] = value;
     if (name === "image") {
+      list[index]["imageName"] = e.target.files[0].name;
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -67,11 +96,23 @@ const CheckboxComponent = ({
     const newKey = String.fromCharCode(keyindex + 1);
     setSoalList([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      {
+        key: newKey,
+        question: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
     ]);
     props_answer([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      {
+        key: newKey,
+        question: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
     ]);
   };
 
@@ -113,7 +154,7 @@ const CheckboxComponent = ({
                     onChange={(e) => handleInputChange(e, i)}
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    Choose file
+                    {x.imageName}
                   </label>
                 </div>
               </div>

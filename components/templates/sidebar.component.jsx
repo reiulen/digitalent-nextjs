@@ -224,14 +224,15 @@ const Sidebar = () => {
 
   // list subvit submenu
   const [listMenuSubvit, setListMenuSubvit] = useState([
-    { id: 1, name: "Tes Substansi", href: "/subvit/substansi" },
+    { id: 1, name: "Dashboard", href: "/subvit" },
+    { id: 2, name: "Tes Substansi", href: "/subvit/substansi" },
     {
-      id: 2,
+      id: 3,
       name: "Survey",
       href: "/subvit/survey",
     },
     {
-      id: 3,
+      id: 4,
       name: "TRIVIA",
       href: "/subvit/trivia",
     },
@@ -360,29 +361,6 @@ const Sidebar = () => {
               height={53}
             />
           </a>
-          {/* <!--end::Logo--> */}
-          {/* <!--begin::Toggle--> */}
-          <button
-            className={`brand-toggle btn btn-sm px-0 ${
-              allFunctionls.isMinimizeSidebar && allFunctionls.isMinimizeSidebar
-                ? "active"
-                : ""
-            }`}
-            id="kt_aside_toggle"
-            onClick={() => dispatch({ type: IS_MINIMIZE_SIDEBAR })}
-          >
-            <span className="svg-icon svg-icon svg-icon-xl">
-              {/* <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-left.svg--> */}
-              <Image
-                alt="icon-sidebar-panah"
-                src="/assets/icon/panah.svg"
-                width={24}
-                height={24}
-              />
-              {/* <!--end::Svg Icon--> */}
-            </span>
-          </button>
-          {/* <!--end::Toolbar--> */}
         </div>
         {/* <!--end::Brand--> */}
 
@@ -408,83 +386,32 @@ const Sidebar = () => {
                 aria-haspopup="true"
                 data-menu-toggle="hover"
               >
-                <a
-                  href="javascript:;"
-                  className="menu-link menu-toggle d-flex align-items-center"
-                >
-                  <span className="svg-icon menu-icon">
-                    {/* <Image
-                      alt="icon-sidebar-layers"
-                      src="/assets/icon/new/aside/layers-white.svg"
-                      width={24}
-                      height={24}
-                    /> */}
-                    {/* <i class="ri-arrow-down-s-line"></i> */}
-                    <svg
-                      width="25"
-                      height="26"
-                      viewBox="0 0 25 26"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M11.4688 17.2648C12.0172 17.704 12.797 17.7037 13.3451 17.2641L20.0169 11.913L20.246 11.7303C20.9977 11.1306 20.9989 9.98842 20.2485 9.38713L13.3451 3.85573C12.797 3.4165 12.0174 3.4165 11.4692 3.85573L4.56144 9.39071C3.81245 9.99086 3.81196 11.1303 4.56044 11.7311L4.78712 11.913L11.4688 17.2648Z"
-                        fill="white"
-                      />
-                      <path
-                        opacity="0.5"
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M13.3347 19.9705C12.7866 20.4096 12.0072 20.4097 11.459 19.9706L5.52621 15.2187C5.11478 14.8892 4.51294 14.9618 4.19168 15.3797C3.87519 15.7915 3.95204 16.3818 4.36341 16.6988L11.4902 22.1905C12.0297 22.6062 12.7815 22.6063 13.3211 22.1906L20.4445 16.7036C20.8594 16.3841 20.9367 15.7887 20.6172 15.3738C20.2932 14.9532 19.6872 14.8804 19.2729 15.2124L13.3347 19.9705Z"
-                        fill="#4299E1"
-                      />
-                    </svg>
-                  </span>
-                  <span className="menu-text">Dashboard</span>
-                  <i className="menu-arrow"></i>
-                </a>
-                <div className="menu-submenu">
-                  <i className="menu-arrow"></i>
-                  <ul className="menu-subnav">
-                    <li
-                      className="menu-item menu-item-parent"
-                      aria-haspopup="true"
-                    >
-                      <span className="menu-link">
-                        <span className="menu-text">Dashboard</span>
-                      </span>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <a className="menu-link">
-                        <span className="menu-text">Pelatihan</span>
-                      </a>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/publikasi">
-                        <a className="menu-link">
-                          <span className="menu-text">Publikasi</span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <a className="menu-link">
-                        <span className="menu-text">Partnership</span>
-                      </a>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <a className="menu-link">
-                        <span className="menu-text">Sertifikat</span>
-                      </a>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/subvit">
-                        <a className="menu-link">
-                          <span className="menu-text">Subvit</span>
-                        </a>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
+                <Link href="/dashboard">
+                  <a className="menu-link menu-toggle d-flex align-items-center">
+                    <span className="svg-icon menu-icon">
+                      <svg
+                        width="25"
+                        height="26"
+                        viewBox="0 0 25 26"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M11.4688 17.2648C12.0172 17.704 12.797 17.7037 13.3451 17.2641L20.0169 11.913L20.246 11.7303C20.9977 11.1306 20.9989 9.98842 20.2485 9.38713L13.3451 3.85573C12.797 3.4165 12.0174 3.4165 11.4692 3.85573L4.56144 9.39071C3.81245 9.99086 3.81196 11.1303 4.56044 11.7311L4.78712 11.913L11.4688 17.2648Z"
+                          fill="white"
+                        />
+                        <path
+                          opacity="0.5"
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M13.3347 19.9705C12.7866 20.4096 12.0072 20.4097 11.459 19.9706L5.52621 15.2187C5.11478 14.8892 4.51294 14.9618 4.19168 15.3797C3.87519 15.7915 3.95204 16.3818 4.36341 16.6988L11.4902 22.1905C12.0297 22.6062 12.7815 22.6063 13.3211 22.1906L20.4445 16.7036C20.8594 16.3841 20.9367 15.7887 20.6172 15.3738C20.2932 14.9532 19.6872 14.8804 19.2729 15.2124L13.3347 19.9705Z"
+                          fill="#4299E1"
+                        />
+                      </svg>
+                    </span>
+                    <span className="menu-text">Dashboard</span>
+                  </a>
+                </Link>
               </li>
 
               <li

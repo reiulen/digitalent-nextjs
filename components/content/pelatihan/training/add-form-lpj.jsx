@@ -76,7 +76,7 @@ const AddFormLpj = () => {
           <div className="card-body py-4">
             <form onSubmit={submitHandler}>
               {formLpj.map((row, i) => (
-                <div className="row ">
+                <div className="row" key={i}>
                   <div className="form-group col-md-1 col-sm-1">
                     <label className="col-form-label font-weight-bold">
                       No
