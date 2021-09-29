@@ -3,16 +3,25 @@ import React, { useState, useEffect, useRef, createRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // #Page, Component & Library
-import PageWrapper from "../../wrapper/page.wrapper";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import SignaturePad from "react-signature-pad-wrapper";
 import SimpleReactValidator from "simple-react-validator";
+import { useSelector } from "react-redux";
+import PageWrapper from "../../../../wrapper/page.wrapper";
 
 export default function TambahMasterSertifikat() {
   const router = useRouter();
+
+  // #Redux state
+  const { loading, error, certificate } = useSelector(
+    state => state.detailCertificates
+  );
+  console.log(certificate);
+  // #Redux state
+
   const [signature, setSignature] = useState(1);
   const ref = useRef(null);
   const editorConfig = {
@@ -73,17 +82,13 @@ export default function TambahMasterSertifikat() {
     const data = signCanvas.current.toDataURL();
   };
 
-  const handleClearTandaTangan = () => {
-    console.log("clicked clear");
+  const handleClearTandaTangan = (e, i) => {
+    console.log("clicked clear", i);
   };
   // #END MODAL
-  useEffect(() => {
-    console.log(person);
-  }, [person]);
+
   const [name, setName] = useState("Ahmad Firaz Mahmud Artsyafi");
-  useEffect(() => {
-    console.log(tandaTanganSlider);
-  }, [tandaTanganSlider]);
+
   // #START SECTION 2
   const [jumlahTandaTangan2, setJumlahTandaTangan2] = useState(1);
   const [tandaTanganSilabusSlider, setTandaTanganSilabusSlider] = useState([
@@ -164,7 +169,6 @@ export default function TambahMasterSertifikat() {
 
   const [limit, setLimit] = useState(null);
 
-  const loading = false;
   let { page = 1, keyword, success } = router.query;
 
   return (
@@ -180,7 +184,7 @@ export default function TambahMasterSertifikat() {
               <div className="mx-6">
                 <input
                   type="text"
-                  className="form-control w-400px"
+                  className="form-control "
                   placeholder="Masukan Nama Sertifikat"
                   // onChange={e => setSearch(e.target.value)}
                 />
@@ -214,7 +218,10 @@ export default function TambahMasterSertifikat() {
           <div className="card-body border-top">
             <div className="row">
               {/* START COL */}
-              <div className="border-primary border col-8 h-500px">
+              <div
+                className="border-primary border col-8 h-500px"
+                // style={{ width: "842px" }}
+              >
                 <div className="p-0">
                   {gambar ? (
                     <Image
@@ -248,87 +255,54 @@ export default function TambahMasterSertifikat() {
                         SERTIFIKAT
                       </label>
                       <div>Diberikan kepada</div>
-                      <div>
-                        <input
-                          type="text"
-                          className="px-5 text-center font-size-h6 font-weight-normal"
-                          placeholder="Nama Peserta"
-                          style={{
-                            borderStyle: "dashed",
-                          }}
-                        />
+                      <div className="my-2">
+                        <span
+                          className="mx-2 px-2 border-2 font-size-h6 px-10"
+                          style={{ borderStyle: "dashed" }}
+                        >
+                          Nama Peserta
+                        </span>
                       </div>
                       <div>Atas Partisipasi sebagai</div>
                       <div className="font-weight-normal font-size-h2">
                         Peserta
                       </div>
                       <div>Nama Pelatihan</div>
-                      <input
-                        type="text"
-                        className="px-5 text-center font-size-h6 font-weight-bold border-2"
-                        placeholder="Nama Pelatihan"
-                        style={{
-                          borderStyle: "dashed",
-                        }}
-                        onChange={e => {
-                          console.log(e.target.value);
-                        }}
-                      />
+                      <div className="text-center font-size-h6 font-weight-bold border-2">
+                        {certificate.theme}
+                      </div>
                       <div className="mt-2 w-100">
-                        <span>Program</span>
-                        <input
-                          type="text"
-                          className="mx-2 text-center border-2 font-weight-normal"
-                          placeholder="Akademi"
-                          style={{
-                            borderStyle: "dashed",
-                          }}
-                          onChange={e => {
-                            console.log(e.target.value);
-                          }}
-                        />
-                        <span>Selama</span>
-                        <input
-                          type="text"
-                          className="mx-2 text-center border-2 font-weight-normal"
-                          placeholder="Waktu Pelatihan"
-                          style={{
-                            borderStyle: "dashed",
-                          }}
-                          onChange={e => {
-                            console.log(e.target.value);
-                          }}
-                        />
+                        <span>
+                          Program{" "}
+                          <span className="font-size-h6 font-weight-bold">
+                            {certificate.data.list_certificate[0].academy.name}
+                          </span>{" "}
+                          Selama
+                        </span>
+                        <span
+                          className="mx-2 px-2 border-2"
+                          style={{ borderStyle: "dashed" }}
+                        >
+                          Waktu Pelatihan
+                        </span>
                       </div>
                       <div className="mt-2">
                         <span>Digital Talent Scholarship</span>
-                        <input
-                          size="4"
-                          maxLength="4"
-                          type="text"
-                          className="mx-2 text-center font-weight-normal"
-                          placeholder="Tahun"
-                          style={{
-                            borderStyle: "dashed",
-                            width: "auto",
-                          }}
-                          onChange={e => {
-                            console.log(e.target.value);
-                          }}
-                        />
+                        <span
+                          className="mx-2 px-2 border-2"
+                          style={{ borderStyle: "dashed" }}
+                        >
+                          Tahun
+                        </span>
                       </div>
-                      <input
-                        type="text"
-                        className="mx-2 text-center font-weight-normal my-3"
-                        placeholder="Jakarta, DD/MM/YYYY"
-                        style={{
-                          borderStyle: "dashed",
-                          width: "auto",
-                        }}
-                        onChange={e => {
-                          console.log(e.target.value);
-                        }}
-                      />
+                      <div className="my-4">
+                        <span
+                          className="mx-2 px-2 border-2"
+                          style={{ borderStyle: "dashed" }}
+                        >
+                          Jakarta, DD/MM/YYYY
+                        </span>
+                      </div>
                       <div
                         className={
                           jumlahTandaTangan < 3
@@ -633,7 +607,9 @@ export default function TambahMasterSertifikat() {
                                         </a>
                                         <button
                                           type="button"
-                                          onClick={handleClearTandaTangan}
+                                          onClick={e => {
+                                            handleClearTandaTangan(e, i);
+                                          }}
                                           className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
                                         >
                                           Buat Ulang Tanda Tangan
