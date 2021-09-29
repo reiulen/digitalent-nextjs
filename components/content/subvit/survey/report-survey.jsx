@@ -237,7 +237,7 @@ const ReportSurvey = ({ token }) => {
                     type="button"
                     onClick={handleExportReport}
                   >
-                    Export
+                    Export .xlsx
                     <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
                   </button>
                 </div>

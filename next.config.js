@@ -24,8 +24,8 @@ module.exports = {
       "http://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
     //subvit
-    // END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
-    END_POINT_API_SUBVIT: "http://api-dts-dev.majapahit.id/subvit/",
+    END_POINT_API_SUBVIT: "http://dts-subvit-dev.majapahit.id/",
+    // END_POINT_API_SUBVIT: "http://api-dts-dev.majapahit.id/subvit/",
     END_POINT_API_IMAGE_SUBVIT:
       "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
 

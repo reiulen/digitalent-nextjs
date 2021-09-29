@@ -428,7 +428,7 @@ const StepTwo = ({ token }) => {
                 </div>
               </div>
               <div className="row">
-                <div className="col-sm-12 col-md-8 pt-0">
+                <div className="col-sm-12 col-md-12 pt-0">
                   <div className="float-right">
                     <button
                       className="btn btn-light-ghost-rounded-full mr-2"

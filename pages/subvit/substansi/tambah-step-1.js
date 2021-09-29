@@ -25,6 +25,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session, title: "Tambah Bank Soal Substansi - Subvit" },
+    props: { session, title: "Tambah Bank Soal Tes Substansi - Subvit" },
   };
 }

@@ -359,7 +359,7 @@ const StepTwo = ({ token }) => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-rounded-full  mr-2 font-weight-bold"
+                    className="btn btn-light-ghost-rounded-full mr-2"
                     type="submit"
                   >
                     Simpan & Lanjut

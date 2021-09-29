@@ -4,10 +4,34 @@ import Image from "next/image";
 
 const BlankComponent = ({ props_answer, props_duration }) => {
   const [answer, setSoalList] = useState([
-    { key: "A", value: "", type: "", option: "", image: "" },
-    { key: "B", value: "", type: "", option: "", image: "" },
-    { key: "C", value: "", type: "", option: "", image: "" },
-    { key: "D", value: "", type: "", option: "", image: "" },
+    {
+      key: "A",
+      value: "",
+      type: "",
+      option: "",
+      image: "",
+    },
+    {
+      key: "B",
+      value: "",
+      type: "",
+      option: "",
+      image: "",
+    },
+    {
+      key: "C",
+      value: "",
+      type: "",
+      option: "",
+      image: "",
+    },
+    {
+      key: "D",
+      value: "",
+      type: "",
+      option: "",
+      image: "",
+    },
   ]);
   const [duration, setDuration] = useState(null);
 
@@ -15,15 +39,6 @@ const BlankComponent = ({ props_answer, props_duration }) => {
     const { name, value } = e.target;
     const list = [...answer];
     list[index][name] = value;
-    if (name === "image") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          list[index]["image"] = reader.result;
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
     setSoalList(list);
     props_answer(list);
   };
