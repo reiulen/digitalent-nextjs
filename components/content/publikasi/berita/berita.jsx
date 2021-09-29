@@ -277,12 +277,12 @@ const Berita = ({token}) => {
         setStartDate(null)
         setEndDate(null)
         setDisableEndDate (true)
-      }
-    
-      const handleStartDate = (date) => {
+    }
+
+    const handleStartDate = (date) => {
         setStartDate (date)
         setDisableEndDate (false)
-      }
+    }
     
 
     return (
@@ -392,7 +392,7 @@ const Berita = ({token}) => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/berita/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
-                                    <i className="ri-add-fill pb-1 text-white mr-2 "></i>
+                                    <i className="ri-add-line pb-1 text-white mr-2 "></i>
                                     Tambah Berita
                                 </a>
                                 {/* <a className="btn btn-light-success px-6 font-weight-bold btn-block ">
