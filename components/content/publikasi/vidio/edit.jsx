@@ -575,7 +575,7 @@ const EditVideo = ({token}) => {
                                         {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
                                         </div> */}
-                                        <input type="text" className="form-control ml-4" placeholder="Example" value={url_video} onChange={(e) => setUrlVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("url_video")} />
+                                        <input type="text" className="form-control ml-4" placeholder="https://www.example.com" value={url_video} onChange={(e) => setUrlVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("url_video")} />
                                     </div>
 
                                     {simpleValidator.current.message(
