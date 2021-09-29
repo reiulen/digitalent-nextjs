@@ -163,7 +163,7 @@ const DetailRole = ({ token }) => {
                           className="text-right child-permission align-middle"
                           style={{ width: "10rem" }}
                         >
-                          <label class="checkbox">
+                          <label className="checkbox">
                             <input
                               type="checkbox"
                               checked="checked"
@@ -176,7 +176,7 @@ const DetailRole = ({ token }) => {
                           className="text-right child-permission align-middle"
                           style={{ width: "0" }}
                         >
-                          <label class="checkbox">
+                          <label className="checkbox">
                             <input
                               type="checkbox"
                               checked="checked"
@@ -204,7 +204,7 @@ const DetailRole = ({ token }) => {
                           className="text-right child-permission align-middle"
                           style={{ width: "10rem" }}
                         >
-                          <label class="checkbox">
+                          <label className="checkbox">
                             <input
                               type="checkbox"
                               checked="checked"
@@ -217,7 +217,7 @@ const DetailRole = ({ token }) => {
                           className="text-right child-permission align-middle"
                           style={{ width: "0" }}
                         >
-                          <label class="checkbox">
+                          <label className="checkbox">
                             <input
                               type="checkbox"
                               checked="checked"

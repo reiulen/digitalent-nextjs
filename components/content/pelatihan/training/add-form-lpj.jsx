@@ -128,7 +128,7 @@ const AddFormLpj = () => {
                     type="button"
                     onClick={handleAddForm}
                   >
-                    <i className="ri-pencil-fill text-white"></i> Tambah Field
+                    <i className="ri-add-fill text-white"></i> Tambah Field
                   </button>
                 </div>
               </div>

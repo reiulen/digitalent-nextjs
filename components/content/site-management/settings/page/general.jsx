@@ -46,17 +46,17 @@ const GeneralPage = ({ token }) => {
                       Logo Digitalent Scholarship
                     </label>
                     <div>
-                      <div class="image-input image-input-outline">
-                        <div class="image-input-wrapper"></div>
+                      <div className="image-input image-input-outline">
+                        <div className="image-input-wrapper"></div>
 
                         <label
-                          class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                          className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                           data-action="change"
                           data-toggle="tooltip"
                           title=""
                           data-original-title="Change avatar"
                         >
-                          <i class="fa fa-pen icon-sm text-muted"></i>
+                          <i className="fa fa-pen icon-sm text-muted"></i>
                           <input
                             type="file"
                             name="profile_avatar"
@@ -66,20 +66,20 @@ const GeneralPage = ({ token }) => {
                         </label>
 
                         <span
-                          class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                          className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                           data-action="cancel"
                           data-toggle="tooltip"
                           title="Cancel avatar"
                         >
-                          <i class="ki ki-bold-close icon-xs text-muted"></i>
+                          <i className="ki ki-bold-close icon-xs text-muted"></i>
                         </span>
 
                         <span
-                          class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                          className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                           data-action="remove"
                           data-toggle="tooltip"
                         >
-                          <i class="ki ki-bold-close icon-xs text-muted"></i>
+                          <i className="ki ki-bold-close icon-xs text-muted"></i>
                         </span>
                       </div>
                       <span className="form-text text-muted">
@@ -98,17 +98,17 @@ const GeneralPage = ({ token }) => {
                             Logo Social Media
                           </label>
                           <div>
-                            <div class="image-input image-input-outline">
-                              <div class="image-input-wrapper"></div>
+                            <div className="image-input image-input-outline">
+                              <div className="image-input-wrapper"></div>
 
                               <label
-                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                 data-action="change"
                                 data-toggle="tooltip"
                                 title=""
                                 data-original-title="Change avatar"
                               >
-                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                <i className="fa fa-pen icon-sm text-muted"></i>
                                 <input
                                   type="file"
                                   name="profile_avatar"
@@ -121,20 +121,20 @@ const GeneralPage = ({ token }) => {
                               </label>
 
                               <span
-                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                 data-action="cancel"
                                 data-toggle="tooltip"
                                 title="Cancel avatar"
                               >
-                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                <i className="ki ki-bold-close icon-xs text-muted"></i>
                               </span>
 
                               <span
-                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                                className="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                                 data-action="remove"
                                 data-toggle="tooltip"
                               >
-                                <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                <i className="ki ki-bold-close icon-xs text-muted"></i>
                               </span>
                             </div>
                             <span className="form-text text-muted">

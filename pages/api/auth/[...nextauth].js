@@ -6,19 +6,24 @@ import axios from "axios";
 export default NextAuth({
   session: {
     jwt: true,
+    maxAge: 24 * 60 * 60, // 1 days
   },
   providers: [
     Providers.Credentials({
       async authorize(credentials) {
-        const { email, password } = credentials;
+        const { email, password, role } = credentials;
         if (!email || !password) {
           throw new Error("Isi Email atau Password dengan benar");
         }
         try {
-          const { data } = await axios.post(
-            "http://api-dts-dev.majapahit.id/sso/api/auth/login",
-            { email, password }
-          );
+          let link = "http://api-dts-dev.majapahit.id/sso/api/auth/login";
+
+          if (role === "mitra") {
+            link = "http://api-dts-dev.majapahit.id";
+          }
+
+          const { data } = await axios.post(link, { email, password });
+
           return Promise.resolve(data);
         } catch (e) {
           const msg = e.response.data.message;
