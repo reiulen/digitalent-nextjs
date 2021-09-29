@@ -57,7 +57,7 @@ const SuportDocument = ({ commitment, lpj, saran }) => {
         <div className="card-body">
           <h5 className="font-weight-bolder pb-5">Pelaksanaan Kegiatan</h5>
           {lpj.map((row, i) => (
-            <div className="row mb-3">
+            <div className="row mb-3" key={i}>
               <div className="col-md-10">
                 <p className="text-neutral-body my-0">Uraian {i + 1}</p>
                 <p className="text-dark">{row.uraian}</p>
@@ -84,6 +84,11 @@ const SuportDocument = ({ commitment, lpj, saran }) => {
 
           <p className="text-neutral-body my-0">Detail Saran</p>
           <p className="text-dark">{saran}</p>
+
+          <h5 className="font-weight-bolder py-5">
+            Telah Menyatakan Menyetujui dengan sebenarnya secara sadar dan tanpa
+            paksaan dan telah menerima segala hak yang telah disetujui
+          </h5>
         </div>
       </div>
     </>
