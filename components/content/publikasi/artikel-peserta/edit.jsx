@@ -23,7 +23,7 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditArtikel = () => {
+const EditArtikel = ({token}) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -45,7 +45,7 @@ const EditArtikel = () => {
   );
   const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
 
-  useEffect(({token}) => {
+  useEffect(() => {
 
     // dispatch(getAllKategori())
 
