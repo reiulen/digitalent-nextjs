@@ -344,6 +344,7 @@ const TambahBerita = () => {
                                 <div className="col-sm-12">
                                     <div className="ckeditor">
                                         {editorLoaded ? <CKEditor
+                                            ck-editor__editable
                                             editor={ClassicEditor}
                                             data={isi_berita}
                                             onReady={editor => {
