@@ -296,11 +296,11 @@ const reducer = combineReducers({
   // =============== end trivia ==================
 
   // =============== sertifikat ==================
-  allSertifikat: allSertifikatReducers,
-  newSertifikat: newSertifikatReducer,
-  detailSertifikat: detailSertifikatReducer,
-  deleteSertifikat: deleteSertifikatReducer,
-  updateSertifikat: updateSertifikatReducer,
+  allCertificates: allSertifikatReducers,
+  newCertificates: newSertifikatReducer,
+  detailCertificates: detailSertifikatReducer,
+  deleteCertificates: deleteSertifikatReducer,
+  updateCertificates: updateSertifikatReducer,
   // =============== end sertifikat ==================
 
   // PARTNERSHIP

@@ -14,6 +14,7 @@ import Pagination from "react-js-pagination";
 import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
+import { useSelector } from "react-redux";
 
 export default function KelolaSertifikat({ token }) {
   console.log(token);
@@ -28,25 +29,9 @@ export default function KelolaSertifikat({ token }) {
   };
   // #DatePicker
 
-  // #Pagination
+  // #Pagination, search, filter
   const [limit, setLimit] = useState(null);
-  // #Pagination
-
-  const loading = false;
-  let { page = 1, keyword, success } = router.query;
-
-  const artikel = {
-    total: 10,
-    artikel: [
-      {
-        id: 110,
-        akademi: "FGA",
-        nama_pelatihan: "Security Awareness",
-        jumlah_sertifikat: "15",
-      },
-    ],
-  };
-
+  const handlePagination = () => {};
   const handleLimit = () => {
     console.log("");
   };
@@ -54,17 +39,15 @@ export default function KelolaSertifikat({ token }) {
   const handleSearch = () => {
     console.log("");
   };
+  // #Pagination
 
-  useEffect(() => {
-    const getData = async () => {
-      const resp = await fetch(
-        "http://dts-sertifikat-dev.majapahit.id/api/certificates"
-      );
-      const data = await resp.json();
-      console.log(data.data);
-    };
-    getData();
-  }, []);
+  let { page = 1, keyword, success } = router.query;
+
+  // #REDUX STATE
+  const { loading, error, certificate } = useSelector(
+    state => state.allCertificates
+  );
+  // #REDUX STATE
 
   return (
     <PageWrapper>
@@ -246,12 +229,7 @@ export default function KelolaSertifikat({ token }) {
             {/* START TABLE */}
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <LoadingTable
-                // UNFISNISH
-                // loading={loading}
-                // Isi dengan loading dari dispatch
-                />
-
+                <LoadingTable loading={loading} />
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>
@@ -264,18 +242,19 @@ export default function KelolaSertifikat({ token }) {
                       </tr>
                     </thead>
                     <tbody>
-                      {!artikel || (artikel && artikel.artikel.length === 0) ? (
+                      {!certificate ||
+                      (certificate &&
+                        certificate.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
                             Data Masih Kosong
                           </td>
                         </tr>
                       ) : (
-                        artikel &&
-                        // artikel.artikel &&
-                        artikel.artikel.map((artikel, i) => {
+                        certificate &&
+                        certificate.list_certificate.map((certificate, i) => {
                           return (
-                            <tr key={artikel.id}>
+                            <tr key={certificate.id}>
                               <td className="align-middle text-center">
                                 {limit === null ? (
                                   <span className="badge badge-secondary text-muted">
@@ -289,17 +268,17 @@ export default function KelolaSertifikat({ token }) {
                               </td>
                               {/* START TABLE DATA */}
                               <td className="align-middle">
-                                {artikel.akademi}
+                                {certificate.theme.academy.name}
                               </td>
                               <td className="align-middle">
-                                {artikel.nama_pelatihan}
+                                {certificate.theme.name}
                               </td>
                               <td className="align-middle">
-                                {artikel.jumlah_sertifikat}
+                                {certificate.theme.count_certificate_count}
                               </td>
                               <td className="align-middle d-flex">
                                 <Link
-                                  href={`/sertifikat/kelola-sertifikat/${artikel.nama_pelatihan}`}
+                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.academy.id}`}
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -324,12 +303,12 @@ export default function KelolaSertifikat({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {artikel && artikel.perPage < artikel.total && (
+                {certificate && certificate.perPage < certificate.total && (
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={artikel.perPage}
-                      totalItemsCount={artikel.total}
+                      itemsCountPerPage={certificate.perPage}
+                      totalItemsCount={certificate.total}
                       pageRangeDisplayed={3}
                       onChange={handlePagination}
                       nextPageText={">"}
@@ -341,7 +320,7 @@ export default function KelolaSertifikat({ token }) {
                     />
                   </div>
                 )}
-                {artikel ? (
+                {certificate ? (
                   <div className="table-total ml-auto">
                     <div className="row mt-3">
                       <div className="col-4 mr-0 p-0 my-auto">
@@ -388,10 +367,7 @@ export default function KelolaSertifikat({ token }) {
                           className="align-middle my-auto"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {artikel.artikel.length}
-                          {
-                            // artikel.total
-                          }
+                          Total Data {certificate.list_certificate.length}
                         </p>
                       </div>
                     </div>

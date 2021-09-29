@@ -1,5 +1,4 @@
 import dynamic from "next/dynamic";
-import Layout from "../../../../components/templates/layout.component";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,11 +8,8 @@ import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
-const KelolaSertifikatAkademi = dynamic(
-  () =>
-    import(
-      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/kelola-sertifikat-akademi"
-    ),
+const AddSertifikat = dynamic(
+  () => import("../../../../components/content/sertifikat/add-sertifikat"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -22,13 +18,13 @@ const KelolaSertifikatAkademi = dynamic(
   }
 );
 
-export default function KelokaSertifikatPage(props) {
+export default function AddSertifikatPage(props) {
   const session = props.session.user.user.data;
 
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <KelolaSertifikatAkademi token={session.token} />
+        <AddSertifikat token={session} />
       </div>
     </>
   );
@@ -59,7 +55,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "List Nama Pelatihan - Sertifikat" },
+        props: { session, title: "Certificate Builder - Sertifikat" },
       };
     }
 );

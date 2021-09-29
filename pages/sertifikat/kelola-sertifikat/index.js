@@ -46,7 +46,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      // console.log("ini store", store);
       await store.dispatch(
         getAllSertifikat(
           query.page,
@@ -59,7 +58,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "List Akademi - Sertikat" },
+        props: { session, title: "List Akademi - Sertifikat" },
       };
     }
 );
