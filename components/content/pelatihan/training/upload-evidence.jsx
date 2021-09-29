@@ -73,6 +73,7 @@ const UploadEvidence = () => {
         console.log(list)
         setImage(list);
       }
+      console.log(image);
       // const reader = new FileReader();
       // reader.onload = () => {
       //   if (reader.readyState === 2) {

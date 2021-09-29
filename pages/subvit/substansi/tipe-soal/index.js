@@ -37,7 +37,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "List Tipe Soal Substansi - Subvit" },
+        props: { session, title: "Tipe Soal Substansi - Subvit" },
       };
     }
 );

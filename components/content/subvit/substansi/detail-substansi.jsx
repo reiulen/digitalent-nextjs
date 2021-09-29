@@ -130,6 +130,11 @@ const DetailSubstansi = ({ token }) => {
     }
   };
 
+  const handleReset = () => {
+    // console.log("work");
+    setShowModal(false);
+  };
+
   const getStartEndAt = (start, end) => {
     if (!(start || end)) {
       return "-";
@@ -392,7 +397,7 @@ const DetailSubstansi = ({ token }) => {
                 className="btn btn-primary-rounded-full font-weight-bolder px-7 py-3 mt-2 btn-block"
                 onClick={handleModal}
               >
-                <i className="ri-pencil-fill"></i>
+                <i className="ri-add-fill"></i>
                 Tambah Soal
               </a>
             </div>
@@ -628,7 +633,7 @@ const DetailSubstansi = ({ token }) => {
             </select>
           </div>
           <div className="form-group mb-5">
-            <label className=" p-0">Kategori</label>
+            <label className=" p-0">Tipe Soal</label>
             <select
               className="form-control"
               onChange={(e) => setKategori(e.target.value)}
@@ -642,13 +647,15 @@ const DetailSubstansi = ({ token }) => {
                 <option value="">Data kosong</option>
               ) : (
                 subtance_question_type &&
-                subtance_question_type.list_types.map((row) => {
-                  return (
-                    <option key={row.id} value={row.id}>
-                      {row.name}
-                    </option>
-                  );
-                })
+                subtance_question_type.list_types
+                  .filter((row) => row.status === 1)
+                  .map((row) => {
+                    return (
+                      <option key={row.id} value={row.id}>
+                        {row.name}
+                      </option>
+                    );
+                  })
               )}
             </select>
           </div>
@@ -657,6 +664,7 @@ const DetailSubstansi = ({ token }) => {
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
             type="reset"
+            onClick={handleReset}
           >
             Reset
           </button>
