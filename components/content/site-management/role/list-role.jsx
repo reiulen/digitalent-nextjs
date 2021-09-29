@@ -18,7 +18,7 @@ import {
 } from "../../../../redux/actions/subvit/subtance.actions";
 import { DELETE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../redux/types/subvit/subtance.type";
 
-const ListSubstansi = ({ token }) => {
+const ListRole = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -228,28 +228,8 @@ const ListSubstansi = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Tes Substansi
+              List Role
             </h1>
-            <div className="card-toolbar">
-              <Link href="/subvit/substansi/tipe-soal">
-                <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                  <i className="ri-article-fill"></i>
-                  Tipe Soal
-                </a>
-              </Link>
-              <Link href="/subvit/substansi/clone">
-                <a className="btn text-white btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                  <i className="ri-mastercard-fill"></i>
-                  Clone Test
-                </a>
-              </Link>
-              <Link href="/subvit/substansi/tambah-step-1">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i className="ri-plus-fill"></i>
-                  Tambah Soal
-                </a>
-              </Link>
-            </div>
           </div>
 
           <div className="card-body pt-0">
@@ -308,10 +288,8 @@ const ListSubstansi = ({ token }) => {
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
-                        <th>Pelatihan</th>
-                        <th>Pelaksaan</th>
-                        <th>Bank Soal</th>
-                        <th>Kategori</th>
+                        <th>Nama Role</th>
+                        <th>Editable</th>
                         <th>Status</th>
                         <th>Aksi</th>
                       </tr>
@@ -485,4 +463,4 @@ const ListSubstansi = ({ token }) => {
   );
 };
 
-export default ListSubstansi;
+export default ListRole;
