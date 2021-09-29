@@ -59,40 +59,6 @@ const EditMitra = ({ token }) => {
     pic_email: "",
   });
 
-  const setDataSingle = async (id) => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setInstitution_name(data.data.institution_name);
-
-      setEmail(data.data.email);
-      // tambah url logo
-      setImageview(data.data.agency_logo);
-      setWesite(data.data.website);
-      setAddress(data.data.alamat);
-
-      setIndonesia_provinces_id(data.data.province.id);
-      setDefaultValueProvince(data.data.province.name);
-      setDefaultValueProvinceID(data.data.province.id);
-
-      setIndonesia_cities_id(data.data.city.id);
-      setDefaultValueCitie(data.data.city.name);
-      setDefaultValueCitieID(data.data.city.id);
-
-      setPostal_code(data.data.postal_code);
-      setPic_name(data.data.pic_name);
-      setPic_contact_number(data.data.pic_contact_number);
-      setPic_email(data.data.pic_email);
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
-    }
-  };
 
   const [defaultValueProvince, setDefaultValueProvince] = useState("");
   const [defaultValueCitie, setDefaultValueCitie] = useState("");
@@ -275,8 +241,43 @@ const EditMitra = ({ token }) => {
   };
 
   useEffect(() => {
-    setDataSingle(router.query.id);
-  }, [router.query.id]);
+    async function setDataSingle (id,token){
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setInstitution_name(data.data.institution_name);
+
+      setEmail(data.data.email);
+      // tambah url logo
+      setImageview(data.data.agency_logo);
+      setWesite(data.data.website);
+      setAddress(data.data.alamat);
+
+      setIndonesia_provinces_id(data.data.province.id);
+      setDefaultValueProvince(data.data.province.name);
+      setDefaultValueProvinceID(data.data.province.id);
+
+      setIndonesia_cities_id(data.data.city.id);
+      setDefaultValueCitie(data.data.city.name);
+      setDefaultValueCitieID(data.data.city.id);
+
+      setPostal_code(data.data.postal_code);
+      setPic_name(data.data.pic_name);
+      setPic_contact_number(data.data.pic_contact_number);
+      setPic_email(data.data.pic_email);
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+
+    } 
+    setDataSingle(router.query.id,token);
+  }, [router.query.id,token]);
 
   useEffect(() => {
     if (indonesia_provinces_id === "") {

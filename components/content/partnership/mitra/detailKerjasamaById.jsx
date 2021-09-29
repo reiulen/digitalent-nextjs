@@ -95,8 +95,25 @@ const EditDokumentKerjasamaById = ({ token }) => {
     }
   };
 
-  const setDataSingle = async (id) => {
-    try {
+  
+
+  const [AllCooperation, setAllCooperation] = useState("");
+  const changeFormCooporation = (index, e) => {
+    let dataaa = [...allMK.singleCooporationSelect.data.option];
+    dataaa[index].cooperation = e.target.value;
+    setAllCooperation(dataaa);
+  };
+
+  // onchange textarea default cooperationID
+  const changeDataContentDefault = (event, i) => {
+    let dataCoopertaion = { ...cooperationID };
+    dataCoopertaion.data_content[i].form_content = event.target.value;
+    setCooperationID(dataCoopertaion);
+  };
+
+  useEffect(() => {
+    async function setDataSingle (id,token){
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
         {
@@ -121,27 +138,12 @@ const EditDokumentKerjasamaById = ({ token }) => {
     } catch (error) {
       console.log("action getSIngle gagal", error);
     }
-  };
 
-  const [AllCooperation, setAllCooperation] = useState("");
-  const changeFormCooporation = (index, e) => {
-    let dataaa = [...allMK.singleCooporationSelect.data.option];
-    dataaa[index].cooperation = e.target.value;
-    setAllCooperation(dataaa);
-  };
-
-  // onchange textarea default cooperationID
-  const changeDataContentDefault = (event, i) => {
-    let dataCoopertaion = { ...cooperationID };
-    dataCoopertaion.data_content[i].form_content = event.target.value;
-    setCooperationID(dataCoopertaion);
-  };
-
-  useEffect(() => {
-    setDataSingle(router.query.id);
+    } 
+    setDataSingle(router.query.id,token);
     dispatch(cancelChangeCategory());
     dispatch(cancelChangeNamaLembaga());
-  }, [dispatch, router.query.id]);
+  }, [dispatch, router.query.id,token]);
   useEffect(() => {
     dispatch(fetchListCooperationSelectById(token,cooperationC_id));
   }, [dispatch, allMK.idCooporationSelect, cooperationC_id,token]);
