@@ -60,6 +60,7 @@ const ListSubstansi = ({ token }) => {
   };
 
   const handleSearch = () => {
+    console.log(search);
     if (limit != null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else {
@@ -233,7 +234,7 @@ const ListSubstansi = ({ token }) => {
             <div className="card-toolbar">
               <Link href="/subvit/substansi/tipe-soal">
                 <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                  <i className="ri-article-fill"></i>
+                  <i className="ri-book-read-fill"></i>
                   Tipe Soal
                 </a>
               </Link>
@@ -245,7 +246,7 @@ const ListSubstansi = ({ token }) => {
               </Link>
               <Link href="/subvit/substansi/tambah-step-1">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
-                  <i className="ri-plus-fill"></i>
+                  <i className="ri-add-fill"></i>
                   Tambah Soal
                 </a>
               </Link>
@@ -371,7 +372,7 @@ const ListSubstansi = ({ token }) => {
                                       className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                       data-toggle="tooltip"
                                       data-placement="bottom"
-                                      title="Edit"
+                                      title="Ubah"
                                     >
                                       <i className="ri-pencil-fill p-0 text-white"></i>
                                     </a>

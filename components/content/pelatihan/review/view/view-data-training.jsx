@@ -16,6 +16,7 @@ const ViewReviewTraining = () => {
     akademi: "Konoha",
     tema: "Anime",
     logoReference: "/assets/media/default.jpg",
+    thumbnail: "/assets/media/default.jpg",
     silabus: "file.pdf",
     metodePelatihan: "Jalan Ninja",
     penyelenggara: "Naruto",
@@ -98,7 +99,7 @@ const ViewReviewTraining = () => {
             </div>
 
             <div className="row mt-2">
-              <div className="col-md-12">
+              <div className="col-md-6">
                 <p className="text-neutral-body">Logo Reference</p>
                 <div className="">
                   <figure
@@ -108,6 +109,24 @@ const ViewReviewTraining = () => {
                   >
                     <Image
                       src={dataPelatihan.logoReference}
+                      alt="image"
+                      width={160}
+                      height={160}
+                      objectFit="cover"
+                    />
+                  </figure>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <p className="text-neutral-body">Thumbnail</p>
+                <div className="">
+                  <figure
+                    className="avatar item-rtl"
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                  >
+                    <Image
+                      src={dataPelatihan.thumbnail}
                       alt="image"
                       width={160}
                       height={160}

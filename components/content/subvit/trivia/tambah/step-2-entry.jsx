@@ -29,6 +29,7 @@ const StepTwo = ({ token }) => {
 
   const [methodAdd, setMethodAdd] = useState("polling");
   const [question, setSoal] = useState("");
+  const [question_image_name, setImageName] = useState("Pilih Gambar");
   const [question_image, setSoalImage] = useState("");
 
   // polling
@@ -82,6 +83,7 @@ const StepTwo = ({ token }) => {
 
   const handleSoalImage = (e) => {
     if (e.target.name === "question_image") {
+      setImageName(e.target.files[0].name);
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -96,23 +98,51 @@ const StepTwo = ({ token }) => {
     setSoal("");
     setSoalImage("");
     setSoalList([
-      { key: "A", option: "", image: "" },
-      { key: "B", option: "", image: "" },
-      { key: "C", option: "", image: "" },
-      { key: "D", option: "", image: "" },
+      { key: "A", option: "", image: "", imageName: "" },
+      { key: "B", option: "", image: "", imageName: "" },
+      { key: "C", option: "", image: "", imageName: "" },
+      { key: "D", option: "", image: "", imageName: "" },
     ]);
     setCheckboxList([
-      { key: "A", value: "", option: "", image: "", is_right: false },
-      { key: "B", value: "", option: "", image: "", is_right: false },
-      { key: "C", value: "", option: "", image: "", is_right: false },
-      { key: "D", value: "", option: "", image: "", is_right: false },
+      {
+        key: "A",
+        value: "",
+        option: "",
+        image: "",
+        imageName: "",
+        is_right: false,
+      },
+      {
+        key: "B",
+        value: "",
+        option: "",
+        image: "",
+        imageName: "",
+        is_right: false,
+      },
+      {
+        key: "C",
+        value: "",
+        option: "",
+        image: "",
+        imageName: "",
+        is_right: false,
+      },
+      {
+        key: "D",
+        value: "",
+        option: "",
+        image: "",
+        imageName: "",
+        is_right: false,
+      },
     ]);
     setDuration("");
     setBlanklList([
-      { key: "A", value: "", type: "", option: "", image: "" },
-      { key: "B", value: "", type: "", option: "", image: "" },
-      { key: "C", value: "", type: "", option: "", image: "" },
-      { key: "D", value: "", type: "", option: "", image: "" },
+      { key: "A", value: "", type: "", option: "", image: "", imageName: "" },
+      { key: "B", value: "", type: "", option: "", image: "", imageName: "" },
+      { key: "C", value: "", type: "", option: "", image: "", imageName: "" },
+      { key: "D", value: "", type: "", option: "", image: "", imageName: "" },
     ]);
     setDurationBlank("");
     setAnswerKey("");
@@ -449,7 +479,7 @@ const StepTwo = ({ token }) => {
                       onChange={(e) => handleSoalImage(e)}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {question_image_name}
                     </label>
                   </div>
                 </div>
