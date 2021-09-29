@@ -32,8 +32,13 @@ const EditTrainingStep1 = () => {
   const [academy, setAcademy] = useState("");
   const [theme, setTheme] = useState("");
   const [logoFile, setLogoFile] = useState("");
+  const [logoBase, setLogoBase] = useState("");
   const [logoName, setLogoName] = useState("Belum ada file");
+  const [thumbnailFile, setThumbnailFile] = useState("");
+  const [thumbnailBase, setThumbnailBase] = useState("");
+  const [thumbnailName, setThumbnailName] = useState("Belum ada file");
   const [silabusFile, setSilabusFile] = useState("");
+  const [silabusBase, setSilabusBase] = useState("");
   const [silabusName, setSilabusName] = useState("Belum ada file");
   const [metodeImplementation, setMetodeImplementation] = useState("");
   const [organizer, setOrganizer] = useState("");
@@ -83,9 +88,119 @@ const EditTrainingStep1 = () => {
     }
   };
 
+  const onLogoHandler = (e) => {
+    const type = ["image/jpg", "image/png", "image/jpeg"];
+    if (type.includes(e.target.files[0].type)) {
+      if (e.target.files[0].size > 2000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            console.log(reader.result);
+            setLogoBase(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setLogoFile(e.target.files[0]);
+        setLogoName(e.target.files[0].name);
+      }
+    } else {
+      e.target.value = null;
+      Swal.fire(
+        "Oops !",
+        "Data yang bisa dimasukkan hanya berupa data gambar.",
+        "error"
+      );
+    }
+  };
+
+  const onThumbnailHandler = (e) => {
+    const type = ["image/jpg", "image/png", "image/jpeg"];
+    if (type.includes(e.target.files[0].type)) {
+      if (e.target.files[0].size > 2000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            console.log(reader.result);
+            setThumbnailBase(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setThumbnailFile(e.target.files[0]);
+        setThumbnailName(e.target.files[0].name);
+      }
+    } else {
+      e.target.value = null;
+      Swal.fire(
+        "Oops !",
+        "Data yang bisa dimasukkan hanya berupa data gambar.",
+        "error"
+      );
+    }
+  };
+
+  const onDeleteHandler = (type) => {
+    switch (type) {
+      case "LOGO":
+        setLogoFile("");
+        setLogoName("Belum ada file");
+        break;
+      case "THUMBNAIL":
+        setThumbnailFile("");
+        setThumbnailName("Belum ada file");
+        break;
+      case "SILABUS":
+        setSilabusFile("");
+        setSilabusName("Belum ada file");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const onSilabusHandler = (e) => {
+    const type = ["application/pdf"];
+    if (type.includes(e.target.files[0].type)) {
+      if (e.target.files[0].size > 2000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setSilabusBase(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        setSilabusFile(e.target.files[0]);
+        setSilabusName(e.target.files[0].name);
+      }
+    } else {
+      e.target.value = null;
+      Swal.fire(
+        "Oops !",
+        "Data yang bisa dimasukkan hanya berupa file pdf.",
+        "error"
+      );
+    }
+  };
+
+  const disabilitasHandler = (value) => {
+    if (disabilitas.some((res) => res === value)) {
+      setDisabilitas(disabilitas.filter((res) => res !== value));
+      return;
+    }
+    setDisabilitas([...disabilitas, value]);
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    router.push("/pelatihan/pelatihan/edit-pelatihan/edit-registrasi");
+    // router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-registrasi");
     if (simpleValidator.current.allValid()) {
       const data = {
         program,
@@ -95,7 +210,11 @@ const EditTrainingStep1 = () => {
         academy,
         theme,
         logoFile,
+        logoBase,
+        thumbnailFile,
+        thumbnailBase,
         silabusFile,
+        silabusBase,
         metodeImplementation,
         organizer,
         mitra,
@@ -128,69 +247,6 @@ const EditTrainingStep1 = () => {
         text: "Isi data yang bener dong lu !",
       });
     }
-  };
-
-  const onLogoHandler = (e) => {
-    const type = ["image/jpg", "image/png", "image/jpeg"];
-    if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 2000000) {
-        e.target.value = null;
-        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-      } else {
-        setLogoFile(e.target.files[0]);
-        setLogoName(e.target.files[0].name);
-      }
-    } else {
-      e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data gambar.",
-        "error"
-      );
-    }
-  };
-
-  const onDeleteHandler = (type) => {
-    switch (type) {
-      case "LOGO":
-        setLogoFile("");
-        setLogoName("Belum ada file");
-        break;
-      case "SILABUS":
-        setSilabusFile("");
-        setSilabusName("Belum ada file");
-        break;
-      default:
-        break;
-    }
-  };
-
-  const onSilabusHandler = (e) => {
-    const type = ["application/pdf"];
-    if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 2000000) {
-        e.target.value = null;
-        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
-      } else {
-        setSilabusFile(e.target.files[0]);
-        setSilabusName(e.target.files[0].name);
-      }
-    } else {
-      e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa file pdf.",
-        "error"
-      );
-    }
-  };
-
-  const disabilitasHandler = (value) => {
-    if (disabilitas.some((res) => res === value)) {
-      setDisabilitas(disabilitas.filter((res) => res !== value));
-      return;
-    }
-    setDisabilitas([...disabilitas, value]);
   };
 
   return (
@@ -384,6 +440,46 @@ const EditTrainingStep1 = () => {
                     className="btn btn-link-action bg-danger text-white ml-3"
                     type="button"
                     onClick={() => onDeleteHandler("LOGO")}
+                  >
+                    <i className="ri-delete-bin-fill p-0 text-white"></i>
+                  </button>
+                </div>
+                <small className="text-muted">
+                  Format File (.png/.jpg) & Max 2 mb
+                </small>
+              </div>
+
+              <div className="form-group mb-3">
+                <label className="col-form-label font-weight-bold">
+                  Upload Thumbnail (Optional)
+                </label>
+                <div className="d-flex">
+                  <div className="custom-file">
+                    <input
+                      type="file"
+                      className="custom-file-input"
+                      accept="image/png, image/jpeg , image/jpg"
+                      onChange={onThumbnailHandler}
+                      onBlur={() =>
+                        simpleValidator.current.showMessageFor("thumbnail")
+                      }
+                    />
+                    <label className="custom-file-label" htmlFor="customFile">
+                      {thumbnailName}
+                    </label>
+                    <label style={{ marginTop: "15px" }}>
+                      {simpleValidator.current.message(
+                        "thumbnail",
+                        thumbnailFile,
+                        "required",
+                        { className: "text-danger" }
+                      )}
+                    </label>
+                  </div>
+                  <button
+                    className="btn btn-link-action bg-danger text-white ml-3"
+                    type="button"
+                    onClick={() => onDeleteHandler("THUMBNAIL")}
                   >
                     <i className="ri-delete-bin-fill p-0 text-white"></i>
                   </button>

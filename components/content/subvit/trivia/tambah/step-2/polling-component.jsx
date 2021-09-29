@@ -4,10 +4,10 @@ import Image from "next/image";
 
 const PollingComponent = ({ props_answer }) => {
   const [answer, setSoalList] = useState([
-    { key: "A", option: "", image: "" },
-    { key: "B", option: "", image: "" },
-    { key: "C", option: "", image: "" },
-    { key: "D", option: "", image: "" },
+    { key: "A", option: "", image: "", imageName: "Pilih Gambar" },
+    { key: "B", option: "", image: "", imageName: "Pilih Gambar" },
+    { key: "C", option: "", image: "", imageName: "Pilih Gambar" },
+    { key: "D", option: "", image: "", imageName: "Pilih Gambar" },
   ]);
 
   const handleInputChange = (e, index) => {
@@ -15,6 +15,7 @@ const PollingComponent = ({ props_answer }) => {
     const list = [...answer];
     list[index][name] = value;
     if (name === "image") {
+      list[index]["imageName"] = e.target.files[0].name;
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -44,11 +45,23 @@ const PollingComponent = ({ props_answer }) => {
     const newKey = String.fromCharCode(keyindex + 1);
     setSoalList([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      {
+        key: newKey,
+        question: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
     ]);
     props_answer([
       ...answer,
-      { key: newKey, question: "", image: "", is_right: false },
+      {
+        key: newKey,
+        question: "",
+        image: "",
+        imageName: "Pilih Gambar",
+        is_right: false,
+      },
     ]);
   };
 
@@ -90,7 +103,7 @@ const PollingComponent = ({ props_answer }) => {
                     onChange={(e) => handleInputChange(e, i)}
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    Choose file
+                    {x.imageName}
                   </label>
                 </div>
               </div>

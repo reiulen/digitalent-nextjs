@@ -242,6 +242,7 @@ const ListTraining = () => {
                       <th>ID Pelatihan</th>
                       <th>Pelatihan</th>
                       <th>Jadwal</th>
+                      <th>Status Publish</th>
                       <th>Status Substansi</th>
                       <th>Status Pelatihan</th>
                       <th>Aksi</th>
@@ -261,6 +262,11 @@ const ListTraining = () => {
                       <td>
                         <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
                         <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
+                      </td>
+                      <td>
+                        <span className="label label-inline label-light-success font-weight-bold">
+                          Publish
+                        </span>
                       </td>
                       <td>
                         <span className="label label-inline label-light-success font-weight-bold">
@@ -319,7 +325,9 @@ const ListTraining = () => {
                               <i className="ri-file-text-fill p-0 text-white"></i>
                             </a>
                           </Link>
-                          <Link href={`/pelatihan/pelatihan/${1}`}>
+                          <Link
+                            href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${1}`}
+                          >
                             <a
                               className="btn btn-link-action bg-blue-secondary text-white mr-2"
                               data-toggle="tooltip"
@@ -459,18 +467,16 @@ const ListTraining = () => {
         <Modal.Body>
           <div className="form-group mb-5">
             <label className="p-0">Isi Catatan</label>
-            <textarea rows="5" className="form-control"></textarea>
+            <textarea rows="5" className="form-control" disabled></textarea>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <button
-            className="btn btn-light-ghost-rounded-full mr-2"
-            type="reset"
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={() => setShowModalRevisi(false)}
           >
-            Reset
-          </button>
-          <button className="btn btn-primary-rounded-full" type="button">
-            Terapkan
+            Batal
           </button>
         </Modal.Footer>
       </Modal>
