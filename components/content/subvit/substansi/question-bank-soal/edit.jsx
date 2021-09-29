@@ -418,13 +418,15 @@ const EditSoalSubstansi = ({ token }) => {
                     <option selected disabled value="">
                       -- Tipe Soal --
                     </option>
-                    {subtance_question_type.list_types.map((row) => {
-                      return (
-                        <option key={row.id} value={row.id}>
-                          {row.name}
-                        </option>
-                      );
-                    })}
+                    {subtance_question_type.list_types
+                      .filter((row) => row.status === 1)
+                      .map((row) => {
+                        return (
+                          <option key={row.id} value={row.id}>
+                            {row.name}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
                 <div className="col-sm-12 col-md-12 mt-3">

@@ -239,7 +239,7 @@ const ListSurvey = ({ token }) => {
             <div className="card-toolbar">
               <Link href="/subvit/survey/tambah">
                 <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                  <i className="ri-pencil-fill"></i>
+                  <i className="ri-add-fill"></i>
                   Tambah Soal
                 </a>
               </Link>
