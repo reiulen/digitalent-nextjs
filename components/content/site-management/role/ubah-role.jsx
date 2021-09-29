@@ -14,7 +14,7 @@ import IconPlus from "../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../public/assets/icon/Minus.svg";
 import Image from "next/image";
 
-const TambahRole = ({ token }) => {
+const UbahRole = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
@@ -51,7 +51,7 @@ const TambahRole = ({ token }) => {
               className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
               style={{ fontSize: "24px" }}
             >
-              Tambah Role
+              Ubah Role
             </h3>
           </div>
           <div className="card-body pt-0">
@@ -243,4 +243,4 @@ const TambahRole = ({ token }) => {
   );
 };
 
-export default TambahRole;
+export default UbahRole;

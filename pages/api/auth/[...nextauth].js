@@ -19,7 +19,6 @@ export default NextAuth({
             "http://api-dts-dev.majapahit.id/sso/api/auth/login",
             { email, password }
           );
-
           return Promise.resolve(data);
         } catch (e) {
           const msg = e.response.data.message;

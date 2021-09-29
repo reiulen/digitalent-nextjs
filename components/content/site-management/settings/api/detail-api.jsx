@@ -35,16 +35,28 @@ const DetailApi = ({ token }) => {
           <div className="card-body pt-0">
             <div>
               <div className="form-group d-flex flex-column mt-4">
-                <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Field</p>
-                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>Field</p>
+                <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Nama API </p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>API Peserta IBM</p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
-                <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Field</p>
-                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>Field</p>
+                <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Status</p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>Aktif</p>
               </div>
               <div className="form-group d-flex flex-column mt-4">
-                <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Field</p>
-                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>Field</p>
+                <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Pengguna</p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>IBM</p>
+              </div>
+              <div className="form-group d-flex flex-column mt-4">
+                <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>Masa Berlaku</p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>22 Maret 2021 sd 25 Mei 2021 </p>
+              </div>
+              <div className="form-group d-flex flex-column mt-4">
+                <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>URL</p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>xxxxxxxxxxxxxxxxxxxxx</p>
+              </div>
+              <div className="form-group d-flex flex-column mt-4">
+                <p htmlFor="exampleSelect1" style={{color: "#6C6C6C"}}>API Key</p>
+                <p htmlFor="exampleSelect1" className="fw-400 fz-16" style={{color: "#1F1F1F"}}>xxxxxxxxxxxxxxxxxxxxx</p>
               </div>
             </div>
             <div className="form-group row">

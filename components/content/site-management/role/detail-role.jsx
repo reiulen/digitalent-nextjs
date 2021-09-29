@@ -14,7 +14,7 @@ import IconPlus from "../../../../public/assets/icon/Plus.svg";
 import IconMinus from "../../../../public/assets/icon/Minus.svg";
 import Image from "next/image";
 
-const TambahRole = ({ token }) => {
+const DetailRole = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
@@ -51,41 +51,58 @@ const TambahRole = ({ token }) => {
               className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
               style={{ fontSize: "24px" }}
             >
-              Tambah Role
+              Detail Role
             </h3>
           </div>
           <div className="card-body pt-0">
-            <form>
-              <div className="form-group">
-                <label>Nama Role</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Placeholder"
-                />
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+            <div className="form-group d-flex flex-column mt-4">
+              <p htmlFor="exampleSelect1" style={{ color: "#6C6C6C" }}>
+                Nama Role
+              </p>
+              <p
+                htmlFor="exampleSelect1"
+                className="fw-400 fz-16"
+                style={{ color: "#1F1F1F" }}
+              >
+                Verifikator
+              </p>
+            </div>
+
+            <div className="row">
+              <div className="col-12 col-sm-6">
+
+            <div className="form-group d-flex flex-column mt-4">
+              <p htmlFor="exampleSelect1" style={{ color: "#6C6C6C" }}>
+                Status Role
+              </p>
+              <p
+                htmlFor="exampleSelect1"
+                className="fw-400 fz-16"
+                style={{ color: "#1F1F1F" }}
+              >
+                Aktif
+              </p>
+            </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
+              <div className="col-12 col-sm-6">
+
+            <div className="form-group d-flex flex-column mt-4">
+              <p htmlFor="exampleSelect1" style={{ color: "#6C6C6C" }}>
+                Status Role
+              </p>
+              <p
+                htmlFor="exampleSelect1"
+                className="fw-400 fz-16"
+                style={{ color: "#1F1F1F" }}
+              >
+                Aktif
+              </p>
+            </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="exampleSelect1">Editable</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
-              </div>{" "}
-            </form>
+            </div>
+
+
+           
 
             <div>
               <h3
@@ -172,10 +189,7 @@ const TambahRole = ({ token }) => {
                       <tr>
                         <td className="text-left">
                           <div className="d-flex align-items-center">
-                            <div
-                              style={btnMin}
-                              className="cursor-pointer mr-3"
-                            >
+                            <div style={btnMin} className="cursor-pointer mr-3">
                               <Image
                                 src={IconMinus}
                                 width={12}
@@ -227,12 +241,6 @@ const TambahRole = ({ token }) => {
                     Kembali
                   </a>
                 </Link>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                >
-                  Simpan
-                </button>
               </div>
             </div>
             {/* end footer btn */}
@@ -243,4 +251,4 @@ const TambahRole = ({ token }) => {
   );
 };
 
-export default TambahRole;
+export default DetailRole;
