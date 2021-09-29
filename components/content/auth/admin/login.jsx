@@ -38,6 +38,7 @@ const LoginAdmin = () => {
         redirect: false,
         email,
         password,
+        role: "admin",
         captcha,
       };
       const result = await signIn("credentials", data);
