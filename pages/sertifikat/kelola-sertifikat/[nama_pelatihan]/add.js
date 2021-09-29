@@ -9,7 +9,10 @@ import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
 const AddSertifikat = dynamic(
-  () => import("../../../../components/content/sertifikat/add-sertifikat"),
+  () =>
+    import(
+      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/add-sertifikat.jsx"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

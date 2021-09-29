@@ -11,7 +11,7 @@ import { wrapper } from "../../../redux/store";
 const KelolaSertifikat = dynamic(
   () =>
     import(
-      "../../../components/content/sertifikat/kelola-sertifikat/kelola-sertifikat"
+      "../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan.jsx"
     ),
   {
     loading: function loadingNow() {

@@ -9,10 +9,10 @@ import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
-const KelolaSertifikatAkademi = dynamic(
+const KelolaSertifikatNamaPelatihanID = dynamic(
   () =>
     import(
-      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/kelola-sertifikat-akademi"
+      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/nama-pelatihan-id.jsx"
     ),
   {
     loading: function loadingNow() {
@@ -28,7 +28,7 @@ export default function KelokaSertifikatPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <KelolaSertifikatAkademi token={session.token} />
+        <KelolaSertifikatNamaPelatihanID token={session.token} />
       </div>
     </>
   );

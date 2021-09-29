@@ -8,7 +8,7 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import Image from "next/image";
 // #Icon
 
-export default function kelolasertifikatID() {
+export default function KelolasertifikatID() {
   const router = useRouter();
   const { query } = router;
   // console.log(router);

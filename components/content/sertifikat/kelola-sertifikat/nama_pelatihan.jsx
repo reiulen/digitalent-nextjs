@@ -1,25 +1,25 @@
 // #Next & React
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 // #Page, Component & Library
-import PageWrapper from "../../../../wrapper/page.wrapper";
+import PageWrapper from "../../../wrapper/page.wrapper";
 import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
-import LoadingTable from "../../../../LoadingTable";
+import LoadingTable from "../../../LoadingTable";
 import Pagination from "react-js-pagination";
 
 // #Icon
-import IconArrow from "../../../../assets/icon/Arrow";
-import IconClose from "../../../../assets/icon/Close";
-import IconFilter from "../../../../assets/icon/Filter";
+import IconArrow from "../../../assets/icon/Arrow";
+import IconClose from "../../../assets/icon/Close";
+import IconFilter from "../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
 
-export default function KelolaSertifikat({ token }) {
+export default function NamaPelatihan({ token }) {
+  console.log(token);
   const router = useRouter();
-  const { query } = router;
-
+  // const {loading, error,}
   // #DatePicker
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -29,19 +29,9 @@ export default function KelolaSertifikat({ token }) {
   };
   // #DatePicker
 
-  // #Pagination
+  // #Pagination, search, filter
   const [limit, setLimit] = useState(null);
-  // #Pagination
-
-  // #REDUX STATE
-  const { loading, error, certificate } = useSelector(
-    state => state.detailCertificates
-  );
-
-  console.log(certificate);
-  // #REDUX STATE
-  let { page = 1, keyword, success } = router.query;
-
+  const handlePagination = () => {};
   const handleLimit = () => {
     console.log("");
   };
@@ -49,6 +39,15 @@ export default function KelolaSertifikat({ token }) {
   const handleSearch = () => {
     console.log("");
   };
+  // #Pagination
+
+  let { page = 1, keyword, success } = router.query;
+
+  // #REDUX STATE
+  const { loading, error, certificate } = useSelector(
+    state => state.allCertificates
+  );
+  // #REDUX STATE
 
   return (
     <PageWrapper>
@@ -58,7 +57,7 @@ export default function KelolaSertifikat({ token }) {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              {certificate.theme}
+              Kelola Sertifikat
             </h3>
           </div>
 
@@ -103,13 +102,19 @@ export default function KelolaSertifikat({ token }) {
                     >
                       <div className="d-flex align-items-center">
                         <IconFilter className="mr-3" />
-                        Pilih Filter
+                        Pilih Akademi
                       </div>
                       <IconArrow fill="#E4E6EF" width="11" height="11" />
                     </button>
 
                     {/* START MODAL UNFINISH*/}
-                    <form className="form text-left">
+                    <form
+                      // id="kt_docs_formvalidation_text"
+                      className="form text-left"
+                      // action="#"
+                      // autoComplete="off"
+                      // onSubmit={handleSubmitSearchMany}
+                    >
                       <div
                         className="modal fade"
                         id="exampleModalCenter"
@@ -164,6 +169,7 @@ export default function KelolaSertifikat({ token }) {
                                     placeholderText="Silahkan Isi Tanggal Dari"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
                                     minDate={moment().toDate()}
+                                    // minDate={addDays(new Date(), 20)}
                                   />
                                 </div>
                               </div>
@@ -182,10 +188,12 @@ export default function KelolaSertifikat({ token }) {
                                     startDate={startDate}
                                     endDate={endDate}
                                     dateFormat="dd/MM/yyyy"
+                                    // minDate={startDate}
                                     minDate={moment().toDate()}
                                     maxDate={addDays(startDate, 20)}
                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                    // minDate={addDays(new Date(), 20)}
                                   />
                                 </div>
                               </div>
@@ -221,12 +229,7 @@ export default function KelolaSertifikat({ token }) {
             {/* START TABLE */}
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <LoadingTable
-                // UNFISNISH
-                // loading={loading}
-                // Isi dengan loading dari dispatch
-                />
-
+                <LoadingTable loading={loading} />
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>
@@ -234,16 +237,14 @@ export default function KelolaSertifikat({ token }) {
                         <th className="text-center">No</th>
                         <th>Akademi</th>
                         <th>Nama Pelatihan</th>
-                        <th>Nama Sertifikat</th>
-                        <th>Jenis Sertifikat</th>
-                        <th>Status</th>
+                        <th>Jumlah Sertifikat</th>
                         <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
                       {!certificate ||
                       (certificate &&
-                        certificate.data.list_certificate.length === 0) ? (
+                        certificate.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
                             Data Masih Kosong
@@ -251,128 +252,48 @@ export default function KelolaSertifikat({ token }) {
                         </tr>
                       ) : (
                         certificate &&
-                        certificate.data.list_certificate.map(
-                          (certificate, i) => {
-                            //   certificate.theme.academy.name == query.akademi ? "" : ""
-                            return (
-                              <tr key={certificate.id}>
-                                <td className="align-middle text-center">
-                                  {limit === null ? (
-                                    <span className="badge badge-secondary text-muted">
-                                      {i + 1 * (page * 5) - (5 - 1)}
-                                    </span>
-                                  ) : (
-                                    <span className="badge badge-secondary text-muted">
-                                      {i + 1 * (page * limit) - (limit - 1)}
-                                    </span>
-                                  )}
-                                </td>
-                                {/* START TABLE DATA */}
-                                <td className="align-middle">
-                                  {certificate.academy.name}
-                                </td>
-                                <td className="align-middle">
-                                  {certificate.theme.name}
-                                </td>
-                                <td className="align-middle">
-                                  {certificate.nama_sertifikat}
-                                </td>
-                                <td className="align-middle">
-                                  {certificate.certificate_type}
-                                </td>
-
-                                <td className="align-middle text-capitalize">
-                                  {certificate.status.name == "publish" ? (
-                                    <span className="label label-inline label-light-success font-weight-bold">
-                                      publish
-                                    </span>
-                                  ) : certificate.status.name == "draft" ? (
-                                    <span className="label label-inline label-light-warning font-weight-bold">
-                                      draft
-                                    </span>
-                                  ) : (
-                                    <span className="label label-inline label-light-danger font-weight-bold">
-                                      belum tersedia
-                                    </span>
-                                  )}
-                                </td>
-                                {/* START AKSI sertifikat */}
-                                <td className="align-middle d-flex">
-                                  {certificate.status.name == "draft" ? (
-                                    <>
-                                      <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${certificate.id}`}
-                                      >
-                                        <a
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Detail"
-                                        >
-                                          <i className="ri-eye-fill p-0 text-white"></i>
-                                        </a>
-                                      </Link>
-                                      <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${certificate.id}/edit`}
-                                      >
-                                        <a
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Edit"
-                                        >
-                                          <i className="ri-pencil-fill p-0 text-white"></i>
-                                        </a>
-                                      </Link>
-                                    </>
-                                  ) : certificate.status == "publish" ? (
-                                    <>
-                                      <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${certificate.id}`}
-                                      >
-                                        <a
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Detail"
-                                        >
-                                          <i className="ri-eye-fill p-0 text-white"></i>
-                                        </a>
-                                      </Link>
-
-                                      <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/listPeserta`}
-                                      >
-                                        <a
-                                          className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                          data-toggle="tooltip"
-                                          data-placement="bottom"
-                                          title="Detail"
-                                        >
-                                          <i className="ri-file-user-fill p-0 text-white"></i>
-                                        </a>
-                                      </Link>
-                                    </>
-                                  ) : (
-                                    <Link
-                                      href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/add`}
-                                    >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Tambah"
-                                      >
-                                        <i className="ri-add-circle-fill p-0 text-white"></i>
-                                      </a>
-                                    </Link>
-                                  )}
-                                </td>
-                                {/* END TABLE DATA */}
-                              </tr>
-                            );
-                          }
-                        )
+                        certificate.list_certificate.map((certificate, i) => {
+                          return (
+                            <tr key={certificate.id}>
+                              <td className="align-middle text-center">
+                                {limit === null ? (
+                                  <span className="badge badge-secondary text-muted">
+                                    {i + 1 * (page * 5) - (5 - 1)}
+                                  </span>
+                                ) : (
+                                  <span className="badge badge-secondary text-muted">
+                                    {i + 1 * (page * limit) - (limit - 1)}
+                                  </span>
+                                )}
+                              </td>
+                              {/* START TABLE DATA */}
+                              <td className="align-middle">
+                                {certificate.theme.academy.name}
+                              </td>
+                              <td className="align-middle">
+                                {certificate.theme.name}
+                              </td>
+                              <td className="align-middle">
+                                {certificate.theme.count_certificate_count}
+                              </td>
+                              <td className="align-middle d-flex">
+                                <Link
+                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.academy.id}`}
+                                >
+                                  <a
+                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Detail"
+                                  >
+                                    <i className="ri-eye-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                              </td>
+                              {/* END TABLE DATA */}
+                            </tr>
+                          );
+                        })
                       )}
                     </tbody>
                   </table>
@@ -382,24 +303,23 @@ export default function KelolaSertifikat({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {certificate &&
-                  certificate.data.perPage < certificate.data.total && (
-                    <div className="table-pagination">
-                      <Pagination
-                        activePage={page}
-                        itemsCountPerPage={certificate.perPage}
-                        totalItemsCount={certificate.total}
-                        pageRangeDisplayed={3}
-                        onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  )}
+                {certificate && certificate.perPage < certificate.total && (
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={certificate.perPage}
+                      totalItemsCount={certificate.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
                 {certificate ? (
                   <div className="table-total ml-auto">
                     <div className="row mt-3">
@@ -447,7 +367,7 @@ export default function KelolaSertifikat({ token }) {
                           className="align-middle my-auto"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {certificate.data.list_certificate.length}
+                          Total Data {certificate.list_certificate.length}
                         </p>
                       </div>
                     </div>
@@ -460,7 +380,6 @@ export default function KelolaSertifikat({ token }) {
             </div>
             {/* END TABLE */}
           </div>
-          {/* START MODAL */}
         </div>
       </div>
     </PageWrapper>

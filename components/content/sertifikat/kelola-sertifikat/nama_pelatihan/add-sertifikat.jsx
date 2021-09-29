@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef, createRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // #Page, Component & Library
-import PageWrapper from "../../wrapper/page.wrapper";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
@@ -11,6 +10,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import SignaturePad from "react-signature-pad-wrapper";
 import SimpleReactValidator from "simple-react-validator";
 import { useSelector } from "react-redux";
+import PageWrapper from "../../../../wrapper/page.wrapper";
 
 export default function TambahMasterSertifikat() {
   const router = useRouter();
@@ -82,8 +82,8 @@ export default function TambahMasterSertifikat() {
     const data = signCanvas.current.toDataURL();
   };
 
-  const handleClearTandaTangan = () => {
-    console.log("clicked clear");
+  const handleClearTandaTangan = (e, i) => {
+    console.log("clicked clear", i);
   };
   // #END MODAL
 
@@ -607,7 +607,9 @@ export default function TambahMasterSertifikat() {
                                         </a>
                                         <button
                                           type="button"
-                                          onClick={handleClearTandaTangan}
+                                          onClick={e => {
+                                            handleClearTandaTangan(e, i);
+                                          }}
                                           className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
                                         >
                                           Buat Ulang Tanda Tangan
