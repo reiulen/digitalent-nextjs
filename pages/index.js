@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
   if (session) {
     return {
       redirect: {
-        destination: "/subvit",
+        destination: "/dashboard",
         permanent: false,
       },
     };

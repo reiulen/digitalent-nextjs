@@ -239,7 +239,7 @@ const ListSubstansi = ({ token }) => {
           <div className="card-header border-0 align-items-center row">
             <div className="col-lg-10 col-xl-10">
               <h3 className="card-title font-weight-bolder text-dark">
-                Report Test Substansi{" "}
+                Report Tes Substansi{" "}
                 {publishValue === null || ""
                   ? ""
                   : `- ${
@@ -301,7 +301,7 @@ const ListSubstansi = ({ token }) => {
                     type="button"
                     onClick={handleExportReport}
                   >
-                    Export
+                    Export .xlsx
                     <i className="ri-arrow-down-s-line ml-3 mt-1 text-white"></i>
                   </button>
                 </div>

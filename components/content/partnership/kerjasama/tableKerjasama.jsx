@@ -151,21 +151,7 @@ const Table = ({token}) => {
   ]);
 
   const [sumWillExpire, setSumWillExpire] = useState(0);
-  const getWillExpire = async () => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setSumWillExpire(data.data.total);
-    } catch (error) {
-      console.log("object", error);
-    }
-  };
+  
 
   const cooperationRejection = (id) =>{
     Swal.fire({
@@ -192,7 +178,22 @@ const Table = ({token}) => {
     dispatch(fetchListSelectMitra(token));
     dispatch(fetchListSelectCooperation(token));
     dispatch(fetchListSelectStatus(token));
-    getWillExpire();
+    async function getWillExpire (token){
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setSumWillExpire(data.data.total);
+    } catch (error) {
+      console.log("object", error);
+    }
+    }
+    getWillExpire(token);
   }, [dispatch,token]);
   return (
     <PageWrapper>

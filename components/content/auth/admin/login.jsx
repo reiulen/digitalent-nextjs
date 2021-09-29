@@ -45,7 +45,7 @@ const LoginAdmin = () => {
       if (result.error) {
         toast.error(result.error);
       } else {
-        router.push("/subvit");
+        router.push("/dashboard");
       }
     } else {
       simpleValidator.current.showMessages();

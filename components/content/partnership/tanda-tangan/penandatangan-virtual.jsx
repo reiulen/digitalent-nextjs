@@ -76,7 +76,7 @@ export default function PenandatanganVirtual({token}) {
   useEffect(() => {
     dispatch(fetchOptionTtdAdmin(token));
     dispatch(fetchTtdPartner(token,router.query.id));
-  }, [dispatch, router.query.id]);
+  }, [dispatch, router.query.id,token]);
 
   return (
     <PageWrapper>

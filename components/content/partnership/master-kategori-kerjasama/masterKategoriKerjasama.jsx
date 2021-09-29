@@ -64,6 +64,7 @@ const Table = ({ token }) => {
     allMKCooporation.page,
     allMKCooporation.status_delete,
     allMKCooporation.status_list,
+    token
   ]);
 
   const onNewReset = () => {

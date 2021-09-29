@@ -228,13 +228,19 @@ const Faq = () => {
 
     const handleLimit = (val) => {
         setLimit(val)
-        if (search === "") {
+        if (search === "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&limit=${val}`);
+
+        } else if (search !== "" && publishValue === null) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
         
-        } else {
-            router.push(`${router.pathname}?page=1&keyword=${val}&limit=${limit}`)
+        } else if (search === "" && publishValue !== null) {
+            router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
+        
+        } else if (search !== "" && publishValue !== null) {
+            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
         }
-        
+
     };
     
     const handlePublish = (val) => {

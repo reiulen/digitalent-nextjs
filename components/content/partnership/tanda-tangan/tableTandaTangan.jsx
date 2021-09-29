@@ -95,6 +95,7 @@ const Table = ({ token }) => {
     allTandaTangan.status_reload,
     allTandaTangan.page,
     allTandaTangan.limit,
+    token
   ]);
 
   return (

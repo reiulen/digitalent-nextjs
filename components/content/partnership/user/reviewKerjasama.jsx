@@ -56,8 +56,11 @@ function ReviewKerjasama() {
   }
 
   const [status, setStatus] = useState("");
-  const cekProgresStatus = async (id) => {
-    try {
+
+  useEffect(() => {
+
+    async function cekProgresStatus(id){
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
         {
@@ -85,16 +88,15 @@ function ReviewKerjasama() {
     } catch (error) {
       console.log("gagal get province", error);
     }
-  };
 
-  useEffect(() => {
+    }
 
 
 
     cekProgresStatus(router.query.id);
 
 
-  }, [router.query.id])
+  }, [router.query.id,router])
 
   // const onNewReset = () => {
   //   router.replace(`/partnership/user/kerjasama/review-kerjasama-1`);
