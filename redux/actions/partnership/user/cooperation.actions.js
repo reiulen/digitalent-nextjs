@@ -92,7 +92,7 @@ export const reqCooperationUser = () => async (dispatch, getState) => {
     const { data } = await axios.get(
       // `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=${pageState}&limit=${limitState}&keyword=${keywordState}&categories_cooporation=${categories_cooporationState}&status=${statusState}&card=${cardState}`,
 
-      `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=${pageState}&card=${cardState}&limit=${limitState}&status=${statusState}&categories_cooporation=${categories_cooporationState}&keyword=${keywordState}`,
+      `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=${pageState}&card=${cardState}&limit=${limitState}&status=${statusState}&categories_cooporation=${categories_cooporationState}&keyword=${keywordState}`,
 
       // params,
       {

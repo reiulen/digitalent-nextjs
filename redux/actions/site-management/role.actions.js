@@ -86,10 +86,10 @@ export const getAllRoles =
         payload: data,
       });
     } catch (error) {
-      dispatch({
-        type: ROLES_FAIL,
-        payload: error.message,
-      });
+      // dispatch({
+      //   type: ROLES_FAIL,
+      //   payload: error.message,
+      // });
     }
   };
 

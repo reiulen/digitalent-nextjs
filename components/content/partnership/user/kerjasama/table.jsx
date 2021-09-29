@@ -136,7 +136,7 @@ const Table = () => {
   const getWillExpire = async () => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`
       );
       console.log("data.data.total",data.data.total)
       setSumWillExpire(data.data.total);
