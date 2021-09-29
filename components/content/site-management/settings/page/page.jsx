@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
-import PageWrapper from "../../../wrapper/page.wrapper";
+import PageWrapper from "../../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../LoadingTable";
-import IconEye from "../../../assets/icon/Eye";
-import IconPencil from "../../../assets/icon/Pencil";
-import IconDelete from "../../../assets/icon/Delete";
-import IconAdd from "../../../assets/icon/Add";
-import IconSearch from "../../../assets/icon/Search";
+import LoadingTable from "../../../../LoadingTable";
+import IconEye from "../../../../assets/icon/Eye";
+import IconPencil from "../../../../assets/icon/Pencil";
+import IconDelete from "../../../../assets/icon/Delete";
+import IconAdd from "../../../../assets/icon/Add";
+import IconSearch from "../../../../assets/icon/Search";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
@@ -29,13 +29,13 @@ const Table = ({ token }) => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              List API
+              List Page
             </h3>
             <div className="card-toolbar">
               <Link href="/site-management/setting/api/tambah-api">
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
                   <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah API
+                  Tambah Page
                 </a>
               </Link>
             </div>
@@ -87,11 +87,8 @@ const Table = ({ token }) => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-left">No</th>
-                      <th className="text-left align-middle">API</th>
-                      <th className="text-left align-middle">URL</th>
-                      <th className="text-left align-middle">KEY</th>
-                      <th className="text-left align-middle">Pengguna</th>
-                      <th className="text-left align-middle">Masa Berlaku</th>
+                      <th className="text-left align-middle">Page Name</th>
+                      <th className="text-left align-middle">Link Url</th>
                       <th className="text-left align-middle">Status</th>
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
@@ -99,11 +96,8 @@ const Table = ({ token }) => {
                   <tbody>
                     <tr>
                       <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">api</td>
-                      <td className="align-middle text-left">url</td>
-                      <td className="align-middle text-left">key</td>
-                      <td className="align-middle text-left">pengguna</td>
-                      <td className="align-middle text-left">masa berlaku</td>
+                      <td className="align-middle text-left">page name</td>
+                      <td className="align-middle text-left">link url</td>
                       <td className="align-middle text-left">
                         <p
                           className="status-div-red mb-0"

@@ -5,7 +5,8 @@ import { wrapper } from "../../../../redux/store";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
 const API = dynamic(
-  () => import("../../../../components/content/site-management/settings/api"),
+  () =>
+    import("../../../../components/content/site-management/settings/api/api"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -14,7 +15,7 @@ const API = dynamic(
   }
 );
 
-export default function ArtikelPage(props) {
+export default function Api(props) {
   const session = props.session.user.user.data;
   return (
     <>

@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 // import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
-import { wrapper } from "../../../../../redux/store";
-import LoadingPage from "../../../../../components/LoadingPage";
+import { wrapper } from "../../../../redux/store";
+import LoadingPage from "../../../../components/LoadingPage";
 
-const UbahApi = dynamic(
+const UbahPage = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/settings/api/ubah-api"
+      "../../../../components/content/site-management/settings/page/ubah-page"
     ),
   {
     loading: function loadingNow() {
@@ -17,12 +17,12 @@ const UbahApi = dynamic(
   }
 );
 
-export default function UbahPage(props) {
+export default function TambahPages(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <UbahApi token={session.token} />
+        <UbahPage token={session.token} />
       </div>
     </>
   );
@@ -53,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   )
       // );
       return {
-        props: { session, title: "Tambah API - Site Management" },
+        props: { session, title: "Ubah Page - Site Management" },
       };
     }
 );
