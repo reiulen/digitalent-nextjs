@@ -7,7 +7,7 @@ import LoadingPage from "../../../../../components/LoadingPage";
 const TambahApi = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/settings/log-api"
+      "../../../../../components/content/site-management/settings/api/log-api"
     ),
   {
     loading: function loadingNow() {
