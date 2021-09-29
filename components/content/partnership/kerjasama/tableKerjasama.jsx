@@ -45,6 +45,7 @@ import {
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/management_cooporation.type";
 
 const Table = ({token}) => {
+  console.log("token admin",token)
   const router = useRouter();
   let { update, success,successTerima,successReject,successMakeREvisi } = router.query;
   let selectRefKerjasama = null;

@@ -36,3 +36,13 @@ tbody {
 .table.table-separate td:first-child{
   padding-left: 13px !important;
 }
+
+.table.table-separate th.permision{
+  padding-right: 11rem !important;
+}
+.table.table-separate th.child-permission {
+  padding-right: 7rem !important;
+}
+.table.table-separate td.child-permission {
+  padding-right: 7.3rem !important;
+}

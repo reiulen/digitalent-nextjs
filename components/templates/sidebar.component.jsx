@@ -1094,7 +1094,7 @@ const Sidebar = () => {
                     </li>
                     <li className="menu-item" aria-haspopup="true">
                       <a className="menu-link">
-                        <Link href="/site-management/role/">
+                        <Link href="/site-management/role/" passHref>
                           <span className="menu-text">Role</span>
                         </Link>
                       </a>
