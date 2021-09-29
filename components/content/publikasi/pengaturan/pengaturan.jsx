@@ -72,12 +72,32 @@ const Pengaturan = () => {
     const submitImagePublikasi = (e) => {
         e.preventDefault()
         if ((simpleValidator.current.allValid())) {
+            // console.log("Cek Target : ", upload_image)
             if (error) {
                 dispatch(clearErrors())
+            } else if (upload_image > 5) {
+                simpleValidator.current.showMessages();
+                forceUpdate(1);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Isi data dengan benar !",
+                });
+            } else if (upload_image < 1) {
+                simpleValidator.current.showMessages();
+                forceUpdate(1);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Upload image minimal 1 MB !",
+                });
+            } else {
+                dispatch(updateSettingImagePublikasi(upload_image))
             }
-
-            dispatch(updateSettingImagePublikasi(upload_image))
-
+            // if (error) {
+            //     dispatch(clearErrors())
+            // }
+            // dispatch(updateSettingImagePublikasi(upload_image))
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
@@ -94,9 +114,29 @@ const Pengaturan = () => {
         if ((simpleValidator.current.allValid())) {
             if (error) {
                 dispatch(clearErrors())
+            } else if (upload_imagetron > 5) {
+                simpleValidator.current.showMessages();
+                forceUpdate(1);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Isi data dengan benar !",
+                });
+            } else if (upload_imagetron < 1) {
+                simpleValidator.current.showMessages();
+                forceUpdate(1);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Upload imagetron minimal 1 MB !",
+                });
+            } else {
+                dispatch(updateSettingImagetronPublikasi(upload_imagetron))
             }
-
-            dispatch(updateSettingImagetronPublikasi(upload_imagetron))
+            // if (error) {
+            //     dispatch(clearErrors())
+            // }
+            // dispatch(updateSettingImagetronPublikasi(upload_imagetron))
 
         } else {
             simpleValidator.current.showMessages();
@@ -114,9 +154,29 @@ const Pengaturan = () => {
         if ((simpleValidator.current.allValid())) {
             if (error) {
                 dispatch(clearErrors())
+            } else if (batas_slider > 7) {
+                simpleValidator.current.showMessages();
+                forceUpdate(1);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Isi data dengan benar !",
+                });
+            } else if (batas_slider < 1) {
+                simpleValidator.current.showMessages();
+                forceUpdate(1);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Batas slider minimal 1 !",
+                });
+            } else {
+                dispatch(updateSettingImagetronPublikasi(batas_slider))
             }
-
-            dispatch(updateSettingSliderPublikasi(batas_slider))
+            // if (error) {
+            //     dispatch(clearErrors())
+            // }
+            // dispatch(updateSettingSliderPublikasi(batas_slider))
 
         } else {
             simpleValidator.current.showMessages();
@@ -134,9 +194,29 @@ const Pengaturan = () => {
         if ((simpleValidator.current.allValid())) {
             if (error) {
                 dispatch(clearErrors())
+            } else if (maxfaq > 5) {
+                simpleValidator.current.showMessages();
+                forceUpdate(1);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Isi data dengan benar !",
+                });
+            } else if (maxfaq < 1) {
+                simpleValidator.current.showMessages();
+                forceUpdate(1);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Max Faq minimal 1 !",
+                });
+            } else {
+                dispatch(updateSettingImagetronPublikasi(maxfaq))
             }
-
-            dispatch(updateSettingFaqPublikasi(maxfaq))
+            // if (error) {
+            //     dispatch(clearErrors())
+            // }
+            // dispatch(updateSettingFaqPublikasi(maxfaq))
 
         } else {
             simpleValidator.current.showMessages();
@@ -224,7 +304,14 @@ const Pengaturan = () => {
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Image</label>
                                         <div className="col-sm-3">
-                                            <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("upload_image")} /> MB
+                                            <input style={{ width: '100px' }}
+                                                type="number" min="1"
+                                                className="form-control mr-4"
+                                                value={upload_image}
+                                                onChange={(e) => setUploadImage(e.target.value)}
+                                                // onChange={(e) => setUploadImage(e.target.value)}
+                                                onBlur={() => simpleValidator.current.showMessageFor("upload_image")}
+                                            /> MB
                                             {/* <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} min='0' onBlur={() =>simpleValidator.current.showMessageFor("upload_image")}/> MB */}
                                             <div style={{ width: '150px' }}>
                                                 {simpleValidator.current.message(
@@ -234,11 +321,10 @@ const Pengaturan = () => {
                                                     { className: "text-danger" }
                                                 )}
                                             </div>
-
                                         </div>
                                         <button
                                             className="btn btn-link-action text-white"
-                                            onClick={submitImagePublikasi}
+                                            onClick={(e) => submitImagePublikasi(e)}
                                             style={{ marginLeft: '-70px' }}
                                         >
                                             <Image
@@ -258,14 +344,15 @@ const Pengaturan = () => {
                                                 {simpleValidator.current.message(
                                                     "upload_imagetron",
                                                     upload_imagetron,
-                                                    "required|numeric|max:10,num",
+                                                    "required|numeric|max:5,num",
                                                     { className: "text-danger" }
                                                 )}
                                             </div>
                                         </div>
                                         <button
                                             className="btn btn-link-action text-white"
-                                            onClick={submitImagetron}
+                                            onClick={(e) => submitImagetron(e)}
+                                            // onClick={submitImagetron}
                                             style={{ marginLeft: '-70px' }}
                                         >
                                             <Image
@@ -291,7 +378,7 @@ const Pengaturan = () => {
                                         </div>
                                         <button
                                             className="btn btn-link-action text-white"
-                                            onClick={submitSlider}
+                                            onClick={(e) => submitSlider(e)}
                                             style={{ marginLeft: '-70px' }}
                                         >
                                             <Image
@@ -317,7 +404,7 @@ const Pengaturan = () => {
                                         </div>
                                         <button
                                             className="btn btn-link-action text-white"
-                                            onClick={submitFaq}
+                                            onClick={(e) => submitFaq(e)}
                                             style={{ marginLeft: '-70px' }}
                                         >
                                             <Image
