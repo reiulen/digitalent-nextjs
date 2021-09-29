@@ -227,10 +227,10 @@ const Vidio = ({token}) => {
 
     const handleLimit = (val) => {
         setLimit(val)
-        if (search === "" && publishValue === "") {
+        if (search === "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&limit=${val}`);
 
-        } else if (search !== "" && publishValue === "") {
+        } else if (search !== "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
 
         } else if (search === "" && publishValue === '1') {
@@ -422,7 +422,7 @@ const Vidio = ({token}) => {
                         // color='#F65464' 
                         value={video && video.unpublish != "" ? video.unpublish : 0} 
                         titleValue='Video' 
-                        title='Total Belum Publish'
+                        title='Total Belum Dipublish'
                         publishedVal = "0"
                         routePublish = { () => handlePublish("0")} 
                         />
@@ -437,7 +437,7 @@ const Vidio = ({token}) => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/video/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
-                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                    <i className="ri-add-fill pb-1 text-white mr-2 "></i>
                                     Tambah Video
                                 </a>
                             </Link>
@@ -688,7 +688,7 @@ const Vidio = ({token}) => {
                                                 !video || video && video.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     video && video.video.map((row, i) => {
-                                                        {console.log("Video :", row.gambar)}
+                                                        // {console.log("Video :", row.gambar)}
                                                         return <tr key={row.id}>
                                                             {/* <td className="align-middle text-center">
                                                                 <span className="badge badge-secondary text-muted">

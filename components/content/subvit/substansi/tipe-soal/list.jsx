@@ -171,7 +171,7 @@ const ListTipeSoal = ({ token }) => {
           <div className="alert-icon">
             <i className="flaticon2-checkmark"></i>
           </div>
-          <div className="alert-text">Berhasil Merubah Data</div>
+          <div className="alert-text">Berhasil Mengubah Data</div>
           <div className="alert-close">
             <button
               type="button"
@@ -202,7 +202,7 @@ const ListTipeSoal = ({ token }) => {
             <div className="card-toolbar">
               <Link href="/subvit/substansi/tipe-soal/tambah">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block px-0">
-                  <i className="ri-pencil-fill"></i>
+                  <i className="ri-add-fill"></i>
                   Tambah Tipe Soal
                 </a>
               </Link>
@@ -319,7 +319,7 @@ const ListTipeSoal = ({ token }) => {
                                       className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                       data-toggle="tooltip"
                                       data-placement="bottom"
-                                      title="Edit"
+                                      title="Ubah"
                                     >
                                       <i className="ri-pencil-fill p-0 text-white"></i>
                                     </a>

@@ -228,15 +228,38 @@ const Galeri = ({ token }) => {
         }
     };
 
+    // const handleLimit = (val) => {
+    //     setLimit(val)
+    //     if (search === "") {
+    //         router.push(`${router.pathname}?page=1&limit=${val}`);
+
+    //     } else {
+    //         router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+    //     }
+
+    // };
+
     const handleLimit = (val) => {
         setLimit(val)
-        if (search === "") {
+        if (search === "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&limit=${val}`);
 
-        } else {
+        } else if (search !== "" && publishValue === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
-        }
 
+        } else if (search === "" && publishValue === '1') {
+            router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
+
+        } else if (search !== "" && publishValue === '1') {
+            router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
+
+        } else if (search === "" && publishValue === '0') {
+            router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
+
+        } else if (search !== "" && publishValue === '0') {
+            router.push(`${router.pathname}?page=1&publish=${publishValue}&limit=${val}`)
+
+        }
     };
 
     const handlePublish = (val) => {
@@ -370,7 +393,7 @@ const Galeri = ({ token }) => {
                         // color='#F65464' 
                         value={galeri && galeri.unpublish != "" ? galeri.unpublish : 0}
                         titleValue='Galeri'
-                        title='Total Unpublish'
+                        title='Total Belum Dipublish'
                         publishedVal="0"
                         routePublish={() => handlePublish("0")}
                     />
@@ -385,7 +408,7 @@ const Galeri = ({ token }) => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/galeri/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
-                                    <i className="ri-pencil-fill pb-1 text-white mr-2 "></i>
+                                    <i className="ri-add-fill pb-1 text-white mr-2 "></i>
                                     Tambah Galeri
                                 </a>
                             </Link>
@@ -591,7 +614,7 @@ const Galeri = ({ token }) => {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     galeri && galeri.gallery.map((row, i) => {
-                                                        // { console.log("INI ROWW ID : ", row) }
+                                                        // { console.log("INI ROWW ID : ", row.gambar) }
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -754,7 +777,13 @@ const Galeri = ({ token }) => {
                                     <div className="table-total ml-auto">
                                         <div className="row">
                                             <div className="col-4 mr-0 p-0 mt-3">
-                                                <select className="form-control" id="exampleFormControlSelect2" style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }} onChange={e => handleLimit(e.target.value)} onBlur={e => handleLimit(e.target.value)}>
+                                                <select
+                                                    className="form-control"
+                                                    id="exampleFormControlSelect2"
+                                                    style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}
+                                                    onChange={(e) => handleLimit(e.target.value)}
+                                                    onBlur={(e) => handleLimit(e.target.value)}
+                                                >
                                                     <option value='5' selected={limit == "5" ? true : false}>5</option>
                                                     <option value='10' selected={limit == "10" ? true : false}>10</option>
                                                     <option value='15' selected={limit == "15" ? true : false}>15</option>

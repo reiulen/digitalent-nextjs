@@ -35,7 +35,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Edit Tipe Soal Test Subtansi - Subvit" },
+        props: { session, title: "Ubah Tipe Soal Test Subtansi - Subvit" },
       };
     }
 );

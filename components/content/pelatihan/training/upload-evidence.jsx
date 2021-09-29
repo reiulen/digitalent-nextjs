@@ -70,8 +70,10 @@ const UploadEvidence = () => {
         list[index].imageFile = e.target.files[0];
         list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
         list[index].imageName = e.target.files[0].name;
+        console.log(list)
         setImage(list);
       }
+      console.log(image);
       // const reader = new FileReader();
       // reader.onload = () => {
       //   if (reader.readyState === 2) {
