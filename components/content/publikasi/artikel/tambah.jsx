@@ -324,6 +324,7 @@ const TambahArtikel = ({token}) => {
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <CKEditor
+                          ck-editor__editable
                           editor={ClassicEditor}
                           data={isi_artikel}
                           onReady={(editor) => {

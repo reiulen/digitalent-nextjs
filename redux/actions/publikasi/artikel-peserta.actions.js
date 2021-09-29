@@ -29,7 +29,7 @@ import axios from "axios";
 
 // get all data
 export const getAllArtikelPeserta =
-  (role = 8, page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) =>
+  (role = 3, page = 1, keyword = "", limit = 5, publish = null, startdate = null, enddate = null, token) =>
     async (dispatch) => {
       try {
         dispatch({ type: ARTIKEL_PESERTA_REQUEST });
@@ -47,12 +47,17 @@ export const getAllArtikelPeserta =
           },
         };
 
+        console.log (token)
+        // console.log (config)
+
         const { data } = await axios.get(link, config);
 
         dispatch({
           type: ARTIKEL_PESERTA_SUCCESS,
           payload: data,
         });
+
+        
 
       } catch (error) {
         dispatch({
@@ -62,7 +67,7 @@ export const getAllArtikelPeserta =
       }
     };
 
-export const getDetailArtikelPeserta = (id) => async (dispatch, token) => {
+export const getDetailArtikelPeserta = (id, token) => async (dispatch) => {
   try {
     let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`;
 
@@ -86,7 +91,7 @@ export const getDetailArtikelPeserta = (id) => async (dispatch, token) => {
   }
 };
 
-export const newArtikelPeserta = (artikelPesertaData) => async (dispatch) => {
+export const newArtikelPeserta = (artikelPesertaData , token) => async (dispatch) => {
   try {
     dispatch({
       type: NEW_ARTIKEL_PESERTA_REQUEST,
@@ -100,10 +105,16 @@ export const newArtikelPeserta = (artikelPesertaData) => async (dispatch) => {
     //     }
     // }
 
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
     let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel`
     //   let link = process.env.END_POINT_API_PUBLIKASI + `api/artikel/${role}`
 
-    const { data } = await axios.post(link, artikelPesertaData);
+    const { data } = await axios.post(link, artikelPesertaData, config);
 
     dispatch({
       type: NEW_ARTIKEL_PESERTA_SUCCESS,
@@ -118,14 +129,20 @@ export const newArtikelPeserta = (artikelPesertaData) => async (dispatch) => {
   }
 };
 
-export const updateArtikelPeserta = (artikelPesertaData) => async (dispatch) => {
+export const updateArtikelPeserta = (artikelPesertaData, token) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_ARTIKEL_PESERTA_REQUEST });
 
     let link =
       process.env.END_POINT_API_PUBLIKASI + `api/artikel/${artikelPesertaData.id}`;
 
-    const { data } = await axios.post(link, artikelPesertaData);
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(link, artikelPesertaData, token);
 
     dispatch({
       type: UPDATE_ARTIKEL_PESERTA_SUCCESS,
@@ -144,18 +161,25 @@ export const updateArtikelPeserta = (artikelPesertaData) => async (dispatch) => 
   }
 };
 
-export const deleteArtikelPeserta = (id) => async (dispatch) => {
+export const deleteArtikelPeserta = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ARTIKEL_PESERTA_REQUEST });
 
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
     const { data } = await axios.delete(
-      process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
+      process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`, config
     );
 
     dispatch({
       type: DELETE_ARTIKEL_PESERTA_SUCCESS,
       payload: data.status,
     });
+
   } catch (error) {
     dispatch({
       type: DELETE_ARTIKEL_PESERTA_FAIL,

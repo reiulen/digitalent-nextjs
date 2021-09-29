@@ -45,9 +45,9 @@ const EditArtikel = () => {
   );
   const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
 
-  useEffect(() => {
+  useEffect(({token}) => {
 
-    dispatch(getAllKategori())
+    // dispatch(getAllKategori())
 
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
@@ -89,7 +89,7 @@ const EditArtikel = () => {
   const [users_id, setUserId] = useState(artikel_peserta.users_id);
   const [tag, setTag] = useState(artikel_peserta.tag);
   const [publish, setPublish] = useState(artikel_peserta.publish === 1 ? true : false);
-  const [publishDate, setPublishDate] = useState(artikel_peserta.tanggal_publish ? new Date (artikel.tanggal_publish) : null);
+  const [publishDate, setPublishDate] = useState(artikel_peserta.tanggal_publish ? new Date (artikel_peserta.tanggal_publish) : null);
   const [disablePublishDate, setDisablePublishDate] = useState(artikel_peserta.publish === 0 ? true : false)
   const [_method, setMethod] = useState("put");
 
@@ -206,7 +206,7 @@ const EditArtikel = () => {
               if (result.isConfirmed) {
                 console.log ("check")
                 
-                dispatch(updateArtikelPeserta(data));
+                dispatch(updateArtikelPeserta(data, token));
                 
                 // console.log(data)
               }
@@ -240,7 +240,7 @@ const EditArtikel = () => {
               if (result.isConfirmed) {
                 console.log ("check")
                 
-                dispatch(updateArtikelPeserta(data));
+                dispatch(updateArtikelPeserta(data, token));
                 
                 // console.log(data)
               }
@@ -286,7 +286,7 @@ const EditArtikel = () => {
                 // }
                 // console.log ("check1")
   
-                dispatch(updateArtikelPeserta(data));
+                dispatch(updateArtikelPeserta(data, token));
                 
                 // console.log(data)
               }
@@ -325,7 +325,7 @@ const EditArtikel = () => {
                 // }
                 // console.log ("check1")
   
-                dispatch(updateArtikelPeserta(data));
+                dispatch(updateArtikelPeserta(data, token));
                 
                 // console.log(data)
               }
@@ -465,7 +465,7 @@ const EditArtikel = () => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-sm-2 col-form-label font-weight-bolder"
                   >
                     Judul
                   </label>
@@ -492,7 +492,7 @@ const EditArtikel = () => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-sm-2 col-form-label font-weight-bolder"
                   >
                     Isi Artikel
                   </label>
@@ -534,7 +534,7 @@ const EditArtikel = () => {
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100",
+                        "required|min:100|max:2500",
                         { className: "text-danger" }
                       )}
                     </div>
@@ -544,7 +544,7 @@ const EditArtikel = () => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-sm-2 col-form-label font-weight-bolder"
                   >
                     Upload Thumbnail
                   </label>
@@ -658,7 +658,7 @@ const EditArtikel = () => {
                 </div> */}
 
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Kategori</label>
+                  <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
                   <div className="col-sm-12">
                       <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                           <option selected disabled value=''>-- Artikel --</option>
@@ -686,7 +686,7 @@ const EditArtikel = () => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label"
+                    className="col-sm-2 col-form-label font-weight-bolder"
                   >
                     Tag
                   </label>
@@ -705,7 +705,7 @@ const EditArtikel = () => {
                 <div className="form-group row">
                   <label
                     htmlFor="staticEmail"
-                    className="ml-5 pl-4 "
+                    className="ml-5 pl-4 font-weight-bolder"
                   >
                     Publish 
                   </label>

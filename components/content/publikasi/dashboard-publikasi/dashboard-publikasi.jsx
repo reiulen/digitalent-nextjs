@@ -41,37 +41,37 @@ const DashbardPublikasi = ({token}) => {
         {
             "name": "Artikel",
             "publish": dashboard_publikasi.artikel.total_publish,
-            "unpublish": dashboard_publikasi.artikel.total_unpublish
+            "belum dipublish": dashboard_publikasi.artikel.total_unpublish
         },
 
         {
             "name": "Berita",
             "publish": dashboard_publikasi.berita.total_publish,
-            "unpublish": dashboard_publikasi.berita.total_unpublish
+            "belum dipublish": dashboard_publikasi.berita.total_unpublish
         },
 
         {
             "name": "Video",
             "publish": dashboard_publikasi.video.total_publish,
-            "unpublish": dashboard_publikasi.video.total_unpublish
+            "belum dipublish": dashboard_publikasi.video.total_unpublish
         },
 
         {
             "name": "Galeri",
             "publish": dashboard_publikasi.gallery.total_publish,
-            "unpublish": dashboard_publikasi.gallery.total_unpublish
+            "belum dipublish": dashboard_publikasi.gallery.total_unpublish
         },
 
         {
             "name": "Imagetron",
             "publish": dashboard_publikasi.imagetron.total_publish,
-            "unpublish": dashboard_publikasi.imagetron.total_unpublish
+            "belum dipublish": dashboard_publikasi.imagetron.total_unpublish
         },
 
         {
             "name": "FAQ",
             "publish": dashboard_publikasi.faq.total_publish,
-            "unpublish": dashboard_publikasi.faq.total_unpublish
+            "belum dipublish": dashboard_publikasi.faq.total_unpublish
         },
     ])
 
@@ -149,7 +149,7 @@ const DashbardPublikasi = ({token}) => {
                                             radius={[10, 10, 0, 0]} 
                                         />
                                         <Bar 
-                                            dataKey="unpublish" 
+                                            dataKey="belum dipublish" 
                                             fill="#4CBDE2" 
                                             barSize={10} 
                                             radius={[10, 10, 0, 0]}
