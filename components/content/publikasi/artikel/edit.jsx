@@ -45,7 +45,7 @@ const EditArtikel = ({token}) => {
   }));
   const [, forceUpdate] = useState();
   const { artikel } = useSelector((state) => state.detailArtikel);
-  const { error, success, loading } = useSelector(
+  const { error, success, loading} = useSelector(
     (state) => state.updatedArtikel
   );
   const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -58,6 +58,19 @@ const EditArtikel = ({token}) => {
   //       permanent: false,
   //     },
   //   };
+  // }
+
+  // if (allLoading){
+  //   loading = allLoading
+
+  // } else if (updateLoading)
+  //   loading = updateLoading
+
+  // if (allError){
+  //   error = allError
+  
+  // } else if (updateError){
+  //   error = updateError
   // }
 
   useEffect(() => {
@@ -273,7 +286,7 @@ const EditArtikel = ({token}) => {
 
           let today = new Date
 
-          console.log (today)
+          // console.log (today)
 
           const data = {
             judul_artikel,
@@ -308,7 +321,7 @@ const EditArtikel = ({token}) => {
                 // }
     
                 dispatch(updateArtikel(data, token));
-                console.log(data)
+                // console.log(data)
               }
           });
 
@@ -346,7 +359,7 @@ const EditArtikel = ({token}) => {
                 // }
     
                 dispatch(updateArtikel(data, token));
-                console.log(data)
+                // console.log(data)
               }
           });
         }
