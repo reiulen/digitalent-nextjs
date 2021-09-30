@@ -28,6 +28,7 @@ const TambahFaq = ({token}) => {
     const { loading, error, success } = useSelector(state => state.newFaq)
     const { kategori } = useSelector(state => state.allKategori)
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+    const forceUpdate = React.useReducer(() => ({}))[1]
 
     useEffect(() => {
         // dispatch(getAllKategori())
@@ -55,7 +56,7 @@ const TambahFaq = ({token}) => {
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
-    const [, forceUpdate] = useState();
+    // const [, forceUpdate] = useState();
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
@@ -148,7 +149,8 @@ const TambahFaq = ({token}) => {
             
         } else {
             simpleValidator.current.showMessages();
-            forceUpdate(1);
+            // forceUpdate(1);
+            forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
