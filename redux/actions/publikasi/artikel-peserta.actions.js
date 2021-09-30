@@ -142,7 +142,7 @@ export const updateArtikelPeserta = (artikelPesertaData, token) => async (dispat
       },
     };
 
-    const { data } = await axios.post(link, artikelPesertaData, token);
+    const { data } = await axios.post(link, artikelPesertaData, config);
 
     dispatch({
       type: UPDATE_ARTIKEL_PESERTA_SUCCESS,

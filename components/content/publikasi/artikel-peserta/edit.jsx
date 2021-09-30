@@ -204,7 +204,7 @@ const EditArtikel = ({token}) => {
           })
             .then((result) => {
               if (result.isConfirmed) {
-                console.log ("check")
+                // console.log ("check")
                 
                 dispatch(updateArtikelPeserta(data, token));
                 
