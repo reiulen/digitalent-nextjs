@@ -614,7 +614,7 @@ const Galeri = ({ token }) => {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     galeri && galeri.gallery.map((row, i) => {
-                                                        // { console.log("INI ROWW ID : ", row.gambar) }
+                                                        // { console.log("INI ROWW ID : ", i + 1, row) }
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -781,8 +781,8 @@ const Galeri = ({ token }) => {
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
                                                     style={{ width: '65px', background: '#F3F6F9', borderColor: '#F3F6F9', color: '#9E9E9E' }}
-                                                    onChange={(e) => handleLimit(e.target.value)}
-                                                    onBlur={(e) => handleLimit(e.target.value)}
+                                                    onChange={e => handleLimit(e.target.value)}
+                                                    onBlur={e => handleLimit(e.target.value)}
                                                 >
                                                     <option value='5' selected={limit == "5" ? true : false}>5</option>
                                                     <option value='10' selected={limit == "10" ? true : false}>10</option>
@@ -821,9 +821,10 @@ const Galeri = ({ token }) => {
                                     {
                                         galeri && galeri.gallery.length !== 0 ?
                                             galeri.gallery.map((row, i) => {
-                                                { console.log("Galeri Map : ", row.gambar) }
+                                                { console.log("Modal Preview : ", row.id_gallery) }
                                                 return (
                                                     <Image
+                                                        // key={row.id_gallery}
                                                         key={i}
                                                         loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                             "publikasi/images/" +

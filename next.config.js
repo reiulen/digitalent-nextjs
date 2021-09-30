@@ -18,8 +18,8 @@ module.exports = {
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
 
-    // END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
-    END_POINT_API_PUBLIKASI: "http://api-dts-dev.majapahit.id/publikasi/",
+    END_POINT_API_PUBLIKASI: "http://dts-publikasi-dev.majapahit.id/",
+    // END_POINT_API_PUBLIKASI: "http://api-dts-dev.majapahit.id/publikasi/",
     END_POINT_API_IMAGE_PUBLIKASI:
       "http://dts-publikasi-dev.s3.ap-southeast-1.amazonaws.com/",
 
