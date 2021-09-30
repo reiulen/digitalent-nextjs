@@ -164,6 +164,8 @@ export const updateBerita = (beritaData, token) => async (dispatch) => {
             type: UPDATE_BERITA_FAIL,
             payload: error.response.data.message
         })
+
+        // console.log (payload)
     }
 }
 

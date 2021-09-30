@@ -517,8 +517,8 @@ const Faq = ({token}) => {
                                                     startDate={startDate}
                                                     endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
-                                                    // minDate={startDate}
-                                                    minDate={moment().toDate()}
+                                                    minDate={startDate}
+                                                    // minDate={moment().toDate()}
                                                     maxDate={addDays(startDate, 20)}
                                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
