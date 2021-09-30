@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteFaq, updatePinFaq, getAllFaqPagination } from '../../../../redux/actions/publikasi/faq.actions'
 import { DELETE_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 
-const Faq = () => {
+const Faq = ({token}) => {
     const importSwitch = () => import("bootstrap-switch-button-react");
     const SwitchButton = dynamic(importSwitch, {
         ssr: false,
@@ -70,13 +70,18 @@ const Faq = () => {
 
     }, [dispatch, isDeleted, ])
 
-    const onSetPin = (checked, id) => {
-        const data = {
+    const onSetPin = (checked, data) => {
+        const dataToSend = {
             pinned: checked === true ? 1 : 0,
-            _method: 'put'
+            _method: 'put',
+            judul: data.judul,
+            kategori: data.kategori,
+            kategori_id: data.kategori_id,
+            jawaban
+
         }
 
-        dispatch(updatePinFaq(data, id))
+        dispatch(updatePinFaq(dataToSend, data.id, token))
     };
 
     const onNewReset = () => {
@@ -95,7 +100,7 @@ const Faq = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteFaq(id));
+                dispatch(deleteFaq(id, token));
             }
         });
     };
@@ -291,9 +296,9 @@ const Faq = () => {
 
     return (
         <PageWrapper>
-            {/* {
+            {
                 console.log (faq)
-            } */}
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -677,7 +682,7 @@ const Faq = () => {
                                                                         checked={row.pinned === 1 ? true : false}
                                                                         type="checkbox"
                                                                         // onChange={(checked) => setPublish(checked)}
-                                                                        onChange={(checked) => onSetPin(checked, row.id)}
+                                                                        onChange={(checked) => onSetPin(checked, row)}
                                                                         />
                                                                         <span
                                                                         className={`sliders round ${
