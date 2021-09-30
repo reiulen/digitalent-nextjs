@@ -77,7 +77,7 @@ export const getAllKategori = token => async dispatch => {
         //     }
         // }
 
-        console.log(`Kategori: ${token}`);
+        // console.log(`Kategori: ${token}`);
         const config = {
             headers: {
                 Authorization: "Bearer " + token,

@@ -151,7 +151,8 @@ export const updateArtikelReducer = (state = {}, action) => {
     switch (action.type) {
         case UPDATE_ARTIKEL_REQUEST:
             return {
-                loading: true
+                loading: true,
+                status: null
             }
         
         case UPDATE_ARTIKEL_SUCCESS:
@@ -171,7 +172,7 @@ export const updateArtikelReducer = (state = {}, action) => {
         case UPDATE_ARTIKEL_FAIL:
             return {
                 loading: false,
-                error: action.payload
+                error: action.payload,
             }
 
         case CLEAR_ERRORS:

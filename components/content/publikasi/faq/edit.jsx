@@ -15,7 +15,7 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditFaq = () => {
+const EditFaq = ({token}) => {
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -53,8 +53,10 @@ const EditFaq = () => {
     const [jawaban, setJawaban] = useState(faq.jawaban);
     const [kategori_id, setKategoriId] = useState(faq.kategori_id)
     const [users_id, setUsersId] = useState(3)
-    const [pinned, setPinnedFaq] = useState(faq.pinned === 1 ? true : false)
-    const [publish, setPublish] = useState(faq.publish === 1 ? true : false)
+    // const [pinned, setPinnedFaq] = useState(faq.pinned === 1 ? true : false)
+    const [pinned, setPinnedFaq] = useState(faq.pinned)
+    // const [publish, setPublish] = useState(faq.publish === 1 ? true : false)
+    const [publish, setPublish] = useState(faq.publish )
     const [publishDate, setPublishDate] = useState(faq.tanggal_publish ? new Date (faq.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(faq.publish === 0 ? true : false)
     const [, forceUpdate] = useState();
@@ -124,7 +126,7 @@ const EditFaq = () => {
                     tanggal_publish : moment(today).format("YYYY-MM-DD")
                 }
 
-                dispatch(updateFaq(data, faq.id))
+                dispatch(updateFaq(data, faq.id, token))
 
             } else {
                 const data = {
@@ -138,7 +140,7 @@ const EditFaq = () => {
                     tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
                 }
 
-                dispatch(updateFaq(data, faq.id))
+                dispatch(updateFaq(data, faq.id, token))
             }
 
         } else {
@@ -210,7 +212,7 @@ const EditFaq = () => {
                                                 value={jawaban}
                                                 onBlur={() => simpleValidator.current.showMessageFor("jawaban")}
                                             />
-                                            {simpleValidator.current.message("jawaban", jawaban, "required", { className: "text-danger" })}
+                                            {simpleValidator.current.message("jawaban", jawaban, "required|max:350", { className: "text-danger" })}
                                         </div>
                                     </div>
 
