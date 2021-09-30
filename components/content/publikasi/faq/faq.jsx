@@ -77,8 +77,9 @@ const Faq = ({token}) => {
             judul: data.judul,
             kategori: data.kategori,
             kategori_id: data.kategori_id,
-            jawaban
-
+            jawaban: data.jawaban,
+            publish: data.publish,
+            users_id: data.users_id,
         }
 
         dispatch(updatePinFaq(dataToSend, data.id, token))
