@@ -13,12 +13,13 @@ const ReviewDokumenKerjasama = dynamic(
   { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
-export default function RevisiListPage() {
+export default function RevisiListPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Review Kerjasama - Partnership"> */}
-        <ReviewDokumenKerjasama />
+        <ReviewDokumenKerjasama token={session.token} />
         {/* </Layout> */}
       </div>
     </>
@@ -32,7 +33,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/partnership/user/auth/login",
             permanent: false,
           },
         };

@@ -12,13 +12,12 @@ const Table = dynamic(
   { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
 );
 
-export default function IndexPage() {
+export default function IndexPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Kerjasama - Partnership"> */}
-        <Table />
-        {/* </Layout> */}
+        <Table token={session.token} />
       </div>
     </>
   );
@@ -31,7 +30,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/partnership/user/auth/login",
             permanent: false,
           },
         };

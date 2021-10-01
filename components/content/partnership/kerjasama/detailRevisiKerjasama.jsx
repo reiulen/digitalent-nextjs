@@ -44,7 +44,7 @@ const DetailRevisiKerjasama = ({ token }) => {
 
         try {
           let { data } = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi/${router.query.id}/${router.query.varsion}`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/revisi/${router.query.id}/${router.query.varsion}`,
             formData,
             {
               headers: {
@@ -74,7 +74,7 @@ const DetailRevisiKerjasama = ({ token }) => {
     async function setDataSingle(id){
       try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,

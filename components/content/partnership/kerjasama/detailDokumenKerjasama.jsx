@@ -18,11 +18,12 @@ const DetailDokumenKerjasama = ({token}) => {
   const allMK = useSelector((state) => state.allMK);
 
   const [pdfFIle, setPdfFIle] = useState("");
+  
 
   // const getSingleValue = async (id) => {
   //   try {
   //     let { data } = await axios.get(
-  //       `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+  //       `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
   //       {
   //         headers: {
   //           authorization: `Bearer ${token}`,
@@ -39,7 +40,7 @@ const DetailDokumenKerjasama = ({token}) => {
     async function getSingleValue(id){
       try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,

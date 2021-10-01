@@ -6,7 +6,7 @@ import {useRouter} from 'next/router'
 
 import Style from "../../../../styles/progressbar.module.css";
 
-function Hasil() {
+function Hasil({token}) {
   const router = useRouter();
   const headText = {
     "font-weight": "bold",

@@ -131,7 +131,7 @@ const SubmitKerjasama = ({ token }) => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal`,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal`,
               formData,
               {
                 headers: {

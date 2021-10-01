@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getSingleCooperation } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 
-const DetailDokumenKerjasama = () => {
+const DetailDokumenKerjasama = ({token}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { success } = router.query;
@@ -23,10 +23,10 @@ const DetailDokumenKerjasama = () => {
   const getSingleValue = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${END_POINT_API_PARTNERSHIP_MITRA}`,
           },
         }
       );
@@ -38,7 +38,7 @@ const DetailDokumenKerjasama = () => {
 
   useEffect(() => {
     getSingleValue(router.query.id);
-    dispatch(getSingleCooperation(router.query.id));
+    dispatch(getSingleCooperation(router.query.id,token));
   }, [dispatch, router.query.id]);
 
   return (

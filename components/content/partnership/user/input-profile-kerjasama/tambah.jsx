@@ -12,7 +12,7 @@ import axios from "axios";
 import IconClose from "../../../../assets/icon/Close";
 import Image from "next/image";
 
-const Tambah = () => {
+const Tambah = ({token}) => {
   const router = useRouter();
   const { successInputProfile } = router.query;
   // const [startDate, setStartDate] = useState(null);
@@ -145,8 +145,6 @@ const Tambah = () => {
           }
           // formData.append("agency_logo", agency_logo);
 
-
-
           formData.append("website", wesite);
           formData.append("address", address);
 
@@ -165,11 +163,11 @@ const Tambah = () => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/profiles`,
+              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
               formData,
               {
                 headers: {
-                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                  authorization: `Bearer ${token}`,
                 },
               }
             );
@@ -244,7 +242,12 @@ const Tambah = () => {
   const getDataProvinces = async () => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/provinces`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       let dataNewProvinces = data.data.map((items) => {
         return { ...items, label: items.name, value: items.id };
@@ -260,10 +263,10 @@ const Tambah = () => {
   const getProfiles = async () => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/profiles`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -311,9 +314,9 @@ const Tambah = () => {
   };
 
   useEffect(() => {
-    getDataProvinces();
-    getProfiles();
-  }, []);
+    getDataProvinces(token);
+    getProfiles(token);
+  }, [token]);
 
   useEffect(() => {
     // get data cities
@@ -323,7 +326,7 @@ const Tambah = () => {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cities/${indonesia_provinces_id}`
+            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${indonesia_provinces_id}`
           );
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };

@@ -38,6 +38,7 @@ const LoginAdmin = () => {
         redirect: false,
         email,
         password,
+        role:"mitra",
         captcha,
       };
       const result = await signIn("credentials", data);
@@ -45,7 +46,11 @@ const LoginAdmin = () => {
       if (result.error) {
         toast.error(result.error);
       } else {
-        router.push("/subvit");
+        if(data.role === "admin"){
+          router.push("/dashboard");
+        }else{
+          router.push("/partnership/user/kerjasama")
+        }
       }
     } else {
       simpleValidator.current.showMessages();

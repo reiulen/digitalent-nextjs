@@ -14,12 +14,13 @@ const EditTandaTangan = dynamic(
 // import { getDetailTandaTangan } from "../../../redux/actions/partnership/tandaTangan.actions";
 // import { wrapper } from "../../../redux/store";
 
-export default function EditTandaTanganPage() {
+export default function EditTandaTanganPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Ubah Tanda Tangan Digital - Partnership"> */}
-        <EditTandaTangan />
+        <EditTandaTangan token={session.token} />
         {/* </Layout> */}
       </div>
     </>
@@ -33,7 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/partnership/user/auth/login",
             permanent: false,
           },
         };
