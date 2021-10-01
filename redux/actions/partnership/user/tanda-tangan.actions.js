@@ -13,19 +13,19 @@ import {
 
 import axios from "axios";
 
-export async function fetchSignatureApi(params) {
+export async function fetchSignatureApi(params, token) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures`,
+    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures`,
     {
       params,
       headers: {
-        authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+        authorization: `Bearer ${token}`,
       },
     }
   );
 }
 
-export const fetchSignature = () => {
+export const fetchSignature = (token) => {
   return async (dispatch, getState) => {
     dispatch({ type: TANDA_TANGAN_REQUEST });
     let keywordState = getState().allTandaTangan.keyword || "";
@@ -38,7 +38,7 @@ export const fetchSignature = () => {
       page: pageState,
     };
     try {
-      let { data } = await fetchSignatureApi(params);
+      let { data } = await fetchSignatureApi(params, token);
       dispatch(successFetchSignature(data));
     } catch (error) {
       console.log("error data signature action", error);
@@ -52,7 +52,7 @@ export const successFetchSignature = (data) => {
     data,
   };
 };
-export const errorFetchSignature = (data) => {
+export const errorFetchSignature = () => {
   return {
     type: TANDA_TANGAN_FAIL,
   };
@@ -75,14 +75,14 @@ export const setLimit = (value) => {
     value,
   };
 };
-export const deleteTandaTangan = (id) => {
+export const deleteTandaTangan = (id, token) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -100,17 +100,15 @@ export const searchByKey = (value) => {
   };
 };
 
-export const changeStatusList = (value, id) => {
-  console.log("value", value, "id", id);
+export const changeStatusList = (formData, id, token) => {
   return async (dispatch, getState) => {
     try {
-      let dataSend = { _method: "put", status: value };
       let { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/update-status/${id}`,
-        dataSend,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/update-status/${id}`,
+        formData,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );

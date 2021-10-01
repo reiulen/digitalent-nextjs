@@ -12,7 +12,7 @@ import axios from "axios";
 import IconClose from "../../../../assets/icon/Close";
 import Image from "next/image";
 
-const Tambah = () => {
+const Tambah = ({token}) => {
   const router = useRouter();
   const { successInputProfile } = router.query;
   // const [startDate, setStartDate] = useState(null);
@@ -49,16 +49,6 @@ const Tambah = () => {
   });
 
   const submit = (e) => {
-    // console.log("institution_name",institution_name)
-    // console.log("agency_logo",agency_logo)
-    // console.log("wesite",wesite)
-    // console.log("address",address)
-    // console.log("indonesia_cities_id",indonesia_cities_id)
-    // console.log("indonesia_provinces_id",indonesia_provinces_id)
-    // console.log("postal_code",postal_code)
-    // console.log("pic_name",pic_name)
-    // console.log("pic_contact_number",pic_contact_number)
-    // console.log("pic_email",pic_email)
     e.preventDefault();
     if (institution_name === "") {
       setError({
@@ -145,8 +135,6 @@ const Tambah = () => {
           }
           // formData.append("agency_logo", agency_logo);
 
-
-
           formData.append("website", wesite);
           formData.append("address", address);
 
@@ -165,11 +153,11 @@ const Tambah = () => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/profiles`,
+              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
               formData,
               {
                 headers: {
-                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                  authorization: `Bearer ${token}`,
                 },
               }
             );
@@ -244,7 +232,12 @@ const Tambah = () => {
   const getDataProvinces = async () => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/provinces`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       let dataNewProvinces = data.data.map((items) => {
         return { ...items, label: items.name, value: items.id };
@@ -260,14 +253,13 @@ const Tambah = () => {
   const getProfiles = async () => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/profiles`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
-
 
       if (data) {
         setAgency_logo_api(
@@ -295,8 +287,6 @@ const Tambah = () => {
           setIndonesia_cities_id(citiesss);
           setIndonesia_provinces_id(provinciesss);
         } else {
-          // setIndonesia_cities_id(data.data.province === "-" ? "" : data.data.province);
-          // setIndonesia_provinces_id(data.data.city === "-" ? "" : data.data.city);
           console.log("log")
         }
       }
@@ -311,9 +301,9 @@ const Tambah = () => {
   };
 
   useEffect(() => {
-    getDataProvinces();
-    getProfiles();
-  }, []);
+    getDataProvinces(token);
+    getProfiles(token);
+  }, [token]);
 
   useEffect(() => {
     // get data cities
@@ -323,7 +313,7 @@ const Tambah = () => {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cities/${indonesia_provinces_id}`
+            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${indonesia_provinces_id}`
           );
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };

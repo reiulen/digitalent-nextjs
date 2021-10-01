@@ -23,7 +23,7 @@ import {
   exportFileCSV,
   cancelChangeProvinces,
   changeStatusList,
-  reloadTable
+  reloadTable,
 } from "../../../../redux/actions/partnership/mitra.actions";
 import LoadingTable from "../../../LoadingTable";
 
@@ -44,7 +44,7 @@ const Table = ({ token }) => {
   };
 
   const [isStatusBar, setIsStatusBar] = useState(false);
-  const changeListStatus = (token,e, id) => {
+  const changeListStatus = (token, e, id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin merubah status ?",
       icon: "warning",
@@ -54,14 +54,15 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then( (result) => {
+    }).then((result) => {
       if (result.value) {
-        console.log("e.target.value",e.target.value)
-        console.log("id",id)
-        dispatch(changeStatusList(token,e.target.value, id));
+        let formData = new FormData();
+        formData.append("_method", "put");
+        formData.append("status", e.target.value);
+        dispatch(changeStatusList(token, formData, id));
         setSuccessDelete(false);
         // setIsChangeOption(true);
-        router.replace("/partnership/mitra", undefined, { shallow: true })
+        router.replace("/partnership/mitra", undefined, { shallow: true });
       } else {
         dispatch(reloadTable());
       }
@@ -81,7 +82,7 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteMitra(token,id));
+        dispatch(deleteMitra(token, id));
         setSuccessDelete(true);
         router.replace(`/partnership/mitra`);
       }
@@ -103,7 +104,7 @@ const Table = ({ token }) => {
     allMitra.limit,
     allMitra.card,
     update,
-    token
+    token,
   ]);
 
   return (
@@ -322,60 +323,50 @@ const Table = ({ token }) => {
                             {item.cooperations_count} Kerjasama
                           </td>
                           <td className="align-middle text-left">
-                            {item.status == "1" ? 
-                                  <div className="position-relative w-max-content">
-                                      <select
-                                        name=""
-                                        id=""
-                                        className="form-control remove-icon-default dropdown-arrows-green"
-                                        key={index}
-                                        onChange={(e) =>
-                                          changeListStatus(
-                                            token,
-                                            e,
-                                            item.id,
-                                          )
-                                        }
-                                      >
-                                        <option value="1">
-                                          Aktif
-                                        </option>
-                                        <option value="0">Tidak Aktif</option>
-                                      </select>
-                                      <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        width="7"
-                                        height="7"
-                                      />
-                                    </div>
-                                    : <div className="position-relative w-max-content">
-                                      <select
-                                        name=""
-                                        id=""
-                                        className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
-                                        key={index}
-                                        onChange={(e) =>
-                                          changeListStatus(
-                                            token,
-                                            e,
-                                            item.id,
-                                          )
-                                        }
-                                      >
-                                        <option value="0">
-                                          Tidak Aktif
-                                        </option>
-                                        <option value="1">Aktif</option>
-                                      </select>
-                                      <IconArrow
-                                        className="right-center-absolute"
-                                        style={{ right: "10px" }}
-                                        fill="#F65464"
-                                        width="7"
-                                        height="7"
-                                      />
-                                    </div>}
+                            {item.status == "1" ? (
+                              <div className="position-relative w-max-content">
+                                <select
+                                  name=""
+                                  id=""
+                                  className="form-control remove-icon-default dropdown-arrows-green"
+                                  key={index}
+                                  onChange={(e) =>
+                                    changeListStatus(token, e, item.id)
+                                  }
+                                >
+                                  <option value="1">Aktif</option>
+                                  <option value="0">Tidak Aktif</option>
+                                </select>
+                                <IconArrow
+                                  className="right-center-absolute"
+                                  style={{ right: "10px" }}
+                                  width="7"
+                                  height="7"
+                                />
+                              </div>
+                            ) : (
+                              <div className="position-relative w-max-content">
+                                <select
+                                  name=""
+                                  id=""
+                                  className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
+                                  key={index}
+                                  onChange={(e) =>
+                                    changeListStatus(token, e, item.id)
+                                  }
+                                >
+                                  <option value="0">Tidak Aktif</option>
+                                  <option value="1">Aktif</option>
+                                </select>
+                                <IconArrow
+                                  className="right-center-absolute"
+                                  style={{ right: "10px" }}
+                                  fill="#F65464"
+                                  width="7"
+                                  height="7"
+                                />
+                              </div>
+                            )}
                           </td>
                           <td className="align-middle text-left">
                             <div className="d-flex align-items-center">

@@ -12,6 +12,8 @@ export default NextAuth({
     Providers.Credentials({
       async authorize(credentials) {
         const { email, password, role } = credentials;
+        console.log("email,password,role");
+        console.log(email, password, role);
         if (!email || !password) {
           throw new Error("Isi Email atau Password dengan benar");
         }
@@ -19,7 +21,8 @@ export default NextAuth({
           let link = "http://api-dts-dev.majapahit.id/sso/api/auth/login";
 
           if (role === "mitra") {
-            link = "http://api-dts-dev.majapahit.id";
+            link =
+              "http://dts-partnership-dev.majapahit.id/api/authentication/login";
           }
 
           const { data } = await axios.post(link, { email, password });

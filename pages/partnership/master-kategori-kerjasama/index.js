@@ -1,9 +1,3 @@
-// import Layout from "../../../components/templates/layout.component";
-// import LoadingPage from "../../../components/LoadingPage";
-// import MasterKategoriKerjasama from "../../../components/content/partnership/master-kategori-kerjasama/masterKategoriKerjasama";
-
-// import { fetchAllMKCooporation } from "../../../redux/actions/partnership/mk_cooporation.actions";
-// import { wrapper } from "../../../redux/store";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
@@ -13,7 +7,7 @@ const MasterKategoriKerjasama = dynamic(
     import(
       "../../../components/content/partnership/master-kategori-kerjasama/masterKategoriKerjasama"
     ),
-  { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function KategoriKerjasama(props) {
@@ -21,9 +15,7 @@ export default function KategoriKerjasama(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Master Kategori Kerjasama - Partnership"> */}
         <MasterKategoriKerjasama token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

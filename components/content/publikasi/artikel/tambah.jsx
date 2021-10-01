@@ -18,6 +18,7 @@ import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.act
 import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
+// import Editor from "../../../Editor"
 
 const TambahArtikel = ({token}) => {
   const editorRef = useRef();
@@ -47,7 +48,33 @@ const TambahArtikel = ({token}) => {
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
+      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'),
+      // Essentials: require('@ckeditor/ckeditor5-essentials/src/essentials'),
+      // Paragraph: require('@ckeditor/ckeditor5-paragraph/src/paragraph'),
+      // Bold: require('@ckeditor/ckeditor5-basic-styles/src/bold'),
+      // Italic: require ('@ckeditor/ckeditor5-basic-styles/src/italic'),
+      // Underline: require ('@ckeditor/ckeditor5-basic-styles/src/underline'),
+      // Strikethrough: require ('@ckeditor/ckeditor5-basic-styles/src/strikethrough'),
+      // BlockQuote: require ('@ckeditor/ckeditor5-block-quote/src/blockquote'),
+      // Link: require ('@ckeditor/ckeditor5-link/src/link'),
+      // LinkImage: require ('@ckeditor/ckeditor5-link/src/linkimage'),
+      // MediaEmbed: require ('@ckeditor/ckeditor5-media-embed/src/mediaembed'),
+      // PasteFromOffice: require ('@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice'),
+      // Heading: require ('@ckeditor/ckeditor5-heading/src/heading'),
+      // Font: require ('@ckeditor/ckeditor5-font/src/font'),
+      // Image: require ('@ckeditor/ckeditor5-image/src/image'),
+      // ImageStyle: require ('@ckeditor/ckeditor5-image/src/imagestyle'),
+      // ImageToolbar: require ('@ckeditor/ckeditor5-image/src/imagetoolbar'),
+      // ImageUpload: require ('@ckeditor/ckeditor5-image/src/imageupload'),
+      // ImageResize: require ('@ckeditor/ckeditor5-image/src/imageresize'),
+      // List: require ('@ckeditor/ckeditor5-list/src/list'),
+      // Alignment: require ('@ckeditor/ckeditor5-alignment/src/alignment'),
+      // Table: require ('@ckeditor/ckeditor5-table/src/table'),
+      // TableToolbar: require ('@ckeditor/ckeditor5-table/src/tabletoolbar'),
+      // TextTransformation: require ('@ckeditor/ckeditor5-typing/src/texttransformation'),
+      // Indent: require ('@ckeditor/ckeditor5-indent/src/indent'),
+      // IndentBlock: require ('@ckeditor/ckeditor5-indent/src/indentblock'),
+      // Base64UploadAdapter: require ('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'),
     };
 
     setEditorLoaded(true);
@@ -324,7 +351,6 @@ const TambahArtikel = ({token}) => {
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <CKEditor
-                          ck-editor__editable
                           editor={ClassicEditor}
                           data={isi_artikel}
                           onReady={(editor) => {
@@ -341,9 +367,166 @@ const TambahArtikel = ({token}) => {
                               "isi_artikel"
                             )
                           }
-                          config ={{placeholder: "Tulis Deskripsi"}}
-
+                          config ={{
+                            placeholder: "Tulis Deskripsi",
+                            // plugins: [
+                            //   Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize, LinkImage
+                            // ],
+                            // image: {
+                            //   toolbar: [
+                            //     'imageStyle:block',
+                            //     'imageStyle:side',
+                            //     '|',
+                            //     'toggleImageCaption',
+                            //     'imageTextAlternative',
+                            //   ]
+                            // }
+                          }}
+                          // config={{
+                          //   plugins: [
+                          //     Essentials,
+                          //     Paragraph,
+                          //     Bold,
+                          //     Italic,
+                          //     Heading,
+                          //     Indent,
+                          //     IndentBlock,
+                          //     Underline,
+                          //     Strikethrough,
+                          //     BlockQuote,
+                          //     Font,
+                          //     Alignment,
+                          //     List,
+                          //     Link,
+                          //     MediaEmbed,
+                          //     PasteFromOffice,
+                          //     Image,
+                          //     ImageStyle,
+                          //     ImageToolbar,
+                          //     ImageUpload,
+                          //     ImageResize,
+                          //     Base64UploadAdapter,
+                          //     Table,
+                          //     TableToolbar,
+                          //     TextTransformation,
+                          //   ],
+                          //   toolbar: [
+                          //     'heading',
+                          //     '|',
+                          //     'bold',
+                          //     'italic',
+                          //     'underline',
+                          //     'strikethrough',
+                          //     '|',
+                          //     'fontSize',
+                          //     'fontColor',
+                          //     'fontBackgroundColor',
+                          //     '|',
+                          //     'alignment',
+                          //     'outdent',
+                          //     'indent',
+                          //     'bulletedList',
+                          //     'numberedList',
+                          //     'blockQuote',
+                          //     '|',
+                          //     'link',
+                          //     'insertTable',
+                          //     'imageUpload',
+                          //     'mediaEmbed',
+                          //     '|',
+                          //     'undo',
+                          //     'redo',
+                          //   ],
+                          //   heading: {
+                          //     options: [
+                          //       {
+                          //         model: 'paragraph',
+                          //         view: 'p',
+                          //         title: 'Paragraph',
+                          //         class: 'ck-heading_paragraph'
+                          //       },
+                          //       {
+                          //         model: 'heading1',
+                          //         view: 'h1',
+                          //         title: 'Heading 1',
+                          //         class: 'ck-heading_heading1'
+                          //       },
+                          //       {
+                          //         model: 'heading2',
+                          //         view: 'h2',
+                          //         title: 'Heading 2',
+                          //         class: 'ck-heading_heading2'
+                          //       },
+                          //       {
+                          //         model: 'heading3',
+                          //         view: 'h3',
+                          //         title: 'Heading 3',
+                          //         class: 'ck-heading_heading3'
+                          //       }
+                          //     ]
+                          //   },
+                          //   fontSize: {
+                          //     options: [
+                          //       9,
+                          //       10,
+                          //       11,
+                          //       12,
+                          //       13,
+                          //       14,
+                          //       15,
+                          //       16,
+                          //       17,
+                          //       18,
+                          //       19,
+                          //       20,
+                          //       21,
+                          //       23,
+                          //       25,
+                          //       27,
+                          //       29,
+                          //       31,
+                          //       33,
+                          //       35
+                          //     ]
+                          //   },
+                          //   alignment: {
+                          //     options: ['justify', 'left', 'center', 'right']
+                          //   },
+                          //   table: {
+                          //     contentToolbar: [
+                          //       'tableColumn',
+                          //       'tableRow',
+                          //       'mergeTableCells'
+                          //     ]
+                          //   },
+                          //   image: {
+                          //     resizeUnit: 'px',
+                          //     toolbar: [
+                          //       'imageStyle:alignLeft',
+                          //       'imageStyle:full',
+                          //       'imageStyle:alignRight',
+                          //       '|',
+                          //       'imageTextAlternative'
+                          //     ],
+                          //     styles: ['full', 'alignLeft', 'alignRight']
+                          //   },
+                          //   typing: {
+                          //     transformations: {
+                          //       remove: [
+                          //         'enDash',
+                          //         'emDash',
+                          //         'oneHalf',
+                          //         'oneThird',
+                          //         'twoThirds',
+                          //         'oneForth',
+                          //         'threeQuarters'
+                          //       ]
+                          //     }
+                          //   },
+                          //   placeholder: 'Tulis Disini'
+                          // }}
                         />
+                        
                       ) : (
                         <p>Tunggu Sebentar</p>
                       )}

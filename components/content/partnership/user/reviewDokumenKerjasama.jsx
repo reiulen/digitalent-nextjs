@@ -12,7 +12,7 @@ import DatePicker from "react-datepicker";
 
 import { addDays } from "date-fns";
 
-function ReviewDokumenKerjasama() {
+function ReviewDokumenKerjasama({token}) {
   const router = useRouter();
   const {revisiDone} = router.query
   const [startDate, setStartDate] = useState(null);
@@ -33,9 +33,9 @@ function ReviewDokumenKerjasama() {
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,{
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,{
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -159,8 +159,13 @@ function ReviewDokumenKerjasama() {
 
         try {
           let { data } = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/proposal-revisi-document/${router.query.id}`,
-            formData
+            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/proposal-revisi-document/${router.query.id}`,
+            formData,
+            {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
           );
 
           console.log("data sukses",data)

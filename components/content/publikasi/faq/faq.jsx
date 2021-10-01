@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteFaq, updatePinFaq, getAllFaqPagination } from '../../../../redux/actions/publikasi/faq.actions'
 import { DELETE_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 
-const Faq = () => {
+const Faq = ({token}) => {
     const importSwitch = () => import("bootstrap-switch-button-react");
     const SwitchButton = dynamic(importSwitch, {
         ssr: false,
@@ -95,7 +95,7 @@ const Faq = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteFaq(id));
+                dispatch(deleteFaq(id, token));
             }
         });
     };
@@ -511,8 +511,8 @@ const Faq = () => {
                                                     startDate={startDate}
                                                     endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
-                                                    // minDate={startDate}
-                                                    minDate={moment().toDate()}
+                                                    minDate={startDate}
+                                                    // minDate={moment().toDate()}
                                                     maxDate={addDays(startDate, 20)}
                                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"

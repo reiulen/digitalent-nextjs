@@ -1,22 +1,18 @@
-// import Layout from "../../../../components/templates/layout.component";
-// import RevisiList from "../../../../components/content/partnership/user/revisiList";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../../redux/store";
 const RevisiList = dynamic(
   () => import("../../../../components/content/partnership/user/revisiList"),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
-export default function RevisiListPage() {
+export default function RevisiListPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Review Kerjasama - Partnership"> */}
-        <RevisiList />
-        {/* </Layout> */}
+        <RevisiList token={session.token} />
       </div>
     </>
   );
@@ -29,7 +25,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/partnership/user/auth/login",
             permanent: false,
           },
         };

@@ -62,6 +62,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
   // }, [allFunctionls.isOverlayProfile,allFunctionls.isProfile])
 
 
+
   return (
     <>
       <Head>
@@ -160,3 +161,4 @@ const Layout = ({ children, title = "Dashboard" }) => {
 };
 
 export default Layout;
+

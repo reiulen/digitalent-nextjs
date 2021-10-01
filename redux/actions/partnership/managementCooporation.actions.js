@@ -42,7 +42,7 @@ import router from "next/router";
 // fetch data all Coopoeration
 export async function getMCooporation(params) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index`,
+    `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index`,
     {
       params,
     }
@@ -50,34 +50,34 @@ export async function getMCooporation(params) {
 }
 export async function getMitra() {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/option/mitra`
+    `${process.env.END_POINT_API_PARTNERSHIP}api/option/mitra`
   );
 }
 export async function getStatus() {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/option/status`
+    `${process.env.END_POINT_API_PARTNERSHIP}api/option/status`
   );
 }
 export async function getCooperation() {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation`
+    `${process.env.END_POINT_API_PARTNERSHIP}api/option/cooperation`
   );
 }
 // get active select list cooperation
 export async function getCooperationActiveSelect() {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation-active`
+    `${process.env.END_POINT_API_PARTNERSHIP}api/option/cooperation-active`
   );
 }
 // get active select list cooperation by id
 export async function getCooperationActiveSelectById(id) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation-active-choose/${id}`
+    `${process.env.END_POINT_API_PARTNERSHIP}api/option/cooperation-active-choose/${id}`
   );
 }
 export async function getEmail(params) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/get-email`,
+    `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/get-email`,
     {
       params,
     }
@@ -86,7 +86,7 @@ export async function getEmail(params) {
 
 export async function getCooperationActive(params) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/count`,
+    `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/count`,
     {
       params,
     }
@@ -95,7 +95,7 @@ export async function getCooperationActive(params) {
 
 export async function getPengajuanActive(params) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/count-submission`,
+    `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/count-submission`,
     {
       params,
     }
@@ -104,7 +104,7 @@ export async function getPengajuanActive(params) {
 
 export async function getCooperationNonaktif(params) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/count-will-expire`,
+    `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/count-will-expire`,
     {
       params,
     }
@@ -158,7 +158,7 @@ export const fetchAllMK = (token) => {
 
     try {
       const { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index`,
         {
           params,
           headers: {
@@ -167,7 +167,7 @@ export const fetchAllMK = (token) => {
         }
       );
       let dataSortirAll = await await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index`,
         {
           paramss,
           headers: {
@@ -215,7 +215,7 @@ export const fetchListSelectMitra = (token) => {
     dispatch({ type: LIST_MITRA_REQUEST });
     try {
       const { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/mitra`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/mitra`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -250,7 +250,7 @@ export const fetchListSelectCooperation = (token) => {
     dispatch({ type: LIST_COOPERATION_REQUEST });
     try {
       const { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/cooperation`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -287,7 +287,7 @@ export const fetchListCooperationSelect = (token) => {
     // dispatch({ type: GET_COOPERTAION_ACTIVE_SELECT });
     try {
       const { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation-active`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/cooperation-active`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -318,7 +318,7 @@ export const fetchListCooperationSelectById = (token, id) => {
     // dispatch({ type: GET_COOPERTAION_ACTIVE_SELECT });
     try {
       const { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cooperation-active-choose/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/cooperation-active-choose/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -356,7 +356,7 @@ export const fetchListSelectStatus = (token) => {
     dispatch({ type: LIST_STATUS_REQUEST });
     try {
       const { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/status`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/status`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -462,7 +462,7 @@ export const fetchDataEmail = (token) => {
         institution_name: institution_nameState,
       };
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/get-email`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/get-email`,
         {
           params,
           headers: {
@@ -502,7 +502,7 @@ export const deleteCooperation = (token, id) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -526,7 +526,7 @@ export const getSingleCooperation = (token, id) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -546,30 +546,28 @@ export const successGetSingleCooperation = (data) => {
   };
 };
 
-export const changeStatusList = (token, value, id) => {
+export const changeStatusList = (token, formData, id) => {
   return async (dispatch, getState) => {
     try {
-      let dataSend = { status: value };
-      let { data } = await axios.put(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/update-status/${id}`,
-        dataSend,
+      let { data } = await axios.post(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/update-status/${id}`,
+        formData,
         {
           headers: {
             authorization: `Bearer ${token}`,
           },
         }
       );
-      dispatch(successChangeStatusList(value));
+      dispatch(successChangeStatusList());
     } catch (error) {
       console.log("error change status list");
     }
   };
 };
 
-export const successChangeStatusList = (value) => {
+export const successChangeStatusList = () => {
   return {
     type: CHANGE_STATUS_LIST_M,
-    value,
   };
 };
 export const reloadTable = () => {
@@ -627,10 +625,12 @@ export const exportFileCSV = (token) => {
 };
 
 export const rejectCooperation = (token, id) => {
+  console.log("token mm", token);
   return async (dispatch) => {
     try {
       let { data } = await axios.put(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${id}`,
+        null,
         {
           headers: {
             authorization: `Bearer ${token}`,

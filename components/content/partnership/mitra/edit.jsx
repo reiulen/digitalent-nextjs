@@ -200,7 +200,7 @@ const EditMitra = ({ token }) => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${router.query.id}`,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/partners/${router.query.id}`,
               formData,
               {
                 headers: {
@@ -244,7 +244,7 @@ const EditMitra = ({ token }) => {
     async function setDataSingle (id,token){
       try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/partners/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -286,7 +286,7 @@ const EditMitra = ({ token }) => {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cities/${indonesia_provinces_id}`
+            `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`
           );
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };

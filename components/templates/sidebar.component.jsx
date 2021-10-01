@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import IconArrow2 from "../../components/assets/icon/Arrow2";
 import { useDispatch, useSelector } from "react-redux";
+import { useSession } from "next-auth/client";
 
 import {
   IS_ASSIDE_MOBILE_SIDEBAR,
@@ -12,11 +13,14 @@ import {
 } from "../../redux/types/utils/functionals.type";
 
 const Sidebar = () => {
+
+  const [session,loading] = useSession()
+  console.log("session",session)
   const dispatch = useDispatch();
   const getStorageMenu2 = sessionStorage.getItem("menu2");
   const getStorageMenu4 = sessionStorage.getItem("menu4");
   const getStorageMenu3 = sessionStorage.getItem("menu3");
-  const getStorageMenu = sessionStorage.getItem("menu");
+  const getStorageMenuPartnership = sessionStorage.getItem("menu-partnership");
 
   const allFunctionls = useSelector((state) => state.allFunctionls);
 
@@ -157,24 +161,16 @@ const Sidebar = () => {
       href: "/partnership/tanda-tangan",
     },
   ]);
-  // function active submenu partnership
-  const activeSubItemPartnership = () => {
-    if (sessionStorage.getItem("menu")) {
-      sessionStorage.removeItem("menu");
-    } else {
-      sessionStorage.setItem("menu", "menu-item-open");
-    }
-  };
-  // function show sub menu partnership
   const activeMenuPartnership = () => {
-    if (sessionStorage.getItem("menu")) {
-      sessionStorage.removeItem("menu");
+    if (sessionStorage.getItem("menu-partnership")) {
+      sessionStorage.removeItem("menu-partnership");
     } else {
-      sessionStorage.setItem("menu", "menu-item-open");
+      sessionStorage.setItem("menu-partnership", "menu-item-open");
     }
-    setMenuItem4(!sessionStorage.getItem("menu") ? "" : "menu-item-open");
+    setMenuItem4(
+      !sessionStorage.getItem("menu-partnership") ? "" : "menu-item-open"
+    );
   };
-
   // ----------------------------------- end partnership
   // ----------------------------------- start user-mitra
 
@@ -289,24 +285,6 @@ const Sidebar = () => {
     });
   };
 
-  // useEffect(() => {
-  //   // partnership
-  //   const dataFromLocal = !sessionStorage.getItem("menu")
-  //     ? ""
-  //     : sessionStorage.getItem("menu");
-  //   setMenuItem4(dataFromLocal);
-  //   // publikasi
-  //   const dataFromLocal2 = !sessionStorage.getItem("menu2")
-  //     ? ""
-  //     : sessionStorage.getItem("menu2");
-  //   setMenuItem3(dataFromLocal2);
-  //   // subvit
-  //   const dataFromLocal3 = !sessionStorage.getItem("menu3")
-  //     ? ""
-  //     : sessionStorage.getItem("menu3");
-  //   setMenuItem6(dataFromLocal3);
-  // }, []);
-
   // START LIST MENU SERTIFIKAT
   const [listMenuSertifikat, setListMenuSertifikat] = useState([
     {
@@ -379,7 +357,139 @@ const Sidebar = () => {
             data-menu-dropdown-timeout="500"
           >
             {/* <!--begin::Menu Nav--> */}
-            <ul className="menu-nav">
+
+              {session === undefined ? "" : session.user.user.data.user.roles[0] === "mitra" ? 
+
+              <ul className="menu-nav">
+             
+              <li
+                className={`menu-item menu-item-submenu ${
+                  !getStorageMenu4 ? "" : getStorageMenu4
+                }`}
+                onClick={() => activeMenuPartnershipMitra()}
+                aria-haspopup="true"
+                data-menu-toggle="hover"
+              >
+                <a
+                  href="javascript:;"
+                  className="menu-link menu-toggle d-flex align-items-center"
+                >
+                  <span className="svg-icon menu-icon">
+                    <svg
+                      width="23"
+                      height="23"
+                      viewBox="0 0 23 23"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M4.79163 6.70833C4.79163 8.82543 6.50787 10.5417 8.62496 10.5417C10.7421 10.5417 12.4583 8.82543 12.4583 6.70833C12.4583 4.59124 10.7421 2.875 8.62496 2.875C6.50787 2.875 4.79163 4.59124 4.79163 6.70833ZM14.375 10.5417C14.375 12.1295 15.6621 13.4167 17.25 13.4167C18.8378 13.4167 20.125 12.1295 20.125 10.5417C20.125 8.95385 18.8378 7.66667 17.25 7.66667C15.6621 7.66667 14.375 8.95385 14.375 10.5417Z"
+                        fill="white"
+                      />
+                      <path
+                        opacity="0.3"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M8.60904 12.4584C4.08433 12.4584 0.372081 14.7838 0.000624531 19.3576C-0.0196092 19.6068 0.456849 20.125 0.69719 20.125H16.5281C17.248 20.125 17.2592 19.5457 17.248 19.3584C16.9672 14.656 13.1974 12.4584 8.60904 12.4584ZM22.4786 20.125L18.7833 20.125C18.7833 17.9679 18.0706 15.9772 16.8678 14.3756C20.1324 14.4113 22.7979 16.0618 22.9985 19.55C23.0066 19.6905 22.9985 20.125 22.4786 20.125Z"
+                        fill="#4299E1"
+                      />
+                    </svg>
+                  </span>
+                  <span className="menu-text">User Partnership</span>
+                  {/* <i className="menu-arrow"></i> */}
+                  <IconArrow2
+                    className="transition-animate"
+                    fill="#ffffff"
+                    style={{
+                      transform: getStorageMenu4
+                        ? "rotate(90deg)"
+                        : "rotate(0)",
+                    }}
+                  />
+                </a>
+                <div className="menu-submenu">
+                  <i className="menu-arrow"></i>
+                  <ul className="menu-subnav">
+                    <li
+                      className="menu-item menu-item-parent"
+                      aria-haspopup="true"
+                    >
+                      <span className="menu-link">
+                        <span className="menu-text">Partnership</span>
+                      </span>
+                    </li>
+
+                    {/* start partnership loop */}
+
+                    {listMenuPartnershipMitra.map((items, index) => {
+                      return (
+                        <li
+                          key={index}
+                          className={`menu-item ${
+                            items.href === router.pathname
+                              ? "menu-item-active"
+                              : ""
+                          }`}
+                          aria-haspopup="true"
+                          onClick={() => activeSubItemPartnershipMitra()}
+                        >
+                          <Link href={items.href}>
+                            <a className="menu-link">
+                              <span className="menu-text">{items.name}</span>
+                            </a>
+                          </Link>
+                        </li>
+                      );
+                    })}
+
+                    {/* <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/kerjasama">
+                        <a className="menu-link">
+                          <span className="menu-text">Kerjasama</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/mitra">
+                        <a className="menu-link">
+                          <span className="menu-text">Master Mitra</span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/master-kategori-kerjasama">
+                        <a className="menu-link">
+                          <span className="menu-text">
+                            Master Kategori Kerjasama
+                          </span>
+                        </a>
+                      </Link>
+                    </li>
+                    <li className="menu-item" aria-haspopup="true">
+                      <Link href="/partnership/tanda-tangan">
+                        <a className="menu-link">
+                          <span className="menu-text">
+                            Tanda Tangan Digital
+                          </span>
+                        </a>
+                      </Link>
+                    </li> */}
+                    {/* end partnership loop */}
+                  </ul>
+                </div>
+              </li>
+
+              </ul>
+              
+              
+              :
+
+              <ul className="menu-nav">
+                
+              
+
               <li
                 className={`menu-item menu-item-submenu ${menuItem1}`}
                 onClick={onSetMenuItem1}
@@ -678,7 +788,7 @@ const Sidebar = () => {
 
               <li
                 className={`menu-item menu-item-submenu ${
-                  !getStorageMenu ? "" : getStorageMenu
+                  !getStorageMenuPartnership ? "" : getStorageMenuPartnership
                 }`}
                 onClick={() => activeMenuPartnership()}
                 aria-haspopup="true"
@@ -723,7 +833,9 @@ const Sidebar = () => {
                     className="transition-animate"
                     fill="#ffffff"
                     style={{
-                      transform: getStorageMenu ? "rotate(90deg)" : "rotate(0)",
+                      transform: getStorageMenuPartnership
+                        ? "rotate(90deg)"
+                        : "rotate(0)",
                     }}
                   />
                 </a>
@@ -751,7 +863,7 @@ const Sidebar = () => {
                               : ""
                           }`}
                           aria-haspopup="true"
-                          onClick={() => activeSubItemPartnership()}
+                          onClick={() => activeMenuPartnership()}
                         >
                           <Link href={items.href}>
                             <a className="menu-link">
@@ -1084,7 +1196,10 @@ const Sidebar = () => {
                           </li>
                           <li className="menu-item" aria-haspopup="true">
                             <a className="menu-link">
-                              <Link href="/site-management/administrator/" passHref>
+                              <Link
+                                href="/site-management/administrator/"
+                                passHref
+                              >
                                 <span className="menu-text">Administrator</span>
                               </Link>
                             </a>
@@ -1094,7 +1209,7 @@ const Sidebar = () => {
                     </li>
                     <li className="menu-item" aria-haspopup="true">
                       <a className="menu-link">
-                        <Link href="/site-management/role/">
+                        <Link href="/site-management/role/" passHref>
                           <span className="menu-text">Role</span>
                         </Link>
                       </a>
@@ -1102,185 +1217,12 @@ const Sidebar = () => {
                   </ul>
                 </div>
               </li>
+              </ul>
+              }
 
-              {/* <li
-                className={`menu-item menu-item-submenu ${menuItem8}`}
-                onClick={onSetMenuItem8}
-                aria-haspopup="true"
-                data-menu-toggle="hover"
-              >
-                <a href="javascript:;" className="menu-link menu-toggle">
-                  <span className="svg-icon menu-icon">
-                    <Image
-                      alt="icon-sidebar-perisai"
-                      src="/assets/icon/perisai.svg"
-                      width={24}
-                      height={24}
-                    />
-                  </span>
-                  <span className="menu-text">User</span>
-                  <i className="menu-arrow"></i>
-                </a>
-                <div className="menu-submenu">
-                  <i className="menu-arrow"></i>
-                  <ul className="menu-subnav">
-                    <li
-                      className="menu-item menu-item-parent"
-                      aria-haspopup="true"
-                    >
-                      <span className="menu-link">
-                        <span className="menu-text">User</span>
-                      </span>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/user/">
-                        <a className="menu-link">
-                          <span className="menu-text">Manajemen Kerjasama</span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <a className="menu-link">
-                        <span className="menu-text">Profil Lembaga</span>
-                      </a>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/user/tanda-tangan">
-                        <a className="menu-link">
-                          <span className="menu-text">
-                            Tanda Tangan Digital
-                          </span>
-                        </a>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </li> */}
-              <li
-                className={`menu-item menu-item-submenu ${
-                  !getStorageMenu4 ? "" : getStorageMenu4
-                }`}
-                onClick={() => activeMenuPartnershipMitra()}
-                aria-haspopup="true"
-                data-menu-toggle="hover"
-              >
-                <a
-                  href="javascript:;"
-                  className="menu-link menu-toggle d-flex align-items-center"
-                >
-                  <span className="svg-icon menu-icon">
-                    {/* <Image
-                      alt="icon-sidebar-orang"
-                      src="/assets/icon/new/aside/people-white.svg"
-                      width={24}
-                      height={24}
-                    /> */}
-                    <svg
-                      width="23"
-                      height="23"
-                      viewBox="0 0 23 23"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M4.79163 6.70833C4.79163 8.82543 6.50787 10.5417 8.62496 10.5417C10.7421 10.5417 12.4583 8.82543 12.4583 6.70833C12.4583 4.59124 10.7421 2.875 8.62496 2.875C6.50787 2.875 4.79163 4.59124 4.79163 6.70833ZM14.375 10.5417C14.375 12.1295 15.6621 13.4167 17.25 13.4167C18.8378 13.4167 20.125 12.1295 20.125 10.5417C20.125 8.95385 18.8378 7.66667 17.25 7.66667C15.6621 7.66667 14.375 8.95385 14.375 10.5417Z"
-                        fill="white"
-                      />
-                      <path
-                        opacity="0.3"
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M8.60904 12.4584C4.08433 12.4584 0.372081 14.7838 0.000624531 19.3576C-0.0196092 19.6068 0.456849 20.125 0.69719 20.125H16.5281C17.248 20.125 17.2592 19.5457 17.248 19.3584C16.9672 14.656 13.1974 12.4584 8.60904 12.4584ZM22.4786 20.125L18.7833 20.125C18.7833 17.9679 18.0706 15.9772 16.8678 14.3756C20.1324 14.4113 22.7979 16.0618 22.9985 19.55C23.0066 19.6905 22.9985 20.125 22.4786 20.125Z"
-                        fill="#4299E1"
-                      />
-                    </svg>
-                  </span>
-                  <span className="menu-text">User Partnership</span>
-                  {/* <i className="menu-arrow"></i> */}
-                  <IconArrow2
-                    className="transition-animate"
-                    fill="#ffffff"
-                    style={{
-                      transform: getStorageMenu4
-                        ? "rotate(90deg)"
-                        : "rotate(0)",
-                    }}
-                  />
-                </a>
-                <div className="menu-submenu">
-                  <i className="menu-arrow"></i>
-                  <ul className="menu-subnav">
-                    <li
-                      className="menu-item menu-item-parent"
-                      aria-haspopup="true"
-                    >
-                      <span className="menu-link">
-                        <span className="menu-text">Partnership</span>
-                      </span>
-                    </li>
 
-                    {/* start partnership loop */}
 
-                    {listMenuPartnershipMitra.map((items, index) => {
-                      return (
-                        <li
-                          key={index}
-                          className={`menu-item ${
-                            items.href === router.pathname
-                              ? "menu-item-active"
-                              : ""
-                          }`}
-                          aria-haspopup="true"
-                          onClick={() => activeSubItemPartnershipMitra()}
-                        >
-                          <Link href={items.href}>
-                            <a className="menu-link">
-                              <span className="menu-text">{items.name}</span>
-                            </a>
-                          </Link>
-                        </li>
-                      );
-                    })}
-
-                    {/* <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/kerjasama">
-                        <a className="menu-link">
-                          <span className="menu-text">Kerjasama</span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/mitra">
-                        <a className="menu-link">
-                          <span className="menu-text">Master Mitra</span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/master-kategori-kerjasama">
-                        <a className="menu-link">
-                          <span className="menu-text">
-                            Master Kategori Kerjasama
-                          </span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/tanda-tangan">
-                        <a className="menu-link">
-                          <span className="menu-text">
-                            Tanda Tangan Digital
-                          </span>
-                        </a>
-                      </Link>
-                    </li> */}
-                    {/* end partnership loop */}
-                  </ul>
-                </div>
-              </li>
-            </ul>
+            
             {/* <!--end::Menu Nav--> */}
           </div>
           {/* <!--end::Menu Container--> */}
@@ -1303,3 +1245,5 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+
