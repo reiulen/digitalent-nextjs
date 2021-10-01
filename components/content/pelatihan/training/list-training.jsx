@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
 import { Modal } from "react-bootstrap";
+import Select from "react-select";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -23,9 +24,20 @@ const ListTraining = () => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  const [penyelenggara, setPenyelenggara] = useState(null);
+  const [academy, setAcademy] = useState(null);
+  const [theme, setTheme] = useState(null);
+  const [statusSubstansi, setStatusSubstansi] = useState(null);
+
   const [showModal, setShowModal] = useState(false);
   const [showModalRevisi, setShowModalRevisi] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
+
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -35,12 +47,18 @@ const ListTraining = () => {
   };
 
   const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
-    } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`);
-    }
+    let link = `${router.pathname}?page=1&keyword=${search}`;
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
   };
+
+  // const handleFilter = () => {
+  //   let link = `${router.pathname}?page=${1}`;
+  //   if (academy) link = link.concat(`&akademi=${academy}`);
+  //   if (status) link = link.concat(`&status=${status}`);
+  //   router.push(link);
+  //   setShowModal(false);
+  // };
 
   const handleLimit = (val) => {
     setLimit(val);
@@ -48,7 +66,7 @@ const ListTraining = () => {
   };
 
   const onNewReset = () => {
-    router.replace("/subvit/substansi", undefined, { shallow: true });
+    router.replace("/pelatihan/pelatihan", undefined, { shallow: true });
   };
 
   const handleDelete = (id) => {
@@ -98,6 +116,33 @@ const ListTraining = () => {
 
   return (
     <PageWrapper>
+      {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row">
           <CardPage
@@ -107,8 +152,8 @@ const ListTraining = () => {
             value={0}
             titleValue=""
             title="Selesai"
-            publishedVal=""
-            routePublish={() => handlePublish("")}
+            publishedVal="selesai"
+            routePublish={() => handlePublish("selesai")}
           />
           <CardPage
             background="bg-secondary"
@@ -117,8 +162,8 @@ const ListTraining = () => {
             value={0}
             titleValue=""
             title="Disetujui"
-            publishedVal="sudah-mengerjakan"
-            routePublish={() => handlePublish("sudah-mengerjakan")}
+            publishedVal="disetujui"
+            routePublish={() => handlePublish("disetujui")}
           />
           <CardPage
             background="bg-success"
@@ -127,8 +172,8 @@ const ListTraining = () => {
             value={0}
             titleValue=""
             title="Revisi"
-            publishedVal="sedang-mengerjakan"
-            routePublish={() => handlePublish("sedang-mengerjakan")}
+            publishedVal="revisi"
+            routePublish={() => handlePublish("revisi")}
           />
           <CardPage
             background="bg-warning"
@@ -137,8 +182,8 @@ const ListTraining = () => {
             value={0}
             titleValue=""
             title="Menunggu Review"
-            publishedVal="belum-mengerjakan"
-            routePublish={() => handlePublish("belum-mengerjakan")}
+            publishedVal="menunggu-review"
+            routePublish={() => handlePublish("menunggu-review")}
           />
           <CardPage
             background="bg-extras"
@@ -147,8 +192,8 @@ const ListTraining = () => {
             value={0}
             titleValue=""
             title="Berjalan"
-            publishedVal="gagal-test"
-            routePublish={() => handlePublish("gagal-test")}
+            publishedVal="berjalan"
+            routePublish={() => handlePublish("berjalan")}
           />
         </div>
       </div>
@@ -372,6 +417,57 @@ const ListTraining = () => {
                   </tbody>
                 </table>
               </div>
+
+              <div className="row">
+                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <Pagination
+                    activePage={1}
+                    itemsCountPerPage={5}
+                    totalItemsCount={10}
+                    pageRangeDisplayed={3}
+                    onChange={handlePagination}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+
+                <div className="table-total ml-auto">
+                  <div className="row">
+                    <div className="col-4 mr-0 p-0 mt-3">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        onChange={(e) => handleLimit(e.target.value)}
+                        onBlur={(e) => handleLimit(e.target.value)}
+                      >
+                        <option>5</option>
+                        <option>10</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto pt-3">
+                      <p
+                        className="align-middle mt-3"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data 6
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -396,33 +492,43 @@ const ListTraining = () => {
         <Modal.Body>
           <div className="form-group mb-5">
             <label className="p-0">Penyelenggara</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={options}
+              // defaultValue={academy}
+              // onChange={(e) => setAcademy(e.value)}
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Akademi</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={options}
+              // defaultValue={academy}
+              // onChange={(e) => setAcademy(e.value)}
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={options}
+              // defaultValue={academy}
+              // onChange={(e) => setAcademy(e.value)}
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Status Substansi</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={options}
+              // defaultValue={academy}
+              // onChange={(e) => setAcademy(e.value)}
+            />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Status Pelatihan</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <Select
+              options={options}
+              // defaultValue={academy}
+              // onChange={(e) => setAcademy(e.value)}
+            />
           </div>
           <div className="row">
             <div className="form-group mb-5 col-md-6">

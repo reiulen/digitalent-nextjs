@@ -22,48 +22,54 @@ const TriggeredQuestionComponent = ({
 
     if (index == null && parent == null && children != null) {
       const listOption = list[children];
-      listOption.option = value;
-      if (name === "image") {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            listOption.image = reader.result;
-          }
-        };
+      if (name !== "question_image") listOption.option = value;
+      if (name === "question_image") {
         if (e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              listOption.image = reader.result;
+            }
+          };
           reader.readAsDataURL(e.target.files[0]);
+          listOption.image_name = e.target.files[0].name;
+          listOption.image_preview = URL.createObjectURL(e.target.files[0]);
         }
       }
     }
 
     if (index == null && parent != null && children != null) {
       const listAnswer = list[parent].sub[children];
-      listAnswer.question = value;
-      if (name === "image") {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            listAnswer.image = reader.result;
-          }
-        };
+      if (name !== "question_image") listAnswer.option = value;
+      if (name === "question_image") {
         if (e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              listAnswer.image = reader.result;
+            }
+          };
           reader.readAsDataURL(e.target.files[0]);
+          listAnswer.image_name = e.target.files[0].name;
+          listAnswer.image_preview = URL.createObjectURL(e.target.files[0]);
         }
       }
     }
 
     if (index != null && parent != null && children != null) {
       const listOption = list[index].sub[parent].answer[children];
-      listOption.option = value;
-      if (name === "image") {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            listOption.image = reader.result;
-          }
-        };
+      if (name !== "question_image") listOption.option = value;
+      if (name === "question_image") {
         if (e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              listOption.image = reader.result;
+            }
+          };
           reader.readAsDataURL(e.target.files[0]);
+          listOption.image_name = e.target.files[0].name;
+          listOption.image_preview = URL.createObjectURL(e.target.files[0]);
         }
       }
     }
@@ -125,6 +131,8 @@ const TriggeredQuestionComponent = ({
         key: newKey,
         option: "",
         image: "",
+        image_preview: "",
+        image_name: "",
         type: type,
         is_next: false,
         sub: [],
@@ -137,7 +145,14 @@ const TriggeredQuestionComponent = ({
       const lastobj = listArrAnswer[listArrAnswer.length - 1];
       const keyIndex = lastobj.key.charCodeAt(0);
       const newKey = String.fromCharCode(keyIndex + 1);
-      const newObj = { key: newKey, option: "", image: "", type: type };
+      const newObj = {
+        key: newKey,
+        option: "",
+        image: "",
+        image_preview: "",
+        image_name: "",
+        type: type,
+      };
       listArrAnswer.push(newObj);
     }
     setAnswer(list);
@@ -156,9 +171,30 @@ const TriggeredQuestionComponent = ({
           image: "",
           is_next: false,
           answer: [
-            { key: "A", option: "", image: "", type: "choose" },
-            { key: "B", option: "", image: "", type: "choose" },
-            { key: "C", option: "", image: "", type: "choose" },
+            {
+              key: "A",
+              option: "",
+              image: "",
+              image_preview: "",
+              image_name: "",
+              type: "choose",
+            },
+            {
+              key: "B",
+              option: "",
+              image: "",
+              image_preview: "",
+              image_name: "",
+              type: "choose",
+            },
+            {
+              key: "C",
+              option: "",
+              image: "",
+              image_preview: "",
+              image_name: "",
+              type: "choose",
+            },
           ],
         };
         const listArrSub = list[children].sub;
@@ -180,9 +216,30 @@ const TriggeredQuestionComponent = ({
           image: "",
           is_next: false,
           answer: [
-            { key: "A", option: "", image: "", type: "choose" },
-            { key: "B", option: "", image: "", type: "choose" },
-            { key: "C", option: "", image: "", type: "choose" },
+            {
+              key: "A",
+              option: "",
+              image: "",
+              image_preview: "",
+              image_name: "",
+              type: "choose",
+            },
+            {
+              key: "B",
+              option: "",
+              image: "",
+              image_preview: "",
+              image_name: "",
+              type: "choose",
+            },
+            {
+              key: "C",
+              option: "",
+              image: "",
+              image_preview: "",
+              image_name: "",
+              type: "choose",
+            },
           ],
         };
         const listArrSub = list[parent].sub;
@@ -212,9 +269,11 @@ const TriggeredQuestionComponent = ({
                         {row.image ? (
                           <Image
                             src={
-                              process.env.END_POINT_API_IMAGE_SUBVIT +
-                              "survey/images/" +
-                              row.image
+                              row.image_preview.includes("blob")
+                                ? row.image_preview
+                                : process.env.END_POINT_API_IMAGE_SUBVIT +
+                                  "survey/images/" +
+                                  row.image_preview
                             }
                             alt="logo"
                             width={148}
@@ -241,12 +300,15 @@ const TriggeredQuestionComponent = ({
                             type="file"
                             className="custom-file-input"
                             name="question_image"
+                            onChange={(e) =>
+                              handleInputChange(e, null, null, i)
+                            }
                           />
                           <label
                             className="custom-file-label"
                             htmlFor="customFile"
                           >
-                            Choose file
+                            {row.image_name || "Pilih Gambar"}
                           </label>
                         </div>
                       </div>
@@ -309,9 +371,11 @@ const TriggeredQuestionComponent = ({
                               {rowY.image != "" ? (
                                 <Image
                                   src={
-                                    process.env.END_POINT_API_IMAGE_SUBVIT +
-                                    "survey/images/" +
-                                    "7d9b33fa-4078-4f82-a07b-026a68468412.jpeg"
+                                    rowY.image_preview.includes("blob")
+                                      ? rowY.image_preview
+                                      : process.env.END_POINT_API_IMAGE_SUBVIT +
+                                        "survey/images/" +
+                                        rowY.image_preview
                                   }
                                   alt="logo"
                                   width={148}
@@ -339,12 +403,15 @@ const TriggeredQuestionComponent = ({
                                   type="file"
                                   className="custom-file-input"
                                   name="question_image"
+                                  onChange={(e) =>
+                                    handleInputChange(e, null, i, j)
+                                  }
                                 />
                                 <label
                                   className="custom-file-label"
                                   htmlFor="customFile"
                                 >
-                                  Choose file
+                                  {rowY.image_name || "Pilih Gambar"}
                                 </label>
                               </div>
                             </div>
@@ -397,7 +464,16 @@ const TriggeredQuestionComponent = ({
                                             key={k}
                                           >
                                             <Image
-                                              src="/assets/media/Gambar.svg"
+                                              src={
+                                                rowX.image_preview.includes(
+                                                  "blob"
+                                                )
+                                                  ? rowX.image_preview
+                                                  : process.env
+                                                      .END_POINT_API_IMAGE_SUBVIT +
+                                                    "survey/images/" +
+                                                    rowX.image_preview
+                                              }
                                               alt="logo"
                                               width={148}
                                               height={90}
@@ -423,12 +499,16 @@ const TriggeredQuestionComponent = ({
                                                 type="file"
                                                 className="custom-file-input"
                                                 name="question_image"
+                                                onChange={(e) =>
+                                                  handleInputChange(e, i, j, k)
+                                                }
                                               />
                                               <label
                                                 className="custom-file-label"
                                                 htmlFor="customFile"
                                               >
-                                                Choose file
+                                                {rowX.image_name ||
+                                                  "Pilih Gambar"}
                                               </label>
                                             </div>
                                           </div>
