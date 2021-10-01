@@ -1,17 +1,13 @@
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
+import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
-import Pagination from "react-js-pagination";
-import { getAllSertifikat } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import { wrapper } from "../../../redux/store";
+import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
 
-const KelolaSertifikat = dynamic(
+const KelolaSertifikatID = dynamic(
   () =>
     import(
-      "../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan.jsx"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/detail-sertifikat"
     ),
   {
     loading: function loadingNow() {
@@ -23,21 +19,18 @@ const KelolaSertifikat = dynamic(
 
 export default function KelokaSertifikatPage(props) {
   const session = props.session.user.user.data;
-
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <KelolaSertifikat token={session.token} />
+        <KelolaSertifikatID token={session} />
       </div>
     </>
   );
 }
 
-// Function GETSERVERSIDE PROPS
 export const getServerSideProps = wrapper.getServerSideProps(
   store =>
     async ({ query, req }) => {
-      console.log(query, "INI QUERY");
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -48,7 +41,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       await store.dispatch(
-        getAllSertifikat(
+        getDetailParticipant(
+          query.id,
           query.page,
           query.keyword,
           query.limit,
@@ -59,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "List Akademi - Sertifikat" },
+        props: { session, title: "List Peserta - Sertifikat" },
       };
     }
 );

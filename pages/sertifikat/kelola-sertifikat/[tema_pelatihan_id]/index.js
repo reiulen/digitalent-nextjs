@@ -1,17 +1,18 @@
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import Layout from "../../../../components/templates/layout.component";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { getSession } from "next-auth/client";
 import Pagination from "react-js-pagination";
-import { getAllSertifikat } from "../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import { wrapper } from "../../../redux/store";
+import { wrapper } from "../../../../redux/store";
+import { getSession } from "next-auth/client";
+import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
-const KelolaSertifikat = dynamic(
+const KelolaSertifikatNamaPelatihanID = dynamic(
   () =>
     import(
-      "../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan.jsx"
+      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/tema-pelatihan.jsx"
     ),
   {
     loading: function loadingNow() {
@@ -27,17 +28,15 @@ export default function KelokaSertifikatPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <KelolaSertifikat token={session.token} />
+        <KelolaSertifikatNamaPelatihanID token={session.token} />
       </div>
     </>
   );
 }
 
-// Function GETSERVERSIDE PROPS
 export const getServerSideProps = wrapper.getServerSideProps(
   store =>
     async ({ query, req }) => {
-      console.log(query, "INI QUERY");
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -47,8 +46,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
       await store.dispatch(
-        getAllSertifikat(
+        getDetailSertifikat(
+          query.tema_pelatihan_id,
           query.page,
           query.keyword,
           query.limit,
@@ -59,7 +60,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "List Akademi - Sertifikat" },
+        props: { session, title: "List Nama Pelatihan - Sertifikat" },
       };
     }
 );
