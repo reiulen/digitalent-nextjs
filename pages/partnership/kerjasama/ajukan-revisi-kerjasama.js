@@ -1,5 +1,3 @@
-import Layout from "../../../components/templates/layout.component";
-// import AjukanRevisiKerjasama from "../../../components/content/partnership/kerjasama/detailRevisiKerjasama";
 import dynamic from "next/dynamic";
 
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
@@ -11,7 +9,7 @@ const AjukanRevisiKerjasama = dynamic(
     import(
       "../../../components/content/partnership/kerjasama/detailRevisiKerjasama"
     ),
-  { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function DetailRevisiKerjasama(props) {
@@ -19,9 +17,7 @@ export default function DetailRevisiKerjasama(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Detail Data Kerjasama - Partnership"> */}
         <AjukanRevisiKerjasama token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

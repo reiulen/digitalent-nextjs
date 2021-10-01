@@ -1,6 +1,3 @@
-// import Layout from "../../../../components/templates/layout.component";
-// import Table from "../../../../components/content/partnership/user/tanda-tangan/table";
-
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
@@ -10,7 +7,7 @@ const Table = dynamic(
     import(
       "../../../../components/content/partnership/user/tanda-tangan/table"
     ),
-  { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function IndexPage(props) {
@@ -18,9 +15,7 @@ export default function IndexPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Tanda tangan digital - Partnership"> */}
         <Table token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

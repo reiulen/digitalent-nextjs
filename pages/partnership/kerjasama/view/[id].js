@@ -1,5 +1,3 @@
-// import Layout from "../../../../components/templates/layout.component";
-// import DetailKerjasama from "../../../../components/content/partnership/manajemen-kerjasama/detailDokumenKerjasama";
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -10,7 +8,7 @@ const DetailKerjasama = dynamic(
     import(
       "../../../../components/content/partnership/kerjasama/detailDokumenKerjasama"
     ),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
 export default function detailDokumenKerjasama(props) {
@@ -18,9 +16,7 @@ export default function detailDokumenKerjasama(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Detail Data Kerjasama - Partnership"> */}
         <DetailKerjasama token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

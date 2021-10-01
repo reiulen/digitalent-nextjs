@@ -1,6 +1,3 @@
-// import Layout from "../../../../components/templates/layout.component";
-// import ReviewDokumenKerjasama from "../../../../components/content/partnership/user/reviewDokumenKerjasama";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -10,7 +7,7 @@ const ReviewDokumenKerjasama = dynamic(
     import(
       "../../../../components/content/partnership/user/reviewDokumenKerjasama"
     ),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
 export default function RevisiListPage(props) {
@@ -18,9 +15,7 @@ export default function RevisiListPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Review Kerjasama - Partnership"> */}
         <ReviewDokumenKerjasama token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

@@ -1,6 +1,3 @@
-// import Layout from "../../../../components/templates/layout.component";
-// import Submit from "../../../../components/content/partnership/user/submit";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -8,7 +5,7 @@ import { wrapper } from "../../../../redux/store";
 
 const Submit = dynamic(
   () => import("../../../../components/content/partnership/user/submit"),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
 export default function SubmitPage(props) {
@@ -16,9 +13,7 @@ export default function SubmitPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Submit dokumen kerjasama - Partnership"> */}
         <Submit token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

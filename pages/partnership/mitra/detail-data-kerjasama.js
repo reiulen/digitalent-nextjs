@@ -1,6 +1,3 @@
-// import Layout from "../../../components/templates/layout.component";
-// import DetailDataKerjasama from "../../../components/content/partnership/manajemen-mitra/detailDataKerjasama";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -9,16 +6,14 @@ import { wrapper } from "../../../redux/store";
 const DetailDataKerjasama = dynamic(
   () =>
     import("../../../components/content/partnership/mitra/detailDataKerjasama"),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 export default function DetailDataKerjasamaPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Detail Master Mitra - Paretnership"> */}
         <DetailDataKerjasama token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );
