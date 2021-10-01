@@ -124,7 +124,7 @@ export const newArtikel = (artikelData, token) => async dispatch => {
     }
 };
 
-export const updateArtikel = (artikelData, token) => async dispatch => {
+export const updateArtikel = (artikelData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_ARTIKEL_REQUEST });
 
@@ -135,7 +135,7 @@ export const updateArtikel = (artikelData, token) => async dispatch => {
         };
 
         const { data } = await axios.post(
-            process.env.END_POINT_API_PUBLIKASI + "api/artikel",
+            process.env.END_POINT_API_PUBLIKASI + `api/artikel/${artikelData.id}`,
             artikelData,
             config
         );
@@ -144,6 +144,9 @@ export const updateArtikel = (artikelData, token) => async dispatch => {
             type: UPDATE_ARTIKEL_SUCCESS,
             payload: data,
         });
+
+        // console.log (`from artikel action ${data}`)
+
     } catch (error) {
         dispatch({
             type: UPDATE_ARTIKEL_FAIL,
