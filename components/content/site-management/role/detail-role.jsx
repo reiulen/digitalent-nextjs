@@ -101,9 +101,6 @@ const DetailRole = ({ token }) => {
               </div>
             </div>
 
-
-           
-
             <div>
               <h3
                 className="card-title font-weight-bolder text-dark w-100 pb-5 mb-5 mt-5"

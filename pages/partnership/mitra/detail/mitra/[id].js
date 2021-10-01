@@ -1,6 +1,3 @@
-// import Layout from "../../../../../components/templates/layout.component";
-// import DetailDataKerjasamaById from "../../../../../components/content/partnership/manajemen-mitra/detailKerjasamaById";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -11,7 +8,7 @@ const DetailDataKerjasamaById = dynamic(
     import(
       "../../../../../components/content/partnership/mitra/detailKerjasamaById"
     ),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
 export default function DetailDataKerjasamaPage(props) {
@@ -19,9 +16,7 @@ export default function DetailDataKerjasamaPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Detail Data Master Mitra - Paretnership"> */}
         <DetailDataKerjasamaById token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

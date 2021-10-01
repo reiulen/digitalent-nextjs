@@ -15,7 +15,7 @@ import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const SubmitKerjasama = () => {
+const SubmitKerjasama = ({token}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -71,19 +71,6 @@ const SubmitKerjasama = () => {
 
   
   const submit = (e) => {
-    // console.log("institution_name",institution_name)
-    // console.log("date",date)
-    // console.log("title",title)
-    // console.log("period",period)
-    // console.log("periodUnit",periodUnit)
-    // console.log("cooperationC_id",cooperationC_id)
-    // console.log("period_date_start",period_date_start)
-    // console.log("newDate",newDate)
-    // console.log("agreement_number_partner",agreement_number_partner)
-    // console.log("agreement_number_kemkominfo",agreement_number_kemkominfo)
-    // console.log("signing_date",signing_date)
-    // console.log("document",document)
-    // console.log("AllCooperation",AllCooperation)
 
     e.preventDefault();
 
@@ -141,11 +128,11 @@ const SubmitKerjasama = () => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/proposal-revisi-document/${router.query.id}`,
+              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/proposal-revisi-document/${router.query.id}`,
               formData,
               {
                 headers: {
-                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                  authorization: `Bearer ${token}`,
                 },
               }
             );
@@ -222,10 +209,10 @@ const SubmitKerjasama = () => {
   const cekProgresStatus = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );

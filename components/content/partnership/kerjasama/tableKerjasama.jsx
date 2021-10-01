@@ -182,7 +182,7 @@ const Table = ({token}) => {
     async function getWillExpire (token){
       try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,
         {
           headers: {
             authorization: `Bearer ${token}`,

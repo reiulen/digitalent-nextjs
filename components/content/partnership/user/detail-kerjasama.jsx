@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-const DetailDokumenKerjasama = () => {
+const DetailDokumenKerjasama = ({token}) => {
   const dispatch = useDispatch();
   const router = useRouter();
 

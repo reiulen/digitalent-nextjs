@@ -96,9 +96,8 @@
 //       return config
 //     }
 //   })
-  
-// )
 
+// )
 
 module.exports = {
   reactStrictMode: true,
@@ -132,11 +131,10 @@ module.exports = {
       "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // partnership
-    TOKEN_PARTNERSHIP_TEMP:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMOWdGbzFOOG1UMWptelg3OWJuRkZFY0IyN2NWMmM3RyIsImlhdCI6MTYzMjg5MjAzMCwiZXhwIjoxMDI3MjgwNTYzMCwibmJmIjoxNjMyODkyMDMwLCJqdGkiOiJadm13Q00zTUYyNzZ5ckpaIiwic3ViIjo5LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3IiwidXNlciI6eyJpZCI6OSwibmFtZSI6IlJhaG1hdCBIaWRheWF0dWxsYWgiLCJlbWFpbCI6InJhaG1hdGhpZGF5YXR1bGxhaDk5NkBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZF9hdCI6IjIwMjEtMDktMjdUMDQ6MjQ6NTQuMDAwMDAwWiIsInJlbWVtYmVyX3Rva2VuIjoiOTU3MTU0Iiwicm9sZXMiOiJbbWl0cmFdIiwiY3JlYXRlZF9hdCI6IjIwMjEtMDktMjdUMDQ6MjQ6MTQuMDAwMDAwWiIsInVwZGF0ZWRfYXQiOiIyMDIxLTA5LTI3VDA0OjI0OjU0LjAwMDAwMFoifX0.qYev_TBlYql8ny5sp4B0uBAZ3gPhfdE8IiFpxpsM_Bs",
 
     END_POINT_API_PARTNERSHIP: "http://api-dts-dev.majapahit.id/partnership/",
-    END_POINT_API_PARTNERSHIP_MITRA: "http://api-dts-dev.majapahit.id/",
+
+    END_POINT_API_PARTNERSHIP_MITRA: "http://dts-partnership-dev.majapahit.id/",
 
     END_POINT_API_IMAGE_PARTNERSHIP:
       "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
@@ -147,5 +145,4 @@ module.exports = {
     //sertifikat
     END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
   },
-  
 };

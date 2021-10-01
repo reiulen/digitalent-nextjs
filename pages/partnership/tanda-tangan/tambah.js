@@ -1,6 +1,3 @@
-// import Layout from "../../../components/templates/layout.component";
-// import Tambah from "../../../components/content/partnership/tanda-tangan/tambah";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -8,16 +5,14 @@ import { wrapper } from "../../../redux/store";
 
 const Tambah = dynamic(
   () => import("../../../components/content/partnership/tanda-tangan/tambah"),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 export default function TambahPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Tambah Tanda Tangan Digital - Partnership"> */}
         <Tambah token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

@@ -163,7 +163,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
 
         try {
           let { data } = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${router.query.id}`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${router.query.id}`,
             formData,
             {
           headers: {
@@ -250,7 +250,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
     async function setDataSingle (id,token){
       try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,

@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 import Style from "../../../../styles/progressbar.module.css";
 
-function RevisiList() {
+function RevisiList({token}) {
 
   const router = useRouter();
   const cardContainer = {
@@ -37,10 +37,10 @@ function RevisiList() {
   const getCardREviewList = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/card-review/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/card-review/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );

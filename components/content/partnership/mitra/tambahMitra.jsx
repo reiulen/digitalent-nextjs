@@ -124,7 +124,7 @@ const TambahMitra = ({token}) => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/partners/create`,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/partners/create`,
               formData,
               {
           headers: {
@@ -196,7 +196,7 @@ const TambahMitra = ({token}) => {
     async function getDataProvinces (token){
       try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/option/provinces`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -224,7 +224,7 @@ const TambahMitra = ({token}) => {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cities/${indonesia_provinces_id}`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/option/cities/${indonesia_provinces_id}`,
             {
           headers: {
             authorization: `Bearer ${token}`,
