@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
+import Select from "react-select";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
@@ -31,7 +32,13 @@ const EditAcademy = () => {
 
   const [browsurName, setBrowsurName] = useState("Belum ada file");
   const [browsurFile, setBrowsurFile] = useState("");
-  const [status, setStatus] = useState();
+  const [brosurPreview, setBrowsurPreview] = useState("");
+  const [status, setStatus] = useState({ value: 0, label: "Unpublish" });
+
+  const optionsStatus = [
+    { value: 1, label: "Publish" },
+    { value: 0, label: "Unpublish" },
+  ];
 
   useEffect(() => {
     editorRef.current = {
@@ -51,24 +58,30 @@ const EditAcademy = () => {
 
   const onChangeLogo = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
-
-    if (type.includes(e.target.files[0].type)) {
-      setLogoFile(e.target.files[0]);
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setLogoPreview(reader.result);
+    if (e.target.files[0]) {
+      if (type.includes(e.target.files[0].type)) {
+        if (e.target.files[0].size > 5000000) {
+          e.target.value = null;
+          Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+        } else {
+          setLogoFile(e.target.files[0]);
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setLogoPreview(reader.result);
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+          setLogoName(e.target.files[0].name);
         }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-      setLogoName(e.target.files[0].name);
-    } else {
-      e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data gambar.",
-        "error"
-      );
+      } else {
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data gambar.",
+          "error"
+        );
+      }
     }
   };
 
@@ -80,32 +93,47 @@ const EditAcademy = () => {
 
   const onChangeBrowsur = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
-    if (type.includes(e.target.files[0].type)) {
-      setBrowsurFile(e.target.files[0]);
-      setBrowsurName(e.target.files[0].name);
-    } else {
-      e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data gambar.",
-        "error"
-      );
+    if (e.target.files[0]) {
+      if (type.includes(e.target.files[0].type)) {
+        if (e.target.files[0].size > 10000000) {
+          e.target.value = null;
+          Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+        } else {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setBrowsurPreview(reader.result);
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+          setBrowsurFile(e.target.files[0]);
+          setBrowsurName(e.target.files[0].name);
+        }
+      } else {
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data gambar.",
+          "error"
+        );
+      }
     }
   };
 
   const onDeleteBrowsur = () => {
     setBrowsurFile("");
     setBrowsurName("Belum ada file");
+    setBrowsurPreview("");
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const data = {
-        logoFile,
+        logoPreview,
         name,
         description,
-        browsurFile,
+        brosurPreview,
         status,
       };
       console.log(data);
@@ -201,7 +229,7 @@ const EditAcademy = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="placeholder"
+                  placeholder="Silahkan Masukan Nama Akademi"
                   className="form-control"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -265,20 +293,9 @@ const EditAcademy = () => {
                       name="question_image"
                       accept="image/png, image/jpeg , image/jpg ,application/pdf"
                       onChange={onChangeBrowsur}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("browsur")
-                      }
                     />
                     <label className="custom-file-label" htmlFor="customFile">
                       {browsurName}
-                    </label>
-                    <label style={{ marginTop: "15px" }}>
-                      {simpleValidator.current.message(
-                        "browsur",
-                        browsurFile,
-                        "required",
-                        { className: "text-danger" }
-                      )}
                     </label>
                   </div>
                   <button
@@ -298,21 +315,14 @@ const EditAcademy = () => {
                 <label className="col-form-label font-weight-bold">
                   Status
                 </label>
-                <select
-                  value={status}
-                  onBlur={(e) => {
-                    setStatus(e.target.value);
-                    simpleValidator.current.showMessageFor("status");
-                  }}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="form-control"
-                >
-                  <option value="" disabled selected>
-                    -- PILIH STATUS --
-                  </option>
-                  <option value={1}>Publish</option>
-                  <option value={0}>Unpublish</option>
-                </select>
+                <Select
+                  options={optionsStatus}
+                  defaultValue={status}
+                  onChange={(e) => setStatus(e.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
+                />
                 {simpleValidator.current.message("status", status, "required", {
                   className: "text-danger",
                 })}

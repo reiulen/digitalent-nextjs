@@ -30,11 +30,9 @@ const ListAcademy = () => {
   };
 
   const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
-    } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`);
-    }
+    let link = `${router.pathname}?page=1&keyword=${search}`;
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
   };
 
   const handleLimit = (val) => {
@@ -43,7 +41,7 @@ const ListAcademy = () => {
   };
 
   const onNewReset = () => {
-    router.replace("/subvit/substansi", undefined, { shallow: true });
+    router.replace("/pelatihan/akademi", undefined, { shallow: true });
   };
 
   const handleDelete = (id) => {
@@ -70,6 +68,33 @@ const ListAcademy = () => {
 
   return (
     <PageWrapper>
+      {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 mt-3">
@@ -181,6 +206,57 @@ const ListAcademy = () => {
                     </tr>
                   </tbody>
                 </table>
+              </div>
+
+              <div className="row">
+                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <Pagination
+                    activePage={1}
+                    itemsCountPerPage={5}
+                    totalItemsCount={10}
+                    pageRangeDisplayed={3}
+                    onChange={handlePagination}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+
+                <div className="table-total ml-auto">
+                  <div className="row">
+                    <div className="col-4 mr-0 p-0 mt-3">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        onChange={(e) => handleLimit(e.target.value)}
+                        onBlur={(e) => handleLimit(e.target.value)}
+                      >
+                        <option>5</option>
+                        <option>10</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto pt-3">
+                      <p
+                        className="align-middle mt-3"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data 6
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
