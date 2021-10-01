@@ -1,6 +1,3 @@
-// import Layout from "../../../../components/templates/layout.component";
-// import RevisiSubmit from "../../../../components/content/partnership/user/revisiSubmit";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -8,7 +5,7 @@ import { wrapper } from "../../../../redux/store";
 
 const RevisiSubmit = dynamic(
   () => import("../../../../components/content/partnership/user/revisiSubmit"),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
 export default function RevisiSubmitPage(props) {
@@ -16,9 +13,7 @@ export default function RevisiSubmitPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Pembahasan - Partnership"> */}
         <RevisiSubmit token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

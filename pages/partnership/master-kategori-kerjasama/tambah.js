@@ -1,5 +1,3 @@
-// import Layout from "../../../components/templates/layout.component";
-// import Tambah from "../../../components/content/partnership/master-kategori-kerjasama/tambah";
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -9,16 +7,14 @@ const Tambah = dynamic(
     import(
       "../../../components/content/partnership/master-kategori-kerjasama/tambah"
     ),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 export default function TambahPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Tambah Master Kategori Kerjasama - Partnership"> */}
         <Tambah token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

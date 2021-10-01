@@ -1,6 +1,3 @@
-// import Layout from "../../../components/templates/layout.component";
-// import Edit from "../../../components/content/partnership/master-kategori-kerjasama/edit";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -11,7 +8,7 @@ const Edit = dynamic(
     import(
       "../../../components/content/partnership/master-kategori-kerjasama/edit"
     ),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
 export default function TambahPage(props) {
@@ -19,9 +16,7 @@ export default function TambahPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Ubah Master Kategori Kerjasama - Partnership"> */}
         <Edit token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );
