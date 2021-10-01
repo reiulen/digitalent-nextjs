@@ -546,30 +546,28 @@ export const successGetSingleCooperation = (data) => {
   };
 };
 
-export const changeStatusList = (token, value, id) => {
+export const changeStatusList = (token, formData, id) => {
   return async (dispatch, getState) => {
     try {
-      let dataSend = { _method: "PUT", status: value };
       let { data } = await axios.post(
         `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/update-status/${id}`,
-        dataSend,
+        formData,
         {
           headers: {
             authorization: `Bearer ${token}`,
           },
         }
       );
-      dispatch(successChangeStatusList(value));
+      dispatch(successChangeStatusList());
     } catch (error) {
       console.log("error change status list");
     }
   };
 };
 
-export const successChangeStatusList = (value) => {
+export const successChangeStatusList = () => {
   return {
     type: CHANGE_STATUS_LIST_M,
-    value,
   };
 };
 export const reloadTable = () => {

@@ -34,10 +34,10 @@ export async function getOptionTtdPartner(token, id) {
   });
 }
 
-export async function statusListChange(token, dataSend, id) {
+export async function statusListChange(token, formData, id) {
   return await axios.post(
     `${config}api/signatures/update-status/${id}`,
-    dataSend,
+    formData,
     {
       headers: {
         authorization: `Bearer ${token}`,

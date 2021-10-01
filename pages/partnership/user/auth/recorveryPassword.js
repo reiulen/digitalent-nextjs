@@ -1,11 +1,11 @@
-import LoginUser from "../../../../components/content/partnership/user/auth/login";
+import RecoveryPassword from "../../../../components/content/partnership/user/auth/recoveryPassword";
 import { getSession } from "next-auth/client";
 
-export default function LoginMitra() {
+export default function RecoveryPasswordMitra() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <LoginUser />
+        <RecoveryPassword />
       </div>
     </>
   );
@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       data: "auth",
-      title: "Login - Partnership",
+      title: "Pemulihan Email - Partnership",
     },
   };
 }

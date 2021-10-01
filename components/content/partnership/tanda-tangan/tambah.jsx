@@ -102,6 +102,10 @@ const TambahTandaTangan = ({token}) => {
 
           // dispatch add ttd here
           dispatch(addTttd(token,formData))
+          router.push({
+                pathname: `/partnership/tanda-tangan`,
+                query: { success: true },
+              });
 
         }
       });
