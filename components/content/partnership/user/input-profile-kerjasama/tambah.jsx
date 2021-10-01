@@ -49,7 +49,7 @@ const Tambah = ({token}) => {
   });
 
   const submit = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (institution_name === "") {
       setError({
         ...error,
@@ -65,15 +65,16 @@ const Tambah = ({token}) => {
     }
 
     // jika pertama kali data profile kosong
-    // else if (agency_logo_api === "") {
-      else if ((agency_logo === "") && agency_logo_api) {
+    // else if ((agency_logo === "") && agency_logo_api) {
+    else if ((agency_logo_api === "") && (agency_logo === "") ) {
+   
         setError({
           ...error,
           agency_logo: "Harus isi gambar logo dengan format png",
         });
         notify("Harus isi gambar logo dengan format png");
-      }
-    // } 
+  
+    } 
     
     
     else if (address === "") {
@@ -166,10 +167,11 @@ const Tambah = ({token}) => {
               query: { successInputProfile: true },
             });
           } catch (error) {
-            // notify(error.response.data.message);
-            notify(
-              "cek field kab/kota anda apakah sudah sesuai dengan provinsi yang ada"
-            );
+            notify(error.response.data.message);
+            // notify(
+            //   "cek field kab/kota anda apakah sudah sesuai dengan provinsi yang ada"
+            // );
+
           }
         }
       });

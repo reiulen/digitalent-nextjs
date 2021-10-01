@@ -112,16 +112,15 @@ export const changeStatusList = (formData, id, token) => {
           },
         }
       );
-      dispatch(successChangeStatusList(value));
+      dispatch(successChangeStatusList());
     } catch (error) {
       console.log("error change status list,", error.response.data.message);
     }
   };
 };
 
-export const successChangeStatusList = (value) => {
+export const successChangeStatusList = () => {
   return {
     type: CHANGE_STATUS_LIST_M,
-    value,
   };
 };
