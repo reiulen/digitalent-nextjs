@@ -163,6 +163,7 @@ import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
 import { allMCooporationReducerMK } from "./partnership/managementCooporation.reducer";
 import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
 // ================== user
+import { authenticationReducer } from "./partnership/user/authentication.reducer";
 import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
 import { dashboardReducer } from "./partnership/dashboard.reducer";
 import { allTandaTanganUserReducer } from "./partnership/user/tanda-tangan.reducer";
@@ -339,10 +340,10 @@ const reducer = combineReducers({
   // ================================= => user
   allCooperationUser: cooperationUserReducer,
   allTandaTanganUser: allTandaTanganUserReducer,
-
   allProvinsi: allProvinsiReducer,
   allKota: allKotaReducer,
   allFunctionls: reducerFunctionals,
+  allAuthentication: authenticationReducer,
 
   // SITE MANAGEMENT
   // ============== ROLE ============

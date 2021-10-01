@@ -49,16 +49,6 @@ const Tambah = ({token}) => {
   });
 
   const submit = (e) => {
-    // console.log("institution_name",institution_name)
-    // console.log("agency_logo",agency_logo)
-    // console.log("wesite",wesite)
-    // console.log("address",address)
-    // console.log("indonesia_cities_id",indonesia_cities_id)
-    // console.log("indonesia_provinces_id",indonesia_provinces_id)
-    // console.log("postal_code",postal_code)
-    // console.log("pic_name",pic_name)
-    // console.log("pic_contact_number",pic_contact_number)
-    // console.log("pic_email",pic_email)
     e.preventDefault();
     if (institution_name === "") {
       setError({
@@ -271,7 +261,6 @@ const Tambah = ({token}) => {
         }
       );
 
-
       if (data) {
         setAgency_logo_api(
           data.data.agency_logo === "-" ? "" : data.data.agency_logo
@@ -298,8 +287,6 @@ const Tambah = ({token}) => {
           setIndonesia_cities_id(citiesss);
           setIndonesia_provinces_id(provinciesss);
         } else {
-          // setIndonesia_cities_id(data.data.province === "-" ? "" : data.data.province);
-          // setIndonesia_provinces_id(data.data.city === "-" ? "" : data.data.city);
           console.log("log")
         }
       }
