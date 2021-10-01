@@ -124,7 +124,7 @@ const RegisterMitra = () => {
           <div className="container ">
             <div className="title-login text-center mt-6">
               <Image
-                src="/assets/logo/logo-5.svg"
+                src="/assets/logo/logo-6.svg"
                 width={246}
                 height={96}
                 alt="Logo-5"

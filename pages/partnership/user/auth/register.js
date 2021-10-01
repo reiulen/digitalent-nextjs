@@ -25,6 +25,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       data: "auth",
+      title: "Daftar - Partnership",
     },
   };
 }

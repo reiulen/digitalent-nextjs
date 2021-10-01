@@ -100,14 +100,12 @@ export const searchByKey = (value) => {
   };
 };
 
-export const changeStatusList = (value, id, token) => {
-  console.log("value", value, "id", id);
+export const changeStatusList = (formData, id, token) => {
   return async (dispatch, getState) => {
     try {
-      let dataSend = { _method: "put", status: value };
       let { data } = await axios.post(
         `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/update-status/${id}`,
-        dataSend,
+        formData,
         {
           headers: {
             authorization: `Bearer ${token}`,

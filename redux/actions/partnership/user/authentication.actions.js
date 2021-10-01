@@ -36,3 +36,25 @@ export const mitraRegister = (formData) => {
     }
   };
 };
+export const vericationEmail = (formData) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: RECOVERY_PASSWORD_PROCESS,
+      });
+      const { data } = await axios.post(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/authentication/forgot-password`,
+        formData
+      );
+      dispatch({
+        type: RECOVERY_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: RECOVERY_PASSWORD_ERROR,
+        payload: error.response.data.message,
+      });
+    }
+  };
+};
