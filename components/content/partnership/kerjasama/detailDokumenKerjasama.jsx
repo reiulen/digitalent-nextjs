@@ -18,6 +18,7 @@ const DetailDokumenKerjasama = ({token}) => {
   const allMK = useSelector((state) => state.allMK);
 
   const [pdfFIle, setPdfFIle] = useState("");
+  
 
   // const getSingleValue = async (id) => {
   //   try {
