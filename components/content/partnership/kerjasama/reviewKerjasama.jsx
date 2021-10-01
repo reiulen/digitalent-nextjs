@@ -153,7 +153,7 @@ const ReviewKerjasama = ({ token }) => {
     async function setDataSingleSelesaiReview(id, version, token) {
       try {
         let { data } = await axios.get(
-          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/show-revisi/${id}${version}`,
+          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/show-revisi/${id}/${version}`,
           {
             headers: {
               authorization: `Bearer ${token}`,
