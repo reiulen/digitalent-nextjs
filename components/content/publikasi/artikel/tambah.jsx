@@ -10,15 +10,43 @@ import Swal from "sweetalert2";
 import { TagsInput } from "react-tag-input-component";
 import DatePicker from 'react-datepicker'
 
+// import Editor from 'ckeditor5-custom-build/build/ckeditor';
+// import { CKEditor } from '@ckeditor/ckeditor5-react'
+
+// import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials'
+// import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph'
+// import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold'
+// import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic'
+// import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline'
+// import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough'
+// // import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote'
+// import Links from '@ckeditor/ckeditor5-link/src/link'
+// import MediaEmbed from '@ckeditor/ckeditor5-media-embed/src/mediaembed'
+// import PasteFromOffice from '@ckeditor/ckeditor5-paste-from-office/src/pastefromoffice'
+// import Heading from '@ckeditor/ckeditor5-heading/src/heading'
+// import Font from '@ckeditor/ckeditor5-font/src/font'
+// import Images from '@ckeditor/ckeditor5-image/src/image'
+// import ImageStyle from '@ckeditor/ckeditor5-image/src/imagestyle'
+// import ImageToolbar from '@ckeditor/ckeditor5-image/src/imagetoolbar'
+// import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload'
+// import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize'
+// import List from '@ckeditor/ckeditor5-list/src/list'
+// import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
+// import Table from '@ckeditor/ckeditor5-table/src/table'
+// import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar'
+// import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation'
+// import Indent from '@ckeditor/ckeditor5-indent/src/indent'
+// import IndentBlock from '@ckeditor/ckeditor5-indent/src/indentblock'
+// import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter'
+
 import {
   newArtikel,
   clearErrors,
 } from "../../../../redux/actions/publikasi/artikel.actions";
-import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
+// import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { NEW_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
-// import Editor from "../../../Editor"
 
 const TambahArtikel = ({token}) => {
   const editorRef = useRef();
@@ -41,6 +69,68 @@ const TambahArtikel = ({token}) => {
     error: allError,
     kategori,
   } = useSelector((state) => state.allKategori);
+
+  // const Editor = dynamic(() => import ("../../../Editor"), {
+  //   ssr: false
+  // })
+
+  // const editorConfiguration = {
+  //   placeholder: "Tulis Deskripsi",
+  //   plugins: [
+  //     Essentials,
+  //     Paragraph,
+  //     Bold,
+  //     Italic,
+  //     Heading,
+  //     Indent,
+  //     IndentBlock,
+  //     Underline,
+  //     Strikethrough,
+  //     // BlockQuote,
+  //     Font,
+  //     Alignment,
+  //     List,
+  //     Links,
+  //     MediaEmbed,
+  //     PasteFromOffice,
+  //     Images,
+  //     ImageStyle,
+  //     ImageToolbar,
+  //     ImageUpload,
+  //     ImageResize,
+  //     Base64UploadAdapter,
+  //     Table,
+  //     TableToolbar,
+  //     TextTransformation,
+  //   ],
+  //   toolbar: [
+  //     'heading',
+  //     '|',
+  //     'bold',
+  //     'italic',
+  //     'underline',
+  //     'strikethrough',
+  //     '|',
+  //     'fontSize',
+  //     'fontColor',
+  //     'fontBackgroundColor',
+  //     '|',
+  //     'alignment',
+  //     'outdent',
+  //     'indent',
+  //     'bulletedList',
+  //     'numberedList',
+  //     'blockQuote',
+  //     '|',
+  //     'link',
+  //     'insertTable',
+  //     'imageUpload',
+  //     'mediaEmbed',
+  //     '|',
+  //     'undo',
+  //     'redo',
+  //   ],
+  // };
 
   useEffect(() => {
     // dispatch(getAllKategori());
@@ -523,7 +613,7 @@ const TambahArtikel = ({token}) => {
                           //       ]
                           //     }
                           //   },
-                          //   placeholder: 'Tulis Disini'
+                          //   placeholder: 'Tulis Deskripsi'
                           // }}
                         />
                         
@@ -537,6 +627,15 @@ const TambahArtikel = ({token}) => {
                         { className: "text-danger" }
                       )}
                     </div>
+                    {/* <Editor value="" onChange={(data) => setIsiArtikel(data)}/> */}
+                    {/* <CKEditor 
+                      editor={ Editor }
+                      config={ editorConfiguration }
+                      onChange={ ( event, editor ) => {
+                        const data = editor.getData();
+                        console.log( { event, editor, data } );
+                      }}
+                    /> */}
                   </div>
                 </div>
 
