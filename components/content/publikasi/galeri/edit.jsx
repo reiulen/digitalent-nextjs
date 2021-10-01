@@ -151,7 +151,7 @@ const EditGaleri = ({ token }) => {
     //     "/assets/media/default.jpg"
     //   ); //belum
     const [kategori_id, setKategoriId] = useState(galeri.kategori_id); //belum
-    const [users_id, setUserId] = useState(galeri.users_id);
+    const [users_id, setUserId] = useState(3);
     const [tag, setTag] = useState(galeri.tag);
     const [publish, setPublish] = useState(galeri.publish === 1 ? true : false);
     const [_method, setMethod] = useState("put");
@@ -341,7 +341,7 @@ const EditGaleri = ({ token }) => {
 
             // dispatch(newGaleri(data, token))
             dispatch(onCall(data, token))
-            console.log(data)
+            console.log("Unpublish : ", data)
             // console.log(image)
 
         } else {
@@ -360,7 +360,7 @@ const EditGaleri = ({ token }) => {
             }
 
             dispatch(onCall(data, token))
-            console.log(data)
+            console.log("Publish : ", data)
             // console.log(image)
         }
     }
@@ -504,7 +504,7 @@ const EditGaleri = ({ token }) => {
     return (
         <PageWrapper>
             {
-                console.log(galeri)
+                console.log("Cek DATA :",galeri)
             }
 
             {/* {

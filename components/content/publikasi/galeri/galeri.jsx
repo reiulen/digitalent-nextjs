@@ -319,7 +319,7 @@ const Galeri = ({ token }) => {
     return (
         <PageWrapper>
             {
-                console.log(galeri)
+                console.log("Data Awal : ",galeri)
             }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -647,7 +647,7 @@ const Galeri = ({ token }) => {
                                                             <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.judul}</td>
                                                             <td className='align-middle'>{
-                                                                row.status === 1 ? (
+                                                                row.publish === 1 ? (
                                                                     row.tanggal_publish
                                                                 ) : (
                                                                     <span className="label label-inline label-light-danger font-weight-bold">
@@ -660,7 +660,7 @@ const Galeri = ({ token }) => {
                                                                 Super Admin
                                                             </td>
                                                             <td className='align-middle'>
-                                                                {row.status === 1 ? (
+                                                                {row.publish === 1 ? (
                                                                     <span className="label label-inline label-light-success font-weight-bold">
                                                                         Publish
                                                                     </span>
@@ -818,10 +818,38 @@ const Galeri = ({ token }) => {
                         <div className="modal-body text-center" style={{ height: '400px' }}>
                             <div className="row">
                                 <div className="col-7">
+                                    {/* {console.log("Cek Modal Image :", galeri)} */}
+                                    {/* {
+                                        galeri && galeri.gallery.length !== 0 ?
+                                            galeri.gallery.map((row, i) => {
+                                                // { console.log("Modal Preview : ", row) }
+                                                return (
+                                                    <Image
+                                                        // key={row.id_gallery}
+                                                        key={i}
+                                                        loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                            "publikasi/images/" +
+                                                            row.gambar)}
+                                                        src={
+                                                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                            "publikasi/images/" +
+                                                            row.gambar
+                                                        }
+
+                                                        alt='image'
+                                                        layout='fill'
+                                                        objectFit='cover'
+                                                    />
+                                                )
+                                            })
+
+                                            :
+                                            null
+                                    } */}
                                     {
                                         galeri && galeri.gallery.length !== 0 ?
                                             galeri.gallery.map((row, i) => {
-                                                { console.log("Modal Preview : ", row.id_gallery) }
+                                                // { console.log("Modal Preview : ", row) }
                                                 return (
                                                     <Image
                                                         // key={row.id_gallery}

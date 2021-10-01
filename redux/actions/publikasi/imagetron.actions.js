@@ -122,14 +122,19 @@ export const newImagetron = (imagetronData, token) => async (dispatch) => {
     }
 }
 
-export const updateImagetron = (imagetronData) => async (dispatch) => {
+export const updateImagetron = (imagetronData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_IMAGETRON_REQUEST });
 
-        let link =
-            process.env.END_POINT_API_PUBLIKASI + `api/imagetron/${imagetronData.id}`;
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/imagetron/${imagetronData.id}`;
 
-        const { data } = await axios.post(link, imagetronData);
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+
+        const { data } = await axios.post(link, imagetronData, config);
 
         dispatch({
             type: UPDATE_IMAGETRON_SUCCESS,

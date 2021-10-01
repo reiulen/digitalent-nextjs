@@ -146,9 +146,7 @@ const TambahGaleri = ({ token }) => {
     // const [gambarPreview, setGambarPreview] = useState(
     //     "/assets/media/default.jpg"
     //   );
-    const [gambarPreview, setGambarPreview] = useState(
-        []
-    );
+    const [gambarPreview, setGambarPreview] = useState([]);
     const [image, setImage] = useState([
         { key: 1, imagePreview: "", imageFile: "", imageName: "" },
     ]);
@@ -327,10 +325,10 @@ const TambahGaleri = ({ token }) => {
 
             // dispatch(newGaleri(data, token))
 
-            // console.log(data)
+            dispatch(onCall(data, token))
+            console.log("UNPUBLISH : ", data)
             // console.log(image)
 
-            dispatch(onCall(data, token))
         } else {
             const data = {
                 judul,
@@ -345,7 +343,7 @@ const TambahGaleri = ({ token }) => {
             }
 
             dispatch(onCall(data, token))
-            // console.log(data)
+            console.log("PUBLISH : ", data)
             // console.log(image)
         }
     }

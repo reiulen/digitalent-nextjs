@@ -77,7 +77,7 @@ export const getAllKategori = (token) => async dispatch => {
         //     }
         // }
 
-        console.log(`Kategori: ${token}`);
+        // console.log(`Kategori: ${token}`);
         const config = {
             headers: {
                 Authorization: "Bearer " + token,
@@ -213,7 +213,7 @@ export const newKategori = (kategoriData, token) => async dispatch => {
     }
 };
 
-export const deleteKategori = id => async dispatch => {
+export const deleteKategori = (id) => async dispatch => {
     try {
         dispatch({ type: DELETE_KATEGORI_REQUEST });
 

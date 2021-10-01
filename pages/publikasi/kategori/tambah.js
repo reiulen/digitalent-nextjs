@@ -6,6 +6,7 @@ import { getSession } from "next-auth/client";
 
 import LoadingPage from "../../../components/LoadingPage";
 import { wrapper } from "../../../redux/store";
+import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
 
 const Tambah = dynamic(
   () => import("../../../components/content/publikasi/kategori/tambah"),
@@ -32,8 +33,11 @@ export default function TambahPage() {
   );
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession({ req: context.req });
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
+
+  const session = await getSession({ req });
+  console.log(`from artikel create ${session}`)
+
   if (!session) {
     return {
       redirect: {
@@ -43,7 +47,27 @@ export async function getServerSideProps(context) {
     };
   }
 
+  await store.dispatch(getAllKategori(session.user.user.data.token))
+
   return {
     props: { session, title: "Tambah Kategori - Publikasi" },
-  };
-}
+  }
+})
+
+
+
+// export async function getServerSideProps(context) {
+//   const session = await getSession({ req: context.req });
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return {
+//     props: { session, title: "Tambah Kategori - Publikasi" },
+//   };
+// }
