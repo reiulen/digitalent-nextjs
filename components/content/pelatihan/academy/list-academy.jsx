@@ -16,6 +16,8 @@ const ListAcademy = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const { loading, error, academy } = useSelector((state) => state.allAcademy);
+
   let { page = 1, success } = router.query;
   page = Number(page);
 
@@ -68,6 +70,32 @@ const ListAcademy = () => {
 
   return (
     <PageWrapper>
+      {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {success ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
@@ -146,74 +174,100 @@ const ListAcademy = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                {/* <LoadingTable loading={loading} /> */}
-
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead
-                    style={{ background: "#F3F6F9" }}
-                    className="font-weight-bolder"
-                  >
-                    <tr>
-                      <th className="text-center">No</th>
-                      <th>Logo</th>
-                      <th>Akademi</th>
-                      <th>Tema</th>
-                      <th>Pelatihan</th>
-                      <th>Penyelenggara</th>
-                      <th>Status</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="text-center">1</td>
-                      <td></td>
-                      <td>
-                        <p className="font-weight-bolder my-0 h6">SVGA</p>
-                        <p className="my-0">Vocation School Graduate Academy</p>
-                      </td>
-                      <td>50</td>
-                      <td>150</td>
-                      <td>50 Mitra</td>
-                      <td>
-                        <span className="label label-inline label-light-success font-weight-bold">
-                          Publish
-                        </span>
-                      </td>
-                      <td>
-                        <div className="d-flex">
-                          <Link href={`/pelatihan/akademi/${1}`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Edit"
-                            >
-                              <i className="ri-pencil-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary text-white"
-                            onClick={() => handleDelete(1)}
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Hapus"
-                          >
-                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                <LoadingTable loading={loading} />
+                {loading === false ? (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead
+                      style={{ background: "#F3F6F9" }}
+                      className="font-weight-bolder"
+                    >
+                      <tr>
+                        <th className="text-center">No</th>
+                        <th>Logo</th>
+                        <th>Akademi</th>
+                        <th>Tema</th>
+                        <th>Pelatihan</th>
+                        <th>Penyelenggara</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {!academy || (academy && academy.rows.length === 0) ? (
+                        <td className="align-middle text-center" colSpan={8}>
+                          Data Masih Kosong
+                        </td>
+                      ) : (
+                        academy.rows.map((row, i) => (
+                          <tr key={i}>
+                            <td className="text-center">{i + 1}</td>
+                            <td>
+                              <Image
+                                src={row.file_path + row.logo}
+                                width="111"
+                                height="52"
+                                objectFit="cover"
+                              />
+                            </td>
+                            <td>
+                              <p className="font-weight-bolder my-0 h6">
+                                {row.name}
+                              </p>
+                              <p className="my-0">{row.deskripsi}</p>
+                            </td>
+                            <td>50</td>
+                            <td>150</td>
+                            <td>50 Mitra</td>
+                            <td>
+                              {row.status ? (
+                                <span className="label label-inline label-light-success font-weight-bold">
+                                  Publish
+                                </span>
+                              ) : (
+                                <span className="label label-inline label-light-danger font-weight-bold">
+                                  Unpublish
+                                </span>
+                              )}
+                            </td>
+                            <td>
+                              <div className="d-flex">
+                                <Link href={`/pelatihan/akademi/${row.id}`}>
+                                  <a
+                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Edit"
+                                  >
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                  </a>
+                                </Link>
+                                <button
+                                  className="btn btn-link-action bg-blue-secondary text-white"
+                                  onClick={() => handleDelete(row.id)}
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Hapus"
+                                >
+                                  <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))
+                      )}
+                    </tbody>
+                  </table>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="row">
                 <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                   <Pagination
-                    activePage={1}
-                    itemsCountPerPage={5}
-                    totalItemsCount={10}
+                    activePage={academy.page}
+                    itemsCountPerPage={academy.total_pages}
+                    totalItemsCount={academy.total_rows}
                     pageRangeDisplayed={3}
                     onChange={handlePagination}
                     nextPageText={">"}
@@ -252,7 +306,7 @@ const ListAcademy = () => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data 6
+                        Total Data {academy.total_rows}
                       </p>
                     </div>
                   </div>
