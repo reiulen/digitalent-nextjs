@@ -46,7 +46,11 @@ const LoginAdmin = () => {
       if (result.error) {
         toast.error(result.error);
       } else {
-        router.push("/dashboard");
+        if(data.role === "admin"){
+          router.push("/dashboard");
+        }else{
+          router.push("/partnership/user/kerjasama")
+        }
       }
     } else {
       simpleValidator.current.showMessages();

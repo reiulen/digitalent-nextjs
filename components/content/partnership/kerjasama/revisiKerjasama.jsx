@@ -41,7 +41,7 @@ const RevisiKerjasama = ({ token }) => {
   // const setDataSingle = async (id) => {
   //   try {
   //     let { data } = await axios.get(
-  //       `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+  //       `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
   //       {
   //         headers: {
   //           authorization: `Bearer ${token}`,
@@ -75,7 +75,7 @@ const RevisiKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept-document/${router.query.id}`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/accept-document/${router.query.id}`,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ const RevisiKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${router.query.id}`,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -148,7 +148,7 @@ const RevisiKerjasama = ({ token }) => {
             formData.append("_method", "PUT");
             formData.append("note", catatanREvisi);
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi-document/${router.query.id}`,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/revisi-document/${router.query.id}`,
               formData,
               {
           headers: {
@@ -173,7 +173,7 @@ const RevisiKerjasama = ({ token }) => {
     async function setDataSingle (token,id){
       try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,

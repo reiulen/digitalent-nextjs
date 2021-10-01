@@ -11,12 +11,13 @@ const RevisiSubmit = dynamic(
   { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
-export default function RevisiSubmitPage() {
+export default function RevisiSubmitPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Pembahasan - Partnership"> */}
-        <RevisiSubmit />
+        <RevisiSubmit token={session.token} />
         {/* </Layout> */}
       </div>
     </>
@@ -30,7 +31,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/partnership/user/auth/login",
             permanent: false,
           },
         };

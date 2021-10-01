@@ -10,12 +10,13 @@ const Pembahasan = dynamic(
   { loading: () => <LoadingPage />, ssr: false, suspense: true }
 );
 
-export default function PembahasanPage() {
+export default function PembahasanPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Pembahasan - Partnership"> */}
-        <Pembahasan />
+        <Pembahasan token={session.token} />
         {/* </Layout> */}
       </div>
     </>
@@ -29,7 +30,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/partnership/user/auth/login",
             permanent: false,
           },
         };

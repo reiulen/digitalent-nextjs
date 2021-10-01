@@ -14,7 +14,7 @@ import {
 
 import axios from "axios";
 
-function ReviewKerjasama() {
+function ReviewKerjasama({token}) {
   const router = useRouter()
   let dispatch = useDispatch();
   
@@ -39,7 +39,7 @@ function ReviewKerjasama() {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(rejectCooperation(router.query.id));
+        dispatch(rejectCooperation(router.query.id,token));
         // setDeleteBar(true);
         // setIsStatusBar(true);
         router.push({
@@ -59,13 +59,13 @@ function ReviewKerjasama() {
 
   useEffect(() => {
 
-    async function cekProgresStatus(id){
+    async function cekProgresStatus(id,token){
       try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -93,10 +93,10 @@ function ReviewKerjasama() {
 
 
 
-    cekProgresStatus(router.query.id);
+    cekProgresStatus(router.query.id,token);
 
 
-  }, [router.query.id,router])
+  }, [router.query.id,router,token])
 
   // const onNewReset = () => {
   //   router.replace(`/partnership/user/kerjasama/review-kerjasama-1`);

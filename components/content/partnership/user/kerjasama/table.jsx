@@ -49,7 +49,7 @@ import IconEye from "../../../../assets/icon/Eye";
 import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 
-const Table = () => {
+const Table = ({token}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { successInputProfile,successSubmitDokumentKerjasama,successUpdateStatus } = router.query;
@@ -57,7 +57,6 @@ const Table = () => {
   let selectRefStatus = null;
 
   const allCooperationUser = useSelector((state) => state.allCooperationUser);
-  console.log("allCooperationUser", allCooperationUser);
 
   const [valueSearch, setValueSearch] = useState("");
   const [valueStatus, setValueStatus] = useState("");
@@ -96,7 +95,7 @@ const Table = () => {
   };
 
   useEffect(() => {
-    dispatch(reqCooperationUser());
+    dispatch(reqCooperationUser(token));
   }, [
     dispatch,
     allCooperationUser.page,
@@ -107,16 +106,17 @@ const Table = () => {
     allCooperationUser.status,
     allCooperationUser.card,
     allCooperationUser.status_delete,
+    token
   ]);
 
   const [isProfile, setIsProfile] = useState("");
-  const getProfiles = async () => {
+  const getProfiles = async (token) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/profiles`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -133,19 +133,22 @@ const Table = () => {
   };
 
   const [sumWillExpire, setSumWillExpire] = useState(0);
-  const getWillExpire = async () => {
+  const getWillExpire = async (token) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,{
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
-      console.log("data.data.total",data.data.total)
       setSumWillExpire(data.data.total);
     } catch (error) {
       console.log("object", error);
     }
   };
 
-  const cooperationDelete = (id) => {
+  const cooperationDelete = (id,token) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
       icon: "warning",
@@ -157,7 +160,7 @@ const Table = () => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteCooperation(id));
+        dispatch(deleteCooperation(id,token));
         setDeleteBar(true);
         // setIsStatusBar(false);
         // router.replace("/partnership/kerjasama");
@@ -168,11 +171,11 @@ const Table = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchListSelectStatus());
-    dispatch(fetchListSelectCooperation());
-    getProfiles();
-    getWillExpire();
-  }, [dispatch]);
+    dispatch(fetchListSelectStatus(token));
+    dispatch(fetchListSelectCooperation(token));
+    getProfiles(token);
+    getWillExpire(token);
+  }, [dispatch,token]);
 
   return (
     <PageWrapper>
@@ -535,7 +538,7 @@ const Table = () => {
                           <button
                             className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
                             type="button"
-                            onClick={() => dispatch(exportFileCSV())}
+                            onClick={() => dispatch(exportFileCSV(token))}
                           >
                             Export .xlxs
                           </button>

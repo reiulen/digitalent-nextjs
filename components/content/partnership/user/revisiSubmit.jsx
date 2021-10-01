@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const RevisiSubmit = () => {
+const RevisiSubmit = ({token}) => {
   const router = useRouter();
   const [information2, setInformation2] = useState("")
 
@@ -60,11 +60,11 @@ const RevisiSubmit = () => {
 
         try {
           let respoonse = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi/${router.query.id}/${router.query.version}`,
+            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/revisi/${router.query.id}/${router.query.version}`,
             formData,
             {
               headers: {
-                authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                authorization: `Bearer ${token}`,
               },
             }
           );
@@ -85,10 +85,10 @@ const RevisiSubmit = () => {
   const setDataSingle = async (id,version) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/show-revisi/${id}/${version}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -112,10 +112,10 @@ const RevisiSubmit = () => {
   const getLengthListCard = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/card-review/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/card-review/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );

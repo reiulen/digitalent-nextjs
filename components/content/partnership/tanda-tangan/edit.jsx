@@ -75,7 +75,7 @@ const EditTandaTangan = ({ token }) => {
               signature_image: signature !== "" ? signature : "",
             };
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${router.query.id}`,
               sendData,
               {
                 headers: {
@@ -114,7 +114,7 @@ const EditTandaTangan = ({ token }) => {
                 signature_image: signature !== "" ? signature : "",
               };
               let { data } = await axios.post(
-                `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
+                `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${router.query.id}`,
                 sendData,
                 {
                 headers: {
@@ -144,7 +144,7 @@ const EditTandaTangan = ({ token }) => {
 
   const imgSignature = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
   const myLoader = ({ src }) => {
-    return `${imgSignature}/partnership/images/signatures/${tandaTangan}`;
+    return `${imgSignature}partnership/images/signatures/${tandaTangan}`;
   };
 
   const [nama, setNama] = useState("");
@@ -154,7 +154,7 @@ const EditTandaTangan = ({ token }) => {
   const setDataSingle = async (id, token) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,

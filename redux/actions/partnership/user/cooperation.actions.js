@@ -28,38 +28,58 @@ import router from "next/router";
 
 //
 
-export async function getStatus() {
+export async function getStatus(token) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/option/status`
+    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/status`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
   );
 }
-export async function getCooperation() {
+export async function getCooperation(token) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/option/cooperation`
+    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cooperation`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
   );
 }
 // get active select list cooperation
-export async function getCooperationActiveSelect() {
+export async function getCooperationActiveSelect(token) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/option/cooperation-active`
+    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cooperation-active`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
   );
 }
 // get active select list cooperation by id
-export async function getCooperationActiveSelectById(id) {
+export async function getCooperationActiveSelectById(id, token) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/option/cooperation-active-choose/${id}`
+    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cooperation-active-choose/${id}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
   );
 }
 
 // --------------------------------------get api
-export async function getMCooporationUserApi(params) {
+export async function getMCooporationUserApi(params, token) {
   return await axios.get(
-    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/cooperations/proposal/index`,
+    `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/index`,
     {
       params,
-      // headers: {
-      //   authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9kdHMtcGFydG5lcnNoaXAtZGV2Lm1hamFwYWhpdC5pZFwvYXBpXC9hdXRoZW50aWNhdGlvblwvbG9naW4iLCJpYXQiOjE2MzAzMTEzOTksImV4cCI6MTk5MDMwNzc5OSwibmJmIjoxNjMwMzExMzk5LCJqdGkiOiI5U2xSc3l4U2c5TnZsSGN6Iiwic3ViIjoxOSwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.bK3mBYxUZuyxjwz9ovqU_Gkj7kQGkmU5-KiYGcqM8Ts`,
-      // },
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     }
   );
 }
@@ -67,50 +87,33 @@ export async function getMCooporationUserApi(params) {
 
 // --------------------------------------action get
 
-export const reqCooperationUser = () => async (dispatch, getState) => {
+export const reqCooperationUser = (token) => async (dispatch, getState) => {
   let pageState = getState().allCooperationUser.page || 1;
   let cardState = getState().allCooperationUser.card || "";
   let limitState = getState().allCooperationUser.limit || 5;
   let statusState = getState().allCooperationUser.status || "";
   let categories_cooporationState =
     getState().allCooperationUser.categories_cooporation || "";
-  // let partnerState = getState().allCooperationUser.partner || "";
-  let keywordState = getState().allCooperationUser.keyword || "";
 
-  // const params = {
-  //   page: pageState,
-  //   // card: cardState,
-  //   limit: limitState,
-  //   // status: statusState,
-  //   // categories_cooporation: categories_cooporationState,
-  //   // partner: partnerState,
-  //   keyword: keywordState,
-  // };
+  let keywordState = getState().allCooperationUser.keyword || "";
 
   try {
     dispatch({ type: COOPERATION_REQUEST });
     const { data } = await axios.get(
-      // `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/cooperations/proposal/index?page=${pageState}&limit=${limitState}&keyword=${keywordState}&categories_cooporation=${categories_cooporationState}&status=${statusState}&card=${cardState}`,
-
-      `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/index?page=${pageState}&card=${cardState}&limit=${limitState}&status=${statusState}&categories_cooporation=${categories_cooporationState}&keyword=${keywordState}`
-
-      // {
-      //   headers: {
-      //     authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
-      //   },
-      // }
+      `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/index?page=${pageState}&card=${cardState}&limit=${limitState}&status=${statusState}&categories_cooporation=${categories_cooporationState}&keyword=${keywordState}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
     );
-
-    // `/api/cooperations/proposal/index?page=1&card=will_expire&limit=5&status=&categories_cooporation=&partner=&keyword=`;
-
-    console.log("data a a a", data);
     // get data tanpa sortir
     let dataSortirAll = await axios.get(
-      `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/cooperations/proposal/index?page=1&limit=1000&keyword=&categories_cooporation=&status=&card=`,
+      `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/index?page=1&limit=1000&keyword=&categories_cooporation=&status=&card=`,
       // params,
       {
         headers: {
-          authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+          authorization: `Bearer ${token}`,
         },
       }
     );
@@ -145,11 +148,11 @@ export const reqCooperationUser = () => async (dispatch, getState) => {
   }
 };
 
-export const fetchListCooperationSelect = () => {
+export const fetchListCooperationSelect = (token) => {
   return async (dispatch, getState) => {
     // dispatch({ type: GET_COOPERTAION_ACTIVE_SELECT });
     try {
-      const { data } = await getCooperationActiveSelect();
+      const { data } = await getCooperationActiveSelect(token);
 
       dispatch(successFetchListCooperationSelect(data));
     } catch (error) {
@@ -177,12 +180,11 @@ export const changeCooperationSelectByID = (value) => {
 };
 
 // by id
-export const fetchListCooperationSelectById = (id) => {
+export const fetchListCooperationSelectById = (id, token) => {
   return async (dispatch, getState) => {
-    console.log(id);
     // dispatch({ type: GET_COOPERTAION_ACTIVE_SELECT });
     try {
-      const { data } = await getCooperationActiveSelectById(id);
+      const { data } = await getCooperationActiveSelectById(id, token);
 
       dispatch(successFetchListCooperationSelectByID(data));
     } catch (error) {
@@ -218,11 +220,11 @@ export const searchCooporation = (text) => {
   };
 };
 
-export const fetchListSelectStatus = () => {
+export const fetchListSelectStatus = (token) => {
   return async (dispatch, getState) => {
     dispatch({ type: LIST_STATUS_REQUEST });
     try {
-      const { data } = await getStatus();
+      const { data } = await getStatus(token);
       let dataNewStateus = data.data.map((items) => {
         return {
           ...items,
@@ -260,11 +262,11 @@ export const changeValueKerjaSama = (value) => {
   };
 };
 
-export const fetchListSelectCooperation = () => {
+export const fetchListSelectCooperation = (token) => {
   return async (dispatch, getState) => {
     dispatch({ type: LIST_COOPERATION_REQUEST });
     try {
-      const { data } = await getCooperation();
+      const { data } = await getCooperation(token);
       let dataNewKerjasama = data.data.map((items) => {
         return {
           ...items,
@@ -304,14 +306,14 @@ export const limitCooporation = (value) => {
   };
 };
 
-export const getSingleCooperation = (id) => {
+export const getSingleCooperation = (id, token) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/cooperations/proposal/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -328,14 +330,14 @@ export const successGetSingleCooperation = (data) => {
   };
 };
 
-export const deleteCooperation = (id) => {
+export const deleteCooperation = (id, token) => {
   return async (dispatch, getState) => {
     try {
       let { data } = await axios.delete(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/cooperations/proposal/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -352,14 +354,14 @@ export const successDeleteCooperation = () => {
   };
 };
 
-export const rejectCooperation = (id) => {
+export const rejectCooperation = (id, token) => {
   return async (dispatch) => {
     try {
       let { data } = await axios.put(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/cooperations/proposal/reject/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/reject/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -377,7 +379,7 @@ export const reloadTable = () => {
   };
 };
 
-export const exportFileCSV = () => {
+export const exportFileCSV = (token) => {
   return async (dispatch, getState) => {
     let statusState = getState().allCooperationUser.status || "";
     let categories_cooporationState =
@@ -389,11 +391,11 @@ export const exportFileCSV = () => {
     };
     try {
       let urlExport = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}/api/cooperations/proposal/excel/export`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/excel/export`,
         {
           paramssz,
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
