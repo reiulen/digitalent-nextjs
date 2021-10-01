@@ -82,7 +82,7 @@ export const allTandaTanganUserReducer = (state = initialState, action) => {
     case CHANGE_STATUS_LIST_M:
       return {
         ...state,
-        status_reload: state.status_reload === "" ? "reload" : "",
+        status_reload: state.status_reload === "" ? "delete" : "",
       };
 
     default:

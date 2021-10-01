@@ -359,6 +359,7 @@ export const rejectCooperation = (id, token) => {
     try {
       let { data } = await axios.put(
         `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/reject/${id}`,
+        null,
         {
           headers: {
             authorization: `Bearer ${token}`,
