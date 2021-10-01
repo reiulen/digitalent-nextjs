@@ -28,6 +28,9 @@ const ListTraining = () => {
   const [academy, setAcademy] = useState(null);
   const [theme, setTheme] = useState(null);
   const [statusSubstansi, setStatusSubstansi] = useState(null);
+  const [statusPelatihan, setStatusPelatihan] = useState(null);
+  const [dateRegister, setDateRegister] = useState(null);
+  const [dateStart, setDateStart] = useState(null);
 
   const [showModal, setShowModal] = useState(false);
   const [showModalRevisi, setShowModalRevisi] = useState(false);
@@ -52,13 +55,34 @@ const ListTraining = () => {
     router.push(link);
   };
 
-  // const handleFilter = () => {
-  //   let link = `${router.pathname}?page=${1}`;
-  //   if (academy) link = link.concat(`&akademi=${academy}`);
-  //   if (status) link = link.concat(`&status=${status}`);
-  //   router.push(link);
-  //   setShowModal(false);
-  // };
+  const handleFilter = () => {
+    let link = `${router.pathname}?page=${1}`;
+    if (penyelenggara)
+      link = link.concat(`&penyelenggara=${penyelenggara.value}`);
+    if (academy) link = link.concat(`&akademi=${academy.value}`);
+    if (theme) link = link.concat(`&tema=${theme.value}`);
+    if (statusSubstansi)
+      link = link.concat(`&status_substansi=${statusSubstansi.value}`);
+    if (statusPelatihan)
+      link = link.concat(`&status_pelatihan=${statusPelatihan.value}`);
+    if (dateRegister)
+      link = link.concat(`&tanggal_pendaftaran=${dateRegister}`);
+    if (dateStart) link = link.concat(`&tanggal_pelaksanaan=${dateStart}`);
+    router.push(link);
+    setShowModal(false);
+  };
+
+  const handleReset = () => {
+    setPenyelenggara(null);
+    setAcademy(null);
+    setTheme(null);
+    setStatusSubstansi(null);
+    setStatusPelatihan(null);
+    setDateRegister(null);
+    setDateStart(null);
+    router.replace("/pelatihan/pelatihan", undefined, { shallow: true });
+    setShowModal(false);
+  };
 
   const handleLimit = (val) => {
     setLimit(val);
@@ -494,61 +518,86 @@ const ListTraining = () => {
             <label className="p-0">Penyelenggara</label>
             <Select
               options={options}
-              // defaultValue={academy}
-              // onChange={(e) => setAcademy(e.value)}
+              defaultValue={penyelenggara}
+              onChange={(e) =>
+                setPenyelenggara({ value: e.value, label: e.label })
+              }
             />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Akademi</label>
             <Select
               options={options}
-              // defaultValue={academy}
-              // onChange={(e) => setAcademy(e.value)}
+              defaultValue={academy}
+              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
             />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
               options={options}
-              // defaultValue={academy}
-              // onChange={(e) => setAcademy(e.value)}
+              defaultValue={theme}
+              onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Status Substansi</label>
             <Select
               options={options}
-              // defaultValue={academy}
-              // onChange={(e) => setAcademy(e.value)}
+              defaultValue={statusSubstansi}
+              onChange={(e) =>
+                setStatusSubstansi({ value: e.value, label: e.label })
+              }
             />
           </div>
           <div className="form-group mb-5">
             <label className="p-0">Status Pelatihan</label>
             <Select
               options={options}
-              // defaultValue={academy}
-              // onChange={(e) => setAcademy(e.value)}
+              defaultValue={statusPelatihan}
+              onChange={(e) =>
+                setStatusPelatihan({ value: e.value, label: e.label })
+              }
             />
           </div>
           <div className="row">
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pendaftaran</label>
-              <input type="date" name="" id="" className="form-control" />
+              <input
+                type="date"
+                name=""
+                id=""
+                className="form-control"
+                value={dateRegister}
+                onChange={(e) => setDateRegister(e.target.value)}
+              />
             </div>
             <div className="form-group mb-5 col-md-6">
               <label className="p-0">Tanggal Pelaksanaan</label>
-              <input type="date" name="" id="" className="form-control" />
+              <input
+                type="date"
+                name=""
+                id=""
+                className="form-control"
+                value={dateStart}
+                onChange={(e) => setDateStart(e.target.value)}
+              />
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
-            type="reset"
+            type="button"
+            onClick={handleReset}
           >
             Reset
           </button>
-          <button className="btn btn-primary-rounded-full" type="button">
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={handleFilter}
+          >
             Terapkan
           </button>
         </Modal.Footer>

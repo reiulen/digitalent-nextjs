@@ -48,9 +48,16 @@ const ListTheme = () => {
 
   const handleFilter = () => {
     let link = `${router.pathname}?page=${1}`;
-    if (academy) link = link.concat(`&akademi=${academy}`);
-    if (status) link = link.concat(`&status=${status}`);
+    if (academy) link = link.concat(`&akademi=${academy.value}`);
+    if (status) link = link.concat(`&status=${status.value}`);
     router.push(link);
+    setShowModal(false);
+  };
+
+  const handleReset = () => {
+    setAcademy(null);
+    setStatus(null);
+    router.replace("/pelatihan/tema", undefined, { shallow: true });
     setShowModal(false);
   };
 
@@ -314,7 +321,7 @@ const ListTheme = () => {
             <Select
               options={options}
               defaultValue={academy}
-              onChange={(e) => setAcademy(e.value)}
+              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
             />
           </div>
           <div className="form-group mb-0">
@@ -322,7 +329,7 @@ const ListTheme = () => {
             <Select
               options={options}
               defaultValue={status}
-              onChange={(e) => setStatus(e.value)}
+              onChange={(e) => setStatus({ value: e.value, label: e.label })}
             />
           </div>
         </Modal.Body>
@@ -330,6 +337,7 @@ const ListTheme = () => {
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
             type="reset"
+            onClick={handleReset}
           >
             Reset
           </button>

@@ -189,6 +189,17 @@ import {
 } from "./site-management/master-satuan-kerja-penyelenggara.reducers";
 // End Site Management
 
+//PELATIHAN
+// ====================== akademi =====================
+import {
+  allAcademyReducer,
+  newAcademyReducer,
+  detailAcademyReducer,
+  updateAcademyReducer,
+  deleteAcademyReducer,
+} from "./pelatihan/academy.reducers";
+//END PELATIHAN
+
 // functional reducer
 
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
@@ -359,6 +370,15 @@ const reducer = combineReducers({
   // ============== END ROLE ============
 
   // END SITE MANAGEMENT
+
+  //PELATIHAN
+  // ========== akademi ===========
+  allAcademy: allAcademyReducer,
+  newAcademy: newAcademyReducer,
+  detailAcademy: detailAcademyReducer,
+  updateAcademy: updateAcademyReducer,
+  deleteAcademy: deleteAcademyReducer,
+  //END PELATIHAN
 });
 
 export default reducer;
