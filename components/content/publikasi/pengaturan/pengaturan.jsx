@@ -10,7 +10,7 @@ import { UPDATE_SETTING_RESET } from "../../../../redux/types/publikasi/setting.
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingTable from "../../../LoadingTable";
 
-const Pengaturan = () => {
+const Pengaturan = ({ token }) => {
     const dispatch = useDispatch()
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -83,7 +83,8 @@ const Pengaturan = () => {
                     text: "Upload image minimal 1 MB !",
                 });
             } else {
-                dispatch(updateSettingImagePublikasi(upload_image))
+                dispatch(updateSettingImagePublikasi(upload_image, token))
+                // console.log("TOKEN :", token)
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -114,7 +115,8 @@ const Pengaturan = () => {
                     text: "Upload imagetron minimal 1 MB !",
                 });
             } else {
-                dispatch(updateSettingImagetronPublikasi(upload_imagetron))
+                dispatch(updateSettingImagetronPublikasi(upload_imagetron, token))
+                // console.log("TOKEN :", token)
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -146,7 +148,7 @@ const Pengaturan = () => {
                     text: "Batas slider minimal 1 !",
                 });
             } else {
-                dispatch(updateSettingSliderPublikasi(batas_slider))
+                dispatch(updateSettingSliderPublikasi(batas_slider, token))
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -178,7 +180,7 @@ const Pengaturan = () => {
                     text: "Max Faq minimal 1 !",
                 });
             } else {
-                dispatch(updateSettingFaqPublikasi(maxfaq))
+                dispatch(updateSettingFaqPublikasi(maxfaq, token))
             }
             // if (error) {
             //     dispatch(clearErrors())

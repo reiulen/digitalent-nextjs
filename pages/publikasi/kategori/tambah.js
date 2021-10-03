@@ -20,23 +20,24 @@ const Tambah = dynamic(
   }
 );
 
-export default function TambahPage() {
+export default function TambahPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title='Tambah Kategori'>
                     <Tambah />
                 </Layout> */}
-        <Tambah />
+        <Tambah token={session.token}/>
       </div>
     </>
   );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
+export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, req }) => {
 
   const session = await getSession({ req });
-  console.log(`from artikel create ${session}`)
+  console.log(`from kategori create ${session}`)
 
   if (!session) {
     return {
@@ -58,6 +59,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ q
 
 // export async function getServerSideProps(context) {
 //   const session = await getSession({ req: context.req });
+//   console.log(`from kategori create : ${session}`)
 //   if (!session) {
 //     return {
 //       redirect: {

@@ -20,12 +20,13 @@ const Imagetron = dynamic(
     }
 );
 
-export default function ImagetronPage() {
+export default function ImagetronPage(props) {
+    const session = props.session.user.user.data;
     return (
         <>
             <div className="d-flex flex-column flex-root">
                 {/* <Layout title='Imagetron - Publikasi'> */}
-                    <Imagetron />
+                    <Imagetron token={session.token}/>
                 {/* </Layout> */}
             </div>
         </>

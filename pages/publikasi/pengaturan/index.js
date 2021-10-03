@@ -14,12 +14,13 @@ const PengaturanPublikasi = dynamic(
     { loading: () => <LoadingPage />, ssr: false }
 );
 
-export default function PengaturanPublikasiPage() {
+export default function PengaturanPublikasiPage(props) {
+    const session = props.session.user.user.data;
     return (
         <>
             <div className="d-flex flex-column flex-root">
                 {/* <Layout title='Pengaturan - Publikasi'> */}
-                    <PengaturanPublikasi />
+                    <PengaturanPublikasi token={session.token}/>
                 {/* </Layout> */}
             </div>
         </>

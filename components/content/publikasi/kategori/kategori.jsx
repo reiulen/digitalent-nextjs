@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteKategori, clearErrors, getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import { DELETE_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.type'
 
-const Kategori = () => {
+const Kategori = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -78,7 +78,7 @@ const Kategori = () => {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteKategori(id))
+                dispatch(deleteKategori(id, token))
             }
         })
     }
@@ -183,32 +183,32 @@ const Kategori = () => {
         } else if (limit !== null && search === "" && searchKategori !== null) {
             router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&keyword=${searchKategori}`)
 
-        // } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
-        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+            // } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+            //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-        // } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
-        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+            // } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue === null) {
+            //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-        // } else if (limit !== null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-        //     router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
+            // } else if (limit !== null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+            //     router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}`)
 
-        // } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
-        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
+            // } else if (limit !== null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+            //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}`)
 
-        // } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
-        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
+            // } else if (limit === null && search !== "" && startDate === null && endDate === null && publishValue !== null) {
+            //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}`)
 
-        // } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
-        //     router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
+            // } else if (limit === null && search === "" && startDate === null && endDate === null && publishValue !== null) {
+            //     router.push(`${router.pathname}?page=${pageNumber}&publish=${publishValue}`)
 
-        // } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
-        //     router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+            // } else if (limit !== null && search === "" && startDate !== null && endDate !== null && publishValue !== null) {
+            //     router.push(`${router.pathname}?page=${pageNumber}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-        // } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+            // } else if (limit !== null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+            //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&limit=${limit}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
-        // } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
-        //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
+            // } else if (limit === null && search !== "" && startDate !== null && endDate !== null && publishValue !== null) {
+            //     router.push(`${router.pathname}?page=${pageNumber}&keyword=${search}&publish=${publishValue}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
 
         } else {
             router.push(`${router.pathname}?page=${pageNumber}`)
@@ -235,11 +235,11 @@ const Kategori = () => {
 
         } else if (search !== "" && searchKategori === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
-            
+
         } else if (search === "" && searchKategori !== null) {
             router.push(`${router.pathname}?page=1&keyword=${searchKategori}&limit=${val}`)
-        } 
-        else if(search !== "" && searchKategori !== null){
+        }
+        else if (search !== "" && searchKategori !== null) {
             router.push(`${router.pathname}?page=1&keyword=${searchKategori}&limit=${val}`)
         }
 

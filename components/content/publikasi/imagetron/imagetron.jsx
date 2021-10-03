@@ -29,7 +29,7 @@ import {
 import { DELETE_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron.type";
 // import { getAllImagetron, clearErrors } from '../../../../redux/actions/publikasi/imagetron.actions'
 
-const Imagetron = () => {
+const Imagetron = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter()
@@ -108,7 +108,7 @@ const Imagetron = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteImagetron(id));
+                dispatch(deleteImagetron(id,token));
             }
         });
     };
@@ -344,9 +344,9 @@ const Imagetron = () => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log (imagetron)
-            } */}
+            {
+                console.log(imagetron)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -702,7 +702,7 @@ const Imagetron = () => {
                                                 <th className='text-center'>Thumbnail</th>
                                                 <th>Kategori</th>
                                                 <th>Judul</th>
-                                                <th>Tanggal Membuat</th>
+                                                <th>Tanggal Publish</th>
                                                 <th>Dibuat</th>
                                                 <th>Status</th>
                                                 <th>Role</th>

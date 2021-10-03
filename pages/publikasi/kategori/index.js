@@ -20,14 +20,15 @@ const Kategori = dynamic(
   }
 );
 
-export default function KategoriPage() {
+export default function KategoriPage(props) {
+    const session = props.session.user.user.data;
     return (
         <>
             <div className="d-flex flex-column flex-root">
                 {/* <Layout title='Kategori - Publikasi'>
                     <Kategori />
                 </Layout> */}
-                <Kategori />
+                <Kategori token={session.token}/>
             </div>
         </>
     )

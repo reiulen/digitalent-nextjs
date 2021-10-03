@@ -19,14 +19,15 @@ const EditKategori = dynamic(
     }
 );
 
-export default function EditKategoriPage() {
+export default function EditKategoriPage(props) {
+    const session = props.session.user.user.data;
     return (
         <>
             <div className="d-flex flex-column flex-root">
                 {/* <Layout title="Ubah Kategori">
                     <EditKategori />
                 </Layout> */}
-                <EditKategori />
+                <EditKategori token={session.token}/>
             </div>
         </>
     );

@@ -198,7 +198,7 @@ export const deleteVideo = (id, token) => async (dispatch) => {
             },
         };
 
-        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `api/video/${id}`, config)
+        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + "api/video/" + id, config)
 
         dispatch({
             type: DELETE_VIDEO_SUCCESS,
