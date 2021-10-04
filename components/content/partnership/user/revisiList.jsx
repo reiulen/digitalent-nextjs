@@ -34,8 +34,13 @@ function RevisiList({token}) {
 
   const [listCardREvisi, setListCardREvisi] = useState([]);
 
-  const getCardREviewList = async (id) => {
-    try {
+  // const getCardREviewList = async (id) => {
+    
+  // };
+
+  useEffect(() => {
+    async function getCardREviewList(id) {
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/card-review/${id}`,
         {
@@ -50,11 +55,10 @@ function RevisiList({token}) {
     } catch (error) {
       console.log("action getCardREviewList", error);
     }
-  };
-
-  useEffect(() => {
+      
+    }
     getCardREviewList(router.query.id);
-  }, [router.query.id]);
+  }, [router.query.id,router,token]);
 
   return (
     <PageWrapper>
