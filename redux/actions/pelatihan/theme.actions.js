@@ -130,7 +130,7 @@ export const updateTheme = (themeData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/update`,
+      process.env.END_POINT_API_PELATIHAN + `api/v1/tema/update`,
       themeData,
       config
     );

@@ -94,14 +94,16 @@ const EditTheme = ({ token }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
+      const statusString = (status.value += "");
+      const idInt = parseInt(id);
       const data = {
         name,
         deskripsi: description,
-        status,
-        academy,
-        id,
+        status: statusString,
+        akademi_id: academy.value,
+        id: idInt,
       };
-      console.log(data);
+      dispatch(updateTheme(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
