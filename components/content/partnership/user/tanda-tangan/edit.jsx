@@ -156,8 +156,13 @@ const EditTandaTangan = ({token}) => {
   const [jabatan, setJabatan] = useState("");
   const [tandaTangan, setTandaTangan] = useState("");
 
-  const setDataSingle = async (id) => {
-    try {
+  // const setDataSingle = async (id) => {
+    
+  // };
+
+  useEffect(() => {
+    async function setDataSingle(id) {
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${id}`,{
                 headers: {
@@ -172,11 +177,10 @@ const EditTandaTangan = ({token}) => {
     } catch (error) {
       console.log("error get single");
     }
-  };
-
-  useEffect(() => {
+      
+    }
     setDataSingle(router.query.id);
-  }, [router.query.id]);
+  }, [router.query.id,token]);
 
   return (
     <PageWrapper>
