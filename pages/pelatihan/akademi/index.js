@@ -8,11 +8,12 @@ import { getAllAcademy } from "../../../redux/actions/pelatihan/academy.actions"
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function ListAcademyPage() {
+export default function ListAcademyPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ListAcademy />
+        <ListAcademy token={session.token} />
       </div>
     </>
   );

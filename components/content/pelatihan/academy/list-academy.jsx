@@ -11,18 +11,58 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
+import { deleteAcademy } from "../../../../redux/actions/pelatihan/academy.actions";
+import { DELETE_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
 
-const ListAcademy = () => {
+const ListAcademy = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { loading, error, academy } = useSelector((state) => state.allAcademy);
+  const {
+    loading: allLoading,
+    error: allError,
+    academy,
+  } = useSelector((state) => state.allAcademy);
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    isDeleted,
+  } = useSelector((state) => state.deleteAcademy);
 
   let { page = 1, success } = router.query;
   page = Number(page);
 
+  let loading = false;
+  if (allLoading) {
+    loading = allLoading;
+  } else if (deleteLoading) {
+    loading = deleteLoading;
+  }
+
+  let error;
+  if (allError) {
+    error = allError;
+  } else if (deleteError) {
+    error = deleteError;
+  }
+
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+
+  useEffect(() => {
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        }
+      );
+      dispatch({
+        type: DELETE_ACADEMY_RESET,
+      });
+    }
+  }, [isDeleted]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -58,6 +98,7 @@ const ListAcademy = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
+        dispatch(deleteAcademy(id, token));
       }
     });
   };
@@ -200,8 +241,12 @@ const ListAcademy = () => {
                       ) : (
                         academy.rows.map((row, i) => (
                           <tr key={i}>
-                            <td className="text-center">{i + 1}</td>
-                            <td>
+                            <td className="text-center">
+                              {limit === null
+                                ? i + 1 * (page * 5) - (5 - 1)
+                                : i + 1 * (page * limit) - (limit - 1)}
+                            </td>
+                            <td className="align-middle">
                               <Image
                                 src={row.file_path + row.logo}
                                 width="111"
@@ -209,16 +254,21 @@ const ListAcademy = () => {
                                 objectFit="cover"
                               />
                             </td>
-                            <td>
+                            <td className="align-middle">
                               <p className="font-weight-bolder my-0 h6">
                                 {row.name}
                               </p>
-                              <p className="my-0">{row.deskripsi}</p>
+                              <div
+                                className="my-0"
+                                dangerouslySetInnerHTML={{
+                                  __html: row.deskripsi,
+                                }}
+                              ></div>
                             </td>
-                            <td>50</td>
-                            <td>150</td>
-                            <td>50 Mitra</td>
-                            <td>
+                            <td className="align-middle">50</td>
+                            <td className="align-middle">150</td>
+                            <td className="align-middle">50 Mitra</td>
+                            <td className="align-middle">
                               {row.status ? (
                                 <span className="label label-inline label-light-success font-weight-bold">
                                   Publish
@@ -229,7 +279,7 @@ const ListAcademy = () => {
                                 </span>
                               )}
                             </td>
-                            <td>
+                            <td className="align-middle">
                               <div className="d-flex">
                                 <Link href={`/pelatihan/akademi/${row.id}`}>
                                   <a
@@ -279,38 +329,42 @@ const ListAcademy = () => {
                   />
                 </div>
 
-                <div className="table-total ml-auto">
-                  <div className="row">
-                    <div className="col-4 mr-0 p-0 mt-3">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) => handleLimit(e.target.value)}
-                        onBlur={(e) => handleLimit(e.target.value)}
-                      >
-                        <option>5</option>
-                        <option>10</option>
-                        <option>30</option>
-                        <option>40</option>
-                        <option>50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto pt-3">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data {academy.total_rows}
-                      </p>
+                {academy && academy.total_rows > 5 ? (
+                  <div className="table-total ml-auto">
+                    <div className="row">
+                      <div className="col-4 mr-0 p-0 mt-3">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect2"
+                          style={{
+                            width: "65px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
+                        >
+                          <option>5</option>
+                          <option>10</option>
+                          <option>30</option>
+                          <option>40</option>
+                          <option>50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto pt-3">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3" }}
+                        >
+                          Total Data {academy.total_rows}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
