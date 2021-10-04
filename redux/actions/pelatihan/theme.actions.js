@@ -23,7 +23,14 @@ import {
 import axios from "axios";
 
 export const getAllTheme =
-  (page = 1, keyword = "", akademi = null, status = null, limit = 5, token) =>
+  (
+    page = 1,
+    keyword = "",
+    akademi = null,
+    status = null,
+    limit = null,
+    token
+  ) =>
   async (dispatch) => {
     try {
       dispatch({ type: THEME_REQUEST });
