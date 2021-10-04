@@ -23,14 +23,14 @@ import {
 import axios from "axios";
 
 export const getAllAcademy =
-  (page = 1, keyword = "", limit = 5, token) =>
+  (page = null, keyword = "", limit = null, token) =>
   async (dispatch) => {
     try {
       dispatch({ type: ACADEMY_REQUEST });
 
-      let link =
-        process.env.END_POINT_API_PELATIHAN + `api/akademi?page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
+      let link = process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/find?`;
+      if (page) link = link.concat(`&page=${page}`);
+      if (keyword) link = link.concat(`&cari=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
 
       const config = {
@@ -55,7 +55,8 @@ export const getAllAcademy =
 
 export const getDetailAcademy = (id, token) => async (dispatch) => {
   try {
-    let link = process.env.END_POINT_API_PELATIHAN + `api/akademi/${id}`;
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/detail?id=${id}`;
 
     const config = {
       headers: {
@@ -90,7 +91,7 @@ export const newAcademy = (academyData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + "api/akademi",
+      process.env.END_POINT_API_PELATIHAN + "api/v1/akademi/create",
       academyData,
       config
     );
@@ -107,7 +108,7 @@ export const newAcademy = (academyData, token) => async (dispatch) => {
   }
 };
 
-export const updateAcademy = (id, academyData, token) => async (dispatch) => {
+export const updateAcademy = (academyData, token) => async (dispatch) => {
   try {
     dispatch({
       type: UPDATE_ACADEMY_REQUEST,
@@ -120,7 +121,7 @@ export const updateAcademy = (id, academyData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + `api/akademi/${id}`,
+      process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/update`,
       academyData,
       config
     );
@@ -148,7 +149,7 @@ export const deleteAcademy = (id, token) => async (dispatch) => {
     };
 
     const { data } = await axios.delete(
-      process.env.END_POINT_API_PELATIHAN + `api/akademi/${id}`,
+      process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/delete?id=${id}`,
       config
     );
 

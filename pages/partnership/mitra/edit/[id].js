@@ -5,7 +5,7 @@ import { wrapper } from "../../../../redux/store";
 
 const EditMitra = dynamic(
   () => import("../../../../components/content/partnership/mitra/edit"),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
 export default function EditMitraPage(props) {

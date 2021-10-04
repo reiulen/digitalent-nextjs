@@ -75,7 +75,7 @@ const RevisiKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/accept-document/${router.query.id}`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/accept-document/${router.query.id}`,null,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -108,7 +108,7 @@ const RevisiKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${router.query.id}`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${router.query.id}`,null,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -151,10 +151,10 @@ const RevisiKerjasama = ({ token }) => {
               `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/revisi-document/${router.query.id}`,
               formData,
               {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
             );
             router.push({
               pathname: "/partnership/kerjasama/",
@@ -169,29 +169,28 @@ const RevisiKerjasama = ({ token }) => {
   };
 
   useEffect(() => {
-
-    async function setDataSingle (token,id){
+    async function setDataSingle(id, token) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setPeriod_start(data.data.period_date_start);
-      setPeriod_end(data.data.period_date_end);
-      setNo_perjanjianLembaga(data.data.agreement_number_partner);
-      setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
-      setTgl_ttd(data.data.signing_date);
-      setDokument(data.data.document);
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setPeriod_start(data.data.period_date_start);
+        setPeriod_end(data.data.period_date_end);
+        setNo_perjanjianLembaga(data.data.agreement_number_partner);
+        setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
+        setTgl_ttd(data.data.signing_date);
+        setDokument(data.data.document);
+      } catch (error) {
+        console.log("action getSIngle gagal", error);
+      }
     }
-    }
-    setDataSingle(router.query.id,token);
-  }, [router.query.id,token]);
+    setDataSingle(router.query.id, token);
+  }, [router.query.id, token]);
 
   return (
     <PageWrapper>

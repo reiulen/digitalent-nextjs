@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
 import { Modal } from "react-bootstrap";
+import Select from "react-select";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -22,7 +23,15 @@ const ListTheme = () => {
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+  const [academy, setAcademy] = useState(null);
+  const [status, setStatus] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  const options = [
+    { value: "chocolate", label: "Chocolate" },
+    { value: "strawberry", label: "Strawberry" },
+    { value: "vanilla", label: "Vanilla" },
+  ];
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -32,11 +41,24 @@ const ListTheme = () => {
   };
 
   const handleSearch = () => {
-    if (limit != null) {
-      router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
-    } else {
-      router.push(`${router.pathname}?page=1&keyword=${search}`);
-    }
+    let link = `${router.pathname}?page=1&keyword=${search}`;
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
+  };
+
+  const handleFilter = () => {
+    let link = `${router.pathname}?page=${1}`;
+    if (academy) link = link.concat(`&akademi=${academy.value}`);
+    if (status) link = link.concat(`&status=${status.value}`);
+    router.push(link);
+    setShowModal(false);
+  };
+
+  const handleReset = () => {
+    setAcademy(null);
+    setStatus(null);
+    router.replace("/pelatihan/tema", undefined, { shallow: true });
+    setShowModal(false);
   };
 
   const handleLimit = (val) => {
@@ -45,7 +67,7 @@ const ListTheme = () => {
   };
 
   const onNewReset = () => {
-    router.replace("/subvit/substansi", undefined, { shallow: true });
+    router.replace("/pelatihan/tema", undefined, { shallow: true });
   };
 
   const handleDelete = (id) => {
@@ -72,6 +94,32 @@ const ListTheme = () => {
 
   return (
     <PageWrapper>
+      {success ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark"></i>
+          </div>
+          <div className="alert-text">Berhasil Menyimpan Data</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={onNewReset}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0 mt-3">
@@ -195,6 +243,57 @@ const ListTheme = () => {
                   </tbody>
                 </table>
               </div>
+
+              <div className="row">
+                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                  <Pagination
+                    activePage={1}
+                    itemsCountPerPage={5}
+                    totalItemsCount={10}
+                    pageRangeDisplayed={3}
+                    onChange={handlePagination}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
+                </div>
+
+                <div className="table-total ml-auto">
+                  <div className="row">
+                    <div className="col-4 mr-0 p-0 mt-3">
+                      <select
+                        className="form-control"
+                        id="exampleFormControlSelect2"
+                        style={{
+                          width: "65px",
+                          background: "#F3F6F9",
+                          borderColor: "#F3F6F9",
+                          color: "#9E9E9E",
+                        }}
+                        onChange={(e) => handleLimit(e.target.value)}
+                        onBlur={(e) => handleLimit(e.target.value)}
+                      >
+                        <option>5</option>
+                        <option>10</option>
+                        <option>30</option>
+                        <option>40</option>
+                        <option>50</option>
+                      </select>
+                    </div>
+                    <div className="col-8 my-auto pt-3">
+                      <p
+                        className="align-middle mt-3"
+                        style={{ color: "#B5B5C3" }}
+                      >
+                        Total Data 6
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -206,25 +305,47 @@ const ListTheme = () => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Filter</Modal.Title>
+          <button
+            type="button"
+            className="close"
+            onClick={() => setShowModal(false)}
+          >
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
         </Modal.Header>
         <Modal.Body>
           <div className="form-group mb-5">
-            <label className="p-0">Pelatihan</label>
-            <select className="form-control">
-              <option>Semua</option>
-            </select>
+            <label className="p-0">Akademi</label>
+            <Select
+              options={options}
+              defaultValue={academy}
+              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
+            />
+          </div>
+          <div className="form-group mb-0">
+            <label className="p-0">Status</label>
+            <Select
+              options={options}
+              defaultValue={status}
+              onChange={(e) => setStatus({ value: e.value, label: e.label })}
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>
           <button
             className="btn btn-light-ghost-rounded-full mr-2"
             type="reset"
+            onClick={handleReset}
           >
             Reset
           </button>
-          <button className="btn btn-primary-rounded-full" type="button">
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={handleFilter}
+          >
             Terapkan
           </button>
         </Modal.Footer>

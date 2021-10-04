@@ -30,7 +30,7 @@ const Table = ({token}) => {
   const { success, update } = router.query;
 
   const allTandaTanganUser = useSelector(state => state.allTandaTanganUser)
-  // console.log("state",state)
+  console.log("state",allTandaTanganUser)
 
   const [successDelete, setSuccessDelete] = useState(false);
   const [keyWord, setKeyWord] = useState("");
@@ -52,7 +52,7 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteTandaTangan(id));
+        dispatch(deleteTandaTangan(id,token));
         setSuccessDelete(true);
         router.replace(`/partnership/user/tanda-tangan-digital`);
       }
@@ -77,9 +77,10 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        console.log("e.target.value",e.target.value)
-        console.log("id",id)
-        dispatch(changeStatusList(e.target.value, id,token));
+        let formData = new FormData();
+        formData.append("_method", "put");
+        formData.append("status", e.target.value);
+        dispatch(changeStatusList(formData, id,token));
         setIsStatusBar(true);
         // setDeleteBar(false);
         // setIsChangeOption(true);
@@ -91,10 +92,10 @@ const Table = ({token}) => {
   };
 
   useEffect(() => {
+    console.log("object")
     dispatch(fetchSignature(token))
   }, [dispatch,
     allTandaTanganUser.keyword,
-    allTandaTanganUser.reload_table,
     allTandaTanganUser.status_reload,
     allTandaTanganUser.page,
     allTandaTanganUser.limit,token])

@@ -121,11 +121,10 @@ export const fetchTtdPartner = (token, id) => {
   };
 };
 
-export const changeStatusList = (token, value, id) => {
+export const changeStatusList = (token, formData, id) => {
   return async (dispatch) => {
     try {
-      let dataSend = { _method: "put", status: value };
-      let { data } = await statusListChange(token, dataSend, id);
+      let { data } = await statusListChange(token, formData, id);
       dispatch(successChangeStatusList());
     } catch (error) {
       console.log("error change status list", error.response.data.message);

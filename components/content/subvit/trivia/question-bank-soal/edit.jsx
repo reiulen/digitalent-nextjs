@@ -44,6 +44,11 @@ const EditSoalTrivia = ({ token }) => {
   const [question_image, setQuestionImage] = useState(
     trivia_question_detail.question_image
   );
+  const [question_image_preview, setQuestionImagePreview] = useState(
+    process.env.END_POINT_API_IMAGE_SUBVIT +
+      trivia_question_detail.question_image_preview
+  );
+  const [question_image_name, setQuestionImageName] = useState("Pilih Gambar");
 
   const [answer, setAnswer] = useState(
     JSON.parse(trivia_question_detail.answer)
@@ -67,13 +72,22 @@ const EditSoalTrivia = ({ token }) => {
 
   const handleSoalImage = (e) => {
     if (e.target.name === "question_image") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setQuestionImage(reader.result);
+      if (e.target.files[0].size > 5000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+      } else {
+        if (e.target.files[0]) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setQuestionImage(reader.result);
+            }
+          };
+          setQuestionImagePreview(URL.createObjectURL(e.target.files[0]));
+          setQuestionImageName(e.target.files[0].name);
+          reader.readAsDataURL(e.target.files[0]);
         }
-      };
-      reader.readAsDataURL(e.target.files[0]);
+      }
     }
   };
 
@@ -258,10 +272,11 @@ const EditSoalTrivia = ({ token }) => {
               <div className="title row mb-5">
                 <div className="col-md-3">
                   <Image
-                    src="/assets/logo/logo-2.svg"
+                    src={question_image_preview}
                     alt="logo"
                     width={204}
                     height={100}
+                    objectFit="cover"
                   />
                 </div>
                 <div className="col-md-9 pt-2">
@@ -282,7 +297,7 @@ const EditSoalTrivia = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {question_image_name}
                     </label>
                   </div>
                   <span className="text-muted">

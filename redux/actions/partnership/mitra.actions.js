@@ -377,56 +377,52 @@ export const reloadTable = () => {
   };
 };
 
-export const changeStatusList = (token, value, id) => {
+export const changeStatusList = (token, formData, id) => {
   return async (dispatch, getState) => {
     try {
-      let dataSend = { _method: "put", status: value };
       let { data } = await axios.post(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/update-status/${id}`,
-        dataSend,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/partners/update-status/${id}`,
+        formData,
         {
           headers: {
             authorization: `Bearer ${token}`,
           },
         }
       );
-      dispatch(successChangeStatusList(value));
+      dispatch(successChangeStatusList());
     } catch (error) {
       console.log("error change status list");
     }
   };
 };
 
-export const successChangeStatusList = (value) => {
+export const successChangeStatusList = () => {
   return {
     type: CHANGE_STATUS_LIST_M_DETAIL,
-    value,
   };
 };
 
-// export const changeStatusList = (token, value, id) => {
-//   return async (dispatch, getState) => {
-//     try {
-//       let dataSend = { _method: "put", status: value };
-//       let { data } = await axios.put(
-//         `${process.env.END_POINT_API_PARTNERSHIP}api/partners/update-status/${id}`,
-//         dataSend,
-//         {
-//           headers: {
-//             authorization: `Bearer ${token}`,
-//           },
-//         }
-//       );
-//       dispatch(successChangeStatusList(value));
-//     } catch (error) {
-//       console.log("error change status list", error.response.data.message);
-//     }
-//   };
-// };
+export const changeStatusListCooperation = (token, formData, id) => {
+  return async (dispatch, getState) => {
+    try {
+      let { data } = await axios.post(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/update-status/${id}`,
+        formData,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch(successChangeStatusListCooperation());
+    } catch (error) {
+      console.log("error change status list");
+    }
+  };
+};
 
-// export const successChangeStatusList = (value) => {
-//   return {
-//     type: CHANGE_STATUS_LIST_M,
-//     value,
-//   };
-// };
+export const successChangeStatusListCooperation = () => {
+  return {
+    type: CHANGE_STATUS_LIST_M_DETAIL,
+  };
+};
