@@ -43,7 +43,8 @@ const EditArtikel = ({token}) => {
        url: "Format url berupa: https://www.example.com"
     }
   }));
-  const [, forceUpdate] = useState();
+  // const [, forceUpdate] = useState();
+  const forceUpdate = React.useReducer(() => ({}))[1]
   const { artikel } = useSelector((state) => state.detailArtikel);
   const { error, success, loading} = useSelector(
     (state) => state.updatedArtikel
@@ -521,7 +522,8 @@ const EditArtikel = ({token}) => {
       
     } else {
       simpleValidator.current.showMessages();
-      forceUpdate(1);
+      // forceUpdate(1);
+      forceUpdate;
       Swal.fire({
         icon: "error",
         title: "Oops...",

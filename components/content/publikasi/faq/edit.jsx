@@ -59,7 +59,8 @@ const EditFaq = ({token}) => {
     const [publish, setPublish] = useState(faq.publish )
     const [publishDate, setPublishDate] = useState(faq.tanggal_publish ? new Date (faq.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(faq.publish === 0 ? true : false)
-    const [, forceUpdate] = useState();
+    // const [, forceUpdate] = useState();
+    const forceUpdate = React.useReducer(() => ({}))[1]
 
     const handleChangePinned = (e) => {
         setPinnedFaq(e.target.checked);
@@ -145,7 +146,8 @@ const EditFaq = ({token}) => {
 
         } else {
             simpleValidator.current.showMessages();
-            forceUpdate(1);
+            // forceUpdate(1);
+            forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",

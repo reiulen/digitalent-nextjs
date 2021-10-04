@@ -30,7 +30,8 @@ const TambahBerita = ({token}) => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
-    const [, forceUpdate] = useState();
+    // const [, forceUpdate] = useState();
+    const forceUpdate = React.useReducer(() => ({}))[1]
     const { loading, error, success } = useSelector(state => state.newBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
 
@@ -274,7 +275,8 @@ const TambahBerita = ({token}) => {
             // console.log(data)
         } else {
             simpleValidator.current.showMessages();
-            forceUpdate(1);
+            // forceUpdate(1);
+            forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
