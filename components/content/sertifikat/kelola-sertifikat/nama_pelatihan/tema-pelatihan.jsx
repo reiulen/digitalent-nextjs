@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 export default function NamaPelatihanID({ token }) {
   const router = useRouter();
   const { query } = router;
-
+  console.log(query);
   // #DatePicker
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -38,7 +38,7 @@ export default function NamaPelatihanID({ token }) {
     state => state.detailCertificates
   );
 
-  console.log(certificate);
+  console.log(certificate, "ini sertifikat nya");
   // #REDUX STATE
   let { page = 1, keyword, success } = router.query;
 
@@ -253,7 +253,6 @@ export default function NamaPelatihanID({ token }) {
                         certificate &&
                         certificate.data.list_certificate.map(
                           (certificate, i) => {
-                            //   certificate.theme.academy.name == query.akademi ? "" : ""
                             return (
                               <tr key={certificate.id}>
                                 <td className="align-middle text-center">
@@ -301,7 +300,7 @@ export default function NamaPelatihanID({ token }) {
                                   {certificate.status.name == "draft" ? (
                                     <>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${certificate.id}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -313,7 +312,7 @@ export default function NamaPelatihanID({ token }) {
                                         </a>
                                       </Link>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${certificate.id}/edit`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/edit`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -325,10 +324,10 @@ export default function NamaPelatihanID({ token }) {
                                         </a>
                                       </Link>
                                     </>
-                                  ) : certificate.status == "publish" ? (
+                                  ) : certificate.status.name == "publish" ? (
                                     <>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${certificate.id}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -341,7 +340,7 @@ export default function NamaPelatihanID({ token }) {
                                       </Link>
 
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/listPeserta`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -355,7 +354,7 @@ export default function NamaPelatihanID({ token }) {
                                     </>
                                   ) : (
                                     <Link
-                                      href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/add`}
+                                      href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/add`}
                                     >
                                       <a
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
