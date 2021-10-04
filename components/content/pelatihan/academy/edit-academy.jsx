@@ -13,6 +13,8 @@ import {
   clearErrors,
 } from "../../../../redux/actions/pelatihan/academy.actions";
 
+import { UPDATE_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
+
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
@@ -72,7 +74,17 @@ const EditAcademy = ({ token }) => {
     };
 
     setEditorLoaded(true);
-  }, []);
+
+    if (isUpdated) {
+      dispatch({
+        type: UPDATE_ACADEMY_RESET,
+      });
+      router.push({
+        pathname: `/pelatihan/akademi`,
+        query: { success: true },
+      });
+    }
+  }, [isUpdated]);
 
   const handleResetError = () => {
     if (error) {
