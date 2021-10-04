@@ -111,7 +111,7 @@ const ListAcademy = ({ token }) => {
 
   return (
     <PageWrapper>
-      {error ? (
+      {error && (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -134,10 +134,8 @@ const ListAcademy = ({ token }) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
-      {success ? (
+      {success && (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
@@ -160,8 +158,6 @@ const ListAcademy = ({ token }) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
 
       <div className="col-lg-12 order-1 px-0">
