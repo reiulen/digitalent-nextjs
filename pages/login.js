@@ -1,11 +1,13 @@
+import LoginAdmin from "../components/content/auth/admin/login";
 import Beranda from "../user-component/content/beranda/beranda"
 import { getSession } from "next-auth/client";
 
-export default function DashboardPage() {
+export default function LoginAdminPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Beranda />
+        <LoginAdmin />
+        {/* <Beranda /> */}
       </div>
     </>
   );
@@ -13,10 +15,10 @@ export default function DashboardPage() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (!session) {
+  if (session) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/dashboard",
         permanent: false,
       },
     };
