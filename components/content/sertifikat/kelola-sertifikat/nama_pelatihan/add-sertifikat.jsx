@@ -91,8 +91,8 @@ export default function TambahMasterSertifikat({ token }) {
   // #START MODAL
   const [tandaTanganType, setTandaTanganType] = useState([1, 1, 1, 1]);
   const [tandaTangan, setTandaTangan] = useState("");
-
   const signCanvas = useRef({});
+
   const handleImageTandaTangan = (e, index) => {
     console.log(e.target.name, "INI TARGET NAME", typeof e.target.name);
     if (e.target.name === "image") {
@@ -109,12 +109,14 @@ export default function TambahMasterSertifikat({ token }) {
       }
     }
   };
+
   const handleCanvasTandaTangan = (e, i) => {
     const data = signCanvas.current.toDataURL();
     let newArr = [...signature_certificate_image];
     newArr[i] = data;
     setSignature_certificate_image(newArr);
   };
+
   const handleClearCanvasTandaTangan = (e, i) => {
     let newArr = [...signature_certificate_image];
     newArr[i] = "";
@@ -127,7 +129,6 @@ export default function TambahMasterSertifikat({ token }) {
   const [tandaTanganSyllabusType, setTandaTanganSyllabusType] = useState([
     1, 1, 1, 1,
   ]);
-
   const [number_of_signature_syllabus, setNumber_of_signature_syllabus] =
     useState(1);
 
@@ -146,6 +147,7 @@ export default function TambahMasterSertifikat({ token }) {
       }
     }
   };
+
   const handleCanvasTandaTanganSyllabus = (e, i) => {
     const data = signCanvas.current.toDataURL();
     let newArr = [...signature_certificate_image_syllabus];
@@ -211,47 +213,55 @@ export default function TambahMasterSertifikat({ token }) {
 
   const handleDraft = e => {
     e.preventDefault();
-    let formData = new FormData();
-    formData.append("name", certificate.data.list_certificate[0].name);
-    formData.append("certificate_type", certificate_type);
-    formData.append("background", background);
+    try {
+      let formData = new FormData();
+      // formData.append("name", certificate.data.list_certificate[0].name);
+      formData.append("name", "AMIN");
 
-    signature_certificate_name.forEach((item, i) => {
-      formData.append(`signature_certificate_name[${i}]`, item);
-    });
-    signature_certificate_image.forEach((item, i) => {
-      formData.append(`signature_certificate_image[${i}]`, item);
-    });
-    signature_certificate_position.forEach((item, i) => {
-      formData.append(`signature_certificate_position[${i}]`, item);
-    });
-    signature_certificate_position.forEach((item, i) => {
-      formData.append(`signature_certificate_position[${i}]`, item);
-    });
-    signature_certificate_set_position.forEach((item, i) => {
-      formData.append(`signature_certificate_set_position[${i}]`, item);
-    });
+      formData.append("certificate_type", `${certificate_type} lembar`);
+      formData.append("background", background);
 
-    formData.append("background_syllabus", background_syllabus);
-    signature_certificate_name_syllabus.forEach((item, i) => {
-      formData.append(`signature_certificate_name[${i}]`, item);
-    });
-    signature_certificate_image_syllabus.forEach((item, i) => {
-      formData.append(`signature_certificate_image[${i}]`, item);
-    });
-    signature_certificate_position_syllabus.forEach((item, i) => {
-      formData.append(`signature_certificate_position[${i}]`, item);
-    });
-    signature_certificate_position_syllabus.forEach((item, i) => {
-      formData.append(`signature_certificate_position[${i}]`, item);
-    });
-    signature_certificate_set_position_syllabus.forEach((item, i) => {
-      formData.append(`signature_certificate_set_position[${i}]`, item);
-    });
+      signature_certificate_name.forEach((item, i) => {
+        formData.append(`signature_certificate_name[${i}]`, item);
+      });
+      signature_certificate_image.forEach((item, i) => {
+        formData.append(`signature_certificate_image[${i}]`, item);
+      });
+      signature_certificate_position.forEach((item, i) => {
+        formData.append(`signature_certificate_position[${i}]`, item);
+      });
+      signature_certificate_position.forEach((item, i) => {
+        formData.append(`signature_certificate_position[${i}]`, item);
+      });
+      signature_certificate_set_position.forEach((item, i) => {
+        formData.append(`signature_certificate_set_position[${i}]`, item);
+      });
 
-    certificate.data.list_certificate[0].syllabus.forEach((item, i) => {
-      formData.append(`$syllabus[${i}]`, item);
-    });
+      formData.append("background_syllabus", background_syllabus);
+      signature_certificate_name_syllabus.forEach((item, i) => {
+        formData.append(`signature_certificate_name[${i}]`, item);
+      });
+      signature_certificate_image_syllabus.forEach((item, i) => {
+        formData.append(`signature_certificate_image[${i}]`, item);
+      });
+      signature_certificate_position_syllabus.forEach((item, i) => {
+        formData.append(`signature_certificate_position[${i}]`, item);
+      });
+      signature_certificate_position_syllabus.forEach((item, i) => {
+        formData.append(`signature_certificate_position[${i}]`, item);
+      });
+
+      signature_certificate_set_position_syllabus?.forEach((item, i) => {
+        formData.append(`signature_certificate_set_position[${i}]`, item);
+      });
+
+      console.log(token);
+      formData.append("status_migrate_id", 2);
+      const id = certificate.data.list_certificate[0].id;
+      dispatch(newSertifikat(id, formData, token));
+    } catch (e) {
+      console.log(e, "Masuk sini errornya");
+    }
   };
 
   const [isPublish, setIsPublish] = useState(false);
@@ -351,15 +361,18 @@ export default function TambahMasterSertifikat({ token }) {
                   Batal
                 </a>
               </Link>
-              {/* <Link href="/sertifikat/master-sertifikat/tambah"> */}
-              <a
-                className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
-                onClick={e => {
-                  handleDraft(e);
-                }}
+              <Link
+                href={`/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`}
               >
-                Simpan Draft
-              </a>
+                <a
+                  className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
+                  onClick={e => {
+                    handleDraft(e);
+                  }}
+                >
+                  Simpan Draft
+                </a>
+              </Link>
               <a
                 className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
                 onClick={() => {
@@ -578,8 +591,8 @@ export default function TambahMasterSertifikat({ token }) {
                         type="radio"
                         name="method"
                         value="1"
-                        checked={certificate_type === 1}
-                        onClick={() => setCertificate_type(1)}
+                        checked={certificate_type == 1}
+                        onChange={() => setCertificate_type(1)}
                       />
                       <label className="form-check-label">1 Lembar</label>
                     </div>
@@ -589,8 +602,8 @@ export default function TambahMasterSertifikat({ token }) {
                         type="radio"
                         name="method"
                         value="2"
-                        checked={certificate_type === 2}
-                        onClick={() => setCertificate_type(2)}
+                        checked={certificate_type == 2}
+                        onChange={() => setCertificate_type(2)}
                       />
                       <label className="form-check-label">2 Lembar</label>
                     </div>
@@ -610,7 +623,7 @@ export default function TambahMasterSertifikat({ token }) {
                       }
                       className="form-control"
                     >
-                      <option selected value={1}>
+                      <option defaultValue={1} value={1}>
                         1 Tanda Tangan
                       </option>
                       <option value={2}>2 Tanda Tangan</option>
@@ -710,7 +723,7 @@ export default function TambahMasterSertifikat({ token }) {
                                         name={`tandaTanganType${i}`}
                                         value="1"
                                         checked={tandaTanganType[i] == 1}
-                                        onClick={() => {
+                                        onChange={() => {
                                           let newArr = [...tandaTanganType];
                                           newArr[i] = 1;
                                           setTandaTanganType(newArr);
@@ -727,7 +740,7 @@ export default function TambahMasterSertifikat({ token }) {
                                         name={`tandaTanganType${i}`}
                                         value="2"
                                         checked={tandaTanganType[i] == 2}
-                                        onClick={() => {
+                                        onChange={() => {
                                           let newArr = [...tandaTanganType];
                                           newArr[i] = 2;
                                           setTandaTanganType(newArr);
@@ -1151,7 +1164,7 @@ export default function TambahMasterSertifikat({ token }) {
                         }
                         className="form-control"
                       >
-                        <option selected value={1}>
+                        <option value={1} defaultValue={1}>
                           1 Tanda Tangan
                         </option>
                         <option value={2}>2 Tanda Tangan</option>
@@ -1261,7 +1274,7 @@ export default function TambahMasterSertifikat({ token }) {
                                           checked={
                                             tandaTanganSyllabusType[i] == 1
                                           }
-                                          onClick={() => {
+                                          onChange={() => {
                                             let newArr = [
                                               ...tandaTanganSyllabusType,
                                             ];
@@ -1282,7 +1295,7 @@ export default function TambahMasterSertifikat({ token }) {
                                           checked={
                                             tandaTanganSyllabusType[i] == 2
                                           }
-                                          onClick={() => {
+                                          onChange={() => {
                                             let newArr = [
                                               ...tandaTanganSyllabusType,
                                             ];

@@ -93,7 +93,7 @@ export const getDetailSertifikat =
     }
   };
 
-export const newSertifikat = (id, data, token) => async dispatch => {
+export const newSertifikat = (id, formData, token) => async dispatch => {
   try {
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
     let link =
@@ -106,7 +106,7 @@ export const newSertifikat = (id, data, token) => async dispatch => {
       },
     };
 
-    const { data } = await axios.get(link, data, config);
+    const { data } = await axios.post(link, formData, config);
 
     console.log(data, " ini data nya");
 
