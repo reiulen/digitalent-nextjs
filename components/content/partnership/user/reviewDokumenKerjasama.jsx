@@ -29,35 +29,9 @@ function ReviewDokumenKerjasama({ token }) {
   const [note, setNote] = useState("");
   console.log("note", note);
 
-  const setDataSingle = async (id) => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setPeriod_start(data.data.period_date_start);
-      setPeriod_end(data.data.period_date_end);
-      setNo_perjanjianLembaga(data.data.agreement_number_partner);
-      setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
-      setTgl_ttd(data.data.signing_date);
-      setDokument(data.data.document);
-      setCatatanREvisi(data.data.note);
-      setNote(data.data.note);
-      console.log("data single", data);
-      if(data.data.status_migrates_id.status === "aktif"){
-        router.push({
-          pathname:"/partnership/user/kerjasama/hasil",
-          query:{id:router.query.id,statusKerjasama:data.data.status_migrates_id.status},
-        })
-      }
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
-    }
-  };
+  // const setDataSingle = async (id) => {
+    
+  // };
 
   // pdf from api
   const [document, setDocument] = useState("");
@@ -169,19 +143,6 @@ function ReviewDokumenKerjasama({ token }) {
               },
             }
           );
-
-          console.log("data sukses", data);
-
-          // router.push({
-          //   pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama",
-          //   query: { id: router.query.id },
-          // });
-
-          // router.push({
-          //   pathname: "/partnership/user/kerjasama/",
-          //   query: { successSubmitDokumentKerjasama: true },
-          // });
-
           router.push({
             pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama/",
             query: { revisiDone: true,id:router.query.id },
@@ -206,8 +167,39 @@ function ReviewDokumenKerjasama({ token }) {
   // kondisi jika note terisi alihkan page ke revisi
   useEffect(() => {
 
+    async function setDataSingle(id) {
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setPeriod_start(data.data.period_date_start);
+      setPeriod_end(data.data.period_date_end);
+      setNo_perjanjianLembaga(data.data.agreement_number_partner);
+      setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
+      setTgl_ttd(data.data.signing_date);
+      setDokument(data.data.document);
+      setCatatanREvisi(data.data.note);
+      setNote(data.data.note);
+      console.log("data single", data);
+      if(data.data.status_migrates_id.status === "aktif"){
+        router.push({
+          pathname:"/partnership/user/kerjasama/hasil",
+          query:{id:router.query.id,statusKerjasama:data.data.status_migrates_id.status},
+        })
+      }
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+      
+    }
+
     setDataSingle(router.query.id);
-  }, [router.query.id]);
+  }, [router.query.id,router,token]);
 
   return (
     <PageWrapper>

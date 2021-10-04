@@ -38,7 +38,7 @@ const LoginAdmin = () => {
         redirect: false,
         email,
         password,
-        role:"mitra",
+        role: "mitra",
         captcha,
       };
       const result = await signIn("credentials", data);
@@ -46,10 +46,10 @@ const LoginAdmin = () => {
       if (result.error) {
         toast.error(result.error);
       } else {
-        if(data.role === "admin"){
+        if (data.role === "admin") {
           router.push("/dashboard");
-        }else{
-          router.push("/partnership/user/kerjasama")
+        } else {
+          router.push("/partnership/user/kerjasama");
         }
       }
     } else {
@@ -116,7 +116,11 @@ const LoginAdmin = () => {
                 </div>
                 <div className="form-group">
                   <label className="form-auth-label">Password</label>
-                  <a className="float-right text-primary">Lupa Password ?</a>
+                  <Link
+                    href="/partnership/user/auth/recorveryPassword" passHref
+                  >
+                    <a className="float-right text-primary">Lupa Password ?</a>
+                  </Link>
                   <div className="position-relative">
                     <input
                       id="input-password"
@@ -188,82 +192,6 @@ const LoginAdmin = () => {
               </div>
             </div>
           </div>
-        
-
-
-          {/* <div className="container ">
-            <div className="title-login text-center mt-6">
-              <Image
-                src="/assets/logo/logo-5.svg"
-                width={246}
-                height={96}
-                alt="Logo-5"
-              />
-
-              <h3
-                className="align-middle mt-8"
-                style={{
-                  fontSize: "32px",
-                  color: "#ffffff",
-                  fontWeight: "700",
-                  fontFamily: "Rubik",
-                  lineHeight: "38px",
-                }}
-              >
-                Password Pemulihan
-              </h3>
-            </div>
-
-            <div
-              className="title-form col-lg-6 p-0 mx-auto"
-              style={{ marginTop: "30px" }}
-            >
-              <form>
-                <div className="form-group mb-2">
-                  <label className="form-auth-label">Password Baru</label>
-                  <input
-                    type="password"
-                    className="form-control form-control-auth"
-                    placeholder="Masukkan Password Anda"
-                  />
-                </div>
-                <div className="form-group">
-                  <label className="form-auth-label">Konfirmasi Password Baru</label>
-                  <div className="position-relative">
-                    <input
-                      id="input-password"
-                      type="password"
-                      className="form-control form-control-auth pr-10"
-                      placeholder="Masukkan Password Anda"
-                    />
-                    {hidePassword === true ? (
-                      <i
-                        className="ri-eye-fill right-center-absolute cursor-pointer"
-                        style={{ right: "10px" }}
-                        onClick={() => handlerShowPassword(false)}
-                      />
-                    ) : (
-                      <i
-                        className="ri-eye-off-fill right-center-absolute cursor-pointer"
-                        style={{ right: "10px" }}
-                        onClick={() => handlerShowPassword(true)}
-                      />
-                    )}
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
-                >
-                  Ganti Password
-                </button>
-              </form>
-            </div>
-          </div>
-         */}
-        
-        
         </div>
       </AuthWrapper>
     </>

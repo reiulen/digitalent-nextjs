@@ -23,7 +23,7 @@ import {
 import axios from "axios";
 
 export const getAllAcademy =
-  (page = null, keyword = "", limit = 5, token) =>
+  (page = null, keyword = "", limit = null, token) =>
   async (dispatch) => {
     try {
       dispatch({ type: ACADEMY_REQUEST });
