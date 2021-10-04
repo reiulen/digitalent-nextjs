@@ -20,41 +20,38 @@ import PageWrapper from "../../../../wrapper/page.wrapper";
 import * as htmlToImage from "html-to-image";
 import domtoimage from "dom-to-image";
 import { toPng } from "html-to-image";
+import { useDispatch } from "react-redux";
+import { newSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
 export default function TambahMasterSertifikat() {
   const router = useRouter();
-
+  const dispatch = useDispatch();
   // #Div Reference Lembar 1
   const divReference = useRef(null);
-  const [divImage, setDivImage] = useState(null);
-  // #Div Reference Lembar 1
-
-  // #Div Reference Lembar 2
   const divReferenceSilabus = useRef(null);
-  // #Div Reference Lembar 2
+  const [divImage, setDivImage] = useState(null);
 
   // #Redux state
   const { loading, error, certificate } = useSelector(
     state => state.detailCertificates
   );
-  // console.log(certificate);
   // #Redux state
-
-  const [signature, setSignature] = useState(1);
-  const editorConfig = {
-    toolbar: ["bold", "italic", "link", "redo", "numberedList", "bulletedList"],
-  };
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+
   // #START FORM DATA
   const [lembarValue, setLembarValue] = useState(1);
   const [jumlahTandaTangan, setJumlahTandaTangan] = useState(1);
   const [tandaTanganSlider, setTandaTanganSlider] = useState([0, 0, 0, 0]);
   // #END FORM DATA
+
+  // RESET TTD
   useEffect(() => {
-    // console.log(Array(jumlahTandaTangan));
-    // console.log(typeof jumlahTandaTangan, jumlahTandaTangan);
     setTandaTanganSlider([0, 0, 0, 0]);
   }, [jumlahTandaTangan]);
+
+  useEffect(() => {
+    setTandaTanganSyllabusSlider([0, 0, 0, 0]);
+  }, [jumlahTandaTanganSyllabus]);
 
   // #START MODAL
   const [tandaTanganType, setTandaTanganType] = useState([1, 1, 1, 1]);
@@ -83,14 +80,12 @@ export default function TambahMasterSertifikat() {
       }
     }
   };
-
   const handleCanvasTandaTangan = (e, i) => {
     const data = signCanvas.current.toDataURL();
     let newArr = [...person];
     newArr[i].image = data;
     setPerson(newArr);
   };
-
   const handleClearCanvasTandaTangan = (e, i) => {
     let newArr = [...person];
     newArr[i].image = "";
@@ -143,25 +138,9 @@ export default function TambahMasterSertifikat() {
     setPersonSyllabus(newArr);
     signCanvas.current.clear();
   };
-  const [silabusData, setSilabusData] = useState([
-    "Silabus A",
-    "Silabus B",
-    "Silabus C",
-    "Silabus D",
-    "Silabus E",
-    "Silabus F",
-    "Silabus G",
-    "Silabus H",
-    "Silabus I",
-    "Silabus J",
-    "Silabus E",
-    "Silabus F",
-    "Silabus G",
-    "Silabus H",
-  ]);
   // #END SECTION 2
 
-  // # START IMAGE 1
+  // # START BACKGROUND IMAGE 1
   const [background, setBackground] = useState("");
   const onChangeBackground = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
@@ -183,7 +162,7 @@ export default function TambahMasterSertifikat() {
       );
     }
   };
-  // # END IMAGE
+  // # END BACKGROUND IMAGE 1
 
   // # START IMAGE 2
   const [backgroundLembar2, setBackgroundLembar2] = useState("");
@@ -206,25 +185,22 @@ export default function TambahMasterSertifikat() {
       );
     }
   };
+
   // # END IMAGE
 
-  useEffect(() => {
-    // console.log(Array(jumlahTandaTangan));
-    // console.log(typeof jumlahTandaTangan, jumlahTandaTangan);
-    setTandaTanganSyllabusSlider([0, 0, 0, 0]);
-  }, [jumlahTandaTanganSyllabus]);
-
-  const [limit, setLimit] = useState(null);
-
-  let { page = 1, keyword, success } = router.query;
-
   const handleDraft = () => {
-    console.log(person);
-    console.log(background);
-    console.log(personSyllabus);
-    console.log(backgroundLembar2);
+    console.log(certificate.data.list_certificate[0].id);
+    dispatch(newSertifikat);
+    // console.log(person);
+    // console.log("background");
+    // console.log(background);
+    // console.log("background end");
+    // console.log(personSyllabus);
+    // console.log(backgroundLembar2);
   };
 
+  console.log(certificate);
+  const [isPublish, setIsPublish] = useState(false);
   const handlePublish = useCallback(() => {
     if (divReference.current === null) {
       return;
@@ -239,7 +215,7 @@ export default function TambahMasterSertifikat() {
         link.download = "my-image-name2.png";
         link.href = image;
         link.click();
-        console.log("ini imagenya", image); //dari sini gw post pokoknya namanya gatau
+        // console.log("ini imagenya", image); //dari sini gw post pokoknya namanya gatau
         // setDivImage(divReference.current);
       })
       .catch(err => {
@@ -266,6 +242,32 @@ export default function TambahMasterSertifikat() {
   return (
     <PageWrapper>
       {/* error START */}
+      {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {/* error END */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -280,7 +282,7 @@ export default function TambahMasterSertifikat() {
                   placeholder="Masukan Nama Sertifikat"
                   // onChange={e => setSearch(e.target.value)}
                 >
-                  {certificate.theme}
+                  {certificate.data.list_certificate[0].name}
                 </div>
               </div>
             </div>
@@ -358,8 +360,8 @@ export default function TambahMasterSertifikat() {
                       <div className="w-100">Diberikan kepada</div>
                       <div className="my-2">
                         <span
-                          className="mx-2 px-2 border-2 font-size-h6 px-10 w-100"
-                          style={{ borderStyle: "dashed" }}
+                          className="mx-2 px-2 font-size-h6 px-10 w-100"
+                          // style={{ borderStyle: "dashed" }}
                         >
                           Nama Peserta
                         </span>
@@ -914,20 +916,26 @@ export default function TambahMasterSertifikat() {
                         </div>
                         <div>
                           <ol className="col mt-4">
-                            {silabusData.map((e, i) => {
-                              return (
-                                <li
-                                  className="p-0"
-                                  key={i}
-                                  style={{
-                                    fontSize:
-                                      silabusData.length >= 15 ? "8px" : "12px",
-                                  }}
-                                >
-                                  {e}
-                                </li>
-                              );
-                            })}
+                            {certificate.data.list_certificate[0].syllabus &&
+                              certificate.data.list_certificate[0].syllabus.map(
+                                (e, i) => {
+                                  return (
+                                    <li
+                                      className="p-0"
+                                      key={i}
+                                      style={{
+                                        fontSize:
+                                          certificate.data.list_certificate[0]
+                                            .syllabus.length >= 15
+                                            ? "8px"
+                                            : "12px",
+                                      }}
+                                    >
+                                      {e}
+                                    </li>
+                                  );
+                                }
+                              )}
                           </ol>
                         </div>
                       </div>
