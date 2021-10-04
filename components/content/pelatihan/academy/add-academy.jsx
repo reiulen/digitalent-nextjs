@@ -9,9 +9,14 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
+import {
+  newAcademy,
+  clearErrors,
+} from "../../../../redux/actions/pelatihan/academy.actions";
+import { NEW_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
 import LoadingPage from "../../../LoadingPage";
 
-const AddAcademy = () => {
+const AddAcademy = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -19,6 +24,10 @@ const AddAcademy = () => {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
     editorRef.current || {};
+
+  const { loading, error, success, academy } = useSelector(
+    (state) => state.newAcademy
+  );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -48,7 +57,17 @@ const AddAcademy = () => {
     };
 
     setEditorLoaded(true);
-  }, []);
+
+    if (success) {
+      dispatch({
+        type: NEW_ACADEMY_RESET,
+      });
+      router.push({
+        pathname: `/pelatihan/akademi`,
+        query: { success: true },
+      });
+    }
+  }, [success]);
 
   const handleResetError = () => {
     if (error) {
@@ -129,14 +148,15 @@ const AddAcademy = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
+      let statusString = toString(status);
       const data = {
-        logoPreview,
         name,
-        description,
-        brosurPreview,
-        status,
+        deskripsi: description,
+        logo: logoPreview,
+        brosur: brosurPreview,
+        status: statusString,
       };
-      console.log(data);
+      dispatch(newAcademy(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -150,7 +170,32 @@ const AddAcademy = () => {
 
   return (
     <PageWrapper>
+      {error && (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
       <div className="col-lg-12 order-1 px-0">
+        {loading && <LoadingPage loading={loading} />}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header mt-3">
             <h2
