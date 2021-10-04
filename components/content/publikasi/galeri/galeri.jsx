@@ -300,9 +300,9 @@ const Galeri = ({ token }) => {
             _method: "PUT",
             isview: "1"
         }
-        dispatch(viewGaleri(data))
+        dispatch(viewGaleri(data, token))
         setIndexGalleri(i)
-        // console.log("INDEEEXX : ", id)
+        console.log("INDEEEXX : ", data)
     }
 
     const resetValueSort = () => {
@@ -318,9 +318,9 @@ const Galeri = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log("Data Awal : ", galeri)
-            }
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -614,7 +614,7 @@ const Galeri = ({ token }) => {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     galeri && galeri.gallery.map((row, i) => {
-                                                        { console.log("INI ROWW ID : ", i + 1, row) }
+                                                        // { console.log("INI ROWW ID : ", i + 1, row) }
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -632,6 +632,7 @@ const Galeri = ({ token }) => {
                                                             <td className='text-center'>
                                                                 <Image
                                                                     // alt='name_image'
+                                                                    key={row.id}
                                                                     alt={row.judul}
                                                                     unoptimized={
                                                                         process.env.ENVIRONMENT !== "PRODUCTION"
@@ -649,7 +650,7 @@ const Galeri = ({ token }) => {
                                                             <td className='align-middle'>{row.nama_kategori}</td>
                                                             <td className='align-middle'>{row.judul}</td>
                                                             <td className='align-middle'>{
-                                                                row.publish === 1 ? (
+                                                                row.status === 1 ? (
                                                                     row.tanggal_publish
                                                                 ) : (
                                                                     <span className="label label-inline label-light-danger font-weight-bold">
@@ -662,7 +663,7 @@ const Galeri = ({ token }) => {
                                                                 Super Admin
                                                             </td>
                                                             <td className='align-middle'>
-                                                                {row.publish === 1 ? (
+                                                                {row.status === 1 ? (
                                                                     <span className="label label-inline label-light-success font-weight-bold">
                                                                         Publish
                                                                     </span>
@@ -851,7 +852,7 @@ const Galeri = ({ token }) => {
                                     {
                                         galeri && galeri.gallery.length !== 0 ?
                                             galeri.gallery.map((row, i) => {
-                                                { console.log("Modal Preview : ", row) }
+                                                // { console.log("Modal Preview : ", row) }
                                                 return (
                                                     <Image
                                                         // key={row.id_gallery}
@@ -859,10 +860,10 @@ const Galeri = ({ token }) => {
                                                         loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                             "publikasi/images/" +
                                                             row.gambar)}
-                                                        src={ ()=>
-                                                            (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        src={
+                                                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                             "publikasi/images/" +
-                                                            row.gambar)
+                                                            row.gambar
                                                         }
 
                                                         alt='image'

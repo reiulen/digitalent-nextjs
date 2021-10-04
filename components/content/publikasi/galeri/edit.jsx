@@ -504,7 +504,7 @@ const EditGaleri = ({ token }) => {
     return (
         <PageWrapper>
             {
-                console.log("Cek DATA :",galeri)
+                console.log("Cek Edit Image :",galeri)
             }
 
             {/* {

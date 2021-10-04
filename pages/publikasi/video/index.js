@@ -28,7 +28,7 @@ export default function VidioPage(props) {
                 {/* <Layout title='Video - Publikasi'>
                     <Vidio />
                 </Layout> */}
-                <Vidio />
+                <Vidio token={session.token}/>
             </div>
         </>
     )

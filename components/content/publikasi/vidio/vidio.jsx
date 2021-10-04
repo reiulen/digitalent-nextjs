@@ -307,7 +307,7 @@ const Vidio = ({ token }) => {
             isplay: "1"
         }
 
-        dispatch(playVideo(data))
+        dispatch(playVideo(data, token))
     }
 
     const resetValueSort = () => {
