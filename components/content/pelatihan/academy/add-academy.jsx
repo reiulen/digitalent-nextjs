@@ -170,7 +170,7 @@ const AddAcademy = ({ token }) => {
 
   return (
     <PageWrapper>
-      {error ? (
+      {error && (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -193,11 +193,9 @@ const AddAcademy = ({ token }) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
       <div className="col-lg-12 order-1 px-0">
-        {loading ? <LoadingPage loading={loading} /> : ""}
+        {loading && <LoadingPage loading={loading} />}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header mt-3">
             <h2
