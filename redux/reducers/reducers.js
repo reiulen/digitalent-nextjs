@@ -150,6 +150,11 @@ import {
   newSertifikatReducer,
   updateSertifikatReducer,
 } from "./sertifikat/sertifikat.reducers";
+
+import {
+  allPesertaReducers,
+  detailPesertaReducer,
+} from "./sertifikat/list-peserta.reducer";
 // ============== sertifikat ===============
 
 // start Partnership
@@ -342,6 +347,9 @@ const reducer = combineReducers({
   detailCertificates: detailSertifikatReducer,
   deleteCertificates: deleteSertifikatReducer,
   updateCertificates: updateSertifikatReducer,
+
+  allParticipant: allPesertaReducers,
+  detailParticipant: detailPesertaReducer,
   // =============== end sertifikat ==================
 
   // PARTNERSHIP

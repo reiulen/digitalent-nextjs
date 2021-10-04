@@ -48,6 +48,7 @@ export default function NamaPelatihan({ token }) {
     state => state.allCertificates
   );
   // #REDUX STATE
+  console.log(certificate);
 
   return (
     <PageWrapper>

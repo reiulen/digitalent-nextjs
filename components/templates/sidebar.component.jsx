@@ -22,7 +22,7 @@ const Sidebar = () => {
   const getStorageMenu3 = sessionStorage.getItem("menu3");
   const getStorageMenuPartnership = sessionStorage.getItem("menu-partnership");
 
-  const allFunctionls = useSelector((state) => state.allFunctionls);
+  const allFunctionls = useSelector(state => state.allFunctionls);
 
   const router = useRouter();
   const [menuItem1, setMenuItem1] = useState("");
@@ -291,16 +291,6 @@ const Sidebar = () => {
       id: 1,
       name: "Kelola Sertifikat",
       href: "/sertifikat/kelola-sertifikat",
-    },
-    {
-      id: 2,
-      name: "Master Sertifikat",
-      href: "/sertifikat/master-sertifikat",
-    },
-    {
-      id: 3,
-      name: "Perubahan Sertifikat",
-      href: "/sertifikat/perubahan-sertifikat",
     },
   ]);
 
@@ -989,11 +979,6 @@ const Sidebar = () => {
                         </li>
                       );
                     })}
-                    <li className="menu-item" aria-haspopup="true">
-                      <a className="menu-link">
-                        <span className="menu-text">Sample Link</span>
-                      </a>
-                    </li>
                   </ul>
                 </div>
               </li>

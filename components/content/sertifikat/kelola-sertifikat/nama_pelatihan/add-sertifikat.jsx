@@ -1,5 +1,11 @@
 // #Next & React
-import React, { useState, useEffect, useRef, createRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  createRef,
+  useCallback,
+} from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // #Page, Component & Library
@@ -11,65 +17,91 @@ import SignaturePad from "react-signature-pad-wrapper";
 import SimpleReactValidator from "simple-react-validator";
 import { useSelector } from "react-redux";
 import PageWrapper from "../../../../wrapper/page.wrapper";
+import { toPng } from "html-to-image";
+import { useDispatch } from "react-redux";
+import { newSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
-export default function TambahMasterSertifikat() {
+export default function TambahMasterSertifikat({ token }) {
   const router = useRouter();
+  const dispatch = useDispatch();
+  // #Div Reference Lembar 1
+  const divReference = useRef(null);
+  const divReferenceSilabus = useRef(null);
+  const [divImage, setDivImage] = useState(null);
 
   // #Redux state
   const { loading, error, certificate } = useSelector(
     state => state.detailCertificates
   );
-  console.log(certificate);
   // #Redux state
-
-  const [signature, setSignature] = useState(1);
-  const ref = useRef(null);
-  const editorConfig = {
-    toolbar: [
-      "bold",
-      "italic",
-      "link",
-      "underline",
-      "redo",
-      "numberedList",
-      "bulletedList",
-    ],
-  };
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+
   // #START FORM DATA
-  const [namaPelatihan, setNamaPelatihan] = useState("");
-  const [namaPeserta, setNamaPeserta] = useState("");
-  const [nomorSertifikat, setNomorSertifikat] = useState("");
-  const [lembarValue, setLembarValue] = useState(1);
-  const [jumlahTandaTangan, setJumlahTandaTangan] = useState(1);
-  const [tandaTanganSlider, setTandaTanganSlider] = useState([0, 0, 0, 0]);
-  const [jumlahTandaTanganSilabus, setJumlahTandaTanganSilabus] = useState(1);
+  const [certificate_type, setCertificate_type] = useState(1);
+  const [number_of_signatures, setNumber_of_signatures] = useState(1);
+  const [
+    signature_certificate_set_position,
+    setSignature_certificate_set_position,
+  ] = useState([]);
+
+  const [signature_certificate_name, setSignature_certificate_name] = useState(
+    []
+  );
+  const [signature_certificate_image, setSignature_certificate_image] =
+    useState([]);
+
+  const [signature_certificate_position, setSignature_ceritifcate_position] =
+    useState([]);
+
+  const [certificate_result, setCertificate_result] = useState();
+
+  // START SYLLABUS
+  const [certificate_result_syllabus, setCertificate_result_syllabus] =
+    useState();
+
+  const [
+    signature_certificate_name_syllabus,
+    setSignature_ceritficate_name_syllabus,
+  ] = useState([]);
+  const [
+    signature_certificate_image_syllabus,
+    setSignature_certificate_image_syllabus,
+  ] = useState([]);
+  const [
+    signature_certificate_position_syllabus,
+    setSignature_certificate_position_syllabus,
+  ] = useState([]);
+
+  const [
+    signature_certificate_set_position_syllabus,
+    setSignature_certificate_set_position_syllabus,
+  ] = useState([]);
+  // END SYLLABUS
   // #END FORM DATA
 
+  // RESET TTD
+  useEffect(() => {
+    setSignature_certificate_set_position([0, 0, 0, 0]);
+  }, [number_of_signatures]);
+
+  useEffect(() => {
+    setSignature_certificate_set_position_syllabus([0, 0, 0, 0]);
+  }, [number_of_signature_syllabus]);
+
   // #START MODAL
-  const signCanvas = useRef({});
-  const [dataTandaTangan, setDataTandaTangan] = useState("");
+  const [tandaTanganType, setTandaTanganType] = useState([1, 1, 1, 1]);
   const [tandaTangan, setTandaTangan] = useState("");
-  const [person, setPerson] = useState([
-    { name: "", jabatan: "", image: "" },
-    { name: "", jabatan: "", image: "" },
-    { name: "", jabatan: "", image: "" },
-    { name: "", jabatan: "", image: "" },
-  ]);
-  const [tandaTanganType, setTandaTanganType] = useState(1);
+  const signCanvas = useRef({});
 
   const handleImageTandaTangan = (e, index) => {
-    console.log(e.target.name, "INI TARGET NAME");
+    console.log(e.target.name, "INI TARGET NAME", typeof e.target.name);
     if (e.target.name === "image") {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          //   let newArr = [...tandaTanganImage];
-          //   newArr[index] = reader.result;
-          //   setTandaTanganImage(newArr);
-          let newArr = [...person];
-          newArr[index].image = reader.result;
-          setPerson(newArr);
+          let newArr = [...signature_certificate_image];
+          newArr[index] = reader.result;
+          setSignature_certificate_image(newArr);
         }
       };
       if (e.target.files[0]) {
@@ -78,46 +110,69 @@ export default function TambahMasterSertifikat() {
     }
   };
 
-  const handleDataTandaTangan = () => {
+  const handleCanvasTandaTangan = (e, i) => {
     const data = signCanvas.current.toDataURL();
+    let newArr = [...signature_certificate_image];
+    newArr[i] = data;
+    setSignature_certificate_image(newArr);
   };
 
-  const handleClearTandaTangan = (e, i) => {
-    console.log("clicked clear", i);
+  const handleClearCanvasTandaTangan = (e, i) => {
+    let newArr = [...signature_certificate_image];
+    newArr[i] = "";
+    setSignature_certificate_image(newArr);
+    signCanvas.current.clear();
   };
   // #END MODAL
 
-  const [name, setName] = useState("Ahmad Firaz Mahmud Artsyafi");
+  // #START LEMBAR 2
+  const [tandaTanganSyllabusType, setTandaTanganSyllabusType] = useState([
+    1, 1, 1, 1,
+  ]);
+  const [number_of_signature_syllabus, setNumber_of_signature_syllabus] =
+    useState(1);
 
-  // #START SECTION 2
-  const [jumlahTandaTangan2, setJumlahTandaTangan2] = useState(1);
-  const [tandaTanganSilabusSlider, setTandaTanganSilabusSlider] = useState([
-    0, 0, 0, 0,
-  ]);
-  const [silabusData, setSilabusData] = useState([
-    "Silabus A",
-    "Silabus B",
-    "Silabus C",
-    "Silabus D",
-    "Silabus E",
-    "Silabus F",
-    "Silabus G",
-    "Silabus H",
-    "Silabus I",
-    "Silabus J",
-  ]);
+  const handleImageTandaTanganSyllabus = (e, index) => {
+    if (e.target.name === "image") {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          let newArr = [...signature_certificate_image_syllabus];
+          newArr[index] = reader.result;
+          setSignature_certificate_image_syllabus(newArr);
+        }
+      };
+      if (e.target.files[0]) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    }
+  };
+
+  const handleCanvasTandaTanganSyllabus = (e, i) => {
+    const data = signCanvas.current.toDataURL();
+    let newArr = [...signature_certificate_image_syllabus];
+    newArr[i] = data;
+    setSignature_certificate_image_syllabus(newArr);
+  };
+
+  const handleClearCanvasTandaTanganSyllabus = (e, i) => {
+    let newArr = [...signature_certificate_image_syllabus];
+    newArr[i] = "";
+    setSignature_certificate_image_syllabus(newArr);
+    signCanvas.current.clear();
+  };
   // #END SECTION 2
 
-  // # START IMAGE 1
-  const [gambar, setGambar] = useState("");
-  const onChangeGambar = e => {
+  // # START BACKGROUND IMAGE 1
+  const [background, setBackground] = useState("");
+  const onChangeBackground = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
 
     if (type.includes(e.target.files[0].type)) {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setGambar(reader.result);
+          setBackground(reader.result);
         }
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -125,22 +180,22 @@ export default function TambahMasterSertifikat() {
       e.target.value = null;
       Swal.fire(
         "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data gambar.",
+        "Data yang bisa dimasukkan hanya berupa data background.",
         "error"
       );
     }
   };
-  // # END IMAGE
+  // # END BACKGROUND IMAGE 1
 
-  // # START IMAGE 2
-  const [gambar2, setGambar2] = useState("");
-  const onChangeGambar2 = e => {
+  // # START BACKGROUND IMAGE 2
+  const [background_syllabus, setBackground_syllabus] = useState("");
+  const onChangeBackgroundLembar2 = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (type.includes(e.target.files[0].type)) {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setGambar2(reader.result);
+          setBackground_syllabus(reader.result);
         }
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -148,52 +203,157 @@ export default function TambahMasterSertifikat() {
       e.target.value = null;
       Swal.fire(
         "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data gambar.",
+        "Data yang bisa dimasukkan hanya berupa data background.",
         "error"
       );
     }
   };
+
   // # END IMAGE
 
-  useEffect(() => {
-    // console.log(Array(jumlahTandaTangan));
-    // console.log(typeof jumlahTandaTangan, jumlahTandaTangan);
-    setTandaTanganSlider([0, 0, 0, 0]);
-  }, [jumlahTandaTangan]);
+  const handleDraft = e => {
+    e.preventDefault();
+    try {
+      let formData = new FormData();
+      // formData.append("name", certificate.data.list_certificate[0].name);
+      formData.append("name", "AMIN");
 
-  useEffect(() => {
-    // console.log(Array(jumlahTandaTangan));
-    // console.log(typeof jumlahTandaTangan, jumlahTandaTangan);
-    setTandaTanganSilabusSlider([0, 0, 0, 0]);
-  }, [jumlahTandaTanganSilabus]);
+      formData.append("certificate_type", `${certificate_type} lembar`);
+      formData.append("background", background);
 
-  const [limit, setLimit] = useState(null);
+      signature_certificate_name.forEach((item, i) => {
+        formData.append(`signature_certificate_name[${i}]`, item);
+      });
+      signature_certificate_image.forEach((item, i) => {
+        formData.append(`signature_certificate_image[${i}]`, item);
+      });
+      signature_certificate_position.forEach((item, i) => {
+        formData.append(`signature_certificate_position[${i}]`, item);
+      });
+      signature_certificate_position.forEach((item, i) => {
+        formData.append(`signature_certificate_position[${i}]`, item);
+      });
+      signature_certificate_set_position.forEach((item, i) => {
+        formData.append(`signature_certificate_set_position[${i}]`, item);
+      });
 
-  let { page = 1, keyword, success } = router.query;
+      formData.append("background_syllabus", background_syllabus);
+      signature_certificate_name_syllabus.forEach((item, i) => {
+        formData.append(`signature_certificate_name[${i}]`, item);
+      });
+      signature_certificate_image_syllabus.forEach((item, i) => {
+        formData.append(`signature_certificate_image[${i}]`, item);
+      });
+      signature_certificate_position_syllabus.forEach((item, i) => {
+        formData.append(`signature_certificate_position[${i}]`, item);
+      });
+      signature_certificate_position_syllabus.forEach((item, i) => {
+        formData.append(`signature_certificate_position[${i}]`, item);
+      });
+
+      signature_certificate_set_position_syllabus?.forEach((item, i) => {
+        formData.append(`signature_certificate_set_position[${i}]`, item);
+      });
+
+      console.log(token);
+      formData.append("status_migrate_id", 2);
+      const id = certificate.data.list_certificate[0].id;
+      dispatch(newSertifikat(id, formData, token));
+    } catch (e) {
+      console.log(e, "Masuk sini errornya");
+    }
+  };
+
+  const [isPublish, setIsPublish] = useState(false);
+  const handlePublish = useCallback(() => {
+    if (divReference.current === null) {
+      return;
+    }
+    toPng(divReferenceSilabus.current, {
+      cacheBust: true,
+      canvasWidth: 842,
+      canvasHeight: 595,
+    })
+      .then(image => {
+        const link = document.createElement("a");
+        link.download = "my-image-name2.png";
+        link.href = image;
+        link.click();
+        // console.log("ini imagenya", image); //dari sini gw post pokoknya namanya gatau
+        // setDivImage(divReference.current);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+    toPng(divReference.current, {
+      cacheBust: true,
+      canvasWidth: 842,
+      canvasHeight: 595,
+    })
+      .then(image => {
+        const link = document.createElement("a");
+        link.download = "my-image-name.png";
+        link.href = image;
+        link.click();
+        setDivImage(divReference.current);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [divReference, divReferenceSilabus]);
 
   return (
     <PageWrapper>
       {/* error START */}
+      {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {/* error END */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           {/* START HEADER */}
-          <div className="card-header border-0 d-flex justify-content-lg-between row my-auto py-10 ">
+          <div className="card-header border-0 d-flex justify-content-lg-between row my-auto py-10">
             <div className="card-title d-flex">
               <div className="text-dark">Nama Sertifikat :</div>
               <div className="mx-6">
-                <input
+                <div
                   type="text"
                   className="form-control "
                   placeholder="Masukan Nama Sertifikat"
                   // onChange={e => setSearch(e.target.value)}
-                />
+                >
+                  {certificate.data.list_certificate[0].name}
+                </div>
               </div>
             </div>
             <div className="card-toolbar">
               <Link href="/sertifikat/master-sertifikat/tambah">
                 <a
-                  className="text-primary px-6 font-weight-bolder px-5 py-3 mx-5"
+                  className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
                   onClick={() => {
                     console.log("klik batal");
                   }}
@@ -201,42 +361,52 @@ export default function TambahMasterSertifikat() {
                   Batal
                 </a>
               </Link>
-              <Link href="/sertifikat/master-sertifikat/tambah">
+              <Link
+                href={`/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`}
+              >
                 <a
-                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
-                  onClick={() => {
-                    console.log("klik simpan");
+                  className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
+                  onClick={e => {
+                    handleDraft(e);
                   }}
                 >
-                  Simpan
+                  Simpan Draft
                 </a>
               </Link>
+              <a
+                className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
+                onClick={() => {
+                  handlePublish();
+                }}
+              >
+                Simpan
+              </a>
+              {/* </Link> */}
             </div>
           </div>
           {/* END HEADER */}
           {/* START BODY */}
           <div className="card-body border-top">
-            <div className="row">
+            <div className="row p-0">
               {/* START COL */}
               <div
                 className="border-primary border col-8 h-500px"
                 // style={{ width: "842px" }}
               >
-                <div className="p-0">
-                  {gambar ? (
+                <div className="p-0" ref={divReference}>
+                  {background ? (
                     <Image
-                      src={gambar}
+                      src={background}
                       alt="fitur"
                       // height={495}
-                      // width={700}
+                      // width={1400}
                       layout="fill"
-                      objectFit="fill"
+                      objectFit="cover"
                     />
                   ) : (
                     ""
                   )}
-
-                  <div className="row align-items-center ">
+                  <div className="row align-items-center zindex-1">
                     <div className="position-relative">
                       <input
                         type="text"
@@ -248,45 +418,52 @@ export default function TambahMasterSertifikat() {
                       />
                     </div>
                     <div
-                      className="col-12 text-center font-weight-normal p-0"
-                      style={{ marginTop: "-20px" }}
+                      className="col-12 text-center font-weight-normal p-0 justify-content-center"
+                      style={{ marginTop: "-20px", width: "100%" }}
                     >
-                      <label className="font-weight-boldest display-4">
+                      <label className="font-weight-boldest display-4 w-100">
                         SERTIFIKAT
                       </label>
-                      <div>Diberikan kepada</div>
+                      <div className="w-100">Diberikan kepada</div>
                       <div className="my-2">
                         <span
-                          className="mx-2 px-2 border-2 font-size-h6 px-10"
-                          style={{ borderStyle: "dashed" }}
+                          className="mx-2 px-2 font-size-h6 px-10 w-100"
+                          // style={{ borderStyle: "dashed" }}
                         >
                           Nama Peserta
                         </span>
                       </div>
-                      <div>Atas Partisipasi sebagai</div>
-                      <div className="font-weight-normal font-size-h2">
+                      <div className="w-100">Atas Partisipasi sebagai</div>
+                      <div className="font-weight-normal font-size-h2 w-100">
                         Peserta
                       </div>
-                      <div>Nama Pelatihan</div>
-                      <div className="text-center font-size-h6 font-weight-bold border-2">
+                      <div className="w-100">Nama Pelatihan</div>
+                      <div
+                        className="text-center font-weight-bolder border-2 w-100"
+                        style={{
+                          fontSize: "20px",
+                          textAlign: "center",
+                          // fontWeight: "bold",
+                        }}
+                      >
                         {certificate.theme}
                       </div>
                       <div className="mt-2 w-100">
-                        <span>
+                        <span className="w-100">
                           Program{" "}
-                          <span className="font-size-h6 font-weight-bold">
+                          <span className="font-size-h6 font-weight-bold w-100">
                             {certificate.data.list_certificate[0].academy.name}
                           </span>{" "}
                           Selama
                         </span>
                         <span
-                          className="mx-2 px-2 border-2"
+                          className="mx-2 px-2 border-2 w-100"
                           style={{ borderStyle: "dashed" }}
                         >
                           Waktu Pelatihan
                         </span>
                       </div>
-                      <div className="mt-2">
+                      <div className="mt-2 w-100">
                         <span>Digital Talent Scholarship</span>
                         <span
                           className="mx-2 px-2 border-2"
@@ -295,7 +472,7 @@ export default function TambahMasterSertifikat() {
                           Tahun
                         </span>
                       </div>
-                      <div className="my-4">
+                      <div className="my-4 w-100 text-center">
                         <span
                           className="mx-2 px-2 border-2"
                           style={{ borderStyle: "dashed" }}
@@ -305,19 +482,19 @@ export default function TambahMasterSertifikat() {
                       </div>
                       <div
                         className={
-                          jumlahTandaTangan < 3
+                          number_of_signatures < 3
                             ? " justify-content-center m-0 p-0 d-flex w-100"
                             : " justify-content-around  m-0 p-0 d-flex w-100"
                         }
                       >
                         {/* START MAP TTD */}
-                        {[...Array(jumlahTandaTangan)].map((el, i) => {
+                        {[...Array(number_of_signatures)].map((el, i) => {
                           return (
                             <div
                               key={i}
                               style={{
-                                transform: `translateX(${tandaTanganSlider[i]}%)`,
-                                // left: `${tandaTanganSlider[i]}px`,
+                                transform: `translateX(${signature_certificate_set_position[i]}%)`,
+                                // left: `${signature_certificate_set_position[i]}px`,
                                 width: "156px",
                                 height: "150px",
                               }}
@@ -325,43 +502,60 @@ export default function TambahMasterSertifikat() {
                             >
                               <div className="col">
                                 <div
-                                  className="col border-2 align-items-center justify-content-center d-flex"
+                                  className="col border-2 align-items-center justify-content-center d-flex position-relative"
                                   style={{
-                                    borderStyle: "dashed",
+                                    borderStyle: signature_certificate_image[i]
+                                      ? ""
+                                      : "dashed",
                                     height: "100px",
                                   }}
                                 >
-                                  TTD
-                                </div>
-                                <div
-                                  className="border-2 text-center w-100"
-                                  style={{
-                                    borderStyle: "dashed",
-                                  }}
-                                  //   placeholder="Nama Lengkap"
-                                >
-                                  {person[i].name ? (
-                                    <div
-                                      dangerouslySetInnerHTML={{
-                                        __html: person[i].name,
-                                      }}
-                                      className="my-auto m-0 p-0 test"
-                                      style={{ margin: "0px" }}
-                                    ></div>
+                                  {signature_certificate_image[i] ? (
+                                    <Image
+                                      src={signature_certificate_image[i]}
+                                      layout="fill"
+                                      alt={`Tanda tangan ${i + 1} `}
+                                    />
                                   ) : (
-                                    "Jabatan"
+                                    "TTD"
                                   )}
                                 </div>
                                 <div
                                   className="border-2 text-center w-100"
                                   style={{
-                                    borderStyle: "dashed",
+                                    borderStyle: signature_certificate_name[i]
+                                      ? ""
+                                      : "dashed",
                                   }}
+                                  //   placeholder="Nama Lengkap"
                                 >
-                                  {person[i].jabatan ? (
+                                  {signature_certificate_name[i] ? (
                                     <div
                                       dangerouslySetInnerHTML={{
-                                        __html: person[i].jabatan,
+                                        __html: signature_certificate_name[i],
+                                      }}
+                                      className="my-auto m-0 p-0 test"
+                                      style={{ margin: "0px" }}
+                                    ></div>
+                                  ) : (
+                                    "Nama"
+                                  )}
+                                </div>
+                                <div
+                                  className="border-2 text-center w-100"
+                                  style={{
+                                    borderStyle: signature_certificate_position[
+                                      i
+                                    ]
+                                      ? ""
+                                      : "dashed",
+                                  }}
+                                >
+                                  {signature_certificate_position[i] ? (
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html:
+                                          signature_certificate_position[i],
                                       }}
                                       className="my-auto m-0 p-0"
                                       style={{ margin: "0px" }}
@@ -397,8 +591,8 @@ export default function TambahMasterSertifikat() {
                         type="radio"
                         name="method"
                         value="1"
-                        checked={lembarValue === 1}
-                        onClick={() => setLembarValue(1)}
+                        checked={certificate_type == 1}
+                        onChange={() => setCertificate_type(1)}
                       />
                       <label className="form-check-label">1 Lembar</label>
                     </div>
@@ -408,8 +602,8 @@ export default function TambahMasterSertifikat() {
                         type="radio"
                         name="method"
                         value="2"
-                        checked={lembarValue === 2}
-                        onClick={() => setLembarValue(2)}
+                        checked={certificate_type == 2}
+                        onChange={() => setCertificate_type(2)}
                       />
                       <label className="form-check-label">2 Lembar</label>
                     </div>
@@ -425,11 +619,11 @@ export default function TambahMasterSertifikat() {
                     <select
                       name="jumlah_tandatangan"
                       onChange={e =>
-                        setJumlahTandaTangan(Number(e.target.value))
+                        setNumber_of_signatures(Number(e.target.value))
                       }
                       className="form-control"
                     >
-                      <option selected value={1}>
+                      <option defaultValue={1} value={1}>
                         1 Tanda Tangan
                       </option>
                       <option value={2}>2 Tanda Tangan</option>
@@ -442,7 +636,7 @@ export default function TambahMasterSertifikat() {
                 {/* START TANDA TANGAN SLIDER */}
                 <div className="justify-content-center h-100px align-items-center">
                   {/* START MAP TTD */}
-                  {[...Array(jumlahTandaTangan)].map((el, i) => {
+                  {[...Array(number_of_signatures)].map((el, i) => {
                     return (
                       <div key={i} className="d-flex justify-content-start">
                         <div className="col-12">
@@ -507,13 +701,14 @@ export default function TambahMasterSertifikat() {
                                     onReady={editor => {
                                       // You can store the "editor" and use when it is needed.
                                     }}
-                                    data={person[i].name}
+                                    data={signature_certificate_name[i]}
                                     onChange={(event, editor) => {
                                       const data = editor.getData();
-                                      //   console.log(data);
-                                      let newArr = [...person];
-                                      newArr[i].name = data;
-                                      setPerson(newArr);
+                                      let newArr = [
+                                        ...signature_certificate_name,
+                                      ];
+                                      newArr[i] = data;
+                                      setSignature_certificate_name(newArr);
                                     }}
                                     className="h-25"
                                   />
@@ -525,10 +720,14 @@ export default function TambahMasterSertifikat() {
                                       <input
                                         className="form-check-input"
                                         type="radio"
-                                        name="tandaTanganType"
+                                        name={`tandaTanganType${i}`}
                                         value="1"
-                                        checked={tandaTanganType === 1}
-                                        onClick={() => setTandaTanganType(1)}
+                                        checked={tandaTanganType[i] == 1}
+                                        onChange={() => {
+                                          let newArr = [...tandaTanganType];
+                                          newArr[i] = 1;
+                                          setTandaTanganType(newArr);
+                                        }}
                                       />
                                       <label className="form-check-label">
                                         Manual
@@ -538,17 +737,21 @@ export default function TambahMasterSertifikat() {
                                       <input
                                         className="form-check-input"
                                         type="radio"
-                                        name="tandaTanganType"
+                                        name={`tandaTanganType${i}`}
                                         value="2"
-                                        checked={tandaTanganType === 2}
-                                        onClick={() => setTandaTanganType(2)}
+                                        checked={tandaTanganType[i] == 2}
+                                        onChange={() => {
+                                          let newArr = [...tandaTanganType];
+                                          newArr[i] = 2;
+                                          setTandaTanganType(newArr);
+                                        }}
                                       />
                                       <label className="form-check-label">
                                         Digital
                                       </label>
                                     </div>
                                   </div>
-                                  {tandaTanganType == 1 ? (
+                                  {tandaTanganType[i] == 1 ? (
                                     <div className="custom-file my-5">
                                       <input
                                         type="file"
@@ -599,8 +802,8 @@ export default function TambahMasterSertifikat() {
                                       <div className="d-flex align-items-center my-5">
                                         <a
                                           className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
-                                          onClick={() =>
-                                            handleDataTandaTangan()
+                                          onClick={e =>
+                                            handleCanvasTandaTangan(e, i)
                                           }
                                         >
                                           Buat Tanda Tangan
@@ -608,7 +811,7 @@ export default function TambahMasterSertifikat() {
                                         <button
                                           type="button"
                                           onClick={e => {
-                                            handleClearTandaTangan(e, i);
+                                            handleClearCanvasTandaTangan(e, i);
                                           }}
                                           className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
                                         >
@@ -626,12 +829,14 @@ export default function TambahMasterSertifikat() {
                                     onReady={editor => {
                                       // You can store the "editor" and use when it is needed.
                                     }}
-                                    data={person[i].jabatan}
+                                    data={signature_certificate_position[i]}
                                     onChange={(event, editor) => {
                                       const data = editor.getData();
-                                      let newArr = [...person];
-                                      newArr[i].jabatan = data;
-                                      setPerson(newArr);
+                                      let newArr = [
+                                        ...signature_certificate_position,
+                                      ];
+                                      newArr[i] = data;
+                                      setSignature_ceritifcate_position(newArr);
                                     }}
                                     className="h-25"
                                   />
@@ -654,51 +859,77 @@ export default function TambahMasterSertifikat() {
                             <div className="col-12 d-flex py-5 px-4 ">
                               <input
                                 type="number"
-                                // min={jumlahTandaTangan == 1 ? -275 : -100}
-                                // max={jumlahTandaTangan == 1 ? 275 : 200}
-                                min={-157}
-                                max={157}
+                                min={
+                                  number_of_signatures == 1
+                                    ? -156
+                                    : number_of_signatures == 2
+                                    ? -106
+                                    : number_of_signatures == 3
+                                    ? -22
+                                    : -14
+                                }
+                                max={
+                                  number_of_signatures == 1
+                                    ? 156
+                                    : number_of_signatures == 2
+                                    ? 106
+                                    : number_of_signatures == 3
+                                    ? 22
+                                    : 14
+                                }
                                 className="form-control"
-                                placeholder={tandaTanganSlider[i]}
-                                value={tandaTanganSlider[i]}
+                                placeholder={
+                                  signature_certificate_set_position[i]
+                                }
+                                value={signature_certificate_set_position[i]}
                                 onChange={e => {
-                                  let newArr = [...tandaTanganSlider];
+                                  let newArr = [
+                                    ...signature_certificate_set_position,
+                                  ];
                                   newArr[i] = +e.target.value;
-                                  setTandaTanganSlider(newArr);
+                                  setSignature_certificate_set_position(newArr);
                                 }}
                               />
 
                               <input
                                 type="range"
-                                min={-157}
-                                max={157}
-                                // min={jumlahTandaTangan == 1 ? -275 : -100}
-                                // max={
-                                //   jumlahTandaTangan == 1
-                                //     ? 275
-                                //     : jumlahTandaTangan == 2 &&
-                                //       tandaTanganSlider[0] + 25 ==
-                                //         tandaTanganSlider[1] - 25
-                                //     ? tandaTanganSlider[0] + 25
-                                //     : 100
-                                // }
-                                value={tandaTanganSlider[i]}
+                                min={
+                                  number_of_signatures == 1
+                                    ? -156
+                                    : number_of_signatures == 2
+                                    ? -106
+                                    : number_of_signatures == 3
+                                    ? -22
+                                    : -14
+                                }
+                                max={
+                                  number_of_signatures == 1
+                                    ? 156
+                                    : number_of_signatures == 2
+                                    ? 106
+                                    : number_of_signatures == 3
+                                    ? 22
+                                    : 14
+                                }
+                                value={signature_certificate_set_position[i]}
                                 className="text-white form-range form-control mx-5"
                                 style={{
                                   cursor: "pointer",
                                   width: "100%",
                                 }}
                                 onChange={e => {
-                                  let newArr = [...tandaTanganSlider];
+                                  let newArr = [
+                                    ...signature_certificate_set_position,
+                                  ];
                                   newArr[i] = +e.target.value;
-                                  setTandaTanganSlider(newArr);
+                                  setSignature_certificate_set_position(newArr);
                                 }}
                               />
                             </div>
                           </div>
                         </div>
 
-                        {/* {tandaTanganSlider} */}
+                        {/* {signature_certificate_set_position} */}
                       </div>
                     );
                   })}
@@ -716,14 +947,14 @@ export default function TambahMasterSertifikat() {
                   </label>
                   <input
                     type="file"
-                    name="gambar"
+                    name="background"
                     className="custom-file-input"
                     id="InputFile"
-                    onChange={onChangeGambar}
-                    // onChange={(e) => onChangeGambar(e)}
+                    onChange={e => onChangeBackground(e)}
+                    // onChange={(e) => onChangeBackground(e)}
                     accept="image/*"
                     onBlur={() =>
-                      simpleValidator.current.showMessageFor("gambar")
+                      simpleValidator.current.showMessageFor("background")
                     }
                     style={{ display: "none" }}
                   />
@@ -734,111 +965,182 @@ export default function TambahMasterSertifikat() {
           {/* END BODY */}
         </div>
         {/* START SECTION 2 */}
-        {lembarValue == 2 ? (
+        {certificate_type == 2 ? (
           <div className="card card-custom card-stretch gutter-b">
-            {/* START HEADER */}
-
             {/* START BODY */}
             <div className="card-body border-top">
-              <div className="row">
+              <div className="row p-0">
                 {/* START COL */}
-                <div className="border-primary border col-8 h-500px">
-                  <div className="p-0">
-                    {gambar2 ? (
+                <div className="border-primary border col-8 h-500px h-100">
+                  <div className="p-0" ref={divReferenceSilabus}>
+                    {background_syllabus ? (
                       <Image
-                        src={gambar2}
-                        alt="gambar2"
+                        src={background_syllabus}
+                        alt="fitur"
                         // height={495}
                         // width={700}
                         layout="fill"
-                        objectFit="fill"
+                        objectFit="cover"
                       />
                     ) : (
                       ""
                     )}
-                  </div>
-                  <div className="row h-100">
-                    <div className={jumlahTandaTangan > 2 ? "col-12" : "col-6"}>
-                      <div className="pt-10 pl-10">
-                        <div
-                          className="font-weight-bold"
-                          style={{ fontSize: "14px" }}
-                        >
+                    <div
+                      className="row align-items-center"
+                      style={{ width: "100%" }}
+                    >
+                      <div
+                        className="p-19 zindex-1 col-12"
+                        style={{ height: "370px" }}
+                      >
+                        <div style={{ fontSize: "14px", fontWeight: "bold" }}>
                           Silabus yang di dapat
                         </div>
-
-                        <div
-                          className={jumlahTandaTanganSilabus >= 3 ? "row" : ""}
-                        >
-                          {silabusData &&
-                            silabusData.map((el, i) => {
-                              return (
-                                <div
-                                  className={
-                                    jumlahTandaTanganSilabus >= 3
-                                      ? "my-4 col-6"
-                                      : "my-4"
-                                  }
-                                  key={i}
-                                >
-                                  {i + 1} .{el}
-                                </div>
-                              );
-                            })}
+                        <div>
+                          <ol className="col mt-4">
+                            {certificate.data.list_certificate[0].syllabus &&
+                              certificate.data.list_certificate[0].syllabus.map(
+                                (e, i) => {
+                                  return (
+                                    <li
+                                      className="p-0"
+                                      key={i}
+                                      style={{
+                                        fontSize:
+                                          certificate.data.list_certificate[0]
+                                            .syllabus.length >= 15
+                                            ? "8px"
+                                            : "12px",
+                                      }}
+                                    >
+                                      {e}
+                                    </li>
+                                  );
+                                }
+                              )}
+                          </ol>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      className={
-                        jumlahTandaTanganSilabus < 3
-                          ? "col d-flex align-items-end justify-content-center"
-                          : "col d-flex align-items-end justify-content-around"
-                      }
-                    >
-                      {/* START MAP TTD */}
-                      {[...Array(jumlahTandaTanganSilabus)].map((el, i) => {
-                        return (
-                          <div
-                            key={i}
-                            style={{
-                              transform: `translateX(${tandaTanganSilabusSlider[i]}%)`,
-                              width: "156px",
-                            }}
-                          >
-                            <div className="col">
-                              <div
-                                className="col border-2 align-items-center justify-content-center d-flex"
-                                style={{
-                                  borderStyle: "dashed",
-                                  height: "100px",
-                                  width: "156px",
-                                }}
-                              >
-                                TTD
-                              </div>
-                              <input
-                                type="text"
-                                className="border-2 text-center w-100"
-                                style={{
-                                  borderStyle: "dashed",
-                                }}
-                                placeholder="Nama Lengkap"
-                                onChange={e => {
-                                  console.log(e.target.value);
-                                }}
-                              />
-                              <div
-                                type="text"
-                                className="border-2 text-center w-100"
-                                style={{
-                                  borderStyle: "dashed",
-                                }}
-                                placeholder="Jabatan"
-                              />
-                            </div>
-                          </div>
-                        );
-                      })}
+                      <div
+                        className="col-12 text-center font-weight-normal p-0 justify-content-center"
+                        style={{
+                          marginTop: "-20px",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                      >
+                        <div
+                          className={
+                            number_of_signature_syllabus < 3
+                              ? " justify-content-center m-0 p-0 d-flex w-100"
+                              : " justify-content-around  m-0 p-0 d-flex w-100"
+                          }
+                        >
+                          {/* START MAP TTD */}
+                          {[...Array(number_of_signature_syllabus)].map(
+                            (el, i) => {
+                              return (
+                                <div
+                                  key={i}
+                                  style={{
+                                    transform: `translateX(${signature_certificate_set_position_syllabus[i]}%)`,
+                                    // left: `${signature_certificate_set_position[i]}px`,
+                                    width: "156px",
+                                    height: "150px",
+                                  }}
+                                  className="col-3 p-0"
+                                >
+                                  <div className="col">
+                                    <div
+                                      className="col border-2 align-items-center justify-content-center d-flex position-relative"
+                                      style={{
+                                        borderStyle:
+                                          signature_certificate_image_syllabus[
+                                            i
+                                          ]
+                                            ? ""
+                                            : "dashed",
+                                        height: "100px",
+                                      }}
+                                    >
+                                      {signature_certificate_image_syllabus[
+                                        i
+                                      ] ? (
+                                        <Image
+                                          src={
+                                            signature_certificate_image_syllabus[
+                                              i
+                                            ]
+                                          }
+                                          layout="fill"
+                                          alt={`Tanda tangan ${i + 1} `}
+                                        />
+                                      ) : (
+                                        "TTD"
+                                      )}
+                                    </div>
+                                    <div
+                                      className="border-2 text-center w-100"
+                                      style={{
+                                        borderStyle:
+                                          signature_certificate_name_syllabus[i]
+                                            ? ""
+                                            : "dashed",
+                                      }}
+                                      //   placeholder="Nama Lengkap"
+                                    >
+                                      {signature_certificate_name_syllabus[
+                                        i
+                                      ] ? (
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              signature_certificate_name_syllabus[
+                                                i
+                                              ],
+                                          }}
+                                          className="my-auto m-0 p-0 test"
+                                          style={{ margin: "0px" }}
+                                        ></div>
+                                      ) : (
+                                        "Nama"
+                                      )}
+                                    </div>
+                                    <div
+                                      className="border-2 text-center w-100"
+                                      style={{
+                                        borderStyle:
+                                          signature_certificate_position_syllabus[
+                                            i
+                                          ]
+                                            ? ""
+                                            : "dashed",
+                                      }}
+                                    >
+                                      {signature_certificate_position_syllabus[
+                                        i
+                                      ] ? (
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html:
+                                              signature_certificate_position_syllabus[
+                                                i
+                                              ],
+                                          }}
+                                          className="my-auto m-0 p-0"
+                                          style={{ margin: "0px" }}
+                                        ></div>
+                                      ) : (
+                                        "Jabatan"
+                                      )}
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            }
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -856,11 +1158,13 @@ export default function TambahMasterSertifikat() {
                       <select
                         name="jumlah_tandatangan"
                         onChange={e =>
-                          setJumlahTandaTanganSilabus(Number(e.target.value))
+                          setNumber_of_signature_syllabus(
+                            Number(e.target.value)
+                          )
                         }
                         className="form-control"
                       >
-                        <option selected value={1}>
+                        <option value={1} defaultValue={1}>
                           1 Tanda Tangan
                         </option>
                         <option value={2}>2 Tanda Tangan</option>
@@ -871,71 +1175,339 @@ export default function TambahMasterSertifikat() {
                   </div>
                   {/* END FORM Tanda Tangan */}
                   {/* START TANDA TANGAN SLIDER */}
-                  <div className="justify-content-center align-items-center">
+                  <div className="justify-content-center h-100px align-items-center">
                     {/* START MAP TTD */}
-                    {[...Array(jumlahTandaTanganSilabus)].map((el, i) => {
+                    {[...Array(number_of_signature_syllabus)].map((el, i) => {
                       return (
                         <div key={i} className="d-flex justify-content-start">
                           <div className="col-12">
                             <div className="py-5">
                               {`Atur Tanda tangan - ${i + 1}`}
                             </div>
-                            <div className="card-toolbar">
+                            <div
+                              className="card-toolbar"
+                              data-target={`#modalTTDSyllabus${i}`}
+                              data-toggle="modal"
+                            >
                               <a className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-15 py-3">
                                 <i className="ri-pencil-fill text-white"></i>
                                 Atur Tanda Tangan
                               </a>
                             </div>
-                            {jumlahTandaTanganSilabus < 3 ? (
-                              <div className="row align-items-center py-5 justify-content-center">
-                                <div className="col-12">Atur Posisi</div>
-                                <div className="col-12 d-flex py-5 ">
-                                  <input
-                                    type="number"
-                                    max={100}
-                                    min={-100}
-                                    className="form-control w-25"
-                                    placeholder={tandaTanganSilabusSlider[i]}
-                                    value={tandaTanganSilabusSlider[i]}
-                                    onChange={e => {
-                                      setTandaTanganSlider(prev => {
-                                        return [
-                                          ...prev,
-                                          (tandaTanganSlider[i] =
-                                            e.target.value),
-                                        ];
-                                      });
-                                    }}
-                                  />
 
-                                  <input
-                                    type="range"
-                                    min={-100}
-                                    max={100}
-                                    step="5"
-                                    value={tandaTanganSilabusSlider[i]}
-                                    className="text-white form-range form-control mx-5"
-                                    style={{
-                                      cursor: "pointer",
-                                      width: "100%",
-                                    }}
-                                    onChange={e => {
-                                      setTandaTanganSilabusSlider(prev => {
-                                        return [
-                                          ...prev,
-                                          (tandaTanganSilabusSlider[i] =
-                                            e.target.value),
+                            {/* START MODAL */}
+                            <div
+                              className="modal fade"
+                              id={`modalTTDSyllabus${i}`}
+                              tabIndex="-1"
+                              role="dialog"
+                              aria-labelledby="exampleModalCenterTitle"
+                              aria-hidden="true"
+                            >
+                              <div
+                                className="modal-dialog modal-dialog-centered"
+                                role="document"
+                              >
+                                <div className="modal-content">
+                                  <div className="modal-header">
+                                    <h5
+                                      className="modal-title"
+                                      id="exampleModalLongTitle"
+                                    >
+                                      Tanda Tangan - {i + 1}
+                                    </h5>
+                                    <button
+                                      type="button"
+                                      className="close"
+                                      data-dismiss="modal"
+                                      aria-label="Close"
+                                    >
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div
+                                    className="modal-body"
+                                    //   style={{
+                                    //     height: "400px",
+                                    //   }}
+                                  >
+                                    <div className="font-size-h5 mb-5">
+                                      Penanda Tangan
+                                    </div>
+                                    <CKEditor
+                                      editor={ClassicEditor}
+                                      config={{
+                                        toolbar: [
+                                          "bold",
+                                          "italic",
+                                          "underline",
+                                        ],
+                                      }}
+                                      onReady={editor => {
+                                        // You can store the "editor" and use when it is needed.
+                                      }}
+                                      data={
+                                        signature_certificate_name_syllabus[i]
+                                      }
+                                      onChange={(event, editor) => {
+                                        const data = editor.getData();
+                                        let newArr = [
+                                          ...signature_certificate_name_syllabus,
                                         ];
-                                      });
-                                    }}
-                                  />
+                                        newArr[i] = data;
+                                        setSignature_ceritficate_name_syllabus(
+                                          newArr
+                                        );
+                                      }}
+                                      className="h-25"
+                                    />
+                                    <div className="font-size-h5 my-5">
+                                      Tanda Tangan
+                                    </div>
+                                    <div className="d-flex justify-content-start">
+                                      <div className="col-6 form-check form-check-inline">
+                                        <input
+                                          className="form-check-input"
+                                          type="radio"
+                                          name={`tandaTanganSyllabusType${i}`}
+                                          value="1"
+                                          checked={
+                                            tandaTanganSyllabusType[i] == 1
+                                          }
+                                          onChange={() => {
+                                            let newArr = [
+                                              ...tandaTanganSyllabusType,
+                                            ];
+                                            newArr[i] = 1;
+                                            setTandaTanganSyllabusType(newArr);
+                                          }}
+                                        />
+                                        <label className="form-check-label">
+                                          Manual
+                                        </label>
+                                      </div>
+                                      <div className="col-6 form-check form-check-inline">
+                                        <input
+                                          className="form-check-input"
+                                          type="radio"
+                                          name={`tandaTanganSyllabusType${i}`}
+                                          value="2"
+                                          checked={
+                                            tandaTanganSyllabusType[i] == 2
+                                          }
+                                          onChange={() => {
+                                            let newArr = [
+                                              ...tandaTanganSyllabusType,
+                                            ];
+                                            newArr[i] = 2;
+                                            setTandaTanganSyllabusType(newArr);
+                                          }}
+                                        />
+                                        <label className="form-check-label">
+                                          Digital
+                                        </label>
+                                      </div>
+                                    </div>
+                                    {tandaTanganSyllabusType[i] == 1 ? (
+                                      <div className="custom-file my-5">
+                                        <input
+                                          type="file"
+                                          className="custom-file-input"
+                                          name="image"
+                                          onChange={e =>
+                                            handleImageTandaTanganSyllabus(e, i)
+                                          }
+                                          accept="image/png, image/jpeg , image/jpg"
+                                        />
+                                        <label
+                                          className="custom-file-label"
+                                          htmlFor="customFile"
+                                        >
+                                          Choose file
+                                        </label>
+                                      </div>
+                                    ) : (
+                                      <>
+                                        <div
+                                          style={{
+                                            background: "#FFFFFF",
+                                            boxShadow:
+                                              "inset 10px 10px 40px rgba(0, 0, 0, 0.08)",
+                                            borderRadius: "10px",
+                                          }}
+                                        >
+                                          <SignaturePad
+                                            ref={signCanvas}
+                                            options={{
+                                              minWidth: 1,
+                                              maxWidth: 3,
+                                              penColor: "rgb(66, 133, 244)",
+                                            }}
+                                            onBlur={() =>
+                                              simpleValidator.current.showMessageFor(
+                                                "tandaTangan"
+                                              )
+                                            }
+                                          />
+                                          {simpleValidator.current.message(
+                                            "tandaTangan",
+                                            tandaTangan,
+                                            "required",
+                                            { className: "text-danger" }
+                                          )}
+                                        </div>
+                                        <div className="d-flex align-items-center my-5">
+                                          <a
+                                            className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
+                                            onClick={e =>
+                                              handleCanvasTandaTanganSyllabus(
+                                                e,
+                                                i
+                                              )
+                                            }
+                                          >
+                                            Buat Tanda Tangan
+                                          </a>
+                                          <button
+                                            type="button"
+                                            onClick={e => {
+                                              handleClearCanvasTandaTanganSyllabus(
+                                                e,
+                                                i
+                                              );
+                                            }}
+                                            className="btn btn-sm btn-rounded-full bg-yellow-primary text-white"
+                                          >
+                                            Buat Ulang Tanda Tangan
+                                          </button>
+                                        </div>
+                                      </>
+                                    )}
+                                    <div className="font-size-h5 mb-5">
+                                      Jabatan Penanda Tangan
+                                    </div>
+                                    <CKEditor
+                                      editor={ClassicEditor}
+                                      // config={editorConfig}
+                                      onReady={editor => {
+                                        // You can store the "editor" and use when it is needed.
+                                      }}
+                                      data={
+                                        signature_certificate_position_syllabus[
+                                          i
+                                        ]
+                                      }
+                                      onChange={(event, editor) => {
+                                        const data = editor.getData();
+                                        let newArr = [
+                                          ...signature_certificate_position_syllabus,
+                                        ];
+                                        newArr[i] = data;
+                                        setSignature_certificate_position_syllabus(
+                                          newArr
+                                        );
+                                      }}
+                                      className="h-25"
+                                    />
+                                  </div>
+                                  <div className="modal-footer">
+                                    <button
+                                      type="button"
+                                      className="btn btn-secondary"
+                                      data-dismiss="modal"
+                                    >
+                                      Tutup
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
-                            ) : (
-                              <div></div>
-                            )}
+                            </div>
+                            {/* END MODAL */}
+                            <div className="row align-items-center py-5 justify-content-center">
+                              <div className="col-12">Atur Posisi</div>
+                              <div className="col-12 d-flex py-5 px-4 ">
+                                <input
+                                  type="number"
+                                  min={
+                                    number_of_signature_syllabus == 1
+                                      ? -156
+                                      : number_of_signature_syllabus == 2
+                                      ? -106
+                                      : number_of_signature_syllabus == 3
+                                      ? -22
+                                      : -14
+                                  }
+                                  max={
+                                    number_of_signature_syllabus == 1
+                                      ? 156
+                                      : number_of_signature_syllabus == 2
+                                      ? 106
+                                      : number_of_signature_syllabus == 3
+                                      ? 22
+                                      : 14
+                                  }
+                                  className="form-control"
+                                  value={
+                                    signature_certificate_set_position_syllabus[
+                                      i
+                                    ]
+                                  }
+                                  onChange={e => {
+                                    let newArr = [
+                                      ...signature_certificate_set_position_syllabus,
+                                    ];
+                                    newArr[i] = +e.target.value;
+                                    setSignature_certificate_set_position_syllabus(
+                                      newArr
+                                    );
+                                  }}
+                                />
+
+                                <input
+                                  type="range"
+                                  min={
+                                    number_of_signature_syllabus == 1
+                                      ? -156
+                                      : number_of_signature_syllabus == 2
+                                      ? -106
+                                      : number_of_signature_syllabus == 3
+                                      ? -22
+                                      : -14
+                                  }
+                                  max={
+                                    number_of_signature_syllabus == 1
+                                      ? 156
+                                      : number_of_signature_syllabus == 2
+                                      ? 106
+                                      : number_of_signature_syllabus == 3
+                                      ? 22
+                                      : 14
+                                  }
+                                  value={
+                                    signature_certificate_set_position_syllabus[
+                                      i
+                                    ]
+                                  }
+                                  className="text-white form-range form-control mx-5"
+                                  style={{
+                                    cursor: "pointer",
+                                    width: "100%",
+                                  }}
+                                  onChange={e => {
+                                    let newArr = [
+                                      ...signature_certificate_set_position_syllabus,
+                                    ];
+                                    newArr[i] = +e.target.value;
+                                    setSignature_certificate_set_position_syllabus(
+                                      newArr
+                                    );
+                                  }}
+                                />
+                              </div>
+                            </div>
                           </div>
-                          {/* {tandaTanganSlider} */}
+
+                          {/* {signature_certificate_set_position} */}
                         </div>
                       );
                     })}
@@ -953,13 +1525,13 @@ export default function TambahMasterSertifikat() {
                     </label>
                     <input
                       type="file"
-                      name="gambar2"
-                      className="custom-file-input"
+                      name="background2"
                       id="InputFile2"
-                      onChange={onChangeGambar2}
+                      className="custom-file-input"
+                      onChange={e => onChangeBackgroundLembar2(e)}
                       accept="image/*"
                       onBlur={() =>
-                        simpleValidator.current.showMessageFor("gambar2")
+                        simpleValidator.current.showMessageFor("background")
                       }
                       style={{ display: "none" }}
                     />
