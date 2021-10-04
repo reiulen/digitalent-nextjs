@@ -23,13 +23,16 @@ import {
 import axios from "axios";
 
 export const getAllTheme =
-  (page = 1, keyword = "", limit = 5, token) =>
+  (page = 1, keyword = "", akademi = null, status = null, limit = 5, token) =>
   async (dispatch) => {
     try {
       dispatch({ type: THEME_REQUEST });
 
-      let link = process.env.END_POINT_API_PELATIHAN + `api/tema?page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
+      let link = process.env.END_POINT_API_PELATIHAN + `api/v1/tema/find?`;
+      if (page) link = link.concat(`&page=${page}`);
+      if (keyword) link = link.concat(`&cari=${keyword}`);
+      if (akademi) link = link.concat(`&akademi=${akademi}`);
+      if (status) link = link.concat(`&status=${status}`);
       if (limit) link = link.concat(`&limit=${limit}`);
 
       const config = {
@@ -54,7 +57,8 @@ export const getAllTheme =
 
 export const getDetailTheme = (id, token) => async (dispatch) => {
   try {
-    let link = process.env.END_POINT_API_PELATIHAN + `api/tema/${id}`;
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `api/v1/tema/detail?id=${id}`;
 
     const config = {
       headers: {
@@ -89,7 +93,7 @@ export const newTheme = (themeData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + "api/tema",
+      process.env.END_POINT_API_PELATIHAN + "api/v1/tema/create",
       themeData,
       config
     );
@@ -106,7 +110,7 @@ export const newTheme = (themeData, token) => async (dispatch) => {
   }
 };
 
-export const updateTheme = (id, themeData, token) => async (dispatch) => {
+export const updateTheme = (themeData, token) => async (dispatch) => {
   try {
     dispatch({
       type: UPDATE_THEME_REQUEST,
@@ -119,7 +123,7 @@ export const updateTheme = (id, themeData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + `api/tema/${id}`,
+      process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/update`,
       themeData,
       config
     );
@@ -147,7 +151,7 @@ export const deleteTheme = (id, token) => async (dispatch) => {
     };
 
     const { data } = await axios.delete(
-      process.env.END_POINT_API_PELATIHAN + `api/tema/${id}`,
+      process.env.END_POINT_API_PELATIHAN + `api/v1/tema/delete?id=${id}`,
       config
     );
 

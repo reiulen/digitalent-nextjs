@@ -198,6 +198,15 @@ import {
   updateAcademyReducer,
   deleteAcademyReducer,
 } from "./pelatihan/academy.reducers";
+
+// ====================== tema =====================
+import {
+  allThemeReducer,
+  newThemeReducer,
+  detailThemeReducer,
+  updateThemeReducer,
+  deleteThemeReducer,
+} from "./pelatihan/theme.reducers";
 //END PELATIHAN
 
 // functional reducer
@@ -378,6 +387,12 @@ const reducer = combineReducers({
   detailAcademy: detailAcademyReducer,
   updateAcademy: updateAcademyReducer,
   deleteAcademy: deleteAcademyReducer,
+  // ========== tema ===========
+  allTheme: allThemeReducer,
+  newTheme: newThemeReducer,
+  detailTheme: detailThemeReducer,
+  updateTheme: updateThemeReducer,
+  deleteTheme: deleteThemeReducer,
   //END PELATIHAN
 });
 
