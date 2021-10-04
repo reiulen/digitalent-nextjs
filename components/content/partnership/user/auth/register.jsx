@@ -26,6 +26,28 @@ const RegisterMitra = () => {
     confirmPassword: "",
   });
 
+  const [hidePassword, setHidePassword] = useState(true);
+  const [hidePasswordConfirm, setHidePasswordConfirmConfirm] = useState(true);
+
+  const handlerShowPassword = (value) => {
+    setHidePassword(value);
+    var input = document.getElementById("input-password");
+    if (input.type === "password") {
+      input.type = "text";
+    } else {
+      input.type = "password";
+    }
+  };
+  const handlerShowPasswordConfirm = (value) => {
+    setHidePasswordConfirmConfirm(value);
+    var input = document.getElementById("input-password-confirm");
+    if (input.type === "password") {
+      input.type = "text";
+    } else {
+      input.type = "password";
+    }
+  };
+
   const notify = (value) =>
     toast.info(`🦄 ${value}`, {
       position: "top-right",
@@ -99,7 +121,7 @@ const RegisterMitra = () => {
       })
     }
     
-  }, [allAuthentication.status, allAuthentication.errorRegister,dispatch]);
+  }, [allAuthentication.status, allAuthentication.errorRegister,dispatch,router]);
 
 
   
@@ -173,12 +195,26 @@ const RegisterMitra = () => {
                   <label className="form-auth-label">Password</label>
                   <div className="position-relative">
                     <input
+                      id="input-password"
                       type="password"
                       className="form-control form-control-auth pr-10"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Masukkan Password Anda"
                     />
+                    {hidePassword === true ? (
+                      <i
+                        className="ri-eye-fill right-center-absolute cursor-pointer"
+                        style={{ right: "10px" }}
+                        onClick={() => handlerShowPassword(false)}
+                      />
+                    ) : (
+                      <i
+                        className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                        style={{ right: "10px" }}
+                        onClick={() => handlerShowPassword(true)}
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="form-group">
@@ -186,11 +222,25 @@ const RegisterMitra = () => {
                   <div className="position-relative">
                     <input
                       type="password"
+                      id="input-password-confirm"
                       className="form-control form-control-auth pr-10"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="Masukkan password Anda"
                     />
+                    {hidePasswordConfirm === true ? (
+                      <i
+                        className="ri-eye-fill right-center-absolute cursor-pointer"
+                        style={{ right: "10px" }}
+                        onClick={() => handlerShowPasswordConfirm(false)}
+                      />
+                    ) : (
+                      <i
+                        className="ri-eye-off-fill right-center-absolute cursor-pointer"
+                        style={{ right: "10px" }}
+                        onClick={() => handlerShowPasswordConfirm(true)}
+                      />
+                    )}
                   </div>
                 </div>
 
@@ -211,111 +261,6 @@ const RegisterMitra = () => {
               </div>
             </div>
           </div>
-
-          {/* daftar baru */}
-
-          {/* <div className="container ">
-            <div className="title-login text-center mt-6">
-              <Image
-                src="/assets/logo/logo-5.svg"
-                width={246}
-                height={96}
-                alt="Logo-5"
-              />
-
-              <h3
-                className="align-middle mt-8"
-                style={{
-                  fontSize: "32px",
-                  color: "#ffffff",
-                  fontWeight: "700",
-                  fontFamily: "Rubik",
-                  lineHeight: "38px",
-                }}
-              >
-                Verifikasi E-mail
-              </h3>
-              <p className="text-white">Masukkan kode verifikasi yang telah dikirim ke</p>
-              <p className="fw-600 text-white">contoh@gmail.com</p>
-            </div>
-
-            <div
-              className="title-form col-lg-6 p-0 mx-auto"
-              style={{ marginTop: "30px" }}
-            >
-              <form>
-                <div className="form-group mb-2">
-                  <label className="form-auth-label">Kode Verifikasi</label>
-                  <input
-                    type="text"
-                    className="form-control form-control-auth"
-                    placeholder="Masukkan Kode Verifikasi"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
-                >
-                  Verifikasi
-                </button>
-              </form>
-            </div>
-          </div>
-         */}
-          {/* Email pemulihan */}
-          {/* <div className="container ">
-            <div className="title-login text-center mt-6">
-              <Image
-                src="/assets/logo/logo-5.svg"
-                width={246}
-                height={96}
-                alt="Logo-5"
-              />
-
-              <h3
-                className="align-middle mt-8"
-                style={{
-                  fontSize: "32px",
-                  color: "#ffffff",
-                  fontWeight: "700",
-                  fontFamily: "Rubik",
-                  lineHeight: "38px",
-                }}
-              >
-                Atur Ulang Password
-              </h3>
-            </div>
-
-            <div
-              className="title-form col-lg-6 p-0 mx-auto"
-              style={{ marginTop: "30px" }}
-            >
-              <form>
-                <div className="form-group mb-2">
-                  <label className="form-auth-label">E-mail Pemulihan</label>
-                  <input
-                    type="text"
-                    className="form-control form-control-auth"
-                    placeholder="Masukkan Email Anda"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
-                >
-                  Kirim E-mail
-                </button>
-              </form>
-              <div className="bottom mt-9 text-center">
-                <p style={{ fontSize: "12px", color: "#ffffff" }}>
-                  Belum menerima e-mail?
-                  <Link href="/partnership/user/auth/login" passHref>
-                    <a className="text-primary ml-2">Kirim Ulang</a>
-                  </Link>
-                </p>
-              </div>
-            </div>
-          </div> */}
         </div>
       </AuthWrapper>
     </>

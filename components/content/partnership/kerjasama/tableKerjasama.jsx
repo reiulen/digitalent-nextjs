@@ -706,20 +706,18 @@ const Table = ({token}) => {
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
                                     {items.period} {items.period_unit}
-                                  </p>{" "}
-                                </td>
-                                <td className="align-middle text-left">
-                                  <p className="p-part-t">
-                                    {moment(items.period_date_start).format(
-                                      "DD MMMM YYYY"
-                                    )}
-                                    {/* moment().format('MMMM Do YYYY, h:mm:ss a'); */}
-                                    {/* H, HHss     */}
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
-                                    {moment(items.period_date_end).format(
+                                    {items.period_date_start === null ? "-" : moment(items.period_date_start).format(
+                                      "DD MMMM YYYY"
+                                    )}
+                                  </p>
+                                </td>
+                                <td className="align-middle text-left">
+                                  <p className="p-part-t">
+                                    {items.period_date_end === null ? "-" : moment(items.period_date_end).format(
                                       "DD MMMM YYYY"
                                     )}
                                   </p>
@@ -1066,8 +1064,8 @@ const Table = ({token}) => {
                                       <Link href={{
 
 
-                                        // pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
-                                        pathname:"/partnership/tanda-tangan/ttdTolkit",
+                                        pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
+                                        // pathname:"/partnership/tanda-tangan/ttdTolkit",
 
 
 
