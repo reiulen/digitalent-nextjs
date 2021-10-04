@@ -51,7 +51,7 @@ const Tambah = ({ token }) => {
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
     }).then(async (result) => {
-      if (result) {
+      if (result.value) {
         let statusPro = status ? 1 : 0;
 
         let formData = new FormData();

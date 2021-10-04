@@ -79,7 +79,7 @@ const Edit = ({ token }) => {
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
     }).then(async (result) => {
-      if (result) {
+      if (result.value) {
         // here
         let formData = new FormData();
         formData.append("cooperation_categories", categoryCooporation);

@@ -45,6 +45,8 @@
     "next-auth": "^3.29.0",
     "next-images": "^1.8.1",
     "next-redux-wrapper": "^7.0.2",
+    "pdf-image": "2.0.0",
+    "pdfjs-dist": "2.6.347",
     "pspdfkit": "^2021.5.3",
     "react": "17.0.2",
     "react-bootstrap": "^2.0.0-beta.6",
