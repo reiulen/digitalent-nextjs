@@ -1064,8 +1064,8 @@ const Table = ({token}) => {
                                       <Link href={{
 
 
-                                        // pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
-                                        pathname:"/partnership/tanda-tangan/ttdTolkit",
+                                        pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
+                                        // pathname:"/partnership/tanda-tangan/ttdTolkit",
 
 
 
