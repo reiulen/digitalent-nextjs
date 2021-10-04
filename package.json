@@ -13,6 +13,7 @@
     "@ckeditor/ckeditor5-basic-styles": "^30.0.0",
     "@ckeditor/ckeditor5-block-quote": "^30.0.0",
     "@ckeditor/ckeditor5-build-classic": "^30.0.0",
+    "@ckeditor/ckeditor5-clipboard": "^30.0.0",
     "@ckeditor/ckeditor5-dev-utils": "^25.4.4",
     "@ckeditor/ckeditor5-dev-webpack-plugin": "^25.4.4",
     "@ckeditor/ckeditor5-editor-classic": "^30.0.0",
@@ -36,10 +37,15 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.1.0",
     "bootstrap-switch-button-react": "^1.2.0",
+    "ckeditor5-custom-build": "file:./ckeditor5",
     "debounce-promise": "^3.1.2",
     "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.5",
+<<<<<<< HEAD
     "html-to-image": "^1.8.5",
+=======
+    "i": "^0.3.7",
+>>>>>>> b2ac6d0c4b9948bdc34cfaf4a1b8dccaf513b04d
     "lodash.debounce": "^4.0.8",
     "moment": "^2.29.1",
     "next": "^11.1.2",
@@ -47,6 +53,7 @@
     "next-auth": "^3.29.0",
     "next-images": "^1.8.1",
     "next-redux-wrapper": "^7.0.2",
+    "npm": "^7.24.1",
     "pspdfkit": "^2021.5.3",
     "react": "17.0.2",
     "react-bootstrap": "^2.0.0-beta.6",

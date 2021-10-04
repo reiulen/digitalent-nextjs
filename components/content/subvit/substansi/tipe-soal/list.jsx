@@ -33,8 +33,8 @@ const ListTipeSoal = ({ token }) => {
   } = useSelector((state) => state.deleteSubtanceQuestionType);
 
   let { page = 1, success, successUpdate } = router.query;
-  let loading = false;
   page = Number(page);
+  let loading = false;
   if (allLoading) {
     loading = allLoading;
   } else if (deleteLoading) {

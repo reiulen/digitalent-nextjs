@@ -67,14 +67,13 @@ const RegisterMitra = () => {
     }else{
       ""
     }
-
     return () => {
       dispatch({
         type:RESET_STATUS
       })
     }
 
-  }, [allAuthentication.status, allAuthentication.errorRegister,dispatch]);
+  }, [allAuthentication.status, allAuthentication.errorRegister,dispatch,router]);
 
   return (
     <>

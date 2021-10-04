@@ -29,7 +29,8 @@ const EditBerita = ({token}) => {
     })
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
-    const [, forceUpdate] = useState();
+    // const [, forceUpdate] = useState();
+    const forceUpdate = React.useReducer(() => ({}))[1]
     const { berita } = useSelector(state => state.detailBerita)
     const { loading, error, success } = useSelector(state => state.updatedBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -297,7 +298,8 @@ const EditBerita = ({token}) => {
             }
         } else {
             simpleValidator.current.showMessages();
-            forceUpdate(1);
+            // forceUpdate(1);
+            forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -316,10 +318,10 @@ const EditBerita = ({token}) => {
     return (
         <>
         {
-            console.log (berita)
+            // console.log (berita)
         }
         {
-                console.log (kategori)
+                // console.log (kategori)
             }
             <PageWrapper>
                 {error ?
@@ -382,7 +384,7 @@ const EditBerita = ({token}) => {
                                                 data={isi_berita}
                                                 onReady={editor => {
                                                     // You can store the "editor" and use when it is needed.
-                                                    console.log('Editor is ready to use!', editor);
+                                                    // console.log('Editor is ready to use!', editor);
                                                 }}
                                                 onChange={(event, editor) => {
                                                     const data = editor.getData()
