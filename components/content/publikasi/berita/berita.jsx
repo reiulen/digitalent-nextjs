@@ -156,7 +156,7 @@ const Berita = ({token}) => {
     };
 
     const handleSearchDate = () => {
-        console.log (startDate)
+        // console.log (startDate)
 
         if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
             Swal.fire(
@@ -288,7 +288,7 @@ const Berita = ({token}) => {
     return (
         <PageWrapper>
             {
-                console.log (berita)
+                // console.log (berita)
             }
             
             {error ?

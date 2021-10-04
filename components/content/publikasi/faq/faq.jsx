@@ -183,7 +183,7 @@ const Faq = ({token}) => {
     };
 
     const handleSearchDate = () => {
-        console.log (startDate)
+        // console.log (startDate)
 
         if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
             Swal.fire(
@@ -315,7 +315,7 @@ const Faq = ({token}) => {
     return (
         <PageWrapper>
             {
-                console.log (faq)
+                // console.log (faq)
             }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
