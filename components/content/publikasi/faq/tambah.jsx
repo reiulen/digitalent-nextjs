@@ -15,7 +15,7 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahFaq = () => {
+const TambahFaq = ({token}) => {
     const dispatch = useDispatch()
     const router = useRouter()
 
@@ -28,6 +28,7 @@ const TambahFaq = () => {
     const { loading, error, success } = useSelector(state => state.newFaq)
     const { kategori } = useSelector(state => state.allKategori)
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
+    const forceUpdate = React.useReducer(() => ({}))[1]
 
     useEffect(() => {
         // dispatch(getAllKategori())
@@ -51,11 +52,11 @@ const TambahFaq = () => {
     const [jawaban, setJawaban] = useState('');
     const [kategori_id, setKategoriId] = useState('')
     const [users_id, setUsersId] = useState(3)
-    const [pinned, setPinnedFaq] = useState(false)
-    const [publish, setPublish] = useState(false)
+    const [pinned, setPinnedFaq] = useState(0)
+    const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
-    const [, forceUpdate] = useState();
+    // const [, forceUpdate] = useState();
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
@@ -78,6 +79,18 @@ const TambahFaq = () => {
             // console.log (result)
         }
     }
+
+    const handleChangePinned = (e) => {
+        // setPinnedFaq(e.target.checked);
+        // console.log (e.target.checked)
+
+        if (e.target.checked === false){
+            setPinnedFaq(0)
+
+        } else if (e.target.checked === true) {
+            setPinnedFaq(1)
+        }
+    };
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -116,7 +129,7 @@ const TambahFaq = () => {
                     tanggal_publish : moment(today).format("YYYY-MM-DD")
                 }
 
-                dispatch(newFaq(data))
+                dispatch(newFaq(data, token))
 
             } else {
                 const data = {
@@ -129,14 +142,15 @@ const TambahFaq = () => {
                     tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
                 }
 
-                dispatch(newFaq(data))
+                dispatch(newFaq(data, token))
 
             }
 
             
         } else {
             simpleValidator.current.showMessages();
-            forceUpdate(1);
+            // forceUpdate(1);
+            forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -195,7 +209,7 @@ const TambahFaq = () => {
                                         value={jawaban}
                                         onBlur={() => simpleValidator.current.showMessageFor("jawaban")}
                                     />
-                                    {simpleValidator.current.message("jawaban", jawaban, "required", { className: "text-danger" })}
+                                    {simpleValidator.current.message("jawaban", jawaban, "required|max:350", { className: "text-danger" })}
                                 </div>
                             </div>
                             {

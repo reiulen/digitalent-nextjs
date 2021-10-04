@@ -1,6 +1,3 @@
-// import Layout from "../../../../components/templates/layout.component";
-// import Submit from "../../../../components/content/partnership/user/submit";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -8,16 +5,15 @@ import { wrapper } from "../../../../redux/store";
 
 const Submit = dynamic(
   () => import("../../../../components/content/partnership/user/submit"),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
-export default function SubmitPage() {
+export default function SubmitPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Submit dokumen kerjasama - Partnership"> */}
-        <Submit />
-        {/* </Layout> */}
+        <Submit token={session.token} />
       </div>
     </>
   );
@@ -30,7 +26,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/partnership/user/auth/login",
             permanent: false,
           },
         };

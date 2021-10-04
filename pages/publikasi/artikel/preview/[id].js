@@ -11,15 +11,15 @@ import { wrapper } from "../../../../redux/store";
 export default function PreviewArtikel (props) {
     const session = props.session.user.user.data;
     return (
-        <div style={{minHeight: "100%", position:"absolute", left: "0", right: "0", marginLeft:"auto", marginRight:"auto"}}>
-          <div className="d-flex flex-column flex-root" style={{ paddingBottom: "400px", width: "100%", }}>
-              <Preview token={session.token}/>
-          </div>
-      
-          <div style={{position:"absolute", width: "100%", bottom:"0", left: "0", height: "400px"}}>
-            <Footer/>
-          </div>
+      <div className="wrapper-preview">
+        <div className="d-flex flex-column flex-root content-preview">
+            <Preview token={session.token}/>
         </div>
+    
+        <div className="footer-preview">
+          <Footer/>
+        </div>
+      </div>
 
         // <div className="d-flex flex-column flex-root">
         //     <Preview token={session.token}/>

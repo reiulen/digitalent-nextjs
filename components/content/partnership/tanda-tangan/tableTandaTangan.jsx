@@ -75,9 +75,10 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        console.log("e.target.value",e.target.value)
-        console.log("id",id)
-        dispatch(changeStatusList(token,e.target.value, id));
+        let formData = new FormData();
+        formData.append("_method", "put");
+        formData.append("status", e.target.value);
+        dispatch(changeStatusList(token,formData, id));
         setIsStatusBar(true);
         setDeleteBar(false);
         router.replace("/partnership/tanda-tangan", undefined, { shallow: true })

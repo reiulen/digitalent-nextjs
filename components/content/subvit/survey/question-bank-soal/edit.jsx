@@ -40,6 +40,11 @@ const EditSoalTrivia = ({ token }) => {
   const [question_image, setQuestionImage] = useState(
     survey_question_detail.question_image
   );
+  const [question_image_preview, setQuestionImagePreview] = useState(
+    process.env.END_POINT_API_IMAGE_SUBVIT +
+      survey_question_detail.question_image_preview
+  );
+  const [question_image_name, setQuestionImageName] = useState("Pilih Gambar");
 
   const [answer, setAnswer] = useState(
     JSON.parse(survey_question_detail.answer)
@@ -61,14 +66,16 @@ const EditSoalTrivia = ({ token }) => {
 
   const handleSoalImage = (e) => {
     if (e.target.name === "question_image") {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setQuestionImage(reader.result);
-        }
-      };
       if (e.target.files[0]) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setQuestionImage(reader.result);
+          }
+        };
         reader.readAsDataURL(e.target.files[0]);
+        setQuestionImagePreview(URL.createObjectURL(e.target.files[0]));
+        setQuestionImageName(e.target.files[0].name);
       }
     }
   };
@@ -277,15 +284,12 @@ const EditSoalTrivia = ({ token }) => {
                 {question_image != "" ? (
                   <div className="col-md-3">
                     <Image
-                      src={
-                        process.env.END_POINT_API_IMAGE_SUBVIT +
-                        "survey/images/" +
-                        question_image
-                      }
+                      src={question_image_preview}
                       alt="logo"
                       width={204}
                       height={100}
                       className="soal-image"
+                      objectFit="cover"
                     />
                   </div>
                 ) : (
@@ -308,20 +312,11 @@ const EditSoalTrivia = ({ token }) => {
                       onChange={(e) => handleSoalImage(e)}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {question_image_name}
                     </label>
                   </div>
                 </div>
-                <div className="col-md-2 d-flex my-auto">
-                  {/* <button className="btn pt-0 mr-3" style={{ marginTop: '45px' }} type='button' >
-                                        <Image
-                                            alt="button-action"
-                                            src="/assets/icon/trash-red.svg"
-                                            width={20}
-                                            height={30}
-                                        />
-                                    </button> */}
-                </div>
+                <div className="col-md-2 d-flex my-auto"></div>
               </div>
 
               <div className="font-weight-bold mt-2">Jenis Pertanyaan</div>

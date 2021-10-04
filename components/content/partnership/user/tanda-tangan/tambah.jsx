@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import axios from "axios";
 
-const TambahTandaTangan = () => {
+const TambahTandaTangan = ({token}) => {
   const signCanvas = useRef({});
   const router = useRouter();
 
@@ -103,11 +103,11 @@ const TambahTandaTangan = () => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/create`,
+              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/create`,
               formData,
               {
                 headers: {
-                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                  authorization: `Bearer ${token}`,
                 },
               }
             );

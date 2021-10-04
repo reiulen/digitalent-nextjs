@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import {useDispatch, useSelector } from 'react-redux'
 import Image from "next/image";
 
-import PageWrapper from "../../../wrapper/page.wrapper";
+// import PageWrapper from "../../../wrapper/page.wrapper";
+import PreviewWrapper from "../../../wrapper/preview.wrapper";
 import Backdrop from "../../../../public/assets/media/backdrop.svg"
 
 const Preview = () => {
@@ -61,7 +62,7 @@ const Preview = () => {
                 alt="backdrop"
             >
             </Image>
-            <PageWrapper>
+            <PreviewWrapper title= "Pratinjau Artikel Peserta - Publikasi">
                 
                 <div className="col-lg-12 order-1 px-0 position-relative " style={{marginTop: "-20vh"}}>
                     <div className="card card-custom card-stretch gutter-b">
@@ -79,8 +80,10 @@ const Preview = () => {
                                         src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + gambar}
                                         alt="gambar-artikel"
                                         objectFit="cover"
-                                        height= "100%"
-                                        width= "100%"
+                                       // height= "100%"
+                                       height= "500vh"
+                                       // width= "100%"
+                                       width= "1000vh"
                                         // height= "150vh"
                                         // width= "100vh"
                                         // layout="fill"
@@ -144,7 +147,7 @@ const Preview = () => {
                     </div>
                     
                 </div>
-            </PageWrapper>
+            </PreviewWrapper>
         </>
         
     )

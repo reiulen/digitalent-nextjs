@@ -16,7 +16,7 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditBerita = () => {
+const EditBerita = ({token}) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -188,7 +188,7 @@ const EditBerita = () => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                            dispatch(updateBerita(data));
+                            dispatch(updateBerita(data, token));
                             // console.log(data)
                         }
                     });
@@ -220,7 +220,7 @@ const EditBerita = () => {
                     })
                         .then((result) => {
                           if (result.isConfirmed) {
-                            dispatch(updateBerita(data));
+                            dispatch(updateBerita(data, token));
                             // console.log(data)
                         }
                     });
@@ -257,7 +257,7 @@ const EditBerita = () => {
                     })
                         .then((result) => {
                           if (result.isConfirmed) {
-                            dispatch(updateBerita(data));
+                            dispatch(updateBerita(data, token));
                             // console.log(data)
                         }
                     });
@@ -288,7 +288,7 @@ const EditBerita = () => {
                     })
                         .then((result) => {
                           if (result.isConfirmed) {
-                            dispatch(updateBerita(data));
+                            dispatch(updateBerita(data, token));
                             // console.log(data)
                         }
                     });
@@ -377,6 +377,7 @@ const EditBerita = () => {
                                     <div className="col-sm-12">
                                         <div className="ckeditor">
                                             {editorLoaded ? <CKEditor
+                                                ck-editor__editable
                                                 editor={ClassicEditor}
                                                 data={isi_berita}
                                                 onReady={editor => {

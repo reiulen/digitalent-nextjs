@@ -24,17 +24,22 @@ const EditTheme = () => {
 
   const [name, setName] = useState("");
   const [academy, setAcademy] = useState({
-    value: "strawberry",
-    label: "Strawberry",
+    value: "chocolate",
+    label: "Chocolate",
   });
   const [description, setDescription] = useState("");
 
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState({ value: 1, label: "Publish" });
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
+  ];
+
+  const optionsStatus = [
+    { value: 1, label: "Publish" },
+    { value: 0, label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -170,21 +175,14 @@ const EditTheme = () => {
                 <label className="col-form-label font-weight-bold">
                   Status
                 </label>
-                <select
-                  value={status}
-                  onBlur={(e) => {
-                    setStatus(e.target.value);
-                    simpleValidator.current.showMessageFor("status");
-                  }}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="form-control"
-                >
-                  <option value="" disabled selected>
-                    -- PILIH STATUS --
-                  </option>
-                  <option value={1}>Publish</option>
-                  <option value={0}>Unpublish</option>
-                </select>
+                <Select
+                  options={optionsStatus}
+                  defaultValue={status}
+                  onChange={(e) => setStatus(e.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
+                />
                 {simpleValidator.current.message("status", status, "required", {
                   className: "text-danger",
                 })}

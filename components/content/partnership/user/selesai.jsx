@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import Image from "next/image";
 
-function Selesai() {
+function Selesai({token}) {
   const headText = {
     "font-weight": "bold",
     "line-height": "124.5%",

@@ -301,6 +301,7 @@ const Artikel = ({token}) => {
   return (
     <PageWrapper>
       {/* {console.log(artikel)} */}
+      {console.log(token)}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -416,7 +417,7 @@ const Artikel = ({token}) => {
             <div className="card-toolbar">
               <Link href="/publikasi/artikel/tambah">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
-                <i className="ri-add-fill pb-1 text-white mr-2 "></i>
+                <i className="ri-add-line pb-1 text-white mr-2 "></i>
                   Tambah Artikel
                 </a>
               </Link>
@@ -725,8 +726,8 @@ const Artikel = ({token}) => {
                                 )}
                               </td>
                               <td className="align-middle">
-                                {artikel.dibuat}
-                                {/* Super Admin */}
+                                {/* {artikel.dibuat} */}
+                                Super Admin
                               </td>
                               <td className="align-middle">
                                 {artikel.publish === 1 ? (
@@ -739,7 +740,10 @@ const Artikel = ({token}) => {
                                   </span>
                                 )}
                               </td>
-                              <td className="align-middle">{artikel.role}</td>
+                              <td className="align-middle">
+                                {/* {artikel.role} */}
+                                Super Admin
+                              </td>
                               <td className="align-middle d-flex">
 
                                 <Link

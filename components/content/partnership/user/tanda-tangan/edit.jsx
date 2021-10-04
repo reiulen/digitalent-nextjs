@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import Image from 'next/image'
 
-const EditTandaTangan = () => {
+const EditTandaTangan = ({token}) => {
   const signCanvas = useRef({});
   const clear = () => {
     Swal.fire({
@@ -79,11 +79,11 @@ const EditTandaTangan = () => {
               signature_image: signature !== "" ? signature : "",
             };
             let { data } = await axios.put(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
+              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${router.query.id}`,
               sendData,
               {
                 headers: {
-                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                  authorization: `Bearer ${token}`,
                 },
               }
             );
@@ -119,11 +119,11 @@ const EditTandaTangan = () => {
                 signature_image: signature !== "" ? signature : "",
               };
               let { data } = await axios.put(
-                `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
+                `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${router.query.id}`,
                 sendData,
                 {
                 headers: {
-                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                  authorization: `Bearer ${token}`,
                 },
               }
               );
@@ -159,9 +159,9 @@ const EditTandaTangan = () => {
   const setDataSingle = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`,{
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/signatures/${id}`,{
                 headers: {
-                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                  authorization: `Bearer ${token}`,
                 },
               }
       );

@@ -67,16 +67,19 @@ const EditTandaTangan = ({ token }) => {
         dismissOnDestroy: false,
       }).then(async (result) => {
         if (result.value) {
+          let formData = new FormData();
+          formData.append("_method", "PUT");
+          formData.append("name", nama);
+          formData.append("position", jabatan);
+          formData.append(
+            "signature_image",
+            signature !== "" ? signature : ""
+          );
           try {
-            let sendData = {
-              _method:"PUT",
-              name: nama,
-              position: jabatan,
-              signature_image: signature !== "" ? signature : "",
-            };
+
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
-              sendData,
+              `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${router.query.id}`,
+              formData,
               {
                 headers: {
                   authorization: `Bearer ${token}`,
@@ -106,21 +109,23 @@ const EditTandaTangan = ({ token }) => {
           dismissOnDestroy: false,
         }).then(async (result) => {
           if (result.value) {
+            let formData = new FormData();
+          formData.append("_method", "PUT");
+          formData.append("name", nama);
+          formData.append("position", jabatan);
+          formData.append(
+            "signature_image",
+            signature !== "" ? signature : ""
+          );
             try {
-              let sendData = {
-                _method:"PUT",
-                name: nama,
-                position: jabatan,
-                signature_image: signature !== "" ? signature : "",
-              };
               let { data } = await axios.post(
-                `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${router.query.id}`,
-                sendData,
+                `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${router.query.id}`,
+                formData,
                 {
-                headers: {
-                  authorization: `Bearer ${token}`,
-                },
-              }
+                  headers: {
+                    authorization: `Bearer ${token}`,
+                  },
+                }
               );
 
               router.push({
@@ -144,7 +149,7 @@ const EditTandaTangan = ({ token }) => {
 
   const imgSignature = process.env.END_POINT_API_IMAGE_PARTNERSHIP;
   const myLoader = ({ src }) => {
-    return `${imgSignature}/partnership/images/signatures/${tandaTangan}`;
+    return `${imgSignature}partnership/images/signatures/${tandaTangan}`;
   };
 
   const [nama, setNama] = useState("");
@@ -154,7 +159,7 @@ const EditTandaTangan = ({ token }) => {
   const setDataSingle = async (id, token) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/signatures/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/signatures/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,

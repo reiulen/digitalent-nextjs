@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
   if (session) {
     return {
       redirect: {
-        destination: "/subvit",
+        destination: "/",
         permanent: false,
       },
     };
@@ -25,6 +25,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       data: "auth",
+      title: "Login - Partnership",
     },
   };
 }

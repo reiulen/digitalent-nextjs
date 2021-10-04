@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import Style from "../../../../styles/progressbar.module.css";
 import axios from "axios";
 
-function Pembahasan() {
+function Pembahasan({token}) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -17,10 +17,10 @@ function Pembahasan() {
   const cekProgresStatus = async (id) => {
     try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );

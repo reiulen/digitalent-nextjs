@@ -18,7 +18,6 @@ const ReviewKerjasama = ({ token }) => {
   const [periodUnit, setPeriodUnit] = useState("tahun");
 
   // cek progress
-  
 
   // state cek review card-version
   const [allCooperationView, setAllCooperationView] = useState([]);
@@ -28,10 +27,9 @@ const ReviewKerjasama = ({ token }) => {
   const [periodView, setPeriodView] = useState("");
   const [periodUnitView, setPeriodUnitView] = useState("tahun");
   const [noteView, setNoteView] = useState("");
-  const [mitra, setMitra] = useState("")
+  const [mitra, setMitra] = useState("");
 
   // cek review card-version
-  
 
   const ajukanRevisi = (e) => {
     e.preventDefault();
@@ -72,12 +70,12 @@ const ReviewKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/accept/${router.query.id}`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/accept/${router.query.id}`,null,
             {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
           );
           console.log("data", data);
           router.push({
@@ -109,12 +107,12 @@ const ReviewKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/reject/${router.query.id}`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${router.query.id}`,null,
             {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
           );
 
           console.log("data asdasd", data);
@@ -130,59 +128,56 @@ const ReviewKerjasama = ({ token }) => {
   };
   const [statusInfo, setstatusInfo] = useState("");
   useEffect(() => {
-    async function setDataSingle (id,token){
+    async function setDataSingle(id, token) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-        
-      );
-      console.log("data sdfsdf", data);
-      setTitle(data.data.title);
-      setDate(data.data.submission_date);
-      setCooperationID(data.data.cooperation_category);
-      setPeriod(data.data.period);
-      setPeriodUnit(data.data.period_unit);
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/cek-progres/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("data sdfsdf", data);
+        setTitle(data.data.title);
+        setDate(data.data.submission_date);
+        setCooperationID(data.data.cooperation_category);
+        setPeriod(data.data.period);
+        setPeriodUnit(data.data.period_unit);
+      } catch (error) {
+        console.log("action getSIngle gagal", error);
+      }
     }
+    setDataSingle(router.query.id, token);
 
-    }
-    setDataSingle(router.query.id,token);
-
-    async function setDataSingleSelesaiReview (id,version,token){
+    async function setDataSingleSelesaiReview(id, version, token) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setTitleView(data.data.title);
-      setDateView(data.data.date);
-      setCooperationIDView(data.data.cooperation_category);
-      setPeriodView(data.data.period);
-      setPeriodUnitView(data.data.period_unit);
-      setAllCooperationView(data.data.cooperation_category.data_content);
-      setNoteView(data.data.note);
-      setMitra(data.data.mitra);
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/show-revisi/${id}/${version}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setTitleView(data.data.title);
+        setDateView(data.data.date);
+        setCooperationIDView(data.data.cooperation_category);
+        setPeriodView(data.data.period);
+        setPeriodUnitView(data.data.period_unit);
+        setAllCooperationView(data.data.cooperation_category.data_content);
+        setNoteView(data.data.note);
+        setMitra(data.data.mitra);
+      } catch (error) {
+        console.log("action getSIngle gagal", error);
+      }
     }
 
-    }
-
-    setDataSingleSelesaiReview(router.query.id, router.query.version,token);
+    setDataSingleSelesaiReview(router.query.id, router.query.version, token);
     if (router.query.statusInfo) {
       setstatusInfo(router.query.statusInfo);
     }
-  }, [router.query.id, router.query.version, router.query.statusInfo,token]);
+  }, [router.query.id, router.query.version, router.query.statusInfo, token]);
 
   return (
     <PageWrapper>

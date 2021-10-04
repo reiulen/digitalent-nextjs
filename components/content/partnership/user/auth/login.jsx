@@ -38,6 +38,7 @@ const LoginAdmin = () => {
         redirect: false,
         email,
         password,
+        role:"mitra",
         captcha,
       };
       const result = await signIn("credentials", data);
@@ -45,7 +46,11 @@ const LoginAdmin = () => {
       if (result.error) {
         toast.error(result.error);
       } else {
-        router.push("/subvit");
+        if(data.role === "admin"){
+          router.push("/dashboard");
+        }else{
+          router.push("/partnership/user/kerjasama")
+        }
       }
     } else {
       simpleValidator.current.showMessages();
@@ -63,7 +68,7 @@ const LoginAdmin = () => {
           <div className="container ">
             <div className="title-login text-center mt-6">
               <Image
-                src="/assets/logo/logo-5.svg"
+                src="/assets/logo/logo-6.svg"
                 width={246}
                 height={96}
                 alt="Logo-5"

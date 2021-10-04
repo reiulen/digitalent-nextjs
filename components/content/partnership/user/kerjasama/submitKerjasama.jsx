@@ -14,11 +14,10 @@ import {
   fetchListCooperationSelectById,
 } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 import axios from "axios";
-const DetailDokumenKerjasama = () => {
+const DetailDokumenKerjasama = ({token}) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const allCooperationUser = useSelector((state) => state.allCooperationUser);
-  console.log("allCooperationUser", allCooperationUser);
 
   const [error, setError] = useState({
     date: "",
@@ -109,12 +108,12 @@ const DetailDokumenKerjasama = () => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal`,
+              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal`,
               formData,
               {
                 headers: {
                   authorization:
-                    `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                    `Bearer ${token}`,
                 },
               }
             );
@@ -174,10 +173,10 @@ const DetailDokumenKerjasama = () => {
     });
 
   useEffect(() => {
-    dispatch(fetchListCooperationSelect());
-    dispatch(fetchListCooperationSelectById(cooperationC_id));
+    dispatch(fetchListCooperationSelect(token));
+    dispatch(fetchListCooperationSelectById(cooperationC_id,token));
     setDate(moment(new Date()).format("YYYY-MM-DD"));
-  }, [dispatch,cooperationC_id]);
+  }, [dispatch,cooperationC_id,token]);
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
