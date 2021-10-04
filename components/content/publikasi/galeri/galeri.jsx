@@ -319,7 +319,7 @@ const Galeri = ({ token }) => {
     return (
         <PageWrapper>
             {
-                console.log("Data Awal : ",galeri)
+                console.log("Data Awal : ", galeri)
             }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -614,7 +614,7 @@ const Galeri = ({ token }) => {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
                                                     galeri && galeri.gallery.map((row, i) => {
-                                                        // { console.log("INI ROWW ID : ", i + 1, row) }
+                                                        { console.log("INI ROWW ID : ", i + 1, row) }
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
@@ -630,7 +630,9 @@ const Galeri = ({ token }) => {
 
                                                             </td>
                                                             <td className='text-center'>
-                                                                <Image alt='name_image'
+                                                                <Image
+                                                                    // alt='name_image'
+                                                                    alt={row.judul}
                                                                     unoptimized={
                                                                         process.env.ENVIRONMENT !== "PRODUCTION"
                                                                     }

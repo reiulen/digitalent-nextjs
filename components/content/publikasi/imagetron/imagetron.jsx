@@ -736,6 +736,9 @@ const Imagetron = ({ token }) => {
                                                                     unoptimized={
                                                                         process.env.ENVIRONMENT !== "PRODUCTION"
                                                                     }
+                                                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                        "publikasi/images/" +
+                                                                        row.gambar)}
                                                                     src={
                                                                         process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                         "publikasi/images/" +

@@ -171,7 +171,7 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              // console.log("Unpublish :",data)
+              console.log("Unpublish :",data)
             }
           });
 
@@ -199,7 +199,7 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              // console.log("Publish :",data)
+              console.log("Publish :",data)
             }
           });
       }
