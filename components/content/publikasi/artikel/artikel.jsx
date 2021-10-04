@@ -38,7 +38,7 @@ const Artikel = ({token}) => {
     error,
     artikel,
   } = useSelector((state) => state.allArtikel);
-  console.log(artikel,"Ini ARTIKEL")
+  // console.log(artikel,"Ini ARTIKEL")
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -301,7 +301,7 @@ const Artikel = ({token}) => {
   return (
     <PageWrapper>
       {/* {console.log(artikel)} */}
-      {console.log(token)}
+      {/* {console.log(token)} */}
       {error ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
@@ -659,9 +659,7 @@ const Artikel = ({token}) => {
                     <tbody>
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
                         <tr>
-                          <td className="text-center">
-                            Data Masih Kosong
-                          </td>
+                          <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> 
                         </tr>
                       ) : (
                         artikel &&

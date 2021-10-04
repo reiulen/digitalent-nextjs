@@ -41,8 +41,8 @@ const Footer = () => {
 
                         </div>
                     </div>
-                    <div className="card-body text-white d-flex flex-row">
-                        <div className="col-lg-4 col-xxl-4">
+                    <div className="card-body text-white d-lg-flex flex-lg-row ">
+                        <div className="col-sm-12 col-lg-4 col-xxl-4 my-5">
                             <h3>
                                 Alamat
                             </h3>
@@ -56,7 +56,7 @@ const Footer = () => {
                                 Jakarta Pusat, 10110
                             </div>
                         </div>
-                        <div className="col-lg-4 col-xxl-4 mx-3">
+                        <div className="col-sm-12 col-lg-4 col-xxl-4 my-5">
                             <h3>
                                 Link Eksternal
                             </h3>
@@ -71,7 +71,7 @@ const Footer = () => {
                             </div>
 
                         </div>
-                        <div className="col-lg-4 col-xxl-4">
+                        <div className="col-sm-12 col-lg-4 col-xxl-4 my-5">
                             <h3>
                                 Sosial Media
                             </h3>
