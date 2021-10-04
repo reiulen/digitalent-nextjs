@@ -458,9 +458,13 @@ const DetailDataKerjasama = ({token}) => {
                 }
                 tableBody={
                   mitraDetailAll.status === "process" ? (
-                    <div className="my-12">
-                      <LoadingTable />
-                    </div>
+
+                    <tr>
+                      <td colSpan="8" className="text-center">
+                        <LoadingTable />
+                      </td>
+                    </tr>
+                    
                   ) : mitraDetailAll.mitraDetailAll.data &&
                     mitraDetailAll.mitraDetailAll.data
                       .list_cooperation_categories.length === 0 ? (
