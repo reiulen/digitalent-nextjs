@@ -1,6 +1,3 @@
-// import Layout from "../../../../components/templates/layout.component";
-// import Tambah from "../../../../components/content/partnership/user/tanda-tangan/tambah";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -12,13 +9,12 @@ const Tambah = dynamic(
     ),
   { loading: () => <LoadingPage /> }
 );
-export default function TambahPage() {
+export default function TambahPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Tambah tanda tangan digital -Partnership"> */}
-        <Tambah />
-        {/* </Layout> */}
+        <Tambah token={session.token} />
       </div>
     </>
   );
@@ -31,7 +27,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/partnership/user/auth/login",
             permanent: false,
           },
         };

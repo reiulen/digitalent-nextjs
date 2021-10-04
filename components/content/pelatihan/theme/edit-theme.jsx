@@ -7,34 +7,62 @@ import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 
+import {
+  updateTheme,
+  clearErrors,
+} from "../../../../redux/actions/pelatihan/theme.actions";
+
+import { UPDATE_THEME_RESET } from "../../../../redux/types/pelatihan/theme.type";
+
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditTheme = () => {
+const EditTheme = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { id } = router.query;
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
     editorRef.current || {};
 
+  const {
+    loading: detailLoading,
+    error: detailError,
+    theme,
+  } = useSelector((state) => state.detailTheme);
+
+  const { loading, error, isUpdated } = useSelector(
+    (state) => state.updateTheme
+  );
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState(theme.name);
   const [academy, setAcademy] = useState({
-    value: "strawberry",
-    label: "Strawberry",
+    value: theme.akademi_id,
+    label: theme.akademi,
   });
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(theme.deskripsi);
 
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState(
+    theme.status === "0"
+      ? { value: 0, label: "Unpublish" }
+      : { value: 1, label: "Publish" }
+  );
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
+  ];
+
+  const optionsStatus = [
+    { value: 1, label: "Publish" },
+    { value: 0, label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -45,7 +73,17 @@ const EditTheme = () => {
     };
 
     setEditorLoaded(true);
-  }, []);
+
+    if (isUpdated) {
+      dispatch({
+        type: UPDATE_THEME_RESET,
+      });
+      router.push({
+        pathname: `/pelatihan/tema`,
+        query: { success: true },
+      });
+    }
+  }, [isUpdated]);
 
   const handleResetError = () => {
     if (error) {
@@ -56,13 +94,16 @@ const EditTheme = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
+      const statusString = (status.value += "");
+      const idInt = parseInt(id);
       const data = {
-        academy,
         name,
-        description,
-        status,
+        deskripsi: description,
+        status: statusString,
+        akademi_id: academy.value,
+        id: idInt,
       };
-      console.log(data);
+      dispatch(updateTheme(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -76,7 +117,32 @@ const EditTheme = () => {
 
   return (
     <PageWrapper>
+      {error && (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
       <div className="col-lg-12 order-1 px-0">
+        {loading && <LoadingPage loading={loading} />}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header mt-3">
             <h2
@@ -114,7 +180,7 @@ const EditTheme = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="placeholder"
+                  placeholder="Silahkan Masukan Nama Tema"
                   className="form-control"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -170,21 +236,14 @@ const EditTheme = () => {
                 <label className="col-form-label font-weight-bold">
                   Status
                 </label>
-                <select
-                  value={status}
-                  onBlur={(e) => {
-                    setStatus(e.target.value);
-                    simpleValidator.current.showMessageFor("status");
-                  }}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="form-control"
-                >
-                  <option value="" disabled selected>
-                    -- PILIH STATUS --
-                  </option>
-                  <option value={1}>Publish</option>
-                  <option value={0}>Unpublish</option>
-                </select>
+                <Select
+                  options={optionsStatus}
+                  defaultValue={status}
+                  onChange={(e) => setStatus(e.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
+                />
                 {simpleValidator.current.message("status", status, "required", {
                   className: "text-danger",
                 })}

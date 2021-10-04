@@ -104,6 +104,7 @@ export const allTandaTanganReducer = (state = initialState, action) => {
       return {
         ...state,
         status: statuslist.success,
+        status_reload: state.status_reload === "" ? "reload" : "",
       };
     case FAIL_ADD_TTD:
       return {

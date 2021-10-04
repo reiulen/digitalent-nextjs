@@ -1,6 +1,3 @@
-// import Layout from "../../../components/templates/layout.component";
-// import Penandatanganan from "../../../components/content/partnership/tanda-tangan/Penandatanganan";
-
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
@@ -11,7 +8,7 @@ const Penandatanganan = dynamic(
     import(
       "../../../components/content/partnership/tanda-tangan/Penandatanganan"
     ),
-  { loading: () => <LoadingSkeleton />, ssr: false, suspense: true }
+  { loading: () => <LoadingSkeleton />, ssr: false }
 );
 
 export default function PenandatangananPage(props) {
@@ -19,9 +16,7 @@ export default function PenandatangananPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Dashboard Publikasi"> */}
         <Penandatanganan token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

@@ -12,12 +12,11 @@ import DatePicker from "react-datepicker";
 
 import { addDays } from "date-fns";
 
-function ReviewDokumenKerjasama() {
+function ReviewDokumenKerjasama({ token }) {
   const router = useRouter();
-  const {revisiDone} = router.query
+  const { revisiDone } = router.query;
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
 
   const [period_start, setPeriod_start] = useState("");
   const [period_end, setPeriod_end] = useState("");
@@ -30,30 +29,9 @@ function ReviewDokumenKerjasama() {
   const [note, setNote] = useState("");
   console.log("note", note);
 
-  const setDataSingle = async (id) => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,{
-          headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
-          },
-        }
-      );
-      setPeriod_start(data.data.period_date_start);
-      setPeriod_end(data.data.period_date_end);
-      setNo_perjanjianLembaga(data.data.agreement_number_partner);
-      setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
-      setTgl_ttd(data.data.signing_date);
-      setDokument(data.data.document);
-      setCatatanREvisi(data.data.note)
-      setNote(data.data.note);
-      console.log("data single",data)
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
-    }
-  };
-
-
+  // const setDataSingle = async (id) => {
+    
+  // };
 
   // pdf from api
   const [document, setDocument] = useState("");
@@ -125,8 +103,6 @@ function ReviewDokumenKerjasama() {
       progress: undefined,
     });
 
-
-
   const handleSubmit = async () => {
     // e.preventDefault();
     Swal.fire({
@@ -159,34 +135,20 @@ function ReviewDokumenKerjasama() {
 
         try {
           let { data } = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/proposal-revisi-document/${router.query.id}`,
-            formData
+            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/proposal-revisi-document/${router.query.id}`,
+            formData,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
           );
-
-          console.log("data sukses",data)
-
-          // router.push({
-          //   pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama",
-          //   query: { id: router.query.id },
-          // });
-
-
-          // router.push({
-          //   pathname: "/partnership/user/kerjasama/",
-          //   query: { successSubmitDokumentKerjasama: true },
-          // });
-
-
           router.push({
             pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama/",
-            query: { revisiDone: true },
+            query: { revisiDone: true,id:router.query.id },
           });
-
-
-
-
         } catch (error) {
-          console.log("object skdmksdmksdmksdmkk")
+          console.log("object skdmksdmksdmksdmkk");
           // console.log("sdfsddfs",error.response.data.message);
           notify(error.response.data.message);
         }
@@ -195,15 +157,49 @@ function ReviewDokumenKerjasama() {
   };
 
   const onNewReset = () => {
-    router.replace("/partnership/user/kerjasama/review-dokumen-kerjasama", undefined, { shallow: true });
+    router.replace(
+      "/partnership/user/kerjasama/review-dokumen-kerjasama",
+      undefined,
+      { shallow: true }
+    );
   };
-
-
 
   // kondisi jika note terisi alihkan page ke revisi
   useEffect(() => {
+
+    async function setDataSingle(id) {
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setPeriod_start(data.data.period_date_start);
+      setPeriod_end(data.data.period_date_end);
+      setNo_perjanjianLembaga(data.data.agreement_number_partner);
+      setNo_perjanjianKoninfo(data.data.agreement_number_kemkominfo);
+      setTgl_ttd(data.data.signing_date);
+      setDokument(data.data.document);
+      setCatatanREvisi(data.data.note);
+      setNote(data.data.note);
+      console.log("data single", data);
+      if(data.data.status_migrates_id.status === "aktif"){
+        router.push({
+          pathname:"/partnership/user/kerjasama/hasil",
+          query:{id:router.query.id,statusKerjasama:data.data.status_migrates_id.status},
+        })
+      }
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+      
+    }
+
     setDataSingle(router.query.id);
-  }, [router.query.id]);
+  }, [router.query.id,router,token]);
 
   return (
     <PageWrapper>
@@ -237,16 +233,16 @@ function ReviewDokumenKerjasama() {
         ""
       )}
       <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -310,7 +306,7 @@ function ReviewDokumenKerjasama() {
               </div>
             </div>
 
-            {(note === "-") || revisiDone ? (
+            {note === "-" || revisiDone ? (
               <div className={`row mt-20`}>
                 <div className="col-12 col-sm-6">
                   <Image
@@ -355,17 +351,98 @@ function ReviewDokumenKerjasama() {
             ) : (
               <form>
                 <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Periode Kerjasama
-                </label>
+                  <label htmlFor="staticEmail" className="col-form-label">
+                    Periode Kerjasama
+                  </label>
+                  <div className="row">
+                    <div className="col-12 col-sm-6">
+                      <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                        <DatePicker
+                          className="form-search-date form-control-sm form-control cursor-pointer"
+                          selected={startDate}
+                          selectsStart
+                          value={period_start && period_start}
+                          readOnly
+                          dateFormat="YYYY-MM-DD"
+                          placeholderText="Dari Tanggal"
+                          minDate={moment().toDate()}
+                        />
+                        <IconCalender
+                          className="right-center-absolute"
+                          style={{ right: "10px" }}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-12 col-sm-6">
+                      <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                        <DatePicker
+                          className="form-search-date form-control-sm form-control cursor-pointer"
+                          selected={endDate}
+                          readOnly
+                          selectsEnd
+                          value={period_end && period_end}
+                          startDate={startDate}
+                          endDate={endDate}
+                          minDate={moment().toDate()}
+                          maxDate={addDays(startDate, 20)}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="Sampai Tanggal"
+                        />
+                        <IconCalender
+                          className="right-center-absolute"
+                          style={{ right: "10px" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-12 col-sm-12">
+                    <div className="form-group mb-10">
+                      <label className="required mb-2">
+                        Nomor Perjanjian Lembaga
+                      </label>
+                      <input
+                        readOnly
+                        type="text"
+                        name="text_input"
+                        className="form-control mb-3 mb-lg-0"
+                        placeholder="Masukan Nomor Perjanjian Lembaga"
+                        value={no_perjanjianLembaga && no_perjanjianLembaga}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 col-sm-12">
+                    <div className="form-group mb-10">
+                      <label className="required mb-2">
+                        Nomor Perjanjian Kemkominfo
+                      </label>
+                      <input
+                        readOnly
+                        type="text"
+                        name="text_input"
+                        className="form-control mb-3 mb-lg-0"
+                        placeholder="Masukan Nomor Perjanjian Kemkominfo"
+                        value={no_perjanjianKoninfo && no_perjanjianKoninfo}
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="row">
                   <div className="col-12 col-sm-6">
+                    <label htmlFor="staticEmail" className="col-form-label">
+                      Tanggal Penandatanganan
+                    </label>
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
+                        value={tgl_ttd && tgl_ttd}
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         selected={startDate}
                         selectsStart
-                        value={period_start && period_start}
                         readOnly
                         dateFormat="YYYY-MM-DD"
                         placeholderText="Dari Tanggal"
@@ -377,92 +454,10 @@ function ReviewDokumenKerjasama() {
                       />
                     </div>
                   </div>
-                  <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
-                      <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
-                        selected={endDate}
-                        readOnly
-                        selectsEnd
-                        value={period_end && period_end}
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={moment().toDate()}
-                        maxDate={addDays(startDate, 20)}
-                        dateFormat="dd/MM/yyyy"
-                        placeholderText="Sampai Tanggal"
-                      />
-                      <IconCalender
-                        className="right-center-absolute"
-                        style={{ right: "10px" }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-                <div className="row">
-                  <div className="col-12 col-sm-12">
-                    <div className="form-group mb-10">
-                      <label className="required mb-2">
-                        Nomor Perjanjian Lembaga
-                      </label>
-                      <input
-                      readOnly
-                  type="text"
-                  name="text_input"
-                  className="form-control mb-3 mb-lg-0"
-                  placeholder="Masukan Nomor Perjanjian Lembaga"
-                  value={no_perjanjianLembaga && no_perjanjianLembaga}
-                />
-                    </div>
-                  </div>
                 </div>
                 <div className="row">
-                  <div className="col-12 col-sm-12">
-                    <div className="form-group mb-10">
-                      <label className="required mb-2">
-                        Nomor Perjanjian Kemkominfo
-                      </label>
-                      <input
-                      readOnly
-                  type="text"
-                  name="text_input"
-                  className="form-control mb-3 mb-lg-0"
-                  placeholder="Masukan Nomor Perjanjian Kemkominfo"
-                  value={no_perjanjianKoninfo && no_perjanjianKoninfo}
-                />
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                <div className="col-12 col-sm-6">
-                  <label htmlFor="staticEmail" className="col-form-label">
-                    Tanggal Penandatanganan
-                  </label>
-                  <div className="d-flex align-items-center position-relative datepicker-w mt-2">
-                    <DatePicker
-                      value={tgl_ttd && tgl_ttd}
-                      className="form-search-date form-control-sm form-control cursor-pointer"
-                      selected={startDate}
-                       selectsStart
-                       readOnly
-                      dateFormat="YYYY-MM-DD"
-                      placeholderText="Dari Tanggal"
-                      minDate={moment().toDate()}
-                    />
-                    <IconCalender
-                      className="right-center-absolute"
-                      style={{ right: "10px" }}
-                    />
-                  </div>
-                </div>
-                </div>
-<div className="row">
-                 <div className="col-12">
-                  {/* <div className="form-group">
+                  <div className="col-12">
+                    {/* <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
                       Dokumen Kerjasama
                     </label>
@@ -492,99 +487,101 @@ function ReviewDokumenKerjasama() {
                       </button>
                     </div>
                   </div> */}
-                  {/* start dokument */}
-              <div className="form-group">
-                <label htmlFor="staticEmail" className="col-form-label">
-                  Dokumen Kerjasama
-                </label>
-                {/* action show and upload */}
-                {/* start action show and upload */}
-                <div className="row">
-                  <div className="col-sm-12">
-                    <div className="d-flex flex-wrap align-items-center mb-4">
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
-                      onClick={() => showDocument()}
-                    >
-                      {viewPDF || showDokument
-                        ? "Tutup dokumen"
-                        : "Lihat dokumen"}
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
-                      onClick={() => setDocumentChange()}
-                    >
-                      {!changeDokumen ? "Ubah dokumen" : "Batal Ubah"}
-                    </button>
-                    </div>
+                    {/* start dokument */}
+                    <div className="form-group">
+                      <label htmlFor="staticEmail" className="col-form-label">
+                        Dokumen Kerjasama
+                      </label>
+                      {/* action show and upload */}
+                      {/* start action show and upload */}
+                      <div className="row">
+                        <div className="col-sm-12">
+                          <div className="d-flex flex-wrap align-items-center mb-4">
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
+                              onClick={() => showDocument()}
+                            >
+                              {viewPDF || showDokument
+                                ? "Tutup dokumen"
+                                : "Lihat dokumen"}
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-rounded-full bg-blue-primary text-white mr-3 mt-2"
+                              onClick={() => setDocumentChange()}
+                            >
+                              {!changeDokumen ? "Ubah dokumen" : "Batal Ubah"}
+                            </button>
+                          </div>
 
-                    {changeDokumen && !viewPDF ? (
-                      <div className="input-group mt-3">
-                        <div className="custom-file">
-                          <input
-                            accept=".pdf"
-                            type="file"
-                            name="gambar"
-                            className="custom-file-input cursor-pointer"
-                            id="inputGroupFile04"
-                            required
-                            onChange={handlePdfFileChange}
-                          />
-                          <label
-                            className="custom-file-label"
-                            htmlFor="inputGroupFile04"
-                          >
-                            {NamePDF ? NamePDF : "Tambah dokumen baru"}
-                          </label>
+                          {changeDokumen && !viewPDF ? (
+                            <div className="input-group mt-3">
+                              <div className="custom-file">
+                                <input
+                                  accept=".pdf"
+                                  type="file"
+                                  name="gambar"
+                                  className="custom-file-input cursor-pointer"
+                                  id="inputGroupFile04"
+                                  required
+                                  onChange={handlePdfFileChange}
+                                />
+                                <label
+                                  className="custom-file-label"
+                                  htmlFor="inputGroupFile04"
+                                >
+                                  {NamePDF ? NamePDF : "Tambah dokumen baru"}
+                                </label>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+
+                          {pdfFileError && (
+                            <div
+                              className="mt-3"
+                              style={{ color: "red", fontWeight: "bold" }}
+                            >
+                              {pdfFileError}
+                            </div>
+                          )}
                         </div>
                       </div>
-                    ) : (
-                      ""
-                    )}
-
-                    {pdfFileError && (
                       <div
-                        className="mt-3"
-                        style={{ color: "red", fontWeight: "bold" }}
+                        className={`${
+                          viewPDF
+                            ? "pdf-container w-100"
+                            : "pdf-container d-none"
+                        }`}
                       >
-                        {pdfFileError}
+                        <iframe
+                          src={viewPDF}
+                          frameBorder="0"
+                          scrolling="auto"
+                          height={viewPDF ? "500px" : ""}
+                          width="100%"
+                        ></iframe>
+                        {!viewPDF && <>No pdf file selected </>}
                       </div>
-                    )}
+                      {showDokument ? (
+                        <iframe
+                          className="my-4 border"
+                          src={`http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${dokument}`}
+                          frameBorder="0"
+                          scrolling="auto"
+                          height={"500px"}
+                          width="100%"
+                        ></iframe>
+                      ) : (
+                        ""
+                      )}
+                      {/* start action show and upload */}
+                    </div>
+                    {/* end dokument */}
                   </div>
                 </div>
-                <div
-                  className={`${
-                    viewPDF ? "pdf-container w-100" : "pdf-container d-none"
-                  }`}
-                >
-                  <iframe
-                    src={viewPDF}
-                    frameBorder="0"
-                    scrolling="auto"
-                    height={viewPDF ? "500px" : ""}
-                    width="100%"
-                  ></iframe>
-                  {!viewPDF && <>No pdf file selected </>}
-                </div>
-                {showDokument ? (
-                  <iframe
-                    className="my-4 border"
-                    src={`http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${dokument}`}
-                    frameBorder="0"
-                    scrolling="auto"
-                    height={"500px"}
-                    width="100%"
-                  ></iframe>
-                ) : (
-                  ""
-                )}
-                {/* start action show and upload */}
-              </div>
-              {/* end dokument */}
-                </div>
-             </div>
 
                 <div className="row">
                   <div className="col-12">
@@ -594,8 +591,8 @@ function ReviewDokumenKerjasama() {
                       </label>
                       <div>
                         <textarea
-                        readOnly
-                        value={catatanREvisi&&catatanREvisi}
+                          readOnly
+                          value={catatanREvisi && catatanREvisi}
                           name="cooperation"
                           id=""
                           cols="30"

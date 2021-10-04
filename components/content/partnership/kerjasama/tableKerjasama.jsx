@@ -45,6 +45,7 @@ import {
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/management_cooporation.type";
 
 const Table = ({token}) => {
+  console.log("token admin",token)
   const router = useRouter();
   let { update, success,successTerima,successReject,successMakeREvisi } = router.query;
   let selectRefKerjasama = null;
@@ -93,7 +94,11 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(changeStatusList(token,e.target.value, id));
+        let formData = new FormData();
+        formData.append("_method", "put");
+        formData.append("status", e.target.value);
+
+        dispatch(changeStatusList(token,formData, id));
         setIsStatusBar(true);
         setDeleteBar(false);
         setIsChangeOption(true);
@@ -181,7 +186,7 @@ const Table = ({token}) => {
     async function getWillExpire (token){
       try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -701,20 +706,18 @@ const Table = ({token}) => {
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
                                     {items.period} {items.period_unit}
-                                  </p>{" "}
-                                </td>
-                                <td className="align-middle text-left">
-                                  <p className="p-part-t">
-                                    {moment(items.period_date_start).format(
-                                      "DD MMMM YYYY"
-                                    )}
-                                    {/* moment().format('MMMM Do YYYY, h:mm:ss a'); */}
-                                    {/* H, HHss     */}
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
-                                    {moment(items.period_date_end).format(
+                                    {items.period_date_start === null ? "-" : moment(items.period_date_start).format(
+                                      "DD MMMM YYYY"
+                                    )}
+                                  </p>
+                                </td>
+                                <td className="align-middle text-left">
+                                  <p className="p-part-t">
+                                    {items.period_date_end === null ? "-" : moment(items.period_date_end).format(
                                       "DD MMMM YYYY"
                                     )}
                                   </p>
@@ -1061,8 +1064,8 @@ const Table = ({token}) => {
                                       <Link href={{
 
 
-                                        // pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
-                                        pathname:"/partnership/tanda-tangan/ttdTolkit",
+                                        pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
+                                        // pathname:"/partnership/tanda-tangan/ttdTolkit",
 
 
 

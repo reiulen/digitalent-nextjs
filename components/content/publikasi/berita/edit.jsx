@@ -16,7 +16,7 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditBerita = () => {
+const EditBerita = ({token}) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -29,7 +29,8 @@ const EditBerita = () => {
     })
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
-    const [, forceUpdate] = useState();
+    // const [, forceUpdate] = useState();
+    const forceUpdate = React.useReducer(() => ({}))[1]
     const { berita } = useSelector(state => state.detailBerita)
     const { loading, error, success } = useSelector(state => state.updatedBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -188,7 +189,7 @@ const EditBerita = () => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                            dispatch(updateBerita(data));
+                            dispatch(updateBerita(data, token));
                             // console.log(data)
                         }
                     });
@@ -220,7 +221,7 @@ const EditBerita = () => {
                     })
                         .then((result) => {
                           if (result.isConfirmed) {
-                            dispatch(updateBerita(data));
+                            dispatch(updateBerita(data, token));
                             // console.log(data)
                         }
                     });
@@ -257,7 +258,7 @@ const EditBerita = () => {
                     })
                         .then((result) => {
                           if (result.isConfirmed) {
-                            dispatch(updateBerita(data));
+                            dispatch(updateBerita(data, token));
                             // console.log(data)
                         }
                     });
@@ -288,7 +289,7 @@ const EditBerita = () => {
                     })
                         .then((result) => {
                           if (result.isConfirmed) {
-                            dispatch(updateBerita(data));
+                            dispatch(updateBerita(data, token));
                             // console.log(data)
                         }
                     });
@@ -297,7 +298,8 @@ const EditBerita = () => {
             }
         } else {
             simpleValidator.current.showMessages();
-            forceUpdate(1);
+            // forceUpdate(1);
+            forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -316,10 +318,10 @@ const EditBerita = () => {
     return (
         <>
         {
-            console.log (berita)
+            // console.log (berita)
         }
         {
-                console.log (kategori)
+                // console.log (kategori)
             }
             <PageWrapper>
                 {error ?
@@ -377,11 +379,12 @@ const EditBerita = () => {
                                     <div className="col-sm-12">
                                         <div className="ckeditor">
                                             {editorLoaded ? <CKEditor
+                                                ck-editor__editable
                                                 editor={ClassicEditor}
                                                 data={isi_berita}
                                                 onReady={editor => {
                                                     // You can store the "editor" and use when it is needed.
-                                                    console.log('Editor is ready to use!', editor);
+                                                    // console.log('Editor is ready to use!', editor);
                                                 }}
                                                 onChange={(event, editor) => {
                                                     const data = editor.getData()

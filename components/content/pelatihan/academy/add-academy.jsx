@@ -6,11 +6,17 @@ import { useRouter } from "next/router";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
+import Select from "react-select";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
+import {
+  newAcademy,
+  clearErrors,
+} from "../../../../redux/actions/pelatihan/academy.actions";
+import { NEW_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
 import LoadingPage from "../../../LoadingPage";
 
-const AddAcademy = () => {
+const AddAcademy = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -18,6 +24,10 @@ const AddAcademy = () => {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
     editorRef.current || {};
+
+  const { loading, error, success, academy } = useSelector(
+    (state) => state.newAcademy
+  );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -31,7 +41,13 @@ const AddAcademy = () => {
 
   const [browsurName, setBrowsurName] = useState("Belum ada file");
   const [browsurFile, setBrowsurFile] = useState("");
+  const [brosurPreview, setBrowsurPreview] = useState("");
   const [status, setStatus] = useState();
+
+  const optionsStatus = [
+    { value: 1, label: "Publish" },
+    { value: 0, label: "Unpublish" },
+  ];
 
   useEffect(() => {
     editorRef.current = {
@@ -41,7 +57,17 @@ const AddAcademy = () => {
     };
 
     setEditorLoaded(true);
-  }, []);
+
+    if (success) {
+      dispatch({
+        type: NEW_ACADEMY_RESET,
+      });
+      router.push({
+        pathname: `/pelatihan/akademi`,
+        query: { success: true },
+      });
+    }
+  }, [success]);
 
   const handleResetError = () => {
     if (error) {
@@ -51,24 +77,30 @@ const AddAcademy = () => {
 
   const onChangeLogo = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
-
-    if (type.includes(e.target.files[0].type)) {
-      setLogoFile(e.target.files[0]);
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setLogoPreview(reader.result);
+    if (e.target.files[0]) {
+      if (type.includes(e.target.files[0].type)) {
+        if (e.target.files[0].size > 5000000) {
+          e.target.value = null;
+          Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+        } else {
+          setLogoFile(e.target.files[0]);
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setLogoPreview(reader.result);
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+          setLogoName(e.target.files[0].name);
         }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-      setLogoName(e.target.files[0].name);
-    } else {
-      e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data gambar.",
-        "error"
-      );
+      } else {
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data gambar.",
+          "error"
+        );
+      }
     }
   };
 
@@ -80,35 +112,51 @@ const AddAcademy = () => {
 
   const onChangeBrowsur = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg", "application/pdf"];
-    if (type.includes(e.target.files[0].type)) {
-      setBrowsurFile(e.target.files[0]);
-      setBrowsurName(e.target.files[0].name);
-    } else {
-      e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data gambar.",
-        "error"
-      );
+    if (e.target.files[0]) {
+      if (type.includes(e.target.files[0].type)) {
+        if (e.target.files[0].size > 10000000) {
+          e.target.value = null;
+          Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+        } else {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setBrowsurPreview(reader.result);
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+          setBrowsurFile(e.target.files[0]);
+          setBrowsurName(e.target.files[0].name);
+        }
+      } else {
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data gambar.",
+          "error"
+        );
+      }
     }
   };
 
   const onDeleteBrowsur = () => {
     setBrowsurFile("");
     setBrowsurName("Belum ada file");
+    setBrowsurPreview("");
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
+      let statusString = toString(status);
       const data = {
-        logoFile,
         name,
-        description,
-        browsurFile,
-        status,
+        deskripsi: description,
+        logo: logoPreview,
+        brosur: brosurPreview,
+        status: statusString,
       };
-      console.log(data);
+      dispatch(newAcademy(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -122,7 +170,32 @@ const AddAcademy = () => {
 
   return (
     <PageWrapper>
+      {error && (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
       <div className="col-lg-12 order-1 px-0">
+        {loading && <LoadingPage loading={loading} />}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header mt-3">
             <h2
@@ -201,7 +274,7 @@ const AddAcademy = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="placeholder"
+                  placeholder="Silahkan Masukan Nama Akademi"
                   className="form-control"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -265,20 +338,9 @@ const AddAcademy = () => {
                       name="question_image"
                       accept="image/png, image/jpeg , image/jpg ,application/pdf"
                       onChange={onChangeBrowsur}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("browsur")
-                      }
                     />
                     <label className="custom-file-label" htmlFor="customFile">
                       {browsurName}
-                    </label>
-                    <label style={{ marginTop: "15px" }}>
-                      {simpleValidator.current.message(
-                        "browsur",
-                        browsurFile,
-                        "required",
-                        { className: "text-danger" }
-                      )}
                     </label>
                   </div>
                   <button
@@ -298,21 +360,14 @@ const AddAcademy = () => {
                 <label className="col-form-label font-weight-bold">
                   Status
                 </label>
-                <select
-                  value={status}
-                  onBlur={(e) => {
-                    setStatus(e.target.value);
-                    simpleValidator.current.showMessageFor("status");
-                  }}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="form-control"
-                >
-                  <option value="" disabled selected>
-                    -- PILIH STATUS --
-                  </option>
-                  <option value={1}>Publish</option>
-                  <option value={0}>Unpublish</option>
-                </select>
+                <Select
+                  options={optionsStatus}
+                  defaultValue={status}
+                  onChange={(e) => setStatus(e.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
+                />
                 {simpleValidator.current.message("status", status, "required", {
                   className: "text-danger",
                 })}

@@ -3,19 +3,30 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
+const snakeToPascal = (string) => {
+  return string
+    .split("/")
+    .map((snake) =>
+      snake
+        .split("-")
+        .map((substr) => substr.charAt(0).toUpperCase() + substr.slice(1))
+        .join(" ")
+    )
+    .join("/");
+};
+
 const convertBreadcrumb = (string) => {
-  let newStr = string.replace ("-", " ")
-  // return newStr
-  let result = ""
+  let newStr = snakeToPascal(string);
+  let result = "";
 
   // console.log (newStr)
 
-  for (let i = 0; i < newStr.length; i++){
-    result = newStr.charAt(0).toUpperCase() + newStr.slice(1).split("?")[0] + " /"
+  for (let i = 0; i < newStr.length; i++) {
+    result = newStr.split("?")[0] + " /";
   }
   // result.join (" ")
 
-  return result
+  return result;
 
   // return ` ${newStr.charAt(0).toUpperCase() + newStr.slice(1).split("?")[0]} /` ;
   // return ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /` ;
@@ -58,10 +69,10 @@ const SubHeader = () => {
                 <Link href={breadcrumb.href} key={i}>
                   <a>
                     <p className="text-default mt-2 mb-2">
+                      &nbsp;
                       {/* {
                         (convertBreadcrumb(breadcrumb.breadcrumb))
                       } */}
-
                       {i !== 0
                         ? i == breadcrumbs.length - 1
                           ? convertBreadcrumb(breadcrumb.breadcrumb).slice(

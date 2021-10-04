@@ -2,29 +2,25 @@ import {
   SERTIFIKAT_SUCCESS,
   SERTIFIKAT_FAIL,
   SERTIFIKAT_REQUEST,
-
   NEW_SERTIFIKAT_SUCCESS,
   NEW_SERTIFIKAT_FAIL,
   NEW_SERTIFIKAT_REQUEST,
   NEW_SERTIFIKAT_RESET,
-
   DETAIL_SERTIFIKAT_FAIL,
   DETAIL_SERTIFIKAT_REQUEST,
   DETAIL_SERTIFIKAT_SUCCESS,
-
   DELETE_SERTIFIKAT_FAIL,
   DELETE_SERTIFIKAT_REQUEST,
   DELETE_SERTIFIKAT_RESET,
   DELETE_SERTIFIKAT_SUCCESS,
-
   UPDATE_SERTIFIKAT_FAIL,
   UPDATE_SERTIFIKAT_REQUEST,
   UPDATE_SERTIFIKAT_RESET,
   UPDATE_SERTIFIKAT_SUCCESS,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
-export const allSertifikatReducers = (state = { sertifikat: [] }, action) => {
+export const allSertifikatReducers = (state = { certificate: [] }, action) => {
   switch (action.type) {
     case SERTIFIKAT_REQUEST:
       return {
@@ -33,12 +29,12 @@ export const allSertifikatReducers = (state = { sertifikat: [] }, action) => {
     case SERTIFIKAT_SUCCESS:
       return {
         loading: false,
-        sertifikat: action.payload.data,
+        certificate: action.payload.data,
       };
     case SERTIFIKAT_FAIL:
       return {
         loading: false,
-        sertifikat: action.payload.data,
+        certificate: action.payload.data,
       };
     case CLEAR_ERRORS:
       return {
@@ -49,7 +45,7 @@ export const allSertifikatReducers = (state = { sertifikat: [] }, action) => {
   }
 };
 
-export const newSertifikatReducer = (state = { sertifikat: {} }, action) => {
+export const newSertifikatReducer = (state = { certificate: {} }, action) => {
   switch (action.type) {
     case NEW_SERTIFIKAT_REQUEST:
       return {
@@ -84,7 +80,10 @@ export const newSertifikatReducer = (state = { sertifikat: {} }, action) => {
   }
 };
 
-export const detailSertifikatReducer = (state = { sertifikat: {} }, action) => {
+export const detailSertifikatReducer = (
+  state = { certificate: {} },
+  action
+) => {
   switch (action.type) {
     case DETAIL_SERTIFIKAT_REQUEST:
       return {
@@ -93,7 +92,7 @@ export const detailSertifikatReducer = (state = { sertifikat: {} }, action) => {
     case DETAIL_SERTIFIKAT_SUCCESS:
       return {
         loading: false,
-        SERTIFIKAT: action.payload,
+        certificate: action.payload,
       };
 
     case DETAIL_SERTIFIKAT_FAIL:

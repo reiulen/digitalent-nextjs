@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 
-import Layout from "../../../components/templates/layout.component";
+// import Layout from "../../../components/templates/layout.component";
 // import ArtikelPeserta from "../../../components/content/publikasi/artikel-peserta/artikel-peserta";
 
 import { getAllArtikelPeserta } from '../../../redux/actions/publikasi/artikel-peserta.actions'
 import { wrapper } from '../../../redux/store'
 
-import LoadingPage from "../../../components/LoadingPage";
+// import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton"
 
 const ArtikelPeserta = dynamic(
@@ -42,10 +42,10 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ q
         };
     }
     
-    await store.dispatch(getAllArtikelPeserta(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
+    await store.dispatch(getAllArtikelPeserta(query.role, query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
     // await store.dispatch(getAllKategori(session.user.user.data.token))
     return {
-        props: { session, title: "Artikel - Publikasi" },
+        props: { session, title: "Artikel Peserta - Publikasi" },
     };
 })
 

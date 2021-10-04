@@ -43,9 +43,10 @@ const EditArtikel = ({token}) => {
        url: "Format url berupa: https://www.example.com"
     }
   }));
-  const [, forceUpdate] = useState();
+  // const [, forceUpdate] = useState();
+  const forceUpdate = React.useReducer(() => ({}))[1]
   const { artikel } = useSelector((state) => state.detailArtikel);
-  const { error, success, loading } = useSelector(
+  const { error, success, loading} = useSelector(
     (state) => state.updatedArtikel
   );
   const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -58,6 +59,19 @@ const EditArtikel = ({token}) => {
   //       permanent: false,
   //     },
   //   };
+  // }
+
+  // if (allLoading){
+  //   loading = allLoading
+
+  // } else if (updateLoading)
+  //   loading = updateLoading
+
+  // if (allError){
+  //   error = allError
+  
+  // } else if (updateError){
+  //   error = updateError
   // }
 
   useEffect(() => {
@@ -273,7 +287,7 @@ const EditArtikel = ({token}) => {
 
           let today = new Date
 
-          console.log (today)
+          // console.log (today)
 
           const data = {
             judul_artikel,
@@ -308,7 +322,7 @@ const EditArtikel = ({token}) => {
                 // }
     
                 dispatch(updateArtikel(data, token));
-                console.log(data)
+                // console.log(data)
               }
           });
 
@@ -346,7 +360,7 @@ const EditArtikel = ({token}) => {
                 // }
     
                 dispatch(updateArtikel(data, token));
-                console.log(data)
+                // console.log(data)
               }
           });
         }
@@ -426,7 +440,7 @@ const EditArtikel = ({token}) => {
                 // }
     
                 dispatch(updateArtikel(data, token));
-                console.log(data)
+                // console.log(data)
               }
           });
         } else {
@@ -463,7 +477,7 @@ const EditArtikel = ({token}) => {
                 // }
     
                 dispatch(updateArtikel(data, token));
-                console.log(data)
+                // console.log(data)
               }
           });
         }
@@ -508,7 +522,8 @@ const EditArtikel = ({token}) => {
       
     } else {
       simpleValidator.current.showMessages();
-      forceUpdate(1);
+      // forceUpdate(1);
+      forceUpdate;
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -528,10 +543,10 @@ const EditArtikel = ({token}) => {
   return (
     <>
       <PageWrapper>
-        {console.log (artikel)}
+        {/* {console.log (artikel)}
         {
           console.log (kategori)
-        }
+        } */}
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -632,16 +647,17 @@ const EditArtikel = ({token}) => {
                     <div className="ckeditor">
                       {editorLoaded ? (
                         <CKEditor
+                          ck-editor__editable
                           editor={ClassicEditor}
                           data={isi_artikel}
                           onReady={(editor) => {
                             // You can store the "editor" and use when it is needed.
-                            console.log("Editor is ready to use!", editor);
+                            // console.log("Editor is ready to use!", editor);
                           }}
                           onChange={(event, editor) => {
                             const data = editor.getData();
                             setIsiArtikel(data);
-                            console.log({ event, editor, data });
+                            // console.log({ event, editor, data });
                           }}
                           onBlur={() =>
                             simpleValidator.current.showMessageFor(

@@ -15,7 +15,7 @@ import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const SubmitKerjasama = () => {
+const SubmitKerjasama = ({token}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
 
@@ -71,19 +71,6 @@ const SubmitKerjasama = () => {
 
   
   const submit = (e) => {
-    // console.log("institution_name",institution_name)
-    // console.log("date",date)
-    // console.log("title",title)
-    // console.log("period",period)
-    // console.log("periodUnit",periodUnit)
-    // console.log("cooperationC_id",cooperationC_id)
-    // console.log("period_date_start",period_date_start)
-    // console.log("newDate",newDate)
-    // console.log("agreement_number_partner",agreement_number_partner)
-    // console.log("agreement_number_kemkominfo",agreement_number_kemkominfo)
-    // console.log("signing_date",signing_date)
-    // console.log("document",document)
-    // console.log("AllCooperation",AllCooperation)
 
     e.preventDefault();
 
@@ -124,11 +111,7 @@ const SubmitKerjasama = () => {
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
-
           formData.append("_method", "put");
-          // formData.append("date", date);
-          // formData.append("period", period);
-          // formData.append("period_unit", periodUnit);
           formData.append("period_date_start", period_date_start);
           formData.append("period_date_end", newDate);
           formData.append("agreement_number_partner", agreement_number_partner);
@@ -137,26 +120,26 @@ const SubmitKerjasama = () => {
             agreement_number_kemkominfo
           );
           formData.append("signing_date", signing_date);
+          // formData.append("document", document);
           formData.append("document", document);
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/proposal-revisi-document/${router.query.id}`,
+              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/proposal-revisi-document/${router.query.id}`,
               formData,
               {
                 headers: {
-                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                  authorization: `Bearer ${token}`,
                 },
               }
             );
-            console.log("data fdfdfdfdf",data)
-            // alert('berhasil');
             router.push({
               pathname: `/partnership/user/kerjasama/review-dokumen-kerjasama`,
               query: { successSubmitDokumentKerjasama: true, id:router.query.id },
             });
           } catch (error) {
-            alert("gagal menambahkan data tipe file harus pdf");
+            notify(error.response.data.message)
+            // alert("gagal menambahkan data tipe file harus pdf");
           }
         }
       });
@@ -219,13 +202,20 @@ const SubmitKerjasama = () => {
   const [AllCooperation, setAllCooperation] = useState("");
 
 
-  const cekProgresStatus = async (id) => {
-    try {
+  // const cekProgresStatus = async (id) => {
+    
+  // };
+
+  useEffect(() => {
+
+    // api cek progress
+    async function cekProgresStatus(id) {
+      try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -235,16 +225,12 @@ const SubmitKerjasama = () => {
     } catch (error) {
       console.log("gagal get province", error);
     }
-  };
-
-  useEffect(() => {
-
-    // api cek progress
-    console.log("router.query.id", router.query.id);
+      
+    }
     cekProgresStatus(router.query.id);
 
 
-  }, [router.query.id]);
+  }, [router.query.id,token]);
 
 
   return (

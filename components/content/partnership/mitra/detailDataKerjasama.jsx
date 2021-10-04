@@ -33,7 +33,10 @@ import {
   deleteCooperation,
   reloadTable,
   changeStatusList,
+  changeStatusListCooperation,
 } from "../../../../redux/actions/partnership/mitra.actions";
+
+
 import IconArrow from "../../../assets/icon/Arrow";
 import IconCalender from "../../../assets/icon/Calender";
 import LoadingTable from "../../../LoadingTable";
@@ -100,7 +103,7 @@ const DetailDataKerjasama = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteCooperation(id));
+        dispatch(deleteCooperation(token,id));
         setDeleteBar(true);
         setBarStatus(false);
       } else {
@@ -122,7 +125,10 @@ const DetailDataKerjasama = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(changeStatusList(value, id));
+        let formData = new FormData();
+        formData.append("_method", "put");
+        formData.append("status", value);
+        dispatch(changeStatusListCooperation(token,formData, id));
         setBarStatus(true);
       } else {
         dispatch(reloadTable());
@@ -136,7 +142,7 @@ const DetailDataKerjasama = ({token}) => {
       setgetId(router.query.id);
       dispatch(getSingleValue(token,router.query.id));
       dispatch(fetchListSelectCooperation(token));
-      dispatch(fetchListSelectStatus());
+      dispatch(fetchListSelectStatus(token));
     }
   }, [
     dispatch,
@@ -452,9 +458,13 @@ const DetailDataKerjasama = ({token}) => {
                 }
                 tableBody={
                   mitraDetailAll.status === "process" ? (
-                    <div className="my-12">
-                      <LoadingTable />
-                    </div>
+
+                    <tr>
+                      <td colSpan="8" className="text-center">
+                        <LoadingTable />
+                      </td>
+                    </tr>
+                    
                   ) : mitraDetailAll.mitraDetailAll.data &&
                     mitraDetailAll.mitraDetailAll.data
                       .list_cooperation_categories.length === 0 ? (

@@ -127,7 +127,7 @@ const Edit = ({ token }) => {
     async function getSingleData (id,token) {
       try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/${id}`,
         {
           headers: {
             authorization: `Bearer ${token}`,

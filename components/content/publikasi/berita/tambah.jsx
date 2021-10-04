@@ -18,7 +18,7 @@ import { NEW_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahBerita = () => {
+const TambahBerita = ({token}) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -30,7 +30,8 @@ const TambahBerita = () => {
         ssr: false
     })
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
-    const [, forceUpdate] = useState();
+    // const [, forceUpdate] = useState();
+    const forceUpdate = React.useReducer(() => ({}))[1]
     const { loading, error, success } = useSelector(state => state.newBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
 
@@ -197,7 +198,7 @@ const TambahBerita = () => {
                         //   });
                         // }
             
-                        dispatch(newBerita(data))
+                        dispatch(newBerita(data, token))
                         }
                     });
             } else {
@@ -230,7 +231,7 @@ const TambahBerita = () => {
                         //   });
                         // }
             
-                        dispatch(newBerita(data))
+                        dispatch(newBerita(data, token))
                         }
                     });
             }
@@ -274,7 +275,8 @@ const TambahBerita = () => {
             // console.log(data)
         } else {
             simpleValidator.current.showMessages();
-            forceUpdate(1);
+            // forceUpdate(1);
+            forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -344,11 +346,12 @@ const TambahBerita = () => {
                                 <div className="col-sm-12">
                                     <div className="ckeditor">
                                         {editorLoaded ? <CKEditor
+                                            ck-editor__editable
                                             editor={ClassicEditor}
                                             data={isi_berita}
                                             onReady={editor => {
                                                 // You can store the "editor" and use when it is needed.
-                                                console.log('Editor is ready to use!', editor);
+                                                // console.log('Editor is ready to use!', editor);
                                             }}
                                             onChange={(event, editor) => {
                                                 const data = editor.getData()

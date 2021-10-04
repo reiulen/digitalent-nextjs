@@ -12,7 +12,7 @@ import axios from "axios";
 import IconClose from "../../../../assets/icon/Close";
 import Image from "next/image";
 
-const Tambah = () => {
+const Tambah = ({token}) => {
   const router = useRouter();
   const { successInputProfile } = router.query;
   // const [startDate, setStartDate] = useState(null);
@@ -49,17 +49,7 @@ const Tambah = () => {
   });
 
   const submit = (e) => {
-    // console.log("institution_name",institution_name)
-    // console.log("agency_logo",agency_logo)
-    // console.log("wesite",wesite)
-    // console.log("address",address)
-    // console.log("indonesia_cities_id",indonesia_cities_id)
-    // console.log("indonesia_provinces_id",indonesia_provinces_id)
-    // console.log("postal_code",postal_code)
-    // console.log("pic_name",pic_name)
-    // console.log("pic_contact_number",pic_contact_number)
-    // console.log("pic_email",pic_email)
-    e.preventDefault();
+    // e.preventDefault();
     if (institution_name === "") {
       setError({
         ...error,
@@ -75,15 +65,16 @@ const Tambah = () => {
     }
 
     // jika pertama kali data profile kosong
-    // else if (agency_logo_api === "") {
-      else if ((agency_logo === "") && agency_logo_api) {
+    // else if ((agency_logo === "") && agency_logo_api) {
+    else if ((agency_logo_api === "") && (agency_logo === "") ) {
+   
         setError({
           ...error,
           agency_logo: "Harus isi gambar logo dengan format png",
         });
         notify("Harus isi gambar logo dengan format png");
-      }
-    // } 
+  
+    } 
     
     
     else if (address === "") {
@@ -145,8 +136,6 @@ const Tambah = () => {
           }
           // formData.append("agency_logo", agency_logo);
 
-
-
           formData.append("website", wesite);
           formData.append("address", address);
 
@@ -165,11 +154,11 @@ const Tambah = () => {
 
           try {
             let { data } = await axios.post(
-              `${process.env.END_POINT_API_PARTNERSHIP}/api/profiles`,
+              `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
               formData,
               {
                 headers: {
-                  authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                  authorization: `Bearer ${token}`,
                 },
               }
             );
@@ -178,10 +167,11 @@ const Tambah = () => {
               query: { successInputProfile: true },
             });
           } catch (error) {
-            // notify(error.response.data.message);
-            notify(
-              "cek field kab/kota anda apakah sudah sesuai dengan provinsi yang ada"
-            );
+            notify(error.response.data.message);
+            // notify(
+            //   "cek field kab/kota anda apakah sudah sesuai dengan provinsi yang ada"
+            // );
+
           }
         }
       });
@@ -241,33 +231,51 @@ const Tambah = () => {
   // ketika load cities state ini save data
   const [citiesAll, setCitiesAll] = useState([]);
 
-  const getDataProvinces = async () => {
-    try {
+  // const getDataProvinces = async () => {
+    
+  // };
+
+  // const getProfiles = async () => {
+    
+  // };
+
+  const [isChangeLogo, setIsChangeLogo] = useState(false);
+  const changeStatusLgo = () => {
+    setIsChangeLogo(isChangeLogo ? false : true);
+  };
+
+  useEffect(() => {
+    async function getDataProvinces(token) {
+      try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/option/provinces`
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/provinces`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       let dataNewProvinces = data.data.map((items) => {
         return { ...items, label: items.name, value: items.id };
       });
       dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-      // console.log("dataNewProvinces", dataNewProvinces);
       setAllProvinces(dataNewProvinces);
     } catch (error) {
       console.log("gagal get province", error);
     }
-  };
+      
+    }
 
-  const getProfiles = async () => {
-    try {
+    async function getProfiles(token) {
+      try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/profiles`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
-
 
       if (data) {
         setAgency_logo_api(
@@ -295,25 +303,21 @@ const Tambah = () => {
           setIndonesia_cities_id(citiesss);
           setIndonesia_provinces_id(provinciesss);
         } else {
-          // setIndonesia_cities_id(data.data.province === "-" ? "" : data.data.province);
-          // setIndonesia_provinces_id(data.data.city === "-" ? "" : data.data.city);
           console.log("log")
         }
       }
     } catch (error) {
       console.log("gagal get province", error);
     }
-  };
+      
+    }
 
-  const [isChangeLogo, setIsChangeLogo] = useState(false);
-  const changeStatusLgo = () => {
-    setIsChangeLogo(isChangeLogo ? false : true);
-  };
 
-  useEffect(() => {
-    getDataProvinces();
-    getProfiles();
-  }, []);
+
+
+    getDataProvinces(token);
+    getProfiles(token);
+  }, [token]);
 
   useEffect(() => {
     // get data cities
@@ -323,7 +327,7 @@ const Tambah = () => {
       async function fetchAPI() {
         try {
           let { data } = await axios.get(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/option/cities/${indonesia_provinces_id}`
+            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/cities/${indonesia_provinces_id}`
           );
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };

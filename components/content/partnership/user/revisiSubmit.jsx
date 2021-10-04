@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const RevisiSubmit = () => {
+const RevisiSubmit = ({token}) => {
   const router = useRouter();
   const [information2, setInformation2] = useState("")
 
@@ -60,11 +60,11 @@ const RevisiSubmit = () => {
 
         try {
           let respoonse = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/revisi/${router.query.id}/${router.query.version}`,
+            `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/revisi/${router.query.id}/${router.query.version}`,
             formData,
             {
               headers: {
-                authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+                authorization: `Bearer ${token}`,
               },
             }
           );
@@ -82,48 +82,16 @@ const RevisiSubmit = () => {
     });
   };
 
-  const setDataSingle = async (id,version) => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/show-revisi/${id}/${version}`,
-        {
-          headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
-          },
-        }
-      );
-      console.log("data list revisi",data)
-      setTitle(data.data.title);
-      setDate(data.data.date);
-      setCooperationID(data.data.cooperation_category);
-      setPeriod(data.data.period);
-      setPeriodUnit(data.data.period_unit);
-      setAllCooperation(data.data.cooperation_category.data_content);
-      setNote(data.data.note);
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
-    }
-  };
+  // const setDataSingle = async (id,version) => {
+    
+  // };
 
   const [lengthListCard, setLengthListCard] = useState("")
   const [indexCard, setIndexCard] = useState("")
   console.log("lengthListCard",lengthListCard)
   console.log("indexCard",indexCard)
   const getLengthListCard = async (id) => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/card-review/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
-          },
-        }
-      );
-      console.log("data list revisi",data.data.length -1)
-      setLengthListCard(data.data.length - 1)
-    } catch (error) {
-      console.log("action getSIngle gagal", error);
-    }
+    
   };
 
 
@@ -146,11 +114,50 @@ const RevisiSubmit = () => {
       progress: undefined,
     });
   useEffect(() => {
+    async function setDataSingle(id,version) {
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/show-revisi/${id}/${version}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setTitle(data.data.title);
+      setDate(data.data.date);
+      setCooperationID(data.data.cooperation_category);
+      setPeriod(data.data.period);
+      setPeriodUnit(data.data.period_unit);
+      setAllCooperation(data.data.cooperation_category.data_content);
+      setNote(data.data.note);
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+    }
+
+    async function getLengthListCard(id) {
+      try {
+      let { data } = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/card-review/${id}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("data list revisi",data.data.length -1)
+      setLengthListCard(data.data.length - 1)
+    } catch (error) {
+      console.log("action getSIngle gagal", error);
+    }
+      
+    }
     setDataSingle(router.query.id,router.query.version);
     setInformation2(router.query.information2)
     getLengthListCard(router.query.id)
     setIndexCard(router.query.index)
-  }, [router.query.id,router.query.version,router.query.information2,router.query.index]);
+  }, [router.query.id,router.query.version,router.query.information2,router.query.index,token]);
 
   return (
     <PageWrapper>

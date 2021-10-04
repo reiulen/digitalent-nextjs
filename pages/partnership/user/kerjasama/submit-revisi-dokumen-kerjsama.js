@@ -1,6 +1,3 @@
-// import Layout from "../../../../components/templates/layout.component";
-// import ReviewDokKerjasama from "../../../../components/content/partnership/user/reviewDokKerjasama";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -10,16 +7,15 @@ const ReviewDokKerjasama = dynamic(
     import(
       "../../../../components/content/partnership/user/reviewDokKerjasama"
     ),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
-export default function ReviewDokKerjasamaPage() {
+export default function ReviewDokKerjasamaPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Submit revisi dokumen kerjsama - Partnership"> */}
-        <ReviewDokKerjasama />
-        {/* </Layout> */}
+        <ReviewDokKerjasama token={session.token} />
       </div>
     </>
   );
@@ -32,7 +28,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/partnership/user/auth/login",
             permanent: false,
           },
         };

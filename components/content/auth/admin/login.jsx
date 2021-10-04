@@ -9,6 +9,7 @@ import { signIn } from "next-auth/client";
 import SimpleReactValidator from "simple-react-validator";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
+import LoadingTable from "../../../LoadingTable";
 
 const LoginAdmin = () => {
   const router = useRouter();
@@ -17,6 +18,7 @@ const LoginAdmin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [captcha, setCaptcha] = useState("");
+  const [loading, setLoading] = useState(false);
   const [, forceUpdate] = useState();
 
   const [hidePassword, setHidePassword] = useState(true);
@@ -33,21 +35,30 @@ const LoginAdmin = () => {
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (simpleValidator.current.allValid()) {
       const data = {
         redirect: false,
         email,
         password,
+        role: "admin",
         captcha,
       };
       const result = await signIn("credentials", data);
 
       if (result.error) {
         toast.error(result.error);
+        setLoading(false);
       } else {
-        router.push("/dashboard");
+        setLoading(false);
+        if (data.role === "admin") {
+          router.push("/dashboard");
+        } else {
+          router.push("/partnership/user/kerjasama");
+        }
       }
     } else {
+      setLoading(false);
       simpleValidator.current.showMessages();
       forceUpdate(1);
     }
@@ -95,7 +106,7 @@ const LoginAdmin = () => {
                     className="form-control form-control-auth"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Masukan Email"
+                    placeholder="Masukkan Email"
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("Email")
                     }
@@ -119,7 +130,7 @@ const LoginAdmin = () => {
                       className="form-control form-control-auth pr-10"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Masukan Password"
+                      placeholder="Masukkan Password"
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("Password")
                       }
@@ -153,11 +164,11 @@ const LoginAdmin = () => {
                     sitekey={process.env.CAPTCHA_SITE_KEY}
                     onChange={setCaptcha}
                     onBlur={() =>
-                      simpleValidator.current.showMessageFor("Capcha")
+                      simpleValidator.current.showMessageFor("Captcha")
                     }
                   />
                   {simpleValidator.current.message(
-                    "Capcha",
+                    "Captcha",
                     captcha,
                     "required",
                     {
@@ -166,12 +177,18 @@ const LoginAdmin = () => {
                   )}
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
-                >
-                  Masuk
-                </button>
+                {loading ? (
+                  <div className="mt-5">
+                    <LoadingTable loading={loading} />
+                  </div>
+                ) : (
+                  <button
+                    type="submit"
+                    className="btn btn-primary-rounded-full bg-secondary btn-block mt-5"
+                  >
+                    Masuk
+                  </button>
+                )}
                 {/* <Link href="/publikasi/">
                 </Link> */}
               </form>

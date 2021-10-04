@@ -5,6 +5,7 @@ import Image from "next/image";
 // import PageWrapper from "../../../wrapper/page.wrapper";
 import PreviewWrapper from "../../../wrapper/preview.wrapper";
 import Backdrop from "../../../../public/assets/media/backdrop.svg"
+import "../../../../styles/preview.module.css"
 
 const Preview = () => {
     // const editorRef = useRef();
@@ -53,7 +54,7 @@ const Preview = () => {
     return (
         <>  
             <div className="text-center mt-5">
-                <h1 className="mt-5">
+                <h1 className="mt-5 display-1">
                     {judul_artikel}
                 </h1>
             </div>
@@ -64,8 +65,8 @@ const Preview = () => {
             </Image>
             <PreviewWrapper title= "Pratinjau Artikel - Publikasi">
                 
-                <div className="col-lg-12 order-1 px-0 position-relative " style={{marginTop: "-20vh"}}>
-                    <div className="card card-custom card-stretch gutter-b">
+                <div className="col-lg-12 order-1 px-0 position-relative">
+                    <div className="card card-custom card-stretch gutter-b" style={{marginTop: "-20vh"}}>
 
                         <div className="card-body pt-0">
                                 {/* <div className="text-center mt-5">
@@ -74,7 +75,7 @@ const Preview = () => {
                                     </h3>
                                 </div> */}
 
-                                <div className="d-flex justify-content-center my-3">
+                                <div className="d-flex justify-content-center my-3" >
                                     <Image 
                                         // src={gambar} 
                                         src={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + gambar}
@@ -84,6 +85,7 @@ const Preview = () => {
                                         height= "500vh"
                                         // width= "100%"
                                         width= "1000vh"
+                                        className="mt-5 pt-5"
                                         // height= "150vh"
                                         // width= "100vh"
                                         // layout="fill"

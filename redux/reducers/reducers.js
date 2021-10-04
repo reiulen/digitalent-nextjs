@@ -150,6 +150,11 @@ import {
   newSertifikatReducer,
   updateSertifikatReducer,
 } from "./sertifikat/sertifikat.reducers";
+
+import {
+  allPesertaReducers,
+  detailPesertaReducer,
+} from "./sertifikat/list-peserta.reducer";
 // ============== sertifikat ===============
 
 // start Partnership
@@ -163,10 +168,51 @@ import { allMKCooporationReducer } from "./partnership/mk_cooporation.reducers";
 import { allMCooporationReducerMK } from "./partnership/managementCooporation.reducer";
 import { allTandaTanganReducer } from "./partnership/tandaTangan.reducers";
 // ================== user
+import { authenticationReducer } from "./partnership/user/authentication.reducer";
 import { cooperationUserReducer } from "./partnership/user/cooperation.reducer";
 import { dashboardReducer } from "./partnership/dashboard.reducer";
 import { allTandaTanganUserReducer } from "./partnership/user/tanda-tangan.reducer";
 // end Partnership
+
+// Site Management
+// ============== role ===============
+import {
+  allRolesReducer,
+  newRolesReducer,
+  detailRolesReducer,
+  updateRoleReducer,
+  deleteRolesReducer,
+} from "./site-management/role.reducers";
+
+// ============== master-satuan-penyelenggara ===============
+import {
+  allMasterSatuanKerjaPenyelenggarasReducer,
+  newMasterSatuanKerjaPenyelenggarasReducer,
+  detailMasterSatuanKerjaPenyelenggarasReducer,
+  updateMasterSatuanKerjaPenyelenggaraReducer,
+  deleteMasterSatuanKerjaPenyelenggarasReducer,
+} from "./site-management/master-satuan-kerja-penyelenggara.reducers";
+// End Site Management
+
+//PELATIHAN
+// ====================== akademi =====================
+import {
+  allAcademyReducer,
+  newAcademyReducer,
+  detailAcademyReducer,
+  updateAcademyReducer,
+  deleteAcademyReducer,
+} from "./pelatihan/academy.reducers";
+
+// ====================== tema =====================
+import {
+  allThemeReducer,
+  newThemeReducer,
+  detailThemeReducer,
+  updateThemeReducer,
+  deleteThemeReducer,
+} from "./pelatihan/theme.reducers";
+//END PELATIHAN
 
 // functional reducer
 
@@ -296,11 +342,14 @@ const reducer = combineReducers({
   // =============== end trivia ==================
 
   // =============== sertifikat ==================
-  allSertifikat: allSertifikatReducers,
-  newSertifikat: newSertifikatReducer,
-  detailSertifikat: detailSertifikatReducer,
-  deleteSertifikat: deleteSertifikatReducer,
-  updateSertifikat: updateSertifikatReducer,
+  allCertificates: allSertifikatReducers,
+  newCertificates: newSertifikatReducer,
+  detailCertificates: detailSertifikatReducer,
+  deleteCertificates: deleteSertifikatReducer,
+  updateCertificates: updateSertifikatReducer,
+
+  allParticipant: allPesertaReducers,
+  detailParticipant: detailPesertaReducer,
   // =============== end sertifikat ==================
 
   // PARTNERSHIP
@@ -319,10 +368,40 @@ const reducer = combineReducers({
   // ================================= => user
   allCooperationUser: cooperationUserReducer,
   allTandaTanganUser: allTandaTanganUserReducer,
-
   allProvinsi: allProvinsiReducer,
   allKota: allKotaReducer,
   allFunctionls: reducerFunctionals,
+  allAuthentication: authenticationReducer,
+
+  // SITE MANAGEMENT
+  // ============== ROLE ============
+  allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
+  newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,
+  deleteMasterSatuanKerjaPenyelenggaras:
+    deleteMasterSatuanKerjaPenyelenggarasReducer,
+  detailMasterSatuanKerjaPenyelenggaras:
+    detailMasterSatuanKerjaPenyelenggarasReducer,
+  updateMasterSatuanKerjaPenyelenggara:
+    updateMasterSatuanKerjaPenyelenggaraReducer,
+
+  // ============== END ROLE ============
+
+  // END SITE MANAGEMENT
+
+  //PELATIHAN
+  // ========== akademi ===========
+  allAcademy: allAcademyReducer,
+  newAcademy: newAcademyReducer,
+  detailAcademy: detailAcademyReducer,
+  updateAcademy: updateAcademyReducer,
+  deleteAcademy: deleteAcademyReducer,
+  // ========== tema ===========
+  allTheme: allThemeReducer,
+  newTheme: newThemeReducer,
+  detailTheme: detailThemeReducer,
+  updateTheme: updateThemeReducer,
+  deleteTheme: deleteThemeReducer,
+  //END PELATIHAN
 });
 
 export default reducer;

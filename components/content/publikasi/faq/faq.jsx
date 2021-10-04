@@ -19,9 +19,9 @@ import IconFilter from "../../../assets/icon/Filter";
 
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteFaq, updatePinFaq, getAllFaqPagination } from '../../../../redux/actions/publikasi/faq.actions'
-import { DELETE_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
+import { DELETE_FAQ_RESET, UPDATE_PIN_FAQ_RESET } from '../../../../redux/types/publikasi/faq.type'
 
-const Faq = () => {
+const Faq = ({token}) => {
     const importSwitch = () => import("bootstrap-switch-button-react");
     const SwitchButton = dynamic(importSwitch, {
         ssr: false,
@@ -33,10 +33,11 @@ const Faq = () => {
     const { loading, error, faq } = useSelector(state => state.allFaq)
     const { paginateFaq } = useSelector(state => state.paginationFaq)
     const { error: deleteError, isDeleted } = useSelector(state => state.deleteFaq)
+    const { error: updateError,isUpdated } = useSelector(state => state.updatePinFaq)
 
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
-
+    const [users_id, setUsersId] = useState(3)
     const [limit, setLimit] = useState(null)
     const [search, setSearch] = useState('')
 
@@ -68,15 +69,37 @@ const Faq = () => {
             })
         }
 
-    }, [dispatch, isDeleted, ])
+        // if (isUpdated) {
+        //     Swal.fire("Berhasil ", "Data berhasil diubah.", "success").then((result) => {
+        //         if (result.isConfirmed) {
+        //             window.location.reload()
+        //         }
+        //     });
+        //     dispatch({
+        //         type: UPDATE_PIN_FAQ_RESET
+        //     })
+        // }
 
-    const onSetPin = (checked, id) => {
-        const data = {
-            pinned: checked === true ? 1 : 0,
-            _method: 'put'
+
+    }, [dispatch, isDeleted, isUpdated])
+
+    const onSetPin = (e, data) => {
+        const dataToSend = {
+            pinned: e.target.value === true ? 1 : 0,
+            _method: 'put',
+            judul: data.judul,
+            kategori: data.kategori,
+            kategori_id: data.kategori_id,
+            jawaban: data.jawaban,
+            publish: data.publish,
+            users_id: users_id,
+            tanggal_publish: data.tanggal_publish,
+            users_id: data.users_id,
         }
 
-        dispatch(updatePinFaq(data, id))
+        dispatch(updatePinFaq(dataToSend, data.id, token))
+        // console.log (e.target.checked)
+        // console.log (data)
     };
 
     const onNewReset = () => {
@@ -95,7 +118,7 @@ const Faq = () => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteFaq(id));
+                dispatch(deleteFaq(id, token));
             }
         });
     };
@@ -149,53 +172,55 @@ const Faq = () => {
     const handleSearch = () => {
         if (limit != null && startDate === null && endDate === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
-
+    
         } else if (limit !== null && startDate !== null && endDate !== null ) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
+    
         } else {
             router.push(`${router.pathname}?page=1&keyword=${search}`)
         }
-
+    
     };
 
     const handleSearchDate = () => {
+        // console.log (startDate)
+
         if (moment(startDate).format("YYYY-MM-DD") > moment(endDate).format("YYYY-MM-DD")){
             Swal.fire(
                 'Oops !',
-                'Tanggal sebelum tidak boleh melebihi tanggal sesudah.',
+                'Tanggal Dari tidak boleh melebihi Tanggal Sampai.',
                 'error'
             )
             setStartDate (null)
             setEndDate (null)
-    
+
         } else if (startDate === null && endDate !== null) {
             Swal.fire(
                 'Oops !',
-                'Tanggal sebelum tidak boleh kosong',
+                'Tanggal Dari tidak boleh kosong',
                 'error'
             )
             setStartDate (null)
             setEndDate (null)
-    
+
         } else if (startDate !== null && endDate === null) {
             Swal.fire(
                 'Oops !',
-                'Tanggal sesudah tidak boleh kosong',
+                'Tanggal Sampai tidak boleh kosong',
                 'error'
             )
             setStartDate (null)
             setEndDate (null)
-    
+
         } else if (startDate === null && endDate === null) {
-          Swal.fire(
-              'Oops !',
-              'Harap mengisi tanggal terlebih dahulu.',
-              'error'
-          )
-          setStartDate (null)
-          setEndDate (null)
-    
+            Swal.fire(
+                'Oops !',
+                'Harap mengisi tanggal terlebih dahulu.',
+                'error'
+            )
+            setStartDate (null)
+            setEndDate (null)
+
         } else {
             if (limit !== null && search !== null && startDate !== null && endDate !== null) {
                 router.push(
@@ -212,7 +237,7 @@ const Faq = () => {
                 router.push (
                     `${router.pathname}?page=1&limit=${limit}`
                 )
-    
+
             } else if (limit !== null && search !== null && startDate === null && endDate === null) {
                 router.push(
                     `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
@@ -229,18 +254,18 @@ const Faq = () => {
     const handleLimit = (val) => {
         setLimit(val)
         if (search === "" && publishValue === null) {
-            router.push(`${router.pathname}?page=1&limit=${val}`);
-
+          router.push(`${router.pathname}?page=1&limit=${val}`);
+    
         } else if (search !== "" && publishValue === null) {
-            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
+          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
         
         } else if (search === "" && publishValue !== null) {
-            router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
+          router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
         
         } else if (search !== "" && publishValue !== null) {
-            router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
+          router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
         }
-
+    
     };
     
     const handlePublish = (val) => {
@@ -289,9 +314,9 @@ const Faq = () => {
 
     return (
         <PageWrapper>
-            {/* {
-                console.log (faq)
-            } */}
+            {
+                // console.log (faq)
+            }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -379,7 +404,7 @@ const Faq = () => {
                         <div className="card-toolbar">
                             <Link href='/publikasi/faq/tambah'>
                                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
-                                    <i className="ri-add-fill pb-1 text-white mr-2 "></i>
+                                    <i className="ri-add-line pb-1 text-white mr-2 "></i>
                                     Tambah FAQ
                                 </a>
                             </Link>
@@ -509,8 +534,8 @@ const Faq = () => {
                                                     startDate={startDate}
                                                     endDate={endDate}
                                                     dateFormat="dd/MM/yyyy"
-                                                    // minDate={startDate}
-                                                    minDate={moment().toDate()}
+                                                    minDate={startDate}
+                                                    // minDate={moment().toDate()}
                                                     maxDate={addDays(startDate, 20)}
                                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
@@ -672,14 +697,14 @@ const Faq = () => {
                                                                         <input
                                                                         // required
                                                                         className="checkbox"
-                                                                        checked={row.pinned === 1 ? true : false}
+                                                                        checked={row.pinned === 1 || row.pinned === true ? true : false}
                                                                         type="checkbox"
                                                                         // onChange={(checked) => setPublish(checked)}
-                                                                        onChange={(checked) => onSetPin(checked, row.id)}
+                                                                        onChange={(checked) => onSetPin(checked, row)}
                                                                         />
                                                                         <span
                                                                         className={`sliders round ${
-                                                                            row.pinned === 1 ?"text-white" : "pl-2"
+                                                                            row.pinned === 1  || row.pinned === true  ?"text-white" : "pl-2"
                                                                         }`}
                                                                         >
                                                                         </span>

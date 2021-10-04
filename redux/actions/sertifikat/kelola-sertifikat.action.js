@@ -32,13 +32,11 @@ export const getAllSertifikat =
       dispatch({ type: SERTIFIKAT_REQUEST });
       let link =
         process.env.END_POINT_API_SERTIFIKAT +
-        `api/manage_certificates?page=${page}`;
+        `api/manage_certificates?limit=${limit}&page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
       if (publish) link = link.concat(`&publish=${publish}`);
       if (startdate) link = link.concat(`&startdate=${startdate}`);
       if (enddate) link = link.concat(`&enddate=${enddate}`);
-
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -54,3 +52,68 @@ export const getAllSertifikat =
       dispatch({ type: SERTIFIKAT_FAIL, payload: error.message });
     }
   };
+
+export const getDetailSertifikat =
+  (
+    id,
+    page = 1,
+    keyword = "",
+    limit = 5,
+    publish = null,
+    startdate = null,
+    enddate = null,
+    token
+  ) =>
+  async dispatch => {
+    try {
+      dispatch({ type: DETAIL_SERTIFIKAT_REQUEST });
+      let link =
+        process.env.END_POINT_API_SERTIFIKAT +
+        `api/manage_certificates/detail/${id}?page=${page}`;
+      if (keyword) link = link.concat(`&keyword=${keyword}`);
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (publish) link = link.concat(`&publish=${publish}`);
+      if (startdate) link = link.concat(`&startdate=${startdate}`);
+      if (enddate) link = link.concat(`&enddate=${enddate}`);
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+
+      console.log(data.data.list_certificate[0], " ini data nya");
+
+      if (data) {
+        dispatch({ type: DETAIL_SERTIFIKAT_SUCCESS, payload: data });
+      }
+    } catch (error) {
+      dispatch({ type: DETAIL_SERTIFIKAT_FAIL, payload: error.message });
+    }
+  };
+
+export const newSertifikat = (id, formData, token) => async dispatch => {
+  try {
+    dispatch({ type: NEW_SERTIFIKAT_REQUEST });
+    let link =
+      process.env.END_POINT_API_SERTIFIKAT +
+      `api/manage_certificates/store/${id}`;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.post(link, formData, config);
+
+    console.log(data, " ini data nya");
+
+    if (data) {
+      dispatch({ type: NEW_SERTIFIKAT_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    dispatch({ type: NEW_SERTIFIKAT_FAIL, payload: error.message });
+  }
+};

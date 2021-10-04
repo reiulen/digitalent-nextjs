@@ -7,10 +7,15 @@ import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 
+import {
+  newTheme,
+  clearErrors,
+} from "../../../../redux/actions/pelatihan/theme.actions";
+import { NEW_THEME_RESET } from "../../../../redux/types/pelatihan/theme.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const AddTheme = () => {
+const AddTheme = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -18,6 +23,10 @@ const AddTheme = () => {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
     editorRef.current || {};
+
+  const { loading, error, success, theme } = useSelector(
+    (state) => state.newTheme
+  );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -29,9 +38,14 @@ const AddTheme = () => {
   const [status, setStatus] = useState();
 
   const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+    { value: 1, label: "Chocolate" },
+    { value: 2, label: "Strawberry" },
+    { value: 3, label: "Vanilla" },
+  ];
+
+  const optionsStatus = [
+    { value: 1, label: "Publish" },
+    { value: 0, label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -42,7 +56,17 @@ const AddTheme = () => {
     };
 
     setEditorLoaded(true);
-  }, []);
+
+    if (success) {
+      dispatch({
+        type: NEW_THEME_RESET,
+      });
+      router.push({
+        pathname: `/pelatihan/tema`,
+        query: { success: true },
+      });
+    }
+  }, [success]);
 
   const handleResetError = () => {
     if (error) {
@@ -53,13 +77,14 @@ const AddTheme = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
+      const statusString = (status.value += "");
       const data = {
-        academy,
         name,
-        description,
-        status,
+        deskripsi: description,
+        akademi_id: academy,
+        status: statusString,
       };
-      console.log(data);
+      dispatch(newTheme(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -73,7 +98,32 @@ const AddTheme = () => {
 
   return (
     <PageWrapper>
+      {error && (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
       <div className="col-lg-12 order-1 px-0">
+        {loading && <LoadingPage loading={loading} />}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header mt-3">
             <h2
@@ -111,7 +161,7 @@ const AddTheme = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="placeholder"
+                  placeholder="Masukan Nama Tema"
                   className="form-control"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -167,21 +217,16 @@ const AddTheme = () => {
                 <label className="col-form-label font-weight-bold">
                   Status
                 </label>
-                <select
-                  value={status}
-                  onBlur={(e) => {
-                    setStatus(e.target.value);
-                    simpleValidator.current.showMessageFor("status");
-                  }}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="form-control"
-                >
-                  <option value="" disabled selected>
-                    -- PILIH STATUS --
-                  </option>
-                  <option value={1}>Publish</option>
-                  <option value={0}>Unpublish</option>
-                </select>
+                <Select
+                  options={optionsStatus}
+                  defaultValue={status}
+                  onChange={(e) =>
+                    setStatus({ value: e.value, label: e.label })
+                  }
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("status")
+                  }
+                />
                 {simpleValidator.current.message("status", status, "required", {
                   className: "text-danger",
                 })}

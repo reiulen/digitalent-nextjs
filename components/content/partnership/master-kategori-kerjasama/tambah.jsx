@@ -22,14 +22,14 @@ const Tambah = ({ token }) => {
     setValueCreateCooporations(list);
   };
 
-  const handleDelete = (i) => {
+  const handleDelete = i => {
     let filterResult = valueCreateCooporations.filter(
       (items, index) => index !== i
     );
     setValueCreateCooporations(filterResult);
   };
 
-  const handleChangeStatus = (e) => {
+  const handleChangeStatus = e => {
     setStatus(e.target.checked);
   };
 
@@ -37,7 +37,7 @@ const Tambah = ({ token }) => {
     setValueCreateCooporations([...valueCreateCooporations, ""]);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     Swal.fire({
@@ -50,7 +50,7 @@ const Tambah = ({ token }) => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then(async (result) => {
+    }).then(async result => {
       if (result) {
         let statusPro = status ? 1 : 0;
 
@@ -63,13 +63,13 @@ const Tambah = ({ token }) => {
         });
         try {
           let { data } = await axios.post(
-            `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/create`,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/create`,
             formData,
             {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
           );
 
           router.push({
@@ -83,7 +83,7 @@ const Tambah = ({ token }) => {
     });
   };
 
-  const notify = (value) =>
+  const notify = value =>
     toast.info(`🦄 ${value}`, {
       position: "top-right",
       autoClose: 5000,
@@ -129,7 +129,7 @@ const Tambah = ({ token }) => {
                   type="text"
                   name="category_cooperation"
                   className="form-control"
-                  onChange={(e) => setCategoryCooporation(e.target.value)}
+                  onChange={e => setCategoryCooporation(e.target.value)}
                 />
               </div>
 
@@ -148,7 +148,7 @@ const Tambah = ({ token }) => {
                         }
                         name={`cooperation${index}`}
                         type="text"
-                        onChange={(e) => handleChange(e, index)}
+                        onChange={e => handleChange(e, index)}
                         className="form-control"
                         value={valueCreateCooporation}
                       />
@@ -211,7 +211,7 @@ const Tambah = ({ token }) => {
                         className="checkbox"
                         checked={status}
                         type="checkbox"
-                        onChange={(e) => handleChangeStatus(e)}
+                        onChange={e => handleChangeStatus(e)}
                       />
                       <span
                         className={`sliders round ${
@@ -239,7 +239,7 @@ const Tambah = ({ token }) => {
                   <button
                     type="button"
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    onClick={(e) => handleSubmit(e)}
+                    onClick={e => handleSubmit(e)}
                   >
                     Simpan
                   </button>

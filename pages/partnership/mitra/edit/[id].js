@@ -1,6 +1,3 @@
-// import Layout from "../../../../components/templates/layout.component";
-// import EditMitra from "../../../../components/content/partnership/manajemen-mitra/edit";
-
 import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
@@ -8,7 +5,7 @@ import { wrapper } from "../../../../redux/store";
 
 const EditMitra = dynamic(
   () => import("../../../../components/content/partnership/mitra/edit"),
-  { loading: () => <LoadingPage />, ssr: false, suspense: true }
+  { loading: () => <LoadingPage />, ssr: false }
 );
 
 export default function EditMitraPage(props) {
@@ -16,9 +13,7 @@ export default function EditMitraPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Ubah Mitra - Paretnership"> */}
         <EditMitra token={session.token} />
-        {/* </Layout> */}
       </div>
     </>
   );

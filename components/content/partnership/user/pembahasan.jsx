@@ -7,36 +7,37 @@ import { useRouter } from "next/router";
 import Style from "../../../../styles/progressbar.module.css";
 import axios from "axios";
 
-function Pembahasan() {
+function Pembahasan({token}) {
   const router = useRouter();
   const { id } = router.query;
 
   console.log("id", id);
 
   const [status, setStatus] = useState("");
-  const cekProgresStatus = async (id) => {
-    try {
+  // const cekProgresStatus = async (id) => {
+    
+  // };
+
+  useEffect(() => {
+    // api cek progress
+    async function cekProgresStatus(id) {
+      try {
       let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}/api/cooperations/proposal/cek-progres/${id}`,
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
         {
           headers: {
-            authorization: `Bearer ${process.env.TOKEN_PARTNERSHIP_TEMP}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
-
-      console.log("data a a a ssss", data.data.status_migrates_id.status);
       setStatus(data.data.status_migrates_id.status);
     } catch (error) {
       console.log("gagal get province", error);
     }
-  };
-
-  useEffect(() => {
-    // api cek progress
-    console.log("router.query.id", router.query.id);
+      
+    }
     cekProgresStatus(router.query.id);
-  }, [router.query.id]);
+  }, [router.query.id,token]);
 
   return (
     <PageWrapper>
