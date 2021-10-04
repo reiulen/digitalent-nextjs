@@ -851,7 +851,7 @@ const Galeri = ({ token }) => {
                                     {
                                         galeri && galeri.gallery.length !== 0 ?
                                             galeri.gallery.map((row, i) => {
-                                                // { console.log("Modal Preview : ", row) }
+                                                { console.log("Modal Preview : ", row) }
                                                 return (
                                                     <Image
                                                         // key={row.id_gallery}
@@ -859,10 +859,10 @@ const Galeri = ({ token }) => {
                                                         loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                             "publikasi/images/" +
                                                             row.gambar)}
-                                                        src={
-                                                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        src={ ()=>
+                                                            (process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                             "publikasi/images/" +
-                                                            row.gambar
+                                                            row.gambar)
                                                         }
 
                                                         alt='image'
