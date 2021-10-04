@@ -99,13 +99,14 @@ export const newSertifikat = (id, data, token) => async dispatch => {
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
       `api/manage_certificates/store/${id}`;
+
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
 
-    const { data } = await axios.get(link, config);
+    const { data } = await axios.get(link, data, config);
 
     console.log(data, " ini data nya");
 

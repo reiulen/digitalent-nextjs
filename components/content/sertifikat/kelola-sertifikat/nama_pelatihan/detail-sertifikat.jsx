@@ -18,7 +18,6 @@ export default function KelolasertifikatID({ token }) {
     state => state.detailParticipant
   );
 
-  console.log(participant.data.signature);
   return (
     <PageWrapper>
       {/* error START */}

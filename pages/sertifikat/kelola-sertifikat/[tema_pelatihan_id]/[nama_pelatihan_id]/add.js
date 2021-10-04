@@ -1,17 +1,17 @@
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
-import { wrapper } from "../../../../redux/store";
+import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
-import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import { getDetailSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
 const AddSertifikat = dynamic(
   () =>
     import(
-      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/add-sertifikat.jsx"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/add-sertifikat.jsx"
     ),
   {
     loading: function loadingNow() {

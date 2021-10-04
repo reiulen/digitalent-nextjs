@@ -354,7 +354,7 @@ export default function NamaPelatihanID({ token }) {
                                     </>
                                   ) : (
                                     <Link
-                                      href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/add`}
+                                      href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/add`}
                                     >
                                       <a
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"
