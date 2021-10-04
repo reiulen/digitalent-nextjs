@@ -67,9 +67,9 @@ export const updateSettingImagePublikasi = (settingData, token) => async (dispat
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
+        console.log("Update Image Action :", config)
 
         const { dataImage } = await axios.put(linkImage, params, config)
-        console.log("Update Image Action :", dataImage)
         // const { dataImagetron } = await axios.put(linkImagetron, settingData.upload_imagetron)
         // const { dataSlider } = await axios.put(linkSlider, settingData.batas_slider)
         // const { dataFaq } = await axios.put(linkFaq, settingData.maxfaq)

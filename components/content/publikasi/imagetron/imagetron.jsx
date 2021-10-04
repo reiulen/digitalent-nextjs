@@ -709,9 +709,7 @@ const Imagetron = ({ token }) => {
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        {
-                                            console.log(imagetron)
-                                        }
+                                        
                                         <tbody>
                                             {
                                                 !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?

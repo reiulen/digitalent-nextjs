@@ -84,7 +84,7 @@ const Pengaturan = ({ token }) => {
                 });
             } else {
                 dispatch(updateSettingImagePublikasi(upload_image, token))
-                // console.log("TOKEN :", token)
+                console.log("TOKEN :", token)
             }
             // if (error) {
             //     dispatch(clearErrors())
