@@ -69,23 +69,23 @@ const Faq = ({token}) => {
             })
         }
 
-        // if (isUpdated) {
-        //     Swal.fire("Berhasil ", "Data berhasil diubah.", "success").then((result) => {
-        //         if (result.isConfirmed) {
-        //             window.location.reload()
-        //         }
-        //     });
-        //     dispatch({
-        //         type: UPDATE_PIN_FAQ_RESET
-        //     })
-        // }
+        if (isUpdated) {
+            Swal.fire("Berhasil ", "Data berhasil diubah.", "success").then((result) => {
+                if (result.isConfirmed) {
+                    window.location.reload()
+                }
+            });
+            dispatch({
+                type: UPDATE_PIN_FAQ_RESET
+            })
+        }
 
 
     }, [dispatch, isDeleted, isUpdated])
 
     const onSetPin = (e, data) => {
         const dataToSend = {
-            pinned: e.target.value === true ? 1 : 0,
+            pinned: e.target.checked === true ? 1 : 0,
             _method: 'put',
             judul: data.judul,
             kategori: data.kategori,
@@ -94,7 +94,7 @@ const Faq = ({token}) => {
             publish: data.publish,
             users_id: users_id,
             tanggal_publish: data.tanggal_publish,
-            users_id: data.users_id,
+            // users_id: data.users_id,
         }
 
         dispatch(updatePinFaq(dataToSend, data.id, token))
