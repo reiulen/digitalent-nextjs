@@ -310,7 +310,9 @@ const ListSurvey = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 <b>
-                                  {row.academy === null ? "" : row.academy.name}
+                                  {row.academy === null
+                                    ? "-"
+                                    : row.academy.name}
                                 </b>
                                 <p>
                                   {row.training !== null
