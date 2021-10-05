@@ -32,8 +32,8 @@ const Navigationbar = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <NavDropdown title="Explore" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#action/3.1">Beranda</NavDropdown.Item>
+                            <NavDropdown title="Explore" id="basic-nav-dropdown" className="navdropdown-child">
+                                <NavDropdown.Item href="#action/3.1" className="navdropdown-child">Beranda</NavDropdown.Item>
                                 {/* <NavDropdown.Item href="#action/3.2">Pelatihan</NavDropdown.Item> */}
                                 {/* <DropdownButton
                                     drop='end'
@@ -49,25 +49,25 @@ const Navigationbar = () => {
                                     <Dropdown.Item eventKey="7">TSA</Dropdown.Item>
                                 </DropdownButton> */}
                                 <div className="btn-group dropright">
-                                    <button type="button" className="btn btn-white dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" className="btn btn-white dropdown-toggle navdropdown-child" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Pelatihan
                                     </button>
                                     <div className="dropdown-menu ml-5">
-                                        <a className="dropdown-item" href="#">VSGA</a>
-                                        <a className="dropdown-item" href="#">FGA</a>
-                                        <a className="dropdown-item" href="#">PRO</a>
-                                        <a className="dropdown-item" href="#">TA</a>
-                                        <a className="dropdown-item" href="#">GTA</a>
-                                        <a className="dropdown-item" href="#">DEA</a>
-                                        <a className="dropdown-item" href="#">TSA</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">VSGA</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">FGA</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">PRO</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">TA</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">GTA</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">DEA</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">TSA</a>
                                     </div>
                                 </div>
-                                <NavDropdown.Item href="#action/3.3">Pusat Informasi</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4">Tentang Kami</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4">Penyelenggara</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4">Rilis Media</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4">FAQ</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4">Kontak</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.3" className="navdropdown-child">Pusat Informasi</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Tentang Kami</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Penyelenggara</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Rilis Media</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.4" className="navdropdown-child">FAQ</NavDropdown.Item>
+                                <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Kontak</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                         <Form className="d-flex col-10">

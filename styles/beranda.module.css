@@ -31,4 +31,27 @@
     text-decoration: none;
 }
 
+/* .navdropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-color:#215480 !important;
+} */
+
+.navdropdown-child {
+    background-color: white !important;
+    color: gray;
+}
+
+.navdropdown-child:hover {
+    background-color: #215480 !important;
+    color: white;
+}
+
+.navdropdown-child:focus {
+    background-color: #215480 !important;
+    color: white;
+}
+
+.navdropdown-child:active {
+    background-color: #215480 !important;
+    color: white;
+}
 
