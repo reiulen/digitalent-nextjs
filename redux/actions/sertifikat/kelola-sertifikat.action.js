@@ -95,6 +95,10 @@ export const getDetailSertifikat =
 
 export const newSertifikat = (id, formData, token) => async dispatch => {
   try {
+    console.log("masuk kesini");
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
@@ -108,12 +112,17 @@ export const newSertifikat = (id, formData, token) => async dispatch => {
 
     const { data } = await axios.post(link, formData, config);
 
-    console.log(data, " ini data nya");
-
     if (data) {
       dispatch({ type: NEW_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
+    console.log(error.response.data.message, "masukedispatch");
     dispatch({ type: NEW_SERTIFIKAT_FAIL, payload: error.message });
   }
+};
+
+export const clearErrors = () => async dispatch => {
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
 };

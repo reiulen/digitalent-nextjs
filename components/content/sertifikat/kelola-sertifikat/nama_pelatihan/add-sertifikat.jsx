@@ -19,7 +19,10 @@ import { useSelector } from "react-redux";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import { toPng } from "html-to-image";
 import { useDispatch } from "react-redux";
-import { newSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import {
+  clearErrors,
+  newSertifikat,
+} from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
 export default function TambahMasterSertifikat({ token }) {
   const router = useRouter();
@@ -30,9 +33,18 @@ export default function TambahMasterSertifikat({ token }) {
   const [divImage, setDivImage] = useState(null);
 
   // #Redux state
-  const { loading, error, certificate } = useSelector(
-    state => state.detailCertificates
+  const {
+    loading,
+    error: errorDetail,
+    certificate,
+  } = useSelector(state => state.detailCertificates);
+
+  const { error, certificate: newCertificate } = useSelector(
+    state => state.newCertificates
   );
+
+  const [syllabus, setSyllabus] = useState(["", ""]);
+
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -94,7 +106,7 @@ export default function TambahMasterSertifikat({ token }) {
   const signCanvas = useRef({});
 
   const handleImageTandaTangan = (e, index) => {
-    console.log(e.target.name, "INI TARGET NAME", typeof e.target.name);
+    // console.log(e.target.name, "INI TARGET NAME", typeof e.target.name);
     if (e.target.name === "image") {
       const reader = new FileReader();
       reader.onload = () => {
@@ -222,7 +234,7 @@ export default function TambahMasterSertifikat({ token }) {
       formData.append("background", background);
 
       signature_certificate_name.forEach((item, i) => {
-        formData.append(`signature_certificate_name[${i}]`, item);
+        formData.append(`signature_certificate_name[${i}]`, item ? item : null);
       });
       signature_certificate_image.forEach((item, i) => {
         formData.append(`signature_certificate_image[${i}]`, item);
@@ -255,10 +267,15 @@ export default function TambahMasterSertifikat({ token }) {
         formData.append(`signature_certificate_set_position[${i}]`, item);
       });
 
-      console.log(token);
+      // console.log(token);
       formData.append("status_migrate_id", 2);
       const id = certificate.data.list_certificate[0].id;
       dispatch(newSertifikat(id, formData, token));
+      // router.push({
+      //   pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
+      //   query: { success: true },
+      // });
+      // console.log(newCertificate, " ini new certificates");
     } catch (e) {
       console.log(e, "Masuk sini errornya");
     }
@@ -302,6 +319,28 @@ export default function TambahMasterSertifikat({ token }) {
         console.log(err);
       });
   }, [divReference, divReferenceSilabus]);
+
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...syllabus];
+    list[index] = value;
+    setSyllabus(list);
+  };
+
+  const handleDelete = i => {
+    let filterResult = syllabus.filter((items, index) => index !== i);
+    setSyllabus(filterResult);
+  };
+
+  const handleAddInput = () => {
+    setSyllabus([...syllabus, ""]);
+  };
 
   return (
     <PageWrapper>
@@ -355,24 +394,24 @@ export default function TambahMasterSertifikat({ token }) {
                 <a
                   className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
                   onClick={() => {
-                    console.log("klik batal");
+                    // console.log("klik batal");
                   }}
                 >
                   Batal
                 </a>
               </Link>
-              <Link
+              {/* <Link
                 href={`/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`}
+              > */}
+              <a
+                className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
+                onClick={e => {
+                  handleDraft(e);
+                }}
               >
-                <a
-                  className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
-                  onClick={e => {
-                    handleDraft(e);
-                  }}
-                >
-                  Simpan Draft
-                </a>
-              </Link>
+                Simpan Draft
+              </a>
+              {/* </Link> */}
               <a
                 className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
                 onClick={() => {
@@ -639,7 +678,7 @@ export default function TambahMasterSertifikat({ token }) {
                   {[...Array(number_of_signatures)].map((el, i) => {
                     return (
                       <div key={i} className="d-flex justify-content-start">
-                        <div className="col-12">
+                        <div className="col-12 p-0">
                           <div className="py-5">
                             {`Atur Tanda tangan - ${i + 1}`}
                           </div>
@@ -998,26 +1037,27 @@ export default function TambahMasterSertifikat({ token }) {
                         </div>
                         <div>
                           <ol className="col mt-4">
-                            {certificate.data.list_certificate[0].syllabus &&
-                              certificate.data.list_certificate[0].syllabus.map(
-                                (e, i) => {
-                                  return (
-                                    <li
-                                      className="p-0"
-                                      key={i}
-                                      style={{
-                                        fontSize:
-                                          certificate.data.list_certificate[0]
-                                            .syllabus.length >= 15
-                                            ? "8px"
-                                            : "12px",
-                                      }}
-                                    >
-                                      {e}
-                                    </li>
-                                  );
-                                }
-                              )}
+                            {syllabus &&
+                              syllabus.map((e, i) => {
+                                return (
+                                  <li
+                                    className="p-0"
+                                    key={i}
+                                    style={{
+                                      fontSize:
+                                        syllabus.length <= 5
+                                          ? "16px"
+                                          : syllabus.length <= 10
+                                          ? "12px"
+                                          : syllabus.length <= 15
+                                          ? "10px"
+                                          : "6px",
+                                    }}
+                                  >
+                                    {e}
+                                  </li>
+                                );
+                              })}
                           </ol>
                         </div>
                       </div>
@@ -1172,6 +1212,18 @@ export default function TambahMasterSertifikat({ token }) {
                         <option value={4}>4 Tanda Tangan</option>
                       </select>
                     </div>
+                    <label className=" col-form-label font-weight-bold">
+                      Syllabus
+                    </label>
+                    <div
+                      className="card-toolbar"
+                      data-target={`#modalSyllabus`}
+                      data-toggle="modal"
+                    >
+                      <a className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-15 py-3">
+                        Atur Syllabus
+                      </a>
+                    </div>
                   </div>
                   {/* END FORM Tanda Tangan */}
                   {/* START TANDA TANGAN SLIDER */}
@@ -1180,10 +1232,11 @@ export default function TambahMasterSertifikat({ token }) {
                     {[...Array(number_of_signature_syllabus)].map((el, i) => {
                       return (
                         <div key={i} className="d-flex justify-content-start">
-                          <div className="col-12">
+                          <div className="col-12 p-0">
                             <div className="py-5">
                               {`Atur Tanda tangan - ${i + 1}`}
                             </div>
+
                             <div
                               className="card-toolbar"
                               data-target={`#modalTTDSyllabus${i}`}
@@ -1545,9 +1598,107 @@ export default function TambahMasterSertifikat({ token }) {
           <div></div>
         )}
 
-        {/* START MODAL TANDA TANGAN  1*/}
+        {/* START MODAL SYLLABUS*/}
+        <div
+          className="modal fade"
+          id={`modalSyllabus`}
+          tabIndex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalCenterTitle"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">
+                  Syllabus
+                </h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                {syllabus.map((syllabus, index) => {
+                  return (
+                    <div className="form-group" key={index}>
+                      <div className="position-relative">
+                        <input
+                          required
+                          placeholder={
+                            index === 0 ? "Syllabus 1" : `Syllabus ${index + 1}`
+                          }
+                          name={`cooperation${index}`}
+                          type="text"
+                          onChange={e => handleChange(e, index)}
+                          className="form-control"
+                          value={syllabus}
+                        />
+                        {index === 0 ? (
+                          ""
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => handleDelete(index)}
+                            className="btn position-absolute"
+                            style={{ top: "0", right: "3px" }}
+                          >
+                            <svg
+                              className="position-relative"
+                              style={{ bottom: "2px" }}
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 24 24"
+                              width="24"
+                              height="24"
+                            >
+                              <path fill="none" d="M0 0h24v24H0z" />
+                              <path
+                                d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"
+                                fill="#ADB5BD"
+                              />
+                            </svg>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+                <div className="form-group">
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-form-label"
+                  ></label>
 
-        {/* END MODAL TANDA TANGAN */}
+                  <p
+                    className="btn btn-rounded-full bg-blue-primary text-white"
+                    style={{
+                      backgroundColor: "#40A9FF",
+                      color: "#FFFFFF",
+                      width: "max-content",
+                    }}
+                    onClick={() => handleAddInput()}
+                  >
+                    Tambah Syllabus
+                  </p>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Tutup
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* END MODAL SYLLABUS */}
       </div>
     </PageWrapper>
   );
