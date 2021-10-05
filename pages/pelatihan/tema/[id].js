@@ -3,15 +3,17 @@ import React from "react";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import EditTheme from "../../../components/content/pelatihan/theme/edit-theme";
+import { getDetailTheme } from "../../../redux/actions/pelatihan/theme.actions";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function EditThemePage() {
+export default function EditThemePage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditTheme />
+        <EditTheme token={session.token} />
       </div>
     </>
   );
@@ -29,6 +31,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(
+        getDetailTheme(params.id, session.user.user.data.token)
+      );
 
       return {
         props: { session, title: "Edit Theme - Pelatihan" },
