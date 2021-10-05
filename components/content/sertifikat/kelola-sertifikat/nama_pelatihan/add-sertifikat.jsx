@@ -23,6 +23,7 @@ import {
   clearErrors,
   newSertifikat,
 } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import axios from "axios";
 
 export default function TambahMasterSertifikat({ token }) {
   const router = useRouter();
@@ -31,6 +32,8 @@ export default function TambahMasterSertifikat({ token }) {
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
   const [divImage, setDivImage] = useState(null);
+
+  const [certificate_name, setCertificate_name] = useState("");
 
   // #Redux state
   const {
@@ -42,8 +45,6 @@ export default function TambahMasterSertifikat({ token }) {
   const { error, certificate: newCertificate } = useSelector(
     state => state.newCertificates
   );
-
-  const [syllabus, setSyllabus] = useState(["", ""]);
 
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -68,9 +69,11 @@ export default function TambahMasterSertifikat({ token }) {
   const [certificate_result, setCertificate_result] = useState();
 
   // START SYLLABUS
+  const [number_of_signature_syllabus, setNumber_of_signature_syllabus] =
+    useState(1);
+  const [syllabus, setSyllabus] = useState(["", ""]);
   const [certificate_result_syllabus, setCertificate_result_syllabus] =
     useState();
-
   const [
     signature_certificate_name_syllabus,
     setSignature_ceritficate_name_syllabus,
@@ -83,14 +86,15 @@ export default function TambahMasterSertifikat({ token }) {
     signature_certificate_position_syllabus,
     setSignature_certificate_position_syllabus,
   ] = useState([]);
-
   const [
     signature_certificate_set_position_syllabus,
     setSignature_certificate_set_position_syllabus,
   ] = useState([]);
   // END SYLLABUS
   // #END FORM DATA
-
+  const [tandaTanganSyllabusType, setTandaTanganSyllabusType] = useState([
+    1, 1, 1, 1,
+  ]);
   // RESET TTD
   useEffect(() => {
     setSignature_certificate_set_position([0, 0, 0, 0]);
@@ -138,12 +142,6 @@ export default function TambahMasterSertifikat({ token }) {
   // #END MODAL
 
   // #START LEMBAR 2
-  const [tandaTanganSyllabusType, setTandaTanganSyllabusType] = useState([
-    1, 1, 1, 1,
-  ]);
-  const [number_of_signature_syllabus, setNumber_of_signature_syllabus] =
-    useState(1);
-
   const handleImageTandaTanganSyllabus = (e, index) => {
     if (e.target.name === "image") {
       const reader = new FileReader();
@@ -220,7 +218,17 @@ export default function TambahMasterSertifikat({ token }) {
       );
     }
   };
-
+  // useEffect(() => {
+  //   console.log(router.query.nama_pelatihan_id, "INI ID");
+  //   const getData = async () => {
+  //     const data = await axios.get(
+  //       `${process.env.END_POINT_API_SERTIFIKAT}api/manage_certificates/${router.query.nama_pelatihan_id}`
+  //     );
+  //     console.log(data, "ini data yang di fetch");
+  //   };
+  //   getData();
+  // }, []);
+  console.log(router, "ini router");
   // # END IMAGE
 
   const handleDraft = e => {
@@ -230,9 +238,13 @@ export default function TambahMasterSertifikat({ token }) {
       // formData.append("name", certificate.data.list_certificate[0].name);
       formData.append("name", "AMIN");
 
-      formData.append("certificate_type", `${certificate_type} lembar`);
       formData.append("background", background);
-
+      formData.append("certificate_type", `${certificate_type} lembar`);
+      formData.append("number_of_signatures", number_of_signatures);
+      formData.append(
+        "number_of_signature_syllabus",
+        number_of_signature_syllabus
+      );
       signature_certificate_name.forEach((item, i) => {
         formData.append(`signature_certificate_name[${i}]`, item ? item : null);
       });
@@ -249,6 +261,7 @@ export default function TambahMasterSertifikat({ token }) {
         formData.append(`signature_certificate_set_position[${i}]`, item);
       });
 
+      formData.append("syllabus", syllabus);
       formData.append("background_syllabus", background_syllabus);
       signature_certificate_name_syllabus.forEach((item, i) => {
         formData.append(`signature_certificate_name[${i}]`, item);
@@ -262,24 +275,27 @@ export default function TambahMasterSertifikat({ token }) {
       signature_certificate_position_syllabus.forEach((item, i) => {
         formData.append(`signature_certificate_position[${i}]`, item);
       });
-
       signature_certificate_set_position_syllabus?.forEach((item, i) => {
-        formData.append(`signature_certificate_set_position[${i}]`, item);
+        formData.append(
+          `signature_certificate_set_position_syllabus[${i}]`,
+          item
+        );
       });
 
-      // console.log(token);
       formData.append("status_migrate_id", 2);
-      const id = certificate.data.list_certificate[0].id;
+      const id = router.query.nama_pelatihan_id;
       dispatch(newSertifikat(id, formData, token));
+
       // router.push({
       //   pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
       //   query: { success: true },
       // });
-      // console.log(newCertificate, " ini new certificates");
     } catch (e) {
       console.log(e, "Masuk sini errornya");
     }
   };
+
+  console.log(certificate.data);
 
   const [isPublish, setIsPublish] = useState(false);
   const handlePublish = useCallback(() => {
@@ -379,14 +395,12 @@ export default function TambahMasterSertifikat({ token }) {
             <div className="card-title d-flex">
               <div className="text-dark">Nama Sertifikat :</div>
               <div className="mx-6">
-                <div
+                <input
                   type="text"
                   className="form-control "
                   placeholder="Masukan Nama Sertifikat"
-                  // onChange={e => setSearch(e.target.value)}
-                >
-                  {certificate.data.list_certificate[0].name}
-                </div>
+                  onChange={e => setCertificate_name(e.target.value)}
+                />
               </div>
             </div>
             <div className="card-toolbar">
@@ -400,18 +414,18 @@ export default function TambahMasterSertifikat({ token }) {
                   Batal
                 </a>
               </Link>
-              {/* <Link
+              <Link
                 href={`/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`}
-              > */}
-              <a
-                className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
-                onClick={e => {
-                  handleDraft(e);
-                }}
               >
-                Simpan Draft
-              </a>
-              {/* </Link> */}
+                <a
+                  className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
+                  onClick={e => {
+                    handleDraft(e);
+                  }}
+                >
+                  Simpan Draft
+                </a>
+              </Link>
               <a
                 className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
                 onClick={() => {
@@ -460,7 +474,7 @@ export default function TambahMasterSertifikat({ token }) {
                       className="col-12 text-center font-weight-normal p-0 justify-content-center"
                       style={{ marginTop: "-20px", width: "100%" }}
                     >
-                      <label className="font-weight-boldest display-4 w-100">
+                      <label className="font-weight-boldest display-4 w-100 futura">
                         SERTIFIKAT
                       </label>
                       <div className="w-100">Diberikan kepada</div>
@@ -485,13 +499,16 @@ export default function TambahMasterSertifikat({ token }) {
                           // fontWeight: "bold",
                         }}
                       >
-                        {certificate.theme}
+                        {certificate?.theme}
                       </div>
                       <div className="mt-2 w-100">
                         <span className="w-100">
                           Program{" "}
                           <span className="font-size-h6 font-weight-bold w-100">
-                            {certificate.data.list_certificate[0].academy.name}
+                            {
+                              certificate?.data?.list_certificate[0]?.academy
+                                .name
+                            }
                           </span>{" "}
                           Selama
                         </span>
@@ -533,7 +550,6 @@ export default function TambahMasterSertifikat({ token }) {
                               key={i}
                               style={{
                                 transform: `translateX(${signature_certificate_set_position[i]}%)`,
-                                // left: `${signature_certificate_set_position[i]}px`,
                                 width: "156px",
                                 height: "150px",
                               }}
@@ -917,9 +933,6 @@ export default function TambahMasterSertifikat({ token }) {
                                     : 14
                                 }
                                 className="form-control"
-                                placeholder={
-                                  signature_certificate_set_position[i]
-                                }
                                 value={signature_certificate_set_position[i]}
                                 onChange={e => {
                                   let newArr = [
@@ -967,8 +980,6 @@ export default function TambahMasterSertifikat({ token }) {
                             </div>
                           </div>
                         </div>
-
-                        {/* {signature_certificate_set_position} */}
                       </div>
                     );
                   })}
@@ -1010,7 +1021,7 @@ export default function TambahMasterSertifikat({ token }) {
             <div className="card-body border-top">
               <div className="row p-0">
                 {/* START COL */}
-                <div className="border-primary border col-8 h-500px h-100">
+                <div className="border-primary p-0 border col-8 h-500px">
                   <div className="p-0" ref={divReferenceSilabus}>
                     {background_syllabus ? (
                       <Image
@@ -1025,11 +1036,11 @@ export default function TambahMasterSertifikat({ token }) {
                       ""
                     )}
                     <div
-                      className="row align-items-center"
+                      className="row align-items-center m-0"
                       style={{ width: "100%" }}
                     >
                       <div
-                        className="p-19 zindex-1 col-12"
+                        className="pt-19 pl-19 zindex-1 col-10-"
                         style={{ height: "370px" }}
                       >
                         <div style={{ fontSize: "14px", fontWeight: "bold" }}>
@@ -1084,7 +1095,6 @@ export default function TambahMasterSertifikat({ token }) {
                                   key={i}
                                   style={{
                                     transform: `translateX(${signature_certificate_set_position_syllabus[i]}%)`,
-                                    // left: `${signature_certificate_set_position[i]}px`,
                                     width: "156px",
                                     height: "150px",
                                   }}
@@ -1559,8 +1569,6 @@ export default function TambahMasterSertifikat({ token }) {
                               </div>
                             </div>
                           </div>
-
-                          {/* {signature_certificate_set_position} */}
                         </div>
                       );
                     })}

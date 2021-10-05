@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 // #Icon
 
 export default function KelolasertifikatID({ token }) {
-  console.log(token);
+  // console.log(token);
   const router = useRouter();
   const { query } = router;
   // console.log(router);

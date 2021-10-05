@@ -363,7 +363,6 @@ export default function NamaPelatihanID({ token }) {
                                           <i className="ri-eye-fill p-0 text-white"></i>
                                         </a>
                                       </Link>
-
                                       <Link
                                         href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
                                       >
