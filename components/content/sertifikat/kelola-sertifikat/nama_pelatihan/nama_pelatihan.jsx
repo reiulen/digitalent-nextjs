@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 export default function NamaPelatihanID({ token }) {
   const router = useRouter();
   const { query } = router;
-  console.log(query);
+  // console.log(query);
   // #DatePicker
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -31,6 +31,7 @@ export default function NamaPelatihanID({ token }) {
 
   // #Pagination
   const [limit, setLimit] = useState(null);
+  const [search, setSearch] = useState("");
   // #Pagination
 
   // #REDUX STATE
@@ -38,21 +39,50 @@ export default function NamaPelatihanID({ token }) {
     state => state.detailCertificates
   );
 
-  console.log(certificate, "ini sertifikat nya");
+  // console.log(certificate, "ini sertifikat nya");
   // #REDUX STATE
   let { page = 1, keyword, success } = router.query;
 
-  const handleLimit = () => {
-    console.log("");
+  const handleLimit = val => {
+    setLimit(val);
+    router.push(`${router.pathname}?page=1&limit=${limit}`);
   };
 
   const handleSearch = () => {
-    console.log("");
+    let link = `${router.pathname}?page=1&keyword=${search}`;
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
   };
 
   return (
     <PageWrapper>
       {/* error START */}
+      {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {/* error END */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -108,7 +138,6 @@ export default function NamaPelatihanID({ token }) {
                       <IconArrow fill="#E4E6EF" width="11" height="11" />
                     </button>
 
-                    {/* START MODAL UNFINISH*/}
                     <form className="form text-left">
                       <div
                         className="modal fade"
@@ -221,11 +250,7 @@ export default function NamaPelatihanID({ token }) {
             {/* START TABLE */}
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <LoadingTable
-                // UNFISNISH
-                // loading={loading}
-                // Isi dengan loading dari dispatch
-                />
+                <LoadingTable loading={loading} />
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -338,7 +363,6 @@ export default function NamaPelatihanID({ token }) {
                                           <i className="ri-eye-fill p-0 text-white"></i>
                                         </a>
                                       </Link>
-
                                       <Link
                                         href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
                                       >
