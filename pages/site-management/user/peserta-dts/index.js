@@ -6,7 +6,9 @@ import { getSession } from "next-auth/client";
 
 const ListUser = dynamic(
   () =>
-    import("../../../../components/content/site-management/user/list-peserta"),
+    import(
+      "../../../../components/content/site-management/user/peserta-dts/list-peserta"
+    ),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

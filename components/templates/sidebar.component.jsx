@@ -179,17 +179,17 @@ const Sidebar = () => {
     {
       id: 2,
       name: "User",
-      href: "",
+      href: "/site-management/user",
     },
     {
       id: 3,
       name: "User Peserta DTS",
-      href: "/site-management/dashboardg",
+      href: "/site-management/user/peserta-dts",
     },
     {
       id: 4,
       name: "User Administrator",
-      href: "/site-management/dashboarde",
+      href: "/site-management/user/administrator",
     },
     {
       id: 5,

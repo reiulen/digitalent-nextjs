@@ -7,7 +7,7 @@ import { getSession } from "next-auth/client";
 const ListUser = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/user/ubah-list-peserta-pelatihan"
+      "../../../../../components/content/site-management/user/peserta-dts/ubah-list-peserta-pelatihan"
     ),
   {
     loading: function loadingNow() {

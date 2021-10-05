@@ -6,7 +6,7 @@ import { wrapper } from "../../../../../redux/store";
 const PageDetail = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/user/detail-peserta-dts"
+      "../../../../../components/content/site-management/user/peserta-dts/detail-peserta-dts"
     ),
   { loading: () => <LoadingPage />, ssr: false }
 );

@@ -6,7 +6,7 @@ import { wrapper } from "../../../../../redux/store";
 const PageUbah = dynamic(
   () =>
     import(
-      "../../../../../components/content/site-management/user/ubah-peserta"
+      "../../../../../components/content/site-management/user/peserta-dts/ubah-peserta"
     ),
   { loading: () => <LoadingPage />, ssr: false }
 );
