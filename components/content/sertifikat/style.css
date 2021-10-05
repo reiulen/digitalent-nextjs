@@ -2,13 +2,14 @@
     margin-bottom: 0px;
 }
 
-@font-face {
-    font-family: "futura";
-    src: url('../../../public/assets/font/Futura-Heavy-font.ttf');
-    /* font-style: ; */
-    /* font-weight: 800; */
-    /* font-display: swap; */
-}
+/* @font-face {
+    font-family: "futura"; */
+/* src: url('../../../public/assets/font/Futura-Heavy-font.ttf'); */
+/* font-style: ; */
+/* font-weight: 800; */
+/* font-display: swap; */
+/* }  */
+
 
 .futura {
     font-family: 'futura';

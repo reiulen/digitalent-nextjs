@@ -8,7 +8,7 @@ import { getSingleSertifikat } from "../../../../../redux/actions/sertifikat/kel
 const KelolaSertifikatID = dynamic(
   () =>
     import(
-      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/single_sertifikat"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/single_sertifikat"
     ),
   {
     loading: function loadingNow() {
@@ -41,10 +41,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      console.log(query);
       await store.dispatch(
         getSingleSertifikat(
-          query.id,
+          query.nama_pelatihan_id,
           query.page,
           query.keyword,
           query.limit,
