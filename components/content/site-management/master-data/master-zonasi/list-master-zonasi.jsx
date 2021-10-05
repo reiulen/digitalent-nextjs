@@ -47,13 +47,13 @@ const Table = ({ token }) => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              List Satuan Kerja Penyelenggara
+              List Master Zonasi
             </h3>
             <div className="card-toolbar">
-              <Link href="/site-management/master-data/master-satuan-kerja-penyelenggara/tambah-satuan-kerja-penyelenggara" passHref>
+              <Link href="/site-management/master-data/master-zonasi/tambah-zonasi" passHref>
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
                   <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Master Satuan Kerja
+                  Tambah Master Zonasi
                 </a>
               </Link>
             </div>
@@ -105,7 +105,7 @@ const Table = ({ token }) => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-left">No</th>
-                      <th className="text-left align-middle">Nama Satuan Kerja</th>
+                      <th className="text-left align-middle">Nama Zonasi</th>
                       <th className="text-left align-middle">Status</th>
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
@@ -127,16 +127,16 @@ const Table = ({ token }) => {
                           <button
                             className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                             onClick={() =>
-                              router.push(`/site-management/master-data/master-satuan-kerja-penyelenggara/ubah-satuan-kerja-penyelenggara`)
+                              router.push(`/site-management/master-data/master-zonasi/ubah-zonasi`)
                             }
                           >
                             <IconPencil width="16" height="16" />
                             <div className="text-hover-show-hapus">Ubah</div>
                           </button>
                           <button
-                            className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
+                            className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                             onClick={() =>
-                              router.push(`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara`)
+                              router.push(`/site-management/master-data/master-zonasi/detail-zonasi`)
                             }
                           >
                             <IconEye width="16" height="16" />
@@ -149,7 +149,7 @@ const Table = ({ token }) => {
                 </table>
               </div>
 
-              <div className="row w-100">
+              <div className="row">
                 <div className="table-pagination paginate-cs">
                   pagination
                   {/* <Pagination

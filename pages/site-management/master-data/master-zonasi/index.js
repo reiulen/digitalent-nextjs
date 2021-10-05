@@ -7,7 +7,7 @@ import { getSession } from "next-auth/client";
 const ListRole = dynamic(
   () =>
     import(
-      "../../../../components/content/site-management/master-data/master-satuan-kerja-penyelenggara/list-satuan-keja-penyelenggara"
+      "../../../../components/content/site-management/master-data/master-zonasi/list-master-zonasi"
     ),
   {
     loading: function loadingNow() {
@@ -51,10 +51,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // );
 
       return {
-        props: {
-          session,
-          title: "List Satuan Kerja Penyelanggara - Site Management",
-        },
+        props: { session, title: "Master Zonasi - Site Management" },
       };
     }
 );

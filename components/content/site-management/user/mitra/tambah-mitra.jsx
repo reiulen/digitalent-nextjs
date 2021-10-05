@@ -79,15 +79,6 @@ const TambahApi = ({ token }) => {
                 </span>
               </div>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
-              </div>
-              <div className="form-group">
                 <label>Password</label>
                 <input
                   type="password"
@@ -109,8 +100,9 @@ const TambahApi = ({ token }) => {
                   Please enter your full name
                 </span>
               </div>
+              
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Role</label>
+                <label htmlFor="exampleSelect1">Status</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
@@ -118,18 +110,12 @@ const TambahApi = ({ token }) => {
                   Please enter your full name
                 </span>
               </div>
-              <div className="form-group">
-                <label htmlFor="exampleSelect1">Satuan Kerja</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
-              </div> </form>
+              
+              
+              </form>
             <div className="form-group row">
               <div className="col-sm-12 d-flex justify-content-end">
-                <Link href="/site-management/user/administrator" passHref>
+                <Link href="/site-management/user/mitra" passHref>
                   <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
                     Kembali
                   </a>

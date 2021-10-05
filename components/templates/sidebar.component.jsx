@@ -194,7 +194,7 @@ const Sidebar = () => {
     {
       id: 5,
       name: "User Mitra",
-      href: "/site-management/dashboardz",
+      href: "/site-management/user/mitra",
     },
     {
       id: 6,
@@ -204,50 +204,60 @@ const Sidebar = () => {
     {
       id: 7,
       name: "Export Data",
-      href: "/site-management/dashboards",
+      href: "/site-management/export-data",
     },
     {
       id: 8,
       name: "Master Data",
-      href: "/site-management/dashboardd",
+      href: "/site-management/master-data",
     },
     {
       id: 9,
-      name: "Data Reference",
-      href: "/site-management/dashboardf",
+      name: "Master Zonasi",
+      href: "/site-management/master-data/master-zonasi",
     },
     {
       id: 10,
+      name: "Master Satuan Kerja",
+      href: "/site-management/master-data/master-satuan-kerja-penyelenggara",
+    },
+    {
+      id: 11,
+      name: "Data Reference",
+      href: "/site-management/reference",
+    },
+    {
+      id: 12,
       name: "Setting",
       href: "/site-management/setting",
     },
     {
-      id: 11,
+      id: 13,
       name: "Setting General",
       href: "/site-management/setting/general",
     },
     {
-      id: 12,
+      id: 14,
       name: "Setting Page",
       href: "/site-management/setting/page",
     },
     {
-      id: 13,
+      id: 15,
       name: "Setting Menu",
       href: "/site-management/setting/menu",
     },
     {
-      id: 14,
+      id: 16,
       name: "Setting API",
       href: "/site-management/setting/api",
     },
     {
-      id: 15,
+      id: 17,
       name: "Setting CSS",
       href: "/site-management/setting/css",
     },
     {
-      id: 16,
+      id: 18,
       name: "Setting Pelatihan",
       href: "/site-management/setting/pelatihan",
     },

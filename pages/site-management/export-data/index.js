@@ -1,13 +1,13 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../../components/LoadingPage";
-import { wrapper } from "../../../../redux/store";
+import LoadingPage from "../../../components/LoadingPage";
+import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
 const ListRole = dynamic(
   () =>
     import(
-      "../../../../components/content/site-management/master-data/master-satuan-kerja-penyelenggara/list-satuan-keja-penyelenggara"
+      "../../../components/content/site-management/export-data/list-export-data"
     ),
   {
     loading: function loadingNow() {
@@ -51,10 +51,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // );
 
       return {
-        props: {
-          session,
-          title: "List Satuan Kerja Penyelanggara - Site Management",
-        },
+        props: { session, title: "Export Data - Site Management" },
       };
     }
 );

@@ -29,7 +29,7 @@ const TambahApi = ({ token }) => {
               className="card-title font-weight-bolder text-dark border-bottom w-100 pb-5 mb-5 mt-5"
               style={{ fontSize: "24px" }}
             >
-              Tambah Satuan Kerja Penyelenggara
+              Ubah Satuan Kerja Penyelenggara
             </h3>
           </div>
           <div className="card-body pt-0">
@@ -42,37 +42,32 @@ const TambahApi = ({ token }) => {
                   placeholder="Placeholder"
                 />
                 <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
-              </div>
-              <div className="form-group">
+                    Please enter your full name
+                  </span>
+              </div>  <div className="form-group">
                 <label htmlFor="exampleSelect1">Status</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
                 <span className="form-text text-muted">
-                  Please enter your full name
-                </span>
-              </div>{" "}
-            </form>
+                    Please enter your full name
+                  </span>
+              </div> </form>
             <div className="form-group row">
-              <div className="col-sm-12 d-flex justify-content-end">
-                <Link
-                  href="/site-management/master-data/master-satuan-kerja-penyelenggara"
-                  passHref
-                >
-                  <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                    Kembali
-                  </a>
-                </Link>
-                <button
-                  type="button"
-                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                >
-                  Simpan
-                </button>
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link href="/site-management/master-data/master-satuan-kerja-penyelenggara" passHref>
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                      Kembali
+                    </a>
+                  </Link>
+                  <button
+                    type="button"
+                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                  >
+                    Simpan
+                  </button>
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </div>

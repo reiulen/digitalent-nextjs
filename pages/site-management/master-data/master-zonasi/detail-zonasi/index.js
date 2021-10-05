@@ -1,13 +1,13 @@
-import React from "react";
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../../components/LoadingPage";
-import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+// import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
+import { wrapper } from "../../../../../redux/store";
+import LoadingPage from "../../../../../components/LoadingPage";
 
-const ListRole = dynamic(
+const DetailRole = dynamic(
   () =>
     import(
-      "../../../../components/content/site-management/master-data/master-satuan-kerja-penyelenggara/list-satuan-keja-penyelenggara"
+      "../../../../../components/content/site-management/master-data/master-zonasi/detail"
     ),
   {
     loading: function loadingNow() {
@@ -17,12 +17,12 @@ const ListRole = dynamic(
   }
 );
 
-export default function RoleList(props) {
+export default function DetailRoles(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ListRole token={session.token} />
+        <DetailRole token={session.token} />
       </div>
     </>
   );
@@ -42,19 +42,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       // await store.dispatch(
-      //   getAllRoles(
+      //   getAllArtikel(
       //     query.page,
       //     query.keyword,
       //     query.limit,
+      //     query.publish,
+      //     query.startdate,
+      //     query.enddate,
       //     session.user.user.data.token
       //   )
       // );
-
       return {
-        props: {
-          session,
-          title: "List Satuan Kerja Penyelanggara - Site Management",
-        },
+        props: { session, title: "Detail Zonasi - Site Management" },
       };
     }
 );

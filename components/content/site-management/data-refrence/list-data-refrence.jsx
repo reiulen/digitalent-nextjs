@@ -2,21 +2,22 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
-import PageWrapper from "../../../../wrapper/page.wrapper";
+import PageWrapper from "../../../wrapper/page.wrapper";
 import { useDispatch, useSelector } from "react-redux";
-import LoadingTable from "../../../../LoadingTable";
-import IconEye from "../../../../assets/icon/Eye";
-import IconPencil from "../../../../assets/icon/Pencil";
-import IconDelete from "../../../../assets/icon/Delete";
-import IconAdd from "../../../../assets/icon/Add";
-import IconSearch from "../../../../assets/icon/Search";
+import LoadingTable from "../../../LoadingTable";
+import IconEye from "../../../assets/icon/Eye";
+import IconPencil from "../../../assets/icon/Pencil";
+import IconDelete from "../../../assets/icon/Delete";
+import IconAdd from "../../../assets/icon/Add";
+import IconSearch from "../../../assets/icon/Search";
+import AlertBar from "../../partnership/components/BarAlert";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
   // function delete
-  const apiDelete = (id) => {
+  const roleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
       icon: "warning",
@@ -34,7 +35,7 @@ const Table = ({ token }) => {
   };
 
   const onNewReset = () => {
-    router.replace("/site-management/setting/api", undefined, {
+    router.replace("/site-management/role", undefined, {
       shallow: true,
     });
   };
@@ -47,15 +48,33 @@ const Table = ({ token }) => {
               className="card-title font-weight-bolder text-dark"
               style={{ fontSize: "24px" }}
             >
-              List Satuan Kerja Penyelenggara
+              List Data Reference
             </h3>
-            <div className="card-toolbar">
-              <Link href="/site-management/master-data/master-satuan-kerja-penyelenggara/tambah-satuan-kerja-penyelenggara" passHref>
-                <a className="btn btn-rounded-full bg-blue-primary text-white">
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Master Satuan Kerja
-                </a>
-              </Link>
+            <div className="d-flex align-items-center">
+              <div className="card-toolbar mr-4">
+                <Link href="/site-management/reference/tambah-reference-tanpa-relasi">
+                  <a
+                    className="btn btn-rounded-full bg-white"
+                    style={{ color: "#1A4367" }}
+                  >
+                    <IconAdd
+                      className="mr-3"
+                      width="14"
+                      height="14"
+                      fill="#1A4367"
+                    />
+                    Tambah Tanpa Relasi
+                  </a>
+                </Link>
+              </div>
+              <div className="card-toolbar">
+                <Link href="/site-management/reference/tambah-reference-dengan-relasi">
+                  <a className="btn btn-rounded-full bg-blue-primary text-white">
+                    <IconAdd className="mr-3" width="14" height="14" />
+                    Tambah Dengan Relasi
+                  </a>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="card-body pt-0">
@@ -105,7 +124,7 @@ const Table = ({ token }) => {
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-left">No</th>
-                      <th className="text-left align-middle">Nama Satuan Kerja</th>
+                      <th className="text-left align-middle">Data Reference</th>
                       <th className="text-left align-middle">Status</th>
                       <th className="text-left align-middle">Aksi</th>
                     </tr>
@@ -113,7 +132,7 @@ const Table = ({ token }) => {
                   <tbody>
                     <tr>
                       <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">api</td>
+                      <td className="align-middle text-left">name</td>
                       <td className="align-middle text-left">
                         <p
                           className="status-div-red mb-0"
@@ -127,7 +146,7 @@ const Table = ({ token }) => {
                           <button
                             className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                             onClick={() =>
-                              router.push(`/site-management/master-data/master-satuan-kerja-penyelenggara/ubah-satuan-kerja-penyelenggara`)
+                              router.push(`/site-management/reference/ubah-reference-dengan-relasi`)
                             }
                           >
                             <IconPencil width="16" height="16" />
@@ -136,7 +155,7 @@ const Table = ({ token }) => {
                           <button
                             className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
                             onClick={() =>
-                              router.push(`/site-management/master-data/master-satuan-kerja-penyelenggara/detail-satuan-kerja-penyelenggara`)
+                              router.push(`/site-management/reference/detail-refrence`)
                             }
                           >
                             <IconEye width="16" height="16" />
@@ -149,7 +168,7 @@ const Table = ({ token }) => {
                 </table>
               </div>
 
-              <div className="row w-100">
+              <div className="row">
                 <div className="table-pagination paginate-cs">
                   pagination
                   {/* <Pagination
