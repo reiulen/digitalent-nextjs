@@ -13,9 +13,11 @@ const EditImagetron = dynamic(
   () => import("../../../components/content/publikasi/imagetron/edit"),
   {
     // suspense: true,
-    // loading: () => <LoadingSkeleton />, 
-    loading: function loadingNow() { return <LoadingPage /> },
-    ssr: false
+    // loading: () => <LoadingSkeleton />,
+    loading: function loadingNow() {
+      return <LoadingPage />;
+    },
+    ssr: false,
   }
 );
 
@@ -24,7 +26,7 @@ export default function EditImagetronPage() {
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Ubah Imagetron"> */}
-          <EditImagetron />
+        <EditImagetron />
         {/* </Layout> */}
       </div>
     </>
@@ -38,14 +40,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "http://dts-dev.majapahit.id/",
             permanent: false,
           },
         };
       }
-      await store.dispatch(getDetailImagetron(params.id, session.user.user.data.token));
+      await store.dispatch(
+        getDetailImagetron(params.id, session.user.user.data.token)
+      );
       return {
         props: { session, title: "Ubah Imagetron - Publikasi" },
-    };
+      };
     }
 );

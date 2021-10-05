@@ -6,15 +6,25 @@ import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
+import moment from "moment";
+
+import {
+  getCommitmentStep3,
+  storeCommitmentStep3,
+} from "../../../../../redux/actions/pelatihan/function.actions";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 
-const AddCommitmentStep3 = () => {
+const AddCommitmentStep3 = ({ propsStep }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { trainingData } = useSelector((state) => state.trainingStep1);
+  const { registrationData } = useSelector((state) => state.registrationStep2);
+  const { commitmentData } = useSelector((state) => state.commitmentStep3);
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
@@ -23,10 +33,14 @@ const AddCommitmentStep3 = () => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [commitment, setCommitment] = useState("");
-  const [description, setDescription] = useState("");
+  const [commitment, setCommitment] = useState(commitmentData.komitmen);
+  const [description, setDescription] = useState(commitmentData.deskripsi);
+
+  let training = { ...trainingData };
 
   useEffect(() => {
+    dispatch(getCommitmentStep3());
+
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
@@ -34,7 +48,7 @@ const AddCommitmentStep3 = () => {
     };
 
     setEditorLoaded(true);
-  }, []);
+  }, [dispatch]);
 
   const handleResetError = () => {
     if (error) {
@@ -42,15 +56,59 @@ const AddCommitmentStep3 = () => {
     }
   };
 
+  const backHandler = () => {
+    const data = {
+      komitmen: commitment,
+      deskripsi: description,
+    };
+    dispatch(storeCommitmentStep3(data));
+    propsStep(2);
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      const data = {
-        commitment,
-        description,
+      const dataStep3 = {
+        komitmen: commitment,
+        deskripsi: description,
       };
+      dispatch(storeCommitmentStep3(dataStep3));
+      const data = {
+        training,
+        registration: registrationData,
+        commitment: dataStep3,
+      };
+      training.akademi_id =
+        training.akademi_id.value && training.akademi_id.value;
+      training.batch = training.batch.value && training.batch.value;
+      training.kabupaten = training.kabupaten.value && training.kabupaten.value;
+      training.level_pelatihan =
+        training.level_pelatihan.value && training.level_pelatihan.value;
+      training.mitra = training.mitra.value && training.mitra.value;
+      training.penyelenggara =
+        training.penyelenggara.value && training.penyelenggara.value;
+      training.provinsi = training.provinsi.value && training.provinsi.value;
+      training.tema_id = training.tema_id.value && training.tema_id.value;
+      training.zonasi_id = training.zonasi_id.value && training.zonasi_id.value;
+      training.tuna_daksa = training.tuna_daksa ? "1" : "0";
+      training.tuna_netra = training.tuna_netra ? "1" : "0";
+      training.tuna_rungu = training.tuna_rungu ? "1" : "0";
+      training.umum = training.umum ? "1" : "0";
+      training.ketentuan_peserta = training.ketentuan_peserta ? "1" : "0";
+      training.pendaftaran_mulai = moment(training.pendaftaran_mulai).format(
+        "YYYY-MM-DD"
+      );
+      training.pendaftaran_selesai = moment(
+        training.pendaftaran_selesai
+      ).format("YYYY-MM-DD");
+      training.pelatihan_mulai = moment(training.pelatihan_mulai).format(
+        "YYYY-MM-DD"
+      );
+      training.pelatihan_selesai = moment(training.pelatihan_selesai).format(
+        "YYYY-MM-DD"
+      );
       console.log(data);
-      router.push("/pelatihan/pelatihan");
+      // router.push("/pelatihan/pelatihan");
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -63,111 +121,101 @@ const AddCommitmentStep3 = () => {
   };
 
   return (
-    <PageWrapper>
-      <StepInputPelatihan
-        step={3}
-        title1="Tambah Pelatihan"
-        title2="Tambah Form Pendaftaran"
-        title3="Tambah Form Komitmen"
-      />
-      <div className="col-lg-12 order-1 px-0">
-        <div className="card card-custom card-stretch gutter-b">
-          <div className="card-body py-4">
-            <form onSubmit={submitHandler}>
-              <h3 className="font-weight-bolder pb-5 pt-4">Form Komitmen</h3>
-              <div className="form-group row mb-4">
-                <label className="col-form-label font-weight-bold col-sm-2">
-                  Komitmen Peserta
-                </label>
-                <div className="col-sm-10 my-auto">
-                  <div className="form-check form-check-inline">
-                    <input
-                      type="radio"
-                      name="commitment"
-                      className="form-check-input"
-                      value="Ya"
-                      checked={commitment === "Ya"}
-                      onClick={() => setCommitment("Ya")}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("komitmen")
-                      }
-                    />
-                    <label className="form-check-label">Ya</label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      type="radio"
-                      name="commitment"
-                      value="Tidak"
-                      className="form-check-input"
-                      checked={commitment === "Tidak"}
-                      onClick={() => setCommitment("Tidak")}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("komitmen")
-                      }
-                    />
-                    <label className="form-check-label">Tidak</label>
-                  </div>
-                  {simpleValidator.current.message(
-                    "komitmen",
-                    commitment,
-                    "required",
-                    { className: "text-danger" }
-                  )}
-                </div>
+    <div className="card card-custom card-stretch gutter-b">
+      <div className="card-body py-4">
+        <form onSubmit={submitHandler}>
+          <h3 className="font-weight-bolder pb-5 pt-4">Form Komitmen</h3>
+          <div className="form-group row mb-4">
+            <label className="col-form-label font-weight-bold col-sm-2">
+              Komitmen Peserta
+            </label>
+            <div className="col-sm-10 my-auto">
+              <div className="form-check form-check-inline">
+                <input
+                  type="radio"
+                  name="commitment"
+                  className="form-check-input"
+                  value="1"
+                  checked={commitment === "1"}
+                  onClick={() => setCommitment("1")}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("komitmen")
+                  }
+                />
+                <label className="form-check-label">Ya</label>
               </div>
-              {commitment === "Ya" ? (
-                <div className="form-group mb-4">
-                  <label className="col-form-label font-weight-bold">
-                    Input Deskripsi
-                  </label>
-                  <div className="ckeditor">
-                    {editorLoaded ? (
-                      <CKEditor
-                        editor={ClassicEditor}
-                        data={description}
-                        onReady={(editor) => {
-                          // You can store the "editor" and use when it is needed.
-                        }}
-                        onChange={(event, editor) => {
-                          const data = editor.getData();
-                          setDescription(data);
-                          // console.log({ event, editor, data });
-                        }}
-                        config={{
-                          placeholder: "Silahkan Masukan Deskripsi Detail",
-                        }}
-                      />
-                    ) : (
-                      <p>Tunggu Sebentar</p>
-                    )}
-                  </div>
-                </div>
-              ) : (
-                ""
+              <div className="form-check form-check-inline">
+                <input
+                  type="radio"
+                  name="commitment"
+                  value="0"
+                  className="form-check-input"
+                  checked={commitment === "0"}
+                  onClick={() => {
+                    setCommitment("0");
+                    setDescription("");
+                  }}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("komitmen")
+                  }
+                />
+                <label className="form-check-label">Tidak</label>
+              </div>
+              {simpleValidator.current.message(
+                "komitmen",
+                commitment,
+                "required",
+                { className: "text-danger" }
               )}
-              <div className="form-group">
-                <div className="text-right">
-                  <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
-                    type="button"
-                    onClick={() => router.back()}
-                  >
-                    Batal
-                  </button>
-                  <button
-                    className="btn btn-primary-rounded-full"
-                    type="submit"
-                  >
-                    Simpan & Lanjut
-                  </button>
-                </div>
-              </div>
-            </form>
+            </div>
           </div>
-        </div>
+          {commitment === "1" ? (
+            <div className="form-group mb-4">
+              <label className="col-form-label font-weight-bold">
+                Input Deskripsi
+              </label>
+              <div className="ckeditor">
+                {editorLoaded ? (
+                  <CKEditor
+                    editor={ClassicEditor}
+                    data={description}
+                    onReady={(editor) => {
+                      // You can store the "editor" and use when it is needed.
+                    }}
+                    onChange={(event, editor) => {
+                      const data = editor.getData();
+                      setDescription(data);
+                      // console.log({ event, editor, data });
+                    }}
+                    config={{
+                      placeholder: "Silahkan Masukan Deskripsi Detail",
+                    }}
+                  />
+                ) : (
+                  <p>Tunggu Sebentar</p>
+                )}
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="form-group">
+            <div className="text-right">
+              <button
+                className="btn btn-light-ghost-rounded-full mr-2"
+                type="button"
+                onClick={backHandler}
+              >
+                Kembali
+              </button>
+              <button className="btn btn-primary-rounded-full" type="submit">
+                Simpan & Lanjut
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
-    </PageWrapper>
+    </div>
   );
 };
 

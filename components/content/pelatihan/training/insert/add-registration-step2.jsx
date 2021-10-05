@@ -7,14 +7,21 @@ import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
 
+import {
+  storeRegistrationStep2,
+  getRegistrationStep2,
+} from "../../../../../redux/actions/pelatihan/function.actions";
+
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
 import LoadingPage from "../../../../LoadingPage";
 import ModalPreview from "../components/modal-preview-form.component";
 
-const AddRegistrationStep2 = () => {
+const AddRegistrationStep2 = ({ propsStep }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const { registrationData } = useSelector((state) => state.registrationStep2);
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -107,18 +114,12 @@ const AddRegistrationStep2 = () => {
     },
   ]);
 
-  const [title, setTitle] = useState("");
-  const [formBuilder, setFormBuilder] = useState([
-    {
-      key: 1,
-      name: "",
-      element: "",
-      size: "",
-      option: "",
-      dataOption: "",
-      required: false,
-    },
-  ]);
+  const [title, setTitle] = useState(registrationData.judul_form);
+  const [formBuilder, setFormBuilder] = useState(registrationData.formBuilder);
+
+  useEffect(() => {
+    dispatch(getRegistrationStep2());
+  }, [dispatch]);
 
   const handleResetError = () => {
     if (error) {
@@ -317,214 +318,232 @@ const AddRegistrationStep2 = () => {
     setModalShow(false);
   };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-form-komitmen");
+  const backHandler = () => {
     const data = {
-      title,
+      judul_form: title,
       formBuilder,
     };
-    console.log(data);
+    dispatch(storeRegistrationStep2(data));
+    propsStep(1);
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // router.push("/pelatihan/pelatihan/tambah-pelatihan/tambah-form-komitmen");
     if (simpleValidator.current.allValid()) {
+      const data = {
+        judul_form: title,
+        formBuilder,
+      };
+      dispatch(storeRegistrationStep2(data));
+      propsStep(3);
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data yang bener dong lu !",
+        text: "Isi data dengan benar !",
       });
     }
   };
 
   return (
-    <PageWrapper>
-      <StepInputPelatihan
-        step={2}
-        title1="Tambah Pelatihan"
-        title2="Tambah Form Pendaftaran"
-        title3="Tambah Form Komitmen"
-      />
-      <div className="col-lg-12 order-1 px-0">
-        <div className="card card-custom card-stretch gutter-b">
-          <div className="card-body py-4">
-            <form onSubmit={submitHandler}>
-              <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
-              <div className="form-group mb-4">
-                <label className="col-form-label font-weight-bold">
-                  Judul Form
-                </label>
-                <input
-                  type="text"
-                  placeholder="Silahkan Masukan Judul Form"
-                  className="form-control"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                  autoComplete="off"
-                />
-              </div>
+    // <PageWrapper>
+    //   <StepInputPelatihan
+    //     step={2}
+    //     title1="Tambah Pelatihan"
+    //     title2="Tambah Form Pendaftaran"
+    //     title3="Tambah Form Komitmen"
+    //   />
+    //   <div className="col-lg-12 order-1 px-0">
+    <>
+      <div className="card card-custom card-stretch gutter-b">
+        <div className="card-body py-4">
+          <form onSubmit={submitHandler}>
+            <h3 className="font-weight-bolder pb-5 pt-4">Form Pendaftaran</h3>
+            <div className="form-group mb-4">
+              <label className="col-form-label font-weight-bold">
+                Judul Form
+              </label>
+              <input
+                type="text"
+                placeholder="Silahkan Masukan Judul Form"
+                className="form-control"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("judul form")
+                }
+                autoComplete="off"
+              />
+              {simpleValidator.current.message(
+                "judul form",
+                title,
+                "required",
+                { className: "text-danger" }
+              )}
+            </div>
 
-              {formBuilder.map((row, i) => (
-                <div className="builder row" key={i}>
-                  <div className="col-sm-12 col-md-2">
-                    <div className="form-group mb-2">
-                      <label className="col-form-label font-weight-bold">
-                        Nama Field
-                      </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="name"
-                        value={row.name}
-                        placeholder="Field"
-                        autoComplete="off"
-                        onChange={(e) => inputChangeHandler(e, i)}
-                      />
-                    </div>
-                  </div>
-                  <div className="col-sm-12 col-md-2">
-                    <div className="form-group mb-2">
-                      <label className="col-form-label font-weight-bold">
-                        Pilih Element
-                      </label>
-                      <select
-                        className="form-control"
-                        name="element"
-                        value={row.element}
-                        onChange={(e) => inputChangeHandler(e, i)}
-                      >
-                        <option value="" disabled selected>
-                          -- PILIH --
-                        </option>
-                        {element.map((el, i) => (
-                          <option key={i} value={el.value}>
-                            {el.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <div className="col-sm-12 col-md-2">
-                    <div className="form-group mb-2">
-                      <label className="col-form-label font-weight-bold">
-                        Size
-                      </label>
-                      <select
-                        className="form-control"
-                        name="size"
-                        value={row.size}
-                        onChange={(e) => inputChangeHandler(e, i)}
-                      >
-                        <option value="" disabled selected>
-                          -- PILIH --
-                        </option>
-                        {size.map((siz, i) => (
-                          <option key={i} value={siz.value}>
-                            {siz.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
-                  {renderMultipleHandler(row, i)}
-
-                  <div className="col-sm-6 col-md-2">
+            {formBuilder.map((row, i) => (
+              <div className="builder row" key={i}>
+                <div className="col-sm-12 col-md-2">
+                  <div className="form-group mb-2">
                     <label className="col-form-label font-weight-bold">
-                      Required
+                      Nama Field
                     </label>
-                    <div className="d-flex align-items-end">
-                      <div className="form-group mr-7">
-                        <div className="form-check form-check-inline">
-                          <input
-                            type="checkbox"
-                            name="required"
-                            checked={row.required}
-                            className="form-check-input"
-                            onChange={(e) => inputChangeHandler(e, i)}
-                          />
-                        </div>
-                      </div>
-                      {formBuilder.length !== 1 && row.key !== 1 ? (
-                        <button
-                          className="btn btn-link-action bg-danger text-white mb-3 ml-9"
-                          type="button"
-                          onClick={() => removeFieldHandler(i)}
-                        >
-                          <i className="ri-delete-bin-fill p-0 text-white"></i>
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-link-action bg-danger text-white mb-3 ml-9 invisible"
-                          type="button"
-                          onClick={() => removeFieldHandler(i)}
-                        >
-                          <i className="ri-delete-bin-fill p-0 text-white"></i>
-                        </button>
-                      )}
-                    </div>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="name"
+                      value={row.name}
+                      placeholder="Field"
+                      autoComplete="off"
+                      onChange={(e) => inputChangeHandler(e, i)}
+                    />
                   </div>
                 </div>
-              ))}
+                <div className="col-sm-12 col-md-2">
+                  <div className="form-group mb-2">
+                    <label className="col-form-label font-weight-bold">
+                      Pilih Element
+                    </label>
+                    <select
+                      className="form-control"
+                      name="element"
+                      value={row.element}
+                      onChange={(e) => inputChangeHandler(e, i)}
+                    >
+                      <option value="" disabled selected>
+                        -- PILIH --
+                      </option>
+                      {element.map((el, i) => (
+                        <option key={i} value={el.value}>
+                          {el.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <div className="col-sm-12 col-md-2">
+                  <div className="form-group mb-2">
+                    <label className="col-form-label font-weight-bold">
+                      Size
+                    </label>
+                    <select
+                      className="form-control"
+                      name="size"
+                      value={row.size}
+                      onChange={(e) => inputChangeHandler(e, i)}
+                    >
+                      <option value="" disabled selected>
+                        -- PILIH --
+                      </option>
+                      {size.map((siz, i) => (
+                        <option key={i} value={siz.value}>
+                          {siz.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
 
-              <div className="form-group mb-9 mt-4">
-                <div className="text-right">
-                  <button
-                    className="btn btn-light-success mr-2"
-                    type="button"
-                    style={{ borderRadius: "30px", fontWeight: "600" }}
-                    onClick={showPreviewHandler}
-                  >
-                    Review
-                  </button>
-                  <button
-                    className="btn btn-primary-rounded-full"
-                    type="button"
-                    onClick={addFieldHandler}
-                  >
-                    <i className="ri-pencil-fill"></i> Tambah Field
-                  </button>
+                {renderMultipleHandler(row, i)}
+
+                <div className="col-sm-6 col-md-2">
+                  <label className="col-form-label font-weight-bold">
+                    Required
+                  </label>
+                  <div className="d-flex align-items-end">
+                    <div className="form-group mr-7">
+                      <div className="form-check form-check-inline">
+                        <input
+                          type="checkbox"
+                          name="required"
+                          checked={row.required}
+                          className="form-check-input"
+                          onChange={(e) => inputChangeHandler(e, i)}
+                        />
+                      </div>
+                    </div>
+                    {formBuilder.length !== 1 && row.key !== 1 ? (
+                      <button
+                        className="btn btn-link-action bg-danger text-white mb-3 ml-9"
+                        type="button"
+                        onClick={() => removeFieldHandler(i)}
+                      >
+                        <i className="ri-delete-bin-fill p-0 text-white"></i>
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-link-action bg-danger text-white mb-3 ml-9 invisible"
+                        type="button"
+                        onClick={() => removeFieldHandler(i)}
+                      >
+                        <i className="ri-delete-bin-fill p-0 text-white"></i>
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
+            ))}
 
-              <div className="form-group mt-9">
-                <div className="text-right">
-                  <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
-                    type="button"
-                    onClick={() => router.back()}
-                  >
-                    Kembali
-                  </button>
-                  <button
-                    className="btn btn-primary-rounded-full"
-                    type="submit"
-                  >
-                    Simpan & Lanjut
-                  </button>
-                </div>
+            <div className="form-group mb-9 mt-4">
+              <div className="text-right">
+                <button
+                  className="btn btn-light-success mr-2"
+                  type="button"
+                  style={{ borderRadius: "30px", fontWeight: "600" }}
+                  onClick={showPreviewHandler}
+                >
+                  Review
+                </button>
+                <button
+                  className="btn btn-primary-rounded-full"
+                  type="button"
+                  onClick={addFieldHandler}
+                >
+                  <i className="ri-pencil-fill"></i> Tambah Field
+                </button>
               </div>
-            </form>
-          </div>
+            </div>
+
+            <div className="form-group mt-9">
+              <div className="text-right">
+                <button
+                  className="btn btn-light-ghost-rounded-full mr-2"
+                  type="button"
+                  onClick={backHandler}
+                >
+                  Kembali
+                </button>
+                <button className="btn btn-primary-rounded-full" type="submit">
+                  Simpan & Lanjut
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
+        <Modal
+          show={modalShow}
+          onHide={closePreviewHandler}
+          size="xl"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+        >
+          <ModalPreview
+            propsTitle={title}
+            propsForm={formBuilder}
+            propsModalShow={modalShow}
+            sendPropsFormBuilder={(form) => setFormBuilder(form)}
+            sendPropsModalShow={(value) => setModalShow(value)}
+          />
+        </Modal>
       </div>
+    </>
+    //   </div>
 
-      <Modal
-        show={modalShow}
-        onHide={closePreviewHandler}
-        size="xl"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <ModalPreview
-          propsTitle={title}
-          propsForm={formBuilder}
-          propsModalShow={modalShow}
-          sendPropsFormBuilder={(form) => setFormBuilder(form)}
-          sendPropsModalShow={(value) => setModalShow(value)}
-        />
-      </Modal>
-    </PageWrapper>
+    // </PageWrapper>
   );
 };
 
