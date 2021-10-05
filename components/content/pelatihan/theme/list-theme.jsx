@@ -13,13 +13,40 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
+import { deleteTheme } from "../../../../redux/actions/pelatihan/theme.actions";
+import { DELETE_THEME_RESET } from "../../../../redux/types/pelatihan/theme.type";
 
-const ListTheme = () => {
+const ListTheme = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
+  const {
+    loading: allLoading,
+    error: allError,
+    theme,
+  } = useSelector((state) => state.allTheme);
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    isDeleted,
+  } = useSelector((state) => state.deleteTheme);
+
   let { page = 1, success } = router.query;
   page = Number(page);
+
+  let loading = false;
+  if (allLoading) {
+    loading = allLoading;
+  } else if (deleteLoading) {
+    loading = deleteLoading;
+  }
+
+  let error;
+  if (allError) {
+    error = allError;
+  } else if (deleteError) {
+    error = deleteError;
+  }
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
@@ -32,6 +59,21 @@ const ListTheme = () => {
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
   ];
+
+  useEffect(() => {
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        }
+      );
+      dispatch({
+        type: DELETE_THEME_RESET,
+      });
+    }
+  }, [isDeleted]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -82,6 +124,7 @@ const ListTheme = () => {
       cancelButtonText: "Batal",
     }).then((result) => {
       if (result.isConfirmed) {
+        dispatch(deleteTheme(id, token));
       }
     });
   };
@@ -94,7 +137,31 @@ const ListTheme = () => {
 
   return (
     <PageWrapper>
-      {success ? (
+      {error && (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
+      {success && (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
@@ -117,8 +184,6 @@ const ListTheme = () => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
@@ -189,7 +254,7 @@ const ListTheme = () => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                {/* <LoadingTable loading={loading} /> */}
+                <LoadingTable loading={loading} />
 
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
@@ -203,43 +268,68 @@ const ListTheme = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="text-center">1</td>
-                      <td>
-                        <p className="font-weight-bolder my-0 h6">SVGA</p>
-                        <p className="my-0">Vocation School Graduate Academy</p>
+                    {!theme || (theme && theme.rows.length === 0) ? (
+                      <td className="align-middle text-center" colSpan={8}>
+                        Data Masih Kosong
                       </td>
-                      <td>Android Developer</td>
-                      <td>500 Peminat</td>
-                      <td>
-                        <span className="label label-inline label-light-success font-weight-bold">
-                          Publish
-                        </span>
-                      </td>
-                      <td>
-                        <div className="d-flex">
-                          <Link href={`/pelatihan/tema/${1}`}>
-                            <a
-                              className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                              data-toggle="tooltip"
-                              data-placement="bottom"
-                              title="Edit"
-                            >
-                              <i className="ri-pencil-fill p-0 text-white"></i>
-                            </a>
-                          </Link>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary text-white"
-                            onClick={() => handleDelete(1)}
-                            data-toggle="tooltip"
-                            data-placement="bottom"
-                            title="Hapus"
-                          >
-                            <i className="ri-delete-bin-fill p-0 text-white"></i>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                    ) : (
+                      theme.rows.map((row, i) => (
+                        <tr key={i}>
+                          <td className="text-center">
+                            {limit === null
+                              ? i + 1 * (page * 5) - (5 - 1)
+                              : i + 1 * (page * limit) - (limit - 1)}
+                          </td>
+                          <td className="align-middle">
+                            <p className="font-weight-bolder my-0 h6">
+                              {row.akademi}
+                            </p>
+                            <div
+                              className="py-0"
+                              dangerouslySetInnerHTML={{
+                                __html: row.deskripsi,
+                              }}
+                            ></div>
+                          </td>
+                          <td className="align-middle">{row.name}</td>
+                          <td className="align-middle">500 Peminat</td>
+                          <td className="align-middle">
+                            {row.status ? (
+                              <span className="label label-inline label-light-success font-weight-bold">
+                                Publish
+                              </span>
+                            ) : (
+                              <span className="label label-inline label-light-danger font-weight-bold">
+                                Unpublish
+                              </span>
+                            )}
+                          </td>
+                          <td className="align-middle">
+                            <div className="d-flex">
+                              <Link href={`/pelatihan/tema/${row.id}`}>
+                                <a
+                                  className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Edit"
+                                >
+                                  <i className="ri-pencil-fill p-0 text-white"></i>
+                                </a>
+                              </Link>
+                              <button
+                                className="btn btn-link-action bg-blue-secondary text-white"
+                                onClick={() => handleDelete(row.id)}
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Hapus"
+                              >
+                                <i className="ri-delete-bin-fill p-0 text-white"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>
@@ -247,9 +337,9 @@ const ListTheme = () => {
               <div className="row">
                 <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                   <Pagination
-                    activePage={1}
-                    itemsCountPerPage={5}
-                    totalItemsCount={10}
+                    activePage={theme.page}
+                    itemsCountPerPage={theme.total_pages}
+                    totalItemsCount={theme.total_rows}
                     pageRangeDisplayed={3}
                     onChange={handlePagination}
                     nextPageText={">"}
@@ -261,38 +351,40 @@ const ListTheme = () => {
                   />
                 </div>
 
-                <div className="table-total ml-auto">
-                  <div className="row">
-                    <div className="col-4 mr-0 p-0 mt-3">
-                      <select
-                        className="form-control"
-                        id="exampleFormControlSelect2"
-                        style={{
-                          width: "65px",
-                          background: "#F3F6F9",
-                          borderColor: "#F3F6F9",
-                          color: "#9E9E9E",
-                        }}
-                        onChange={(e) => handleLimit(e.target.value)}
-                        onBlur={(e) => handleLimit(e.target.value)}
-                      >
-                        <option>5</option>
-                        <option>10</option>
-                        <option>30</option>
-                        <option>40</option>
-                        <option>50</option>
-                      </select>
-                    </div>
-                    <div className="col-8 my-auto pt-3">
-                      <p
-                        className="align-middle mt-3"
-                        style={{ color: "#B5B5C3" }}
-                      >
-                        Total Data 6
-                      </p>
+                {academy && academy.total_rows > 5 && (
+                  <div className="table-total ml-auto">
+                    <div className="row">
+                      <div className="col-4 mr-0 p-0 mt-3">
+                        <select
+                          className="form-control"
+                          id="exampleFormControlSelect2"
+                          style={{
+                            width: "65px",
+                            background: "#F3F6F9",
+                            borderColor: "#F3F6F9",
+                            color: "#9E9E9E",
+                          }}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
+                        >
+                          <option>5</option>
+                          <option>10</option>
+                          <option>30</option>
+                          <option>40</option>
+                          <option>50</option>
+                        </select>
+                      </div>
+                      <div className="col-8 my-auto pt-3">
+                        <p
+                          className="align-middle mt-3"
+                          style={{ color: "#B5B5C3" }}
+                        >
+                          Total Data {theme.total_rows}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

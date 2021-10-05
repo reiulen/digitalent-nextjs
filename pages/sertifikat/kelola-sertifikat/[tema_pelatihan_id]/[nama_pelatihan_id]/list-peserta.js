@@ -1,17 +1,16 @@
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import Pagination from "react-js-pagination";
-import { wrapper } from "../../../../redux/store";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
+import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
-import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import {
+  getAllParticipant,
+  getDetailParticipant,
+} from "../../../../../redux/actions/sertifikat/list-peserta.action";
 
-const AddSertifikat = dynamic(
+const ListPeserta = dynamic(
   () =>
     import(
-      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/add-sertifikat.jsx"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/list-peserta"
     ),
   {
     loading: function loadingNow() {
@@ -21,13 +20,12 @@ const AddSertifikat = dynamic(
   }
 );
 
-export default function AddSertifikatPage(props) {
-  const session = props.session.user.user.data;
-
+export default function KelokaSertifikatPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <AddSertifikat token={session} />
+        {/* <KelolaSertifikatKategori /> */}
+        <ListPeserta />
       </div>
     </>
   );
@@ -36,6 +34,7 @@ export default function AddSertifikatPage(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   store =>
     async ({ query, req }) => {
+      console.log(query, "ini query list peserta");
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -45,9 +44,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
       await store.dispatch(
-        getDetailSertifikat(
-          query.nama_pelatihan,
+        getDetailParticipant(
+          query.nama_pelatihan_id,
           query.page,
           query.keyword,
           query.limit,
@@ -58,7 +58,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Certificate Builder - Sertifikat" },
+        props: { session, title: "List Peserta - Sertifikat" },
       };
     }
 );
