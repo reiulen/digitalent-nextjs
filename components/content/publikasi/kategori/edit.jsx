@@ -11,7 +11,7 @@ import { UPDATE_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategor
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditKategori = () => {
+const EditKategori = ({token}) => {
 
     const dispatch = useDispatch()
     const router = useRouter();
@@ -59,7 +59,7 @@ const EditKategori = () => {
                 jenis_kategori,
             }
 
-            dispatch(updateKategori(data, kategori.id))
+            dispatch(updateKategori(data, kategori.id,token))
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);

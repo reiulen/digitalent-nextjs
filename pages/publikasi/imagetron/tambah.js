@@ -18,12 +18,13 @@ const Tambah = dynamic(
     }
 );
 
-export default function TambahPage() {
+export default function TambahPage(props) {
+    const session = props.session.user.user.data;
     return (
         <>
             <div className="d-flex flex-column flex-root">
                 {/* <Layout title='Tambah Imagetron - Publikasi'> */}
-                    <Tambah />
+                    <Tambah token={session.token}/>
                 {/* </Layout> */}
             </div>
         </>
