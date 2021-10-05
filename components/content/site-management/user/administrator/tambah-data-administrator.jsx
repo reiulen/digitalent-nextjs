@@ -134,10 +134,10 @@ const TambahApi = ({ token }) => {
               >
                 Hak Akses Pelatihan
               </h3>
-              <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
+              <ul className="nav nav-tabs" id="myTab" role="tablist">
+                <li className="nav-item" role="presentation">
                   <a
-                    class="nav-link active"
+                    className="nav-link active"
                     id="home-tab"
                     data-toggle="tab"
                     href="#home"
@@ -148,9 +148,9 @@ const TambahApi = ({ token }) => {
                     Akademi
                   </a>
                 </li>
-                <li class="nav-item" role="presentation">
+                <li className="nav-item" role="presentation">
                   <a
-                    class="nav-link"
+                    className="nav-link"
                     id="profile-tab"
                     data-toggle="tab"
                     href="#profile"
@@ -162,9 +162,9 @@ const TambahApi = ({ token }) => {
                   </a>
                 </li>
               </ul>
-              <div class="tab-content" id="myTabContent">
+              <div className="tab-content" id="myTabContent">
                 <div
-                  class="tab-pane fade show active"
+                  className="tab-pane fade show active"
                   id="home"
                   role="tabpanel"
                   aria-labelledby="home-tab"
@@ -180,7 +180,7 @@ const TambahApi = ({ token }) => {
                   </div>
                 </div>
                 <div
-                  class="tab-pane fade"
+                  className="tab-pane fade"
                   id="profile"
                   role="tabpanel"
                   aria-labelledby="profile-tab"

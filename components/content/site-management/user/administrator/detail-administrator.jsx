@@ -97,13 +97,13 @@ const DetailRole = ({ token }) => {
               </p>
               <div className="d-flex ailgn-items-center">
                 <span
-                  class="label label-lg label-inline"
+                  className="label label-lg label-inline"
                   style={{ width: "max-content",backgroundColor:"#F2F7FC",color:"#ADB5BD" }}
                 >
                   Admin UPT
                 </span>
                 <span
-                  class="label label-lg label-inline ml-3"
+                  className="label label-lg label-inline ml-3"
                   style={{ width: "max-content",backgroundColor:"#F2F7FC",color:"#ADB5BD" }}
                 >
                   Admin UPT
@@ -116,13 +116,13 @@ const DetailRole = ({ token }) => {
               </p>
               <div className="d-flex ailgn-items-center">
                 <span
-                  class="label label-lg label-inline"
+                  className="label label-lg label-inline"
                   style={{ width: "max-content",backgroundColor:"#F2F7FC",color:"#ADB5BD" }}
                 >
                   Admin UPT
                 </span>
                 <span
-                  class="label label-lg label-inline ml-3"
+                  className="label label-lg label-inline ml-3"
                   style={{ width: "max-content",backgroundColor:"#F2F7FC",color:"#ADB5BD" }}
                 >
                   Admin UPT
