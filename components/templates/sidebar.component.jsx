@@ -254,7 +254,7 @@ const Sidebar = () => {
     {
       id: 17,
       name: "Setting CSS",
-      href: "/site-management/setting/css",
+      href: "/site-management/setting/css-editor",
     },
     {
       id: 18,
