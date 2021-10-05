@@ -61,7 +61,6 @@ const TambahKategori = ({ token }) => {
             }
 
             dispatch(newKategori(data, token))
-            console.log("DAta token", token)
 
         } else {
             simpleValidator.current.showMessages();

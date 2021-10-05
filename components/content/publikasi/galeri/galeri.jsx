@@ -316,6 +316,111 @@ const Galeri = ({ token }) => {
         setDisableEndDate(false)
     }
 
+    const printData = () => {
+        {
+            !galeri || galeri && galeri.gallery.length === 0 ?
+                <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                galeri && galeri.gallery.map((row, i) => {
+                    // { console.log("INI ROWW ID : ", i + 1, row) }
+                    return <tr key={row.id}>
+                        <td className='align-middle text-center'>
+                            {
+                                limit === null ?
+                                    <span className="badge badge-secondary text-muted">
+                                        {i + 1 * (page * 5) - (5 - 1)}
+                                    </span>
+                                    :
+                                    <span className="badge badge-secondary text-muted">
+                                        {i + 1 * (page * limit) - (limit - 1)}
+                                    </span>
+                            }
+                        </td>
+                        <td className='text-center'>
+                            <Image
+                                // alt='name_image'
+                                key={row.id}
+                                alt={row.judul}
+                                unoptimized={
+                                    process.env.ENVIRONMENT !== "PRODUCTION"
+                                }
+                                loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                    "publikasi/images/" +
+                                    row.gambar)}
+                                src={
+                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                    "publikasi/images/" +
+                                    row.gambar
+                                }
+                                width={80} height={50} />
+                        </td>
+                        <td className='align-middle'>{row.nama_kategori}</td>
+                        <td className='align-middle'>{row.judul}</td>
+                        <td className='align-middle'>{
+                            row.status === 1 ? (
+                                row.tanggal_publish
+                            ) : (
+                                <span className="label label-inline label-light-danger font-weight-bold">
+                                    Belum dipublish
+                                </span>
+                            )
+                        }</td>
+                        <td className='align-middle'>
+                            {/* {row.role_name} */}
+                            Super Admin
+                        </td>
+                        <td className='align-middle'>
+                            {row.status === 1 ? (
+                                <span className="label label-inline label-light-success font-weight-bold">
+                                    Publish
+                                </span>
+                            ) : (
+                                <span className="label label-inline label-light-warning font-weight-bold">
+                                    Belum di publish
+                                </span>
+                            )}
+                        </td>
+                        <td className='align-middle'>Super Admin</td>
+                        <td className="align-middle d-flex">
+
+                            <button
+                                onClick={() => handlePreview(i, row.id_gallery)}
+                                className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
+                                data-target="#galleryModalPreview"
+                                data-toggle="modal"
+                            >
+                                <i className="ri-todo-fill p-0 text-white"></i>
+                                <div className="text-hover-show-hapus">
+                                    Pratinjau
+                                </div>
+                            </button>
+
+                            <Link
+                                href={`/publikasi/galeri/${row.id_gallery}`}
+                            >
+                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                    <div className="text-hover-show-hapus">
+                                        Ubah
+                                    </div>
+                                </a>
+                            </Link>
+
+                            <button
+                                className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                onClick={() => handleDelete(row.id_gallery)}
+                            >
+                                <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                <div className="text-hover-show-hapus">
+                                    Hapus
+                                </div>
+                            </button>
+
+                        </td>
+                    </tr>
+                })
+        }
+    }
+
     return (
         <PageWrapper>
             {/* {

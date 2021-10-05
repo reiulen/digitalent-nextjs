@@ -76,7 +76,7 @@ const Pengaturan = ({ token }) => {
                 dispatch(clearErrors())
             } else if (upload_image < 1) {
                 simpleValidator.current.showMessages();
-                // forceUpdate(1);
+                forceUpdate(1);
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
@@ -84,7 +84,7 @@ const Pengaturan = ({ token }) => {
                 });
             } else {
                 dispatch(updateSettingImagePublikasi(upload_image, token))
-                console.log("TOKEN :", token)
+                // console.log("TOKEN :", token)
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -108,7 +108,7 @@ const Pengaturan = ({ token }) => {
                 dispatch(clearErrors())
             } else if (upload_imagetron < 1) {
                 simpleValidator.current.showMessages();
-                // forceUpdate(1);
+                forceUpdate(1);
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
@@ -327,7 +327,6 @@ const Pengaturan = ({ token }) => {
                                         <button
                                             className="btn btn-link-action text-white"
                                             onClick={(e) => submitImagetron(e)}
-                                            // onClick={submitImagetron}
                                             style={{ marginLeft: '-30px' }}
                                         >
                                             <Image

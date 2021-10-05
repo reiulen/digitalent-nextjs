@@ -216,7 +216,7 @@ const Kategori = ({ token }) => {
     }
 
     const handleSearch = () => {
-        console.log("SEARCH : ", `${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
+        // console.log("SEARCH : ", `${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
         if (limit != null && startDate === null && endDate === null) {
             router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`)
 
@@ -256,38 +256,6 @@ const Kategori = ({ token }) => {
 
     // };
 
-    // const handlePublish = (val) => {
-    //     if (val !== null || val !== "") {
-    //         setPublishValue(val)
-
-    //         if (startDate === null && endDate === null && limit === null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}`);
-
-    //         } else if (startDate !== null && endDate !== null && limit === null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`)
-
-    //         } else if (startDate !== null && endDate !== null && limit !== null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`)
-
-    //         } else if (startDate !== null && endDate !== null && limit === null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&keyword=${search}`)
-
-    //         } else if (startDate === null && endDate === null && limit !== null && search === null) {
-    //             router.push(`${router.pathname}?publish=${val}&limit=${limit}`);
-
-    //         } else if (startDate === null && endDate === null && limit === null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&keyword=${search}`);
-
-    //         } else if (startDate === null && endDate === null && limit !== null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&limit=${limit}&keyword=${search}`);
-
-    //         } else if (startDate !== null && endDate !== null && limit !== null && search !== null) {
-    //             router.push(`${router.pathname}?publish=${val}&startdate=${moment(startDate).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}&keyword=${search}`)
-    //         }
-    //     }
-
-    // }
-
     const resetValueSort = () => {
         setSearchKategori(null)
         $('#selectKategori').prop('selectedIndex', 0);
@@ -295,12 +263,12 @@ const Kategori = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(kategori)
             }
             {
                 console.log(paginateKategori)
-            }
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -603,12 +571,12 @@ const Kategori = ({ token }) => {
                                 }
                             </div>
 
-                            {
+                            {/* {
                                 console.log("KATEGORI : ", kategori)
                             }
                             {
                                 console.log("PAGINATE KATEGORI : ", paginateKategori)
-                            }
+                            } */}
                             {
                                 kategori && paginateKategori ?
                                     <div className="row">
