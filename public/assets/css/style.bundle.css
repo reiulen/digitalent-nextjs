@@ -8147,6 +8147,10 @@ a.close.disabled {
   background-color: var(--gray-shade) !important;
 }
 
+.bg-gray{
+  background-color: var(--gray) !important;
+}
+
 .bg-neutral{
   background-color: var(--neutral) !important;
 }
