@@ -48,6 +48,7 @@ export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = nul
                 Authorization: "Bearer " + token,
             },
         };
+        console.log("GetAll Imagetron actions :", config)
 
         const data = await axios.get(link, config);
 
@@ -55,9 +56,6 @@ export const getAllImagetron = (page = 1, keyword = "", limit = 5, publish = nul
             type: IMAGETRON_SUCCESS,
             payload: data
         })
-
-        console.log("check")
-        console.log(data)
 
     } catch (error) {
         dispatch({
@@ -78,6 +76,7 @@ export const getDetailImagetron = (id, token) => async (dispatch) => {
         };
 
         const { data } = await axios.get(link, config);
+        console.log("Detail Imagetron Action : ", data)
 
         dispatch({
             type: DETAIL_IMAGETRON_SUCCESS,
@@ -122,14 +121,19 @@ export const newImagetron = (imagetronData, token) => async (dispatch) => {
     }
 }
 
-export const updateImagetron = (imagetronData) => async (dispatch) => {
+export const updateImagetron = (imagetronData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_IMAGETRON_REQUEST });
 
-        let link =
-            process.env.END_POINT_API_PUBLIKASI + `api/imagetron/${imagetronData.id}`;
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/imagetron/${imagetronData.id}`;
 
-        const { data } = await axios.post(link, imagetronData);
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+
+        const { data } = await axios.post(link, imagetronData, config);
 
         dispatch({
             type: UPDATE_IMAGETRON_SUCCESS,
@@ -143,20 +147,27 @@ export const updateImagetron = (imagetronData) => async (dispatch) => {
     }
 };
 
-export const deleteImagetron = (id) => async (dispatch) => {
+export const deleteImagetron = (id, token) => async (dispatch) => {
     try {
 
         dispatch({ type: DELETE_IMAGETRON_REQUEST })
 
-        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `api/imagetron/${id}`)
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+        };
+        console.log("Delete Imagetron actions :", config)
+
+        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + "api/imagetron/" + id, config)
 
         dispatch({
             type: DELETE_IMAGETRON_SUCCESS,
             payload: data.status
         })
 
-        console.log("delete")
-        console.log(data)
+        // console.log("delete")
+        // console.log(data)
 
     } catch (error) {
         dispatch({
