@@ -23,8 +23,6 @@ export default function KelolasertifikatID({ token }) {
       dispatch(clearErrors());
     }
   };
-  // console.log("ini certificate", certificate);
-  // console.log("ini certificate", certificate.data);
 
   return (
     <PageWrapper>
