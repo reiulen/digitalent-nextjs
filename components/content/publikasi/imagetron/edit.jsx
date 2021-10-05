@@ -16,7 +16,7 @@ import { NEW_IMAGETRON_RESET, UPDATE_IMAGETRON_RESET } from '../../../../redux/t
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from "../../../LoadingPage";
 
-const EditImagetron = () => {
+const EditImagetron = ({ token }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -45,7 +45,7 @@ const EditImagetron = () => {
 
     useEffect(() => {
 
-        dispatch(getAllKategori());
+        // dispatch(getAllKategori());
 
         if (success) {
             router.push({
@@ -166,7 +166,7 @@ const EditImagetron = () => {
                         .then((result) => {
                             if (result.isConfirmed) {
 
-                                dispatch(updateImagetron(data));
+                                dispatch(updateImagetron(data, token));
                                 // console.log(data)
                             }
                         });
@@ -196,7 +196,7 @@ const EditImagetron = () => {
                         .then((result) => {
                             if (result.isConfirmed) {
 
-                                dispatch(updateImagetron(data));
+                                dispatch(updateImagetron(data, token));
                                 // console.log(data)
                             }
                         });
@@ -233,7 +233,7 @@ const EditImagetron = () => {
                         .then((result) => {
                             if (result.isConfirmed) {
 
-                                dispatch(updateImagetron(data));
+                                dispatch(updateImagetron(data,token));
                                 // console.log(data)
                             }
                         });
@@ -263,21 +263,21 @@ const EditImagetron = () => {
                         .then((result) => {
                             if (result.isConfirmed) {
 
-                                dispatch(updateImagetron(data));
+                                dispatch(updateImagetron(data,token));
                                 // console.log(data)
                             }
                         });
                 }
             }
-        }else {
+        } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
             Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Isi data dengan benar !",
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
             });
-          }
+        }
         // e.preventDefault()
         // if (error) {
         //     dispatch(clearErrors())
@@ -306,6 +306,9 @@ const EditImagetron = () => {
         <PageWrapper>
             {
                 console.log(imagetron)
+            }
+            {
+                console.log(kategori)
             }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -418,7 +421,7 @@ const EditImagetron = () => {
                                     )}
                                 </div>
                             </div>
-                            
+
                             <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"

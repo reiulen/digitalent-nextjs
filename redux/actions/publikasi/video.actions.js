@@ -133,7 +133,7 @@ export const newVideo = (videoData, token) => async (dispatch) => {
             payload: data
         })
 
-        console.log(videoData)
+        console.log("Action Add Video :", videoData)
 
     } catch (error) {
         dispatch({
@@ -143,7 +143,7 @@ export const newVideo = (videoData, token) => async (dispatch) => {
     }
 }
 
-export const updateVideo= (videoData, token) => async (dispatch) => {
+export const updateVideo = (videoData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_VIDEO_REQUEST })
 
@@ -198,7 +198,7 @@ export const deleteVideo = (id, token) => async (dispatch) => {
             },
         };
 
-        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + `api/video/${id}`, config)
+        const { data } = await axios.delete(process.env.END_POINT_API_PUBLIKASI + "api/video/" + id, config)
 
         dispatch({
             type: DELETE_VIDEO_SUCCESS,
@@ -213,7 +213,7 @@ export const deleteVideo = (id, token) => async (dispatch) => {
     }
 }
 
-export const playVideo= (videoData, token) => async (dispatch) => {
+export const playVideo = (videoData, token) => async (dispatch) => {
     try {
         dispatch({ type: PLAY_VIDEO_REQUEST })
 
@@ -225,7 +225,7 @@ export const playVideo= (videoData, token) => async (dispatch) => {
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${videoData.id}`
 
-        const { data } = await axios.post (link, videoData, config)
+        const { data } = await axios.post(link, videoData, config)
 
         dispatch({
             type: PLAY_VIDEO_SUCCESS,
