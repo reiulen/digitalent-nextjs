@@ -23,7 +23,7 @@ const Sidebar = () => {
   const getStorageMenuSiteManagement = sessionStorage.getItem("menu-site-management");
   const getStorageMenuSiteManagementUser = sessionStorage.getItem("menu-site-management-user");
 
-  const allFunctionls = useSelector((state) => state.allFunctionls);
+  const allFunctionls = useSelector(state => state.allFunctionls);
 
   const router = useRouter();
   const [menuItem1, setMenuItem1] = useState("");
@@ -183,18 +183,18 @@ const Sidebar = () => {
     },
     {
       id: 3,
-      name: "Peserta DTS",
-      href: "/site-management/dashboard",
+      name: "User Peserta DTS",
+      href: "/site-management/dashboardg",
     },
     {
       id: 4,
-      name: "Administrator",
-      href: "/site-management/dashboard",
+      name: "User Administrator",
+      href: "/site-management/dashboarde",
     },
     {
       id: 5,
-      name: "Mitra",
-      href: "/site-management/dashboard",
+      name: "User Mitra",
+      href: "/site-management/dashboardz",
     },
     {
       id: 6,
@@ -204,22 +204,52 @@ const Sidebar = () => {
     {
       id: 7,
       name: "Export Data",
-      href: "/site-management/dashboard",
+      href: "/site-management/dashboards",
     },
     {
       id: 8,
       name: "Master Data",
-      href: "/site-management/dashboard",
+      href: "/site-management/dashboardd",
     },
     {
       id: 9,
       name: "Data Reference",
-      href: "/site-management/dashboard",
+      href: "/site-management/dashboardf",
     },
     {
       id: 10,
       name: "Setting",
       href: "/site-management/setting",
+    },
+    {
+      id: 11,
+      name: "Setting General",
+      href: "/site-management/setting/general",
+    },
+    {
+      id: 12,
+      name: "Setting Page",
+      href: "/site-management/setting/page",
+    },
+    {
+      id: 13,
+      name: "Setting Menu",
+      href: "/site-management/setting/menu",
+    },
+    {
+      id: 14,
+      name: "Setting API",
+      href: "/site-management/setting/api",
+    },
+    {
+      id: 15,
+      name: "Setting CSS",
+      href: "/site-management/setting/css",
+    },
+    {
+      id: 16,
+      name: "Setting Pelatihan",
+      href: "/site-management/setting/pelatihan",
     },
   ]);
   const activeMenuSiteManagement = () => {
@@ -228,7 +258,7 @@ const Sidebar = () => {
     } else {
       sessionStorage.setItem("menu-site-management", "menu-item-open");
     }
-    setMenuItem4(
+    setMenuItem7(
       !sessionStorage.getItem("menu-site-management") ? "" : "menu-item-open"
     );
   };
@@ -354,16 +384,6 @@ const Sidebar = () => {
       id: 1,
       name: "Kelola Sertifikat",
       href: "/sertifikat/kelola-sertifikat",
-    },
-    {
-      id: 2,
-      name: "Master Sertifikat",
-      href: "/sertifikat/master-sertifikat",
-    },
-    {
-      id: 3,
-      name: "Perubahan Sertifikat",
-      href: "/sertifikat/perubahan-sertifikat",
     },
   ]);
 
@@ -506,39 +526,6 @@ const Sidebar = () => {
                           </li>
                         );
                       })}
-
-                      {/* <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/kerjasama">
-                        <a className="menu-link">
-                          <span className="menu-text">Kerjasama</span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/mitra">
-                        <a className="menu-link">
-                          <span className="menu-text">Master Mitra</span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/master-kategori-kerjasama">
-                        <a className="menu-link">
-                          <span className="menu-text">
-                            Master Kategori Kerjasama
-                          </span>
-                        </a>
-                      </Link>
-                    </li>
-                    <li className="menu-item" aria-haspopup="true">
-                      <Link href="/partnership/tanda-tangan">
-                        <a className="menu-link">
-                          <span className="menu-text">
-                            Tanda Tangan Digital
-                          </span>
-                        </a>
-                      </Link>
-                    </li> */}
                       {/* end partnership loop */}
                     </ul>
                   </div>
@@ -688,16 +675,9 @@ const Sidebar = () => {
                 >
                   <a
                     href="javascript:;"
-                    // onClick={onSetMenuItem3}
                     className="menu-link menu-toggle d-flex align-items-center"
                   >
                     <span className="svg-icon menu-icon">
-                      {/* <Image
-                      alt="icon-sidebar-picture"
-                      src="/assets/icon/new/aside/pictures-white.svg"
-                      width={24}
-                      height={24}
-                    /> */}
                       <svg
                         width="25"
                         height="24"
@@ -764,20 +744,6 @@ const Sidebar = () => {
                       {/* start loop publikasi */}
                       {listMenuPublikasi.map((items, index) => {
                         return (
-                          // <li
-                          //   className={
-                          //     router.pathname == "/publikasi/dashboard-publikasi"
-                          //       ? "menu-item menu-item-active"
-                          //       : "menu-item"
-                          //   }
-                          //   aria-haspopup="true"
-                          // >
-                          //   <Link href="/publikasi/dashboard-publikasi">
-                          //     <a className="menu-link">
-                          //       <span className="menu-text">Dashboard</span>
-                          //     </a>
-                          //   </Link>
-                          // </li>
                           <li
                             className={`menu-item ${
                               items.href === router.pathname
@@ -804,23 +770,12 @@ const Sidebar = () => {
                         aria-haspopup="true"
                         data-menu-toggle="hover"
                       >
-                        {/* <a
-                        href="javascript:;"
-                        className="menu-link menu-toggle"
-                        onClick={onSetMenuItemS}
-                      >
-                        <span className="menu-text">Managemen Admin</span>
-                        <i className="menu-arrow"></i>
-                      </a> */}
                         <div className="menu-submenu">
                           <i className="menu-arrow"></i>
                           <ul className="menu-subnav">
                             <li className="menu-item" aria-haspopup="true">
                               <Link href="/publikasi/managemen-admin/role">
                                 <a className="menu-link">
-                                  {/* <i className="menu-bullet menu-bullet-dot">
-                                                                <span></span>
-                                                            </i> */}
                                   <span className="menu-text">List Role</span>
                                 </a>
                               </Link>
@@ -828,9 +783,6 @@ const Sidebar = () => {
                             <li className="menu-item" aria-haspopup="true">
                               <Link href="/publikasi/managemen-admin/admin">
                                 <a className="menu-link">
-                                  {/* <i className="menu-bullet menu-bullet-dot">
-                                                                <span></span>
-                                                            </i> */}
                                   <span className="menu-text">List Admin</span>
                                 </a>
                               </Link>
@@ -973,13 +925,6 @@ const Sidebar = () => {
                       </li>
                       {listMenuSertifikat.map((items, index) => {
                         return (
-                          // <li className="menu-item" aria-haspopup="true">
-                          //   <Link href="/subvit/substansi">
-                          //     <a className="menu-link">
-                          //       <span className="menu-text">Tes Substansi</span>
-                          //     </a>
-                          //   </Link>
-                          // </li>
                           <li
                             key={index}
                             className={`menu-item ${
@@ -1007,8 +952,77 @@ const Sidebar = () => {
                   </div>
                 </li>
 
-                <li
-                  className={`menu-item menu-item-submenu 
+              <li
+                className={`menu-item menu-item-submenu ${menuItem5}`}
+                onClick={onSetMenuItem5}
+                aria-haspopup="true"
+                data-menu-toggle="hover"
+              >
+                <a
+                  href="javascript:;"
+                  className="menu-link menu-toggle d-flex align-items-center"
+                >
+                  <span className="svg-icon menu-icon">
+                    <svg
+                      width="19"
+                      height="19"
+                      viewBox="0 0 19 19"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        opacity="0.3"
+                        d="M4.63699 1.58337H10.7603C11.115 1.58337 11.4582 1.70906 11.729 1.93811L15.3021 4.96037C15.6391 5.24538 15.8334 5.66431 15.8334 6.10563V15.8993C15.8334 17.3169 15.8172 17.4167 14.3632 17.4167H4.63699C3.18294 17.4167 3.16675 17.3169 3.16675 15.8993V3.10074C3.16675 1.68322 3.18294 1.58337 4.63699 1.58337Z"
+                        fill="#4299E1"
+                      />
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M8.70841 11.0833L7.12508 11.0833C6.68785 11.0833 6.33341 10.7289 6.33341 10.2916C6.33341 9.8544 6.68785 9.49996 7.12508 9.49996L8.70841 9.49996L8.70841 7.91663C8.70841 7.4794 9.06285 7.12496 9.50008 7.12496C9.9373 7.12496 10.2917 7.4794 10.2917 7.91663L10.2917 9.49996H11.8751C12.3123 9.49996 12.6667 9.8544 12.6667 10.2916C12.6667 10.7289 12.3123 11.0833 11.8751 11.0833H10.2917L10.2917 12.6666C10.2917 13.1039 9.9373 13.4583 9.50008 13.4583C9.06285 13.4583 8.70841 13.1039 8.70841 12.6666L8.70841 11.0833Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </span>
+                  <span className="menu-text">Sertifikat</span>
+                  <i className="menu-arrow"></i>
+                </a>
+                <div className="menu-submenu">
+                  <i className="menu-arrow"></i>
+                  <ul className="menu-subnav">
+                    <li
+                      className="menu-item menu-item-parent"
+                      aria-haspopup="true"
+                    >
+                      <span className="menu-link">
+                        <span className="menu-text">Sertifikat</span>
+                      </span>
+                    </li>
+                    {listMenuSertifikat.map((items, index) => {
+                      return (
+                        <li
+                          key={index}
+                          className={`menu-item ${
+                            items.href === router.pathname
+                              ? "menu-item-active"
+                              : ""
+                          }`}
+                          aria-haspopup="true"
+                          onClick={() => activeSubItemSertifikat()}
+                        >
+                          <Link href={items.href}>
+                            <a className="menu-link">
+                              <span className="menu-text">{items.name}</span>
+                            </a>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </li>
+
+              <li
+                className={`menu-item menu-item-submenu 
                 ${!getStorageMenu3 ? "" : getStorageMenu3}`}
                   // onClick={onSetMenuItem6}
                   onClick={() => activeMenuSubvit()}
@@ -1020,12 +1034,6 @@ const Sidebar = () => {
                     className="menu-link menu-toggle d-flex align-items-center"
                   >
                     <span className="svg-icon menu-icon">
-                      {/* <Image
-                      alt="icon-sidebar-kotak-kotak"
-                      src="/assets/icon/new/aside/compiling-white.svg"
-                      width={24}
-                      height={24}
-                    /> */}
                       <svg
                         width="24"
                         height="24"
@@ -1049,7 +1057,6 @@ const Sidebar = () => {
                       </svg>
                     </span>
                     <span className="menu-text">Subvit</span>
-                    {/* <i className="menu-arrow"></i> */}
                     <IconArrow2
                       className="transition-animate"
                       fill="#ffffff"
@@ -1060,8 +1067,6 @@ const Sidebar = () => {
                       }}
                     />
                   </a>
-                  {/* <Link href='/subvit/'>
-                </Link> */}
                   <div className="menu-submenu">
                     <i className="menu-arrow"></i>
                     <ul className="menu-subnav">
@@ -1078,13 +1083,6 @@ const Sidebar = () => {
 
                       {listMenuSubvit.map((items, index) => {
                         return (
-                          // <li className="menu-item" aria-haspopup="true">
-                          //   <Link href="/subvit/substansi">
-                          //     <a className="menu-link">
-                          //       <span className="menu-text">Tes Substansi</span>
-                          //     </a>
-                          //   </Link>
-                          // </li>
                           <li
                             key={index}
                             className={`menu-item ${
@@ -1103,14 +1101,6 @@ const Sidebar = () => {
                           </li>
                         );
                       })}
-
-                      {/* <li className="menu-item" aria-haspopup="true">
-                      <Link href="/subvit/substansi">
-                        <a className="menu-link">
-                          <span className="menu-text">Tes Substansi</span>
-                        </a>
-                      </Link>
-                    </li> */}
 
                       {/* end loop subvit */}
                     </ul>

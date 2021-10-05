@@ -325,7 +325,7 @@ const ListAcademy = ({ token }) => {
                   />
                 </div>
 
-                {academy && academy.total_rows > 5 ? (
+                {academy && academy.total_rows > 5 && (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0 mt-3">
@@ -358,8 +358,6 @@ const ListAcademy = ({ token }) => {
                       </div>
                     </div>
                   </div>
-                ) : (
-                  ""
                 )}
               </div>
             </div>

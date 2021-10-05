@@ -500,6 +500,12 @@ margin-top: 1rem;
   z-index: 99;
 }
 
+.listDTS:hover{
+  transition: 0.2s;
+  background: #ECF5FC;
+  cursor: pointer;
+}
+
 
 
 

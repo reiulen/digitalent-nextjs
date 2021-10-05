@@ -213,7 +213,7 @@ const TambahFaq = ({token}) => {
                                 </div>
                             </div>
                             {
-                                console.log (kategori)
+                                // console.log (kategori)
                             }
 
                             <div className="form-group">

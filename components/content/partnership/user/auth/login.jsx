@@ -84,7 +84,7 @@ const LoginAdmin = () => {
                   lineHeight: "38px",
                 }}
               >
-                Selamat Datang
+                Selamat Datang Mitra
               </h3>
             </div>
 
