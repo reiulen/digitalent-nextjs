@@ -134,15 +134,13 @@ export default function KelolasertifikatID({ token }) {
                           // fontWeight: "bold",
                         }}
                       >
-                        {certificate?.theme}
+                        {certificate?.data?.certificate?.theme?.name}
                       </div>
                       <div className="mt-2 w-100">
                         <span className="w-100">
                           Program{" "}
                           <span className="font-size-h6 font-weight-bold w-100">
-                            {/* {
-                              certificate?.data?.list_certificate[0]?.academy.name
-                            } */}
+                            {certificate?.data?.certificate.academy.name}
                           </span>{" "}
                           Selama
                         </span>
