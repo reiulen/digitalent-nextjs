@@ -93,13 +93,15 @@ const Faq = ({token}) => {
             jawaban: data.jawaban,
             publish: data.publish,
             users_id: users_id,
+            // users_id: users_id,
             tanggal_publish: data.tanggal_publish,
             // users_id: data.users_id,
         }
 
         dispatch(updatePinFaq(dataToSend, data.id, token))
         // console.log (e.target.checked)
-        // console.log (data)
+        // console.log (dataToSend)
+        // console.log(data.id)
     };
 
     const onNewReset = () => {
@@ -314,9 +316,9 @@ const Faq = ({token}) => {
 
     return (
         <PageWrapper>
-            {
-                // console.log (faq)
-            }
+            {/* {
+                console.log (faq)
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
