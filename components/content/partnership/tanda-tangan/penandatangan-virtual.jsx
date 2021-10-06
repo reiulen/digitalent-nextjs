@@ -43,7 +43,6 @@ export default function PenandatanganVirtual({token}) {
   const router = useRouter();
   const dispatch = useDispatch();
   const allTandaTangan = useSelector((state) => state.allTandaTangan);
-  console.log("allTandaTangan dd",allTandaTangan.ttdPartner)
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: ".pdf",
@@ -60,15 +59,10 @@ export default function PenandatanganVirtual({token}) {
 
   const images = files.map((file) => (
     <div className="h-100 w-100" key={file.name}>
-      {/* <img src={file.preview} className="w-100 h-100" alt="preview" /> */}
       <iframe
       className="w-100"
         style={{ border: "1px solid black",minHeight:"100vh" }}
         src={file.preview}
-        // frameBorder="0"
-        // scrolling="auto"
-        // height={file.preview ? "500px" : ""}
-        // width="100%"
       ></iframe>
     </div>
   ));
@@ -99,30 +93,9 @@ export default function PenandatanganVirtual({token}) {
               className="mx-auto border my-10 d-flex align-items-center justify-content-center"
             >
               {images}
-              {/* card ttd */}
-              <div className="cardss" ref={cardRef}>
-                {(allTandaTangan.ttdPartner.length === 0) || (allTandaTangan.ttdPartner.data.length === 0)  ? (
-                  ""
-                ) : (
-                  <div className="image-card-1">
-                    <Image
-                      src={
-                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
-                        "partnership/images/signatures/" +
-                        allTandaTangan.ttdPartner.data[0].signature_image
-                      }
-                      width={400}
-                      height={400}
-                      alt="logo"
-                    />
-                  </div>
-                  
-                )}
-              </div>
               {images.length === 0 ? 
               <div>
                 {/* btn upload */}
-
                 <div className="border px-5 py-8 d-flex flex-column align-items-center justify-content-center">
                   {/* icon */}
                   <Image
@@ -157,6 +130,26 @@ export default function PenandatanganVirtual({token}) {
                 </div>
               </div>
            :""}
+           {/* card ttd */}
+              <div className="cardss" ref={cardRef}>
+                {(allTandaTangan.ttdPartner.length === 0) || (allTandaTangan.ttdPartner.data.length === 0)  ? (
+                  ""
+                ) : (
+                  <div className="image-card-1">
+                    <Image
+                      src={
+                        process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                        "partnership/images/signatures/" +
+                        allTandaTangan.ttdPartner.data[0].signature_image
+                      }
+                      width={400}
+                      height={400}
+                      alt="logo"
+                    />
+                  </div>
+                  
+                )}
+              </div>
            </div>
             {/* end container sub */}
 
@@ -166,11 +159,6 @@ export default function PenandatanganVirtual({token}) {
                   <div className="d-flex aling-items-end justify-content-between">
                     <div className="form-group">
                       <label>Pihak 1 Admin</label>
-                      {/* <input
-                        type="email"
-                        className="form-control form-control-lg"
-                        placeholder="Nanang Ismail"
-                      /> */}
                       <select
                         className="form-control form-control-lg"
                         onChange={(e) => choiceTtdAdmin(e)}

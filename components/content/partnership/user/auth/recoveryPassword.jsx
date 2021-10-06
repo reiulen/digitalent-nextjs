@@ -113,7 +113,7 @@ const RegisterMitra = () => {
                   lineHeight: "38px",
                 }}
               >
-                Atur Ulang Password
+                Atur Ulang Password Mitra
               </h3>
             </div>
 
