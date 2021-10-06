@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
-import SimpleReactValidator from 'simple-react-validator'
-import DatePicker from 'react-datepicker'
+import SimpleReactValidator from "simple-react-validator";
+import DatePicker from "react-datepicker";
 import { getSession } from "next-auth/client";
 
 import {
@@ -23,7 +23,7 @@ import {
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditArtikel = ({token}) => {
+const EditArtikel = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -37,6 +37,18 @@ const EditArtikel = ({token}) => {
   });
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
+<<<<<<< HEAD
+  const simpleValidator = useRef(
+    new SimpleReactValidator({
+      locale: "id",
+      messages: {
+        url: "Format url berupa: https://www.example.com",
+      },
+    })
+  );
+  // const [, forceUpdate] = useState();
+  const forceUpdate = React.useReducer(() => ({}))[1];
+=======
   const simpleValidator = useRef(new SimpleReactValidator({ 
     locale: "id",
     messages: {
@@ -45,17 +57,22 @@ const EditArtikel = ({token}) => {
   }));
   const [, forceUpdate] = useState();
   // const forceUpdate = React.useReducer(() => ({}))[1]
+>>>>>>> 279f614e085680387383629b291de8e592fdb1c4
   const { artikel } = useSelector((state) => state.detailArtikel);
-  const { error, success, loading} = useSelector(
+  const { error, success, loading } = useSelector(
     (state) => state.updatedArtikel
   );
-  const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
+  const {
+    loading: allLoading,
+    error: allError,
+    kategori,
+  } = useSelector((state) => state.allKategori);
   // const session = getSession({ req });
 
   // if (!session) {
   //   return {
   //     redirect: {
-  //       destination: "/",
+  //       destination: "http://dts-dev.majapahit.id/",
   //       permanent: false,
   //     },
   //   };
@@ -69,13 +86,12 @@ const EditArtikel = ({token}) => {
 
   // if (allError){
   //   error = allError
-  
+
   // } else if (updateError){
   //   error = updateError
   // }
 
   useEffect(() => {
-
     // dispatch(getAllKategori(session.user.user.data.token))
 
 
@@ -98,32 +114,46 @@ const EditArtikel = ({token}) => {
   const [id, setId] = useState(artikel.id);
   const [judul_artikel, setJudulArtikel] = useState(artikel.judul_artikel);
   const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel);
-  const [gambar, setGambar] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel.gambar);
-  const [gambarDB, setGambardb] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel.gambar);
+  const [gambar, setGambar] = useState(
+    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+      "publikasi/images/" +
+      artikel.gambar
+  );
+  const [gambarDB, setGambardb] = useState(
+    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+      "publikasi/images/" +
+      artikel.gambar
+  );
   // const [gambar, setGambar] = useState(artikel.gambar);
   // const [gambarPreview, setGambarPreview] = useState(
   //   "/assets/media/default.jpg"
   // ); //belum
-  const [iconPlus, setIconPlus] = useState(
-    "/assets/icon/Add.svg"
+  const [iconPlus, setIconPlus] = useState("/assets/icon/Add.svg");
+  const [gambarPreview, setGambarPreview] = useState(
+    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+      "publikasi/images/" +
+      artikel.gambar
   );
-  const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + artikel.gambar);
-  const [gambarName, setGambarName] = useState (artikel.gambar)
+  const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
   const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
   const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
-  const [publishDate, setPublishDate] = useState(artikel.tanggal_publish ? new Date (artikel.tanggal_publish) : null);
-  const [disablePublishDate, setDisablePublishDate] = useState(artikel.publish === 0 ? true : false)
+  const [publishDate, setPublishDate] = useState(
+    artikel.tanggal_publish ? new Date(artikel.tanggal_publish) : null
+  );
+  const [disablePublishDate, setDisablePublishDate] = useState(
+    artikel.publish === 0 ? true : false
+  );
   const [_method, setMethod] = useState("put");
 
   const onChangeGambar = (e) => {
-    const type = ["image/jpg", "image/png", "image/jpeg"]
+    const type = ["image/jpg", "image/png", "image/jpeg"];
     // console.log (e.target.files[0].type)
     // console.log (e.target.files[0])
     // console.log ("check")
 
-    if (type.includes (e.target.files[0].type)){
+    if (type.includes(e.target.files[0].type)) {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -131,35 +161,34 @@ const EditArtikel = ({token}) => {
           setGambarPreview(reader.result);
         }
       };
-      reader.readAsDataURL(e.target.files[0])
+      reader.readAsDataURL(e.target.files[0]);
       // console.log (reader.readAsDataURL(e.target.files[0]))
-      setGambarName(e.target.files[0].name)
-    } 
-    else {
+      setGambarName(e.target.files[0].name);
+    } else {
       // setGambar("")
       // setGambarPreview("/assets/media/default.jpg")
       // setGambarName(null)
       // simpleValidator.current.showMessages();
       // forceUpdate(1);
-      e.target.value = null
+      e.target.value = null;
       Swal.fire(
-        'Oops !',
-        'Data yang bisa dimasukkan hanya berupa data gambar.',
-        'error'
-      )
+        "Oops !",
+        "Data yang bisa dimasukkan hanya berupa data gambar.",
+        "error"
+      );
     }
   };
 
   const handleChangePublish = (e) => {
     // setPublish(e.target.checked);
-    setDisablePublishDate(!disablePublishDate)
+    setDisablePublishDate(!disablePublishDate);
     // console.log (e.target.checked)
 
-    if (e.target.checked === false){
-        setPublishDate (null)
-        setPublish (0)
+    if (e.target.checked === false) {
+      setPublishDate(null);
+      setPublish(0);
     } else {
-        setPublish (1)
+      setPublish(1);
     }
   };
 
@@ -167,10 +196,10 @@ const EditArtikel = ({token}) => {
     // let result = moment(date).format("YYYY-MM-DD")
     if (disablePublishDate === false) {
       // setPublishDate(result)
-      setPublishDate(date)
+      setPublishDate(date);
       // console.log (result)
     }
-  }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -178,7 +207,7 @@ const EditArtikel = ({token}) => {
       if (error) {
         dispatch(clearErrors());
       }
-  
+
       if (success) {
         dispatch({
           // type: NEW_ARTIKEL_RESET
@@ -187,11 +216,9 @@ const EditArtikel = ({token}) => {
       }
 
       if (publish === true) {
-        setPublish(1)
-      
+        setPublish(1);
       } else if (publish === false) {
-        setPublish(0)
-
+        setPublish(0);
       }
 
       // if (publishDate === null) {
@@ -212,7 +239,7 @@ const EditArtikel = ({token}) => {
       //     _method,
       //     tanggal_publish : moment(today).format("YYYY-MM-DD")
       //   };
-        
+
       //   Swal.fire({
       //     title: "Apakah anda yakin ?",
       //     text: "Data ini akan diedit !",
@@ -231,7 +258,7 @@ const EditArtikel = ({token}) => {
       //         //     type: UPDATE_ARTIKEL_RESET,
       //         //   });
       //         // }
-  
+
       //         dispatch(updateArtikel(data));
       //         console.log(data)
       //       }
@@ -250,7 +277,7 @@ const EditArtikel = ({token}) => {
       //     _method,
       //     tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
       //   };
-        
+
       //   Swal.fire({
       //     title: "Apakah anda yakin ?",
       //     text: "Data ini akan diedit !",
@@ -269,7 +296,7 @@ const EditArtikel = ({token}) => {
       //         //     type: UPDATE_ARTIKEL_RESET,
       //         //   });
       //         // }
-  
+
       //         dispatch(updateArtikel(data));
       //         console.log(data)
       //       }
@@ -277,10 +304,8 @@ const EditArtikel = ({token}) => {
       // }
 
       if (gambarDB !== gambar) {
-
         if (publishDate === null) {
-
-          let today = new Date
+          let today = new Date();
 
           // console.log (today)
 
@@ -294,9 +319,9 @@ const EditArtikel = ({token}) => {
             publish,
             id,
             _method,
-            tanggal_publish : moment(today).format("YYYY-MM-DD")
+            tanggal_publish: moment(today).format("YYYY-MM-DD"),
           };
-          
+
           Swal.fire({
             title: "Apakah anda yakin ?",
             text: "Data ini akan diedit !",
@@ -306,21 +331,19 @@ const EditArtikel = ({token}) => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Ya !",
             cancelButtonText: "Batal",
-          })
-            .then((result) => {
-              if (result.isConfirmed) {
-                // if (success) {
-                //   dispatch({
-                //     // type: NEW_ARTIKEL_RESET
-                //     type: UPDATE_ARTIKEL_RESET,
-                //   });
-                // }
-    
-                dispatch(updateArtikel(data, token));
-                // console.log(data)
-              }
-          });
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // if (success) {
+              //   dispatch({
+              //     // type: NEW_ARTIKEL_RESET
+              //     type: UPDATE_ARTIKEL_RESET,
+              //   });
+              // }
 
+              dispatch(updateArtikel(data, token));
+              // console.log(data)
+            }
+          });
         } else {
           const data = {
             judul_artikel,
@@ -332,9 +355,9 @@ const EditArtikel = ({token}) => {
             publish,
             id,
             _method,
-            tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
           };
-          
+
           Swal.fire({
             title: "Apakah anda yakin ?",
             text: "Data ini akan diedit !",
@@ -344,19 +367,18 @@ const EditArtikel = ({token}) => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Ya !",
             cancelButtonText: "Batal",
-          })
-            .then((result) => {
-              if (result.isConfirmed) {
-                // if (success) {
-                //   dispatch({
-                //     // type: NEW_ARTIKEL_RESET
-                //     type: UPDATE_ARTIKEL_RESET,
-                //   });
-                // }
-    
-                dispatch(updateArtikel(data, token));
-                // console.log(data)
-              }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // if (success) {
+              //   dispatch({
+              //     // type: NEW_ARTIKEL_RESET
+              //     type: UPDATE_ARTIKEL_RESET,
+              //   });
+              // }
+
+              dispatch(updateArtikel(data, token));
+              // console.log(data)
+            }
           });
         }
 
@@ -372,7 +394,7 @@ const EditArtikel = ({token}) => {
         //   _method,
         //   tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
         // };
-        
+
         // Swal.fire({
         //   title: "Apakah anda yakin ?",
         //   text: "Data ini akan diedit !",
@@ -391,30 +413,28 @@ const EditArtikel = ({token}) => {
         //       //     type: UPDATE_ARTIKEL_RESET,
         //       //   });
         //       // }
-  
+
         //       dispatch(updateArtikel(data));
         //       console.log(data)
         //     }
         // });
-
       } else {
-
         if (publishDate === null) {
-          let today = new Date
+          let today = new Date();
 
           const data = {
             judul_artikel,
             isi_artikel,
-            gambar : "",
+            gambar: "",
             kategori_id,
             users_id,
             tag,
             publish,
             id,
             _method,
-            tanggal_publish : moment(today).format("YYYY-MM-DD")
+            tanggal_publish: moment(today).format("YYYY-MM-DD"),
           };
-          
+
           Swal.fire({
             title: "Apakah anda yakin ?",
             text: "Data ini akan diedit !",
@@ -424,34 +444,33 @@ const EditArtikel = ({token}) => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Ya !",
             cancelButtonText: "Batal",
-          })
-            .then((result) => {
-              if (result.isConfirmed) {
-                // if (success) {
-                //   dispatch({
-                //     // type: NEW_ARTIKEL_RESET
-                //     type: UPDATE_ARTIKEL_RESET,
-                //   });
-                // }
-    
-                dispatch(updateArtikel(data, token));
-                // console.log(data)
-              }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // if (success) {
+              //   dispatch({
+              //     // type: NEW_ARTIKEL_RESET
+              //     type: UPDATE_ARTIKEL_RESET,
+              //   });
+              // }
+
+              dispatch(updateArtikel(data, token));
+              // console.log(data)
+            }
           });
         } else {
           const data = {
             judul_artikel,
             isi_artikel,
-            gambar : "",
+            gambar: "",
             kategori_id,
             users_id,
             tag,
             publish,
             id,
             _method,
-            tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+            tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
           };
-          
+
           Swal.fire({
             title: "Apakah anda yakin ?",
             text: "Data ini akan diedit !",
@@ -461,19 +480,18 @@ const EditArtikel = ({token}) => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Ya !",
             cancelButtonText: "Batal",
-          })
-            .then((result) => {
-              if (result.isConfirmed) {
-                // if (success) {
-                //   dispatch({
-                //     // type: NEW_ARTIKEL_RESET
-                //     type: UPDATE_ARTIKEL_RESET,
-                //   });
-                // }
-    
-                dispatch(updateArtikel(data, token));
-                // console.log(data)
-              }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // if (success) {
+              //   dispatch({
+              //     // type: NEW_ARTIKEL_RESET
+              //     type: UPDATE_ARTIKEL_RESET,
+              //   });
+              // }
+
+              dispatch(updateArtikel(data, token));
+              // console.log(data)
+            }
           });
         }
 
@@ -489,7 +507,7 @@ const EditArtikel = ({token}) => {
         //   _method,
         //   tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
         // };
-        
+
         // Swal.fire({
         //   title: "Apakah anda yakin ?",
         //   text: "Data ini akan diedit !",
@@ -508,13 +526,12 @@ const EditArtikel = ({token}) => {
         //       //     type: UPDATE_ARTIKEL_RESET,
         //       //   });
         //       // }
-  
+
         //       dispatch(updateArtikel(data));
         //       console.log(data)
         //     }
         // });
       }
-      
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
@@ -525,7 +542,6 @@ const EditArtikel = ({token}) => {
         text: "Isi data dengan benar !",
       });
     }
-    
   };
 
   const onNewReset = () => {
@@ -542,6 +558,7 @@ const EditArtikel = ({token}) => {
         {
           console.log (kategori)
         } */}
+        
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -667,7 +684,7 @@ const EditArtikel = ({token}) => {
                           //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
                           //     // }
                           //     allowedContent: true
-                              
+
                           //   }
                           // }
                         />
@@ -720,7 +737,7 @@ const EditArtikel = ({token}) => {
                         onBlur={() =>
                           simpleValidator.current.showMessageFor("gambar")
                         }
-                        style={{display: "none"}}
+                        style={{ display: "none" }}
                       />
                     </div>
                     {/* <div>
@@ -746,7 +763,6 @@ const EditArtikel = ({token}) => {
                         style={{display: "none"}}
                       />
                     </div> */}
-                    
                   </div>
 
                   <div className="ml-3">
@@ -756,21 +772,17 @@ const EditArtikel = ({token}) => {
                       "required",
                       { className: "text-danger" }
                     )}
-                    {
-                      gambarName !== null ?
-                        <small className="text-danger">{gambarName}</small>
-                      :
-                        null
-                    }
+                    {gambarName !== null ? (
+                      <small className="text-danger">{gambarName}</small>
+                    ) : null}
                   </div>
 
                   <div className="mt-3 col-sm-3 text-muted">
                     <p>
-                      Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
+                      Resolusi yang direkomendasikan adalah 1024 * 512. Fokus
+                      visual pada bagian tengah gambar
                     </p>
-                      
                   </div>
-                  
                 </div>
 
                 {/* <div className="form-group row">
@@ -819,28 +831,52 @@ const EditArtikel = ({token}) => {
                 </div> */}
 
                 <div className="form-group">
-                  <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
+                  <label
+                    htmlFor="staticEmail"
+                    className="col-sm-2 col-form-label font-weight-bolder"
+                  >
+                    Kategori
+                  </label>
                   <div className="col-sm-12">
-                      <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
-                          <option selected disabled value=''>-- Artikel --</option>
-                          {!kategori || (kategori && kategori.length === 0) ? (
-                              <option value="">Data kosong</option>
-                          ) : (
-                              kategori && kategori.kategori && kategori.kategori.map((row) => {
-                                  return (
-                                    row.jenis_kategori == "Artikel" ?
-                                      <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>
-                                        {row.nama_kategori}
-                                      </option>
-                                    :
-                                      null
-                                      // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
-                                  )
-                              })
-                          )}
-
-                      </select>
-                      {simpleValidator.current.message('kategori_id', kategori_id, 'required', { className: 'text-danger' })}
+                    <select
+                      name=""
+                      id=""
+                      className="form-control"
+                      value={kategori_id}
+                      onChange={(e) => setKategoriId(e.target.value)}
+                      onBlur={(e) => {
+                        setKategoriId(e.target.value);
+                        simpleValidator.current.showMessageFor("kategori_id");
+                      }}
+                    >
+                      <option selected disabled value="">
+                        -- Artikel --
+                      </option>
+                      {!kategori || (kategori && kategori.length === 0) ? (
+                        <option value="">Data kosong</option>
+                      ) : (
+                        kategori &&
+                        kategori.kategori &&
+                        kategori.kategori.map((row) => {
+                          return row.jenis_kategori == "Artikel" ? (
+                            <option
+                              key={row.id}
+                              value={row.id}
+                              selected={kategori_id === row.id ? true : false}
+                            >
+                              {row.nama_kategori}
+                            </option>
+                          ) : null;
+                          // <option key={row.id} value={row.id} selected={kategori_id === row.id ? true : false}>{row.nama_kategori}</option>
+                        })
+                      )}
+                    </select>
+                    {simpleValidator.current.message(
+                      "kategori_id",
+                      kategori_id,
+                      "required",
+                      { className: "text-danger" }
+                    )}
                   </div>
                 </div>
 
@@ -868,7 +904,7 @@ const EditArtikel = ({token}) => {
                     htmlFor="staticEmail"
                     className="ml-5 pl-4 font-weight-bolder"
                   >
-                    Publish 
+                    Publish
                   </label>
                   <div className="col-sm-1 ml-4">
                     <div className="">
@@ -885,8 +921,7 @@ const EditArtikel = ({token}) => {
                           className={`sliders round ${
                             publish ? "text-white" : "pl-2"
                           }`}
-                        >
-                        </span>
+                        ></span>
                       </label>
                     </div>
                   </div>
@@ -913,42 +948,41 @@ const EditArtikel = ({token}) => {
                   </div>
                 </div> */}
 
-                {
-                  disablePublishDate === false ?
-                    <div className="form-group">
-                      <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
-                      <div className="col-sm-12">
-                        <div className="input-group">
-                          <DatePicker
-                            className="form-search-date form-control-sm form-control"
-                            selected={publishDate}
-                            onChange={(date) => handlePublishDate(date)}
-                            // onChange={(date) => setPublishDate(date)}
-                            selectsStart
-                            startDate={publishDate}
-                            // endDate={endDate}
-                            dateFormat="dd/MM/yyyy"
-                            placeholderText="Silahkan Isi Tanggal Publish"
-                            wrapperClassName="col-12 col-lg-12 col-xl-12"
-                            // minDate={moment().toDate()}
+                {disablePublishDate === false ? (
+                  <div className="form-group">
+                    <label className="col-sm-5 col-form-label font-weight-bolder">
+                      Set Tanggal Publish
+                    </label>
+                    <div className="col-sm-12">
+                      <div className="input-group">
+                        <DatePicker
+                          className="form-search-date form-control-sm form-control"
+                          selected={publishDate}
+                          onChange={(date) => handlePublishDate(date)}
+                          // onChange={(date) => setPublishDate(date)}
+                          selectsStart
+                          startDate={publishDate}
+                          // endDate={endDate}
+                          dateFormat="dd/MM/yyyy"
+                          placeholderText="Silahkan Isi Tanggal Publish"
+                          wrapperClassName="col-12 col-lg-12 col-xl-12"
+                          // minDate={moment().toDate()}
                           // minDate={addDays(new Date(), 20)}
-                            disabled = {disablePublishDate === true || disablePublishDate === null}
-                          />
-                        </div>
-                        {/* {
+                          disabled={
+                            disablePublishDate === true ||
+                            disablePublishDate === null
+                          }
+                        />
+                      </div>
+                      {/* {
                           disablePublishDate === true ?
                             <small className="text-muted">Harap ubah status publikasi menjadi aktif untuk mengisi Tanggal Publish</small>
                           :
                             null
                         } */}
-                      </div>
                     </div>
-                  :
-                    null
-
-                }
-
-                
+                  </div>
+                ) : null}
 
                 <div className="form-group row">
                   <div className="col-sm-2"></div>
@@ -958,7 +992,9 @@ const EditArtikel = ({token}) => {
                         Kembali
                       </a>
                     </Link>
-                    <button className="btn btn-primary-rounded-full rounded-pill btn-sm">Simpan</button>
+                    <button className="btn btn-primary-rounded-full rounded-pill btn-sm">
+                      Simpan
+                    </button>
                   </div>
                 </div>
               </form>

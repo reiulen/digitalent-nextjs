@@ -7,35 +7,34 @@ import { getDetailArtikel } from "../../../../redux/actions/publikasi/artikel.ac
 import { wrapper } from "../../../../redux/store";
 // import { getSession } from "next-auth/client";
 
-
-export default function PreviewArtikel (props) {
-    const session = props.session.user.user.data;
-    return (
-      <div className="wrapper-preview">
-        <div className="d-flex flex-column flex-root content-preview">
-            <Preview token={session.token}/>
-        </div>
-    
-        <div className="footer-preview">
-          <Footer/>
-        </div>
+export default function PreviewArtikel(props) {
+  const session = props.session.user.user.data;
+  return (
+    <div className="wrapper-preview">
+      <div className="d-flex flex-column flex-root content-preview">
+        <Preview token={session.token} />
       </div>
 
-        // <div className="d-flex flex-column flex-root">
-        //     <Preview token={session.token}/>
-        //     <Footer/>
-        // </div>
-    )
+      <div className="footer-preview">
+        <Footer />
+      </div>
+    </div>
+
+    // <div className="d-flex flex-column flex-root">
+    //     <Preview token={session.token}/>
+    //     <Footer/>
+    // </div>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ params, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "http://dts-dev.majapahit.id/",
             permanent: false,
           },
         };
@@ -45,7 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Preview Artikel - Publikasi", data: "auth", },
+        props: { session, title: "Preview Artikel - Publikasi", data: "auth" },
       };
     }
 );
