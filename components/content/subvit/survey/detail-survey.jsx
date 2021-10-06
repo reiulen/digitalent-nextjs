@@ -175,7 +175,7 @@ const DetailSurvey = ({ token }) => {
                   <div className="col value-1">
                     <p>{survey.academy.name}</p>
                     <p>{survey.theme.name}</p>
-                    <p>{survey.training.name}</p>
+                    <p>{survey.training ? survey.training.name : ""}</p>
                     <p>{survey.status ? "Publish" : "Draft"}</p>
                   </div>
                 </div>

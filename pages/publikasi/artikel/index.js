@@ -5,56 +5,70 @@ import { getSession } from "next-auth/client";
 // import Artikel from "../../../components/content/publikasi/artikel/artikel";
 // import ContentLoader from "react-content-loader"
 
-import { getAllArtikel } from '../../../redux/actions/publikasi/artikel.actions'
-import { wrapper } from '../../../redux/store'
+import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
+import { wrapper } from "../../../redux/store";
 
 // import LoadingPage from "../../../components/LoadingPage";
-import LoadingSkeleton from "../../../components/LoadingSkeleton"
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 const Artikel = dynamic(
-    () => import("../../../components/content/publikasi/artikel/artikel"),
-    {
-        // suspense: true,
-        // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow() { return <LoadingSkeleton /> },
-        ssr: false
-    }
+  () => import("../../../components/content/publikasi/artikel/artikel"),
+  {
+    // suspense: true,
+    // loading: () => <LoadingSkeleton />,
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
 );
 
 export default function ArtikelPage(props) {
-    const session = props.session.user.user.data;
-    // console.log (session.token)
-    return (
-        <>
-            <div className="d-flex flex-column flex-root">
-                {/* <Layout title='Artikel - Publikasi'>
+  const session = props.session.user.user.data;
+  // console.log (session.token)
+  return (
+    <>
+      <div className="d-flex flex-column flex-root">
+        {/* <Layout title='Artikel - Publikasi'>
                     <Artikel />
                 </Layout> */}
-                <Artikel token={session.token}/>
-            </div>
-        </>
-    )
+        <Artikel token={session.token} />
+      </div>
+    </>
+  );
 }
 
-
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
-    // await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
-    const session = await getSession({ req });
-    if (!session) {
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query, req }) => {
+      // await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate))
+      const session = await getSession({ req });
+      if (!session) {
         return {
-            redirect: {
-            destination: "/",
+          redirect: {
+            destination: "http://dts-dev.majapahit.id/",
             permanent: false,
-            },
+          },
         };
-    }
-    
-    await store.dispatch(getAllArtikel(query.page, query.keyword, query.limit, query.publish, query.startdate, query.enddate, session.user.user.data.token))
-    // await store.dispatch(getAllKategori(session.user.user.data.token))
-    return {
+      }
+
+      await store.dispatch(
+        getAllArtikel(
+          query.page,
+          query.keyword,
+          query.limit,
+          query.publish,
+          query.startdate,
+          query.enddate,
+          session.user.user.data.token
+        )
+      );
+      // await store.dispatch(getAllKategori(session.user.user.data.token))
+      return {
         props: { session, title: "Artikel - Publikasi" },
-    };
-})
+      };
+    }
+);
 
 // export const getStaticProps = wrapper.getStaticProps(
 //     store => async ({ query }) => {
@@ -69,7 +83,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ q
 // export const getStaticProps = async (ctx) =>{
 //     const resp = await fetch('http://dts-publikasi-dev.majapahit.id/api/artikel')
 //     const {data} = await resp.json()
-//     return { 
+//     return {
 //         props : data
 //     }
 // }

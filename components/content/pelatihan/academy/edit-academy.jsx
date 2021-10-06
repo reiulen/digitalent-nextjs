@@ -182,7 +182,7 @@ const EditAcademy = ({ token }) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data yang bener dong lu !",
+        text: "Isi data dengan benar !",
       });
     }
   };

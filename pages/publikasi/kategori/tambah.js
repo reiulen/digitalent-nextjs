@@ -42,7 +42,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async ({ p
   if (!session) {
     return {
       redirect: {
-        destination: "/",
+        destination: "http://dts-dev.majapahit.id/",
         permanent: false,
       },
     };

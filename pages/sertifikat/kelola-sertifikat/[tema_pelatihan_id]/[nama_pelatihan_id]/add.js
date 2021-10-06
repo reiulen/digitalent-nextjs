@@ -11,7 +11,7 @@ import { getDetailSertifikat } from "../../../../../redux/actions/sertifikat/kel
 const AddSertifikat = dynamic(
   () =>
     import(
-      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/add-sertifikat.jsx"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/add-sertifikat"
     ),
   {
     loading: function loadingNow() {
@@ -34,13 +34,13 @@ export default function AddSertifikatPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "http://dts-dev.majapahit.id/",
             permanent: false,
           },
         };

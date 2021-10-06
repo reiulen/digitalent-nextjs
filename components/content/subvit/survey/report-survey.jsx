@@ -13,6 +13,7 @@ import CardPage from "../../../CardPage";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
+import axios from "axios";
 
 const ReportSurvey = ({ token }) => {
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const ReportSurvey = ({ token }) => {
   };
 
   const handleExportReport = async () => {
-    let link = `http://dts-subvit-dev.majapahit.id/api/trivia-question-banks/report/export/${id}`;
+    let link = `http://dts-subvit-dev.majapahit.id/api/survey-question-banks/report/export/${id}`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (status) link = link.concat(`&status=${status}`);
     if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
@@ -207,7 +208,7 @@ const ReportSurvey = ({ token }) => {
                   </div>
                 </div>
                 <div className="col-md-1"></div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-1"
                     style={{
@@ -224,7 +225,7 @@ const ReportSurvey = ({ token }) => {
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-3">
                   {/* <button
                     className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
                     type="button"
