@@ -132,7 +132,8 @@ const AddRegistrationStep2 = ({ propsStep }) => {
     const list = [...formBuilder];
     list[index][name] = value;
     if (name === "required") {
-      list[index]["required"] = checked;
+      let check = checked === true ? "1" : "0";
+      list[index]["required"] = check;
     }
     setFormBuilder(list);
   };
@@ -148,7 +149,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
         size: "",
         option: "",
         dataOption: "",
-        required: false,
+        required: "0",
       },
     ]);
   };
@@ -460,7 +461,7 @@ const AddRegistrationStep2 = ({ propsStep }) => {
                         <input
                           type="checkbox"
                           name="required"
-                          checked={row.required}
+                          checked={row.required === "1" ? true : false}
                           className="form-check-input"
                           onChange={(e) => inputChangeHandler(e, i)}
                         />

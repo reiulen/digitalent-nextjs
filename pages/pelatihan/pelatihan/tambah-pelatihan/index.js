@@ -14,11 +14,12 @@ import {
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function AddTrainingPage() {
+export default function AddTrainingPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <IndexInsert />
+        <IndexInsert token={session.token} />
       </div>
     </>
   );

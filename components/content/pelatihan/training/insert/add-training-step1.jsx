@@ -556,9 +556,9 @@ const AddTrainingStep1 = ({ propsStep }) => {
                 <input
                   type="radio"
                   name="metode"
-                  value="swakelola"
-                  checked={metodeImplementation === "swakelola"}
-                  onClick={() => setMetodeImplementation("swakelola")}
+                  value="Swakelola"
+                  checked={metodeImplementation === "Swakelola"}
+                  onClick={() => setMetodeImplementation("Swakelola")}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("metode pelaksanaan")
                   }
@@ -571,9 +571,9 @@ const AddTrainingStep1 = ({ propsStep }) => {
                   type="radio"
                   name="metode"
                   className="form-check-input"
-                  value="mitra"
-                  checked={metodeImplementation === "mitra"}
-                  onClick={() => setMetodeImplementation("mitra")}
+                  value="Mitra"
+                  checked={metodeImplementation === "Mitra"}
+                  onClick={() => setMetodeImplementation("Mitra")}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("metode pelaksanaan")
                   }
@@ -839,9 +839,9 @@ const AddTrainingStep1 = ({ propsStep }) => {
                   type="radio"
                   name="statusKuota"
                   className="form-check-input"
-                  value="available"
-                  checked={statusKuota === "available"}
-                  onClick={() => setStatusKuota("available")}
+                  value="Available"
+                  checked={statusKuota === "Available"}
+                  onClick={() => setStatusKuota("Available")}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("status kuota")
                   }
@@ -853,9 +853,9 @@ const AddTrainingStep1 = ({ propsStep }) => {
                   type="radio"
                   name="statusKuota"
                   className="form-check-input"
-                  value="full"
-                  checked={statusKuota === "full"}
-                  onClick={() => setStatusKuota("full")}
+                  value="Full"
+                  checked={statusKuota === "Full"}
+                  onClick={() => setStatusKuota("Full")}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("status kuota")
                   }
@@ -1102,9 +1102,9 @@ const AddTrainingStep1 = ({ propsStep }) => {
                   type="radio"
                   name="metodeTraining"
                   className="form-check-input"
-                  value="Online&Offline"
-                  checked={metodeTraining === "Online&Offline"}
-                  onClick={() => setMetodeTraining("Online&Offline")}
+                  value="Online dan Offline"
+                  checked={metodeTraining === "Online dan Offline"}
+                  onClick={() => setMetodeTraining("Online dan Offline")}
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("metode pelatihan")
                   }

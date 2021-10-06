@@ -8,6 +8,8 @@ import {
   IS_OVERLAY_ASSIDE_HEADER,
 } from "../../redux/types/utils/functionals.type";
 
+import { getSession } from "next-auth/client";
+
 const Header = () => {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -15,6 +17,7 @@ const Header = () => {
   // console.log("header page",allFunctionls)
 
   const [breadcrumbs, setBreadcrumbs] = useState(null);
+  const [user, setUser] = useState();
 
   const snakeToPascal = (string) => {
     return string
@@ -66,7 +69,11 @@ const Header = () => {
 
       setBreadcrumbs(pathArray);
     }
-  }, [router]);
+
+    getSession().then((session) => {
+      setUser(session.user.user.data.user);
+    });
+  }, [router, getSession]);
 
   return (
     <>
@@ -288,11 +295,11 @@ const Header = () => {
                   Hi,
                 </span>
                 <span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
-                  Dendy
+                  {(user && user.name) || ""}
                 </span>
                 <span className="symbol symbol-lg-35 symbol-25 symbol-light-success">
                   <span className="symbol-label font-size-h5 font-weight-bold">
-                    D
+                    {(user && user.name.charAt(0).toUpperCase()) || ""}
                   </span>
                 </span>
               </div>

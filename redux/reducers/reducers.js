@@ -212,6 +212,13 @@ import {
   updateThemeReducer,
   deleteThemeReducer,
 } from "./pelatihan/theme.reducers";
+
+// ====================== pelatihan =====================
+import {
+  newTrainingReducer,
+  allTrainingReducer,
+  deleteTrainingReducer,
+} from "./pelatihan/training.reducers";
 //END PELATIHAN
 
 // functional reducer
@@ -406,6 +413,10 @@ const reducer = combineReducers({
   detailTheme: detailThemeReducer,
   updateTheme: updateThemeReducer,
   deleteTheme: deleteThemeReducer,
+  // ========== pelatihan ===========
+  allTraining: allTrainingReducer,
+  newTraining: newTrainingReducer,
+  deleteTraining: deleteTrainingReducer,
 
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,
