@@ -95,3 +95,12 @@
     max-width: 40rem;
     min-width:40rem;
 } */
+
+/* the slides */
+.slick-slide {
+    margin: 0 1000px;
+}
+/* the parent */
+.slick-list {
+    margin: 0 -1000px;
+}
