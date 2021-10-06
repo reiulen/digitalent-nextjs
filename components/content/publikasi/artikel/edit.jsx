@@ -37,6 +37,7 @@ const EditArtikel = ({ token }) => {
   });
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
+<<<<<<< HEAD
   const simpleValidator = useRef(
     new SimpleReactValidator({
       locale: "id",
@@ -47,6 +48,16 @@ const EditArtikel = ({ token }) => {
   );
   // const [, forceUpdate] = useState();
   const forceUpdate = React.useReducer(() => ({}))[1];
+=======
+  const simpleValidator = useRef(new SimpleReactValidator({ 
+    locale: "id",
+    messages: {
+       url: "Format url berupa: https://www.example.com"
+    }
+  }));
+  const [, forceUpdate] = useState();
+  // const forceUpdate = React.useReducer(() => ({}))[1]
+>>>>>>> 279f614e085680387383629b291de8e592fdb1c4
   const { artikel } = useSelector((state) => state.detailArtikel);
   const { error, success, loading } = useSelector(
     (state) => state.updatedArtikel
@@ -83,11 +94,6 @@ const EditArtikel = ({ token }) => {
   useEffect(() => {
     // dispatch(getAllKategori(session.user.user.data.token))
 
-    editorRef.current = {
-      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
-      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
-    };
 
     setEditorLoaded(true);
     if (success) {
@@ -528,8 +534,8 @@ const EditArtikel = ({ token }) => {
       }
     } else {
       simpleValidator.current.showMessages();
-      // forceUpdate(1);
-      forceUpdate;
+      forceUpdate(1);
+      // forceUpdate;
       Swal.fire({
         icon: "error",
         title: "Oops...",

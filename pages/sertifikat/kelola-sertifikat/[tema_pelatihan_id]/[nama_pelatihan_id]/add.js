@@ -11,7 +11,7 @@ import { getDetailSertifikat } from "../../../../../redux/actions/sertifikat/kel
 const AddSertifikat = dynamic(
   () =>
     import(
-      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/add-sertifikat.jsx"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/add-sertifikat"
     ),
   {
     loading: function loadingNow() {

@@ -39,6 +39,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       const session = await getSession({ req });
       if (!session) {
         return {
+<<<<<<< HEAD
           redirect: {
             destination: "http://dts-dev.majapahit.id/",
             permanent: false,
@@ -54,6 +55,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       return {
         props: { session, title: "Edit Faq - Publikasi" },
+=======
+          props: { session, title: "Ubah Faq - Publikasi" },
+>>>>>>> 279f614e085680387383629b291de8e592fdb1c4
       };
     }
 );

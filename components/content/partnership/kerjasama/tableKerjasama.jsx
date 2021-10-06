@@ -39,22 +39,23 @@ import {
   changeStatusList,
   exportFileCSV,
   reloadTable,
-  rejectCooperation
+  rejectCooperation,
 } from "../../../../redux/actions/partnership/managementCooporation.actions";
 
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/management_cooporation.type";
 
-const Table = ({token}) => {
-  console.log("token admin",token)
+const Table = ({ token }) => {
+  console.log("token admin", token);
   const router = useRouter();
-  let { update, success,successTerima,successReject,successMakeREvisi } = router.query;
+  let { update, success, successTerima, successReject, successMakeREvisi } =
+    router.query;
   let selectRefKerjasama = null;
   let selectRefStatus = null;
   let selectRefMitra = null;
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK",allMK)
+  console.log("allMK", allMK);
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
@@ -98,11 +99,11 @@ const Table = ({token}) => {
         formData.append("_method", "put");
         formData.append("status", e.target.value);
 
-        dispatch(changeStatusList(token,formData, id));
+        dispatch(changeStatusList(token, formData, id));
         setIsStatusBar(true);
         setDeleteBar(false);
         setIsChangeOption(true);
-        router.replace("/partnership/kerjasama", undefined, { shallow: true })
+        router.replace("/partnership/kerjasama", undefined, { shallow: true });
       } else {
         dispatch(reloadTable());
       }
@@ -121,7 +122,7 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteCooperation(token,id));
+        dispatch(deleteCooperation(token, id));
         setDeleteBar(true);
         setIsStatusBar(false);
         router.replace("/partnership/kerjasama");
@@ -152,13 +153,12 @@ const Table = ({token}) => {
     allMK.card,
     allMK.status_delete,
     allMK.status_list,
-    token
+    token,
   ]);
 
   const [sumWillExpire, setSumWillExpire] = useState(0);
-  
 
-  const cooperationRejection = (id) =>{
+  const cooperationRejection = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin batalkan kerjasama ?",
       icon: "warning",
@@ -170,39 +170,37 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(rejectCooperation(token,id));
+        dispatch(rejectCooperation(token, id));
         setIsStatusBar(true);
       } else {
         dispatch(reloadTable());
       }
     });
-
-  }
+  };
 
   useEffect(() => {
     dispatch(fetchListSelectMitra(token));
     dispatch(fetchListSelectCooperation(token));
     dispatch(fetchListSelectStatus(token));
-    async function getWillExpire (token){
+    async function getWillExpire(token) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setSumWillExpire(data.data.total);
-    } catch (error) {
-      console.log("object", error);
-    }
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&card=will_expire&limit=1000`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setSumWillExpire(data.data.total);
+      } catch (error) {
+        console.log("object", error);
+      }
     }
     getWillExpire(token);
-  }, [dispatch,token]);
+  }, [dispatch, token]);
   return (
     <PageWrapper>
-
       {update ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
@@ -348,7 +346,7 @@ const Table = ({token}) => {
       ) : (
         ""
       )}
-       {successReject ? (
+      {successReject ? (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
           role="alert"
@@ -482,9 +480,7 @@ const Table = ({token}) => {
                             <IconArrow fill="#E4E6EF" width="11" height="11" />
                           </button>
                           {/* modal */}
-                          <form
-                            className="form text-left"
-                          >
+                          <form className="form text-left">
                             <div
                               className="modal fade"
                               id="exampleModalCenter"
@@ -710,16 +706,20 @@ const Table = ({token}) => {
                                 </td>
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
-                                    {items.period_date_start === null ? "-" : moment(items.period_date_start).format(
-                                      "DD MMMM YYYY"
-                                    )}
+                                    {items.period_date_start === null
+                                      ? "-"
+                                      : moment(items.period_date_start).format(
+                                          "DD MMMM YYYY"
+                                        )}
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
-                                    {items.period_date_end === null ? "-" : moment(items.period_date_end).format(
-                                      "DD MMMM YYYY"
-                                    )}
+                                    {items.period_date_end === null
+                                      ? "-"
+                                      : moment(items.period_date_end).format(
+                                          "DD MMMM YYYY"
+                                        )}
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
@@ -824,7 +824,6 @@ const Table = ({token}) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-yellow"
-                                        
                                       >
                                         <option value="">
                                           Pengajuan - Revisi
@@ -840,10 +839,7 @@ const Table = ({token}) => {
                                         className="form-control remove-icon-default dropdown-arrows-blue pr-10"
                                         key={index}
                                         onChange={(e) =>
-                                          changeListStatus(
-                                            e,
-                                            items.id
-                                          )
+                                          changeListStatus(e, items.id)
                                         }
                                       >
                                         <option value="5">
@@ -868,7 +864,6 @@ const Table = ({token}) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue"
-                                        
                                       >
                                         <option value="">
                                           Pengajuan - Selesai
@@ -883,7 +878,6 @@ const Table = ({token}) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue"
-                                        
                                       >
                                         <option value="">
                                           Pengajuan - Dokumen
@@ -897,7 +891,6 @@ const Table = ({token}) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-red-primary"
-                                       
                                       >
                                         <option value="">Ditolak</option>
                                       </select>
@@ -1026,71 +1019,72 @@ const Table = ({token}) => {
                                   ) : items.status.name ===
                                     "pengajuan-review" ? (
                                     <div className="d-flex align-items-center">
-                                      <Link href={{pathname:"/partnership/kerjasama/revisi-kerjasama",query:{id:items.id}}}>
-                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                        <IconReview />
-                                        <div className="text-hover-show-hapus">
-                                          Review
-                                        </div>
-                                      </a>
+                                      <Link
+                                        href={{
+                                          pathname:
+                                            "/partnership/kerjasama/revisi-kerjasama",
+                                          query: { id: items.id },
+                                        }}
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                          <IconReview />
+                                          <div className="text-hover-show-hapus">
+                                            Review
+                                          </div>
+                                        </a>
                                       </Link>
                                     </div>
                                   ) : items.status.name ===
                                     "pengajuan-revisi" ? (
                                     <div className="d-flex align-items-center">
-
-                                      <Link href={{
-                                        pathname:"/partnership/kerjasama/revisi-kerjasama",
-                                        query:{id:items.id}
-                                      }} passHref>
-                                      
-                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                        <IconEye
-                                          width="16"
-                                          height="16"
-                                          fill="rgba(255,255,255,1)"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Review
-                                        </div>
-                                      </a>
+                                      <Link
+                                        href={{
+                                          pathname:
+                                            "/partnership/kerjasama/revisi-kerjasama",
+                                          query: { id: items.id },
+                                        }}
+                                        passHref
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                          <IconEye
+                                            width="16"
+                                            height="16"
+                                            fill="rgba(255,255,255,1)"
+                                          />
+                                          <div className="text-hover-show-hapus">
+                                            Review
+                                          </div>
+                                        </a>
                                       </Link>
                                     </div>
                                   ) : items.status.name ===
                                     "pengajuan-pembahasan" ? (
                                     <div className="d-flex align-items-center">
+                                      <Link
+                                        href={{
+                                          pathname:
+                                            "/partnership/tanda-tangan/penandatanganan-virtual",
+                                          // pathname:"/partnership/tanda-tangan/ttdTolkit",
 
-
-                                      <Link href={{
-
-
-                                        pathname:"/partnership/tanda-tangan/penandatanganan-virtual",
-                                        // pathname:"/partnership/tanda-tangan/ttdTolkit",
-
-
-
-                                        query:{id:items.id}
-                                      }} passHref>
-                                      
-                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
-
-                                        <Image
-                                          src={`/assets/icon/ttd.svg`}
-                                          width={19}
-                                          height={19}
-                                          alt="ditolak"
-                                        />
-                                        <div className="text-hover-show-hapus">
-                                          Tanda tangan virtual
-                                        </div>
-
-                                      </a>
+                                          query: { id: items.id },
+                                        }}
+                                        passHref
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3">
+                                          <Image
+                                            src={`/assets/icon/ttd.svg`}
+                                            width={19}
+                                            height={19}
+                                            alt="ditolak"
+                                          />
+                                          <div className="text-hover-show-hapus">
+                                            Tanda tangan virtual
+                                          </div>
+                                        </a>
                                       </Link>
 
-
-
                                       <button
-                                      type="button"
+                                        type="button"
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
                                           cooperationRejection(items.id)
@@ -1111,7 +1105,7 @@ const Table = ({token}) => {
                                     "pengajuan-selesai" ? (
                                     <div className="d-flex align-items-center">
                                       <button
-                                      type="button"
+                                        type="button"
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
                                           cooperationRejection(items.id)
@@ -1131,19 +1125,20 @@ const Table = ({token}) => {
                                   ) : items.status.name ===
                                     "pengajuan-document" ? (
                                     <div className="d-flex align-items-center">
-
-
-                                      <Link href={{
-                                        pathname:"/partnership/kerjasama/submit-dokumen-kerjasama-revisi",
-                                        query:{id:items.id}
-
-                                      }} passHref>
-                                      <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                                        <IconReview />
-                                        <div className="text-hover-show-hapus">
-                                          Review
-                                        </div>
-                                      </a>
+                                      <Link
+                                        href={{
+                                          pathname:
+                                            "/partnership/kerjasama/submit-dokumen-kerjasama-revisi",
+                                          query: { id: items.id },
+                                        }}
+                                        passHref
+                                      >
+                                        <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                          <IconReview />
+                                          <div className="text-hover-show-hapus">
+                                            Review
+                                          </div>
+                                        </a>
                                       </Link>
                                     </div>
                                   ) : (

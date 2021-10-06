@@ -10,7 +10,7 @@ import { UPDATE_SETTING_RESET } from "../../../../redux/types/publikasi/setting.
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingTable from "../../../LoadingTable";
 
-const Pengaturan = () => {
+const Pengaturan = ({ token }) => {
     const dispatch = useDispatch()
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -76,14 +76,15 @@ const Pengaturan = () => {
                 dispatch(clearErrors())
             } else if (upload_image < 1) {
                 simpleValidator.current.showMessages();
-                // forceUpdate(1);
+                forceUpdate(1);
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
                     text: "Upload image minimal 1 MB !",
                 });
             } else {
-                dispatch(updateSettingImagePublikasi(upload_image))
+                dispatch(updateSettingImagePublikasi(upload_image, token))
+                // console.log("TOKEN :", token)
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -107,14 +108,15 @@ const Pengaturan = () => {
                 dispatch(clearErrors())
             } else if (upload_imagetron < 1) {
                 simpleValidator.current.showMessages();
-                // forceUpdate(1);
+                forceUpdate(1);
                 Swal.fire({
                     icon: "error",
                     title: "Oops...",
                     text: "Upload imagetron minimal 1 MB !",
                 });
             } else {
-                dispatch(updateSettingImagetronPublikasi(upload_imagetron))
+                dispatch(updateSettingImagetronPublikasi(upload_imagetron, token))
+                // console.log("TOKEN :", token)
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -146,7 +148,7 @@ const Pengaturan = () => {
                     text: "Batas slider minimal 1 !",
                 });
             } else {
-                dispatch(updateSettingSliderPublikasi(batas_slider))
+                dispatch(updateSettingSliderPublikasi(batas_slider, token))
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -178,7 +180,7 @@ const Pengaturan = () => {
                     text: "Max Faq minimal 1 !",
                 });
             } else {
-                dispatch(updateSettingFaqPublikasi(maxfaq))
+                dispatch(updateSettingFaqPublikasi(maxfaq, token))
             }
             // if (error) {
             //     dispatch(clearErrors())
@@ -225,12 +227,12 @@ const Pengaturan = () => {
     }
 
     // disable enter on input
-    $("input").keydown(function(event) {
+    $("input").keydown(function (event) {
         if (event.keyCode == 13) {
             event.preventDefault();
         }
     });
-    
+
     return (
         <PageWrapper>
             {/* {
@@ -277,7 +279,7 @@ const Pengaturan = () => {
                                 <form>
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Image</label>
-                                        <div className="col-sm-3">
+                                        <div className="col-sm-3" style={{ height: '60px', marginTop: '20px' }}>
                                             <input style={{ width: '100px' }}
                                                 type="number" min="1"
                                                 className="form-control mr-4"
@@ -286,7 +288,7 @@ const Pengaturan = () => {
                                                 onBlur={() => simpleValidator.current.showMessageFor("upload_image")}
                                             /> MB
                                             {/* <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_image} onChange={(e) => setUploadImage(e.target.value)} min='0' onBlur={() =>simpleValidator.current.showMessageFor("upload_image")}/> MB */}
-                                            <div style={{ width: '150px' }}>
+                                            <div style={{ width: '200px', fontSize: '11px' }}>
                                                 {simpleValidator.current.message(
                                                     "upload_image",
                                                     upload_image,
@@ -298,7 +300,7 @@ const Pengaturan = () => {
                                         <button
                                             className="btn btn-link-action text-white"
                                             onClick={(e) => submitImagePublikasi(e)}
-                                            style={{ marginLeft: '-70px' }}
+                                            style={{ marginLeft: '-30px' }}
                                         >
                                             <Image
                                                 src={`/assets/icon/save.svg`}
@@ -311,9 +313,9 @@ const Pengaturan = () => {
                                     </div>
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Upload Imagetron</label>
-                                        <div className="col-sm-3">
+                                        <div className="col-sm-3" style={{ height: '60px', marginTop: '20px' }}>
                                             <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={upload_imagetron} onChange={(e) => setUploadImagetron(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("upload_imagetron")} /> MB
-                                            <div style={{ width: '150px' }}>
+                                            <div style={{ width: '200px', fontSize: '11px' }}>
                                                 {simpleValidator.current.message(
                                                     "upload_imagetron",
                                                     upload_imagetron,
@@ -325,8 +327,7 @@ const Pengaturan = () => {
                                         <button
                                             className="btn btn-link-action text-white"
                                             onClick={(e) => submitImagetron(e)}
-                                            // onClick={submitImagetron}
-                                            style={{ marginLeft: '-70px' }}
+                                            style={{ marginLeft: '-30px' }}
                                         >
                                             <Image
                                                 src={`/assets/icon/save.svg`}
@@ -338,9 +339,9 @@ const Pengaturan = () => {
                                     </div>
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Batas Slider</label>
-                                        <div className="col-sm-3">
+                                        <div className="col-sm-3" style={{ height: '60px', marginTop: '20px' }}>
                                             <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={batas_slider} onChange={(e) => setBatasSlider(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("batas_slider")} /> Page
-                                            <div style={{ width: '150px' }}>
+                                            <div style={{ width: '200px', fontSize: '11px' }}>
                                                 {simpleValidator.current.message(
                                                     "batas_slider",
                                                     batas_slider,
@@ -352,7 +353,7 @@ const Pengaturan = () => {
                                         <button
                                             className="btn btn-link-action text-white"
                                             onClick={(e) => submitSlider(e)}
-                                            style={{ marginLeft: '-70px' }}
+                                            style={{ marginLeft: '-30px' }}
                                         >
                                             <Image
                                                 src={`/assets/icon/save.svg`}
@@ -364,9 +365,9 @@ const Pengaturan = () => {
                                     </div>
                                     <div className="form-group row form-inline">
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label">Maksimal FAQ</label>
-                                        <div className="col-sm-3">
+                                        <div className="col-sm-3" style={{ height: '60px', marginTop: '20px' }}>
                                             <input style={{ width: '100px' }} type="number" min="1" className="form-control mr-4" value={maxfaq} onChange={(e) => setMaxfaq(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("maxfaq")} /> Page
-                                            <div style={{ width: '150px' }}>
+                                            <div style={{ width: '200px', fontSize: '11px' }}>
                                                 {simpleValidator.current.message(
                                                     "maxfaq",
                                                     maxfaq,
@@ -378,7 +379,7 @@ const Pengaturan = () => {
                                         <button
                                             className="btn btn-link-action text-white"
                                             onClick={(e) => submitFaq(e)}
-                                            style={{ marginLeft: '-70px' }}
+                                            style={{ marginLeft: '-30px' }}
                                         >
                                             <Image
                                                 src={`/assets/icon/save.svg`}

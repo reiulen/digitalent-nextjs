@@ -12,7 +12,7 @@ import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola
 const KelolaSertifikatNamaPelatihanID = dynamic(
   () =>
     import(
-      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/tema-pelatihan.jsx"
+      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/nama_pelatihan"
     ),
   {
     loading: function loadingNow() {

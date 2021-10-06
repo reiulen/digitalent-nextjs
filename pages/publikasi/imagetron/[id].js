@@ -8,6 +8,7 @@ import { getDetailImagetron } from "../../../redux/actions/publikasi/imagetron.a
 import { wrapper } from "../../../redux/store";
 
 import LoadingPage from "../../../components/LoadingPage";
+import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
 
 const EditImagetron = dynamic(
   () => import("../../../components/content/publikasi/imagetron/edit"),
@@ -21,18 +22,24 @@ const EditImagetron = dynamic(
   }
 );
 
-export default function EditImagetronPage() {
+export default function EditImagetronPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Ubah Imagetron"> */}
+<<<<<<< HEAD
         <EditImagetron />
+=======
+        <EditImagetron token={session.token} />
+>>>>>>> 279f614e085680387383629b291de8e592fdb1c4
         {/* </Layout> */}
       </div>
     </>
   );
 }
 
+<<<<<<< HEAD
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, req }) => {
@@ -52,4 +59,22 @@ export const getServerSideProps = wrapper.getServerSideProps(
         props: { session, title: "Ubah Imagetron - Publikasi" },
       };
     }
+=======
+export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params, req }) => {
+  const session = await getSession({ req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  await store.dispatch(getAllKategori(session.user.user.data.token))
+  await store.dispatch(getDetailImagetron(params.id, session.user.user.data.token));
+  return {
+    props: { session, title: "Ubah Imagetron - Publikasi" },
+  };
+}
+>>>>>>> 279f614e085680387383629b291de8e592fdb1c4
 );

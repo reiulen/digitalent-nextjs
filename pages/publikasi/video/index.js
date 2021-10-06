@@ -30,10 +30,17 @@ export default function VidioPage(props) {
         {/* <Layout title='Video - Publikasi'>
                     <Vidio />
                 </Layout> */}
+<<<<<<< HEAD
         <Vidio />
       </div>
     </>
   );
+=======
+                <Vidio token={session.token}/>
+            </div>
+        </>
+    )
+>>>>>>> 279f614e085680387383629b291de8e592fdb1c4
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(

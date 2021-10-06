@@ -20,6 +20,7 @@ const Tambah = dynamic(
   }
 );
 
+<<<<<<< HEAD
 export default function TambahPage() {
   return (
     <>
@@ -30,6 +31,19 @@ export default function TambahPage() {
       </div>
     </>
   );
+=======
+export default function TambahPage(props) {
+    const session = props.session.user.user.data;
+    return (
+        <>
+            <div className="d-flex flex-column flex-root">
+                {/* <Layout title='Tambah Imagetron - Publikasi'> */}
+                    <Tambah token={session.token}/>
+                {/* </Layout> */}
+            </div>
+        </>
+    )
+>>>>>>> 279f614e085680387383629b291de8e592fdb1c4
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(

@@ -149,6 +149,7 @@ import {
   detailSertifikatReducer,
   newSertifikatReducer,
   updateSertifikatReducer,
+  singleSertifikatReducer,
 } from "./sertifikat/sertifikat.reducers";
 
 import {
@@ -356,6 +357,7 @@ const reducer = combineReducers({
   // =============== sertifikat ==================
   allCertificates: allSertifikatReducers,
   newCertificates: newSertifikatReducer,
+  singleCertificate: singleSertifikatReducer,
   detailCertificates: detailSertifikatReducer,
   deleteCertificates: deleteSertifikatReducer,
   updateCertificates: updateSertifikatReducer,
