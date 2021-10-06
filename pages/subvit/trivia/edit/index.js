@@ -33,7 +33,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Edit Trivia Step 1 - Subvit" },
+        props: { session, title: "Ubah Trivia Step 1 - Subvit" },
       };
     }
 );

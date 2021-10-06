@@ -89,6 +89,7 @@ const TambahBerita = ({token}) => {
     );
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
+    const [disableTag, setDisableTag] = useState(false)
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -145,9 +146,22 @@ const TambahBerita = ({token}) => {
         }
     }
 
+    const handleTag = (data) => {
+        if (data.length === 1 && data[0] === " "){
+            setTag([])
+            alert("tag")
+            setDisableTag (true)
+        } else {
+            setTag(data)
+            setDisableTag (false)
+        }
+
+        console.log (data)
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
-        if (simpleValidator.current.allValid()) {
+        if (simpleValidator.current.allValid() && disableTag === false) {
             if (error) {
                 dispatch(clearErrors())
             }
@@ -504,10 +518,19 @@ const TambahBerita = ({token}) => {
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        // onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
                                         name="tag"
                                         placeHolder="Isi Tag disini dan enter."
                                     />
+                                    {
+                                        disableTag === true ?
+                                            <p className="text-danger">
+                                                Tag tidak bisa terdiri dari 1 character "SPACE"
+                                            </p>
+                                        :
+                                            null
+                                    }
                                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                 </div>
                             </div>
