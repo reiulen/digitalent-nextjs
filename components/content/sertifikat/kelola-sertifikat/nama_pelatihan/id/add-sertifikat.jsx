@@ -16,13 +16,13 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import SignaturePad from "react-signature-pad-wrapper";
 import SimpleReactValidator from "simple-react-validator";
 import { useSelector } from "react-redux";
-import PageWrapper from "../../../../wrapper/page.wrapper";
+import PageWrapper from "../../../../../wrapper/page.wrapper";
 import { toPng } from "html-to-image";
 import { useDispatch } from "react-redux";
 import {
   clearErrors,
   newSertifikat,
-} from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+} from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import axios from "axios";
 
 export default function TambahMasterSertifikat({ token }) {
@@ -31,8 +31,7 @@ export default function TambahMasterSertifikat({ token }) {
   // #Div Reference Lembar 1
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
-  const [divImage, setDivImage] = useState(null);
-
+  const [namaPeserta, setNamaPeserta] = useState("Nama Peserta");
   const [certificate_name, setCertificate_name] = useState("");
 
   // #Redux state
@@ -50,7 +49,10 @@ export default function TambahMasterSertifikat({ token }) {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
   // #START FORM DATA
-  const [certificate_type, setCertificate_type] = useState(1);
+  const [certificate_type, setCertificate_type] = useState(
+    certificate.data.list_certificate[0].certificate_type
+  );
+
   const [number_of_signatures, setNumber_of_signatures] = useState(1);
   const [
     signature_certificate_set_position,
@@ -63,7 +65,7 @@ export default function TambahMasterSertifikat({ token }) {
   const [signature_certificate_image, setSignature_certificate_image] =
     useState([]);
 
-  const [signature_certificate_position, setSignature_ceritifcate_position] =
+  const [signature_certificate_position, setSignature_certificate_position] =
     useState([]);
 
   const [certificate_result, setCertificate_result] = useState();
@@ -76,7 +78,7 @@ export default function TambahMasterSertifikat({ token }) {
     useState();
   const [
     signature_certificate_name_syllabus,
-    setSignature_ceritficate_name_syllabus,
+    setSignature_certificate_name_syllabus,
   ] = useState([]);
   const [
     signature_certificate_image_syllabus,
@@ -218,123 +220,122 @@ export default function TambahMasterSertifikat({ token }) {
       );
     }
   };
-  // useEffect(() => {
-  //   console.log(router.query.nama_pelatihan_id, "INI ID");
-  //   const getData = async () => {
-  //     const data = await axios.get(
-  //       `${process.env.END_POINT_API_SERTIFIKAT}api/manage_certificates/${router.query.nama_pelatihan_id}`
-  //     );
-  //     console.log(data, "ini data yang di fetch");
-  //   };
-  //   getData();
-  // }, []);
-  console.log(router, "ini router");
+  const [, forceUpdate] = useState();
+
   // # END IMAGE
-
-  const handleDraft = e => {
-    e.preventDefault();
+  const handlePost = (e, status) => {
     try {
-      let formData = new FormData();
-      // formData.append("name", certificate.data.list_certificate[0].name);
-      formData.append("name", "AMIN");
+      e.preventDefault();
+      if (simpleValidator.current.allValid()) {
+        dispatch(newSertifikat(id, formData, token));
 
-      formData.append("background", background);
-      formData.append("certificate_type", `${certificate_type} lembar`);
-      formData.append("number_of_signatures", number_of_signatures);
-      formData.append(
-        "number_of_signature_syllabus",
-        number_of_signature_syllabus
-      );
-      signature_certificate_name.forEach((item, i) => {
-        formData.append(`signature_certificate_name[${i}]`, item ? item : null);
-      });
-      signature_certificate_image.forEach((item, i) => {
-        formData.append(`signature_certificate_image[${i}]`, item);
-      });
-      signature_certificate_position.forEach((item, i) => {
-        formData.append(`signature_certificate_position[${i}]`, item);
-      });
-      signature_certificate_position.forEach((item, i) => {
-        formData.append(`signature_certificate_position[${i}]`, item);
-      });
-      signature_certificate_set_position.forEach((item, i) => {
-        formData.append(`signature_certificate_set_position[${i}]`, item);
-      });
+        setNamaPeserta("");
+        let formData = new FormData();
+        // formData.append("name", certificate.data.list_certificate[0].name);
+        formData.append("name", certificate_name);
 
-      formData.append("syllabus", syllabus);
-      formData.append("background_syllabus", background_syllabus);
-      signature_certificate_name_syllabus.forEach((item, i) => {
-        formData.append(`signature_certificate_name[${i}]`, item);
-      });
-      signature_certificate_image_syllabus.forEach((item, i) => {
-        formData.append(`signature_certificate_image[${i}]`, item);
-      });
-      signature_certificate_position_syllabus.forEach((item, i) => {
-        formData.append(`signature_certificate_position[${i}]`, item);
-      });
-      signature_certificate_position_syllabus.forEach((item, i) => {
-        formData.append(`signature_certificate_position[${i}]`, item);
-      });
-      signature_certificate_set_position_syllabus?.forEach((item, i) => {
+        formData.append("background", background);
+        formData.append("certificate_type", certificate_type);
+        formData.append("number_of_signatures", number_of_signatures);
         formData.append(
-          `signature_certificate_set_position_syllabus[${i}]`,
-          item
+          "number_of_signature_syllabus",
+          number_of_signature_syllabus
         );
-      });
+        signature_certificate_name.forEach((item, i) => {
+          formData.append(
+            `signature_certificate_name[${i}]`,
+            item ? item : null
+          );
+        });
+        signature_certificate_image.forEach((item, i) => {
+          formData.append(`signature_certificate_image[${i}]`, item);
+        });
+        signature_certificate_position.forEach((item, i) => {
+          formData.append(`signature_certificate_position[${i}]`, item);
+        });
+        signature_certificate_position.forEach((item, i) => {
+          formData.append(`signature_certificate_position[${i}]`, item);
+        });
+        signature_certificate_set_position.forEach((item, i) => {
+          formData.append(`signature_certificate_set_position[${i}]`, item);
+        });
 
-      formData.append("status_migrate_id", 2);
-      const id = router.query.nama_pelatihan_id;
-      dispatch(newSertifikat(id, formData, token));
+        syllabus.forEach((item, i) => {
+          formData.append(`syllabus[${i}]`, item);
+        });
 
-      // router.push({
-      //   pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
-      //   query: { success: true },
-      // });
+        formData.append("background_syllabus", background_syllabus);
+
+        signature_certificate_name_syllabus.forEach((item, i) => {
+          formData.append(`signature_certificate_name[${i}]`, item);
+        });
+        signature_certificate_image_syllabus.forEach((item, i) => {
+          formData.append(`signature_certificate_image[${i}]`, item);
+        });
+        signature_certificate_position_syllabus.forEach((item, i) => {
+          formData.append(`signature_certificate_position[${i}]`, item);
+        });
+        signature_certificate_position_syllabus.forEach((item, i) => {
+          formData.append(`signature_certificate_position[${i}]`, item);
+        });
+        signature_certificate_set_position_syllabus?.forEach((item, i) => {
+          formData.append(
+            `signature_certificate_set_position_syllabus[${i}]`,
+            item
+          );
+        });
+
+        if (status == 1) {
+          //publish
+          // HARUS DI LAKUKAN PENGECEKAN DISINI
+          formData.append("status_migrate_id", status);
+          toPng(divReference.current, {
+            cacheBust: true,
+            canvasWidth: 842,
+            canvasHeight: 595,
+          })
+            .then(image => {
+              formData.append("certificate_result", image);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+
+          if (certificate_type == "2 lembar") {
+            toPng(divReferenceSilabus.current, {
+              cacheBust: true,
+              canvasWidth: 842,
+              canvasHeight: 595,
+            })
+              .then(image => {
+                formData.append("certificate_result_syllabus", image);
+              })
+              .catch(err => {
+                console.log(err);
+              });
+          }
+        }
+
+        if (status == 2) {
+          formData.append("status_migrate_id", status);
+          dispatch(newSertifikat(id, formData, token));
+        }
+        const id = router.query.nama_pelatihan_id;
+
+        // if (!error) {
+        //   router.push({
+        //     pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
+        //     query: { success: true },
+        //   });
+        // }
+      } else {
+        simpleValidator.current.showMessages();
+        forceUpdate(1);
+      }
     } catch (e) {
       console.log(e, "Masuk sini errornya");
     }
   };
-
-  console.log(certificate.data);
-
-  const [isPublish, setIsPublish] = useState(false);
-  const handlePublish = useCallback(() => {
-    if (divReference.current === null) {
-      return;
-    }
-    toPng(divReferenceSilabus.current, {
-      cacheBust: true,
-      canvasWidth: 842,
-      canvasHeight: 595,
-    })
-      .then(image => {
-        const link = document.createElement("a");
-        link.download = "my-image-name2.png";
-        link.href = image;
-        link.click();
-        // console.log("ini imagenya", image); //dari sini gw post pokoknya namanya gatau
-        // setDivImage(divReference.current);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-
-    toPng(divReference.current, {
-      cacheBust: true,
-      canvasWidth: 842,
-      canvasHeight: 595,
-    })
-      .then(image => {
-        const link = document.createElement("a");
-        link.download = "my-image-name.png";
-        link.href = image;
-        link.click();
-        setDivImage(divReference.current);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [divReference, divReferenceSilabus]);
 
   const handleResetError = () => {
     if (error) {
@@ -391,16 +392,25 @@ export default function TambahMasterSertifikat({ token }) {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           {/* START HEADER */}
-          <div className="card-header border-0 d-flex justify-content-lg-between row my-auto py-10">
-            <div className="card-title d-flex">
+          <div className="card-header border-0 d-flex justify-content-lg-between row p-10">
+            <div className="card-title d-flex my-auto">
               <div className="text-dark">Nama Sertifikat :</div>
-              <div className="mx-6">
+              <div className="mx-6 p-0">
                 <input
                   type="text"
-                  className="form-control "
+                  className="form-control"
                   placeholder="Masukan Nama Sertifikat"
                   onChange={e => setCertificate_name(e.target.value)}
+                  onBlur={() => {
+                    simpleValidator.current.showMessageFor("nama sertifikat");
+                  }}
                 />
+                {simpleValidator.current.message(
+                  "nama sertifikat",
+                  certificate_name,
+                  "required|min:50",
+                  { className: "text-danger font-size-sm mt-4" }
+                )}
               </div>
             </div>
             <div className="card-toolbar">
@@ -414,25 +424,23 @@ export default function TambahMasterSertifikat({ token }) {
                   Batal
                 </a>
               </Link>
-              <Link
-                href={`/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`}
-              >
-                <a
-                  className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
-                  onClick={e => {
-                    handleDraft(e);
-                  }}
-                >
-                  Simpan Draft
-                </a>
-              </Link>
+
               <a
-                className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
-                onClick={() => {
-                  handlePublish();
+                className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
+                onClick={e => {
+                  handlePost(e, 2); // 2 == draft
                 }}
               >
-                Simpan
+                Simpan Draft
+              </a>
+
+              <a
+                className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
+                onClick={e => {
+                  handlePost(e, 1);
+                }}
+              >
+                Publish
               </a>
               {/* </Link> */}
             </div>
@@ -481,9 +489,9 @@ export default function TambahMasterSertifikat({ token }) {
                       <div className="my-2">
                         <span
                           className="mx-2 px-2 font-size-h6 px-10 w-100"
-                          // style={{ borderStyle: "dashed" }}
+                          style={{ borderStyle: namaPeserta ? "dashed" : "" }}
                         >
-                          Nama Peserta
+                          {namaPeserta ? namaPeserta : ""}
                         </span>
                       </div>
                       <div className="w-100">Atas Partisipasi sebagai</div>
@@ -646,8 +654,8 @@ export default function TambahMasterSertifikat({ token }) {
                         type="radio"
                         name="method"
                         value="1"
-                        checked={certificate_type == 1}
-                        onChange={() => setCertificate_type(1)}
+                        checked={certificate_type == "1 lembar"}
+                        onChange={() => setCertificate_type("1 lembar")}
                       />
                       <label className="form-check-label">1 Lembar</label>
                     </div>
@@ -657,8 +665,8 @@ export default function TambahMasterSertifikat({ token }) {
                         type="radio"
                         name="method"
                         value="2"
-                        checked={certificate_type == 2}
-                        onChange={() => setCertificate_type(2)}
+                        checked={certificate_type == "2 lembar"}
+                        onChange={() => setCertificate_type("2 lembar")}
                       />
                       <label className="form-check-label">2 Lembar</label>
                     </div>
@@ -765,8 +773,20 @@ export default function TambahMasterSertifikat({ token }) {
                                       newArr[i] = data;
                                       setSignature_certificate_name(newArr);
                                     }}
-                                    className="h-25"
+                                    onBlur={() =>
+                                      simpleValidator.current.showMessageFor(
+                                        "nama"
+                                      )
+                                    }
                                   />
+                                  {simpleValidator.current.message(
+                                    "nama",
+                                    signature_certificate_name[i],
+                                    "required",
+                                    {
+                                      className: "text-danger mt-4",
+                                    }
+                                  )}
                                   <div className="font-size-h5 my-5">
                                     Tanda Tangan
                                   </div>
@@ -815,6 +835,11 @@ export default function TambahMasterSertifikat({ token }) {
                                         onChange={e =>
                                           handleImageTandaTangan(e, i)
                                         }
+                                        onBlur={() =>
+                                          simpleValidator.current.showMessageFor(
+                                            "tanda tangan"
+                                          )
+                                        }
                                         accept="image/png, image/jpeg , image/jpg"
                                       />
                                       <label
@@ -843,16 +868,10 @@ export default function TambahMasterSertifikat({ token }) {
                                           }}
                                           onBlur={() =>
                                             simpleValidator.current.showMessageFor(
-                                              "tandaTangan"
+                                              "tanda tangan"
                                             )
                                           }
                                         />
-                                        {simpleValidator.current.message(
-                                          "tandaTangan",
-                                          tandaTangan,
-                                          "required",
-                                          { className: "text-danger" }
-                                        )}
                                       </div>
                                       <div className="d-flex align-items-center my-5">
                                         <a
@@ -875,6 +894,14 @@ export default function TambahMasterSertifikat({ token }) {
                                       </div>
                                     </>
                                   )}
+                                  {simpleValidator.current.message(
+                                    "tanda tangan",
+                                    signature_certificate_image[i],
+                                    "required",
+                                    {
+                                      className: "text-danger mb-4",
+                                    }
+                                  )}
                                   <div className="font-size-h5 mb-5">
                                     Jabatan Penanda Tangan
                                   </div>
@@ -891,10 +918,23 @@ export default function TambahMasterSertifikat({ token }) {
                                         ...signature_certificate_position,
                                       ];
                                       newArr[i] = data;
-                                      setSignature_ceritifcate_position(newArr);
+                                      setSignature_certificate_position(newArr);
                                     }}
                                     className="h-25"
+                                    onBlur={() =>
+                                      simpleValidator.current.showMessageFor(
+                                        "jabatan"
+                                      )
+                                    }
                                   />
+                                  {simpleValidator.current.message(
+                                    "jabatan",
+                                    signature_certificate_position[i],
+                                    "required",
+                                    {
+                                      className: "text-danger mt-4",
+                                    }
+                                  )}
                                 </div>
                                 <div className="modal-footer">
                                   <button
@@ -1003,9 +1043,6 @@ export default function TambahMasterSertifikat({ token }) {
                     onChange={e => onChangeBackground(e)}
                     // onChange={(e) => onChangeBackground(e)}
                     accept="image/*"
-                    onBlur={() =>
-                      simpleValidator.current.showMessageFor("background")
-                    }
                     style={{ display: "none" }}
                   />
                 </div>
@@ -1015,7 +1052,7 @@ export default function TambahMasterSertifikat({ token }) {
           {/* END BODY */}
         </div>
         {/* START SECTION 2 */}
-        {certificate_type == 2 ? (
+        {certificate_type == "2 lembar" ? (
           <div className="card card-custom card-stretch gutter-b">
             {/* START BODY */}
             <div className="card-body border-top">
@@ -1318,12 +1355,25 @@ export default function TambahMasterSertifikat({ token }) {
                                           ...signature_certificate_name_syllabus,
                                         ];
                                         newArr[i] = data;
-                                        setSignature_ceritficate_name_syllabus(
+                                        setSignature_certificate_name_syllabus(
                                           newArr
                                         );
                                       }}
                                       className="h-25"
+                                      onBlur={() =>
+                                        simpleValidator.current.showMessageFor(
+                                          "Nama"
+                                        )
+                                      }
                                     />
+                                    {simpleValidator.current.message(
+                                      "Nama",
+                                      signature_certificate_name_syllabus[i],
+                                      "required",
+                                      {
+                                        className: "text-danger mt-4",
+                                      }
+                                    )}
                                     <div className="font-size-h5 my-5">
                                       Tanda Tangan
                                     </div>
@@ -1381,6 +1431,11 @@ export default function TambahMasterSertifikat({ token }) {
                                             handleImageTandaTanganSyllabus(e, i)
                                           }
                                           accept="image/png, image/jpeg , image/jpg"
+                                          onBlur={() =>
+                                            simpleValidator.current.showMessageFor(
+                                              "tanda tangan syllabus"
+                                            )
+                                          }
                                         />
                                         <label
                                           className="custom-file-label"
@@ -1408,17 +1463,12 @@ export default function TambahMasterSertifikat({ token }) {
                                             }}
                                             onBlur={() =>
                                               simpleValidator.current.showMessageFor(
-                                                "tandaTangan"
+                                                "tanda tangan syllabus"
                                               )
                                             }
                                           />
-                                          {simpleValidator.current.message(
-                                            "tandaTangan",
-                                            tandaTangan,
-                                            "required",
-                                            { className: "text-danger" }
-                                          )}
                                         </div>
+
                                         <div className="d-flex align-items-center my-5">
                                           <a
                                             className="btn btn-sm btn-rounded-full text-blue-primary border-primary mr-5"
@@ -1446,6 +1496,12 @@ export default function TambahMasterSertifikat({ token }) {
                                         </div>
                                       </>
                                     )}
+                                    {simpleValidator.current.message(
+                                      "tanda tangan syllabus",
+                                      signature_certificate_image_syllabus[i],
+                                      "required",
+                                      { className: "text-danger mb-4" }
+                                    )}
                                     <div className="font-size-h5 mb-5">
                                       Jabatan Penanda Tangan
                                     </div>
@@ -1471,7 +1527,20 @@ export default function TambahMasterSertifikat({ token }) {
                                         );
                                       }}
                                       className="h-25"
+                                      onBlur={() =>
+                                        simpleValidator.current.showMessageFor(
+                                          "Jabatan"
+                                        )
+                                      }
                                     />
+                                    {simpleValidator.current.message(
+                                      "Jabatan",
+                                      signature_certificate_position_syllabus[
+                                        i
+                                      ],
+                                      "required",
+                                      { className: "text-danger mt-4" }
+                                    )}
                                   </div>
                                   <div className="modal-footer">
                                     <button
@@ -1591,9 +1660,6 @@ export default function TambahMasterSertifikat({ token }) {
                       className="custom-file-input"
                       onChange={e => onChangeBackgroundLembar2(e)}
                       accept="image/*"
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("background")
-                      }
                       style={{ display: "none" }}
                     />
                   </div>

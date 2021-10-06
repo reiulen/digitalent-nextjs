@@ -8,16 +8,18 @@ import Swal from "sweetalert2";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import PageWrapper from "../../../../../wrapper/page.wrapper";
+import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 // #Icon
 
 export default function KelolasertifikatID({ token }) {
   // console.log(token);
   const router = useRouter();
   const { query } = router;
-  // console.log(router);
+
   const { loading, error, certificate } = useSelector(
     state => state.singleCertificate
   );
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -67,9 +69,21 @@ export default function KelolasertifikatID({ token }) {
                   // placeholder="Masukan Nama Sertifikat"
                   // value={certificate.data.certificate.name}
                 >
-                  {certificate.data.certificate.name}
+                  {certificate?.data?.certificate?.name
+                    ? certificate?.data?.certificate?.name
+                    : "Nama Sertifikat"}
                 </div>
               </div>
+            </div>
+            <div className="card-toolbar">
+              <Link
+                href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}`}
+              >
+                <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3">
+                  Kembali
+                </a>
+              </Link>
+              {/* </Link> */}
             </div>
           </div>
           {/* END HEADER */}
@@ -116,7 +130,7 @@ export default function KelolasertifikatID({ token }) {
                       <div className="my-2">
                         <span
                           className="mx-2 px-2 font-size-h6 px-10 w-100"
-                          // style={{ borderStyle: "dashed" }}
+                          style={{ borderStyle: "dashed" }}
                         >
                           Nama Peserta
                         </span>
@@ -197,7 +211,7 @@ export default function KelolasertifikatID({ token }) {
                                 >
                                   {el.signature ? (
                                     <Image
-                                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-image-syllabus/${el.signature}`}
+                                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${el.signature}`}
                                       layout="fill"
                                       alt={`Tanda tangan ${i + 1} `}
                                     />
@@ -357,7 +371,7 @@ export default function KelolasertifikatID({ token }) {
                                   >
                                     {el.signature ? (
                                       <Image
-                                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${el.signature}`}
+                                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-image-syllabus/${el.signature}`}
                                         layout="fill"
                                         alt={`Tanda tangan ${i + 1} `}
                                       />
