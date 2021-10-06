@@ -78,11 +78,6 @@ const EditArtikel = ({token}) => {
 
     // dispatch(getAllKategori(session.user.user.data.token))
 
-    editorRef.current = {
-      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, //Added .CKEditor
-      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
-      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
-    };
 
     setEditorLoaded(true);
     if (success) {
