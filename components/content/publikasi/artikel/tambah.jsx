@@ -61,8 +61,8 @@ const TambahArtikel = ({token}) => {
     ssr: false,
   });
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
-  // const [, forceUpdate] = useState();
-  const forceUpdate = React.useReducer(() => ({}))[1]
+  const [, forceUpdate] = useState();
+  // const forceUpdate = React.useReducer(() => ({}))[1]
 
   const { loading, error, success } = useSelector((state) => state.newArtikel);
   const {
@@ -353,8 +353,8 @@ const TambahArtikel = ({token}) => {
 
     } else {
       simpleValidator.current.showMessages();
-      // forceUpdate(1);
-      forceUpdate;
+      forceUpdate(1);
+      // forceUpdate;
       Swal.fire({
         icon: "error",
         title: "Oops...",
