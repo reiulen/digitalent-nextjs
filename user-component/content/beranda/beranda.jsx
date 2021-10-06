@@ -580,6 +580,7 @@ const Beranda = () => {
                     
                 </Carousel>
             </div>
+            
 
             {/* Carousel Training  */}
             <Carousel
