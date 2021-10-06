@@ -21,13 +21,13 @@ const ListTrivia = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { loading, error, trivia } = useSelector(
-    (state) => state.allTriviaQuestionBanks
+    state => state.allTriviaQuestionBanks
   );
   const {
     loading: loadingDelete,
     error: errorDelete,
     isDeleted,
-  } = useSelector((state) => state.deleteTriviaQuestionBanks);
+  } = useSelector(state => state.deleteTriviaQuestionBanks);
 
   let { page = 1, success } = router.query;
   page = Number(page);
@@ -38,7 +38,7 @@ const ListTrivia = ({ token }) => {
   useEffect(() => {
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
+        result => {
           if (result.isConfirmed) {
             window.location.reload();
           }
@@ -50,7 +50,7 @@ const ListTrivia = ({ token }) => {
     }
   }, [dispatch, isDeleted]);
 
-  const handlePagination = (pageNumber) => {
+  const handlePagination = pageNumber => {
     let link = `${router.pathname}?page=${pageNumber}`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (limit) link = link.concat(`&limit=${limit}`);
@@ -63,12 +63,12 @@ const ListTrivia = ({ token }) => {
     router.push(link);
   };
 
-  const handleLimit = (val) => {
+  const handleLimit = val => {
     setLimit(val);
     router.push(`${router.pathname}?page=1&limit=${limit}`);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -78,7 +78,7 @@ const ListTrivia = ({ token }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         console.log("dari handle delete", token);
         dispatch(deleteTriviaQuestionBanks(id, token));
@@ -96,7 +96,7 @@ const ListTrivia = ({ token }) => {
     }
   };
 
-  const getStartAt = (date) => {
+  const getStartAt = date => {
     if (!date) {
       return "-";
     }
@@ -147,7 +147,7 @@ const ListTrivia = ({ token }) => {
     return `${tanggal} ${bulan} ${tahun}`;
   };
 
-  const isFinish = (date) => {
+  const isFinish = date => {
     if (!date) {
       return "Belum Dilaksanakan";
     }
@@ -250,7 +250,7 @@ const ListTrivia = ({ token }) => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={e => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -259,6 +259,7 @@ const ListTrivia = ({ token }) => {
                         borderBottomLeftRadius: "0",
                       }}
                       onClick={handleSearch}
+                      // UNFINISH
                     >
                       Cari
                     </button>
@@ -418,8 +419,8 @@ const ListTrivia = ({ token }) => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={(e) => handleLimit(e.target.value)}
-                          onBlur={(e) => handleLimit(e.target.value)}
+                          onChange={e => handleLimit(e.target.value)}
+                          onBlur={e => handleLimit(e.target.value)}
                         >
                           <option>5</option>
                           <option>10</option>

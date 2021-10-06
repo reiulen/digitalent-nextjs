@@ -17,7 +17,7 @@ import IconFilter from "../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
 
 export default function NamaPelatihan({ token }) {
-  console.log(token);
+  // console.log(token);
   const router = useRouter();
   // const {loading, error,}
   // #DatePicker
@@ -30,14 +30,23 @@ export default function NamaPelatihan({ token }) {
   // #DatePicker
 
   // #Pagination, search, filter
+  const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
-  const handlePagination = () => {};
-  const handleLimit = () => {
-    console.log("");
+  const handlePagination = pageNumber => {
+    let link = `${router.pathname}?page=${pageNumber}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
+  };
+  const handleLimit = val => {
+    setLimit(val);
+    router.push(`${router.pathname}?page=1&limit=${limit}`);
   };
 
   const handleSearch = () => {
-    console.log("");
+    let link = `${router.pathname}?page=1&keyword=${search}`;
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
   };
   // #Pagination
 
@@ -48,11 +57,37 @@ export default function NamaPelatihan({ token }) {
     state => state.allCertificates
   );
   // #REDUX STATE
-  console.log(certificate);
+  // console.log(certificate);
 
   return (
     <PageWrapper>
       {/* error START */}
+      {error ? (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {/* error END */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
