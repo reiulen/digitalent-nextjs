@@ -9271,15 +9271,11 @@ a.close.disabled {
   background-color: var(--gray-shade) !important;
 }
 
-<<<<<<< HEAD
 .bg-gray{
   background-color: var(--gray) !important;
 }
 
 .bg-neutral{
-=======
-.bg-neutral {
->>>>>>> af396f9f2124b75265417f71780698f0a803716b
   background-color: var(--neutral) !important;
 }
 
