@@ -29160,6 +29160,10 @@ button.bg-white:focus {
   color: var(--primary) !important;
 }
 
+.text-gray {
+  color: var(--gray)!important;
+}
+
 .text-neutral {
   color: var(--neutral) !important;
 }

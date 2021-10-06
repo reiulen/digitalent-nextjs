@@ -580,63 +580,409 @@ const Beranda = () => {
                     
                 </Carousel>
             </div>
-            
+
 
             {/* Carousel Training  */}
-            <Carousel
-                arrows
-                showDots={false}
-                responsive={responsive}
-                ssr={true} // means to render carousel on server-side.
-                infinite={false}
-                // autoPlay={true}
-                autoPlaySpeed={3000}
-                keyBoardControl={true}
-                // customTransition="all .5"
-                // transitionDuration={500}
-                containerClass="carousel-container"
-                removeArrowOnDeviceType={["tablet", "mobile"]}
-                // deviceType={this.props.deviceType}
-                dotListClass="custom-dot-list-style"
-                draggable={true}
-                swipeable={true}
-                slidesToSlide={1}
-                className="my-3 ml-5"
-            >
-                <Link href="#">
-                    <Card style={{ width: '30rem', height:"20rem", cursor:"pointer" }}>
-                        <div className='p-3'>
-                            <Card.Img variant="top" src={`/assets/media/image-28.svg`} />
-                        </div>
-                        
-
-                        <div className="ml-3" style={{marginTop:"-35px"}}> 
-                            <Image 
-                                src={`/assets/media/gojek.svg`}
-                                width={50}
-                                height={50}
-                            />
-                        </div>
-                        
-                        <Card.Body>
+            <div className="my-5">
+                <h1 className="text-left font-weight-bolder ml-5">
+                    Multi Media Designer
+                </h1>
+                <Carousel
+                    arrows
+                    showDots={false}
+                    responsive={responsive}
+                    ssr={true} // means to render carousel on server-side.
+                    infinite={false}
+                    // autoPlay={true}
+                    autoPlaySpeed={3000}
+                    keyBoardControl={true}
+                    // customTransition="all .5"
+                    // transitionDuration={500}
+                    // containerClass="carousel-container"
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    // deviceType={this.props.deviceType}
+                    dotListClass="custom-dot-list-style"
+                    draggable={true}
+                    swipeable={true}
+                    slidesToSlide={1}
+                    className="my-3 ml-5"
+                    // itemClass="carousel-item-padding-40-px"
+                    // itemClass="p-5"
+                >
+                    <Link href="#">
+                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
+                            <div className='p-3'>
+                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} />
+                            </div>
                             
-                            <Card.Text>
-                                
-                            </Card.Text>
 
-                            <Card.Title>
-                               
-                            </Card.Title>
-
-                        </Card.Body>
-
-                        <Card.Footer>
+                            <div className="ml-3 p-1" style={{marginTop:"-35px"}}> 
+                                <Image 
+                                    src={`/assets/media/Frame_6523.svg`}
+                                    width={50}
+                                    height={50}
+                                />
+                            </div>
                             
-                        </Card.Footer>
-                    </Card>
-                </Link>
+                            <Card.Body>
+                                <div className="text-right text-muted mb-2">
+                                    05 Juli 2021 - 31 Juli 2021
+                                </div>
+                                {/* <Card.Text>
+                                    
+                                </Card.Text> */}
 
-            </Carousel>
+                                <Card.Title>
+                                    Intermediate Multimedia Designer
+                                </Card.Title>
+
+                                <div className="text-muted mb-3">
+                                    Gojek
+                                </div>
+
+                                <div className="row">
+                                    <button className="btn btn-light rounded  ml-3">
+                                        <div className="text-success">
+                                            Open
+                                        </div>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-5">
+                                        <i className="ri-parent-line mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            1000
+                                        </span>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-1">
+                                        <i className="ri-heart-line mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            Wishlist
+                                        </span>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-1">
+                                        <i className="ri-share-fill mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            Share
+                                        </span>
+                                    </button>
+
+                                </div>
+
+                            </Card.Body>
+
+                        </Card>
+                    </Link>
+
+                    <Link href="#">
+                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
+                            <div style={{marginBottom:"-60px", marginLeft:"300px"}}>
+                                <Image 
+                                    src={`/assets/media/label-online.svg`}
+                                    width={100}
+                                    height={60}
+                                    style={{opacity:"0.5", filter:"grayscale(100%)"}}
+                                />
+                            </div>
+
+                            <div className='p-3'>
+                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} style={{opacity:"0.5", filter:"grayscale(100%)"}}/>
+                            </div>
+                            
+
+                            <div className="ml-3 p-1 img-grayed-out" style={{marginTop:"-35px", filter:"grayscale(100%)"}}> 
+                                <Image 
+                                    src={`/assets/media/Frame_6523.svg`}
+                                    width={50}
+                                    height={50}
+                                    // style={{opacity:"0.5", filter:"grayscale(100%)"}}
+                                />
+                            </div>
+                            
+                            <Card.Body>
+                                <div className="text-right text-muted mb-2">
+                                    05 Juli 2021 - 31 Juli 2021
+                                </div>
+                                {/* <Card.Text>
+                                    
+                                </Card.Text> */}
+
+                                <Card.Title className="text-muted">
+                                    Intermediate Pemograman Menggunakan Laravel
+                                </Card.Title>
+
+                                <div className="text-muted mb-3">
+                                    Bukalapak
+                                </div>
+
+                                <div className="row">
+                                    <button className="btn btn-light rounded  ml-3" disabled>
+                                        <div className="text-danger">
+                                            Closed
+                                        </div>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-5" disabled>
+                                        <i className="ri-parent-line mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            1000
+                                        </span>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-1" disabled>
+                                        <i className="ri-heart-line mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            Wishlist
+                                        </span>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-1" disabled>
+                                        <i className="ri-share-fill mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            Share
+                                        </span>
+                                    </button>
+
+                                </div>
+
+                            </Card.Body>
+
+                        </Card>
+                    </Link>
+
+                    <Link href="#">
+                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
+                            {/* <div style={{marginBottom:"-60px", marginLeft:"300px"}}>
+                                <Image 
+                                    src={`/assets/media/label-online.svg`}
+                                    width={100}
+                                    height={60}
+                                    style={{opacity:"0.5", filter:"grayscale(100%)"}}
+                                />
+                            </div> */}
+
+                            <div className='p-3'>
+                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} style={{opacity:"0.5", filter:"grayscale(100%)"}}/>
+                            </div>
+                            
+
+                            <div className="ml-3 p-1 img-grayed-out" style={{marginTop:"-35px", filter:"grayscale(100%)"}}> 
+                                <Image 
+                                    src={`/assets/media/Frame_6523.svg`}
+                                    width={50}
+                                    height={50}
+                                    // style={{opacity:"0.5", filter:"grayscale(100%)"}}
+                                />
+                            </div>
+                            
+                            <Card.Body>
+                                <div className="text-right text-muted mb-2">
+                                    05 Juli 2021 - 31 Juli 2021
+                                </div>
+                                {/* <Card.Text>
+                                    
+                                </Card.Text> */}
+
+                                <Card.Title className="text-muted">
+                                    Intermediate Multimedia Designer
+                                </Card.Title>
+
+                                <div className="text-muted mb-3">
+                                    Bukalapak
+                                </div>
+
+                                <div className="row">
+                                    <button className="btn btn-light rounded  ml-3" disabled>
+                                        <div className="text-danger">
+                                            Closed
+                                        </div>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-5" disabled>
+                                        <i className="ri-parent-line mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            1000
+                                        </span>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-1" disabled>
+                                        <i className="ri-heart-line mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            Wishlist
+                                        </span>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-1" disabled>
+                                        <i className="ri-share-fill mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            Share
+                                        </span>
+                                    </button>
+
+                                </div>
+
+                            </Card.Body>
+
+                        </Card>
+                    </Link>
+
+                    <Link href="#">
+                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
+                            {/* <div style={{marginBottom:"-60px", marginLeft:"300px"}}>
+                                <Image 
+                                    src={`/assets/media/label-online.svg`}
+                                    width={100}
+                                    height={60}
+                                    style={{opacity:"0.5", filter:"grayscale(100%)"}}
+                                />
+                            </div> */}
+
+                            <div className='p-3'>
+                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} style={{opacity:"0.5", filter:"grayscale(100%)"}}/>
+                            </div>
+                            
+
+                            <div className="ml-3 p-1 img-grayed-out" style={{marginTop:"-35px", filter:"grayscale(100%)"}}> 
+                                <Image 
+                                    src={`/assets/media/Frame_6523.svg`}
+                                    width={50}
+                                    height={50}
+                                    // style={{opacity:"0.5", filter:"grayscale(100%)"}}
+                                />
+                            </div>
+                            
+                            <Card.Body>
+                                <div className="text-right text-muted mb-2">
+                                    05 Juli 2021 - 31 Juli 2021
+                                </div>
+                                {/* <Card.Text>
+                                    
+                                </Card.Text> */}
+
+                                <Card.Title className="text-muted">
+                                    Intermediate Multimedia Designer
+                                </Card.Title>
+
+                                <div className="text-muted mb-3">
+                                    Bukalapak
+                                </div>
+
+                                <div className="row">
+                                    <button className="btn btn-light rounded  ml-3" disabled>
+                                        <div className="text-danger">
+                                            Closed
+                                        </div>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-5" disabled>
+                                        <i className="ri-parent-line mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            1000
+                                        </span>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-1" disabled>
+                                        <i className="ri-heart-line mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            Wishlist
+                                        </span>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-1" disabled>
+                                        <i className="ri-share-fill mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            Share
+                                        </span>
+                                    </button>
+
+                                </div>
+
+                            </Card.Body>
+
+                        </Card>
+                    </Link>
+
+                    <Link href="#">
+                        <Card style={{ width: '35rem', height:"35rem", cursor:"pointer"}}>
+                            {/* <div style={{marginBottom:"-60px", marginLeft:"300px"}}>
+                                <Image 
+                                    src={`/assets/media/label-online.svg`}
+                                    width={100}
+                                    height={60}
+                                    style={{opacity:"0.5", filter:"grayscale(100%)"}}
+                                />
+                            </div> */}
+
+                            <div className='p-3'>
+                                <Card.Img variant="top" src={`/assets/media/image_28.svg`} style={{opacity:"0.5", filter:"grayscale(100%)"}}/>
+                            </div>
+                            
+
+                            <div className="ml-3 p-1 img-grayed-out" style={{marginTop:"-35px", filter:"grayscale(100%)"}}> 
+                                <Image 
+                                    src={`/assets/media/Frame_6523.svg`}
+                                    width={50}
+                                    height={50}
+                                    // style={{opacity:"0.5", filter:"grayscale(100%)"}}
+                                />
+                            </div>
+                            
+                            <Card.Body>
+                                <div className="text-right text-muted mb-2">
+                                    05 Juli 2021 - 31 Juli 2021
+                                </div>
+                                {/* <Card.Text>
+                                    
+                                </Card.Text> */}
+
+                                <Card.Title className="text-muted">
+                                    Intermediate Multimedia Designer
+                                </Card.Title>
+
+                                <div className="text-muted mb-3">
+                                    Bukalapak
+                                </div>
+
+                                <div className="row">
+                                    <button className="btn btn-light rounded  ml-3" disabled>
+                                        <div className="text-danger">
+                                            Closed
+                                        </div>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-5" disabled>
+                                        <i className="ri-parent-line mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            1000
+                                        </span>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-1" disabled>
+                                        <i className="ri-heart-line mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            Wishlist
+                                        </span>
+                                    </button>
+
+                                    <button className="btn btn-light rounded ml-1" disabled>
+                                        <i className="ri-share-fill mr-2 text-info"></i>
+                                        <span className="text-gray">
+                                            Share
+                                        </span>
+                                    </button>
+
+                                </div>
+
+                            </Card.Body>
+
+                        </Card>
+                    </Link>
+
+                </Carousel>
+
+            </div>
+            
 
             
 

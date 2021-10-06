@@ -81,3 +81,17 @@
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
 }
+
+.img-grayed-out {
+    filter: grayscale(100%);
+    opacity: 50%;
+}
+
+.items-carousel-space-60px {
+   padding-right: 1000px;
+}
+
+/* .react-multi-carousel-item{
+    max-width: 40rem;
+    min-width:40rem;
+} */
