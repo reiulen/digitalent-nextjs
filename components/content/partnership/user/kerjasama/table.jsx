@@ -348,7 +348,10 @@ const Table = ({token}) => {
               ""
             ) : isProfile === false ? (
               <Link
-                href="/partnership/user/profile-lembaga/input-profile"
+                href={{
+                  pathname:"/partnership/user/profile-lembaga/input-profile",
+                  query:{isProfile:false},
+                }}
                 passHref
               >
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
