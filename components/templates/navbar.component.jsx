@@ -49,10 +49,19 @@ const Navigationbar = () => {
                                     <Dropdown.Item eventKey="7">TSA</Dropdown.Item>
                                 </DropdownButton> */}
                                 <div className="btn-group dropright">
-                                    <button type="button" className="btn btn-white dropdown-toggle navdropdown-child" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Pelatihan
+                                    <button type="button" className="btn btn-white-navbar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div className="row">
+                                            <div className="col-9 text-left">
+                                                Pelatihan
+                                            </div>
+                                            <div className="col-1 text-right">
+                                                <i className="ri-arrow-right-s-line text-dark ml-1"> </i>
+                                            </div>
+                                        </div>
+                                        
+                                    
                                     </button>
-                                    <div className="dropdown-menu ml-5">
+                                    <div className="dropdown-menu ml-3">
                                         <a className="dropdown-item navdropdown-child" href="#">VSGA</a>
                                         <a className="dropdown-item navdropdown-child" href="#">FGA</a>
                                         <a className="dropdown-item navdropdown-child" href="#">PRO</a>
@@ -62,10 +71,40 @@ const Navigationbar = () => {
                                         <a className="dropdown-item navdropdown-child" href="#">TSA</a>
                                     </div>
                                 </div>
-                                <NavDropdown.Item href="#action/3.3" className="navdropdown-child">Pusat Informasi</NavDropdown.Item>
+                                {/* <NavDropdown.Item href="#action/3.3" className="navdropdown-child">Pusat Informasi</NavDropdown.Item> */}
+                                <div className="btn-group dropright">
+                                    <button type="button" className="btn btn-white-navbar dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Pusat Informasi
+                                        {/* <i className="ri-arrow-right-s-line text-dark"> </i> */}
+                                    </button>
+                                    <div className="dropdown-menu ml-3">
+                                        <a className="dropdown-item navdropdown-child" href="#">Panduan Test Substansi</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">Hak dan Kewajiban</a>
+                                    </div>
+                                </div>
                                 <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Tentang Kami</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Penyelenggara</NavDropdown.Item>
-                                <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Rilis Media</NavDropdown.Item>
+                                {/* <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Rilis Media</NavDropdown.Item> */}
+                                <div className="btn-group dropright">
+                                    <button type="button" className="btn btn-white-navbar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div className="row">
+                                            <div className="col-9 text-left">
+                                                Rilis Media
+                                            </div>
+                                            <div className="col-1 text-right">
+                                                <i className="ri-arrow-right-s-line text-dark"> </i>
+                                            </div>
+                                        </div>
+                                        
+                                    
+                                    </button>
+                                    <div className="dropdown-menu ml-3">
+                                        <a className="dropdown-item navdropdown-child" href="#">Berita</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">Artikel</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">Galeri</a>
+                                        <a className="dropdown-item navdropdown-child" href="#">Video</a>
+                                    </div>
+                                </div>
                                 <NavDropdown.Item href="#action/3.4" className="navdropdown-child">FAQ</NavDropdown.Item>
                                 <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Kontak</NavDropdown.Item>
                             </NavDropdown>
