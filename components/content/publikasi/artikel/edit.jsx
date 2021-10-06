@@ -146,6 +146,7 @@ const EditArtikel = ({ token }) => {
     artikel.publish === 0 ? true : false
   );
   const [_method, setMethod] = useState("put");
+  const [disableTag, setDisableTag] = useState(false)
 
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
@@ -200,6 +201,19 @@ const EditArtikel = ({ token }) => {
       // console.log (result)
     }
   };
+
+  const handleTag = (data) => {
+    if (data.includes(" ")){
+        setTag([])
+        alert("tag")
+        setDisableTag (true)
+    } else {
+        setTag(data)
+        setDisableTag (false)
+    }
+
+    console.log (data)
+}
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -890,11 +904,20 @@ const EditArtikel = ({ token }) => {
                   <div className="col-sm-12">
                     <TagsInput
                       value={tag}
-                      onChange={setTag}
+                      // onChange={setTag}
+                      onChange={(data) => handleTag(data)}
                       name="fruits"
                       placeHolder="Isi Tag disini dan Enter"
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
+                    {
+                      disableTag === true ?
+                          <p className="text-danger">
+                              Tag tidak bisa terdiri dari 1 character "SPACE"
+                          </p>
+                      :
+                          null
+                    }
                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                   </div>
                 </div>
