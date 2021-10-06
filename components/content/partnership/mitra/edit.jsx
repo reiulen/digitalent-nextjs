@@ -333,6 +333,7 @@ const EditMitra = ({ token }) => {
                   Nama Lembaga
                 </label>
                 <input
+                readOnly
                   onFocus={() => setError({ ...error, institution_name: "" })}
                   type="text"
                   className="form-control"
@@ -371,12 +372,12 @@ const EditMitra = ({ token }) => {
                 <div className="col-12 col-sm-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
-                      Email (read only)
+                      Email
                     </label>
                     <input
+                    readOnly
                       onFocus={() => setError({ ...error, email: "" })}
                       type="email"
-                      readOnly
                       className="form-control"
                       placeholder="Masukkan Email"
                       value={email}
