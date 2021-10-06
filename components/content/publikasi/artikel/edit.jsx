@@ -558,6 +558,7 @@ const EditArtikel = ({ token }) => {
         {
           console.log (kategori)
         } */}
+        
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
