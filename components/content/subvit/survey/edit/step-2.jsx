@@ -63,10 +63,10 @@ const StepTwo = ({ token }) => {
         start_at,
         end_at,
         duration,
-        status: 0,
+        status: status,
         questions_to_share: jumlah_soal,
       };
-
+      console.log(data);
       dispatch(updateSurveyQuestionBanksPublish(data, id, token));
     } else {
       simpleValidator.current.showMessages();
@@ -113,10 +113,10 @@ const StepTwo = ({ token }) => {
           start_at,
           end_at,
           duration,
-          status: 1,
+          status: status,
           questions_to_share: jumlah_soal,
         };
-
+        console.log(data);
         dispatch(updateSurveyQuestionBanksPublish(data, id, token));
       } else {
         simpleValidator.current.showMessages();
@@ -134,6 +134,10 @@ const StepTwo = ({ token }) => {
     if (error) {
       dispatch(clearErrors());
     }
+  };
+
+  const handleStatus = (e) => {
+    setStatus(e.target.value);
   };
 
   return (
@@ -322,12 +326,12 @@ const StepTwo = ({ token }) => {
                   </p>
                   <select
                     name="status"
-                    id=""
+                    id="status"
                     className="form-control"
                     value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    onBlur={(e) => {
-                      setStatus(e.target.value);
+                    onChange={(event) => handleStatus(event)}
+                    onBlur={(event) => {
+                      handleStatus(event);
                       simpleValidator.current.showMessageFor("status");
                     }}
                   >
