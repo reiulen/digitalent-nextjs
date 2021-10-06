@@ -15,8 +15,26 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
+  // function delete
+  const pageDelete = (id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ingin menghapus data ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        // dispatch delete
+      }
+    });
+  };
+
   const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
+    router.replace("/site-management/setting/page", undefined, {
       shallow: true,
     });
   };
@@ -32,7 +50,7 @@ const Table = ({ token }) => {
               List Page
             </h3>
             <div className="card-toolbar">
-              <Link href="/site-management/setting/api/tambah-api">
+              <Link href="/site-management/setting/tambah-page" passHref>
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
                   <IconAdd className="mr-3" width="14" height="14" />
                   Tambah Page
@@ -108,16 +126,31 @@ const Table = ({ token }) => {
                       </td>
                       <td className="align-middle text-left">
                         <div className="d-flex align-items-center">
-                          <button className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                          <button
+                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                            onClick={() =>
+                              router.push(`/site-management/setting/ubah-page`)
+                            }
+                          >
                             <IconPencil width="16" height="16" />
                             <div className="text-hover-show-hapus">Ubah</div>
                           </button>
-                          <button className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                          <button
+                            className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                            onClick={() =>
+                              router.push(`/site-management/setting/preview-page`)
+                            }
+                          >
                             <IconEye width="16" height="16" />
-                            <div className="text-hover-show-hapus">Detail</div>
+                            <div className="text-hover-show-hapus">Preview</div>
                           </button>
 
-                          <button className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                          <button
+                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                            // onClick={() =>
+                            //   pageDelete(items.id)
+                            // }
+                          >
                             <IconDelete width="16" height="16" />
                             <div className="text-hover-show-hapus">Hapus</div>
                           </button>

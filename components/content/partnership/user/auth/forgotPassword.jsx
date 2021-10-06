@@ -15,9 +15,7 @@ const ForgotPassword = () => {
   let dispatch = useDispatch();
   const allAuthentication = useSelector((state) => state.allAuthentication);
   const [emailCode, setEmailCode] = useState("");
-  console.log("emailCode",emailCode)
   const [passwordCode, setPasswordCode] = useState("");
-  console.log("passwordCode",passwordCode)
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
@@ -169,7 +167,7 @@ const ForgotPassword = () => {
                   lineHeight: "38px",
                 }}
               >
-                Password Pemulihan
+                Password Pemulihan Mitra
               </h3>
             </div>
 
