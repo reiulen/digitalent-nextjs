@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import Swal from "sweetalert2";
 import { Modal } from "react-bootstrap";
 import Select from "react-select";
+import moment from "moment";
 
 import {
   deleteTraining,
@@ -382,39 +383,68 @@ const ListTraining = ({ token }) => {
                       ) : (
                         training.rows.map((row, i) => (
                           <tr key={i}>
-                            <td className="text-center">
+                            <td className="text-center align-middle">
                               {limit === null
                                 ? i + 1 * (page * 5) - (5 - 1)
                                 : i + 1 * (page * limit) - (limit - 1)}
                             </td>
-                            <td>CC001</td>
-                            <td>
+                            <td className="align-middle">CC00{row.id}</td>
+                            <td className="align-middle">
                               <p className="font-weight-bolder my-0">
-                                Android Developer
+                                {row.name}
                               </p>
-                              <p className="my-0">IBM</p>
-                              <p className="my-0">DKI</p>
+                              <p className="my-0">{row.penyelenggara}</p>
+                              <p className="my-0">{row.provinsi}</p>
                             </td>
-                            <td>
-                              <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
-                              <p className="my-0">21 Aug 2021 - 29 Sep 2021 </p>
+                            <td className="align-middle">
+                              <p className="my-0">
+                                {moment(row.pendaftaran_mulai).format(
+                                  "DD MMM YYYY"
+                                )}{" "}
+                                -{" "}
+                                {moment(row.pendaftaran_selesai).format(
+                                  "DD MMM YYYY"
+                                )}{" "}
+                              </p>
+                              <p className="my-0">
+                                {moment(row.pelatihan_mulai).format(
+                                  "DD MMM YYYY"
+                                )}{" "}
+                                -{" "}
+                                {moment(row.pelatihan_selesai).format(
+                                  "DD MMM YYYY"
+                                )}{" "}
+                              </p>
                             </td>
-                            <td>
+                            <td className="align-middle">
+                              {row.status_publish ? (
+                                <span className="label label-inline label-light-success font-weight-bold">
+                                  Publish
+                                </span>
+                              ) : (
+                                <span className="label label-inline label-light-danger font-weight-bold">
+                                  Unpublish
+                                </span>
+                              )}
+                            </td>
+                            <td className="align-middle">
+                              {row.status_substansi === "review" ||
+                              row.status_substansi === "disetujui" ? (
+                                <span className="label label-inline label-light-success font-weight-bold">
+                                  {row.status_substansi}
+                                </span>
+                              ) : (
+                                <span className="label label-inline label-light-danger font-weight-bold">
+                                  {row.status_substansi}
+                                </span>
+                              )}
+                            </td>
+                            <td className="align-middle">
                               <span className="label label-inline label-light-success font-weight-bold">
-                                Publish
+                                {row.status_pelatihan}
                               </span>
                             </td>
-                            <td>
-                              <span className="label label-inline label-light-success font-weight-bold">
-                                Disetujui
-                              </span>
-                            </td>
-                            <td>
-                              <span className="label label-inline label-light-success font-weight-bold">
-                                Publish
-                              </span>
-                            </td>
-                            <td>
+                            <td className="align-middle">
                               <div className="d-flex">
                                 <Link
                                   href={`/pelatihan/pelatihan/edit-pelatihan/${1}`}
@@ -440,15 +470,17 @@ const ListTraining = ({ token }) => {
                                     <i className="ri-eye-fill text-white p-0"></i>
                                   </a>
                                 </Link>
-                                <button
-                                  className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                  onClick={() => handleModalRevisi(1)}
-                                  data-toggle="tooltip"
-                                  data-placement="bottom"
-                                  title="Revisi"
-                                >
-                                  <i className="ri-draft-line p-0 text-white"></i>
-                                </button>
+                                {row.status_substansi === "revisi" && (
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                    onClick={() => handleModalRevisi(1)}
+                                    data-toggle="tooltip"
+                                    data-placement="bottom"
+                                    title="Revisi"
+                                  >
+                                    <i className="ri-draft-line p-0 text-white"></i>
+                                  </button>
+                                )}
                                 <Link
                                   href={`/pelatihan/pelatihan/tambah-form-lpj/${1}`}
                                 >
@@ -461,30 +493,34 @@ const ListTraining = ({ token }) => {
                                     <i className="ri-file-text-fill p-0 text-white"></i>
                                   </a>
                                 </Link>
-                                <Link
-                                  href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${1}`}
-                                >
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="User"
+                                {row.status_pelatihan === "pendaftaran" && (
+                                  <Link
+                                    href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${1}`}
                                   >
-                                    <i className="ri-user-3-fill p-0 text-white"></i>
-                                  </a>
-                                </Link>
-                                <Link
-                                  href={`/pelatihan/pelatihan/upload-evidence`}
-                                >
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                    data-toggle="tooltip"
-                                    data-placement="bottom"
-                                    title="Upload Evidence"
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="User"
+                                    >
+                                      <i className="ri-user-3-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                )}
+                                {row.status_pelatihan === "selesai" && (
+                                  <Link
+                                    href={`/pelatihan/pelatihan/upload-evidence`}
                                   >
-                                    <i className="ri-folder-upload-fill p-0 text-white"></i>
-                                  </a>
-                                </Link>
+                                    <a
+                                      className="btn btn-link-action bg-blue-secondary text-white mr-2"
+                                      data-toggle="tooltip"
+                                      data-placement="bottom"
+                                      title="Upload Evidence"
+                                    >
+                                      <i className="ri-folder-upload-fill p-0 text-white"></i>
+                                    </a>
+                                  </Link>
+                                )}
                                 <Link href={`/pelatihan/pelatihan/${1}`}>
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"

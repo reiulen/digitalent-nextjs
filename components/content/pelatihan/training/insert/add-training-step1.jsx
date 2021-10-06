@@ -104,6 +104,12 @@ const AddTrainingStep1 = ({ propsStep }) => {
     { value: "3", label: "Vanilla" },
   ];
 
+  let optionBatch = [];
+  for (let index = 0; index < 20; index++) {
+    const val = { value: index + 1, label: index + 1 };
+    optionBatch.push(val);
+  }
+
   useEffect(() => {
     dispatch(getTrainingStep1());
 
@@ -124,55 +130,59 @@ const AddTrainingStep1 = ({ propsStep }) => {
 
   const onLogoHandler = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
-    if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 2000000) {
-        e.target.value = null;
-        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+    if (e.target.files[0]) {
+      if (type.includes(e.target.files[0].type)) {
+        if (e.target.files[0].size > 2000000) {
+          e.target.value = null;
+          Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+        } else {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setLogoBase(reader.result);
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+          setLogoFile(e.target.files[0]);
+          setLogoName(e.target.files[0].name);
+        }
       } else {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            setLogoBase(reader.result);
-          }
-        };
-        reader.readAsDataURL(e.target.files[0]);
-        setLogoFile(e.target.files[0]);
-        setLogoName(e.target.files[0].name);
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data gambar.",
+          "error"
+        );
       }
-    } else {
-      e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data gambar.",
-        "error"
-      );
     }
   };
 
   const onThumbnailHandler = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
-    if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 2000000) {
-        e.target.value = null;
-        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+    if (e.target.files[0]) {
+      if (type.includes(e.target.files[0].type)) {
+        if (e.target.files[0].size > 2000000) {
+          e.target.value = null;
+          Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+        } else {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setThumbnailBase(reader.result);
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+          setThumbnailFile(e.target.files[0]);
+          setThumbnailName(e.target.files[0].name);
+        }
       } else {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            setThumbnailBase(reader.result);
-          }
-        };
-        reader.readAsDataURL(e.target.files[0]);
-        setThumbnailFile(e.target.files[0]);
-        setThumbnailName(e.target.files[0].name);
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data gambar.",
+          "error"
+        );
       }
-    } else {
-      e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data gambar.",
-        "error"
-      );
     }
   };
 
@@ -197,28 +207,30 @@ const AddTrainingStep1 = ({ propsStep }) => {
 
   const onSilabusHandler = (e) => {
     const type = ["application/pdf"];
-    if (type.includes(e.target.files[0].type)) {
-      if (e.target.files[0].size > 2000000) {
-        e.target.value = null;
-        Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+    if (e.target.files[0]) {
+      if (type.includes(e.target.files[0].type)) {
+        if (e.target.files[0].size > 2000000) {
+          e.target.value = null;
+          Swal.fire("Oops !", "Data yang bisa dimasukkan hanya 2 MB.", "error");
+        } else {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (reader.readyState === 2) {
+              setSilabusBase(reader.result);
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+          setSilabusFile(e.target.files[0]);
+          setSilabusName(e.target.files[0].name);
+        }
       } else {
-        const reader = new FileReader();
-        reader.onload = () => {
-          if (reader.readyState === 2) {
-            setSilabusBase(reader.result);
-          }
-        };
-        reader.readAsDataURL(e.target.files[0]);
-        setSilabusFile(e.target.files[0]);
-        setSilabusName(e.target.files[0].name);
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa file pdf.",
+          "error"
+        );
       }
-    } else {
-      e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa file pdf.",
-        "error"
-      );
     }
   };
 
@@ -1048,7 +1060,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
               <label className="col-form-label font-weight-bold">Batch</label>
               <Select
                 placeholder="Silahkan Pilih Batch"
-                options={options}
+                options={optionBatch}
                 defaultValue={batch}
                 onChange={(e) => setBatch({ value: e.value, label: e.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("batch")}
