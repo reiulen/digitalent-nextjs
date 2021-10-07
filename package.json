@@ -42,6 +42,7 @@
     "dom-to-image": "^2.6.0",
     "file-saver": "^2.0.5",
     "html-to-image": "^1.8.5",
+    "js-cookie": "^3.0.1",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.29.1",
     "next": "^11.1.2",

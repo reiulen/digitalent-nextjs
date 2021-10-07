@@ -1,0 +1,43 @@
+.back {
+  background: #ffffff;
+  box-shadow: 0px 5px 40px rgba(0, 0, 0, 0.05);
+  height: 44px;
+  padding: 14px;
+}
+.pelatihan {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 22px */
+
+  /* Neutral/Body */
+
+  color: #6c6c6c;
+}
+.nameTest {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 22px */
+
+  /* Neutral/Body */
+
+  color: #6c6c6c;
+}
+.time {
+  text-align: right;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 22px */
+
+  /* Neutral/Caption */
+
+  color: #adb5bd;
+}

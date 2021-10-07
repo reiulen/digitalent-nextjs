@@ -1,0 +1,34 @@
+.thanks {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 120%;
+  color: #6c6c6c;
+}
+.bodyDone {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 112%;
+  color: #6c6c6c;
+}
+.btnDone {
+  background: #215480;
+  border-radius: 30px;
+  border: #215480;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  padding: 5px 20px;
+  text-align: center;
+  color: #ffffff;
+  float: right;
+}
+.imageDone {
+  margin: 20px;
+  padding: 20px;
+}
