@@ -848,7 +848,7 @@ const Galeri = ({ token }) => {
                                 </div>
                                 {/* <div className="col-1"></div> */}
                                 <div className="col-6" style={{ padding: '30px' }}>
-                                    {/* {console.log("CEK :",galeri.gallery[index_galleri])} */}
+                                    {console.log("CEK :",galeri.gallery)}
                                     {
                                         galeri && galeri.gallery.length !== 0 && index_galleri !== null ?
                                             <>
@@ -864,7 +864,7 @@ const Galeri = ({ token }) => {
                                                             className="mb-1 p-0 d-flex align-items-center">
                                                             <i className="flaticon2-calendar-4"></i>
                                                             <span className="ml-2">
-                                                                Publish: {galeri.gallery[index_galleri].tanggal_publish}
+                                                                Publish: {moment( galeri.gallery[index_galleri].tanggal_publish ).format('LL')}
                                                             </span>
                                                         </div>
 

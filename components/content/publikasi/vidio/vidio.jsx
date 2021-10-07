@@ -892,7 +892,7 @@ const Vidio = ({ token }) => {
                                     {
                                         tanggal_publish ?
                                             <span className="ml-2">
-                                                Publish : {tanggal_publish}
+                                                Publish : {moment({ tanggal_publish }).format('LL')}
                                             </span>
                                             :
                                             <span className="ml-2">

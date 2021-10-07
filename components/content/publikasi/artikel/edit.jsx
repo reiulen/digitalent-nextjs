@@ -37,18 +37,6 @@ const EditArtikel = ({ token }) => {
   });
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
-<<<<<<< HEAD
-  const simpleValidator = useRef(
-    new SimpleReactValidator({
-      locale: "id",
-      messages: {
-        url: "Format url berupa: https://www.example.com",
-      },
-    })
-  );
-  // const [, forceUpdate] = useState();
-  const forceUpdate = React.useReducer(() => ({}))[1];
-=======
   const simpleValidator = useRef(new SimpleReactValidator({ 
     locale: "id",
     messages: {
@@ -57,7 +45,6 @@ const EditArtikel = ({ token }) => {
   }));
   const [, forceUpdate] = useState();
   // const forceUpdate = React.useReducer(() => ({}))[1]
->>>>>>> 279f614e085680387383629b291de8e592fdb1c4
   const { artikel } = useSelector((state) => state.detailArtikel);
   const { error, success, loading } = useSelector(
     (state) => state.updatedArtikel
