@@ -279,7 +279,11 @@ const Table = ({ token }) => {
                 }
                 tableBody={
                   allMitra.status === "process" ? (
-                    <LoadingTable />
+                    <tr>
+                      <td colSpan="7" className="text-center">
+                        <LoadingTable />
+                      </td>
+                    </tr>
                   ) : allMitra.mitraAll.data &&
                     allMitra.mitraAll.data.list_mitras.length === 0 ? (
                     <tr>

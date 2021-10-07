@@ -111,11 +111,7 @@ const SubmitKerjasama = ({token}) => {
       }).then(async (result) => {
         if (result.value) {
           let formData = new FormData();
-
           formData.append("_method", "put");
-          // formData.append("date", date);
-          // formData.append("period", period);
-          // formData.append("period_unit", periodUnit);
           formData.append("period_date_start", period_date_start);
           formData.append("period_date_end", newDate);
           formData.append("agreement_number_partner", agreement_number_partner);
@@ -124,6 +120,7 @@ const SubmitKerjasama = ({token}) => {
             agreement_number_kemkominfo
           );
           formData.append("signing_date", signing_date);
+          // formData.append("document", document);
           formData.append("document", document);
 
           try {
@@ -136,14 +133,13 @@ const SubmitKerjasama = ({token}) => {
                 },
               }
             );
-            console.log("data fdfdfdfdf",data)
-            // alert('berhasil');
             router.push({
               pathname: `/partnership/user/kerjasama/review-dokumen-kerjasama`,
               query: { successSubmitDokumentKerjasama: true, id:router.query.id },
             });
           } catch (error) {
-            alert("gagal menambahkan data tipe file harus pdf");
+            notify(error.response.data.message)
+            // alert("gagal menambahkan data tipe file harus pdf");
           }
         }
       });
@@ -206,8 +202,15 @@ const SubmitKerjasama = ({token}) => {
   const [AllCooperation, setAllCooperation] = useState("");
 
 
-  const cekProgresStatus = async (id) => {
-    try {
+  // const cekProgresStatus = async (id) => {
+    
+  // };
+
+  useEffect(() => {
+
+    // api cek progress
+    async function cekProgresStatus(id) {
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/cek-progres/${id}`,
         {
@@ -222,16 +225,12 @@ const SubmitKerjasama = ({token}) => {
     } catch (error) {
       console.log("gagal get province", error);
     }
-  };
-
-  useEffect(() => {
-
-    // api cek progress
-    console.log("router.query.id", router.query.id);
+      
+    }
     cekProgresStatus(router.query.id);
 
 
-  }, [router.query.id]);
+  }, [router.query.id,token]);
 
 
   return (
@@ -347,7 +346,7 @@ const SubmitKerjasama = ({token}) => {
                     )}
                   </div>
                   <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         selected={endDate}

@@ -115,7 +115,7 @@ module.exports = {
   env: {
     NEXTAUTH_URL: "http://dts-dev.majapahit.id/",
 
-    NEXTAUTH_URL_INTERNAL: "http://localhost:3000/",
+    // NEXTAUTH_URL_INTERNAL: "http://localhost:3000/",
 
     CAPTCHA_SITE_KEY: "6LeUmtIbAAAAAMltXjRDmRqns6MThDowaaYHz3YU",
     CAPTCHA_SECRET_KEY: "6LeUmtIbAAAAAAbA9yada3LOIktctPbfQ86SjhNn",
@@ -132,7 +132,6 @@ module.exports = {
       "https://dts-subvit-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // partnership
-
     END_POINT_API_PARTNERSHIP: "http://api-dts-dev.majapahit.id/partnership/",
 
     END_POINT_API_PARTNERSHIP_MITRA: "http://dts-partnership-dev.majapahit.id/",
@@ -140,10 +139,15 @@ module.exports = {
     END_POINT_API_IMAGE_PARTNERSHIP:
       "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
 
+    // site management
+    END_POINT_API_SITE_MANAGEMENT: "http://dts-user-dev.majapahit.id/",
+
     // pelatihan
     END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",
 
     //sertifikat
     END_POINT_API_SERTIFIKAT: "http://dts-sertifikat-dev.majapahit.id/",
+    END_POINT_API_IMAGE_SERTIFIKAT:
+      "https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
   },
 };

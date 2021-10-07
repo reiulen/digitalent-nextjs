@@ -49,6 +49,7 @@ const Tambah = ({token}) => {
   });
 
   const submit = (e) => {
+    console.log("object f f",router.query.isProfile)
     // e.preventDefault();
     if (institution_name === "") {
       setError({
@@ -162,16 +163,20 @@ const Tambah = ({token}) => {
                 },
               }
             );
-            router.push({
-              pathname: "/partnership/user/profile-lembaga/input-profile",
-              query: { successInputProfile: true },
-            });
+            if(router.query.isProfile){
+                router.push({
+                pathname: "/partnership/user/kerjasama/submit-kerjasama",
+                query: { isProfile: true },
+              });
+            }
+            else{
+              router.push({
+                pathname: "/partnership/user/profile-lembaga/input-profile",
+                query: { successInputProfile: true },
+              });
+            }
           } catch (error) {
             notify(error.response.data.message);
-            // notify(
-            //   "cek field kab/kota anda apakah sudah sesuai dengan provinsi yang ada"
-            // );
-
           }
         }
       });
@@ -231,8 +236,22 @@ const Tambah = ({token}) => {
   // ketika load cities state ini save data
   const [citiesAll, setCitiesAll] = useState([]);
 
-  const getDataProvinces = async () => {
-    try {
+  // const getDataProvinces = async () => {
+    
+  // };
+
+  // const getProfiles = async () => {
+    
+  // };
+
+  const [isChangeLogo, setIsChangeLogo] = useState(false);
+  const changeStatusLgo = () => {
+    setIsChangeLogo(isChangeLogo ? false : true);
+  };
+
+  useEffect(() => {
+    async function getDataProvinces(token) {
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/provinces`,
         {
@@ -245,15 +264,15 @@ const Tambah = ({token}) => {
         return { ...items, label: items.name, value: items.id };
       });
       dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-      // console.log("dataNewProvinces", dataNewProvinces);
       setAllProvinces(dataNewProvinces);
     } catch (error) {
       console.log("gagal get province", error);
     }
-  };
+      
+    }
 
-  const getProfiles = async () => {
-    try {
+    async function getProfiles(token) {
+      try {
       let { data } = await axios.get(
         `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
         {
@@ -295,14 +314,12 @@ const Tambah = ({token}) => {
     } catch (error) {
       console.log("gagal get province", error);
     }
-  };
+      
+    }
 
-  const [isChangeLogo, setIsChangeLogo] = useState(false);
-  const changeStatusLgo = () => {
-    setIsChangeLogo(isChangeLogo ? false : true);
-  };
 
-  useEffect(() => {
+
+
     getDataProvinces(token);
     getProfiles(token);
   }, [token]);

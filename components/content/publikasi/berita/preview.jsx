@@ -21,7 +21,7 @@ const Preview = () => {
     return (
         <> 
             <div className="text-center mt-5">
-                <h1 className="mt-5">
+                <h1 className="mt-5 display-1">
                     {judul_berita}
                 </h1>
             </div>
@@ -31,8 +31,8 @@ const Preview = () => {
                 >
             </Image>
             <PreviewWrapper title= "Pratinjau Berita - Publikasi">
-                <div className="col-lg-12 order-1 px-0 position-relative " style={{marginTop: "-20vh"}} >
-                    <div className="card card-custom card-stretch gutter-b">
+                <div className="col-lg-12 order-1 px-0 position-relative "  >
+                    <div className="card card-custom card-stretch gutter-b"style={{marginTop: "-20vh"}}>
 
                         <div className="card-body pt-0">
 
@@ -44,6 +44,7 @@ const Preview = () => {
                                         objectFit="cover"
                                         height= "500vh"
                                         width= "1000vh"
+                                        className="mt-5 pt-5"
                                         // height= "100%"
                                         // width= "100%"
                                         // layout="fill"

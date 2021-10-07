@@ -49,7 +49,7 @@ export const getSettingPublikasi = (token) => async (dispatch) => {
     }
 }
 
-export const updateSettingImagePublikasi = (settingData) => async (dispatch) => {
+export const updateSettingImagePublikasi = (settingData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_SETTING_REQUEST });
 
@@ -63,9 +63,11 @@ export const updateSettingImagePublikasi = (settingData) => async (dispatch) => 
 
         const config = {
             headers: {
+                Authorization: "Bearer " + token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
+        // console.log("Update Image Action :", config)
 
         const { dataImage } = await axios.put(linkImage, params, config)
         // const { dataImagetron } = await axios.put(linkImagetron, settingData.upload_imagetron)
@@ -116,7 +118,7 @@ export const updateSettingImagePublikasi = (settingData) => async (dispatch) => 
     }
 }
 
-export const updateSettingImagetronPublikasi = (settingData) => async (dispatch) => {
+export const updateSettingImagetronPublikasi = (settingData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_SETTING_REQUEST });
 
@@ -127,9 +129,11 @@ export const updateSettingImagetronPublikasi = (settingData) => async (dispatch)
 
         const config = {
             headers: {
+                Authorization: "Bearer " + token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
+        // console.log("Update Imagetron Action :", config)
 
         const { dataImagetron } = await axios.put(linkImagetron, params, config)
 
@@ -146,7 +150,7 @@ export const updateSettingImagetronPublikasi = (settingData) => async (dispatch)
     }
 }
 
-export const updateSettingSliderPublikasi = (settingData) => async (dispatch) => {
+export const updateSettingSliderPublikasi = (settingData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_SETTING_REQUEST });
 
@@ -157,6 +161,7 @@ export const updateSettingSliderPublikasi = (settingData) => async (dispatch) =>
 
         const config = {
             headers: {
+                Authorization: "Bearer " + token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
@@ -177,7 +182,7 @@ export const updateSettingSliderPublikasi = (settingData) => async (dispatch) =>
     }
 }
 
-export const updateSettingFaqPublikasi = (settingData) => async (dispatch) => {
+export const updateSettingFaqPublikasi = (settingData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_SETTING_REQUEST });
 
@@ -188,6 +193,7 @@ export const updateSettingFaqPublikasi = (settingData) => async (dispatch) => {
 
         const config = {
             headers: {
+                Authorization: "Bearer " + token,
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }

@@ -438,7 +438,7 @@ const EditVideo = ({token}) => {
         <>
             <PageWrapper>
                 {
-                    console.log (video)
+                    console.log ("Cek Data Awal :",video)
                 }
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">

@@ -15,6 +15,8 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
+import "../../../../styles/publikasi.module.css"
+
 const EditFaq = ({token}) => {
     const dispatch = useDispatch()
     const router = useRouter()
@@ -60,6 +62,7 @@ const EditFaq = ({token}) => {
     const [publishDate, setPublishDate] = useState(faq.tanggal_publish ? new Date (faq.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(faq.publish === 0 ? true : false)
     const [, forceUpdate] = useState();
+    // const forceUpdate = React.useReducer(() => ({}))[1]
 
     const handleChangePinned = (e) => {
         setPinnedFaq(e.target.checked);
@@ -146,6 +149,7 @@ const EditFaq = ({token}) => {
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
+            // forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -156,12 +160,12 @@ const EditFaq = ({token}) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log (faq)
-            }
-            {
-                console.log (kategori)
-            }
+            } */}
+            {/* {
+                console.log (disablePublishDate)
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -204,7 +208,7 @@ const EditFaq = ({token}) => {
                                         <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Jawaban</label>
                                         <div className="col-sm-12">
                                             <textarea
-                                                className='form-control'
+                                                className='form-control description-text'
                                                 placeholder='isi deskripsi jawaban disini'
                                                 name="jawaban"
                                                 rows="10"
@@ -285,7 +289,7 @@ const EditFaq = ({token}) => {
                                                     <DatePicker
                                                         className="form-search-date form-control-sm form-control"
                                                         selected={publishDate}
-                                                        nChange={(date) => handlePublishDate(date)}
+                                                        onChange={(date) => handlePublishDate(date)}
                                                         // onChange={(date) => setPublishDate(date)}
                                                         selectsStart
                                                         startDate={publishDate}

@@ -149,7 +149,14 @@ import {
   detailSertifikatReducer,
   newSertifikatReducer,
   updateSertifikatReducer,
+  singleSertifikatReducer,
+  publishedSertifikatReducer,
 } from "./sertifikat/sertifikat.reducers";
+
+import {
+  allPesertaReducers,
+  detailPesertaReducer,
+} from "./sertifikat/list-peserta.reducer";
 // ============== sertifikat ===============
 
 // start Partnership
@@ -171,6 +178,7 @@ import { allTandaTanganUserReducer } from "./partnership/user/tanda-tangan.reduc
 
 // Site Management
 // ============== role ===============
+import { pageReducer } from "./site-management/settings/page.reducer";
 import {
   allRolesReducer,
   newRolesReducer,
@@ -198,10 +206,31 @@ import {
   updateAcademyReducer,
   deleteAcademyReducer,
 } from "./pelatihan/academy.reducers";
+
+// ====================== tema =====================
+import {
+  allThemeReducer,
+  newThemeReducer,
+  detailThemeReducer,
+  updateThemeReducer,
+  deleteThemeReducer,
+} from "./pelatihan/theme.reducers";
+
+// ====================== pelatihan =====================
+import {
+  newTrainingReducer,
+  allTrainingReducer,
+  deleteTrainingReducer,
+} from "./pelatihan/training.reducers";
 //END PELATIHAN
 
 // functional reducer
 
+import {
+  trainingStep1Reducer,
+  registrationStep2Reducer,
+  commitmentStep3Reducer,
+} from "./pelatihan/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
 
@@ -330,9 +359,14 @@ const reducer = combineReducers({
   // =============== sertifikat ==================
   allCertificates: allSertifikatReducers,
   newCertificates: newSertifikatReducer,
+  singleCertificate: singleSertifikatReducer,
   detailCertificates: detailSertifikatReducer,
   deleteCertificates: deleteSertifikatReducer,
   updateCertificates: updateSertifikatReducer,
+  publishCertificate: publishedSertifikatReducer,
+
+  allParticipant: allPesertaReducers,
+  detailParticipant: detailPesertaReducer,
   // =============== end sertifikat ==================
 
   // PARTNERSHIP
@@ -357,6 +391,8 @@ const reducer = combineReducers({
   allAuthentication: authenticationReducer,
 
   // SITE MANAGEMENT
+  // ============ PAGE =======
+  allPage: pageReducer,
   // ============== ROLE ============
   allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
   newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,
@@ -378,6 +414,20 @@ const reducer = combineReducers({
   detailAcademy: detailAcademyReducer,
   updateAcademy: updateAcademyReducer,
   deleteAcademy: deleteAcademyReducer,
+  // ========== tema ===========
+  allTheme: allThemeReducer,
+  newTheme: newThemeReducer,
+  detailTheme: detailThemeReducer,
+  updateTheme: updateThemeReducer,
+  deleteTheme: deleteThemeReducer,
+  // ========== pelatihan ===========
+  allTraining: allTrainingReducer,
+  newTraining: newTrainingReducer,
+  deleteTraining: deleteTrainingReducer,
+
+  trainingStep1: trainingStep1Reducer,
+  registrationStep2: registrationStep2Reducer,
+  commitmentStep3: commitmentStep3Reducer,
   //END PELATIHAN
 });
 

@@ -58,3 +58,25 @@ export const vericationEmail = (formData) => {
     }
   };
 };
+export const resetPassword = (formData) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: RESET_PASSWORD_PROCESS,
+      });
+      const { data } = await axios.post(
+        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/authentication/password-reset`,
+        formData
+      );
+      dispatch({
+        type: RESET_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: RESET_PASSWORD_ERROR,
+        payload: error.response.data.message,
+      });
+    }
+  };
+};

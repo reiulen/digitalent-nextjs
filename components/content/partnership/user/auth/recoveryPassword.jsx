@@ -67,14 +67,13 @@ const RegisterMitra = () => {
     }else{
       ""
     }
-
     return () => {
       dispatch({
         type:RESET_STATUS
       })
     }
 
-  }, [allAuthentication.status, allAuthentication.errorRegister,dispatch]);
+  }, [allAuthentication.status, allAuthentication.errorRegister,dispatch,router]);
 
   return (
     <>
@@ -114,7 +113,7 @@ const RegisterMitra = () => {
                   lineHeight: "38px",
                 }}
               >
-                Atur Ulang Password
+                Atur Ulang Password Mitra
               </h3>
             </div>
 

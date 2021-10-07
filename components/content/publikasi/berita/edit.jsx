@@ -30,6 +30,7 @@ const EditBerita = ({token}) => {
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
     const [, forceUpdate] = useState();
+    // const forceUpdate = React.useReducer(() => ({}))[1]
     const { berita } = useSelector(state => state.detailBerita)
     const { loading, error, success } = useSelector(state => state.updatedBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -82,6 +83,7 @@ const EditBerita = ({token}) => {
     // const [publishDate, setPublishDate] = useState(null);
     const [publishDate, setPublishDate] = useState(berita.tanggal_publish ? (new Date (berita.tanggal_publish)) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(berita.publish === 0 ? true : false)
+    const [disableTag, setDisableTag] = useState(false)
     
 
     const onChangeGambar = (e) => {
@@ -136,9 +138,22 @@ const EditBerita = ({token}) => {
         }
     }
 
+    const handleTag = (data) => {
+        if (data.includes(" ")){
+            setTag([])
+            alert("tag")
+            setDisableTag (true)
+        } else {
+            setTag(data)
+            setDisableTag (false)
+        }
+
+        console.log (data)
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
-        if (simpleValidator.current.allValid()){
+        if (simpleValidator.current.allValid() && disableTag === false){
             if (error) {
                 dispatch(clearErrors())
             }
@@ -298,6 +313,7 @@ const EditBerita = ({token}) => {
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
+            // forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -316,10 +332,10 @@ const EditBerita = ({token}) => {
     return (
         <>
         {
-            console.log (berita)
+            // console.log (berita)
         }
         {
-                console.log (kategori)
+                // console.log (kategori)
             }
             <PageWrapper>
                 {error ?
@@ -382,7 +398,7 @@ const EditBerita = ({token}) => {
                                                 data={isi_berita}
                                                 onReady={editor => {
                                                     // You can store the "editor" and use when it is needed.
-                                                    console.log('Editor is ready to use!', editor);
+                                                    // console.log('Editor is ready to use!', editor);
                                                 }}
                                                 onChange={(event, editor) => {
                                                     const data = editor.getData()
@@ -533,10 +549,19 @@ const EditBerita = ({token}) => {
                                     <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
+                                        // onChange={setTag}
                                         name="tag"
                                         placeHolder="Isi Tag disini"
                                     />
+                                    {
+                                        disableTag === true ?
+                                            <p className="text-danger">
+                                                Tag tidak bisa terdiri dari 1 character "SPACE"
+                                            </p>
+                                        :
+                                            null
+                                    }
                                         {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                     </div>
                                 </div>

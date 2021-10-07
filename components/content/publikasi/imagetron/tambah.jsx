@@ -11,15 +11,15 @@ import { TagsInput } from "react-tag-input-component";
 import DatePicker from "react-datepicker";
 
 import {
-    newImagetron,
-    clearErrors,
+  newImagetron,
+  clearErrors,
 } from "../../../../redux/actions/publikasi/imagetron.actions";
 import { getAllKategori } from "../../../../redux/actions/publikasi/kategori.actions";
 import { NEW_IMAGETRON_RESET } from "../../../../redux/types/publikasi/imagetron.type";
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const TambahImagetron = () => {
+const TambahImagetron = ({ token }) => {
   const editorRef = useRef()
   const dispatch = useDispatch()
   const router = useRouter();
@@ -40,7 +40,7 @@ const TambahImagetron = () => {
 
   useEffect(() => {
 
-    dispatch(getAllKategori());
+    // dispatch(getAllKategori());
 
     if (success) {
       router.push({
@@ -70,7 +70,7 @@ const TambahImagetron = () => {
   );
   const [gambarName, setGambarName] = useState(null)
   const [url_link, setUrlRedirect] = useState('')
-  const [publish, setPublish] = useState(false)
+  const [publish, setPublish] = useState(0)
   const [users_id, setUserId] = useState(3)
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
@@ -78,7 +78,7 @@ const TambahImagetron = () => {
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
     // console.log (e.target.files[0].type)
-    console.log (e.target.files[0])
+    // console.log(e.target.files[0])
     // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
@@ -170,8 +170,8 @@ const TambahImagetron = () => {
         })
           .then((result) => {
             if (result.isConfirmed) {
-              dispatch(newImagetron(data))
-              console.log(data)
+              dispatch(newImagetron(data, token))
+              console.log("Unpublish :",data)
             }
           });
 
@@ -198,8 +198,8 @@ const TambahImagetron = () => {
         })
           .then((result) => {
             if (result.isConfirmed) {
-              dispatch(newImagetron(data))
-              console.log(data)
+              dispatch(newImagetron(data, token))
+              console.log("Publish :",data)
             }
           });
       }

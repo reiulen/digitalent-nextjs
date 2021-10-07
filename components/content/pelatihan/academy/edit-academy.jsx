@@ -8,32 +8,58 @@ import SimpleReactValidator from "simple-react-validator";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 
+import {
+  updateAcademy,
+  clearErrors,
+} from "../../../../redux/actions/pelatihan/academy.actions";
+
+import { UPDATE_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
+
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingPage from "../../../LoadingPage";
 
-const EditAcademy = () => {
+const EditAcademy = ({ token }) => {
   const editorRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
+  const { id } = router.query;
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
     editorRef.current || {};
 
+  const {
+    loading: detailLoading,
+    error: detailError,
+    academy,
+  } = useSelector((state) => state.detailAcademy);
+
+  const { loading, error, isUpdated } = useSelector(
+    (state) => state.updateAcademy
+  );
+
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
-  const [logoPreview, setLogoPreview] = useState("/assets/media/default.jpg");
+  const [logoPreview, setLogoPreview] = useState(
+    academy.file_path + academy.logo
+  );
   const [logoFile, setLogoFile] = useState("");
-  const [logoName, setLogoName] = useState("");
+  const [logoName, setLogoName] = useState(academy.logo);
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const [name, setName] = useState(academy.name);
+  const [description, setDescription] = useState(academy.deskripsi);
 
-  const [browsurName, setBrowsurName] = useState("Belum ada file");
+  const [browsurName, setBrowsurName] = useState(academy.brosur);
   const [browsurFile, setBrowsurFile] = useState("");
-  const [brosurPreview, setBrowsurPreview] = useState("");
-  const [status, setStatus] = useState({ value: 0, label: "Unpublish" });
+  const [brosurPreview, setBrowsurPreview] = useState(
+    academy.file_path + academy.brosur
+  );
+  const [status, setStatus] = useState(
+    academy.status === "0"
+      ? { value: 0, label: "Unpublish" }
+      : { value: 1, label: "Publish" }
+  );
 
   const optionsStatus = [
     { value: 1, label: "Publish" },
@@ -48,7 +74,17 @@ const EditAcademy = () => {
     };
 
     setEditorLoaded(true);
-  }, []);
+
+    if (isUpdated) {
+      dispatch({
+        type: UPDATE_ACADEMY_RESET,
+      });
+      router.push({
+        pathname: `/pelatihan/akademi`,
+        query: { success: true },
+      });
+    }
+  }, [isUpdated]);
 
   const handleResetError = () => {
     if (error) {
@@ -64,11 +100,11 @@ const EditAcademy = () => {
           e.target.value = null;
           Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
         } else {
-          setLogoFile(e.target.files[0]);
+          setLogoPreview(URL.createObjectURL(e.target.files[0]));
           const reader = new FileReader();
           reader.onload = () => {
             if (reader.readyState === 2) {
-              setLogoPreview(reader.result);
+              setLogoFile(reader.result);
             }
           };
           reader.readAsDataURL(e.target.files[0]);
@@ -102,11 +138,11 @@ const EditAcademy = () => {
           const reader = new FileReader();
           reader.onload = () => {
             if (reader.readyState === 2) {
-              setBrowsurPreview(reader.result);
+              setBrowsurFile(reader.result);
             }
           };
           reader.readAsDataURL(e.target.files[0]);
-          setBrowsurFile(e.target.files[0]);
+          setBrowsurPreview(URL.createObjectURL(e.target.files[0]));
           setBrowsurName(e.target.files[0].name);
         }
       } else {
@@ -129,28 +165,56 @@ const EditAcademy = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
+      const statusString = (status.value += "");
+      const idInt = parseInt(id);
       const data = {
-        logoPreview,
         name,
-        description,
-        brosurPreview,
-        status,
+        deskripsi: description,
+        logo: logoFile,
+        brosur: browsurFile,
+        status: statusString,
+        id: idInt,
       };
-      console.log(data);
+      dispatch(updateAcademy(data, token));
     } else {
       simpleValidator.current.showMessages();
       forceUpdate(1);
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data yang bener dong lu !",
+        text: "Isi data dengan benar !",
       });
     }
   };
 
   return (
     <PageWrapper>
+      {error && (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
       <div className="col-lg-12 order-1 px-0">
+        {loading && <LoadingPage loading={loading} />}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header mt-3">
             <h2
@@ -199,19 +263,10 @@ const EditAcademy = () => {
                       accept="image/*"
                       style={{ display: "none" }}
                       onChange={onChangeLogo}
-                      onBlur={() =>
-                        simpleValidator.current.showMessageFor("logo")
-                      }
                     />
                   </div>
                 </div>
                 <div className="ml-3">
-                  {simpleValidator.current.message(
-                    "logo",
-                    logoFile,
-                    "required",
-                    { className: "text-danger" }
-                  )}
                   {logoName !== null ? (
                     <small className="text-muted">{logoName}</small>
                   ) : null}
@@ -233,16 +288,7 @@ const EditAcademy = () => {
                   className="form-control"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("nama akademi")
-                  }
                 />
-                {simpleValidator.current.message(
-                  "nama akademi",
-                  name,
-                  "required",
-                  { className: "text-danger" }
-                )}
               </div>
 
               <div className="form-group mb-4">

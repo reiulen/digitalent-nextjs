@@ -1,6 +1,18 @@
-import DashboardUser from "../../../components/content/site-management/dashboard/dashboard-user";
-// import Layout from "../../components/templates/layout.component";
 import { getSession } from "next-auth/client";
+import dynamic from "next/dynamic";
+import LoadingPage from "../../../components/LoadingPage";
+const DashboardUser = dynamic(
+  () =>
+    import(
+      "../../../components/content/site-management/dashboard/dashboard-user"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingPage />;
+    },
+    ssr: false,
+  }
+);
 
 export default function Dashboard() {
   return (
@@ -17,7 +29,7 @@ export async function getServerSideProps(context) {
   if (!session) {
     return {
       redirect: {
-        destination: "/",
+        destination: "http://dts-dev.majapahit.id/",
         permanent: false,
       },
     };

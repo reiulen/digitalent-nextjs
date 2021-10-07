@@ -11,7 +11,10 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAcademy } from "../../../../redux/actions/pelatihan/academy.actions";
+import {
+  deleteAcademy,
+  clearErrors,
+} from "../../../../redux/actions/pelatihan/academy.actions";
 import { DELETE_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
 
 const ListAcademy = ({ token }) => {
@@ -212,7 +215,7 @@ const ListAcademy = ({ token }) => {
             <div className="table-page mt-5">
               <div className="table-responsive">
                 <LoadingTable loading={loading} />
-                {loading === false ? (
+                {loading === false && (
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead
                       style={{ background: "#F3F6F9" }}
@@ -303,8 +306,6 @@ const ListAcademy = ({ token }) => {
                       )}
                     </tbody>
                   </table>
-                ) : (
-                  ""
                 )}
               </div>
 
@@ -325,7 +326,7 @@ const ListAcademy = ({ token }) => {
                   />
                 </div>
 
-                {academy && academy.total_rows > 5 ? (
+                {academy && academy.total_rows > 5 && (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0 mt-3">
@@ -358,8 +359,6 @@ const ListAcademy = ({ token }) => {
                       </div>
                     </div>
                   </div>
-                ) : (
-                  ""
                 )}
               </div>
             </div>

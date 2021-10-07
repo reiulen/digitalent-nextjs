@@ -15,6 +15,8 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
+import "../../../../styles/publikasi.module.css"
+
 const TambahFaq = ({token}) => {
     const dispatch = useDispatch()
     const router = useRouter()
@@ -28,7 +30,6 @@ const TambahFaq = ({token}) => {
     const { loading, error, success } = useSelector(state => state.newFaq)
     const { kategori } = useSelector(state => state.allKategori)
     const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
-    const forceUpdate = React.useReducer(() => ({}))[1]
 
     useEffect(() => {
         // dispatch(getAllKategori())
@@ -56,7 +57,8 @@ const TambahFaq = ({token}) => {
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
-    // const [, forceUpdate] = useState();
+    const [, forceUpdate] = useState();
+    // const forceUpdate = React.useReducer(() => ({}))[1]
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
@@ -149,8 +151,8 @@ const TambahFaq = ({token}) => {
             
         } else {
             simpleValidator.current.showMessages();
-            // forceUpdate(1);
-            forceUpdate;
+            forceUpdate(1);
+            // forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -187,7 +189,7 @@ const TambahFaq = ({token}) => {
                                 <div className="col-sm-12">
                                     <input
                                         type="text"
-                                        className="form-control"
+                                        className="form-control description-text"
                                         placeholder="Masukkan Judul Disini"
                                         value={judul}
                                         onChange={(e) => setJudulPertanyaan(e.target.value)}
@@ -213,7 +215,7 @@ const TambahFaq = ({token}) => {
                                 </div>
                             </div>
                             {
-                                console.log (kategori)
+                                // console.log (kategori)
                             }
 
                             <div className="form-group">

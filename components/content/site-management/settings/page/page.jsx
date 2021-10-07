@@ -10,16 +10,69 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
+import {
+  fetchPage,
+  setPage,
+  limitCooporation,
+  searchCooporation,
+  deletePage
+} from "../../../../../redux/actions/site-management/settings/page.actions";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
+  const allPage = useSelector((state) => state.allPage);
+  console.log("allPage list table", allPage);
+
+  const [valueSearch, setValueSearch] = useState("");
+  const handleChangeValueSearch = (value) => {
+    setValueSearch(value);
+  };
+
+  // function delete
+  const pageDelete = (id) => {
+    Swal.fire({
+      title: "Apakah anda yakin ingin menghapus data ?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Batal",
+      confirmButtonText: "Ya !",
+      dismissOnDestroy: false,
+    }).then(async (result) => {
+      if (result.value) {
+        // dispatch delete
+        dispatch(deletePage(id,token))
+      }
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(searchCooporation(valueSearch));
+  };
+
   const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
+    router.replace("/site-management/setting/page", undefined, {
       shallow: true,
     });
   };
+
+  useEffect(() => {
+    if (allAuthentication.status === "error") {
+      notify(allAuthentication.errorRegister);
+    } else if (allAuthentication.status === "success"){
+      // jika sukses
+      Swal.fire("Berhasil Daftar", "Silahkan login", "success").then(() => {
+        router.push("/partnership/user/auth/login")
+      });
+    }else{
+      ""
+    }
+    dispatch(fetchPage(token));
+  }, [dispatch, allPage.keyword, allPage.limit, allPage.page,allPage.dataSuccesDelete,allPage.errorDeletePage]);
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -32,7 +85,7 @@ const Table = ({ token }) => {
               List Page
             </h3>
             <div className="card-toolbar">
-              <Link href="/site-management/setting/api/tambah-api">
+              <Link href="/site-management/setting/tambah-page" passHref>
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
                   <IconAdd className="mr-3" width="14" height="14" />
                   Tambah Page
@@ -45,7 +98,7 @@ const Table = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   <form
-                    // onSubmit={handleSubmit}
+                    onSubmit={handleSubmit}
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
@@ -60,9 +113,9 @@ const Table = ({ token }) => {
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
                           />
                           <button
                             type="submit"
@@ -83,71 +136,117 @@ const Table = ({ token }) => {
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">Page Name</th>
-                      <th className="text-left align-middle">Link Url</th>
-                      <th className="text-left align-middle">Status</th>
-                      <th className="text-left align-middle">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">page name</td>
-                      <td className="align-middle text-left">link url</td>
-                      <td className="align-middle text-left">
-                        <p
-                          className="status-div-red mb-0"
-                          style={{ width: "max-content" }}
-                        >
-                          Tidak aktif
-                        </p>
-                      </td>
-                      <td className="align-middle text-left">
-                        <div className="d-flex align-items-center">
-                          <button className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                            <IconPencil width="16" height="16" />
-                            <div className="text-hover-show-hapus">Ubah</div>
-                          </button>
-                          <button className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
-                            <IconEye width="16" height="16" />
-                            <div className="text-hover-show-hapus">Detail</div>
-                          </button>
+                {allPage.status === "process" ? (
+                  <LoadingTable />
+                ) : (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">Page Name</th>
+                        <th className="text-left align-middle">Link Url</th>
+                        <th className="text-left align-middle">Status</th>
+                        <th className="text-left align-middle">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {allPage.dataPage.data && allPage.dataPage.data.length === 0 ? (
+                        <tr>
+                          <td colSpan="5" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        allPage.dataPage.data &&
+                        allPage.dataPage.data.map((items, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="align-middle text-left">
+                                {allPage.page === 1
+                                  ? index + 1
+                                  : (allPage.page - 1) * allPage.limit +
+                                    (index + 1)}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.name}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.url}
+                              </td>
+                              <td className="align-middle text-left">
+                                <p
+                                  className="status-div-red mb-0"
+                                  style={{ width: "max-content" }}
+                                >
+                                  {items.status}
+                                </p>
+                              </td>
+                              <td className="align-middle text-left">
+                                <div className="d-flex align-items-center">
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push(
+                                        `/site-management/setting/ubah-page`
+                                      )
+                                    }
+                                  >
+                                    <IconPencil width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
+                                  </button>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push(
+                                        `/site-management/setting/preview-page`
+                                      )
+                                    }
+                                  >
+                                    <IconEye width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Preview
+                                    </div>
+                                  </button>
 
-                          <button className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
-                            <IconDelete width="16" height="16" />
-                            <div className="text-hover-show-hapus">Hapus</div>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      pageDelete(items.id)
+                                    }
+                                  >
+                                    <IconDelete width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                )}
               </div>
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
+                  <Pagination
+                    activePage={allPage.page}
+                    itemsCountPerPage={allPage?.dataPage?.data?.perPage}
+                    totalItemsCount={allPage?.dataPage?.data?.total}
                     pageRangeDisplayed={3}
                     onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}
                     lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
                 </div>
 
                 <div className="table-total ml-auto">
@@ -163,6 +262,9 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) =>
+                          dispatch(limitCooporation(e.target.value))
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>

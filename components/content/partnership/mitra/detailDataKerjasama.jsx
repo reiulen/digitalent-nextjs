@@ -458,9 +458,13 @@ const DetailDataKerjasama = ({token}) => {
                 }
                 tableBody={
                   mitraDetailAll.status === "process" ? (
-                    <div className="my-12">
-                      <LoadingTable />
-                    </div>
+
+                    <tr>
+                      <td colSpan="8" className="text-center">
+                        <LoadingTable />
+                      </td>
+                    </tr>
+                    
                   ) : mitraDetailAll.mitraDetailAll.data &&
                     mitraDetailAll.mitraDetailAll.data
                       .list_cooperation_categories.length === 0 ? (
@@ -502,15 +506,19 @@ const DetailDataKerjasama = ({token}) => {
                               {items.period} {items.period_unit}
                             </td>
                             <td className="align-middle text-left">
-                              {moment(items.period_date_start).format(
-                                "DD MMMM YYYY"
-                              )}
+                              {items.period_date_start === null
+                                      ? "-"
+                                      : moment(items.period_date_start).format(
+                                          "DD MMMM YYYY"
+                                        )}
                               {/* {items.signing_date} */}
                             </td>
                             <td className="align-middle">
-                              {moment(items.period_date_end).format(
-                                "DD MMMM YYYY"
-                              )}
+                             {items.period_date_end === null
+                                      ? "-"
+                                      : moment(items.period_date_end).format(
+                                          "DD MMMM YYYY"
+                                        )}
                               {/* {items.period_date_end} */}
                             </td>
                             <td className="align-middle text-left">
