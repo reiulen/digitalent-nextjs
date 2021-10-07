@@ -3,12 +3,15 @@ import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
-import { getSingleSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import {
+  getPublishedSertifikat,
+  getSingleSertifikat,
+} from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
-const KelolaSertifikatID = dynamic(
+const PublishedSertifikat = dynamic(
   () =>
     import(
-      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/single_sertifikat"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/published_sertifikat"
     ),
   {
     loading: function loadingNow() {
@@ -23,7 +26,7 @@ export default function KelokaSertifikatPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <KelolaSertifikatID token={session} />
+        <PublishedSertifikat token={session} />
       </div>
     </>
   );
@@ -41,15 +44,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      console.log("query", query.nama_pelatihan_id);
       await store.dispatch(
-        getSingleSertifikat(
+        getPublishedSertifikat(
           query.nama_pelatihan_id,
-          query.page,
-          query.keyword,
-          query.limit,
-          query.publish,
-          query.startdate,
-          query.enddate,
           session.user.user.data.token
         )
       );
