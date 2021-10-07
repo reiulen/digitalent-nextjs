@@ -236,11 +236,7 @@ a {
   width: 100% !important;
   position: relative;
 }
-<<<<<<< HEAD
-=======
 
-.disabled-form input{
-  background-color: #F3F6F9 !important;
+.disabled-form input {
+  background-color: #f3f6f9 !important;
 }
-
->>>>>>> 2d74140b5ae7185965f5da421bfe360cfa1f543b
