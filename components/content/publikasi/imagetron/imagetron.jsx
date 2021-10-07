@@ -46,6 +46,11 @@ const Imagetron = ({ token }) => {
         isDeleted,
     } = useSelector((state) => state.deleteImagetron);
 
+    // const {
+    //     error: updateError,
+    //     isUpdated
+    // } = useSelector(state => state.updatedImagetron)
+
     const [search, setSearch] = useState("");
     const [limit, setLimit] = useState(null);
     const [startDate, setStartDate] = useState(null);
@@ -73,6 +78,17 @@ const Imagetron = ({ token }) => {
         // if (limit) {
         //     router.push(`${router.pathname}?page=1&limit=${limit}`);
         // }
+
+        // if (success) {
+        //     dispatch({
+        //         type: UPDATE_IMAGETRON_REQUEST
+        //     })
+        // }
+        printData()
+        // setTimeout(() => {
+        //     window.location.reload()
+        // }, 8000);
+
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
                 (result) => {
@@ -108,7 +124,7 @@ const Imagetron = ({ token }) => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteImagetron(id,token));
+                dispatch(deleteImagetron(id, token));
             }
         });
     };
@@ -342,6 +358,123 @@ const Imagetron = ({ token }) => {
         setDisableEndDate(false)
     }
 
+    // const printImage = () => {
+    //     <Image
+    //         loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+    //             "publikasi/images/" +
+    //             imagetron.imagetron.data.imagetron)}
+    //         src={
+    //             process.env.END_POINT_API_IMAGE_PUBLIKASI +
+    //             "publikasi/images/" +
+    //             imagetron.imagetron.data.imagetron
+    //         }
+
+    //         alt='image'
+    //         layout='fill'
+    //         objectFit='fill'
+    //     />
+    // }
+
+    const printData = () => {
+        { console.log("CEK Imagetron :", imagetron) }
+        {
+            return !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
+                <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
+                imagetron && imagetron.data.imagetron.map((row, i) => {
+                    return <tr key={row.id}>
+                        <td className='align-middle text-center'>
+                            {
+                                limit === null ?
+                                    <span className="badge badge-secondary text-muted">
+                                        {i + 1 * (page * 5) - (5 - 1)}
+                                    </span>
+                                    :
+                                    <span className="badge badge-secondary text-muted">
+                                        {i + 1 * (page * limit) - (limit - 1)}
+                                    </span>
+                            }
+
+                        </td>
+                        <td className='text-center'>
+                            <Image
+                                alt={row.judul}
+                                unoptimized={
+                                    process.env.ENVIRONMENT !== "PRODUCTION"
+                                }
+                                loader={process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                    "publikasi/images/" +
+                                    row.gambar}
+                                src={
+                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                    "publikasi/images/" +
+                                    row.gambar
+                                }
+                                width={80}
+                                height={50}
+                            />
+                            {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
+                        </td>
+                        <td className='align-middle'>{row.nama_kategori}</td>
+                        <td className='align-middle'>{row.judul}</td>
+                        <td className="align-middle">
+                            {row.publish === 1 ? (
+                                row.tanggal_publish
+                            ) : (
+                                <span className="label label-inline label-light-danger font-weight-bold">
+                                    Belum dipublish
+                                </span>
+                            )}
+                        </td>
+                        {/* <td className='align-middle'>{row.dibuat}</td> */}
+                        <td className='align-middle'>Super Admin</td>
+                        <td className="align-middle">
+                            {row.publish === 1 ? (
+                                <span className="label label-inline label-light-success font-weight-bold">
+                                    Publish
+                                </span>
+                            ) : (
+                                <span className="label label-inline label-light-warning font-weight-bold">
+                                    Belum dipublish
+                                </span>
+                            )}
+                        </td>
+                        <td className='align-middle'>Super Admin</td>
+                        <td className="align-middle d-flex justify-content-center">
+
+                            <Link
+                                href={`/publikasi/imagetron/${row.id}`}
+                            >
+                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                    <i className="ri-pencil-fill p-0 text-white"></i>
+                                    <div className="text-hover-show-hapus">
+                                        Ubah
+                                    </div>
+                                </a>
+                            </Link>
+
+                            <button
+                                className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                onClick={() => handleDelete(row.id)}
+                            >
+                                <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                <div className="text-hover-show-hapus">
+                                    Hapus
+                                </div>
+                            </button>
+
+                        </td>
+                    </tr>
+
+                })
+        }
+    }
+
+    // caches.open('v1').then(function(cache) {
+    //     cache.delete('/images/image.png').then(function(response) {
+    //         someUIUpdateFunction();
+    //     });
+    // })
+
     return (
         <PageWrapper>
             {
@@ -434,7 +567,7 @@ const Imagetron = ({ token }) => {
                         // color='#74BBB7' 
                         value='64'
                         titleValue='K'
-                        title='Total Konten Author'
+                        title='Total Author'
                         publishedVal=""
                         routePublish={() => handlePublish("")}
                     />
@@ -446,7 +579,7 @@ const Imagetron = ({ token }) => {
                         // color='#F65464' 
                         value={imagetron.data && imagetron.data.unpublish != "" ? imagetron.data.unpublish : 0}
                         titleValue='Imagetron'
-                        title='Total Unpublish'
+                        title='Total Belum Dipublish'
                         publishedVal="0"
                         routePublish={() => handlePublish("0")}
                     />
@@ -709,120 +842,9 @@ const Imagetron = ({ token }) => {
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        
+
                                         <tbody>
-                                            {
-                                                !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
-                                                    imagetron && imagetron.data.imagetron.map((row, i) => {
-                                                        return <tr key={row.id}>
-                                                            <td className='align-middle text-center'>
-                                                                {
-                                                                    limit === null ?
-                                                                        <span className="badge badge-secondary text-muted">
-                                                                            {i + 1 * (page * 5) - (5 - 1)}
-                                                                        </span>
-                                                                        :
-                                                                        <span className="badge badge-secondary text-muted">
-                                                                            {i + 1 * (page * limit) - (limit - 1)}
-                                                                        </span>
-                                                                }
-
-                                                            </td>
-                                                            <td className='text-center'>
-
-                                                                <Image
-                                                                    alt={row.judul}
-                                                                    unoptimized={
-                                                                        process.env.ENVIRONMENT !== "PRODUCTION"
-                                                                    }
-                                                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                                        "publikasi/images/" +
-                                                                        row.gambar)}
-                                                                    src={
-                                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                                                        "publikasi/images/" +
-                                                                        row.gambar
-                                                                    }
-                                                                    width={80}
-                                                                    height={50}
-                                                                />
-                                                                {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
-                                                            </td>
-                                                            <td className='align-middle'>{row.nama_kategori}</td>
-                                                            <td className='align-middle'>{row.judul}</td>
-                                                            <td className="align-middle">
-                                                                {row.publish === 1 ? (
-                                                                    row.tanggal_publish
-                                                                ) : (
-                                                                    <span className="label label-inline label-light-danger font-weight-bold">
-                                                                        Belum dipublish
-                                                                    </span>
-                                                                )}
-                                                            </td>
-                                                            {/* <td className='align-middle'>{row.dibuat}</td> */}
-                                                            <td className='align-middle'>Super Admin</td>
-                                                            <td className="align-middle">
-                                                                {row.publish === 1 ? (
-                                                                    <span className="label label-inline label-light-success font-weight-bold">
-                                                                        Publish
-                                                                    </span>
-                                                                ) : (
-                                                                    <span className="label label-inline label-light-warning font-weight-bold">
-                                                                        Belum dipublish
-                                                                    </span>
-                                                                )}
-                                                            </td>
-                                                            <td className='align-middle'>Super Admin</td>
-                                                            <td className="align-middle d-flex justify-content-center">
-
-                                                                <Link
-                                                                    href={`/publikasi/imagetron/${row.id}`}
-                                                                >
-                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
-                                                                        <div className="text-hover-show-hapus">
-                                                                            Ubah
-                                                                        </div>
-                                                                    </a>
-                                                                </Link>
-
-                                                                <button
-                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
-                                                                    onClick={() => handleDelete(row.id)}
-                                                                >
-                                                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                                                    <div className="text-hover-show-hapus">
-                                                                        Hapus
-                                                                    </div>
-                                                                </button>
-
-                                                            </td>
-                                                            {/* <td className='align-middle'>
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/imagetron/${row.id}`} title="Edit"/>
-                                                                <button
-                                                                    onClick={() => handleDelete(row.id)}
-                                                                    className="btn mr-1"
-                                                                    style={{
-                                                                        background: "#F3F6F9",
-                                                                        borderRadius: "6px",
-                                                                    }}
-                                                                    data-toggle="tooltip" 
-                                                                    data-placement="bottom" 
-                                                                    title="Hapus"
-                                                                    >
-                                                                    <Image
-                                                                        alt="button-action"
-                                                                        src={`/assets/icon/trash.svg`}
-                                                                        width={18}
-                                                                        height={18}
-                                                                    />
-                                                                </button>
-                                                            </td> */}
-                                                        </tr>
-
-                                                    })
-                                            }
+                                            {printData()}
                                         </tbody>
                                     </table> : ''
                                 }
@@ -849,7 +871,7 @@ const Imagetron = ({ token }) => {
                                 {imagetron ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
-                                            <div className="col-4 mr-0 p-0 mt-3">
+                                            <div className="col-4 mr-0 mt-3">
                                                 <select
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
@@ -869,7 +891,7 @@ const Imagetron = ({ token }) => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {imagetron.data.total}</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {imagetron.data.total} List Data</p>
                                             </div>
                                         </div>
                                     </div> : ''

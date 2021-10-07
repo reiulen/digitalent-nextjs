@@ -57,6 +57,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
       return {
         props: { session, title: "List Peserta - Sertifikat" },
       };

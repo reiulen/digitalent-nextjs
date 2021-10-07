@@ -315,6 +315,7 @@ export default function NamaPelatihan({ token }) {
                               <td className="align-middle d-flex">
                                 <Link
                                   href={`/sertifikat/kelola-sertifikat/${certificate.theme.academy.id}`}
+                                  passHref
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
