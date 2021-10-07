@@ -51,6 +51,8 @@ export default function TambahMasterSertifikat({ token }) {
   // #START FORM DATA
   const [certificate_type, setCertificate_type] = useState(
     certificate.data.list_certificate[0].certificate_type
+      ? certificate.data.list_certificate[0].certificate_type
+      : "1 lembar"
   );
 
   const [number_of_signatures, setNumber_of_signatures] = useState(1);
@@ -222,10 +224,46 @@ export default function TambahMasterSertifikat({ token }) {
   };
   const [, forceUpdate] = useState();
 
+  const convertDivToPng = async div => {
+    // toPng(div, {
+    //   cacheBust: true,
+    //   canvasWidth: 842,
+    //   canvasHeight: 595,
+    // })
+    //   .then(image => {
+    //     return image;
+    //   })
+    //   .catch(e => {
+    //     console.log(e);
+    //   });
+    const data = await toPng(div, {
+      cacheBust: true,
+      canvasWidth: 842,
+      canvasHeight: 595,
+    });
+    return data;
+    // .then(image => {
+    //   return image;
+    //   console.log("ini imagenya", image, "ini imagenyaaaaaaa");
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // });
+  };
+
   // # END IMAGE
-  const handlePost = (e, status) => {
+  const handlePost = async (e, status) => {
     try {
       e.preventDefault();
+      // console.log(simpleValidator.current.fields["Tanda tangan"])
+      if (certificate_type == "1 lembar") {
+        simpleValidator.current.fields.Jabatan = true;
+        simpleValidator.current.fields.Nama = true;
+        simpleValidator.current.fields["Tanda tangan"] = true;
+      }
+
+      const id = router.query.nama_pelatihan_id;
+
       if (simpleValidator.current.allValid()) {
         dispatch(newSertifikat(id, formData, token));
 
@@ -285,52 +323,65 @@ export default function TambahMasterSertifikat({ token }) {
           );
         });
 
-        if (status == 1) {
-          //publish
-          // HARUS DI LAKUKAN PENGECEKAN DISINI
-          formData.append("status_migrate_id", status);
-          toPng(divReference.current, {
-            cacheBust: true,
-            canvasWidth: 842,
-            canvasHeight: 595,
-          })
-            .then(image => {
-              formData.append("certificate_result", image);
-            })
-            .catch(err => {
-              console.log(err);
-            });
-
-          if (certificate_type == "2 lembar") {
-            toPng(divReferenceSilabus.current, {
-              cacheBust: true,
-              canvasWidth: 842,
-              canvasHeight: 595,
-            })
-              .then(image => {
-                formData.append("certificate_result_syllabus", image);
-              })
-              .catch(err => {
-                console.log(err);
-              });
-          }
-        }
-
         if (status == 2) {
           formData.append("status_migrate_id", status);
           dispatch(newSertifikat(id, formData, token));
         }
-        const id = router.query.nama_pelatihan_id;
 
-        // if (!error) {
-        //   router.push({
-        //     pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
-        //     query: { success: true },
-        //   });
-        // }
+        if (status == 1) {
+          // publish
+          // HARUS DI LAKUKAN PENGECEKAN DISINI
+
+          formData.append("status_migrate_id", status);
+          const data = await convertDivToPng(divReference.current);
+          console.log(
+            "ini div yang di convert",
+            data,
+            "ini div yang di convert"
+          );
+          formData.append("certificate_result", data);
+
+          if (certificate_type == "2 lembar") {
+            const dataSyllabus = await convertDivToPng(
+              divReferenceSilabus.current
+            );
+            formData.append("certificate_result_syllabus", dataSyllabus);
+          }
+          dispatch(newSertifikat(id, formData, token));
+          // toPng(divReference.current, {
+          //   cacheBust: true,
+          //   canvasWidth: 842,
+          //   canvasHeight: 595,
+          // })
+          //   .then(image => {
+          //     result = image;
+          //   })
+          //   .catch(err => {
+          //     console.log(err);
+          //   });
+
+          // if (certificate_type == "2 lembar") {
+          //   toPng(divReferenceSilabus.current, {
+          //     cacheBust: true,
+          //     canvasWidth: 842,
+          //     canvasHeight: 595,
+          //   })
+          //     .then(image => {
+          //       result_syllabus = image;
+          //     })
+          //     .catch(err => {
+          //       console.log(err);
+          //     });
+          // }
+        }
+        router.push({
+          pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
+          query: { success: true },
+        });
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
+        Swal.fire("Oops !", "Isi data dengan benar.", "error");
       }
     } catch (e) {
       console.log(e, "Masuk sini errornya");
@@ -408,41 +459,10 @@ export default function TambahMasterSertifikat({ token }) {
                 {simpleValidator.current.message(
                   "nama sertifikat",
                   certificate_name,
-                  "required|min:50",
+                  "required",
                   { className: "text-danger font-size-sm mt-4" }
                 )}
               </div>
-            </div>
-            <div className="card-toolbar">
-              <Link href="/sertifikat/master-sertifikat/tambah">
-                <a
-                  className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
-                  onClick={() => {
-                    // console.log("klik batal");
-                  }}
-                >
-                  Batal
-                </a>
-              </Link>
-
-              <a
-                className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
-                onClick={e => {
-                  handlePost(e, 2); // 2 == draft
-                }}
-              >
-                Simpan Draft
-              </a>
-
-              <a
-                className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
-                onClick={e => {
-                  handlePost(e, 1);
-                }}
-              >
-                Publish
-              </a>
-              {/* </Link> */}
             </div>
           </div>
           {/* END HEADER */}
@@ -1046,9 +1066,58 @@ export default function TambahMasterSertifikat({ token }) {
                     style={{ display: "none" }}
                   />
                 </div>
+                <div className="position-relative">
+                  <label>
+                    <div className="mr-5">
+                      <a
+                        onClick={() => {
+                          setBackground("");
+                        }}
+                        className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                      >
+                        Reset Background
+                      </a>
+                    </div>
+                  </label>
+                </div>
               </div>
             </div>
+            {certificate_type == "1 lembar" ? (
+              <div className="d-lg-flex justify-content-end">
+                <Link href="/sertifikat/master-sertifikat/tambah" passHref>
+                  <a
+                    className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
+                    onClick={() => {
+                      // console.log("klik batal");
+                    }}
+                  >
+                    Batal
+                  </a>
+                </Link>
+
+                <a
+                  className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
+                  onClick={e => {
+                    handlePost(e, 2); // 2 == draft
+                  }}
+                >
+                  Simpan Draft
+                </a>
+
+                <a
+                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
+                  onClick={e => {
+                    handlePost(e, 1);
+                  }}
+                >
+                  Publish
+                </a>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
+
           {/* END BODY */}
         </div>
         {/* START SECTION 2 */}
@@ -1360,20 +1429,26 @@ export default function TambahMasterSertifikat({ token }) {
                                         );
                                       }}
                                       className="h-25"
-                                      onBlur={() =>
-                                        simpleValidator.current.showMessageFor(
-                                          "Nama"
-                                        )
-                                      }
+                                      onBlur={() => {
+                                        if (certificate_type == "2 lembar") {
+                                          simpleValidator.current.showMessageFor(
+                                            "Nama"
+                                          );
+                                        }
+                                      }}
                                     />
-                                    {simpleValidator.current.message(
-                                      "Nama",
-                                      signature_certificate_name_syllabus[i],
-                                      "required",
-                                      {
-                                        className: "text-danger mt-4",
-                                      }
-                                    )}
+                                    {certificate_type == "2 lembar"
+                                      ? simpleValidator.current.message(
+                                          "Nama",
+                                          signature_certificate_name_syllabus[
+                                            i
+                                          ],
+                                          "required",
+                                          {
+                                            className: "text-danger mt-4",
+                                          }
+                                        )
+                                      : ""}
                                     <div className="font-size-h5 my-5">
                                       Tanda Tangan
                                     </div>
@@ -1431,11 +1506,15 @@ export default function TambahMasterSertifikat({ token }) {
                                             handleImageTandaTanganSyllabus(e, i)
                                           }
                                           accept="image/png, image/jpeg , image/jpg"
-                                          onBlur={() =>
-                                            simpleValidator.current.showMessageFor(
-                                              "tanda tangan syllabus"
-                                            )
-                                          }
+                                          onBlur={() => {
+                                            if (
+                                              certificate_type == "2 lembar"
+                                            ) {
+                                              simpleValidator.current.showMessageFor(
+                                                "Tanda tangan"
+                                              );
+                                            }
+                                          }}
                                         />
                                         <label
                                           className="custom-file-label"
@@ -1461,11 +1540,15 @@ export default function TambahMasterSertifikat({ token }) {
                                               maxWidth: 3,
                                               penColor: "rgb(66, 133, 244)",
                                             }}
-                                            onBlur={() =>
-                                              simpleValidator.current.showMessageFor(
-                                                "tanda tangan syllabus"
-                                              )
-                                            }
+                                            onBlur={() => {
+                                              if (
+                                                certificate_type == "2 lembar"
+                                              ) {
+                                                simpleValidator.current.showMessageFor(
+                                                  "Tanda tangan"
+                                                );
+                                              }
+                                            }}
                                           />
                                         </div>
 
@@ -1496,12 +1579,16 @@ export default function TambahMasterSertifikat({ token }) {
                                         </div>
                                       </>
                                     )}
-                                    {simpleValidator.current.message(
-                                      "tanda tangan syllabus",
-                                      signature_certificate_image_syllabus[i],
-                                      "required",
-                                      { className: "text-danger mb-4" }
-                                    )}
+                                    {certificate_type == "2 lembar"
+                                      ? simpleValidator.current.message(
+                                          "Tanda tangan",
+                                          signature_certificate_image_syllabus[
+                                            i
+                                          ],
+                                          "required",
+                                          { className: "text-danger mb-4" }
+                                        )
+                                      : ""}
                                     <div className="font-size-h5 mb-5">
                                       Jabatan Penanda Tangan
                                     </div>
@@ -1527,20 +1614,24 @@ export default function TambahMasterSertifikat({ token }) {
                                         );
                                       }}
                                       className="h-25"
-                                      onBlur={() =>
-                                        simpleValidator.current.showMessageFor(
-                                          "Jabatan"
-                                        )
-                                      }
+                                      onBlur={() => {
+                                        if (certificate_type == "2 lembar") {
+                                          simpleValidator.current.showMessageFor(
+                                            "Jabatan"
+                                          );
+                                        }
+                                      }}
                                     />
-                                    {simpleValidator.current.message(
-                                      "Jabatan",
-                                      signature_certificate_position_syllabus[
-                                        i
-                                      ],
-                                      "required",
-                                      { className: "text-danger mt-4" }
-                                    )}
+                                    {certificate_type == "2 lembar"
+                                      ? simpleValidator.current.message(
+                                          "Jabatan",
+                                          signature_certificate_position_syllabus[
+                                            i
+                                          ],
+                                          "required",
+                                          { className: "text-danger mt-4" }
+                                        )
+                                      : ""}
                                   </div>
                                   <div className="modal-footer">
                                     <button
@@ -1663,8 +1754,56 @@ export default function TambahMasterSertifikat({ token }) {
                       style={{ display: "none" }}
                     />
                   </div>
+                  <div className="position-relative">
+                    <label>
+                      <div className="mr-5">
+                        <a
+                          onClick={() => {
+                            setBackground_syllabus("");
+                          }}
+                          className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                        >
+                          Reset Background
+                        </a>
+                      </div>
+                    </label>
+                  </div>
                 </div>
               </div>
+              {certificate_type == "2 lembar" ? (
+                <div className="d-lg-flex justify-content-end">
+                  <Link href="/sertifikat/master-sertifikat/tambah" passHref>
+                    <a
+                      className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
+                      onClick={() => {
+                        // console.log("klik batal");
+                      }}
+                    >
+                      Batal
+                    </a>
+                  </Link>
+
+                  <a
+                    className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
+                    onClick={e => {
+                      handlePost(e, 2); // 2 == draft
+                    }}
+                  >
+                    Simpan Draft
+                  </a>
+
+                  <a
+                    className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
+                    onClick={e => {
+                      handlePost(e, 1);
+                    }}
+                  >
+                    Publish
+                  </a>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             {/* END BODY */}
           </div>
@@ -1700,39 +1839,42 @@ export default function TambahMasterSertifikat({ token }) {
                 {syllabus.map((syllabus, index) => {
                   return (
                     <div className="form-group" key={index}>
-                      <div className="position-relative">
-                        <input
-                          required
-                          placeholder={
-                            index === 0 ? "Syllabus 1" : `Syllabus ${index + 1}`
-                          }
-                          name={`cooperation${index}`}
-                          type="text"
-                          onChange={e => handleChange(e, index)}
-                          className="form-control"
-                          value={syllabus}
-                        />
+                      <div className="row align-items-center">
+                        <div className="col-10 h-100">
+                          <input
+                            required
+                            placeholder={
+                              index === 0
+                                ? "Syllabus 1"
+                                : `Syllabus ${index + 1}`
+                            }
+                            name={`cooperation${index}`}
+                            type="text"
+                            onChange={e => handleChange(e, index)}
+                            className="form-control"
+                            value={syllabus}
+                          />
+                        </div>
                         {index === 0 ? (
                           ""
                         ) : (
                           <button
                             type="button"
                             onClick={() => handleDelete(index)}
-                            className="btn position-absolute"
-                            style={{ top: "0", right: "3px" }}
+                            className="btn bg-danger"
+                            style={{ height: "38px" }}
                           >
                             <svg
-                              className="position-relative"
                               style={{ bottom: "2px" }}
                               xmlns="http://www.w3.org/2000/svg"
                               viewBox="0 0 24 24"
-                              width="24"
-                              height="24"
+                              width="20"
+                              height="20"
                             >
                               <path fill="none" d="M0 0h24v24H0z" />
                               <path
                                 d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"
-                                fill="#ADB5BD"
+                                fill="#ffffff"
                               />
                             </svg>
                           </button>
@@ -1741,32 +1883,34 @@ export default function TambahMasterSertifikat({ token }) {
                     </div>
                   );
                 })}
-                <div className="form-group">
-                  <label
-                    htmlFor="staticEmail"
-                    className="col-form-label"
-                  ></label>
-
-                  <p
-                    className="btn btn-rounded-full bg-blue-primary text-white"
-                    style={{
-                      backgroundColor: "#40A9FF",
-                      color: "#FFFFFF",
-                      width: "max-content",
-                    }}
-                    onClick={() => handleAddInput()}
-                  >
-                    Tambah Syllabus
-                  </p>
-                </div>
+                {syllabus.length >= 25 ? (
+                  ""
+                ) : (
+                  <div className="form-group d-flex align-items-center m-0">
+                    <div
+                      className="btn btn-outline-primary-rounded-full font-weight-bolder py-3 m-0"
+                      onClick={() => handleAddInput()}
+                    >
+                      <i className="ri-add-fill mr-2 p-0 text-primary"></i>
+                      Tambah Syllabus
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="modal-footer">
                 <button
                   type="button"
-                  className="btn btn-secondary"
                   data-dismiss="modal"
+                  className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
                 >
                   Tutup
+                </button>
+                <button
+                  type="button"
+                  data-dismiss="modal"
+                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
+                >
+                  Simpan
                 </button>
               </div>
             </div>
