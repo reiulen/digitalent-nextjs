@@ -14,9 +14,9 @@
 
 .help,
 .help:hover {
-  background: #ffa800;
+  background: #ffa800 !important;
   border-radius: 30px;
-  border-color: #ffa800;
+  border-color: #ffa800 !important;
   padding: 10px 30px;
   font-family: Poppins;
   font-style: normal;
@@ -51,9 +51,9 @@
 }
 .done,
 .done:hover {
-  background: #215480;
+  background: #215480 !important;
   border-radius: 30px;
-  border-color: #215480;
+  border-color: #215480 !important;
   padding: 12px 32px;
   font-family: Poppins;
   font-style: normal;
@@ -99,24 +99,24 @@
   border-radius: 30px;
   margin-right: 10px;
   padding: 10px 20px;
-  background: #ffffff;
+  background: #ffffff !important;
   font-family: poppins;
   font-weight: 600;
-  color: #215480;
+  color: #215480 !important;
   font-size: 14px;
-  border: 1px solid #215480;
+  border: 1px solid #215480 !important;
   box-sizing: border-box;
 }
 .btnSubmit,
 .btnSubmit:hover {
   border-radius: 30px;
   padding: 10px 20px;
-  background: #215480;
-  border-color: #215480;
+  background: #215480 !important;
+  border-color: #215480 !important;
   font-family: poppins;
   font-weight: 600;
   color: #fff;
   font-size: 14px;
-  border: 1px solid #215480;
+  border: 1px solid #215480 !important;
   box-sizing: border-box;
 }

@@ -14,19 +14,21 @@ const SubtansiUser = () => {
   const [data, setData] = useState({});
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
+  const [numberPage, setNumberPage] = useState("");
 
   const handleNumber = (val) => {
     console.log(val);
     // e.preventDefault();
+    setNumberPage(val);
     router.push(`/user/subvit/subtansi/${val + 1}`);
   };
 
   const handleBack = () => {
     const page = parseInt(router.query.id) - 1;
     if (parseInt(router.query.id) === 1) {
-      router.push(`user/subvit/subtansi/1`);
+      router.push(`${router.pathname.slice(0, 21)}/1`);
     } else {
-      router.replace(`user/subvit/subtansi/${page}`);
+      router.push(`${router.pathname.slice(0, 21)}/${page}`);
     }
   };
   function startTimer(duration, display) {
@@ -55,8 +57,8 @@ const SubtansiUser = () => {
         display = document.querySelector("#time");
       startTimer(fiveMinutes, display);
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    console.log(router.query.id);
+    console.log(numberPage); // eslint-disable-next-line react-hooks/exhaustive-deps
     getRandomSoal();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -134,7 +136,7 @@ const SubtansiUser = () => {
               <Row>
                 {data.list_questions &&
                 data.list_questions[parseInt(router.query.id) - 1]
-                  .question_image === null ? (
+                  .question_image !== null ? (
                   <>
                     <Col sm={2}>
                       <p>Ini Gambar</p>
@@ -183,7 +185,7 @@ const SubtansiUser = () => {
                   return (
                     <>
                       <Row>
-                        {key.image ? (
+                        {key.image != null ? (
                           <>
                             <Col sm={2}>ini Gambar</Col>
                             <Col sm={10}>
@@ -241,47 +243,24 @@ const SubtansiUser = () => {
                   data.list_questions.map((item, index) => {
                     return (
                       <Col key={index} style={{ width: "20%" }}>
-                        {index + 1 === parseInt(router.query.id) ? (
-                          <Card
+                        <Card
+                          className={
+                            parseInt(numberPage) === parseInt(router.query.id)
+                              ? styles.cardChoosed
+                              : styles.cardChoose
+                          }
+                          onClick={() => handleNumber(index)}
+                        >
+                          <p
                             className={
-                              localStorage.getItem(`${router.query.id}`) ===
-                              answer
-                                ? styles.numberAnswer
-                                : styles.cardChoose
+                              numberPage === router.query.id
+                                ? styles.textCardNumber
+                                : styles.textCard
                             }
-                            onClick={() => handleNumber(index)}
                           >
-                            <p
-                              className={
-                                localStorage.getItem(`${router.query.id}`) ===
-                                answer
-                                  ? styles.textCardAnswer
-                                  : styles.textCard
-                              }
-                            >
-                              {index + 1}
-                            </p>
-                          </Card>
-                        ) : (
-                          <Card
-                            className={
-                              item.no === router.query.id
-                                ? styles.cardChoosed
-                                : styles.cardChoose
-                            }
-                            onClick={(e) => handleNumber(index)}
-                          >
-                            <p
-                              className={
-                                item.no === router.query.id
-                                  ? styles.textCardNumber
-                                  : styles.textCard
-                              }
-                            >
-                              {index + 1}
-                            </p>
-                          </Card>
-                        )}
+                            {index + 1}
+                          </p>
+                        </Card>
                       </Col>
                     );
                   })}

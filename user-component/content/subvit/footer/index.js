@@ -19,17 +19,17 @@ const Footer = ({ number, answer }) => {
 
   const handleDone = () => {
     localStorage.clear();
-    router.push("/done");
+    location.replace("/user/done");
   };
 
   const handleNext = () => {
     const page = parseInt(router.query.id) + 1;
-    router.push(`/${page}`);
+    router.push(`${router.pathname.slice(0, 21)}/${page}`);
   };
 
   const handleBack = () => {
     const page = parseInt(router.query.id) - 1;
-    router.push(`/${page}`);
+    router.push(`${router.pathname.slice(0, 21)}/${page}`);
   };
   return (
     <>
