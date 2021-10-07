@@ -913,18 +913,6 @@ const Vidio = ({ token }) => {
                                 <span className="ml-1 py-1">
                                     {isiVideo}
                                 </span>
-                                {/* {
-                                video && video.video.length !== 0 && idVideo !== null ?
-                                    <>
-                                        <div className="row mb-1 justify-content-between">
-                                            <h3 className="col-10" style={{ fontWeight: 'bold', textAlign: 'left' }}>
-                                                {console.log("Cek Isi :", isiVideo)}
-                                            </h3>
-                                        </div>
-                                    </>
-                                    :
-                                    null
-                            } */}
                             </div>
                         </div>
                         {/* <div className="modal-footer">
