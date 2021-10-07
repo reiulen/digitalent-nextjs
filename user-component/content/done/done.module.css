@@ -28,6 +28,20 @@
   color: #ffffff !important;
   float: right;
 }
+.btnDone:hover {
+  background: #214580 !important;
+  border-radius: 30px;
+  border: #214580 !important;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  padding: 5px 20px;
+  text-align: center;
+  color: #ffffff !important;
+  float: right;
+}
 .imageDone {
   margin: 20px;
   padding: 20px;
