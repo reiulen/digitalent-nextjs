@@ -16,6 +16,30 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
+  const [menu, setMenu] = useState([
+    {
+      name: "menu 1",
+      link: "link 1",
+    },
+  ]);
+
+  
+  console.log("menu state", menu);
+  
+  const addMenu = (e) => {
+    e.preventDefault();
+    setMenu([...menu, { name: "menu 2", link: "link 2" }]);
+  };
+  const addChild = (e, index) => {
+    const tempMenu = [...menu];
+    tempMenu[index] = {
+      ...tempMenu[index],
+      child: [{ nama: "sdf" }],
+    };
+    // setMenu(tempMenu);
+    // console.log("menu sss", [...menu[index].child,{nama:"sdf"}]  )
+  };
+
   // function delete
   const apiDelete = (id) => {
     Swal.fire({
@@ -51,78 +75,84 @@ const Table = ({ token }) => {
               Menu
             </h3>
             <div className="card-toolbar">
-              <Link
-                href="/site-management/master-data/master-satuan-kerja-penyelenggara/tambah-satuan-kerja-penyelenggara"
-                passHref
+              <button
+                className="btn btn-rounded-full bg-blue-primary text-white"
+                onClick={(e) => addMenu(e)}
               >
-                <a className="btn btn-rounded-full bg-blue-primary text-white">
-                  <IconAdd className="mr-3" width="14" height="14" />
-                  Tambah Menu
-                </a>
-              </Link>
+                <IconAdd className="mr-3" width="14" height="14" />
+                Tambah Menu
+              </button>
             </div>
           </div>
           <div className="card-body pt-0 mt-10">
-             {/* main */}
-            <div className="d-flex align-items-center">
-              <div className="col-12 col-sm-5">
-                <div className="form-group">
-                  <label>Menu 1</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Placeholder"
-                  />
-                  <span className="form-text text-muted">
-                    Please enter your full name
-                  </span>
+            {/* main */}
+            {menu.map((items, index) => {
+              return (
+                <div>
+                  <div className="d-flex align-items-center">
+                    <div className="col-12 col-sm-5">
+                      <div className="form-group">
+                        <label>{items.nama}</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Placeholder"
+                        />
+                        <span className="form-text text-muted">
+                          Please enter your full name
+                        </span>
+                      </div>
+                    </div>
+                    <div className="col-12 col-sm-5">
+                      <div className="form-group">
+                        <label>{items.link}</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Placeholder"
+                        />
+                        <span className="form-text text-muted">
+                          Please enter your full name
+                        </span>
+                      </div>
+                    </div>
+                    <div className="col-12 col-sm-2">
+                      <div className="d-flex align-items-center h-100">
+                        <button
+                          type="button"
+                          className="btn mr-4 mb-5"
+                          style={{ backgroundColor: "#4299E1" }}
+                          onClick={(e) => addChild(e, index)}
+                        >
+                          <IconAdd />
+                        </button>
+                        <button
+                          type="button"
+                          className="btn mr-4 mb-5"
+                          style={{ backgroundColor: "#4299E1" }}
+                          onClick={(e) => addChild(e, index)}
+                        >
+                          <Image
+                            src="/assets/icon/link.svg"
+                            alt="link"
+                            width={16}
+                            height={16}
+                          />
+                        </button>
+                        <button
+                          type="button"
+                          className="btn mb-5"
+                          style={{ backgroundColor: "#EE2D41" }}
+                        >
+                          <IconDelete />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="col-12 col-sm-5">
-                <div className="form-group">
-                  <label>Link</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="Placeholder"
-                  />
-                  <span className="form-text text-muted">
-                    Please enter your full name
-                  </span>
-                </div>
-              </div>
-              <div className="col-12 col-sm-2">
-                <div className="d-flex align-items-center h-100">
-                  <button
-                    type="button"
-                    className="btn mr-4 mb-5"
-                    style={{ backgroundColor: "#4299E1" }}
-                  >
-                    <IconAdd />
-                  </button>
-                  <button
-                    type="button"
-                    className="btn mr-4 mb-5"
-                    style={{ backgroundColor: "#4299E1" }}
-                  >
-                    <Image
-                      src="/assets/icon/link.svg"
-                      alt="link"
-                      width={16}
-                      height={16}
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    className="btn mb-5"
-                    style={{ backgroundColor: "#EE2D41" }}
-                  >
-                    <IconDelete />
-                  </button>
-                </div>
-              </div>
-            </div> 
-          
+              );
+            })}
+
             {/* main */}
             <div className="d-flex align-items-center">
               <div className="col-12 col-sm-5">
@@ -181,7 +211,7 @@ const Table = ({ token }) => {
                   </button>
                 </div>
               </div>
-            </div> 
+            </div>
             {/* sub main */}
             <div className="d-flex align-items-center pl-10">
               <div className="col-12 col-sm-5">
@@ -229,25 +259,23 @@ const Table = ({ token }) => {
                 </div>
               </div>
             </div>
-           
-           
-           
+
             <div className="form-group row">
-                <div className="col-sm-12 d-flex justify-content-end">
-                  <Link href="/site-management/setting">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
-                    </a>
-                  </Link>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
-                    // onClick={e => handleSubmit(e)}
-                  >
-                    Simpan
-                  </button>
-                </div>
+              <div className="col-sm-12 d-flex justify-content-end">
+                <Link href="/site-management/setting">
+                  <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                    Kembali
+                  </a>
+                </Link>
+                <button
+                  type="button"
+                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
+                  // onClick={e => handleSubmit(e)}
+                >
+                  Simpan
+                </button>
               </div>
+            </div>
           </div>
         </div>
       </div>

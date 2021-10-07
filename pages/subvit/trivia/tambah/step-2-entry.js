@@ -17,13 +17,13 @@ export default function TambahBankSoalTesTriviaStep2(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "http://dts-dev.majapahit.id/",
             permanent: false,
           },
         };
