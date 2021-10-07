@@ -12,7 +12,7 @@ import { getDetailSertifikat } from "../../../../redux/actions/sertifikat/kelola
 const KelolaSertifikatNamaPelatihanID = dynamic(
   () =>
     import(
-      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/tema-pelatihan.jsx"
+      "../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/nama_pelatihan"
     ),
   {
     loading: function loadingNow() {
@@ -35,13 +35,13 @@ export default function KelokaSertifikatPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "http://dts-dev.majapahit.id/",
             permanent: false,
           },
         };

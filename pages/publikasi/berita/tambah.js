@@ -5,46 +5,50 @@ import dynamic from "next/dynamic";
 
 import LoadingPage from "../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
-import { getAllKategori } from '../../../redux/actions/publikasi/kategori.actions'
-import { wrapper } from '../../../redux/store'
+import { getAllKategori } from "../../../redux/actions/publikasi/kategori.actions";
+import { wrapper } from "../../../redux/store";
 
 const Tambah = dynamic(
-    () => import("../../../components/content/publikasi/berita/tambah"),
-    { 
-        // suspense: true,
-        // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingPage /> }, 
-        ssr: false
-    }
+  () => import("../../../components/content/publikasi/berita/tambah"),
+  {
+    // suspense: true,
+    // loading: () => <LoadingSkeleton />,
+    loading: function loadingNow() {
+      return <LoadingPage />;
+    },
+    ssr: false,
+  }
 );
 
 export default function TambahPage(props) {
-    const session = props.session.user.user.data;
-    return (
-        <>
-            <div className="d-flex flex-column flex-root">
-                <Tambah token={session.token}/>
-            </div>
-        </>
-    )
+  const session = props.session.user.user.data;
+  return (
+    <>
+      <div className="d-flex flex-column flex-root">
+        <Tambah token={session.token} />
+      </div>
+    </>
+  );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ query, req }) => {
-    
-    const session = await getSession({ req });
-    console.log (`from artikel create ${session}`)
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query, req }) => {
+      const session = await getSession({ req });
+      console.log(`from artikel create ${session}`);
 
-    if (!session) {
+      if (!session) {
         return {
-            redirect: {
-            destination: "/",
+          redirect: {
+            destination: "http://dts-dev.majapahit.id/",
             permanent: false,
-            },
+          },
         };
-    }
-    await store.dispatch(getAllKategori(session.user.user.data.token))
+      }
+      await store.dispatch(getAllKategori(session.user.user.data.token));
 
-    return {
+      return {
         props: { session, title: "Tambah Berita - Publikasi" },
-    };
-})
+      };
+    }
+);

@@ -162,7 +162,7 @@ const RegisterMitra = () => {
                   lineHeight: "38px",
                 }}
               >
-                Daftar Baru
+                Daftar Mitra Baru
               </h3>
             </div>
 
