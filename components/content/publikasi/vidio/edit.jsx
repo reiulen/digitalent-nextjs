@@ -75,7 +75,8 @@ const EditVideo = ({token}) => {
     const [kategori_id, setKategoriId] = useState(video.kategori_id)
     const [users_id, setUserId] = useState(video.users_id)
     const [tag, setTag] = useState(video.tag)
-    const [publish, setPublish] = useState(video.publish === 1 ? true : false)
+    const [publish, setPublish] = useState(video.publish)
+    // const [publish, setPublish] = useState(video.publish === 1 ? true : false)
     const [_method, setMethod] = useState("put")
     const [publishDate, setPublishDate] = useState(new Date(video.tanggal_publish));
     const [disablePublishDate, setDisablePublishDate] = useState(video.publish === 0 ? true : false)

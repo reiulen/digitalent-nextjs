@@ -636,9 +636,9 @@ const Galeri = ({ token }) => {
                                                                     unoptimized={
                                                                         process.env.ENVIRONMENT !== "PRODUCTION"
                                                                     }
-                                                                    loader={process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                    loader={()=>(process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                         "publikasi/images/" +
-                                                                        row.gambar}
+                                                                        row.gambar)}
                                                                     src={
                                                                         process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                         "publikasi/images/" +
@@ -672,7 +672,7 @@ const Galeri = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>Super Admin</td>
+                                                            <td className='align-middle'>{row.role}</td>
                                                             <td className="align-middle d-flex">
 
                                                                 <button
@@ -852,15 +852,16 @@ const Galeri = ({ token }) => {
                                     {
                                         galeri && galeri.gallery.length !== 0 && index_galleri !== null ?
                                             <>
-                                                    <div className="row mb-1 justify-content-between">
-                                                        <h3 className="col-10" style={{ fontWeight: 'bold', textAlign: 'left' }}>
-                                                            {galeri.gallery[index_galleri].judul}
-                                                        </h3>
-                                                        <button type="button" className="col-1 flaticon2-delete" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
-                                                    </div>
-                                                    <div className="row mb-4" style={{ textAlign: 'left' }}>
+                                                <div className="row mb-1 justify-content-between">
+                                                    <h3 className="col-10" style={{ fontWeight: 'bold', textAlign: 'left' }}>
+                                                        {galeri.gallery[index_galleri].judul}
+                                                    </h3>
+                                                    <button type="button" className="col-1 flaticon2-delete" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
+                                                </div>
+                                                <div className="row mb-4" style={{ textAlign: 'left' }}>
+                                                    <div className="col-6">
                                                         <div style={{ fontSize: '11px' }}
-                                                            className="col-6 mb-1 p-0 d-flex align-items-center">
+                                                            className="mb-1 p-0 d-flex align-items-center">
                                                             <i className="flaticon2-calendar-4"></i>
                                                             <span className="ml-2">
                                                                 Publish: {galeri.gallery[index_galleri].tanggal_publish}
@@ -868,19 +869,34 @@ const Galeri = ({ token }) => {
                                                         </div>
 
                                                         <div style={{ fontSize: '11px' }}
-                                                            className="col-6 mb-1 p-0 d-flex align-items-center">
-                                                            <i className="flaticon-squares-4"></i>
+                                                            className="mb-1 p-0 d-flex align-items-center">
+                                                            <i className="flaticon2-user"></i>
                                                             <span className="ml-2">
                                                                 {/* User : Super Admin */}
-                                                                Kategori : {galeri.gallery[index_galleri].nama_kategori}
+                                                                Author : {galeri.gallery[index_galleri].role}
                                                             </span>
                                                         </div>
                                                     </div>
-                                                    <hr style={{width:'375px',marginLeft:'-30px'}}/>
+
+                                                    <div style={{ fontSize: '11px' }}
+                                                        className="col-6 mb-1 p-0 d-flex align-items-center">
+                                                        <i className="ri-dashboard-line"></i>
+                                                        <span className="ml-2">
+                                                            {/* User : Super Admin */}
+                                                            Kategori : {galeri.gallery[index_galleri].nama_kategori}
+                                                        </span>
+                                                    </div>
+
+                                                </div>
+                                                <hr style={{ width: '375px', marginLeft: '-30px' }} />
                                                 <div className=" row mb-1">
-                                                    <p style={{ textAlign: 'left', width: '100%',height:'310px', flexWrap: 'wrap',overflow:'auto'}}
+                                                    <p style={{ textAlign: 'left', width: '100%', height: '260px', flexWrap: 'wrap', overflow: 'auto' }}
                                                         dangerouslySetInnerHTML={{ __html: galeri.gallery[index_galleri].isi_galleri }}>
                                                     </p>
+                                                    <span className="label label-inline label-light-success font-weight-bold">
+                                                        {/* {galeri.gallery[index_galleri].nama_kategori} */}
+                                                        Publish
+                                                    </span>
                                                 </div>
                                             </>
                                             :

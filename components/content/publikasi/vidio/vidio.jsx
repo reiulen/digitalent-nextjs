@@ -22,6 +22,7 @@ import IconFilter from "../../../assets/icon/Filter";
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteVideo, playVideo, clearErrors } from '../../../../redux/actions/publikasi/video.actions'
 import { DELETE_VIDEO_RESET } from '../../../../redux/types/publikasi/video.type'
+import { viewGaleri } from '../../../../redux/actions/publikasi/galeri.actions';
 
 const Vidio = ({ token }) => {
 
@@ -44,6 +45,7 @@ const Vidio = ({ token }) => {
     const [judul_video, setJudulVideo] = useState(null)
     const [tanggal_publish, setTanggalPublish] = useState(null)
     const [kategori, setKategori] = useState(null)
+    const [isiVideo, setIsiVideo] = useState(null)
 
     let loading = false
     let { page = 1, keyword, success } = router.query
@@ -284,7 +286,7 @@ const Vidio = ({ token }) => {
 
     }
 
-    const handlePreview = (url, id, judul_video, tanggal_publish, kategori) => {
+    const handlePreview = (url, id, judul_video, tanggal_publish, kategori, isi_video) => {
         // const data = {
         //     id,
         //     _method: "PUT",
@@ -292,12 +294,14 @@ const Vidio = ({ token }) => {
         // }
 
         // dispatch(playVideo(data))
+
         setIdVideo(id)
         setVideoPlaying(true)
         setUrlVideo(url)
         setJudulVideo(judul_video)
         setTanggalPublish(tanggal_publish)
         setKategori(kategori)
+        setIsiVideo(isi_video)
     }
 
     const handleIsPlayed = () => {
@@ -688,7 +692,7 @@ const Vidio = ({ token }) => {
                                                 !video || video && video.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
                                                     video && video.video.map((row, i) => {
-                                                        { console.log("Video :", row.id) }
+                                                        { console.log("Video :", row) }
                                                         return <tr key={row.id}>
                                                             {/* <td className="align-middle text-center">
                                                                 <span className="badge badge-secondary text-muted">
@@ -749,7 +753,7 @@ const Vidio = ({ token }) => {
                                                             <td className="align-middle d-flex">
 
                                                                 <button
-                                                                    onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori)}
+                                                                    onClick={() => handlePreview(row.url_video, row.id, row.judul_video, row.tanggal_publish, row.kategori, row.isi_video)}
                                                                     className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete"
                                                                     data-target="#videoPlayerModal"
                                                                     data-toggle="modal"
@@ -865,47 +869,67 @@ const Vidio = ({ token }) => {
             <div className="modal fade" id="videoPlayerModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content" style={{ width: '1000px' }}>
-                        <div className="modal-header">
+                        {/* <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Video</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                        </div>
-                        <div className="modal-body d-flex justify-content-center flex-column" style={{ height: '400px' }}>
+                        </div> */}
+                        <div className="modal-body d-flex justify-content-center flex-column" style={{ height: '500px' }}>
+                            <div className="mb-2" style={{ textAlign: 'right' }}>
+                                <button type="button" className="col-1 flaticon2-delete" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
+                            </div>
                             <ReactPlayer url={url_video} controls width="700px" playing={video_playing} onPlay={handleIsPlayed} />
-                            <div className="my-2">
+                            <div className="my-5">
                                 <h3>
                                     {judul_video}
                                 </h3>
                             </div>
                             <div className="row">
                                 <div style={{ background: "#F3F6F9" }}
-                                    className="mr-5 px-3 py-1 rounded mb-1 ml-4">
-                                    <i className="flaticon2-calendar-4"></i>
+                                    className="mr-5 px-3 py-1 rounded mb-1 ml-4 d-flex align-items-center">
+                                    <i className="flaticon2-calendar-4 "></i>
                                     {
                                         tanggal_publish ?
-                                            <span className="ml-1">
+                                            <span className="ml-2">
                                                 Publish : {tanggal_publish}
                                             </span>
                                             :
-                                            <span className="ml-1">
+                                            <span className="ml-2">
                                                 Belum dipublish
                                             </span>
                                     }
                                 </div>
 
                                 <div style={{ background: "#F3F6F9" }}
-                                    className=" rounded px-3">
+                                    className=" rounded px-3 d-flex align-items-center">
                                     <i className="ri-dashboard-line"></i>
-                                    <span className="ml-1 py-1">
+                                    <span className="ml-2 py-1">
                                         Kategori: {kategori}
                                     </span>
                                 </div>
                             </div>
+                            <div className="">
+                                <span className="ml-1 py-1">
+                                    {isiVideo}
+                                </span>
+                                {/* {
+                                video && video.video.length !== 0 && idVideo !== null ?
+                                    <>
+                                        <div className="row mb-1 justify-content-between">
+                                            <h3 className="col-10" style={{ fontWeight: 'bold', textAlign: 'left' }}>
+                                                {console.log("Cek Isi :", isiVideo)}
+                                            </h3>
+                                        </div>
+                                    </>
+                                    :
+                                    null
+                            } */}
+                            </div>
                         </div>
-                        <div className="modal-footer">
+                        {/* <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => setVideoPlaying(false)}>Tutup</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

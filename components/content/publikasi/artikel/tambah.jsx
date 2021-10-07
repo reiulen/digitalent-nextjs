@@ -252,7 +252,7 @@ const TambahArtikel = ({token}) => {
   }
 
   const handleTag = (data) => {
-    if (data.length === 1 && data[0] === " "){
+    if (data[0] === " "){
         setTag([])
         alert("tag")
         setDisableTag (true)
