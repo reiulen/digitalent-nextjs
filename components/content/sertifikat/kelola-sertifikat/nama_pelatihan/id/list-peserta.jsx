@@ -298,7 +298,7 @@ export default function ListPeserta() {
                                   {participant.status == 1 ? (
                                     <>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.nama_pelatihan}/${participant.id}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${query.nama_pelatihan_id}/list-peserta/${participant.name}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"

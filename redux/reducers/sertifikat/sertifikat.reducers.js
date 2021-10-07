@@ -103,6 +103,7 @@ export const detailSertifikatReducer = (
 
     case DETAIL_SERTIFIKAT_FAIL:
       return {
+        loading: false,
         error: action.payload,
       };
     case CLEAR_ERRORS:
@@ -133,6 +134,7 @@ export const singleSertifikatReducer = (
 
     case SINGLE_SERTIFIKAT_FAIL:
       return {
+        loading: false,
         error: action.payload,
       };
     case CLEAR_ERRORS:

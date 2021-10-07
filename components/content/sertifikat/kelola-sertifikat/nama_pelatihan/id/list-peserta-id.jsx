@@ -9,10 +9,9 @@ import { useSelector } from "react-redux";
 import PageWrapper from "../../../../../wrapper/page.wrapper";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { toPng } from "html-to-image";
-
 // #Icon
 
-export default function KelolasertifikatID({ token }) {
+export default function ListPesertaID({ token }) {
   // console.log(token);
   const router = useRouter();
   const { query } = router;
@@ -20,7 +19,14 @@ export default function KelolasertifikatID({ token }) {
   const { loading, error, certificate } = useSelector(
     state => state.publishCertificate
   );
-  const [type, setType] = useState(certificate.data.certificate_type);
+  const {
+    loading: loadingParticipant,
+    error: errorParticipant,
+    participant,
+  } = useSelector(state => state.detailParticipant);
+
+  console.log(query);
+  const [type, setType] = useState(2);
   console.log("INI publish", certificate);
 
   const handleResetError = () => {
@@ -29,9 +35,9 @@ export default function KelolasertifikatID({ token }) {
     }
   };
   const divReference = useRef(null);
-  const divReferenceSyllabus = useRef(null);
 
   const handleDownload = () => {
+    console.log(divReference.current);
     toPng(divReference.current, {
       cacheBust: true,
       canvasWidth: 842,
@@ -39,24 +45,7 @@ export default function KelolasertifikatID({ token }) {
     })
       .then(image => {
         const link = document.createElement("a");
-        link.download = "Sertifikat.png";
-        link.href = image;
-        link.click();
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  const handleDownloadSyllabus = () => {
-    toPng(divReferenceSyllabus.current, {
-      cacheBust: true,
-      canvasWidth: 842,
-      canvasHeight: 595,
-    })
-      .then(image => {
-        const link = document.createElement("a");
-        link.download = "Sertifikat-Syllabus.png";
+        link.download = "my-image-name.png";
         link.href = image;
         link.click();
       })
@@ -108,17 +97,12 @@ export default function KelolasertifikatID({ token }) {
                   // placeholder="Masukan Nama Sertifikat"
                   // value={certificate.data.certificate.name}
                 >
-                  {certificate?.data?.certificate?.name
-                    ? certificate?.data?.certificate?.name
-                    : "Nama Sertifikat"}
+                  {certificate?.data?.certificate?.name || "Nama sertifikat"}
                 </div>
               </div>
             </div>
             <div className="card-toolbar">
-              <Link
-                href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}`}
-                passHref
-              >
+              <Link passHref href="/kelola/">
                 <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3">
                   Kembali
                 </a>
@@ -136,8 +120,8 @@ export default function KelolasertifikatID({ token }) {
                 ref={divReference}
               >
                 <Image
-                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate_result}`}
-                  alt={`image ${certificate.data.certificate_result}`}
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data}`}
+                  alt={"image"}
                   layout="fill"
                   objectFit="fill"
                 />
@@ -145,12 +129,7 @@ export default function KelolasertifikatID({ token }) {
                   className="position-absolute w-100 text-center"
                   style={{ marginTop: "128px" }}
                 >
-                  <span
-                    className="font-size-h5 px-5 border-2"
-                    style={{ borderStyle: "dashed" }}
-                  >
-                    Nama Peserta
-                  </span>
+                  <span className="font-size-h3">{query.id}</span>
                 </div>
               </div>
               {/* END COL */}
@@ -175,54 +154,27 @@ export default function KelolasertifikatID({ token }) {
           {/* END BODY */}
         </div>
         {/* START SECTION 2 */}
-        {type == "2 lembar" ? (
+        {type == 2 ? (
           <div className="card card-custom card-stretch gutter-b">
-            {/* START HEADER */}
-            {/* END HEADER */}
             {/* START BODY */}
             <div className="card-body border-top">
               <div className="row p-0 justify-content-center">
                 {/* START COL */}
-                <div
-                  className=" position-relative p-0"
-                  style={{ width: "781px", height: "552px" }}
-                  ref={divReferenceSyllabus}
-                >
-                  <Image
-                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate_result}`}
-                    alt={`${certificate.data}`}
-                    layout="fill"
-                    objectFit="fill"
-                  />
-                  <div
-                    className="position-absolute w-100 text-center"
-                    style={{ marginTop: "128px" }}
-                  >
-                    <span
-                      className="font-size-h5 px-5 border-2"
-                      style={{ borderStyle: "dashed" }}
-                    >
-                      Nama Peserta
-                    </span>
+                <div className="p-0 col-12 h-500px">
+                  <div className="p-0">
+                    <Image
+                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data}`}
+                      alt="fitur"
+                      // height={495}
+                      // width={700}
+                      layout="fill"
+                      objectFit="contain"
+                    />
                   </div>
                 </div>
+
                 {/* END COL */}
-              </div>
-              <div className="row mt-10 col-12">
-                <div className="position-relative">
-                  <label>
-                    <div className="mr-5">
-                      <a
-                        onClick={e => {
-                          handleDownload(e);
-                        }}
-                        className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
-                      >
-                        Unduh
-                      </a>
-                    </div>
-                  </label>
-                </div>
+                {/* START FORM Jenis Sertifikat */}
               </div>
             </div>
             {/* END BODY */}
@@ -234,3 +186,47 @@ export default function KelolasertifikatID({ token }) {
     </PageWrapper>
   );
 }
+
+// {/* <div className="card-body border-top">
+//             <div className="row p-0 justify-content-center">
+//               {/* START COL */}
+//               <div
+//                 className="border-primary col-12 h-500px "
+//                 // style={{ width: "842px" }}
+//               >
+//                 <div className="p-0 position-relative h-100">
+//                   <Image
+// src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data}`}
+// alt={`${certificate.data}`}
+//                     // height={495}
+//                     // width={1400}
+//                     layout="fill"
+//                     objectFit="contain"
+//                   />
+//                   <div
+//                     className="position-absolute"
+//                     style={{ left: "450px", top: "23%", borderStyle: "dash" }}
+//                   >
+//                     <span className="px-2 font-size-h6 px-10 w-100">
+//                       {query.id}
+//                     </span>
+//                   </div>
+//                 </div>
+//               </div>
+//               {/* END COL */}
+//             </div>
+//             <div className="row mt-10 col-12">
+//               <div className="position-relative">
+//                 <label>
+//                   <div className="mr-5">
+//                     <a
+//                       onClick={() => {}}
+//                       className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+//                     >
+//                       Unduh
+//                     </a>
+//                   </div>
+//                 </label>
+//               </div>
+//             </div>
+//           </div> */}

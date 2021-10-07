@@ -54,6 +54,11 @@ export default function NamaPelatihanID({ token }) {
     router.push(link);
   };
 
+  console.log("masuk halaman ini");
+  useEffect(() => {
+    console.log(loading, "INI LOADING");
+  }, [loading]);
+
   return (
     <PageWrapper>
       {/* error START */}
