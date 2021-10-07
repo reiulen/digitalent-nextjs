@@ -150,6 +150,7 @@ import {
   newSertifikatReducer,
   updateSertifikatReducer,
   singleSertifikatReducer,
+  publishedSertifikatReducer,
 } from "./sertifikat/sertifikat.reducers";
 
 import {
@@ -362,6 +363,7 @@ const reducer = combineReducers({
   detailCertificates: detailSertifikatReducer,
   deleteCertificates: deleteSertifikatReducer,
   updateCertificates: updateSertifikatReducer,
+  publishCertificate: publishedSertifikatReducer,
 
   allParticipant: allPesertaReducers,
   detailParticipant: detailPesertaReducer,
