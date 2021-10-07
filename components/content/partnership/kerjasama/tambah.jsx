@@ -228,17 +228,21 @@ const Tambah = ({token}) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
+
+
                   <div className="fv-row mb-10">
                     <label className="required fw-bold fs-6 mb-2">Email</label>
                     <input
-                      readOnly
+                      disabled
                       type="text"
                       value={allMK.email}
                       name="text_input"
-                      className="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0"
                       placeholder="Masukan Alamat E-mail"
                     />
                   </div>
+
+
                 </div>
               </div>
 

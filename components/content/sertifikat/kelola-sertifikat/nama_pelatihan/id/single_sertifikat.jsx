@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, createRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-
 // #Page, Component & Library
 
 import Image from "next/image";
@@ -78,12 +77,12 @@ export default function KelolasertifikatID({ token }) {
             <div className="card-toolbar">
               <Link
                 href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}`}
+                passHref
               >
                 <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3">
                   Kembali
                 </a>
               </Link>
-              {/* </Link> */}
             </div>
           </div>
           {/* END HEADER */}

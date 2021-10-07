@@ -32,7 +32,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getDetailTriviaQuestionBanks(query.id, session.user.user.data.token)
       );
       return {
-        props: { session, title: "Edit Triva Step 2 - Subvit" },
+        props: { session, title: "Ubah Triva Step 2 - Subvit" },
       };
     }
 );

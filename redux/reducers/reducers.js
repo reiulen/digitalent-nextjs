@@ -150,6 +150,7 @@ import {
   newSertifikatReducer,
   updateSertifikatReducer,
   singleSertifikatReducer,
+  publishedSertifikatReducer,
 } from "./sertifikat/sertifikat.reducers";
 
 import {
@@ -177,6 +178,7 @@ import { allTandaTanganUserReducer } from "./partnership/user/tanda-tangan.reduc
 
 // Site Management
 // ============== role ===============
+import { pageReducer } from "./site-management/settings/page.reducer";
 import {
   allRolesReducer,
   newRolesReducer,
@@ -361,6 +363,7 @@ const reducer = combineReducers({
   detailCertificates: detailSertifikatReducer,
   deleteCertificates: deleteSertifikatReducer,
   updateCertificates: updateSertifikatReducer,
+  publishCertificate: publishedSertifikatReducer,
 
   allParticipant: allPesertaReducers,
   detailParticipant: detailPesertaReducer,
@@ -388,6 +391,8 @@ const reducer = combineReducers({
   allAuthentication: authenticationReducer,
 
   // SITE MANAGEMENT
+  // ============ PAGE =======
+  allPage: pageReducer,
   // ============== ROLE ============
   allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
   newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,

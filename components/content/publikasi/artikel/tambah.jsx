@@ -193,6 +193,7 @@ const TambahArtikel = ({token}) => {
   const [publish, setPublish] = useState(0);
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
+  const [disableTag, setDisableTag] = useState(false)
   // const [disablePublishDate, setDisablePublishDate] = useState(null)
 
   const onChangeGambar = (e) => {
@@ -250,10 +251,23 @@ const TambahArtikel = ({token}) => {
     }
   }
 
+  const handleTag = (data) => {
+    if (data.length === 1 && data[0] === " "){
+        setTag([])
+        alert("tag")
+        setDisableTag (true)
+    } else {
+        setTag(data)
+        setDisableTag (false)
+    }
+
+    console.log (data)
+  }
+
   const onSubmit = (e) => {
 
     e.preventDefault();
-    if (simpleValidator.current.allValid()) {
+    if (simpleValidator.current.allValid() && disableTag === false) {
       if (error) {
         dispatch(clearErrors());
       }
@@ -849,7 +863,8 @@ const TambahArtikel = ({token}) => {
                   <div className="col-sm-12">
                     <TagsInput
                       value={tag}
-                      onChange={setTag}
+                      onChange={(data) => handleTag(data)}
+                      // onChange={setTag}
                       name="fruits"
                       placeHolder="Isi Tag disini dan enter."
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
