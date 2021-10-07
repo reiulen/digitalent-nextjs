@@ -70,7 +70,7 @@ const TambahImagetron = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(null)
   const [url_link, setUrlRedirect] = useState('')
-  const [publish, setPublish] = useState(false)
+  const [publish, setPublish] = useState(0)
   const [users_id, setUserId] = useState(3)
   const [publishDate, setPublishDate] = useState(null);
   const [disablePublishDate, setDisablePublishDate] = useState(true)
@@ -78,7 +78,7 @@ const TambahImagetron = ({ token }) => {
   const onChangeGambar = (e) => {
     const type = ["image/jpg", "image/png", "image/jpeg"]
     // console.log (e.target.files[0].type)
-    console.log(e.target.files[0])
+    // console.log(e.target.files[0])
     // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
