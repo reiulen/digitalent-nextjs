@@ -232,3 +232,8 @@ a {
   width: 100% !important;
   position: relative;
 }
+
+.disabled-form input{
+  background-color: #F3F6F9 !important;
+}
+

@@ -14,7 +14,6 @@ import {
 
 const Sidebar = () => {
   const [session, loading] = useSession();
-  console.log("session", session);
   const dispatch = useDispatch();
   const getStorageMenu2 = sessionStorage.getItem("menu2");
   const getStorageMenu4 = sessionStorage.getItem("menu4");
@@ -166,6 +165,15 @@ const Sidebar = () => {
       href: "/partnership/tanda-tangan",
     },
   ]);
+
+  const activeSubItemPartnership = () => {
+    if (sessionStorage.getItem("menu-partnership")) {
+      sessionStorage.removeItem("menu-partnership");
+    } else {
+      sessionStorage.setItem("menu-partnership", "menu-item-open");
+    }
+  };
+
   const activeMenuPartnership = () => {
     if (sessionStorage.getItem("menu-partnership")) {
       sessionStorage.removeItem("menu-partnership");
@@ -876,7 +884,7 @@ const Sidebar = () => {
                                 : ""
                             }`}
                             aria-haspopup="true"
-                            onClick={() => activeMenuPartnership()}
+                            onClick={() => activeSubItemPartnership()}
                           >
                             <Link href={items.href}>
                               <a className="menu-link">

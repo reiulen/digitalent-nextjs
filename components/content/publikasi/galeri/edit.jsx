@@ -153,7 +153,8 @@ const EditGaleri = ({ token }) => {
     const [kategori_id, setKategoriId] = useState(galeri.kategori_id); //belum
     const [users_id, setUserId] = useState(3);
     const [tag, setTag] = useState(galeri.tag);
-    const [publish, setPublish] = useState(galeri.publish === 1 ? true : false);
+    // const [publish, setPublish] = useState(galeri.publish === 1 ? true : false);
+    const [publish, setPublish] = useState(galeri.publish);
     const [_method, setMethod] = useState("put");
     const [publishDate, setPublishDate] = useState(galeri.tanggal_publish ? new Date(galeri.tanggal_publish) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(galeri.publish === 0 ? true : false)

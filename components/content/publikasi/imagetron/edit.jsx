@@ -53,7 +53,8 @@ const EditImagetron = ({ token }) => {
                 query: { successEdit: true },
             });
         }
-
+        // window.location.reload()
+        
         // if (error) {
         //     dispatch(clearErrors())
         // }
@@ -96,6 +97,7 @@ const EditImagetron = ({ token }) => {
             }
             reader.readAsDataURL(e.target.files[0])
             setGambarName(e.target.files[0].name)
+            // reader.URL.revokeObjectURL(e.target.files[0])
         }
     }
     // console.log("IMAGE PREVIEW : ",gambarPreview)

@@ -607,15 +607,17 @@ export const exportFileCSV = (token) => {
           },
         }
       );
-      router.push(
-        urlExport.config.url +
-          `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`
-        // {
-        //   headers: {
-        //     authorization: `Bearer ${token}`,
-        //   },
-        // }
-      );
+
+      // window.open(
+      //   urlExport.config.url +
+      //     `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`,
+      //   {
+      //     paramssz,
+      //     headers: {
+      //       authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
 
       // console.log("data", data);
     } catch (error) {
