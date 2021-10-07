@@ -410,7 +410,7 @@ const Vidio = ({ token }) => {
                         // color='#74BBB7' 
                         value={video && video.total_views != "" ? video.total_views : 0}
                         titleValue='Orang'
-                        title='Total Yang Baca'
+                        title='Total Dilihat'
                         publishedVal=""
                         routePublish={() => handlePublish("")}
                     />
@@ -686,7 +686,7 @@ const Vidio = ({ token }) => {
                                         <tbody>
                                             {
                                                 !video || video && video.video.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
                                                     video && video.video.map((row, i) => {
                                                         { console.log("Video :", row.id) }
                                                         return <tr key={row.id}>
@@ -712,6 +712,7 @@ const Vidio = ({ token }) => {
                                                                 <Image
                                                                     alt={row.judul_video}
                                                                     unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                                                    loader={process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + row.gambar}
                                                                     src={process.env.END_POINT_API_IMAGE_PUBLIKASI + 'publikasi/images/' + row.gambar}
                                                                     width={80}
                                                                     height={50}
@@ -833,7 +834,8 @@ const Vidio = ({ token }) => {
                                 {video ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
-                                            <div className="col-4 mr-0 p-0 mt-3">
+                                            {/* <div className="col-4 mr-0 p-0 mt-3"> */}
+                                            <div className="col-4 mr-0 mt-3">
                                                 <select
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
@@ -848,7 +850,7 @@ const Vidio = ({ token }) => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {video.total}</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {video.total} List Data</p>
                                             </div>
                                         </div>
                                     </div> : ''

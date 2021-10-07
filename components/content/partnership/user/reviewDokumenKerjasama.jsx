@@ -333,17 +333,19 @@ function ReviewDokumenKerjasama({ token }) {
 
                   <div className="form-group row">
                     <div className="col-sm-12 d-flex justify-content-end">
-                      {/* <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
+                      <Link href="/partnership/user/kerjasama" passHref>
+                    <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                      Selesai
                     </a>
-                  </Link> */}
-                      <button
-                        // type="submit"
+                  </Link>
+
+                      {/* <button
                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                       >
                         Selesai
-                      </button>
+                      </button> */}
+
+
                     </div>
                   </div>
                 </div>

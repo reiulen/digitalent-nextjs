@@ -78,7 +78,7 @@ function ReviewKerjasama({token}) {
           query:{id:router.query.id}
         })
       }
-      if(data.data.status_migrates_id.status === "pengajuan-selesai"){
+      if((data.data.status_migrates_id.status === "pengajuan-selesai") || (data.data.status_migrates_id.status === "pengajuan-pembahasan")  ){
         router.push({
           pathname:"/partnership/user/kerjasama/pembahasan-2",
           query:{id:router.query.id}
