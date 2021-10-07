@@ -85,7 +85,7 @@ const TambahVidio = ({ token }) => {
         "/assets/icon/Add.svg"
     );
     const [gambarName, setGambarName] = useState(null)
-    const [publish, setPublish] = useState(false)
+    const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
 
