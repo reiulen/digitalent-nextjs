@@ -282,10 +282,10 @@ const SubmitKerjasama = ({token}) => {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress active-line"></div>
-                  <div className="circle-progress active-circle">
-                    <span className="title-progress">
-                      Submit Dokumen Kerjasama
+                  <div className="line-progress"></div>
+                  <div className="circle-progress">
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Submit Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>
@@ -294,8 +294,8 @@ const SubmitKerjasama = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Review Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Review Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>
@@ -480,7 +480,7 @@ const SubmitKerjasama = ({token}) => {
                 {pdfFile ? (
                   <div className="mt-3">
                     <button
-                      className="btn btn-primary btn-sm mr-2"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                       type="button"
                       onClick={() => showDocument()}
                     >
@@ -513,7 +513,7 @@ const SubmitKerjasama = ({token}) => {
                 {!viewPDF && <>No pdf file selected </>}
               </div>
 
-              <div className="form-group row">
+              <div className="form-group row mt-6">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/user/kerjasama">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">

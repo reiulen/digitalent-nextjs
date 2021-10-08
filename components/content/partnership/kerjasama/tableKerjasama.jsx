@@ -403,7 +403,7 @@ const Table = ({ token }) => {
             icon="Error-circle.svg"
             color="#ffffff"
             value={sumWillExpire}
-            titleValue="Kerjasama akan Habis"
+            titleValue=""
             title="Kerjasama akan Habis"
             publishedVal="1"
             routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
