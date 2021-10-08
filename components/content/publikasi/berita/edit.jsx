@@ -332,7 +332,7 @@ const EditBerita = ({token}) => {
     return (
         <>
         {
-            // console.log (berita)
+            console.log (berita)
         }
         {
                 // console.log (kategori)

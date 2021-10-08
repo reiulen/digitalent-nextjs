@@ -199,7 +199,7 @@ const EditArtikel = ({ token }) => {
         setDisableTag (false)
     }
 
-    console.log (data)
+    // console.log (data)
 }
 
   const onSubmit = (e) => {
@@ -555,10 +555,10 @@ const EditArtikel = ({ token }) => {
   return (
     <>
       <PageWrapper>
-        {/* {console.log (artikel)}
+        {/* {console.log (artikel)} */}
         {
-          console.log (kategori)
-        } */}
+          // console.log (kategori)
+        }
         
         {error ? (
           <div

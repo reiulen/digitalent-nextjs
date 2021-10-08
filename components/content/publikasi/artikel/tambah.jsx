@@ -261,7 +261,7 @@ const TambahArtikel = ({token}) => {
         setDisableTag (false)
     }
 
-    console.log (data)
+    // console.log (data)
   }
 
   const onSubmit = (e) => {
