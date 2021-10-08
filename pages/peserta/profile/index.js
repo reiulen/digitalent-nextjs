@@ -2,12 +2,12 @@ import dynamic from "next/dynamic";
 
 // import Layout from "../../../components/templates/layout.component";
 
-import { wrapper } from "../../redux/store";
+import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
-import LoadingSkeleton from "../../components/LoadingSkeleton";
+import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
-const Dashboard = dynamic(
-  () => import("../../user-component/content/peserta/dashboard"),
+const Profile = dynamic(
+  () => import("../../../user-component/content/peserta/profile"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -17,14 +17,14 @@ const Dashboard = dynamic(
 );
 
 const Layout = dynamic(() =>
-  import("../../user-component/components/template/Layout.component")
+  import("../../../user-component/components/template/Layout.component")
 );
 
-export default function DashboardPage() {
+export default function ProfilePage() {
   return (
     <>
-      <Layout title="Dashboard Peserta - Pelatihan">
-        <Dashboard />
+      <Layout title="Pelatihan Peserta - Pelatihan">
+        <Profile />
       </Layout>
     </>
   );

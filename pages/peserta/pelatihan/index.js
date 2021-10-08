@@ -9,8 +9,6 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 const ListPelatihan = dynamic(
   () => import("../../../user-component/content/peserta/pelatihan"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingSkeleton />;
     },
@@ -18,15 +16,16 @@ const ListPelatihan = dynamic(
   }
 );
 
-const Navigationbar = dynamic(() =>
-  import("../../../components/templates/navbar.component")
+const Layout = dynamic(() =>
+  import("../../../user-component/components/template/Layout.component")
 );
 
 export default function ListPelatihanPage() {
   return (
     <>
-      <Navigationbar />
-      <ListPelatihan />
+      <Layout title="Pelatihan Peserta - Pelatihan">
+        <ListPelatihan />
+      </Layout>
     </>
   );
 }
