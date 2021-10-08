@@ -61,16 +61,16 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    if (allAuthentication.status === "error") {
-      notify(allAuthentication.errorRegister);
-    } else if (allAuthentication.status === "success"){
-      // jika sukses
-      Swal.fire("Berhasil Daftar", "Silahkan login", "success").then(() => {
-        router.push("/partnership/user/auth/login")
-      });
-    }else{
-      ""
-    }
+    // if (allAuthentication.status === "error") {
+    //   notify(allAuthentication.errorRegister);
+    // } else if (allAuthentication.status === "success"){
+    
+    //   Swal.fire("Berhasil Daftar", "Silahkan login", "success").then(() => {
+    //     router.push("/partnership/user/auth/login")
+    //   });
+    // }else{
+    //   ""
+    // }
     dispatch(fetchPage(token));
   }, [dispatch, allPage.keyword, allPage.limit, allPage.page,allPage.dataSuccesDelete,allPage.errorDeletePage]);
   return (
@@ -150,7 +150,7 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allPage.dataPage.data && allPage.dataPage.data.length === 0 ? (
+                      {/* {allPage.dataPage.data && allPage.dataPage.data.length === 0 ? (
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h4>Data tidak ditemukan</h4>
@@ -226,7 +226,7 @@ const Table = ({ token }) => {
                             </tr>
                           );
                         })
-                      )}
+                      )} */}
                     </tbody>
                   </table>
                 )}

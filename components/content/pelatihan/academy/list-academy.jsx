@@ -268,7 +268,7 @@ const ListAcademy = ({ token }) => {
                             <td className="align-middle">150</td>
                             <td className="align-middle">50 Mitra</td>
                             <td className="align-middle">
-                              {row.status ? (
+                              {row.status === "1" ? (
                                 <span className="label label-inline label-light-success font-weight-bold">
                                   Publish
                                 </span>

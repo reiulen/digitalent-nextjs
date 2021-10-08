@@ -166,15 +166,15 @@ export const fetchAllMK = (token) => {
           },
         }
       );
-      let dataSortirAll = await await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index`,
+      let dataSortirAll = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&limit=1000`,
         {
-          paramss,
           headers: {
             authorization: `Bearer ${token}`,
           },
         }
       );
+      console.log("dataSortirAll", dataSortirAll);
 
       let totalData = dataSortirAll.data.data.list_cooperations.length;
       // get total data status aktif

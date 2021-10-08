@@ -557,7 +557,7 @@ const EditArtikel = ({ token }) => {
   return (
     <>
       <PageWrapper>
-        {console.log (artikel)}
+        {/* {console.log (artikel)} */}
         {/* {
           console.log (kategori)
         } */}

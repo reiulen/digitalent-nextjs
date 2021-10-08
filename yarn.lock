@@ -1037,7 +1037,28 @@
   "resolved" "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz"
   "version" "1.2.0"
 
-"@isaacs/string-locale-compare@*", "@isaacs/string-locale-compare@^1.0.1":
+"@mrmlnc/readdir-enhanced@^2.2.1":
+  "integrity" "sha512-bPHp6Ji8b41szTOcaP63VlnbbO5Ny6dwAATtY6JTjh5N2OLrb5Qk/Th5cRkRQhkWCt+EJsYrNB0MiL+Gpn6e3g=="
+  "resolved" "https://registry.npmjs.org/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz"
+  "version" "2.2.1"
+  dependencies:
+    "call-me-maybe" "^1.0.1"
+    "glob-to-regexp" "^0.3.0"
+
+"@napi-rs/triples@^1.0.3":
+  "integrity" "sha512-jDJTpta+P4p1NZTFVLHJ/TLFVYVcOqv6l8xwOeBKNPMgY/zDYH/YH7SJbvrr/h1RcS9GzbPcLKGzpuK9cV56UA=="
+  "resolved" "https://registry.npmjs.org/@napi-rs/triples/-/triples-1.0.3.tgz"
+  "version" "1.0.3"
+
+"@next-auth/prisma-legacy-adapter@0.1.2":
+  "integrity" "sha512-QpGcRvrnFERkvVFroqS89qDbnskw9AjhvWxO095u3xl/8QVI++Y+doluQdZWuV6PewjrV7xY+uVUEnRhnGM8yQ=="
+  "resolved" "https://registry.npmjs.org/@next-auth/prisma-legacy-adapter/-/prisma-legacy-adapter-0.1.2.tgz"
+  "version" "0.1.2"
+  dependencies:
+    "@babel/runtime" "^7.14.0"
+
+"@next-auth/typeorm-legacy-adapter@0.1.4":
+  "integrity" "sha512-UDnctrPiUU0yaPNeFhD6uw0FAuWGvx6IUVwUYTEzZm26RCEe/BBjkpGLYk43M3rcn"@isaacs/string-locale-compare@*", "@isaacs/string-locale-compare@^1.0.1":
   "version" "1.1.0"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
@@ -8862,4 +8883,3 @@
     "zen-observable" "0.8.15"
 
 "zen-observable@0.8.15":
-  "version" "0.8.15"

@@ -159,6 +159,7 @@ const TambahGaleri = ({ token }) => {
     const [disablePublishDate, setDisablePublishDate] = useState(true)
     const [gambarName, setGambarName] = useState(null)
     const [totalImage, setTotalImage] = useState(1)
+    const [disableTag, setDisableTag] = useState(false)
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
@@ -307,6 +308,19 @@ const TambahGaleri = ({ token }) => {
 
     };
 
+    const handleTag = (data) => {
+        if (data[0] === " ") {
+            setTag([])
+            alert("tag")
+            setDisableTag(true)
+        } else {
+            setTag(data)
+            setDisableTag(false)
+        }
+
+        console.log(data)
+    }
+
     const handleData = (temps, onCall) => {
         if (publishDate === null) {
             let today = new Date
@@ -449,7 +463,7 @@ const TambahGaleri = ({ token }) => {
     return (
         <PageWrapper>
             {
-                console.log("Cek Kategori Awal",kategori)
+                console.log("Cek Kategori Awal", kategori)
             }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -1702,7 +1716,7 @@ const TambahGaleri = ({ token }) => {
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
                                         name="fruits"
                                         placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
