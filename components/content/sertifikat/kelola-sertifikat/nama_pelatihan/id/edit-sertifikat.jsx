@@ -284,12 +284,16 @@ export default function EditSertifikat({ token }) {
         console.log("KONDISI DARI SIGNATURE PAS DI DISPATCH", signature);
 
         signature.forEach((item, i) => {
-          console.log(item, "ini items");
           if (item.localSignature) {
             formData.append(
               `signature_certificate_image[${i}]`,
               item.localSignature
             ); // img signature yang baru di taro
+          } else {
+            formData.append(
+              `signature_certificate_image[${i}]`,
+              item.signature
+            );
           }
           formData.append(
             `signature_certificate_position[${i}]`,
@@ -329,11 +333,11 @@ export default function EditSertifikat({ token }) {
               item.name
             );
           });
-        }
 
-        syllabus.forEach((item, i) => {
-          formData.append(`syllabus[${i}]`, item);
-        });
+          syllabus.forEach((item, i) => {
+            formData.append(`syllabus[${i}]`, item);
+          });
+        }
 
         const data = await convertDivToPng(divReference.current); // convert bg 1
         formData.append("certificate_result", data);

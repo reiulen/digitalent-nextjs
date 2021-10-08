@@ -71,8 +71,6 @@ export default function TambahMasterSertifikat({ token }) {
   const [signature_certificate_position, setSignature_certificate_position] =
     useState([]);
 
-  const [certificate_result, setCertificate_result] = useState();
-
   // START SYLLABUS
   const [number_of_signature_syllabus, setNumber_of_signature_syllabus] =
     useState(1);
@@ -111,7 +109,6 @@ export default function TambahMasterSertifikat({ token }) {
 
   // #START MODAL
   const [tandaTanganType, setTandaTanganType] = useState([1, 1, 1, 1]);
-  const [tandaTangan, setTandaTangan] = useState("");
   const signCanvas = useRef({});
 
   const handleImageTandaTangan = (e, index) => {

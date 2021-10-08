@@ -25,6 +25,7 @@ const Sidebar = () => {
   const getStorageMenuSiteManagementUser = sessionStorage.getItem(
     "menu-site-management-user"
   );
+  const getStorageMenuSertifikat = sessionStorage.getItem("menu-sertifikat");
 
   const allFunctionls = useSelector(state => state.allFunctionls);
 
@@ -408,14 +409,25 @@ const Sidebar = () => {
     },
   ]);
 
+  // function show sub menu Sertifikat
   const activeSubItemSertifikat = () => {
-    if (sessionStorage.getItem("menu5")) {
-      sessionStorage.removeItem("menu5");
+    if (sessionStorage.getItem("menu-sertifikat")) {
+      sessionStorage.removeItem("menu-sertifikat");
     } else {
-      sessionStorage.setItem("menu5", "menu-item-open");
+      sessionStorage.setItem("menu-sertifikat", "menu-item-open");
     }
   };
-
+  // function show active menu Sertifikat
+  const activeMenuSertifikat = () => {
+    if (sessionStorage.getItem("menu-sertifikat")) {
+      sessionStorage.removeItem("menu-sertifikat");
+    } else {
+      sessionStorage.setItem("menu-sertifikat", "menu-item-open");
+    }
+    setMenuItem3(
+      !sessionStorage.getItem("menu-sertifikat") ? "" : "menu-item-open"
+    );
+  };
   // END LIST MENU SERTIFIKAT
 
   return (
@@ -474,7 +486,6 @@ const Sidebar = () => {
                   aria-haspopup="true"
                   data-menu-toggle="hover"
                 >
-                  
                   <div className="menu-submenu">
                     <i className="menu-arrow"></i>
                     <ul className="menu-subnav">
@@ -862,8 +873,10 @@ const Sidebar = () => {
                 </li>
 
                 <li
-                  className={`menu-item menu-item-submenu ${menuItem5}`}
-                  onClick={onSetMenuItem5}
+                  className={`menu-item menu-item-submenu 
+                ${!getStorageMenuSertifikat ? "" : getStorageMenuSertifikat}`}
+                  // onClick={onSetMenuItem6}
+                  onClick={() => activeMenuSertifikat()}
                   aria-haspopup="true"
                   data-menu-toggle="hover"
                 >
@@ -893,7 +906,15 @@ const Sidebar = () => {
                       </svg>
                     </span>
                     <span className="menu-text">Sertifikat</span>
-                    <i className="menu-arrow"></i>
+                    <IconArrow2
+                      className="transition-animate"
+                      fill="#ffffff"
+                      style={{
+                        transform: getStorageMenuSertifikat
+                          ? "rotate(90deg)"
+                          : "rotate(0)",
+                      }}
+                    />
                   </a>
                   <div className="menu-submenu">
                     <i className="menu-arrow"></i>
@@ -906,6 +927,9 @@ const Sidebar = () => {
                           <span className="menu-text">Sertifikat</span>
                         </span>
                       </li>
+
+                      {/* start loop sertifikat */}
+
                       {listMenuSertifikat.map((items, index) => {
                         return (
                           <li
@@ -926,6 +950,8 @@ const Sidebar = () => {
                           </li>
                         );
                       })}
+
+                      {/* end loop sertifikat */}
                     </ul>
                   </div>
                 </li>
