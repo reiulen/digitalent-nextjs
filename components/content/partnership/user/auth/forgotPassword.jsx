@@ -47,7 +47,6 @@ const ForgotPassword = () => {
   };
 
   const submit = (e) => {
-    console.log("asdasdasdasdasdas asdmnasmdansmdnamsda sdamsndamsnd")
     e.preventDefault();
     if (newPassword === "") {
       setError({
@@ -99,8 +98,6 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     if (router.query.code && router.query.email) {
-      console.log("router.query.code",router.query.code)
-      console.log("router.query.email",router.query.email)
       setEmailCode(router.query.email);
       setPasswordCode(router.query.code);
     }

@@ -47,7 +47,6 @@ const TambahTandaTangan = ({token}) => {
 
   const dataTandaTangan = () => {
     const data = signCanvas.current.toDataURL();
-    console.log("Data",data)
     if (!tandaTangan) {
       Swal.fire({
         icon: "success",
@@ -65,7 +64,6 @@ const TambahTandaTangan = ({token}) => {
     }
   };
   const submit = (e) => {
-    console.log("tandaTangan",tandaTangan)
     e.preventDefault();
     if (nama === "") {
       setError({ ...error, nama: "Harus isi nama" });

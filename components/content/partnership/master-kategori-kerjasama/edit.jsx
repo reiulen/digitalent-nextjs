@@ -13,7 +13,6 @@ const Edit = ({ token }) => {
   const router = useRouter();
   let dispatch = useDispatch();
   const allMKCooporation = useSelector((state) => state.allMKCooporation);
-  console.log("allMKCooporation", allMKCooporation);
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [stateDataSingleOld, setStateDataSingleOld] = useState([]);
   const [stateDataSingle, setStateDataSingle] = useState([]);

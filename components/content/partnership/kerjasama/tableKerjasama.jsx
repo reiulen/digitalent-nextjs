@@ -45,7 +45,6 @@ import {
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/management_cooporation.type";
 
 const Table = ({ token }) => {
-  console.log("token admin", token);
   const router = useRouter();
   let { update, success, successTerima, successReject, successMakeREvisi } =
     router.query;
@@ -55,7 +54,6 @@ const Table = ({ token }) => {
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK", allMK);
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");

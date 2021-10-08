@@ -24,13 +24,12 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconArrow from "../../../../assets/icon/Arrow";
 
-const Table = ({token}) => {
-  let dispatch = useDispatch();
+const Table = ({ token }) => {
+  const dispatch = useDispatch();
   let router = useRouter();
   const { success, update } = router.query;
 
-  const allTandaTanganUser = useSelector(state => state.allTandaTanganUser)
-  console.log("state",allTandaTanganUser)
+  const allTandaTanganUser = useSelector((state) => state.allTandaTanganUser);
 
   const [successDelete, setSuccessDelete] = useState(false);
   const [keyWord, setKeyWord] = useState("");
@@ -52,7 +51,7 @@ const Table = ({token}) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        dispatch(deleteTandaTangan(id,token));
+        dispatch(deleteTandaTangan(id, token));
         setSuccessDelete(true);
         router.replace(`/partnership/user/tanda-tangan-digital`);
       }
@@ -61,7 +60,9 @@ const Table = ({token}) => {
 
   const onNewReset = () => {
     setSuccessDelete(false);
-    router.replace("/partnership/user/tanda-tangan-digital", undefined, { shallow: true });
+    router.replace("/partnership/user/tanda-tangan-digital", undefined, {
+      shallow: true,
+    });
   };
 
   const [isStatusBar, setIsStatusBar] = useState(false);
@@ -80,11 +81,13 @@ const Table = ({token}) => {
         let formData = new FormData();
         formData.append("_method", "put");
         formData.append("status", e.target.value);
-        dispatch(changeStatusList(formData, id,token));
+        dispatch(changeStatusList(formData, id, token));
         setIsStatusBar(true);
         // setDeleteBar(false);
         // setIsChangeOption(true);
-        router.replace("/partnership/user/tanda-tangan-digital", undefined, { shallow: true })
+        router.replace("/partnership/user/tanda-tangan-digital", undefined, {
+          shallow: true,
+        });
       } else {
         dispatch(reloadTable());
       }
@@ -92,13 +95,15 @@ const Table = ({token}) => {
   };
 
   useEffect(() => {
-    console.log("object")
-    dispatch(fetchSignature(token))
-  }, [dispatch,
+    dispatch(fetchSignature(token));
+  }, [
+    dispatch,
     allTandaTanganUser.keyword,
     allTandaTanganUser.status_reload,
     allTandaTanganUser.page,
-    allTandaTanganUser.limit,token])
+    allTandaTanganUser.limit,
+    token
+  ]);
 
   return (
     <PageWrapper>
@@ -141,7 +146,7 @@ const Table = ({token}) => {
             <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#c51b1b" }}>
-            Berhasil menghapus data 
+            Berhasil menghapus data
           </div>
           <div className="alert-close">
             <button
@@ -274,7 +279,6 @@ const Table = ({token}) => {
               </div>
             </form>
 
-
             <div className="table-page mt-5">
               <div className="table-responsive">
                 {allTandaTanganUser.status === "process" ? (
@@ -306,13 +310,11 @@ const Table = ({token}) => {
                             return (
                               <tr key={index}>
                                 <td className="align-middle text-left">
-                                  
-                                    {allTandaTanganUser.page === 1
-                                      ? index + 1
-                                      : (allTandaTanganUser.page - 1) *
-                                          allTandaTanganUser.limit +
-                                        (index + 1)}
-                                 
+                                  {allTandaTanganUser.page === 1
+                                    ? index + 1
+                                    : (allTandaTanganUser.page - 1) *
+                                        allTandaTanganUser.limit +
+                                      (index + 1)}
                                 </td>
                                 <td className="align-middle text-left">
                                   {items.name}
@@ -321,23 +323,18 @@ const Table = ({token}) => {
                                   {items.position}
                                 </td>
                                 <td className="align-middle text-left">
-                                  {items.status == "1" ? 
-                                  <div className="position-relative w-max-content">
+                                  {items.status == "1" ? (
+                                    <div className="position-relative w-max-content">
                                       <select
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-green"
                                         key={index}
                                         onChange={(e) =>
-                                          changeListStatus(
-                                            e,
-                                            items.id,
-                                          )
+                                          changeListStatus(e, items.id)
                                         }
                                       >
-                                        <option value="1">
-                                          Aktif
-                                        </option>
+                                        <option value="1">Aktif</option>
                                         <option value="0">Tidak Aktif</option>
                                       </select>
                                       <IconArrow
@@ -347,22 +344,18 @@ const Table = ({token}) => {
                                         height="7"
                                       />
                                     </div>
-                                    : <div className="position-relative w-max-content">
+                                  ) : (
+                                    <div className="position-relative w-max-content">
                                       <select
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
                                         key={index}
                                         onChange={(e) =>
-                                          changeListStatus(
-                                            e,
-                                            items.id,
-                                          )
+                                          changeListStatus(e, items.id)
                                         }
                                       >
-                                        <option value="0">
-                                          Tidak Aktif
-                                        </option>
+                                        <option value="0">Tidak Aktif</option>
                                         <option value="1">Aktif</option>
                                       </select>
                                       <IconArrow
@@ -372,7 +365,8 @@ const Table = ({token}) => {
                                         width="7"
                                         height="7"
                                       />
-                                    </div>}
+                                    </div>
+                                  )}
                                 </td>
                                 <td className="align-middle text-left">
                                   <div className="d-flex align-items-center">
@@ -386,8 +380,8 @@ const Table = ({token}) => {
                                     >
                                       <IconPencil width="16" height="16" />
                                       <div className="text-hover-show-hapus">
-                                          Ubah
-                                        </div>
+                                        Ubah
+                                      </div>
                                     </button>
                                     <button
                                       className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
@@ -395,8 +389,8 @@ const Table = ({token}) => {
                                     >
                                       <IconDelete width="16" height="16" />
                                       <div className="text-hover-show-hapus">
-                                          Hapus
-                                        </div>
+                                        Hapus
+                                      </div>
                                     </button>
                                   </div>
                                 </td>
@@ -417,7 +411,9 @@ const Table = ({token}) => {
                     itemsCountPerPage={
                       allTandaTanganUser?.tanda_tangan?.data?.perPage
                     }
-                    totalItemsCount={allTandaTanganUser?.tanda_tangan?.data?.total}
+                    totalItemsCount={
+                      allTandaTanganUser?.tanda_tangan?.data?.total
+                    }
                     pageRangeDisplayed={3}
                     onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}

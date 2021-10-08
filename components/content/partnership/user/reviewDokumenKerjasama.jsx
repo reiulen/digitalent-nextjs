@@ -27,7 +27,6 @@ function ReviewDokumenKerjasama({ token }) {
   const [catatanREvisi, setCatatanREvisi] = useState("");
 
   const [note, setNote] = useState("");
-  console.log("note", note);
 
   // const setDataSingle = async (id) => {
     
@@ -185,7 +184,6 @@ function ReviewDokumenKerjasama({ token }) {
       setDokument(data.data.document);
       setCatatanREvisi(data.data.note);
       setNote(data.data.note);
-      console.log("data single", data);
       if(data.data.status_migrates_id.status === "aktif"){
         router.push({
           pathname:"/partnership/user/kerjasama/hasil",
