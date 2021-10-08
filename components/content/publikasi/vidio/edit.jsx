@@ -83,16 +83,16 @@ const EditVideo = ({ token }) => {
     const [disableTag, setDisableTag] = useState(false)
 
     const handleTag = (data) => {
-        if (data == "") {
-            // setTag([])
-            alert("tag")
-            // setDisableTag(true)
-        } else {
-            setTag(data)
-            setDisableTag(false)
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].length; j++) {
+                if (data[i][j] === " ") {
+                    setDisableTag(true)
+                } else {
+                    setDisableTag(false)
+                }
+            }
         }
-
-        console.log(data)
+        setTag(data)
     }
 
     const onChangeGambar = (e) => {
@@ -451,9 +451,9 @@ const EditVideo = ({ token }) => {
     return (
         <>
             <PageWrapper>
-                {
+                {/* {
                     console.log("Cek Data Awal :", video)
-                }
+                } */}
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                         <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -644,10 +644,17 @@ const EditVideo = ({ token }) => {
                                             value={tag}
                                             onChange={(data) => handleTag(data)}
                                             name="fruits"
-                                            placeHolder="Isi Tag disini dan Enter"
+                                            placeHolder="Isi Tag disini"
                                         // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                         />
-                                        {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
+                                        {
+                                            disableTag === true ?
+                                                <p className="text-danger">
+                                                    Tag tidak bisa terdiri dari "SPACE" character saja
+                                                </p>
+                                                :
+                                                null
+                                        }
                                     </div>
                                 </div>
 

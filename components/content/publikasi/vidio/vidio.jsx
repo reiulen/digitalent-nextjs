@@ -294,7 +294,7 @@ const Vidio = ({ token }) => {
         //     isplay: "1"
         // }
 
-        // dispatch(playVideo(data))
+        // dispatch(playVideo(data, token))
 
         setIdVideo(id)
         setVideoPlaying(true)
@@ -338,9 +338,9 @@ const Vidio = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log(video)
-            }
+            } */}
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
                     <div className="alert-icon"><i className="flaticon-warning"></i></div>
@@ -381,7 +381,7 @@ const Vidio = ({ token }) => {
                 ""
             )}
 
-            <div className="col-lg-12 col-md-3">
+            <div className="col-lg-12 col-md-12">
                 <div className="row">
                     <CardPage
                         background='bg-light-info'
@@ -693,7 +693,7 @@ const Vidio = ({ token }) => {
                                                 !video || video && video.video.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
                                                     video && video.video.map((row, i) => {
-                                                        { console.log("Video :", row) }
+                                                        // { console.log("Video :", row) }
                                                         return <tr key={row.id}>
                                                             {/* <td className="align-middle text-center">
                                                                 <span className="badge badge-secondary text-muted">
@@ -750,7 +750,7 @@ const Vidio = ({ token }) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>Super Admin</td>
+                                                            <td className='align-middle'>{row.role}</td>
                                                             <td className="align-middle d-flex">
 
                                                                 <button
@@ -878,19 +878,19 @@ const Vidio = ({ token }) => {
                         </div> */}
                         <div className={styles['modal-body']}>
                             {/* <div className={styles['title-preview-video']}> */}
-                                {/* <div className="mb-2" style={{ textAlign: 'right' }}> */}
-                                <div className={styles['playVideo']}>
-                                    <button type="button" className="col-1 flaticon2-delete mb-2" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
+                            {/* <div className="mb-2" style={{ textAlign: 'right' }}> */}
+                            <div className={styles['playVideo']}>
+                                <button type="button" className="col-1 flaticon2-delete mb-2" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
                                 {/* </div> */}
-                                    <ReactPlayer url={url_video} controls width="100%" height="100%" playing={video_playing} onPlay={handleIsPlayed} />
-                                </div>
+                                <ReactPlayer url={url_video} controls width="100%" height="100%" playing={video_playing} onPlay={handleIsPlayed} />
+                            </div>
                             {/* </div> */}
-                            <div className="ml-3" style={{marginTop:'30px'}}>
+                            <div className="ml-3" style={{ marginTop: '30px' }}>
                                 <h3>
                                     {judul_video}
                                 </h3>
                             </div>
-                            <div className="row" style={{marginLeft:'-12px'}}>
+                            <div className="row" style={{ marginLeft: '-12px' }}>
                                 <div
                                     className="mr-5 px-3 py-1 rounded mb-1 ml-4 d-flex align-items-center">
                                     <i className="flaticon2-calendar-4 "></i>

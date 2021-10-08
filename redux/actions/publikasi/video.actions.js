@@ -133,7 +133,7 @@ export const newVideo = (videoData, token) => async (dispatch) => {
             payload: data
         })
 
-        console.log("Action Add Video :", videoData)
+        // console.log("Action Add Video :", videoData)
 
     } catch (error) {
         dispatch({
@@ -222,11 +222,11 @@ export const playVideo = (videoData, token) => async (dispatch) => {
                 Authorization: 'Bearer ' + token,
             },
         };
-
-        let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${videoData.id}`
-
+        
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/video/play/${videoData.id}`
+        
         const { data } = await axios.post(link, videoData, config)
-        console.log("Play Video Actions :", data)
+        // console.log("Play Video Actions :", data)
         
         dispatch({
             type: PLAY_VIDEO_SUCCESS,

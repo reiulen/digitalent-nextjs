@@ -121,30 +121,16 @@ const TambahVidio = ({ token }) => {
     }
 
     const handleTag = (data) => {
-        // if (data[0] === " ") {
-        //     setTag([])
-        //     alert("tag")
-        //     setDisableTag(true)
-        // } else {
-        //     setTag(data)
-        //     setDisableTag(false)
-        // }
-
-        if (data.includes("")){
-            setTag([])
-            // alert("tag")
-            setDisableTag (true)
-            Swal.fire({
-                icon: "error",
-                title: "Oops...",
-                text: "Isi data dengan benar !",
-            })
-        } else {
-            setTag(data)
-            setDisableTag (false)
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].length; j++) {
+                if (data[i][j] === " ") {
+                    setDisableTag(true)
+                } else {
+                    setDisableTag(false)
+                }
+            }
         }
-
-        console.log(data)
+        setTag(data)
     }
 
     const handleChangePublish = (e) => {
@@ -205,7 +191,7 @@ const TambahVidio = ({ token }) => {
                 }
 
                 dispatch(newVideo(data, token))
-                console.log("Unpublish :", data)
+                // console.log("Unpublish :", data)
             } else {
 
                 const data = {
@@ -221,7 +207,7 @@ const TambahVidio = ({ token }) => {
                 }
 
                 dispatch(newVideo(data, token))
-                console.log("Publish :", data)
+                // console.log("Publish :", data)
             }
 
         } else {
@@ -445,10 +431,17 @@ const TambahVidio = ({ token }) => {
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
                                         name="fruits"
-                                        placeHolder="Isi Tag disini dan Enter"
+                                        placeHolder="Isi Tag disini"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
-                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
+                                    {
+                                        disableTag === true ?
+                                            <p className="text-danger">
+                                                Tag tidak bisa terdiri dari "SPACE" character saja
+                                            </p>
+                                            :
+                                            null
+                                    }
                                 </div>
                             </div>
                             <div className="form-group row">
