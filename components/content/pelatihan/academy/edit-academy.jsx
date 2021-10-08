@@ -57,13 +57,13 @@ const EditAcademy = ({ token }) => {
   );
   const [status, setStatus] = useState(
     academy.status === "0"
-      ? { value: 0, label: "Unpublish" }
-      : { value: 1, label: "Publish" }
+      ? { value: "0", label: "Unpublish" }
+      : { value: "1", label: "Publish" }
   );
 
   const optionsStatus = [
-    { value: 1, label: "Publish" },
-    { value: 0, label: "Unpublish" },
+    { value: "1", label: "Publish" },
+    { value: "0", label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -165,16 +165,17 @@ const EditAcademy = ({ token }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      const statusString = (status.value += "");
+      // const statusString = (status.value += "");
       const idInt = parseInt(id);
       const data = {
         name,
         deskripsi: description,
         logo: logoFile,
         brosur: browsurFile,
-        status: statusString,
+        status: status.value,
         id: idInt,
       };
+      console.log(data);
       dispatch(updateAcademy(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -364,7 +365,9 @@ const EditAcademy = ({ token }) => {
                 <Select
                   options={optionsStatus}
                   defaultValue={status}
-                  onChange={(e) => setStatus(e.value)}
+                  onChange={(e) =>
+                    setStatus({ value: e.value, label: e.label })
+                  }
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("status")
                   }

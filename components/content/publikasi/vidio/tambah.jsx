@@ -79,7 +79,7 @@ const TambahVidio = ({ token }) => {
     const [isi_video, setIsiVideo] = useState('');
     const [url_video, setUrlVideo] = useState('')
     const [gambar, setGambar] = useState('')
-    const [tag, setTag] = useState('')
+    const [tag, setTag] = useState([])
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
     const [iconPlus, setIconPlus] = useState(
         "/assets/icon/Add.svg"
@@ -88,6 +88,7 @@ const TambahVidio = ({ token }) => {
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
+    const [disableTag, setDisableTag] = useState(false)
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -117,6 +118,33 @@ const TambahVidio = ({ token }) => {
         //     }
         //     reader.readAsDataURL(e.target.files[0])
         // }
+    }
+
+    const handleTag = (data) => {
+        // if (data[0] === " ") {
+        //     setTag([])
+        //     alert("tag")
+        //     setDisableTag(true)
+        // } else {
+        //     setTag(data)
+        //     setDisableTag(false)
+        // }
+
+        if (data.includes("")){
+            setTag([])
+            // alert("tag")
+            setDisableTag (true)
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
+            })
+        } else {
+            setTag(data)
+            setDisableTag (false)
+        }
+
+        console.log(data)
     }
 
     const handleChangePublish = (e) => {
@@ -415,7 +443,7 @@ const TambahVidio = ({ token }) => {
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
                                         name="fruits"
                                         placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}

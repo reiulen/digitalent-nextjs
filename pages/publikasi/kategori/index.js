@@ -25,19 +25,6 @@ const Kategori = dynamic(
   }
 );
 
-<<<<<<< HEAD
-export default function KategoriPage() {
-  return (
-    <>
-      <div className="d-flex flex-column flex-root">
-        {/* <Layout title='Kategori - Publikasi'>
-                    <Kategori />
-                </Layout> */}
-        <Kategori />
-      </div>
-    </>
-  );
-=======
 export default function KategoriPage(props) {
     const session = props.session.user.user.data;
     return (
@@ -50,7 +37,6 @@ export default function KategoriPage(props) {
             </div>
         </>
     )
->>>>>>> 279f614e085680387383629b291de8e592fdb1c4
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(

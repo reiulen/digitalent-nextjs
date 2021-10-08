@@ -237,3 +237,11 @@ a {
   background-color: #F3F6F9 !important;
 }
 
+.minimal-image img{
+  min-width: 16px;
+  width: 16px;
+  min-height: 16px;
+  height: 16px;
+
+}
+
