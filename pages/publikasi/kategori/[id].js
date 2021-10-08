@@ -21,19 +21,6 @@ const EditKategori = dynamic(
   }
 );
 
-<<<<<<< HEAD
-export default function EditKategoriPage() {
-  return (
-    <>
-      <div className="d-flex flex-column flex-root">
-        {/* <Layout title="Ubah Kategori">
-                    <EditKategori />
-                </Layout> */}
-        <EditKategori />
-      </div>
-    </>
-  );
-=======
 export default function EditKategoriPage(props) {
     const session = props.session.user.user.data;
     return (
@@ -46,7 +33,6 @@ export default function EditKategoriPage(props) {
             </div>
         </>
     );
->>>>>>> 279f614e085680387383629b291de8e592fdb1c4
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(

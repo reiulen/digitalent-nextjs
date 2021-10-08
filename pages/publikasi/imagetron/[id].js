@@ -28,38 +28,13 @@ export default function EditImagetronPage(props) {
     <>
       <div className="d-flex flex-column flex-root">
         {/* <Layout title="Ubah Imagetron"> */}
-<<<<<<< HEAD
-        <EditImagetron />
-=======
         <EditImagetron token={session.token} />
->>>>>>> 279f614e085680387383629b291de8e592fdb1c4
         {/* </Layout> */}
       </div>
     </>
   );
 }
 
-<<<<<<< HEAD
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ params, req }) => {
-      const session = await getSession({ req });
-      if (!session) {
-        return {
-          redirect: {
-            destination: "http://dts-dev.majapahit.id/",
-            permanent: false,
-          },
-        };
-      }
-      await store.dispatch(
-        getDetailImagetron(params.id, session.user.user.data.token)
-      );
-      return {
-        props: { session, title: "Ubah Imagetron - Publikasi" },
-      };
-    }
-=======
 export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params, req }) => {
   const session = await getSession({ req });
   if (!session) {
@@ -76,5 +51,4 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ({
     props: { session, title: "Ubah Imagetron - Publikasi" },
   };
 }
->>>>>>> 279f614e085680387383629b291de8e592fdb1c4
 );

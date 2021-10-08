@@ -16,7 +16,7 @@ import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.act
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditVideo = ({token}) => {
+const EditVideo = ({ token }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -27,10 +27,10 @@ const EditVideo = ({token}) => {
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
-    const simpleValidator = useRef(new SimpleReactValidator({ 
+    const simpleValidator = useRef(new SimpleReactValidator({
         locale: "id",
         messages: {
-           url: "Format url berupa: https://www.example.com"
+            url: "Format url berupa: https://www.example.com"
         }
     }));
     const [, forceUpdate] = useState();
@@ -75,11 +75,39 @@ const EditVideo = ({token}) => {
     const [kategori_id, setKategoriId] = useState(video.kategori_id)
     const [users_id, setUserId] = useState(video.users_id)
     const [tag, setTag] = useState(video.tag)
-    const [publish, setPublish] = useState(video.publish === 1 ? true : false)
+    const [publish, setPublish] = useState(video.publish)
+    // const [publish, setPublish] = useState(video.publish === 1 ? true : false)
     const [_method, setMethod] = useState("put")
     const [publishDate, setPublishDate] = useState(new Date(video.tanggal_publish));
     const [disablePublishDate, setDisablePublishDate] = useState(video.publish === 0 ? true : false)
-    console.log("PREVIEW :", gambarPreview)
+    const [disableTag, setDisableTag] = useState(false)
+
+    const handleTag = (data) => {
+        if (tag.some(data => data === " ")) {
+            setTag([])
+            alert("tag")
+            setDisableTag(true)
+        } else {
+            setTag(data)
+            setDisableTag(false)
+        }
+
+        // if (typeof data === "string"){
+        //     setTag([])
+        //     // alert("tag")
+        //     setDisableTag (true)
+        //     Swal.fire({
+        //         icon: "error",
+        //         title: "Oops...",
+        //         text: "Isi data dengan benar !",
+        //     })
+        // } else {
+        //     setTag(data)
+        //     setDisableTag (false)
+        // }
+
+        console.log(data)
+    }
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -189,19 +217,19 @@ const EditVideo = ({token}) => {
                         confirmButtonText: "Ya !",
                         cancelButtonText: "Batal",
                     })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                        // if (success) {
-                        //   dispatch({
-                        //     // type: NEW_ARTIKEL_RESET
-                        //     type: UPDATE_ARTIKEL_RESET,
-                        //   });
-                        // }
-            
-                        dispatch(updateVideo(data, token));
-                        console.log(data)
-                        }
-                    });
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                // if (success) {
+                                //   dispatch({
+                                //     // type: NEW_ARTIKEL_RESET
+                                //     type: UPDATE_ARTIKEL_RESET,
+                                //   });
+                                // }
+
+                                dispatch(updateVideo(data, token));
+                                console.log(data)
+                            }
+                        });
                 } else {
 
                     const data = {
@@ -230,19 +258,19 @@ const EditVideo = ({token}) => {
                         confirmButtonText: "Ya !",
                         cancelButtonText: "Batal",
                     })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                        // if (success) {
-                        //   dispatch({
-                        //     // type: NEW_ARTIKEL_RESET
-                        //     type: UPDATE_ARTIKEL_RESET,
-                        //   });
-                        // }
-            
-                        dispatch(updateVideo(data, token));
-                        console.log(data)
-                        }
-                    });
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                // if (success) {
+                                //   dispatch({
+                                //     // type: NEW_ARTIKEL_RESET
+                                //     type: UPDATE_ARTIKEL_RESET,
+                                //   });
+                                // }
+
+                                dispatch(updateVideo(data, token));
+                                console.log(data)
+                            }
+                        });
                 }
 
 
@@ -277,18 +305,18 @@ const EditVideo = ({token}) => {
                         cancelButtonText: "Batal",
                     })
                         .then((result) => {
-                        if (result.isConfirmed) {
-                            // if (success) {
-                            //   dispatch({
-                            //     // type: NEW_ARTIKEL_RESET
-                            //     type: UPDATE_ARTIKEL_RESET,
-                            //   });
-                            // }
-                
-                            dispatch(updateVideo(data, token));
-                            console.log(data)
-                        }
-                    });
+                            if (result.isConfirmed) {
+                                // if (success) {
+                                //   dispatch({
+                                //     // type: NEW_ARTIKEL_RESET
+                                //     type: UPDATE_ARTIKEL_RESET,
+                                //   });
+                                // }
+
+                                dispatch(updateVideo(data, token));
+                                console.log(data)
+                            }
+                        });
 
                 } else {
                     const data = {
@@ -317,19 +345,19 @@ const EditVideo = ({token}) => {
                         confirmButtonText: "Ya !",
                         cancelButtonText: "Batal",
                     })
-                    .then((result) => {
-                        if (result.isConfirmed) {
-                        // if (success) {
-                        //   dispatch({
-                        //     // type: NEW_ARTIKEL_RESET
-                        //     type: UPDATE_ARTIKEL_RESET,
-                        //   });
-                        // }
-            
-                        dispatch(updateVideo(data, token));
-                        console.log(data)
-                        }
-                    });
+                        .then((result) => {
+                            if (result.isConfirmed) {
+                                // if (success) {
+                                //   dispatch({
+                                //     // type: NEW_ARTIKEL_RESET
+                                //     type: UPDATE_ARTIKEL_RESET,
+                                //   });
+                                // }
+
+                                dispatch(updateVideo(data, token));
+                                console.log(data)
+                            }
+                        });
                 }
 
             }
@@ -438,7 +466,7 @@ const EditVideo = ({token}) => {
         <>
             <PageWrapper>
                 {
-                    console.log ("Cek Data Awal :",video)
+                    console.log("Cek Data Awal :", video)
                 }
                 {error ?
                     <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -628,7 +656,7 @@ const EditVideo = ({token}) => {
                                     <div className="col-sm-12">
                                         <TagsInput
                                             value={tag}
-                                            onChange={setTag}
+                                            onChange={(data) => handleTag(data)}
                                             name="fruits"
                                             placeHolder="Isi Tag disini dan Enter"
                                         // onBlur={() => simpleValidator.current.showMessageFor('tag')}
