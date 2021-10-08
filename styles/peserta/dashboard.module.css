@@ -1,0 +1,17 @@
+.figure_img {
+  background-size: cover;
+  padding: 0;
+  border-radius: 8px;
+}
+
+.text_date_register {
+  font-size: 14px;
+}
+
+.text_link {
+  font-size: 16px;
+  text-decoration-line: underline;
+  color: #357ab4;
+  margin-top: 12px;
+  margin-bottom: 0;
+}
