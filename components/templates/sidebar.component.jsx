@@ -464,7 +464,7 @@ const Sidebar = () => {
 
             {session === undefined ? (
               ""
-            ) : session.user.user.data.user.roles[0] === "mitra" ? (
+            ) : session?.user?.user?.data?.user?.roles[0] === "mitra" ? (
               <ul className="menu-nav">
                 <li
                   className={`menu-item menu-item-submenu menu-item-open ${
