@@ -324,16 +324,16 @@ const EditGaleri = ({ token }) => {
     };
 
     const handleTag = (data) => {
-        if (data[0] === " ") {
-            setTag([])
-            alert("tag")
-            setDisableTag(true)
-        } else {
-            setTag(data)
-            setDisableTag(false)
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].length; j++) {
+                if (data[i][j] === " ") {
+                    setDisableTag(true)
+                } else {
+                    setDisableTag(false)
+                }
+            }
         }
-
-        console.log(data)
+        setTag(data)
     }
 
     const handleData = (temps, onCall) => {
@@ -519,7 +519,7 @@ const EditGaleri = ({ token }) => {
     return (
         <PageWrapper>
             {
-                console.log("Cek Edit Image :",galeri)
+                console.log("Cek Edit Image :", galeri)
             }
 
             {/* {
@@ -735,7 +735,14 @@ const EditGaleri = ({ token }) => {
                                         placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
-                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
+                                    {
+                                        disableTag === true ?
+                                            <p className="text-danger">
+                                                Tag tidak bisa terdiri dari "SPACE" character saja
+                                            </p>
+                                            :
+                                            null
+                                    }
                                 </div>
                             </div>
 
