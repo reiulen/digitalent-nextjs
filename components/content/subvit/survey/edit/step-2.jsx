@@ -46,8 +46,12 @@ const StepTwo = ({ token }) => {
     }
   }, [dispatch, error, success, router]);
 
-  const [startDate, setStartDate] = useState(new Date(survey.start_at));
-  const [endDate, setEndDate] = useState(new Date(survey.end_at));
+  const [startDate, setStartDate] = useState(
+    new Date(survey.start_at ? survey.start_at : Date.now())
+  );
+  const [endDate, setEndDate] = useState(
+    new Date(survey.end_at ? survey.end_at : Date.now())
+  );
   const [duration, setDuration] = useState(survey.duration);
   const [jumlah_soal, setJumlahSoal] = useState(survey.questions_to_share);
   const [status, setStatus] = useState(survey.status);

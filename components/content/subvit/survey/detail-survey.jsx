@@ -194,11 +194,19 @@ const DetailSurvey = ({ token }) => {
                   </div>
                   <div className="col value-1">
                     <p>
-                      {moment(survey.start_at).format("ll")} -{" "}
-                      {moment(survey.end_at).format("ll")}
+                      {survey.start_at
+                        ? moment(survey.start_at).format("ll")
+                        : ""}{" "}
+                      -{" "}
+                      {survey.end_at ? moment(survey.end_at).format("ll") : ""}
                     </p>
-                    <p>{survey.questions_to_share} Soal</p>
-                    <p>{survey.duration} Menit</p>
+                    <p>
+                      {survey.questions_to_share
+                        ? survey.questions_to_share
+                        : "Belum Ada "}{" "}
+                      Soal
+                    </p>
+                    <p>{survey.duration ? survey.duration : 0} Menit</p>
                   </div>
                 </div>
               </div>
@@ -292,7 +300,7 @@ const DetailSurvey = ({ token }) => {
                                 {question.question}
                               </td>
                               <td className="align-middle">
-                                {question.status ? (
+                                {question.status === 1 ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>
