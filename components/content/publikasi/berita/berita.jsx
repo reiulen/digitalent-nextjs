@@ -637,7 +637,7 @@ const Berita = ({token}) => {
                                         <tbody>
                                             {
                                                 !berita || berita && berita.berita.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
                                                     berita && berita.berita.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>

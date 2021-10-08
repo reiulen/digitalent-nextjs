@@ -12,7 +12,7 @@ import DatePicker from 'react-datepicker'
 
 import { updateBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 import { NEW_BERITA_RESET, UPDATE_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
-import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
+// import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
@@ -139,16 +139,18 @@ const EditBerita = ({token}) => {
     }
 
     const handleTag = (data) => {
-        if (data.includes(" ")){
-            setTag([])
-            alert("tag")
-            setDisableTag (true)
-        } else {
-            setTag(data)
-            setDisableTag (false)
+        for (let i = 0; i < data.length; i++){
+          for (let j = 0; j < data[i].length; j++){
+            if (data[i][j] === " "){
+              setDisableTag (true)
+            } else {
+              setDisableTag (false)
+            }
+          }
         }
-
-        console.log (data)
+    
+        setTag(data)
+        
     }
 
     const onSubmit = (e) => {
@@ -552,12 +554,13 @@ const EditBerita = ({token}) => {
                                         onChange={(data) => handleTag(data)}
                                         // onChange={setTag}
                                         name="tag"
-                                        placeHolder="Isi Tag disini"
+                                        placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                                        seprators={["Enter", "Tab"]}
                                     />
                                     {
                                         disableTag === true ?
                                             <p className="text-danger">
-                                                Tag tidak bisa terdiri dari 1 character "SPACE"
+                                                Tag tidak bisa terdiri dari "SPACE" character saja
                                             </p>
                                         :
                                             null
