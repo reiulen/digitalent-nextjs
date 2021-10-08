@@ -61,13 +61,11 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    if (allAuthentication.status === "error") {
-      notify(allAuthentication.errorRegister);
-    } else if (allAuthentication.status === "success"){
-      // jika sukses
-      Swal.fire("Berhasil Daftar", "Silahkan login", "success").then(() => {
-        router.push("/partnership/user/auth/login")
-      });
+    if (allPage.status === "error") {
+      notify(allPage.errorRegister);
+    } else if (allPage.status === "success"){
+    
+      Swal.fire("Berhasil ubah status", "", "success")
     }else{
       ""
     }
@@ -150,7 +148,7 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allPage.dataPage.data && allPage.dataPage.data.length === 0 ? (
+                      {allPage.dataPage.data && allPage.dataPage.data.data.artikel.length === 0 ? (
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h4>Data tidak ditemukan</h4>
@@ -158,7 +156,7 @@ const Table = ({ token }) => {
                         </tr>
                       ) : (
                         allPage.dataPage.data &&
-                        allPage.dataPage.data.map((items, index) => {
+                        allPage.dataPage.data.data.artikel.map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">

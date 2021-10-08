@@ -9,7 +9,7 @@ import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import SimpleReactValidator from "simple-react-validator";
 import DatePicker from "react-datepicker";
-import { getSession } from "next-auth/client";
+// import { getSession } from "next-auth/client";
 
 import {
   updateArtikel,
@@ -37,6 +37,7 @@ const EditArtikel = ({ token }) => {
   });
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
+<<<<<<< HEAD
   const simpleValidator = useRef(
     new SimpleReactValidator({
       locale: "id",
@@ -48,6 +49,12 @@ const EditArtikel = ({ token }) => {
   const [, forceUpdate] = useState();
   // const forceUpdate = React.useReducer(() => ({}))[1]
   const { artikel } = useSelector(state => state.detailArtikel);
+=======
+  const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
+  const [, forceUpdate] = useState();
+  // const forceUpdate = React.useReducer(() => ({}))[1]
+  const { artikel } = useSelector((state) => state.detailArtikel);
+>>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
   const { error, success, loading } = useSelector(
     state => state.updatedArtikel
   );
@@ -83,6 +90,15 @@ const EditArtikel = ({ token }) => {
   useEffect(() => {
     // dispatch(getAllKategori(session.user.user.data.token))
 
+<<<<<<< HEAD
+=======
+    editorRef.current = {
+      CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
+      ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
+      // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
+    }
+
+>>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
     setEditorLoaded(true);
     if (success) {
       // setJudulArtikel('')
@@ -190,6 +206,7 @@ const EditArtikel = ({ token }) => {
     }
   };
 
+<<<<<<< HEAD
   const handleTag = data => {
     if (data.includes(" ")) {
       setTag([]);
@@ -202,6 +219,22 @@ const EditArtikel = ({ token }) => {
 
     console.log(data);
   };
+=======
+  const handleTag = (data) => {
+    for (let i = 0; i < data.length; i++){
+      for (let j = 0; j < data[i].length; j++){
+        if (data[i][j] === " "){
+          setDisableTag (true)
+        } else {
+          setDisableTag (false)
+        }
+      }
+    }
+
+    setTag(data)
+    
+  }
+>>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
 
   const onSubmit = e => {
     e.preventDefault();
@@ -556,8 +589,8 @@ const EditArtikel = ({ token }) => {
   return (
     <>
       <PageWrapper>
-        {/* {console.log (artikel)}
-        {
+        {/* {console.log (artikel)} */}
+        {/* {
           console.log (kategori)
         } */}
 
@@ -895,7 +928,8 @@ const EditArtikel = ({ token }) => {
                       // onChange={setTag}
                       onChange={data => handleTag(data)}
                       name="fruits"
-                      placeHolder="Isi Tag disini dan Enter"
+                      placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                      seprators={["Enter", "Tab"]}
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
                     {disableTag === true ? (

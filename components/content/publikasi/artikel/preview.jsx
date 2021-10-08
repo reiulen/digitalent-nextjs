@@ -99,7 +99,7 @@ const Preview = () => {
 
                                 <div className="row">
                                     <div style={{ background: "#F3F6F9"}} 
-                                        className="mr-5 px-3 py-1 rounded">
+                                        className="mr-5 px-3 py-1 rounded mt-2">
                                         <i className="flaticon2-user"></i>
                                         <span className="ml-1">
                                             User {user}
@@ -107,7 +107,7 @@ const Preview = () => {
                                     </div>
 
                                     <div style={{ background: "#F3F6F9"}} 
-                                        className="mr-5 px-3 py-1 rounded">
+                                        className="mr-5 px-3 py-1 rounded mt-2">
                                         <i className="flaticon2-calendar-4"></i>
                                         <span className="ml-1">
                                             Publish: {created_at}  
@@ -115,7 +115,7 @@ const Preview = () => {
                                     </div>
 
                                     <div style={{ background: "#F3F6F9"}} 
-                                        className="mr-5 px-3 py-1 rounded">
+                                        className="mr-5 px-3 py-1 rounded mt-2">
                                         <i className="flaticon2-setup"></i>
                                         <span className="ml-1">
                                             {jenis_kategori}: {nama}

@@ -40,7 +40,6 @@ const ReadPdf = ({ image, setImage }) => {
       canvasContext: document.querySelector("#pdf-canvas").getContext("2d"),
       viewport: viewport
     };
-    console.log("viewport", viewport);
     setWidth(viewport.width);
     setHeight(viewport.height);
     await page.render(render_context);

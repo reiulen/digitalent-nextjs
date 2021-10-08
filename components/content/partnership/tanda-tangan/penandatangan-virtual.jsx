@@ -63,7 +63,6 @@ export default function PenandatanganVirtual({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const allTandaTangan = useSelector((state) => state.allTandaTangan);
-  console.log("allTandaTangan", allTandaTangan);
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: ".pdf",
