@@ -184,9 +184,11 @@ const NavbarComponent = () => {
                     Dashboard
                   </NavDropdown.Item>
                 </Link>
-                <NavDropdown.Item href="#" className="navdropdown-child">
-                  Profile
-                </NavDropdown.Item>
+                <Link href="/peserta/profile" passHref>
+                  <NavDropdown.Item href="#" className="navdropdown-child">
+                    Profile
+                  </NavDropdown.Item>
+                </Link>
                 <Link href="/peserta/pelatihan" passHref>
                   <NavDropdown.Item href="#" className="navdropdown-child">
                     Pelatihan
