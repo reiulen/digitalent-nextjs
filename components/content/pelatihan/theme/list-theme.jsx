@@ -294,7 +294,7 @@ const ListTheme = ({ token }) => {
                           <td className="align-middle">{row.name}</td>
                           <td className="align-middle">500 Peminat</td>
                           <td className="align-middle">
-                            {row.status ? (
+                            {row.status === "1" ? (
                               <span className="label label-inline label-light-success font-weight-bold">
                                 Publish
                               </span>
