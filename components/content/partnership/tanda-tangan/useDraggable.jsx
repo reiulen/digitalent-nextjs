@@ -33,6 +33,8 @@ export default function useDraggable(el) {
   }, [dx, dy,el]);
 
   useEffect(() => {
-    el.current.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+    if(el.current){
+      el.current.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+    }
   }, [dx, dy,el]);
 }

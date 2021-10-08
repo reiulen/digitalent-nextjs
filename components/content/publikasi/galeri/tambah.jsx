@@ -102,7 +102,7 @@ const TambahGaleri = ({ token }) => {
             </div>
         </div>
     ));
-    
+
     useEffect(() => {
         // dispatch(getAllKategori());
 
@@ -135,7 +135,7 @@ const TambahGaleri = ({ token }) => {
             })
         }
 
-    // }, [dispatch, error, success, files, router]);
+        // }, [dispatch, error, success, files, router]);
     }, [dispatch, error, success, router]);
 
 
@@ -146,9 +146,7 @@ const TambahGaleri = ({ token }) => {
     // const [gambarPreview, setGambarPreview] = useState(
     //     "/assets/media/default.jpg"
     //   );
-    const [gambarPreview, setGambarPreview] = useState(
-        []
-      );
+    const [gambarPreview, setGambarPreview] = useState([]);
     const [image, setImage] = useState([
         { key: 1, imagePreview: "", imageFile: "", imageName: "" },
     ]);
@@ -159,8 +157,9 @@ const TambahGaleri = ({ token }) => {
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
-    const [gambarName, setGambarName] = useState (null)
-    const [ totalImage, setTotalImage ] = useState(1)
+    const [gambarName, setGambarName] = useState(null)
+    const [totalImage, setTotalImage] = useState(1)
+    const [disableTag, setDisableTag] = useState(false)
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
@@ -188,45 +187,45 @@ const TambahGaleri = ({ token }) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
         let arr = gambar
         let arrPreview = gambarPreview
-    
-        if (type.includes (e.target.files[0].type)){
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-            //   setGambar(reader.result);
-            // setGambarPreview(reader.result);
-            arr.push (reader.result)
-            arrPreview.push (reader.result)
-            }
-          };
-          reader.readAsDataURL(e.target.files[0])
-          // console.log (reader.readAsDataURL(e.target.files[0]))
-          setGambarName(e.target.files[0].name)
-          setGambar (arr)
-          setGambarPreview (arrPreview)
-        } 
+
+        if (type.includes(e.target.files[0].type)) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    //   setGambar(reader.result);
+                    // setGambarPreview(reader.result);
+                    arr.push(reader.result)
+                    arrPreview.push(reader.result)
+                }
+            };
+            reader.readAsDataURL(e.target.files[0])
+            // console.log (reader.readAsDataURL(e.target.files[0]))
+            setGambarName(e.target.files[0].name)
+            setGambar(arr)
+            setGambarPreview(arrPreview)
+        }
         else {
-          // setGambar("")
-          // setGambarPreview("/assets/media/default.jpg")
-          // setGambarName(null)
-          // simpleValidator.current.showMessages();
-          // forceUpdate(1);
-          e.target.value = null
-          Swal.fire(
-            'Oops !',
-            'Data yang bisa dimasukkan hanya berupa data gambar.',
-            'error'
-          )
+            // setGambar("")
+            // setGambarPreview("/assets/media/default.jpg")
+            // setGambarName(null)
+            // simpleValidator.current.showMessages();
+            // forceUpdate(1);
+            e.target.value = null
+            Swal.fire(
+                'Oops !',
+                'Data yang bisa dimasukkan hanya berupa data gambar.',
+                'error'
+            )
         }
     };
 
     const handleAddImage = () => {
         let arr = gambarPreview
-        
-        setTotalImage ((totalImage) + 1)
-        arr.push ("/assets/media/default.jpg")
 
-        setGambarPreview (arr)
+        setTotalImage((totalImage) + 1)
+        arr.push("/assets/media/default.jpg")
+
+        setGambarPreview(arr)
     }
 
     // const handleTemps = () => {
@@ -249,23 +248,23 @@ const TambahGaleri = ({ token }) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
         let list = [...image];
         if (type.includes(e.target.files[0].type)) {
-        list[index].imageFile = e.target.files[0];
-        const reader = new FileReader();
-        
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-            list[index].imagePreview = reader.result;
-            }
-            // router.reload(window.location.pathname)
-            setImage([
-            ...image,
-            ]);
-        };
-        
-        reader.readAsDataURL(e.target.files[0]);
-        list[index].imageName = e.target.files[0].name;
-    
-        setImage(list);
+            list[index].imageFile = e.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    list[index].imagePreview = reader.result;
+                }
+                // router.reload(window.location.pathname)
+                setImage([
+                    ...image,
+                ]);
+            };
+
+            reader.readAsDataURL(e.target.files[0]);
+            list[index].imageName = e.target.files[0].name;
+
+            setImage(list);
 
 
         } else {
@@ -281,20 +280,20 @@ const TambahGaleri = ({ token }) => {
     const onAddImage = () => {
         const newKey = image[image.length - 1].key + 1;
         setImage([
-          ...image,
-          {
-            key: newKey,
-            imagePreview: "",
-            imageFile: "",
-            imageName: "",
-          },
+            ...image,
+            {
+                key: newKey,
+                imagePreview: "",
+                imageFile: "",
+                imageName: "",
+            },
         ]);
-        setTotalImage ((totalImage) + 1)
+        setTotalImage((totalImage) + 1)
     };
 
     const onDeleteImage = (index) => {
 
-        if (totalImage === 1){
+        if (totalImage === 1) {
             Swal.fire(
                 "Oops !",
                 "Harus memasukkan minimal 1 Gambar !",
@@ -304,10 +303,23 @@ const TambahGaleri = ({ token }) => {
             const list = [...image];
             list.splice(index, 1);
             setImage(list);
-            setTotalImage ((totalImage) - 1)
-        }   
-        
+            setTotalImage((totalImage) - 1)
+        }
+
     };
+
+    const handleTag = (data) => {
+        if (data[0] === " ") {
+            setTag([])
+            alert("tag")
+            setDisableTag(true)
+        } else {
+            setTag(data)
+            setDisableTag(false)
+        }
+
+        console.log(data)
+    }
 
     const handleData = (temps, onCall) => {
         if (publishDate === null) {
@@ -327,10 +339,10 @@ const TambahGaleri = ({ token }) => {
 
             // dispatch(newGaleri(data, token))
 
-            // console.log(data)
+            dispatch(onCall(data, token))
+            console.log("UNPUBLISH : ", data)
             // console.log(image)
 
-            dispatch (onCall (data, token))
         } else {
             const data = {
                 judul,
@@ -345,7 +357,7 @@ const TambahGaleri = ({ token }) => {
             }
 
             dispatch(onCall(data, token))
-            // console.log(data)
+            console.log("PUBLISH : ", data)
             // console.log(image)
         }
     }
@@ -371,15 +383,15 @@ const TambahGaleri = ({ token }) => {
 
         let temps = []
 
-        let flag = 0 
+        let flag = 0
 
-        for (let i = 0; i < image.length; i++){
+        for (let i = 0; i < image.length; i++) {
             flag += 1
 
-            temps.push (image[i].imagePreview)
+            temps.push(image[i].imagePreview)
 
-            if (flag === image.length){
-                handleData (temps, newGaleri)
+            if (flag === image.length) {
+                handleData(temps, newGaleri)
             }
         }
 
@@ -407,7 +419,7 @@ const TambahGaleri = ({ token }) => {
         // setGambar(temps)
 
 
-        
+
         // if (publishDate === null) {
         //     let today = new Date
 
@@ -451,7 +463,7 @@ const TambahGaleri = ({ token }) => {
     return (
         <PageWrapper>
             {
-                console.log (kategori)
+                console.log("Cek Kategori Awal", kategori)
             }
             {error ?
                 <div className="alert alert-custom alert-light-danger fade show mb-5" role="alert">
@@ -502,7 +514,7 @@ const TambahGaleri = ({ token }) => {
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Upload Gambar</label>
-                                
+
                                 {/* {
                                     totalImage === 1 ?
                                         <div>
@@ -1441,7 +1453,7 @@ const TambahGaleri = ({ token }) => {
 
                                         
                                 } */}
-                                
+
                                 {/* <div className="col-sm-12">
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
@@ -1528,76 +1540,76 @@ const TambahGaleri = ({ token }) => {
 
                                 </div> */}
 
-                                    <div className="form-group mb-4">
-                                        {/* <label
+                                <div className="form-group mb-4">
+                                    {/* <label
                                         htmlFor="staticEmail"
                                         className="col-form-label font-weight-bold"
                                         >
                                         Upload Gambar
                                         </label> */}
-                                        <div className="row align-items-center">
+                                    <div className="row align-items-center">
                                         {image.map((row, i) => (
-                                            <div className="col-4 col-md-2 col-lg-2 p-0 ml-5">
-                                            <div
-                                                className="position-relative mx-auto mt-5"
-                                                style={{ maxWidth: "max-content" }}
-                                            >
-                                                <figure
-                                                className="avatar item-rtl position-relative"
-                                                data-toggle="modal"
-                                                data-target="#exampleModalCenter"
+                                            <div className="col-4 col-md-2 col-lg-2 p-0 ml-5" key={row.key} >
+                                                <div
+                                                    className="position-relative mx-auto mt-5"
+                                                    style={{ maxWidth: "max-content" }}
                                                 >
-                                                    <Image
-                                                        src={
-                                                        row.imagePreview === ""
-                                                            ? "/assets/media/default.jpg"
-                                                            : row.imagePreview
-                                                        }
-                                                        alt="image"
-                                                        width={160}
-                                                        height={160}
-                                                        objectFit="cover"
-                                                    />
-                                                {/* <div
+                                                    <figure
+                                                        className="avatar item-rtl position-relative"
+                                                        data-toggle="modal"
+                                                        data-target="#exampleModalCenter"
+                                                    >
+                                                        <Image
+                                                            src={
+                                                                row.imagePreview === ""
+                                                                    ? "/assets/media/default.jpg"
+                                                                    : row.imagePreview
+                                                            }
+                                                            alt="image"
+                                                            width={160}
+                                                            height={160}
+                                                            objectFit="cover"
+                                                        />
+                                                        {/* <div
                                                 className="circle-top"
                                                 onClick={() => onDeleteImage(i)}
                                                 disabled={totalImage === 1 ? true : false}
                                                 >
                                                     <i className="ri-delete-bin-fill text-dark"></i>
                                                 </div> */}
-                                                    <label className="circle-top" htmlFor={`inputGroupFile${i}`}>
-                                                        {
-                                                            row.imageName ?
-                                                                <i className="ri-pencil-fill text-dark"></i>
-                                                            :
-                                                                <i className="ri-add-line text-dark"></i>
-                                                        }
-                                                    </label>
-                                                    <input
-                                                        type="file"
-                                                        name="gambar"
-                                                        className="custom-file-input"
-                                                        id={`inputGroupFile${i}`}
-                                                        accept="image/*"
-                                                        style={{ display: "none" }}
-                                                        onChange={(e) => onChangeImage(e, i)}
-                                                    />
-                                                
-                                                </figure>
+                                                        <label className="circle-top" htmlFor={`inputGroupFile${i}`}>
+                                                            {
+                                                                row.imageName ?
+                                                                    <i className="ri-pencil-fill text-dark"></i>
+                                                                    :
+                                                                    <i className="ri-add-line text-dark"></i>
+                                                            }
+                                                        </label>
+                                                        <input
+                                                            type="file"
+                                                            name="gambar"
+                                                            className="custom-file-input"
+                                                            id={`inputGroupFile${i}`}
+                                                            accept="image/*"
+                                                            style={{ display: "none" }}
+                                                            onChange={(e) => onChangeImage(e, i)}
+                                                        />
 
-                                                {
-                                                    totalImage === 1 ?
-                                                        null
-                                                    :
-                                                        <div className="position-relative">
-                                                            <label
-                                                                className="circle-bottom"
-                                                                // htmlFor={`inputGroupFile${i}`}
-                                                                onClick={() => onDeleteImage(i)}
-                                                            >   
-                                                                <i className="ri-delete-bin-fill text-dark"></i>
-                                                            </label>
-                                                            {/* <input
+                                                    </figure>
+
+                                                    {
+                                                        totalImage === 1 ?
+                                                            null
+                                                            :
+                                                            <div className="position-relative">
+                                                                <label
+                                                                    className="circle-bottom"
+                                                                    // htmlFor={`inputGroupFile${i}`}
+                                                                    onClick={() => onDeleteImage(i)}
+                                                                >
+                                                                    <i className="ri-delete-bin-fill text-dark"></i>
+                                                                </label>
+                                                                {/* <input
                                                                 type="file"
                                                                 name="gambar"
                                                                 className="custom-file-input"
@@ -1606,45 +1618,47 @@ const TambahGaleri = ({ token }) => {
                                                                 style={{ display: "none" }}
                                                                 onChange={(e) => onChangeImage(e, i)}
                                                             /> */}
-                                                        </div>
-                                                }
+                                                            </div>
+                                                    }
 
-                                                
-                                                {
-                                                    image[i].imageName !== "" ?
-                                                        
-                                                        <div className="mt-3 ml-3 text-danger">
-                                                            <small className="text-danger">{image[i].imageName}</small>
-                                                        </div>
-                                                    :
-                                                        null
-                                                }
-                                                
+
+                                                    {
+                                                        image[i].imageName !== "" ?
+
+                                                            <div className="mt-3 ml-3 text-danger">
+                                                                <small className="text-danger">{image[i].imageName}</small>
+                                                            </div>
+                                                            :
+                                                            null
+                                                    }
+
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
 
-                                    <button
-                                        className="btn btn-primary-rounded-full text-white ml-5 mt-5"
-                                        onClick={onAddImage}
-                                        type="button"
-                                        disabled={totalImage === 6 ? true : false}
-                                    >
-                                        <i className="ri-add-line text-white"></i> Tambah Gambar
-                                    </button>
+                                        <button
+                                            className="btn btn-primary-rounded-full text-white ml-5 mt-5"
+                                            style={{ borderRadius: '10px', textAlign: 'center', width: '45px' }}
+                                            onClick={onAddImage}
+                                            type="button"
+                                            disabled={totalImage === 6 ? true : false}
+                                        >
+                                            <i className="ri-add-line text-white"></i>
+                                            {/* <i className="ri-add-line text-white"></i> Tambah Gambar */}
+                                        </button>
                                     </div>
 
                                     <div className="mt-3 col-sm-3 text-muted">
-                                    <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
+                                        <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                     </div>
                                 </div>
-                                
+
                             </div>
 
                             {/* {
                                 console.log (kategori)
                             } */}
-                            
+
                             {/* {
                                 console.log (gambarPreview)
                             } */}
@@ -1702,7 +1716,7 @@ const TambahGaleri = ({ token }) => {
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
                                         name="fruits"
                                         placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}

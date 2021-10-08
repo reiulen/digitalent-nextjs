@@ -33,7 +33,7 @@ import axios from 'axios'
 
 
 // get all data
-export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, startdate = null, enddate = null, token ) => async (dispatch) => {
+export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, startdate = null, enddate = null, token) => async (dispatch) => {
     try {
 
         dispatch({ type: GALERI_REQUEST })
@@ -50,6 +50,7 @@ export const getAllGaleri = (page = 1, keyword = '', limit = 5, publish = null, 
                 Authorization: 'Bearer ' + token,
             },
         };
+        // console.log("Token :", token)
 
         // const { data } = await axios.get(process.env.END_POINT_API_PUBLIKASI + 'publikasi/api/galeri')
         const { data } = await axios.get(link, config)
@@ -79,7 +80,7 @@ export const getDetailGaleri = (id, token) => async (dispatch) => {
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${id}`
 
         const { data } = await axios.get(link, config)
-        // console.log("Action Edit : ", data)
+        console.log("Action Detail : ", data)
 
         dispatch({
             type: DETAIL_GALERI_SUCCESS,
@@ -115,11 +116,11 @@ export const newGaleri = (galeriData, token) => async (dispatch) => {
             },
         };
 
-        
+
 
         const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/gallery', galeriData, config)
         // const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/gallery', galeriData)
-        // console.log("Link Image : ", data)
+        console.log("Action Add Galeri : ", data)
         // const { data } = await axios.post(process.env.END_POINT_API_PUBLIKASI + 'api/gallery', galeriDatas, config)
 
         // console.log (`Gambar: ${galeriData.gambar}`)
@@ -141,7 +142,7 @@ export const newGaleri = (galeriData, token) => async (dispatch) => {
     }
 }
 
-export const updateGaleri= (galeriData, token) => async (dispatch) => {
+export const updateGaleri = (galeriData, token) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_GALERI_REQUEST })
 
@@ -153,7 +154,7 @@ export const updateGaleri= (galeriData, token) => async (dispatch) => {
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${galeriData.id}`
 
-        const { data } = await axios.post (link, galeriData, config)
+        const { data } = await axios.post(link, galeriData, config)
 
         dispatch({
             type: UPDATE_GALERI_SUCCESS,
@@ -194,7 +195,7 @@ export const deleteGaleri = (id, token) => async (dispatch) => {
     }
 }
 
-export const viewGaleri= (galeriData, token) => async (dispatch) => {
+export const viewGaleri = (galeriData, token) => async (dispatch) => {
     try {
         dispatch({ type: VIEW_GALERI_REQUEST })
 
@@ -203,12 +204,13 @@ export const viewGaleri= (galeriData, token) => async (dispatch) => {
                 Authorization: 'Bearer ' + token,
             },
         };
-
+        
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${galeriData.id}`
         
-        const { data } = await axios.post (link, galeriData, config)
+        const { data } = await axios.post(link, galeriData, config)
+        console.log("Action View Galeri : ", data)
 
-        dispatch ({
+        dispatch({
             type: VIEW_GALERI_SUCCESS,
             payload: data
         })

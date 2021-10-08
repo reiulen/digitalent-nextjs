@@ -11,7 +11,7 @@ import { wrapper } from "../../../redux/store";
 const KelolaSertifikat = dynamic(
   () =>
     import(
-      "../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan.jsx"
+      "../../../components/content/sertifikat/kelola-sertifikat/tema_pelatihan.jsx"
     ),
   {
     loading: function loadingNow() {
@@ -35,13 +35,14 @@ export default function KelokaSertifikatPage(props) {
 
 // Function GETSERVERSIDE PROPS
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
+      // console.log(query, "INI QUERY");
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "http://dts-dev.majapahit.id/",
             permanent: false,
           },
         };

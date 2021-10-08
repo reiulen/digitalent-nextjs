@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Card, Figure, Button } from "react-bootstrap";
+import { Row, Col, Card, Figure, Button, ButtonGroup } from "react-bootstrap";
 import Image from "next/image";
 import Link from "next/link";
 import style from "../../../../styles/peserta/dashboard.module.css";
@@ -27,6 +27,11 @@ const Profile = () => {
                 >
                   Ubah Data
                 </Button>
+
+                <ButtonGroup vertical>
+                  <Button className="mb-2">Button</Button>
+                  <Button className="mb-2">Button</Button>
+                </ButtonGroup>
               </Card.Body>
             </Card>
           </Col>

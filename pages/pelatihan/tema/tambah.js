@@ -7,11 +7,12 @@ import AddTheme from "../../../components/content/pelatihan/theme/add-theme";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
-export default function AddThemePage() {
+export default function AddThemePage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <AddTheme />
+        <AddTheme token={session.token} />
       </div>
     </>
   );
@@ -24,7 +25,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "http://dts-dev.majapahit.id/",
             permanent: false,
           },
         };

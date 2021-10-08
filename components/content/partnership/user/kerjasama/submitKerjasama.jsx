@@ -117,8 +117,6 @@ const DetailDokumenKerjasama = ({token}) => {
                 },
               }
             );
-            // alert("berhasil");
-            console.log("data",data)
             router.push({
               pathname: `/partnership/user/kerjasama/review-kerjasama-1`,
               query: { successSubmitKerjasama: true,id:data.data.id },
@@ -150,6 +148,11 @@ const DetailDokumenKerjasama = ({token}) => {
     }
   };
 
+  const onNewReset = () => {
+    setIsProfile(false);
+    router.replace("/partnership/user/kerjasama/submit-kerjasama", undefined, { shallow: true });
+  };
+
   const onChangePeriod = (e) => {
     const regex = new RegExp(/[^0-9]/, "g");
     const val = e.target.value;
@@ -172,13 +175,46 @@ const DetailDokumenKerjasama = ({token}) => {
       progress: undefined,
     });
 
+  const [isProfile, setIsProfile] = useState(false)
   useEffect(() => {
+    if(router.query.isProfile){
+      setIsProfile(true)
+    }
     dispatch(fetchListCooperationSelect(token));
     dispatch(fetchListCooperationSelectById(cooperationC_id,token));
     setDate(moment(new Date()).format("YYYY-MM-DD"));
-  }, [dispatch,cooperationC_id,token]);
+  }, [dispatch,cooperationC_id,token,router.query.isProfile]);
   return (
     <PageWrapper>
+      {isProfile ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            Berhasil menyimpan data profile
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       <div className="col-lg-12 order-1 px-0">
         <ToastContainer
           position="bottom-right"

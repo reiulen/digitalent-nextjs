@@ -254,7 +254,7 @@ const ListTheme = ({ token }) => {
 
             <div className="table-page mt-5">
               <div className="table-responsive">
-                {/* <LoadingTable loading={loading} /> */}
+                <LoadingTable loading={loading} />
 
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
@@ -280,16 +280,21 @@ const ListTheme = ({ token }) => {
                               ? i + 1 * (page * 5) - (5 - 1)
                               : i + 1 * (page * limit) - (limit - 1)}
                           </td>
-                          <td>
+                          <td className="align-middle">
                             <p className="font-weight-bolder my-0 h6">
                               {row.akademi}
                             </p>
-                            <p className="my-0">{row.deskripsi}</p>
+                            <div
+                              className="py-0"
+                              dangerouslySetInnerHTML={{
+                                __html: row.deskripsi,
+                              }}
+                            ></div>
                           </td>
-                          <td>{row.name}</td>
-                          <td>500 Peminat</td>
-                          <td>
-                            {row.status ? (
+                          <td className="align-middle">{row.name}</td>
+                          <td className="align-middle">500 Peminat</td>
+                          <td className="align-middle">
+                            {row.status === "1" ? (
                               <span className="label label-inline label-light-success font-weight-bold">
                                 Publish
                               </span>
@@ -299,7 +304,7 @@ const ListTheme = ({ token }) => {
                               </span>
                             )}
                           </td>
-                          <td>
+                          <td className="align-middle">
                             <div className="d-flex">
                               <Link href={`/pelatihan/tema/${row.id}`}>
                                 <a

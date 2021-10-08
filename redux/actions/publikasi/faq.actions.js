@@ -244,6 +244,9 @@ export const updatePinFaq = (faq, id, token) => async (dispatch) => {
             type: UPDATE_PIN_FAQ_SUCCESS,
             payload: data,
         });
+
+
+        // console.log (data)
     } catch (error) {
         dispatch({
             type: UPDATE_PIN_FAQ_FAIL,

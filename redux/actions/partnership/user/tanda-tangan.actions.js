@@ -25,25 +25,24 @@ export async function fetchSignatureApi(params, token) {
   );
 }
 
-export const fetchSignature = (token) => {
-  return async (dispatch, getState) => {
-    dispatch({ type: TANDA_TANGAN_REQUEST });
-    let keywordState = getState().allTandaTangan.keyword || "";
-    let limitState = getState().allTandaTangan.limit || "";
-    let pageState = getState().allTandaTangan.page || 1;
+export const fetchSignature = (token) => async (dispatch, getState) => {
+  console.log("object msansman");
+  dispatch({ type: TANDA_TANGAN_REQUEST });
+  let keywordState = getState().allTandaTangan.keyword || "";
+  let limitState = getState().allTandaTangan.limit || "";
+  let pageState = getState().allTandaTangan.page || 1;
 
-    const params = {
-      keyword: keywordState,
-      limit: limitState,
-      page: pageState,
-    };
-    try {
-      let { data } = await fetchSignatureApi(params, token);
-      dispatch(successFetchSignature(data));
-    } catch (error) {
-      console.log("error data signature action", error);
-    }
+  const params = {
+    keyword: keywordState,
+    limit: limitState,
+    page: pageState,
   };
+  try {
+    let { data } = await fetchSignatureApi(params, token);
+    dispatch(successFetchSignature(data));
+  } catch (error) {
+    console.log("error data signature action", error);
+  }
 };
 
 export const successFetchSignature = (data) => {

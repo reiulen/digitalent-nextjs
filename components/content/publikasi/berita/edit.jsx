@@ -12,7 +12,7 @@ import DatePicker from 'react-datepicker'
 
 import { updateBerita, clearErrors } from '../../../../redux/actions/publikasi/berita.actions'
 import { NEW_BERITA_RESET, UPDATE_BERITA_RESET } from '../../../../redux/types/publikasi/berita.type'
-import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
+// import { getAllKategori } from '../../../../redux/actions/publikasi/kategori.actions'
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
@@ -29,8 +29,8 @@ const EditBerita = ({token}) => {
     })
 
     const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
-    // const [, forceUpdate] = useState();
-    const forceUpdate = React.useReducer(() => ({}))[1]
+    const [, forceUpdate] = useState();
+    // const forceUpdate = React.useReducer(() => ({}))[1]
     const { berita } = useSelector(state => state.detailBerita)
     const { loading, error, success } = useSelector(state => state.updatedBerita)
     const { loading: allLoading, error: allError, kategori } = useSelector((state) => state.allKategori);
@@ -83,6 +83,7 @@ const EditBerita = ({token}) => {
     // const [publishDate, setPublishDate] = useState(null);
     const [publishDate, setPublishDate] = useState(berita.tanggal_publish ? (new Date (berita.tanggal_publish)) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(berita.publish === 0 ? true : false)
+    const [disableTag, setDisableTag] = useState(false)
     
 
     const onChangeGambar = (e) => {
@@ -137,9 +138,24 @@ const EditBerita = ({token}) => {
         }
     }
 
+    const handleTag = (data) => {
+        for (let i = 0; i < data.length; i++){
+          for (let j = 0; j < data[i].length; j++){
+            if (data[i][j] === " "){
+              setDisableTag (true)
+            } else {
+              setDisableTag (false)
+            }
+          }
+        }
+    
+        setTag(data)
+        
+    }
+
     const onSubmit = (e) => {
         e.preventDefault()
-        if (simpleValidator.current.allValid()){
+        if (simpleValidator.current.allValid() && disableTag === false){
             if (error) {
                 dispatch(clearErrors())
             }
@@ -298,8 +314,8 @@ const EditBerita = ({token}) => {
             }
         } else {
             simpleValidator.current.showMessages();
-            // forceUpdate(1);
-            forceUpdate;
+            forceUpdate(1);
+            // forceUpdate;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
@@ -318,7 +334,7 @@ const EditBerita = ({token}) => {
     return (
         <>
         {
-            // console.log (berita)
+            console.log (berita)
         }
         {
                 // console.log (kategori)
@@ -535,10 +551,20 @@ const EditBerita = ({token}) => {
                                     <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
+                                        // onChange={setTag}
                                         name="tag"
-                                        placeHolder="Isi Tag disini"
+                                        placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                                        seprators={["Enter", "Tab"]}
                                     />
+                                    {
+                                        disableTag === true ?
+                                            <p className="text-danger">
+                                                Tag tidak bisa terdiri dari "SPACE" character saja
+                                            </p>
+                                        :
+                                            null
+                                    }
                                         {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                     </div>
                                 </div>

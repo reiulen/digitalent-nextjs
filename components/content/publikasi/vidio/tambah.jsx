@@ -27,7 +27,7 @@ const TambahVidio = ({ token }) => {
     const SwitchButton = dynamic(importSwitch, {
         ssr: false
     })
-    const simpleValidator = useRef(new SimpleReactValidator({ 
+    const simpleValidator = useRef(new SimpleReactValidator({
         locale: "id",
         // messages: {
         //    url: "Format url berupa: https://www.example.com"
@@ -40,7 +40,7 @@ const TambahVidio = ({ token }) => {
         loading: allLoading,
         error: allError,
         kategori,
-      } = useSelector((state) => state.allKategori);
+    } = useSelector((state) => state.allKategori);
 
     useEffect(() => {
         // dispatch(getAllKategori());
@@ -79,33 +79,34 @@ const TambahVidio = ({ token }) => {
     const [isi_video, setIsiVideo] = useState('');
     const [url_video, setUrlVideo] = useState('')
     const [gambar, setGambar] = useState('')
-    const [tag, setTag] = useState('')
+    const [tag, setTag] = useState([])
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
     const [iconPlus, setIconPlus] = useState(
         "/assets/icon/Add.svg"
-      );
-    const [gambarName, setGambarName] = useState (null)
-    const [publish, setPublish] = useState(false)
+    );
+    const [gambarName, setGambarName] = useState(null)
+    const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
+    const [disableTag, setDisableTag] = useState(false)
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
         // console.log (e.target.files[0])
         // console.log ("check")
 
-        if (type.includes (e.target.files[0].type)){
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-            setGambar(reader.result);
-            setGambarPreview(reader.result);
-            }
-        };
-        reader.readAsDataURL(e.target.files[0])
-        setGambarName(e.target.files[0].name)
-        // console.log (reader.readAsDataURL(e.target.files[0]))
-        } 
+        if (type.includes(e.target.files[0].type)) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setGambar(reader.result);
+                    setGambarPreview(reader.result);
+                }
+            };
+            reader.readAsDataURL(e.target.files[0])
+            setGambarName(e.target.files[0].name)
+            // console.log (reader.readAsDataURL(e.target.files[0]))
+        }
 
         // if (e.target.name === 'gambar') {
         //     const reader = new FileReader()
@@ -119,31 +120,58 @@ const TambahVidio = ({ token }) => {
         // }
     }
 
+    const handleTag = (data) => {
+        // if (data[0] === " ") {
+        //     setTag([])
+        //     alert("tag")
+        //     setDisableTag(true)
+        // } else {
+        //     setTag(data)
+        //     setDisableTag(false)
+        // }
+
+        if (data.includes("")){
+            setTag([])
+            // alert("tag")
+            setDisableTag (true)
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
+            })
+        } else {
+            setTag(data)
+            setDisableTag (false)
+        }
+
+        console.log(data)
+    }
+
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
-    
-        if (e.target.checked === false){
-            setPublishDate (null)
-            setPublish (0)
+
+        if (e.target.checked === false) {
+            setPublishDate(null)
+            setPublish(0)
         } else {
-            setPublish (1)
+            setPublish(1)
         }
-      };
+    };
 
     const handlePublishDate = (date) => {
         // let result = moment(date).format("YYYY-MM-DD")
         if (disablePublishDate === false) {
-          // setPublishDate(result)
-          setPublishDate(date)
-          // console.log (result)
+            // setPublishDate(result)
+            setPublishDate(date)
+            // console.log (result)
         }
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (simpleValidator.current.allValid()){
+        if (simpleValidator.current.allValid()) {
             if (error) {
                 dispatch(clearErrors())
             }
@@ -155,13 +183,13 @@ const TambahVidio = ({ token }) => {
 
             if (publish === true) {
                 setPublish(1)
-              
-              } else if (publish === false) {
+
+            } else if (publish === false) {
                 setPublish(0)
-                
-              }
-            
-            if (publishDate === null){
+
+            }
+
+            if (publishDate === null) {
                 let today = new Date
 
                 const data = {
@@ -173,11 +201,11 @@ const TambahVidio = ({ token }) => {
                     gambar,
                     tag,
                     publish,
-                    tanggal_publish : moment(today).format("YYYY-MM-DD")
+                    tanggal_publish: moment(today).format("YYYY-MM-DD")
                 }
-        
+
                 dispatch(newVideo(data, token))
-                // console.log(data)
+                console.log("Unpublish :", data)
             } else {
 
                 const data = {
@@ -189,23 +217,23 @@ const TambahVidio = ({ token }) => {
                     gambar,
                     tag,
                     publish,
-                    tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                    tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
                 }
-        
+
                 dispatch(newVideo(data, token))
-                // console.log(data)
+                console.log("Publish :", data)
             }
-            
+
         } else {
             simpleValidator.current.showMessages();
             forceUpdate(1);
             Swal.fire({
-              icon: "error",
-              title: "Oops...",
-              text: "Isi data dengan benar !",
+                icon: "error",
+                title: "Oops...",
+                text: "Isi data dengan benar !",
             });
-          }
-        
+        }
+
     }
 
     const onNewReset = () => {
@@ -253,7 +281,7 @@ const TambahVidio = ({ token }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")}/>
+                                    <input type="text" className="form-control" placeholder="Masukkan Judul Disini" value={judul_video} onChange={(e) => setJudulVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_video")} />
                                     {simpleValidator.current.message(
                                         "judul_video",
                                         judul_video,
@@ -267,7 +295,7 @@ const TambahVidio = ({ token }) => {
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi Video</label>
                                 <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
-                                    {simpleValidator.current.message("isi_video",isi_video,"required|max:160|min:5",{ className: "text-danger" })}
+                                    {simpleValidator.current.message("isi_video", isi_video, "required|max:160|min:5", { className: "text-danger" })}
                                     {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>
@@ -281,56 +309,56 @@ const TambahVidio = ({ token }) => {
                                 </label>
                                 <div className="ml-3 row">
                                     <figure
-                                    className="avatar item-rtl"
-                                    data-toggle="modal"
-                                    data-target="#exampleModalCenter"
+                                        className="avatar item-rtl"
+                                        data-toggle="modal"
+                                        data-target="#exampleModalCenter"
                                     >
-                                    <Image
-                                        src={gambarPreview}
-                                        alt="image"
-                                        width={160}
-                                        height={160}
-                                        objectFit="cover"
-                                    />
+                                        <Image
+                                            src={gambarPreview}
+                                            alt="image"
+                                            width={160}
+                                            height={160}
+                                            objectFit="cover"
+                                        />
                                     </figure>
                                     <div>
-                                    <label htmlFor="inputGroupFile04" className="icon-plus">
-                                        <Image
-                                        src={iconPlus}
-                                        alt="plus"
-                                        width={60}
-                                        height={60} 
+                                        <label htmlFor="inputGroupFile04" className="icon-plus">
+                                            <Image
+                                                src={iconPlus}
+                                                alt="plus"
+                                                width={60}
+                                                height={60}
+                                            />
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            name="gambar"
+                                            className="custom-file-input"
+                                            id="inputGroupFile04"
+                                            onChange={onChangeGambar}
+                                            accept="image/*"
+                                            onBlur={() =>
+                                                simpleValidator.current.showMessageFor("gambar")
+                                            }
+                                            style={{ display: "none" }}
                                         />
-                                    </label>
-                                    
-                                    <input
-                                        type="file"
-                                        name="gambar"
-                                        className="custom-file-input"
-                                        id="inputGroupFile04"
-                                        onChange={onChangeGambar}
-                                        accept="image/*"
-                                        onBlur={() =>
-                                        simpleValidator.current.showMessageFor("gambar")
-                                        }
-                                        style={{display: "none"}}
-                                    />
                                     </div>
-                                    
+
                                 </div>
 
                                 <div className="ml-3">
                                     {simpleValidator.current.message(
-                                    "gambar",
-                                    gambar,
-                                    "required",
-                                    { className: "text-danger" }
+                                        "gambar",
+                                        gambar,
+                                        "required",
+                                        { className: "text-danger" }
                                     )}
                                     {
-                                    gambarName !== null ?
-                                        <small className="text-danger">{gambarName}</small>
-                                    :
-                                        null
+                                        gambarName !== null ?
+                                            <small className="text-danger">{gambarName}</small>
+                                            :
+                                            null
                                     }
                                 </div>
 
@@ -338,9 +366,9 @@ const TambahVidio = ({ token }) => {
                                     <p>
                                         Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
-                                    
+
                                 </div>
-                                
+
                             </div>
 
                             <div className="form-group">
@@ -350,14 +378,14 @@ const TambahVidio = ({ token }) => {
                                         {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
                                         </div> */}
-                                        <input type="text" className="form-control" value={url_video} onChange={e => setUrlVideo(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url video")}/>
-                                        
+                                        <input type="text" className="form-control" value={url_video} onChange={e => setUrlVideo(e.target.value)} placeholder="https://www.example.com" onBlur={() => simpleValidator.current.showMessageFor("url video")} />
+
                                     </div>
                                     {simpleValidator.current.message(
-                                    "url video",
-                                    url_video,
-                                    "required|url",
-                                    { className: "text-danger" }
+                                        "url video",
+                                        url_video,
+                                        "required|url",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
@@ -371,41 +399,41 @@ const TambahVidio = ({ token }) => {
                                 </label>
                                 <div className="col-sm-12">
                                     <select
-                                    name=""
-                                    id=""
-                                    className="form-control"
-                                    value={kategori_id}
-                                    onChange={(e) => setKategoriId(e.target.value)}
-                                    onBlur={(e) => {
-                                        setKategoriId(e.target.value);
-                                        simpleValidator.current.showMessageFor("kategori_id");
-                                    }}
+                                        name=""
+                                        id=""
+                                        className="form-control"
+                                        value={kategori_id}
+                                        onChange={(e) => setKategoriId(e.target.value)}
+                                        onBlur={(e) => {
+                                            setKategoriId(e.target.value);
+                                            simpleValidator.current.showMessageFor("kategori_id");
+                                        }}
                                     >
-                                    <option selected disabled value="">
-                                        -- Video --
-                                    </option>
-                                    {!kategori || (kategori && kategori.length === 0) ? (
-                                        <option value="">Data kosong</option>
-                                    ) : (
-                                        kategori &&
-                                        kategori.kategori &&
-                                        kategori.kategori.map((row) => {
-                                            return (
-                                                row.jenis_kategori == "Video" ?
-                                                  <option key={row.id} value={row.id}>
-                                                    {row.nama_kategori}
-                                                  </option>
-                                                :
-                                                  null
-                                              );
-                                        })
-                                    )}
+                                        <option selected disabled value="">
+                                            -- Video --
+                                        </option>
+                                        {!kategori || (kategori && kategori.length === 0) ? (
+                                            <option value="">Data kosong</option>
+                                        ) : (
+                                            kategori &&
+                                            kategori.kategori &&
+                                            kategori.kategori.map((row) => {
+                                                return (
+                                                    row.jenis_kategori == "Video" ?
+                                                        <option key={row.id} value={row.id}>
+                                                            {row.nama_kategori}
+                                                        </option>
+                                                        :
+                                                        null
+                                                );
+                                            })
+                                        )}
                                     </select>
                                     {simpleValidator.current.message(
-                                    "kategori_id",
-                                    kategori_id,
-                                    "required",
-                                    { className: "text-danger" }
+                                        "kategori_id",
+                                        kategori_id,
+                                        "required",
+                                        { className: "text-danger" }
                                     )}
                                 </div>
                             </div>
@@ -415,7 +443,7 @@ const TambahVidio = ({ token }) => {
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
                                         name="fruits"
                                         placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
@@ -428,26 +456,25 @@ const TambahVidio = ({ token }) => {
                                     htmlFor="staticEmail"
                                     className="ml-5 pl-4 font-weight-bolder"
                                 >
-                                    Publish 
+                                    Publish
                                 </label>
                                 <div className="col-sm-1 ml-4">
                                     <div className="">
-                                    <label className="switches">
-                                        <input
-                                        // required
-                                        className="checkbox"
-                                        checked={publish}
-                                        type="checkbox"
-                                        // onChange={(checked) => setPublish(checked)}
-                                        onChange={(e) => handleChangePublish(e)}
-                                        />
-                                        <span
-                                        className={`sliders round ${
-                                            publish ? "text-white" : "pl-2"
-                                        }`}
-                                        >
-                                        </span>
-                                    </label>
+                                        <label className="switches">
+                                            <input
+                                                // required
+                                                className="checkbox"
+                                                checked={publish}
+                                                type="checkbox"
+                                                // onChange={(checked) => setPublish(checked)}
+                                                onChange={(e) => handleChangePublish(e)}
+                                            />
+                                            <span
+                                                className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                    }`}
+                                            >
+                                            </span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -486,10 +513,10 @@ const TambahVidio = ({ token }) => {
                                                     placeholderText="Silahkan Isi Tanggal Publish"
                                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
                                                     // minDate={moment().toDate()}
-                                                // minDate={addDays(new Date(), 20)}
-                                                    disabled = {disablePublishDate === true || disablePublishDate === null}
+                                                    // minDate={addDays(new Date(), 20)}
+                                                    disabled={disablePublishDate === true || disablePublishDate === null}
                                                 />
-                                                
+
                                             </div>
                                             {/* {
                                                 disablePublishDate === true ?
@@ -499,11 +526,11 @@ const TambahVidio = ({ token }) => {
                                             } */}
                                         </div>
                                     </div>
-                                :
+                                    :
                                     null
                             }
 
-                            
+
 
                             <div className="form-group row">
                                 <div className="col-sm-2"></div>

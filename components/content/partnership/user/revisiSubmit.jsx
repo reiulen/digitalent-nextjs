@@ -88,8 +88,6 @@ const RevisiSubmit = ({token}) => {
 
   const [lengthListCard, setLengthListCard] = useState("")
   const [indexCard, setIndexCard] = useState("")
-  console.log("lengthListCard",lengthListCard)
-  console.log("indexCard",indexCard)
   const getLengthListCard = async (id) => {
     
   };
@@ -98,8 +96,6 @@ const RevisiSubmit = ({token}) => {
   const handleChange = (e, index) => {
     let dataaa = [...allCooperation];
     dataaa[index].form_content = e.target.value;
-    console.log("dataaa", dataaa);
-    // console.log("index",index)
     setAllCooperation(dataaa);
   };
 
@@ -146,7 +142,6 @@ const RevisiSubmit = ({token}) => {
           },
         }
       );
-      console.log("data list revisi",data.data.length -1)
       setLengthListCard(data.data.length - 1)
     } catch (error) {
       console.log("action getSIngle gagal", error);

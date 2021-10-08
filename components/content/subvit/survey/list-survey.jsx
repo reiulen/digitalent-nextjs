@@ -309,7 +309,11 @@ const ListSurvey = ({ token }) => {
                                 </span>
                               </td>
                               <td className="align-middle">
-                                <b>{row.academy.name}</b>
+                                <b>
+                                  {row.academy === null
+                                    ? "-"
+                                    : row.academy.name}
+                                </b>
                                 <p>
                                   {row.training !== null
                                     ? row.training.name
@@ -324,7 +328,7 @@ const ListSurvey = ({ token }) => {
                                 {row.bank_soal} Soal
                               </td>
                               <td className="align-middle">
-                                {row.status ? (
+                                {row.status === 1 ? (
                                   <span className="label label-inline label-light-success font-weight-bold">
                                     Publish
                                   </span>

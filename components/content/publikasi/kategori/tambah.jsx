@@ -11,7 +11,7 @@ import { NEW_KATEGORI_RESET } from '../../../../redux/types/publikasi/kategori.t
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const TambahKategori = (token) => {
+const TambahKategori = ({ token }) => {
 
     const dispatch = useDispatch()
     const router = useRouter();
@@ -57,11 +57,10 @@ const TambahKategori = (token) => {
 
             const data = {
                 nama,
-                jenis_kategori       
+                jenis_kategori
             }
 
             dispatch(newKategori(data, token))
-            // console.log(data)
 
         } else {
             simpleValidator.current.showMessages();
@@ -111,10 +110,10 @@ const TambahKategori = (token) => {
                                         onChange={(e) => setNamaKategori(e.target.value)}
                                         onBlur={() => simpleValidator.current.showMessageFor("nama kategori")}
                                     />
-                                    { 
-                                        success ? 
+                                    {
+                                        success ?
                                             null
-                                        :
+                                            :
                                             simpleValidator.current.message("nama kategori", nama, "required|min:1|max:100|string", { className: "text-danger" })
                                     }
                                 </div>
@@ -140,7 +139,7 @@ const TambahKategori = (token) => {
                                     {
                                         success ?
                                             null
-                                        :
+                                            :
                                             simpleValidator.current.message("jenis kategori", jenis_kategori, "required", { className: "text-danger" })
                                     }
                                 </div>

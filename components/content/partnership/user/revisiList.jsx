@@ -51,7 +51,6 @@ function RevisiList({token}) {
       );
 
       setListCardREvisi(data.data);
-      console.log("data",data)
     } catch (error) {
       console.log("action getCardREviewList", error);
     }

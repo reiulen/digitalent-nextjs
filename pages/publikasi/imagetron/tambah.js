@@ -9,44 +9,49 @@ import { getAllKategori } from "../../../redux/actions/publikasi/kategori.action
 import { wrapper } from "../../../redux/store";
 
 const Tambah = dynamic(
-    () => import("../../../components/content/publikasi/imagetron/tambah"),
-    { 
-        // suspense: true,
-        // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingPage /> }, 
-        ssr: false
-    }
+  () => import("../../../components/content/publikasi/imagetron/tambah"),
+  {
+    // suspense: true,
+    // loading: () => <LoadingSkeleton />,
+    loading: function loadingNow() {
+      return <LoadingPage />;
+    },
+    ssr: false,
+  }
 );
 
-export default function TambahPage() {
+export default function TambahPage(props) {
+    const session = props.session.user.user.data;
     return (
         <>
             <div className="d-flex flex-column flex-root">
                 {/* <Layout title='Tambah Imagetron - Publikasi'> */}
-                    <Tambah />
+                    <Tambah token={session.token}/>
                 {/* </Layout> */}
             </div>
         </>
     )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, req }) => {
-    
-    const session = await getSession({ req });
-    // console.log (`from artikel create ${session}`)
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params, req }) => {
+      const session = await getSession({ req });
+      // console.log (`from artikel create ${session}`)
 
-    if (!session) {
+      if (!session) {
         return {
-            redirect: {
-            destination: "/",
+          redirect: {
+            destination: "http://dts-dev.majapahit.id/",
             permanent: false,
-            },
+          },
         };
-    }
-    
-    await store.dispatch(getAllKategori(session.user.user.data.token))
+      }
 
-    return {
+      await store.dispatch(getAllKategori(session.user.user.data.token));
+
+      return {
         props: { session, title: "Tambah Imagetron - Publikasi" },
-    };
-})
+      };
+    }
+);

@@ -23,7 +23,14 @@ import {
 import axios from "axios";
 
 export const getAllTheme =
-  (page = 1, keyword = "", akademi = null, status = null, limit = 5, token) =>
+  (
+    page = 1,
+    keyword = "",
+    akademi = null,
+    status = null,
+    limit = null,
+    token
+  ) =>
   async (dispatch) => {
     try {
       dispatch({ type: THEME_REQUEST });
@@ -123,7 +130,7 @@ export const updateTheme = (themeData, token) => async (dispatch) => {
     };
 
     const { data } = await axios.post(
-      process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/update`,
+      process.env.END_POINT_API_PELATIHAN + `api/v1/tema/update`,
       themeData,
       config
     );
