@@ -171,7 +171,7 @@ export const updateVideo = (videoData, token) => async (dispatch) => {
         };
 
         const { data } = await axios.post(link, videoData, config)
-        // console.log("Update Data : ", data)
+        console.log("Update Data : ", data)
         dispatch({
             type: UPDATE_VIDEO_SUCCESS,
             payload: data
@@ -226,7 +226,8 @@ export const playVideo = (videoData, token) => async (dispatch) => {
         let link = process.env.END_POINT_API_PUBLIKASI + `api/video/${videoData.id}`
 
         const { data } = await axios.post(link, videoData, config)
-
+        console.log("Play Video Actions :", data)
+        
         dispatch({
             type: PLAY_VIDEO_SUCCESS,
             payload: data

@@ -160,6 +160,7 @@ const EditGaleri = ({ token }) => {
     const [disablePublishDate, setDisablePublishDate] = useState(galeri.publish === 0 ? true : false)
     const [image, setImage] = useState(null)
     const [totalImage, setTotalImage] = useState(1)
+    const [disableTag, setDisableTag] = useState(false)
 
     const handleDataToArr = (data) => {
         let arr = []
@@ -321,6 +322,19 @@ const EditGaleri = ({ token }) => {
         ]);
         setTotalImage((totalImage) + 1)
     };
+
+    const handleTag = (data) => {
+        if (data[0] === " ") {
+            setTag([])
+            alert("tag")
+            setDisableTag(true)
+        } else {
+            setTag(data)
+            setDisableTag(false)
+        }
+
+        console.log(data)
+    }
 
     const handleData = (temps, onCall) => {
         if (publishDate === null) {
@@ -716,7 +730,7 @@ const EditGaleri = ({ token }) => {
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
                                         name="fruits"
                                         placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
