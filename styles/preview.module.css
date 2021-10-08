@@ -1,3 +1,62 @@
 .bg-preview-white {
     background-color: white !important;
 }
+
+/* Modals Preview Video Publikasi */
+
+.modal-body{
+    /* border: 1px solid yellow; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 450px;
+}
+
+.playVideo{
+    /* border: 1px solid blue; */
+    position: relative;
+    text-align: right;
+    margin-top: -20px;
+    width: 700px;
+    height: 300px;
+}
+
+.isiVideoPrev{
+    margin: 10px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .modal-body{
+        height: 400px;
+        width: 600px;
+    }
+    .playVideo{
+        width: 100%;
+        height: 60%;
+    }
+    .isiVideoPrev{
+        /* margin: 30px; */
+        flex-wrap: wrap;
+        /* border: 1px solid black; */
+        width: 10px;
+        font-size: 11px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .modal-body{
+        height: 400px;
+        width: 400px;
+    }
+    .playVideo{
+        width: 125%;
+        height: 60%;
+    }
+    .isiVideoPrev{
+        /* margin: 30px; */
+        flex-wrap: wrap;
+        /* border: 1px solid black; */
+        width: 10px;
+        font-size: 7px;
+    }
+}
