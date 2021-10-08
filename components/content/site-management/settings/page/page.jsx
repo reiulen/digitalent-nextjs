@@ -148,7 +148,7 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {allPage.dataPage.data && allPage.dataPage.data.data.artikel.length === 0 ? (
+                      {allPage.dataPage.data && allPage.dataPage.data.artikel.length === 0 ? (
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h4>Data tidak ditemukan</h4>
@@ -156,7 +156,7 @@ const Table = ({ token }) => {
                         </tr>
                       ) : (
                         allPage.dataPage.data &&
-                        allPage.dataPage.data.data.artikel.map((items, index) => {
+                        allPage.dataPage.data.artikel.map((items, index) => {
                           return (
                             <tr key={index}>
                               <td className="align-middle text-left">

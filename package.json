@@ -88,7 +88,8 @@
     "simple-react-validator": "^1.6.1",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.0.20",
-    "webpack": "^5.55.0"
+    "webpack": "^5.55.0",
+    "worker-loader": "^3.0.8"
   },
   "devDependencies": {
     "eslint": "7.31.0",
