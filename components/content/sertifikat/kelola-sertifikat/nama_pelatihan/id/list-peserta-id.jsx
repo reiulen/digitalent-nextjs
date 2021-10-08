@@ -25,9 +25,10 @@ export default function ListPesertaID({ token }) {
     participant,
   } = useSelector(state => state.detailParticipant);
 
+  console.log(certificate);
+
   console.log(query);
-  const [type, setType] = useState(2);
-  console.log("INI publish", certificate);
+  const [type, setType] = useState(certificate.data.certificate_type);
 
   const handleResetError = () => {
     if (error) {
@@ -120,7 +121,7 @@ export default function ListPesertaID({ token }) {
                 ref={divReference}
               >
                 <Image
-                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data}`}
+                  src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate?.data?.certificate_result}`}
                   alt={"image"}
                   layout="fill"
                   objectFit="fill"
@@ -154,7 +155,7 @@ export default function ListPesertaID({ token }) {
           {/* END BODY */}
         </div>
         {/* START SECTION 2 */}
-        {type == 2 ? (
+        {type == "2 lembar" ? (
           <div className="card card-custom card-stretch gutter-b">
             {/* START BODY */}
             <div className="card-body border-top">
@@ -163,7 +164,7 @@ export default function ListPesertaID({ token }) {
                 <div className="p-0 col-12 h-500px">
                   <div className="p-0">
                     <Image
-                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data}`}
+                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate?.data?.certificate_result_syllabus}`}
                       alt="fitur"
                       // height={495}
                       // width={700}

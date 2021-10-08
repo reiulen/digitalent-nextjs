@@ -304,7 +304,7 @@ export default function NamaPelatihanID({ token }) {
                                   {certificate.theme.name}
                                 </td>
                                 <td className="align-middle">
-                                  {certificate.nama_sertifikat}
+                                  {certificate.name}
                                 </td>
                                 <td className="align-middle">
                                   {certificate.certificate_type}

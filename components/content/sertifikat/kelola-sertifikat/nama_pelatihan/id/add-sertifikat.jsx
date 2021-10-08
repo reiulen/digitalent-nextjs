@@ -263,21 +263,16 @@ export default function TambahMasterSertifikat({ token }) {
           number_of_signature_syllabus
         );
         signature_certificate_name.forEach((item, i) => {
-          formData.append(
-            `signature_certificate_name[${i}]`,
-            item ? item : null
-          );
-        });
+          formData.append(`signature_certificate_name[${i}]`, item);
+        }); // nama
         signature_certificate_image.forEach((item, i) => {
           formData.append(`signature_certificate_image[${i}]`, item);
-        });
+        }); // nih buat signature
         signature_certificate_position.forEach((item, i) => {
           formData.append(`signature_certificate_position[${i}]`, item);
-        });
-        signature_certificate_position.forEach((item, i) => {
-          formData.append(`signature_certificate_position[${i}]`, item);
-        });
+        }); //nih buat posisi
         signature_certificate_set_position.forEach((item, i) => {
+          console.log(item, "ini item dari foreach", typeof item);
           formData.append(`signature_certificate_set_position[${i}]`, item);
         });
 
@@ -296,9 +291,6 @@ export default function TambahMasterSertifikat({ token }) {
         signature_certificate_position_syllabus.forEach((item, i) => {
           formData.append(`signature_certificate_position[${i}]`, item);
         });
-        signature_certificate_position_syllabus.forEach((item, i) => {
-          formData.append(`signature_certificate_position[${i}]`, item);
-        });
         signature_certificate_set_position_syllabus?.forEach((item, i) => {
           formData.append(
             `signature_certificate_set_position_syllabus[${i}]`,
@@ -306,6 +298,7 @@ export default function TambahMasterSertifikat({ token }) {
           );
         });
 
+        console.log(signature_certificate_set_position);
         const data = await convertDivToPng(divReference.current); // convert bg 1
         formData.append("certificate_result", data);
 
@@ -318,7 +311,6 @@ export default function TambahMasterSertifikat({ token }) {
           console.log("ini datanya", dataSyllabus);
         }
 
-        dispatch(newSertifikat(id, formData, token));
         formData.append("status_migrate_id", status);
 
         // if (status == 2) {
@@ -329,6 +321,7 @@ export default function TambahMasterSertifikat({ token }) {
         //   // publish
         //   // HARUS DI LAKUKAN PENGECEKAN DISINI
         // }
+        dispatch(newSertifikat(id, formData, token));
 
         router.push({
           pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,

@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import {
   clearErrors,
   newSertifikat,
+  updateSertifikat,
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import axios from "axios";
 import * as moment from "moment";
@@ -44,10 +45,11 @@ export default function EditSertifikat({ token }) {
   const [certificate_name, setCertificate_name] = useState(
     certificate.data.certificate.name || ""
   );
-
+  const [signature, setSignature] = useState(certificate.data.signature); //ttd 1
+  const [signatureSyllabus, setSignatureSyllabus] = useState(
+    certificate.data.signature_syllabu
+  ); //ttd 2
   const [date, setDate] = useState(new Date());
-
-  console.log(certificate);
   // #Redux state
 
   // #Redux state
@@ -62,45 +64,14 @@ export default function EditSertifikat({ token }) {
     certificate.data.certificate.number_of_signatures
   );
 
-  const [
-    signature_certificate_set_position,
-    setSignature_certificate_set_position,
-  ] = useState([]);
-
-  const [signature, setSignature] = useState(certificate.data.signature);
-
-  const [signature_certificate_image, setSignature_certificate_image] =
-    useState([]);
-
-  const [signature_certificate_position, setSignature_certificate_position] =
-    useState([]);
-
-  const [certificate_result, setCertificate_result] = useState();
-
   // START SYLLABUS
   const [number_of_signature_syllabus, setNumber_of_signature_syllabus] =
     useState(1);
+
   const [syllabus, setSyllabus] = useState(
     certificate.data.certificate.syllabus || ["", ""]
   );
-  const [certificate_result_syllabus, setCertificate_result_syllabus] =
-    useState();
-  const [
-    signature_certificate_name_syllabus,
-    setSignature_certificate_name_syllabus,
-  ] = useState([]);
-  const [
-    signature_certificate_image_syllabus,
-    setSignature_certificate_image_syllabus,
-  ] = useState([]);
-  const [
-    signature_certificate_position_syllabus,
-    setSignature_certificate_position_syllabus,
-  ] = useState([]);
-  const [
-    signature_certificate_set_position_syllabus,
-    setSignature_certificate_set_position_syllabus,
-  ] = useState([]);
+
   // END SYLLABUS
   // #END FORM DATA
   const [tandaTanganSyllabusType, setTandaTanganSyllabusType] = useState([
@@ -118,7 +89,13 @@ export default function EditSertifikat({ token }) {
   }, [number_of_signatures]);
 
   useEffect(() => {
-    setSignature_certificate_set_position_syllabus([0, 0, 0, 0]);
+    setSignatureSyllabus(prev => {
+      let newArr = [...prev];
+      newArr.forEach(el => {
+        el.set_position = 0;
+      });
+      return newArr;
+    });
   }, [number_of_signature_syllabus]);
 
   // #START MODAL
@@ -126,14 +103,17 @@ export default function EditSertifikat({ token }) {
   const [tandaTangan, setTandaTangan] = useState("");
   const signCanvas = useRef({});
 
-  const handleImageTandaTangan = (e, index) => {
+  const handleImageTandaTangan = (e, i) => {
     // console.log(e.target.name, "INI TARGET NAME", typeof e.target.name);
     if (e.target.name === "image") {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          let newArr = [...signature, { localSignature: "" }];
-          newArr[index].localSignature = reader.result;
+          const data = reader.result;
+          let newArr = [...signature];
+          newArr[i]?.localSignature
+            ? (newArr[i]["localSignature"] = data)
+            : (newArr[i] = { ...newArr[i], localSignature: data });
           setSignature(newArr);
         }
       };
@@ -145,15 +125,19 @@ export default function EditSertifikat({ token }) {
 
   const handleCanvasTandaTangan = (e, i) => {
     const data = signCanvas.current.toDataURL();
-    let newArr = [...signature, { localSignature: "" }];
-    newArr[i].localSignature = data;
+    let newArr = [...signature];
+    newArr[i]?.localSignature
+      ? (newArr[i]["localSignature"] = data)
+      : (newArr[i] = { ...newArr[i], localSignature: data });
     setSignature(newArr);
   };
 
   const handleClearCanvasTandaTangan = (e, i) => {
-    let newArr = [...signature_certificate_image];
-    newArr[i] = "";
-    setSignature_certificate_image(newArr);
+    let newArr = [...signature];
+    newArr[i]?.localSignature
+      ? (newArr[i]["localSignature"] = "")
+      : (newArr[i] = { ...newArr[i], localSignature: "" });
+    setSignature(newArr);
     signCanvas.current.clear();
   };
   // #END MODAL
@@ -164,9 +148,12 @@ export default function EditSertifikat({ token }) {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          let newArr = [...signature_certificate_image_syllabus];
-          newArr[index] = reader.result;
-          setSignature_certificate_image_syllabus(newArr);
+          const data = reader.result;
+          let newArr = [...signatureSyllabus];
+          newArr[i]?.localSignature
+            ? (newArr[i]["localSignature"] = data)
+            : (newArr[i] = { ...newArr[i], localSignature: data });
+          setSignatureSyllabus(newArr);
         }
       };
       if (e.target.files[0]) {
@@ -174,32 +161,22 @@ export default function EditSertifikat({ token }) {
       }
     }
   };
-  //   new Object()
-  //   const newKey = formBuilder[formBuilder.length - 1].key + 1;
-  //   setFormBuilder([
-  //     ...formBuilder,
-  //     {
-  //       key: newKey,
-  //       name: "",
-  //       element: "",
-  //       size: "",
-  //       option: "",
-  //       dataOption: "",
-  //       required: "0",
-  //     },
-  //   ]);
 
   const handleCanvasTandaTanganSyllabus = (e, i) => {
     const data = signCanvas.current.toDataURL();
-    let newArr = [...signature_certificate_image_syllabus];
-    newArr[i] = data;
-    setSignature_certificate_image_syllabus(newArr);
+    let newArr = [...signatureSyllabus];
+    newArr[i]?.localSignature
+      ? (newArr[i]["localSignature"] = data)
+      : (newArr[i] = { ...newArr[i], localSignature: data });
+    setSignatureSyllabus(newArr);
   };
 
   const handleClearCanvasTandaTanganSyllabus = (e, i) => {
-    let newArr = [...signature_certificate_image_syllabus];
-    newArr[i] = "";
-    setSignature_certificate_image_syllabus(newArr);
+    let newArr = [...signatureSyllabus];
+    newArr[i]?.localSignature
+      ? (newArr[i]["localSignature"] = "")
+      : (newArr[i] = { ...newArr[i], localSignature: "" });
+    setSignatureSyllabus(newArr);
     signCanvas.current.clear();
   };
   // #END SECTION 2
@@ -234,14 +211,19 @@ export default function EditSertifikat({ token }) {
   // # END BACKGROUND IMAGE 1
 
   // # START BACKGROUND IMAGE 2
-  const [background_syllabus, setBackground_syllabus] = useState("");
+  const [background_syllabus, setBackground_syllabus] = useState(
+    certificate.data.certificate.background_syllabus || ""
+  );
+
+  const [localBackgroundSyllabus, setLocalBackgroundSyllabus] = useState("");
+
   const onChangeBackgroundLembar2 = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (type.includes(e.target.files[0].type)) {
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
-          setBackground_syllabus(reader.result);
+          setLocalBackgroundSyllabus(reader.result);
         }
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -249,11 +231,12 @@ export default function EditSertifikat({ token }) {
       e.target.value = null;
       Swal.fire(
         "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data background.",
+        "Data yang bisa dimasukkan hanya berupa data image.",
         "error"
       );
     }
   };
+
   const [, forceUpdate] = useState();
 
   const convertDivToPng = async div => {
@@ -279,87 +262,84 @@ export default function EditSertifikat({ token }) {
       const id = router.query.nama_pelatihan_id;
 
       if (simpleValidator.current.allValid()) {
-        dispatch(newSertifikat(id, formData, token));
-
-        setNamaPeserta("");
         let formData = new FormData();
-        // formData.append("name", certificate.data.certificate].name);
-        formData.append("name", certificate_name);
+        setNamaPeserta("");
 
-        formData.append("background", background);
+        formData.append("_method", "put");
+        formData.append("name", certificate_name);
         formData.append("certificate_type", certificate_type);
         formData.append("number_of_signatures", number_of_signatures);
         formData.append(
           "number_of_signature_syllabus",
           number_of_signature_syllabus
         );
-        // signature_certificate_name.forEach((item, i) => {
-        //   formData.append(
-        //     `signature_certificate_name[${i}]`,
-        //     item ? item : null
-        //   );
-        // });
-        signature_certificate_image.forEach((item, i) => {
-          formData.append(`signature_certificate_image[${i}]`, item);
-        });
-        signature_certificate_position.forEach((item, i) => {
-          formData.append(`signature_certificate_position[${i}]`, item);
-        });
-        signature_certificate_position.forEach((item, i) => {
-          formData.append(`signature_certificate_position[${i}]`, item);
-        });
-        signature_certificate_set_position.forEach((item, i) => {
-          formData.append(`signature_certificate_set_position[${i}]`, item);
-        });
 
-        syllabus.forEach((item, i) => {
-          formData.append(`syllabus[${i}]`, item);
-        });
+        if (localBackground) {
+          formData.append("background", localBackground);
+        }
 
-        formData.append("background_syllabus", background_syllabus);
+        if (localBackgroundSyllabus) {
+          formData.append("background_syllabus", localBackgroundSyllabus);
+        }
+        console.log("KONDISI DARI SIGNATURE PAS DI DISPATCH", signature);
 
-        signature_certificate_name_syllabus.forEach((item, i) => {
-          formData.append(`signature_certificate_name[${i}]`, item);
-        });
-        signature_certificate_image_syllabus.forEach((item, i) => {
-          formData.append(`signature_certificate_image[${i}]`, item);
-        });
-        signature_certificate_position_syllabus.forEach((item, i) => {
-          formData.append(`signature_certificate_position[${i}]`, item);
-        });
-        signature_certificate_position_syllabus.forEach((item, i) => {
-          formData.append(`signature_certificate_position[${i}]`, item);
-        });
-        signature_certificate_set_position_syllabus?.forEach((item, i) => {
+        signature.forEach((item, i) => {
+          console.log(item, "ini items");
+          if (item.localSignature) {
+            formData.append(
+              `signature_certificate_image[${i}]`,
+              item.localSignature
+            ); // img signature yang baru di taro
+          }
           formData.append(
-            `signature_certificate_set_position_syllabus[${i}]`,
-            item
+            `signature_certificate_position[${i}]`,
+            item.position
+          ); //jabatan
+          formData.append(
+            `signature_certificate_set_position[${i}]`,
+            item.set_position
           );
+          formData.append(`signature_certificate_name[${i}]`, item.name);
         });
-
-        const data = await convertDivToPng(divReference.current); // convert bg 1
-        formData.append("certificate_result", data);
 
         if (certificate_type == "2 lembar") {
           const dataSyllabus = await convertDivToPng(
             divReferenceSilabus.current
           ); //convert bg 2
           formData.append("certificate_result_syllabus", dataSyllabus);
-          console.log("ini data syllabus masuk kesini");
-          console.log("ini datanya", dataSyllabus);
+
+          signatureSyllabus.forEach((item, i) => {
+            console.log(item, "ini items");
+            if (item.localSignature) {
+              formData.append(
+                `signature_certificate_image_syllabus[${i}]`,
+                item.localSignature
+              ); // img signature yang baru di taro
+            }
+            formData.append(
+              `signature_certificate_position_syllabus[${i}]`,
+              item.position
+            ); //jabatan
+            formData.append(
+              `signature_certificate_set_position_syllabus[${i}]`,
+              item.set_position
+            );
+            formData.append(
+              `signature_certificate_name_syllabus[${i}]`,
+              item.name
+            );
+          });
         }
 
-        dispatch(newSertifikat(id, formData, token));
+        syllabus.forEach((item, i) => {
+          formData.append(`syllabus[${i}]`, item);
+        });
+
+        const data = await convertDivToPng(divReference.current); // convert bg 1
+        formData.append("certificate_result", data);
         formData.append("status_migrate_id", status);
 
-        // if (status == 2) {
-        // formData.append("status_migrate_id", status);
-        // dispatch(newSertifikat(id, formData, token));
-        // }
-        // if (status == 1) {
-        //   // publish
-        //   // HARUS DI LAKUKAN PENGECEKAN DISINI
-        // }
+        dispatch(updateSertifikat(id, formData, token));
 
         router.push({
           pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
@@ -371,7 +351,7 @@ export default function EditSertifikat({ token }) {
         Swal.fire("Oops !", "Isi data dengan benar.", "error");
       }
     } catch (e) {
-      console.log(e, "Masuk sini errornya");
+      console.log(e, "Masuk sini errornya catch");
     }
   };
 
@@ -396,6 +376,11 @@ export default function EditSertifikat({ token }) {
   const handleAddInput = () => {
     setSyllabus([...syllabus, ""]);
   };
+
+  console.log(signature);
+  // useEffect(() => {
+  //   console.log(signature, "signatureSyllabus brubah disini");
+  // }, [signature]);
 
   return (
     <PageWrapper>
@@ -524,7 +509,7 @@ export default function EditSertifikat({ token }) {
                           // fontWeight: "bold",
                         }}
                       >
-                        {certificate.data.certificate.theme.name ||
+                        {certificate?.data?.certificate?.theme?.name ||
                           "Tema Sertifikat"}
                       </div>
                       <div className="mt-2 w-100">
@@ -571,7 +556,7 @@ export default function EditSertifikat({ token }) {
                               key={i}
                               style={{
                                 transform: `translateX(${
-                                  signature[i]?.set_position || 0
+                                  signature[i].set_position || 0
                                 }%)`,
                                 width: "156px",
                                 height: "150px",
@@ -598,7 +583,7 @@ export default function EditSertifikat({ token }) {
                                     />
                                   ) : signature[i]?.signature ? (
                                     <Image
-                                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[i]?.signature}`}
+                                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${signature[i].signature}`}
                                       layout="fill"
                                       alt={`Tanda tangan ${i + 1} `}
                                     />
@@ -778,7 +763,7 @@ export default function EditSertifikat({ token }) {
                                   <CKEditor
                                     editor={ClassicEditor}
                                     config={{
-                                      toolbar: ["bold", "italic", "underline"],
+                                      toolbar: ["bold", "italic"],
                                     }}
                                     onReady={editor => {
                                       // You can store the "editor" and use when it is needed.
@@ -786,8 +771,13 @@ export default function EditSertifikat({ token }) {
                                     data={signature[i]?.name}
                                     onChange={(event, editor) => {
                                       const data = editor.getData();
-                                      let newArr = [...signature, { name: "" }];
-                                      newArr[i].name = data;
+                                      let newArr = [...signature];
+                                      newArr[i].name
+                                        ? (newArr[i].name = data)
+                                        : (newArr[i] = {
+                                            ...newArr[i],
+                                            name: data,
+                                          });
                                       setSignature(newArr);
                                     }}
                                     onBlur={() =>
@@ -929,14 +919,16 @@ export default function EditSertifikat({ token }) {
                                     onReady={editor => {
                                       // You can store the "editor" and use when it is needed.
                                     }}
-                                    data={signature_certificate_position[i]}
+                                    data={signature[i]?.position}
                                     onChange={(event, editor) => {
                                       const data = editor.getData();
-                                      let newArr = [
-                                        ...signature,
-                                        { position: "" },
-                                      ];
-                                      newArr[i].position = data;
+                                      let newArr = [...signature];
+                                      newArr[i]?.position
+                                        ? (newArr[i]["position"] = data)
+                                        : (newArr[i] = {
+                                            ...newArr[i],
+                                            position: data,
+                                          });
                                       setSignature(newArr);
                                     }}
                                     className="h-25"
@@ -994,11 +986,14 @@ export default function EditSertifikat({ token }) {
                                 className="form-control"
                                 value={signature[i]?.set_position || 0}
                                 onChange={e => {
-                                  let newArr = [
-                                    ...signature,
-                                    { set_position: 0 },
-                                  ];
-                                  newArr[i].set_position = +e.target.value;
+                                  let newArr = [...signature];
+                                  newArr[i]?.set_position
+                                    ? (newArr[i]["set_position"] =
+                                        +e.target.value)
+                                    : (newArr[i] = {
+                                        ...newArr[i],
+                                        set_position: +e.target.value,
+                                      });
                                   setSignature(newArr);
                                 }}
                               />
@@ -1030,11 +1025,14 @@ export default function EditSertifikat({ token }) {
                                   width: "100%",
                                 }}
                                 onChange={e => {
-                                  let newArr = [
-                                    ...signature,
-                                    { set_position: 0 },
-                                  ];
-                                  newArr[i].set_position = +e.target.value;
+                                  let newArr = [...signature];
+                                  newArr[i]?.set_position
+                                    ? (newArr[i]["set_position"] =
+                                        +e.target.value)
+                                    : (newArr[i] = {
+                                        ...newArr[i],
+                                        set_position: +e.target.value,
+                                      });
                                   setSignature(newArr);
                                 }}
                               />
@@ -1130,12 +1128,21 @@ export default function EditSertifikat({ token }) {
                 {/* START COL */}
                 <div className="border-primary p-0 border col-8 h-500px">
                   <div className="p-0" ref={divReferenceSilabus}>
-                    {background_syllabus ? (
+                    {localBackgroundSyllabus ? (
                       <Image
-                        src={background_syllabus}
+                        src={localBackgroundSyllabus}
                         alt="fitur"
                         // height={495}
-                        // width={700}
+                        // width={1400}
+                        layout="fill"
+                        objectFit="fill"
+                      />
+                    ) : background_syllabus ? (
+                      <Image
+                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${background_syllabus}`}
+                        alt={`background Image ${background_syllabus}`}
+                        // height={495}
+                        // width={1400}
                         layout="fill"
                         objectFit="fill"
                       />
@@ -1155,7 +1162,7 @@ export default function EditSertifikat({ token }) {
                         </div>
                         <div>
                           <ol className="col mt-4">
-                            {certificate.data.certificate.syllabus || syllabus
+                            {syllabus
                               ? syllabus.map((e, i) => {
                                   return (
                                     <li
@@ -1202,7 +1209,9 @@ export default function EditSertifikat({ token }) {
                                 <div
                                   key={i}
                                   style={{
-                                    transform: `translateX(${signature_certificate_set_position_syllabus[i]}%)`,
+                                    transform: `translateX(${
+                                      signatureSyllabus[i]?.set_position || 0
+                                    }%)`,
                                     width: "156px",
                                     height: "150px",
                                   }}
@@ -1213,23 +1222,24 @@ export default function EditSertifikat({ token }) {
                                       className="col border-2 align-items-center justify-content-center d-flex position-relative"
                                       style={{
                                         borderStyle:
-                                          signature_certificate_image_syllabus[
-                                            i
-                                          ]
+                                          signatureSyllabus[i]?.signature ||
+                                          signatureSyllabus[i]?.localSignature
                                             ? ""
                                             : "dashed",
                                         height: "100px",
                                       }}
                                     >
-                                      {signature_certificate_image_syllabus[
-                                        i
-                                      ] ? (
+                                      {signatureSyllabus[i]?.localSignature ? (
                                         <Image
                                           src={
-                                            signature_certificate_image_syllabus[
-                                              i
-                                            ]
+                                            signatureSyllabus[i]?.localSignature
                                           }
+                                          layout="fill"
+                                          alt={`Tanda tangan ${i + 1} `}
+                                        />
+                                      ) : signatureSyllabus[i]?.signature ? (
+                                        <Image
+                                          src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images-syllabus/${signatureSyllabus[i]?.signature}`}
                                           layout="fill"
                                           alt={`Tanda tangan ${i + 1} `}
                                         />
@@ -1240,22 +1250,15 @@ export default function EditSertifikat({ token }) {
                                     <div
                                       className="border-2 text-center w-100"
                                       style={{
-                                        borderStyle:
-                                          signature_certificate_name_syllabus[i]
-                                            ? ""
-                                            : "dashed",
+                                        borderStyle: signatureSyllabus[i]?.name
+                                          ? ""
+                                          : "dashed",
                                       }}
-                                      //   placeholder="Nama Lengkap"
                                     >
-                                      {signature_certificate_name_syllabus[
-                                        i
-                                      ] ? (
+                                      {signatureSyllabus[i]?.name ? (
                                         <div
                                           dangerouslySetInnerHTML={{
-                                            __html:
-                                              signature_certificate_name_syllabus[
-                                                i
-                                              ],
+                                            __html: signatureSyllabus[i]?.name,
                                           }}
                                           className="my-auto m-0 p-0 test"
                                           style={{ margin: "0px" }}
@@ -1267,23 +1270,17 @@ export default function EditSertifikat({ token }) {
                                     <div
                                       className="border-2 text-center w-100"
                                       style={{
-                                        borderStyle:
-                                          signature_certificate_position_syllabus[
-                                            i
-                                          ]
-                                            ? ""
-                                            : "dashed",
+                                        borderStyle: signatureSyllabus[i]
+                                          ?.position
+                                          ? ""
+                                          : "dashed",
                                       }}
                                     >
-                                      {signature_certificate_position_syllabus[
-                                        i
-                                      ] ? (
+                                      {signatureSyllabus[i]?.position ? (
                                         <div
                                           dangerouslySetInnerHTML={{
                                             __html:
-                                              signature_certificate_position_syllabus[
-                                                i
-                                              ],
+                                              signatureSyllabus[i]?.position,
                                           }}
                                           className="my-auto m-0 p-0"
                                           style={{ margin: "0px" }}
@@ -1417,18 +1414,17 @@ export default function EditSertifikat({ token }) {
                                       onReady={editor => {
                                         // You can store the "editor" and use when it is needed.
                                       }}
-                                      data={
-                                        signature_certificate_name_syllabus[i]
-                                      }
+                                      data={signatureSyllabus[i]?.name}
                                       onChange={(event, editor) => {
                                         const data = editor.getData();
-                                        let newArr = [
-                                          ...signature_certificate_name_syllabus,
-                                        ];
-                                        newArr[i] = data;
-                                        setSignature_certificate_name_syllabus(
-                                          newArr
-                                        );
+                                        let newArr = [...signatureSyllabus];
+                                        newArr[i]?.name
+                                          ? (newArr[i]["name"] = data)
+                                          : (newArr[i] = {
+                                              ...newArr[i],
+                                              name: data,
+                                            });
+                                        setSignatureSyllabus(newArr);
                                       }}
                                       className="h-25"
                                       onBlur={() => {
@@ -1442,9 +1438,7 @@ export default function EditSertifikat({ token }) {
                                     {certificate_type == "2 lembar"
                                       ? simpleValidator.current.message(
                                           "Nama",
-                                          signature_certificate_name_syllabus[
-                                            i
-                                          ],
+                                          signatureSyllabus[i]?.name,
                                           "required",
                                           {
                                             className: "text-danger mt-4",
@@ -1584,9 +1578,9 @@ export default function EditSertifikat({ token }) {
                                     {certificate_type == "2 lembar"
                                       ? simpleValidator.current.message(
                                           "Tanda tangan",
-                                          signature_certificate_image_syllabus[
-                                            i
-                                          ],
+                                          signatureSyllabus[i]
+                                            ?.localSignature ||
+                                            signatureSyllabus[i]?.signature,
                                           "required",
                                           { className: "text-danger mb-4" }
                                         )
@@ -1600,20 +1594,17 @@ export default function EditSertifikat({ token }) {
                                       onReady={editor => {
                                         // You can store the "editor" and use when it is needed.
                                       }}
-                                      data={
-                                        signature_certificate_position_syllabus[
-                                          i
-                                        ]
-                                      }
+                                      data={signatureSyllabus[i]?.position}
                                       onChange={(event, editor) => {
                                         const data = editor.getData();
-                                        let newArr = [
-                                          ...signature_certificate_position_syllabus,
-                                        ];
-                                        newArr[i] = data;
-                                        setSignature_certificate_position_syllabus(
-                                          newArr
-                                        );
+                                        let newArr = [...signatureSyllabus];
+                                        newArr[i]?.position
+                                          ? (newArr[i]["position"] = data)
+                                          : (newArr[i] = {
+                                              ...newArr[i],
+                                              position: data,
+                                            });
+                                        setSignatureSyllabus(newArr);
                                       }}
                                       className="h-25"
                                       onBlur={() => {
@@ -1627,9 +1618,7 @@ export default function EditSertifikat({ token }) {
                                     {certificate_type == "2 lembar"
                                       ? simpleValidator.current.message(
                                           "Jabatan",
-                                          signature_certificate_position_syllabus[
-                                            i
-                                          ],
+                                          signatureSyllabus[i]?.position,
                                           "required",
                                           { className: "text-danger mt-4" }
                                         )
@@ -1673,18 +1662,18 @@ export default function EditSertifikat({ token }) {
                                   }
                                   className="form-control"
                                   value={
-                                    signature_certificate_set_position_syllabus[
-                                      i
-                                    ]
+                                    signatureSyllabus[i]?.set_position || 0
                                   }
                                   onChange={e => {
-                                    let newArr = [
-                                      ...signature_certificate_set_position_syllabus,
-                                    ];
-                                    newArr[i] = +e.target.value;
-                                    setSignature_certificate_set_position_syllabus(
-                                      newArr
-                                    );
+                                    let newArr = [...signatureSyllabus];
+                                    newArr[i]?.set_position
+                                      ? (newArr[i]["set_position"] =
+                                          +e.target.value)
+                                      : (newArr[i] = {
+                                          ...newArr[i],
+                                          set_position: +e.target.value,
+                                        });
+                                    setSignatureSyllabus(newArr);
                                   }}
                                 />
 
@@ -1709,9 +1698,7 @@ export default function EditSertifikat({ token }) {
                                       : 14
                                   }
                                   value={
-                                    signature_certificate_set_position_syllabus[
-                                      i
-                                    ]
+                                    signatureSyllabus[i]?.set_position || 0
                                   }
                                   className="text-white form-range form-control mx-5"
                                   style={{
@@ -1719,13 +1706,15 @@ export default function EditSertifikat({ token }) {
                                     width: "100%",
                                   }}
                                   onChange={e => {
-                                    let newArr = [
-                                      ...signature_certificate_set_position_syllabus,
-                                    ];
-                                    newArr[i] = +e.target.value;
-                                    setSignature_certificate_set_position_syllabus(
-                                      newArr
-                                    );
+                                    let newArr = [...signatureSyllabus];
+                                    newArr[i]?.set_position
+                                      ? (newArr[i]["set_position"] =
+                                          +e.target.value)
+                                      : (newArr[i] = {
+                                          ...newArr[i],
+                                          set_position: +e.target.value,
+                                        });
+                                    setSignatureSyllabus(newArr);
                                   }}
                                 />
                               </div>
@@ -1761,6 +1750,7 @@ export default function EditSertifikat({ token }) {
                       <div className="mr-5">
                         <a
                           onClick={() => {
+                            setLocalBackgroundSyllabus("");
                             setBackground_syllabus("");
                           }}
                           className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"

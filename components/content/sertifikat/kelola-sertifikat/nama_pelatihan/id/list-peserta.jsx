@@ -227,9 +227,9 @@ export default function ListPeserta() {
             <div className="table-page mt-5">
               <div className="table-responsive">
                 <LoadingTable
-                // UNFISNISH
-                // loading={loading}
-                // Isi dengan loading dari dispatch
+                  // UNFISNISH
+                  loading={loading}
+                  // Isi dengan loading dari dispatch
                 />
 
                 {loading === false ? (
@@ -311,18 +311,7 @@ export default function ListPeserta() {
                                       </Link>
                                     </>
                                   ) : (
-                                    <Link
-                                      href={`/sertifikat/kelola-sertifikat/add`}
-                                    >
-                                      <a
-                                        className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Tambah"
-                                      >
-                                        <i className="ri-add-circle-fill p-0 text-white"></i>
-                                      </a>
-                                    </Link>
+                                    ""
                                   )}
                                 </td>
                                 {/* END TABLE DATA */}
