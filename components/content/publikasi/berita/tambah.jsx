@@ -147,16 +147,18 @@ const TambahBerita = ({token}) => {
     }
 
     const handleTag = (data) => {
-        if (data.length === 1 && data[0] === " "){
-            setTag([])
-            alert("tag")
-            setDisableTag (true)
-        } else {
-            setTag(data)
-            setDisableTag (false)
+        for (let i = 0; i < data.length; i++){
+          for (let j = 0; j < data[i].length; j++){
+            if (data[i][j] === " "){
+              setDisableTag (true)
+            } else {
+              setDisableTag (false)
+            }
+          }
         }
-
-        console.log (data)
+    
+        setTag(data)
+        
     }
 
     const onSubmit = (e) => {
@@ -521,12 +523,13 @@ const TambahBerita = ({token}) => {
                                         // onChange={setTag}
                                         onChange={(data) => handleTag(data)}
                                         name="tag"
-                                        placeHolder="Isi Tag disini dan enter."
+                                        placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                                        seprators={["Enter", "Tab"]}
                                     />
                                     {
                                         disableTag === true ?
                                             <p className="text-danger">
-                                                Tag tidak bisa terdiri dari 1 character "SPACE"
+                                                Tag tidak bisa terdiri dari "SPACE" character saja
                                             </p>
                                         :
                                             null
