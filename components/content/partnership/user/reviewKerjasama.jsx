@@ -69,7 +69,6 @@ function ReviewKerjasama({token}) {
           },
         }
       );
-      console.log("data",data)
 
       // console.log("data a a a ssss", data.data.status_migrates_id.status);
       if(data.data.status_migrates_id.status === "pengajuan-revisi"){

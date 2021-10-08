@@ -117,8 +117,6 @@ const DetailDokumenKerjasama = ({token}) => {
                 },
               }
             );
-            // alert("berhasil");
-            console.log("data",data)
             router.push({
               pathname: `/partnership/user/kerjasama/review-kerjasama-1`,
               query: { successSubmitKerjasama: true,id:data.data.id },

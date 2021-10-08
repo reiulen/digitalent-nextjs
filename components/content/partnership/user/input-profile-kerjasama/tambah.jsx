@@ -49,7 +49,6 @@ const Tambah = ({token}) => {
   });
 
   const submit = (e) => {
-    console.log("object f f",router.query.isProfile)
     // e.preventDefault();
     if (institution_name === "") {
       setError({
