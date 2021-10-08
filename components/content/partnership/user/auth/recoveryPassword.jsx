@@ -13,7 +13,6 @@ const RegisterMitra = () => {
   const router = useRouter();
   let dispatch = useDispatch();
   const allAuthentication = useSelector((state) => state.allAuthentication);
-  console.log("object", allAuthentication);
   const [email, setEmail] = useState("");
 
   const [error, setError] = useState({

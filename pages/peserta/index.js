@@ -9,8 +9,6 @@ import LoadingSkeleton from "../../components/LoadingSkeleton";
 const Dashboard = dynamic(
   () => import("../../user-component/content/peserta/dashboard"),
   {
-    // suspense: true,
-    // loading: () => <LoadingSkeleton />,
     loading: function loadingNow() {
       return <LoadingSkeleton />;
     },
@@ -18,15 +16,16 @@ const Dashboard = dynamic(
   }
 );
 
-const Navigationbar = dynamic(() =>
-  import("../../components/templates/navbar.component")
+const Layout = dynamic(() =>
+  import("../../user-component/components/template/Layout.component")
 );
 
 export default function DashboardPage() {
   return (
     <>
-      <Navigationbar />
-      <Dashboard />
+      <Layout title="Dashboard Peserta - Pelatihan">
+        <Dashboard />
+      </Layout>
     </>
   );
 }

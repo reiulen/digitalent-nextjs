@@ -11,7 +11,6 @@ function Pembahasan({token}) {
   const router = useRouter();
   const { id } = router.query;
 
-  console.log("id", id);
 
   const [status, setStatus] = useState("");
   // const cekProgresStatus = async (id) => {
