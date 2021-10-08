@@ -174,6 +174,9 @@ const DetailRevisiKerjasama = ({ token }) => {
 
               {/* start loop */}
 
+
+              
+
               {!allCooperation.length
                 ? ""
                 : allCooperation.map((items, index) => {
