@@ -83,28 +83,14 @@ const EditVideo = ({ token }) => {
     const [disableTag, setDisableTag] = useState(false)
 
     const handleTag = (data) => {
-        if (tag.some(data => data === " ")) {
-            setTag([])
+        if (data == "") {
+            // setTag([])
             alert("tag")
-            setDisableTag(true)
+            // setDisableTag(true)
         } else {
             setTag(data)
             setDisableTag(false)
         }
-
-        // if (typeof data === "string"){
-        //     setTag([])
-        //     // alert("tag")
-        //     setDisableTag (true)
-        //     Swal.fire({
-        //         icon: "error",
-        //         title: "Oops...",
-        //         text: "Isi data dengan benar !",
-        //     })
-        // } else {
-        //     setTag(data)
-        //     setDisableTag (false)
-        // }
 
         console.log(data)
     }

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import styles from '../../../../styles/preview.module.css'
 
 import Pagination from 'react-js-pagination';
 import DatePicker from 'react-datepicker'
@@ -875,18 +876,22 @@ const Vidio = ({ token }) => {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div> */}
-                        <div className="modal-body d-flex justify-content-center flex-column" style={{ height: '500px' }}>
-                            <div className="mb-2" style={{ textAlign: 'right' }}>
-                                <button type="button" className="col-1 flaticon2-delete" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
-                            </div>
-                            <ReactPlayer url={url_video} controls width="700px" playing={video_playing} onPlay={handleIsPlayed} />
-                            <div className="my-5">
+                        <div className={styles['modal-body']}>
+                            {/* <div className={styles['title-preview-video']}> */}
+                                {/* <div className="mb-2" style={{ textAlign: 'right' }}> */}
+                                <div className={styles['playVideo']}>
+                                    <button type="button" className="col-1 flaticon2-delete mb-2" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
+                                {/* </div> */}
+                                    <ReactPlayer url={url_video} controls width="100%" height="100%" playing={video_playing} onPlay={handleIsPlayed} />
+                                </div>
+                            {/* </div> */}
+                            <div className="ml-3" style={{marginTop:'30px'}}>
                                 <h3>
                                     {judul_video}
                                 </h3>
                             </div>
-                            <div className="row">
-                                <div style={{ background: "#F3F6F9" }}
+                            <div className="row" style={{marginLeft:'-12px'}}>
+                                <div
                                     className="mr-5 px-3 py-1 rounded mb-1 ml-4 d-flex align-items-center">
                                     <i className="flaticon2-calendar-4 "></i>
                                     {
@@ -901,7 +906,7 @@ const Vidio = ({ token }) => {
                                     }
                                 </div>
 
-                                <div style={{ background: "#F3F6F9" }}
+                                <div
                                     className=" rounded px-3 d-flex align-items-center">
                                     <i className="ri-dashboard-line"></i>
                                     <span className="ml-2 py-1">
@@ -909,8 +914,8 @@ const Vidio = ({ token }) => {
                                     </span>
                                 </div>
                             </div>
-                            <div className="">
-                                <span className="ml-1 py-1">
+                            <div>
+                                <span className={styles['isiVideoPrev']}>
                                     {isiVideo}
                                 </span>
                             </div>
