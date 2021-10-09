@@ -50,8 +50,8 @@ const Tambah = ({ token }) => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then(async result => {
-      if (result) {
+    }).then(async (result) => {
+      if (result.value) {
         let statusPro = status ? 1 : 0;
 
         let formData = new FormData();
@@ -137,10 +137,14 @@ const Tambah = ({ token }) => {
               {valueCreateCooporations.map((valueCreateCooporation, index) => {
                 return (
                   <div className="form-group" key={index}>
+                    {index === 0 ? 
                     <label htmlFor="staticEmail" className="col-form-label">
-                      {index === 0 ? "Form Kerjasama" : ""}
+                    
+                    Form Kerjasama
+                    
                     </label>
-                    <div className="position-relative">
+                    : ""}
+                    <div className="position-relative d-flex align-items-center">
                       <input
                         required
                         placeholder={
@@ -149,7 +153,7 @@ const Tambah = ({ token }) => {
                         name={`cooperation${index}`}
                         type="text"
                         onChange={e => handleChange(e, index)}
-                        className="form-control"
+                        className="form-control mr-6"
                         value={valueCreateCooporation}
                       />
                       {index === 0 ? (
@@ -158,8 +162,8 @@ const Tambah = ({ token }) => {
                         <button
                           type="button"
                           onClick={() => handleDelete(index)}
-                          className="btn position-absolute"
-                          style={{ top: "0", right: "3px" }}
+                          className="btn"
+                          style={{ backgroundColor:"#EE2D41" }}
                         >
                           <svg
                             className="position-relative"
@@ -172,7 +176,7 @@ const Tambah = ({ token }) => {
                             <path fill="none" d="M0 0h24v24H0z" />
                             <path
                               d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"
-                              fill="#ADB5BD"
+                              fill="#ffffff"
                             />
                           </svg>
                         </button>

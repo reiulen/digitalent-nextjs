@@ -50,8 +50,8 @@ const EditTheme = ({ token }) => {
 
   const [status, setStatus] = useState(
     theme.status === "0"
-      ? { value: 0, label: "Unpublish" }
-      : { value: 1, label: "Publish" }
+      ? { value: "0", label: "Unpublish" }
+      : { value: "1", label: "Publish" }
   );
 
   const options = [
@@ -61,8 +61,8 @@ const EditTheme = ({ token }) => {
   ];
 
   const optionsStatus = [
-    { value: 1, label: "Publish" },
-    { value: 0, label: "Unpublish" },
+    { value: "1", label: "Publish" },
+    { value: "0", label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -94,12 +94,12 @@ const EditTheme = ({ token }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      const statusString = (status.value += "");
+      // const statusString = (status.value += "");
       const idInt = parseInt(id);
       const data = {
         name,
         deskripsi: description,
-        status: statusString,
+        status: status.value,
         akademi_id: academy.value,
         id: idInt,
       };
@@ -110,7 +110,7 @@ const EditTheme = ({ token }) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data yang bener dong lu !",
+        text: "Isi data dengan benar !",
       });
     }
   };
@@ -239,7 +239,9 @@ const EditTheme = ({ token }) => {
                 <Select
                   options={optionsStatus}
                   defaultValue={status}
-                  onChange={(e) => setStatus(e.value)}
+                  onChange={(e) =>
+                    setStatus({ value: e.value, label: e.label })
+                  }
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("status")
                   }

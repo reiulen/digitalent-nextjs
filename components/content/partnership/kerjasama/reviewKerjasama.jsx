@@ -77,7 +77,6 @@ const ReviewKerjasama = ({ token }) => {
               },
             }
           );
-          console.log("data", data);
           router.push({
             pathname: "/partnership/kerjasama/",
             query: { successTerima: true },
@@ -90,7 +89,6 @@ const ReviewKerjasama = ({ token }) => {
   };
 
   const rejectDokument = (e) => {
-    console.log("rejectDokument");
     e.preventDefault();
 
     Swal.fire({
@@ -115,7 +113,6 @@ const ReviewKerjasama = ({ token }) => {
             }
           );
 
-          console.log("data asdasd", data);
           router.push({
             pathname: "/partnership/kerjasama/",
             query: { successReject: true },
@@ -138,7 +135,6 @@ const ReviewKerjasama = ({ token }) => {
             },
           }
         );
-        console.log("data sdfsdf", data);
         setTitle(data.data.title);
         setDate(data.data.submission_date);
         setCooperationID(data.data.cooperation_category);

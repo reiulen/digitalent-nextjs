@@ -505,7 +505,7 @@ const Kategori = ({ token }) => {
                                         <tbody>
                                             {
                                                 !paginateKategori || paginateKategori && paginateKategori.kategori.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={4}>Data Masih Kosong</td> :
+                                                    <td className='align-middle text-center' colSpan={4}>Data Tidak Ditemukan</td> :
                                                     paginateKategori && paginateKategori.kategori.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             {/* {console.log("KATEGORI : ",row.nama_kategori)} */}
@@ -627,7 +627,7 @@ const Kategori = ({ token }) => {
                                         } */}
                                         <div className="table-total ml-auto">
                                             <div className="row">
-                                                <div className="col-4 mr-0 p-0 mt-3">
+                                                <div className="col-4 mr-0 mt-3">
                                                     <select
                                                         className="form-control"
                                                         id="exampleFormControlSelect2"
@@ -647,7 +647,7 @@ const Kategori = ({ token }) => {
                                                     </select>
                                                 </div>
                                                 <div className="col-8 my-auto">
-                                                    <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {paginateKategori.total}</p>
+                                                    <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {paginateKategori.total} List Data</p>
                                                 </div>
                                             </div>
                                         </div>

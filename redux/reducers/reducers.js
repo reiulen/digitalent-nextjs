@@ -150,6 +150,7 @@ import {
   newSertifikatReducer,
   updateSertifikatReducer,
   singleSertifikatReducer,
+  publishedSertifikatReducer,
 } from "./sertifikat/sertifikat.reducers";
 
 import {
@@ -177,6 +178,7 @@ import { allTandaTanganUserReducer } from "./partnership/user/tanda-tangan.reduc
 
 // Site Management
 // ============== role ===============
+import { pageReducer } from "./site-management/settings/page.reducer";
 import {
   allRolesReducer,
   newRolesReducer,
@@ -213,10 +215,22 @@ import {
   updateThemeReducer,
   deleteThemeReducer,
 } from "./pelatihan/theme.reducers";
+
+// ====================== pelatihan =====================
+import {
+  newTrainingReducer,
+  allTrainingReducer,
+  deleteTrainingReducer,
+} from "./pelatihan/training.reducers";
 //END PELATIHAN
 
 // functional reducer
 
+import {
+  trainingStep1Reducer,
+  registrationStep2Reducer,
+  commitmentStep3Reducer,
+} from "./pelatihan/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
 
@@ -349,6 +363,7 @@ const reducer = combineReducers({
   detailCertificates: detailSertifikatReducer,
   deleteCertificates: deleteSertifikatReducer,
   updateCertificates: updateSertifikatReducer,
+  publishCertificate: publishedSertifikatReducer,
 
   allParticipant: allPesertaReducers,
   detailParticipant: detailPesertaReducer,
@@ -376,6 +391,8 @@ const reducer = combineReducers({
   allAuthentication: authenticationReducer,
 
   // SITE MANAGEMENT
+  // ============ PAGE =======
+  allPage: pageReducer,
   // ============== ROLE ============
   allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
   newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,
@@ -403,6 +420,14 @@ const reducer = combineReducers({
   detailTheme: detailThemeReducer,
   updateTheme: updateThemeReducer,
   deleteTheme: deleteThemeReducer,
+  // ========== pelatihan ===========
+  allTraining: allTrainingReducer,
+  newTraining: newTrainingReducer,
+  deleteTraining: deleteTrainingReducer,
+
+  trainingStep1: trainingStep1Reducer,
+  registrationStep2: registrationStep2Reducer,
+  commitmentStep3: commitmentStep3Reducer,
   //END PELATIHAN
 });
 

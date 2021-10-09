@@ -27,7 +27,6 @@ function ReviewDokumenKerjasama({ token }) {
   const [catatanREvisi, setCatatanREvisi] = useState("");
 
   const [note, setNote] = useState("");
-  console.log("note", note);
 
   // const setDataSingle = async (id) => {
     
@@ -185,7 +184,6 @@ function ReviewDokumenKerjasama({ token }) {
       setDokument(data.data.document);
       setCatatanREvisi(data.data.note);
       setNote(data.data.note);
-      console.log("data single", data);
       if(data.data.status_migrates_id.status === "aktif"){
         router.push({
           pathname:"/partnership/user/kerjasama/hasil",
@@ -333,17 +331,19 @@ function ReviewDokumenKerjasama({ token }) {
 
                   <div className="form-group row">
                     <div className="col-sm-12 d-flex justify-content-end">
-                      {/* <Link href="/partnership/kerjasama">
-                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                      Kembali
+                      <Link href="/partnership/user/kerjasama" passHref>
+                    <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                      Selesai
                     </a>
-                  </Link> */}
-                      <button
-                        // type="submit"
+                  </Link>
+
+                      {/* <button
                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                       >
                         Selesai
-                      </button>
+                      </button> */}
+
+
                     </div>
                   </div>
                 </div>

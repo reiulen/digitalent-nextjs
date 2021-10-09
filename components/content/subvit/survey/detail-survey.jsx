@@ -8,6 +8,8 @@ import Pagination from "react-js-pagination";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import ButtonAction from "../../../ButtonAction";
+import moment from "moment";
+import "moment/locale/id";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -164,7 +166,7 @@ const DetailSurvey = ({ token }) => {
               <div className="col-md-5">
                 <div className="row">
                   <div
-                    className="col title-1 font-weight-bold"
+                    className="col-sm-4 title-1 font-weight-bold"
                     style={{ color: "#000000" }}
                   >
                     <p>Akademi</p>
@@ -172,10 +174,10 @@ const DetailSurvey = ({ token }) => {
                     <p>Pelatihan</p>
                     <p>Status</p>
                   </div>
-                  <div className="col value-1">
-                    <p>{survey.academy.name}</p>
-                    <p>{survey.theme.name}</p>
-                    <p>{survey.training.name}</p>
+                  <div className="col-sm-8 value-1">
+                    <p>{survey.academy ? survey.academy.name : "-"}</p>
+                    <p>{survey.theme ? survey.theme.name : "-"} </p>
+                    <p>{survey.training ? survey.training.name : ""}</p>
                     <p>{survey.status ? "Publish" : "Draft"}</p>
                   </div>
                 </div>
@@ -191,7 +193,10 @@ const DetailSurvey = ({ token }) => {
                     <p>Durasi Tes</p>
                   </div>
                   <div className="col value-1">
-                    <p>1 - 5 Juli 2021</p>
+                    <p>
+                      {moment(survey.start_at).format("ll")} -{" "}
+                      {moment(survey.end_at).format("ll")}
+                    </p>
                     <p>{survey.questions_to_share} Soal</p>
                     <p>{survey.duration} Menit</p>
                   </div>

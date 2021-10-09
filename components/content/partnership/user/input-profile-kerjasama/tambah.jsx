@@ -162,16 +162,20 @@ const Tambah = ({token}) => {
                 },
               }
             );
-            router.push({
-              pathname: "/partnership/user/profile-lembaga/input-profile",
-              query: { successInputProfile: true },
-            });
+            if(router.query.isProfile){
+                router.push({
+                pathname: "/partnership/user/kerjasama/submit-kerjasama",
+                query: { isProfile: true },
+              });
+            }
+            else{
+              router.push({
+                pathname: "/partnership/user/profile-lembaga/input-profile",
+                query: { successInputProfile: true },
+              });
+            }
           } catch (error) {
             notify(error.response.data.message);
-            // notify(
-            //   "cek field kab/kota anda apakah sudah sesuai dengan provinsi yang ada"
-            // );
-
           }
         }
       });

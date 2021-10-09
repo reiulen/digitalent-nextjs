@@ -13,7 +13,6 @@ const Edit = ({ token }) => {
   const router = useRouter();
   let dispatch = useDispatch();
   const allMKCooporation = useSelector((state) => state.allMKCooporation);
-  console.log("allMKCooporation", allMKCooporation);
   const [categoryCooporation, setCategoryCooporation] = useState("");
   const [stateDataSingleOld, setStateDataSingleOld] = useState([]);
   const [stateDataSingle, setStateDataSingle] = useState([]);
@@ -79,7 +78,7 @@ const Edit = ({ token }) => {
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
     }).then(async (result) => {
-      if (result) {
+      if (result.value) {
         // here
         let formData = new FormData();
         formData.append("cooperation_categories", categoryCooporation);
@@ -209,17 +208,22 @@ const Edit = ({ token }) => {
                     return (
                       <div key={index}>
                         <div className="form-group">
+                            {index === 0 ? 
                           <label
                             htmlFor="staticEmail"
                             className="col-form-label"
-                          >
-                            {index === 0 ? "Form Kerjasama" : ""}
+                            >
+                            Form Kerjasama
+                            
                           </label>
-                          <div className="position-relative">
+                            : 
+                            
+                            ""}
+                          <div className="position-relative d-flex align-items-center">
                             <input
                               type="text"
                               name="name"
-                              className="form-control"
+                              className="form-control mr-6"
                               placeholder="Tujuan Kerjasama"
                               value={item.name}
                               onChange={(e) => handleChange(e, index)}
@@ -230,8 +234,8 @@ const Edit = ({ token }) => {
                               <button
                                 type="button"
                                 onClick={() => handleDelete(index)}
-                                className="btn position-absolute"
-                                style={{ top: "0", right: "10px" }}
+                                className="btn"
+                          style={{ backgroundColor:"#EE2D41" }}
                               >
                                 <svg
                                   className="position-relative"
@@ -244,7 +248,7 @@ const Edit = ({ token }) => {
                                   <path fill="none" d="M0 0h24v24H0z" />
                                   <path
                                     d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-9 3h2v6H9v-6zm4 0h2v6h-2v-6zM9 4v2h6V4H9z"
-                                    fill="#ADB5BD"
+                                    fill="#ffffff"
                                   />
                                 </svg>
                               </button>
@@ -263,12 +267,17 @@ const Edit = ({ token }) => {
                     return (
                       <div key={index} className="d-none">
                         <div className="form-group">
+                            {index === 0 ? 
                           <label
                             htmlFor="staticEmail"
                             className="col-form-label"
-                          >
-                            {index === 0 ? "Form Kerjasama" : ""}
+                            >
+                            Form Kerjasama
+                            
                           </label>
+                            : ""
+                            
+                            }
                           <input
                             required
                             type="text"

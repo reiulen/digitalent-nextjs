@@ -44,8 +44,8 @@ const AddTheme = ({ token }) => {
   ];
 
   const optionsStatus = [
-    { value: 1, label: "Publish" },
-    { value: 0, label: "Unpublish" },
+    { value: "1", label: "Publish" },
+    { value: "0", label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -77,12 +77,12 @@ const AddTheme = ({ token }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      const statusString = (status.value += "");
+      // const statusString = (status.value += "");
       const data = {
         name,
         deskripsi: description,
         akademi_id: academy,
-        status: statusString,
+        status: status.value,
       };
       dispatch(newTheme(data, token));
     } else {
@@ -91,7 +91,7 @@ const AddTheme = ({ token }) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data yang bener dong lu !",
+        text: "Isi data dengan benar !",
       });
     }
   };

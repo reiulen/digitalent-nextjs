@@ -46,6 +46,11 @@ const Imagetron = ({ token }) => {
         isDeleted,
     } = useSelector((state) => state.deleteImagetron);
 
+    // const {
+    //     error: updateError,
+    //     isUpdated
+    // } = useSelector(state => state.updatedImagetron)
+
     const [search, setSearch] = useState("");
     const [limit, setLimit] = useState(null);
     const [startDate, setStartDate] = useState(null);
@@ -73,6 +78,16 @@ const Imagetron = ({ token }) => {
         // if (limit) {
         //     router.push(`${router.pathname}?page=1&limit=${limit}`);
         // }
+
+        // if (success) {
+        //     dispatch({
+        //         type: UPDATE_IMAGETRON_REQUEST
+        //     })
+        // }
+        // setTimeout(() => {
+        //     window.location.reload()
+        // }, 8000);
+
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
                 (result) => {
@@ -108,7 +123,7 @@ const Imagetron = ({ token }) => {
             cancelButtonText: "Batal",
         }).then((result) => {
             if (result.isConfirmed) {
-                dispatch(deleteImagetron(id,token));
+                dispatch(deleteImagetron(id, token));
             }
         });
     };
@@ -342,6 +357,34 @@ const Imagetron = ({ token }) => {
         setDisableEndDate(false)
     }
 
+    // const printImage = () => {
+    //     <Image
+    //         loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+    //             "publikasi/images/" +
+    //             imagetron.imagetron.data.imagetron)}
+    //         src={
+    //             process.env.END_POINT_API_IMAGE_PUBLIKASI +
+    //             "publikasi/images/" +
+    //             imagetron.imagetron.data.imagetron
+    //         }
+
+    //         alt='image'
+    //         layout='fill'
+    //         objectFit='fill'
+    //     />
+    // }
+
+    // const printData = () => {
+    //     { console.log("CEK Imagetron :", imagetron) }
+
+    // }
+
+    // caches.open('v1').then(function(cache) {
+    //     cache.delete('/images/image.png').then(function(response) {
+    //         someUIUpdateFunction();
+    //     });
+    // })
+
     return (
         <PageWrapper>
             {
@@ -434,7 +477,7 @@ const Imagetron = ({ token }) => {
                         // color='#74BBB7' 
                         value='64'
                         titleValue='K'
-                        title='Total Konten Author'
+                        title='Total Author'
                         publishedVal=""
                         routePublish={() => handlePublish("")}
                     />
@@ -446,7 +489,7 @@ const Imagetron = ({ token }) => {
                         // color='#F65464' 
                         value={imagetron.data && imagetron.data.unpublish != "" ? imagetron.data.unpublish : 0}
                         titleValue='Imagetron'
-                        title='Total Unpublish'
+                        title='Total Belum Dipublish'
                         publishedVal="0"
                         routePublish={() => handlePublish("0")}
                     />
@@ -709,11 +752,11 @@ const Imagetron = ({ token }) => {
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
-                                        
+
                                         <tbody>
                                             {
                                                 !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
                                                     imagetron && imagetron.data.imagetron.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
@@ -730,7 +773,6 @@ const Imagetron = ({ token }) => {
 
                                                             </td>
                                                             <td className='text-center'>
-
                                                                 <Image
                                                                     alt={row.judul}
                                                                     unoptimized={
@@ -773,7 +815,7 @@ const Imagetron = ({ token }) => {
                                                                     </span>
                                                                 )}
                                                             </td>
-                                                            <td className='align-middle'>Super Admin</td>
+                                                            <td className='align-middle'>{row.role}</td>
                                                             <td className="align-middle d-flex justify-content-center">
 
                                                                 <Link
@@ -798,27 +840,6 @@ const Imagetron = ({ token }) => {
                                                                 </button>
 
                                                             </td>
-                                                            {/* <td className='align-middle'>
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/imagetron/${row.id}`} title="Edit"/>
-                                                                <button
-                                                                    onClick={() => handleDelete(row.id)}
-                                                                    className="btn mr-1"
-                                                                    style={{
-                                                                        background: "#F3F6F9",
-                                                                        borderRadius: "6px",
-                                                                    }}
-                                                                    data-toggle="tooltip" 
-                                                                    data-placement="bottom" 
-                                                                    title="Hapus"
-                                                                    >
-                                                                    <Image
-                                                                        alt="button-action"
-                                                                        src={`/assets/icon/trash.svg`}
-                                                                        width={18}
-                                                                        height={18}
-                                                                    />
-                                                                </button>
-                                                            </td> */}
                                                         </tr>
 
                                                     })
@@ -849,7 +870,7 @@ const Imagetron = ({ token }) => {
                                 {imagetron ?
                                     <div className="table-total ml-auto">
                                         <div className="row">
-                                            <div className="col-4 mr-0 p-0 mt-3">
+                                            <div className="col-4 mr-0 mt-3">
                                                 <select
                                                     className="form-control"
                                                     id="exampleFormControlSelect2"
@@ -869,7 +890,7 @@ const Imagetron = ({ token }) => {
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
-                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {imagetron.data.total}</p>
+                                                <p className='align-middle mt-5 pt-1' style={{ color: '#B5B5C3' }}>Total Data {imagetron.data.total} List Data</p>
                                             </div>
                                         </div>
                                     </div> : ''

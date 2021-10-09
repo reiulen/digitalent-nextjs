@@ -32,6 +32,7 @@ const AddAcademy = ({ token }) => {
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
 
+  const [slug, setSlug] = useState("");
   const [logoPreview, setLogoPreview] = useState("/assets/media/default.jpg");
   const [logoFile, setLogoFile] = useState("");
   const [logoName, setLogoName] = useState("");
@@ -45,8 +46,8 @@ const AddAcademy = ({ token }) => {
   const [status, setStatus] = useState();
 
   const optionsStatus = [
-    { value: 1, label: "Publish" },
-    { value: 0, label: "Unpublish" },
+    { value: "1", label: "Publish" },
+    { value: "0", label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -76,7 +77,7 @@ const AddAcademy = ({ token }) => {
   };
 
   const onChangeLogo = (e) => {
-    const type = ["image/jpg", "image/png", "image/jpeg"];
+    const type = ["image/png"];
     if (e.target.files[0]) {
       if (type.includes(e.target.files[0].type)) {
         if (e.target.files[0].size > 5000000) {
@@ -148,14 +149,16 @@ const AddAcademy = ({ token }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      let statusString = toString(status);
+      // let statusString = toString(status.value);
       const data = {
+        slug,
         name,
         deskripsi: description,
         logo: logoPreview,
         brosur: brosurPreview,
-        status: statusString,
+        status,
       };
+      console.log(data);
       dispatch(newAcademy(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -163,7 +166,7 @@ const AddAcademy = ({ token }) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data yang bener dong lu !",
+        text: "Isi data dengan benar !",
       });
     }
   };
@@ -208,6 +211,28 @@ const AddAcademy = ({ token }) => {
 
           <div className="card-body py-4">
             <form onSubmit={submitHandler}>
+              <div className="form-group mb-4 col-md-4">
+                <label className="col-form-label font-weight-bold">
+                  Kode Akademi
+                </label>
+                <input
+                  type="text"
+                  placeholder="Silahkan Masukan Kode Akademi"
+                  className="form-control"
+                  value={slug}
+                  onChange={(e) => setSlug(e.target.value)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("kode akademi")
+                  }
+                />
+                {simpleValidator.current.message(
+                  "kode akademi",
+                  slug,
+                  "required",
+                  { className: "text-danger" }
+                )}
+              </div>
+
               <div className="form-group mb-4">
                 <label
                   htmlFor="staticEmail"
@@ -241,7 +266,7 @@ const AddAcademy = ({ token }) => {
                       name="gambar"
                       className="custom-file-input"
                       id="inputGroupFile05"
-                      accept="image/*"
+                      accept="image/png"
                       style={{ display: "none" }}
                       onChange={onChangeLogo}
                       onBlur={() =>

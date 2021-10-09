@@ -26,7 +26,7 @@ const DetailDokumenKerjasama = ({token}) => {
         `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/${id}`,
         {
           headers: {
-            authorization: `Bearer ${END_POINT_API_PARTNERSHIP_MITRA}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );

@@ -18,6 +18,9 @@ import {
   SINGLE_SERTIFIKAT_REQUEST,
   SINGLE_SERTIFIKAT_FAIL,
   CLEAR_ERRORS,
+  PUBLISHED_SERTIFIKAT_REQUEST,
+  PUBLISHED_SERTIFIKAT_SUCCESS,
+  PUBLISHED_SERTIFIKAT_FAIL,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
 export const getAllSertifikat =
@@ -98,17 +101,15 @@ export const getDetailSertifikat =
 
 export const newSertifikat = (id, formData, token) => async dispatch => {
   try {
-    console.log("masuk kesini");
     for (var pair of formData.entries()) {
       console.log(pair[0] + ", " + pair[1]);
     }
-    console.log(id, "ini id");
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
       `api/manage_certificates/store/${id}`;
 
-    console.log(token, "INI TOKENNNNNNNNNNN!!");
+    // console.log(token, "INI TOKENNNNNNNNNNN!!");
     const config = {
       headers: {
         Authorization: `Bearer ${token.token}`,
@@ -121,10 +122,12 @@ export const newSertifikat = (id, formData, token) => async dispatch => {
       dispatch({ type: NEW_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    // console.log(error.response.data.message, "masukedispatch");
     console.log(error.response.data.message, "masukedispatch");
-
-    dispatch({ type: NEW_SERTIFIKAT_FAIL, payload: error.message });
+    dispatch({
+      type: NEW_SERTIFIKAT_FAIL,
+      payload: error.message,
+      // payload: error.response.data.message,
+    });
   }
 };
 
@@ -173,3 +176,25 @@ export const getSingleSertifikat =
       dispatch({ type: SINGLE_SERTIFIKAT_FAIL, payload: error.message });
     }
   };
+
+export const getPublishedSertifikat = (id, token) => async dispatch => {
+  try {
+    dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
+    let link =
+      process.env.END_POINT_API_SERTIFIKAT +
+      `api/manage_certificates/image/${id}`;
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    if (data) {
+      dispatch({ type: PUBLISHED_SERTIFIKAT_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    dispatch({ type: PUBLISHED_SERTIFIKAT_FAIL, payload: error.message });
+  }
+};

@@ -10,13 +10,15 @@ import { wrapper } from "../../../redux/store";
 import LoadingPage from "../../../components/LoadingPage";
 
 const EditKategori = dynamic(
-    () => import("../../../components/content/publikasi/kategori/edit"),
-    {
-        // suspense: true,
-        // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow() { return <LoadingPage /> },
-        ssr: false
-    }
+  () => import("../../../components/content/publikasi/kategori/edit"),
+  {
+    // suspense: true,
+    // loading: () => <LoadingSkeleton />,
+    loading: function loadingNow() {
+      return <LoadingPage />;
+    },
+    ssr: false,
+  }
 );
 
 export default function EditKategoriPage(props) {
@@ -34,22 +36,24 @@ export default function EditKategoriPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-    (store) =>
-        async ({ params, req }) => {
-            const session = await getSession({ req });
-            if (!session) {
-                return {
-                    redirect: {
-                        destination: "/",
-                        permanent: false,
-                    },
-                };
-            }
-            await store.dispatch(getDetailKategori(params.id, session.user.user.data.token));
-            return {
-                props: { session, title: "Ubah Kategori - Publikasi" },
-            };
-        }
+  (store) =>
+    async ({ params, req }) => {
+      const session = await getSession({ req });
+      if (!session) {
+        return {
+          redirect: {
+            destination: "http://dts-dev.majapahit.id/",
+            permanent: false,
+          },
+        };
+      }
+      await store.dispatch(
+        getDetailKategori(params.id, session.user.user.data.token)
+      );
+      return {
+        props: { session, title: "Ubah Kategori - Publikasi" },
+      };
+    }
 );
 
 // export const getServerSideProps = wrapper.getServerSideProps((store) => async ({ params }) => {

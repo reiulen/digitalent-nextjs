@@ -15,9 +15,7 @@ const ForgotPassword = () => {
   let dispatch = useDispatch();
   const allAuthentication = useSelector((state) => state.allAuthentication);
   const [emailCode, setEmailCode] = useState("");
-  console.log("emailCode",emailCode)
   const [passwordCode, setPasswordCode] = useState("");
-  console.log("passwordCode",passwordCode)
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
 
@@ -49,7 +47,6 @@ const ForgotPassword = () => {
   };
 
   const submit = (e) => {
-    console.log("asdasdasdasdasdas asdmnasmdansmdnamsda sdamsndamsnd")
     e.preventDefault();
     if (newPassword === "") {
       setError({
@@ -101,8 +98,6 @@ const ForgotPassword = () => {
 
   useEffect(() => {
     if (router.query.code && router.query.email) {
-      console.log("router.query.code",router.query.code)
-      console.log("router.query.email",router.query.email)
       setEmailCode(router.query.email);
       setPasswordCode(router.query.code);
     }
@@ -169,7 +164,7 @@ const ForgotPassword = () => {
                   lineHeight: "38px",
                 }}
               >
-                Password Pemulihan
+                Password Pemulihan Mitra
               </h3>
             </div>
 

@@ -31,6 +31,17 @@ const StepOne = ({ token }) => {
   const [theme_id, setThemeId] = useState(survey.theme_id);
   const [training_id, setTrainingId] = useState(survey.training_id);
 
+  const handleAcademy = (e) => {
+    setAcademyId(e.target.value);
+  };
+
+  const handleTheme = (e) => {
+    setThemeId(e.target.value);
+  };
+
+  const handleTraining = (e) => {
+    setTrainingId(e.target.value);
+  };
   useEffect(() => {
     // if (error) {
     //     dispatch(clearErrors())
@@ -137,15 +148,18 @@ const StepOne = ({ token }) => {
                   <select
                     name="academy_id"
                     id=""
-                    onChange={(e) => setAcademyId(e.target.value)}
+                    onChange={(event) => handleAcademy(event)}
                     className="form-control"
                   >
-                    <option> -Pilih Akademi -</option>
-                    <option value="1" selected>
+                    <option value="" disabled>
+                      {" "}
+                      -Pilih Akademi -
+                    </option>
+                    <option value={1} selected>
                       {" "}
                       Computer Scientist{" "}
                     </option>
-                    <option value="2"> Designer </option>
+                    <option value={2}> Designer </option>
                   </select>
                 </div>
               </div>
@@ -158,15 +172,18 @@ const StepOne = ({ token }) => {
                   <select
                     name="the_id"
                     id=""
-                    onChange={(e) => setThemeId(e.target.value)}
+                    onChange={(event) => handleTheme(event)}
                     className="form-control"
                   >
-                    <option> -Pilih Tema-</option>
-                    <option value="1" selected>
+                    <option value="" disabled>
+                      {" "}
+                      -Pilih Tema-
+                    </option>
+                    <option value={1} selected>
                       {" "}
                       Cloud Computing{" "}
                     </option>
-                    <option value="2"> UI/UX Designer </option>
+                    <option value={2}> UI/UX Designer </option>
                   </select>
                 </div>
               </div>
@@ -179,15 +196,18 @@ const StepOne = ({ token }) => {
                   <select
                     name="training_id"
                     id=""
-                    onChange={(e) => setTrainingId(e.target.value)}
+                    onChange={(event) => handleTraining(event)}
                     className="form-control"
                   >
-                    <option> -Pilih Pelatihan-</option>
-                    <option value="1" selected>
+                    <option value="" disabled>
+                      {" "}
+                      -Pilih Pelatihan-
+                    </option>
+                    <option value={1} selected>
                       {" "}
                       Google Cloud Computing{" "}
                     </option>
-                    <option value="2"> Adobe UI/UX Designer </option>
+                    <option value={2}> Adobe UI/UX Designer </option>
                   </select>
                 </div>
               </div>

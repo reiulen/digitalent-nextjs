@@ -2,22 +2,23 @@ import React, { useState, useEffect, useRef, createRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
-
 // #Page, Component & Library
 
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import PageWrapper from "../../../../../wrapper/page.wrapper";
+import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 // #Icon
 
 export default function KelolasertifikatID({ token }) {
   // console.log(token);
   const router = useRouter();
   const { query } = router;
-  // console.log(router);
+
   const { loading, error, certificate } = useSelector(
     state => state.singleCertificate
   );
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -67,9 +68,21 @@ export default function KelolasertifikatID({ token }) {
                   // placeholder="Masukan Nama Sertifikat"
                   // value={certificate.data.certificate.name}
                 >
-                  {certificate.data.certificate.name}
+                  {certificate?.data?.certificate?.name
+                    ? certificate?.data?.certificate?.name
+                    : "Nama Sertifikat"}
                 </div>
               </div>
+            </div>
+            <div className="card-toolbar">
+              <Link
+                href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}`}
+                passHref
+              >
+                <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3">
+                  Kembali
+                </a>
+              </Link>
             </div>
           </div>
           {/* END HEADER */}
@@ -116,7 +129,7 @@ export default function KelolasertifikatID({ token }) {
                       <div className="my-2">
                         <span
                           className="mx-2 px-2 font-size-h6 px-10 w-100"
-                          // style={{ borderStyle: "dashed" }}
+                          style={{ borderStyle: "dashed" }}
                         >
                           Nama Peserta
                         </span>
@@ -134,15 +147,13 @@ export default function KelolasertifikatID({ token }) {
                           // fontWeight: "bold",
                         }}
                       >
-                        {certificate?.theme}
+                        {certificate?.data?.certificate?.theme?.name}
                       </div>
                       <div className="mt-2 w-100">
                         <span className="w-100">
                           Program{" "}
                           <span className="font-size-h6 font-weight-bold w-100">
-                            {/* {
-                              certificate?.data?.list_certificate[0]?.academy.name
-                            } */}
+                            {certificate?.data?.certificate.academy.name}
                           </span>{" "}
                           Selama
                         </span>
@@ -199,7 +210,7 @@ export default function KelolasertifikatID({ token }) {
                                 >
                                   {el.signature ? (
                                     <Image
-                                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-image-syllabus/${el.signature}`}
+                                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${el.signature}`}
                                       layout="fill"
                                       alt={`Tanda tangan ${i + 1} `}
                                     />
@@ -359,7 +370,7 @@ export default function KelolasertifikatID({ token }) {
                                   >
                                     {el.signature ? (
                                       <Image
-                                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images/${el.signature}`}
+                                        src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-image-syllabus/${el.signature}`}
                                         layout="fill"
                                         alt={`Tanda tangan ${i + 1} `}
                                       />
