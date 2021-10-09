@@ -15,7 +15,6 @@ import {
 const Sidebar = () => {
 
   const [session,loading] = useSession()
-  console.log("session",session)
   const dispatch = useDispatch();
   const getStorageMenu2 = sessionStorage.getItem("menu2");
   const getStorageMenu4 = sessionStorage.getItem("menu4");
@@ -348,7 +347,7 @@ const Sidebar = () => {
           >
             {/* <!--begin::Menu Nav--> */}
 
-              {session === undefined ? "" : session.user.user.data.user.roles[0] === "mitra" ? 
+              { session && session?.user.user.data.user.roles[0] === "mitra" ? 
 
               <ul className="menu-nav">
              
