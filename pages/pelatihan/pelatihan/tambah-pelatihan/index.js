@@ -3,7 +3,19 @@ import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 // import AddTraining from "../../../../components/content/pelatihan/training/insert/add-training-step1";
-import IndexInsert from "../../../../components/content/pelatihan/training/insert/index-insert";
+// import IndexInsert from "../../../../components/content/pelatihan/training/insert/index-insert";
+const IndexInsert = dynamic(
+  () =>
+    import(
+      "../../../../components/content/pelatihan/training/insert/index-insert"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 import {
   getTrainingStep1,

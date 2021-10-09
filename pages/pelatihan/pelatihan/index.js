@@ -2,12 +2,22 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import ListTraining from "../../../components/content/pelatihan/training/list-training";
+// import ListTraining from "../../../components/content/pelatihan/training/list-training";
 
 import { getAllTraining } from "../../../redux/actions/pelatihan/training.actions";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const ListTraining = dynamic(
+  () => import("../../../components/content/pelatihan/training/list-training"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ListTrainingPage(props) {
   const session = props.session.user.user.data;

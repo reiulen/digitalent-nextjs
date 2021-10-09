@@ -7,6 +7,19 @@ import ViewTraining from "../../../../components/content/pelatihan/training/view
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 
+const ViewTraining = dynamic(
+  () =>
+    import(
+      "../../../../components/content/pelatihan/training/view/view-training-step1"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
+
 export default function ViewTrainingPage() {
   return (
     <>
