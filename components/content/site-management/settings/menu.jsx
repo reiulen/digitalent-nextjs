@@ -202,7 +202,7 @@ const Table = ({ token }) => {
       }
 
       getDataMenu(token);
-    }, []);
+    }, [token]);
   return (
     <PageWrapper>
       <ToastContainer
