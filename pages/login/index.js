@@ -1,7 +1,7 @@
 import LoginUser from "../../components/content/auth/user/login";
 import Beranda from "../../user-component/content/beranda/beranda";
 import { getSession } from "next-auth/client";
-//check login
+//check login login
 
 export default function LoginUserPage() {
   return (
