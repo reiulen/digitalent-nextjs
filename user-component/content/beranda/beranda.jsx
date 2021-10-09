@@ -625,7 +625,7 @@ const Beranda = () => {
                     </Carousel>
                 </div> */}
 
-                <div className="mx-5 mb-3">
+                <div className="mb-3">
                     <Carousel
                     indicators={false}
                     nextIcon={false} 
@@ -637,7 +637,7 @@ const Beranda = () => {
                         <Carousel.Item>
                             <div className="row d-flex justify-content-center">
                                 <Link href="#VSGA">
-                                    <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("VSGA", 0)}>
+                                    <Card style={{ width: '14rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("VSGA", 0)}>
                                         {
                                             indexTab === 0 ?
                                                 <Card.Body>
@@ -691,7 +691,7 @@ const Beranda = () => {
 
                                 
                                 <Link href="#FGA">
-                                    <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }}  onClick={() => handleActive("FGA", 1)}>
+                                    <Card style={{ width: '14rem', height:"15rem", cursor:"pointer" }}  onClick={() => handleActive("FGA", 1)}>
                                     {
                                             indexTab === 1 ?
                                                 <Card.Body>
@@ -742,7 +742,7 @@ const Beranda = () => {
 
                                 
                                 <Link href="#PRO">
-                                    <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("PRO", 2)}>
+                                    <Card style={{ width: '14rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("PRO", 2)}>
                                         {
                                             indexTab === 2 ?
                                                 <Card.Body>
@@ -793,7 +793,7 @@ const Beranda = () => {
 
                                 
                                 <Link href="#TA">
-                                    <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }}  onClick={() => handleActive("TA",3)}>
+                                    <Card style={{ width: '14rem', height:"15rem", cursor:"pointer" }}  onClick={() => handleActive("TA",3)}>
                                         {
                                             indexTab === 3 ?
                                                 <Card.Body>
@@ -843,7 +843,7 @@ const Beranda = () => {
                                 </Link>
                                 
                                 <Link href="#GTA">
-                                    <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("GTA",4)}>
+                                    <Card style={{ width: '14rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("GTA",4)}>
                                         {
                                             indexTab === 4 ?
                                                 <Card.Body>
@@ -893,7 +893,7 @@ const Beranda = () => {
                                 </Link>
 
                                 <Link href="#DEA">
-                                    <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("DEA", 5)}>
+                                    <Card style={{ width: '14rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("DEA", 5)}>
                                         {
                                             indexTab === 5 ?
                                                 <Card.Body>
@@ -942,6 +942,59 @@ const Beranda = () => {
                                     </Card>
                                 </Link>
 
+                                <Link href="#TSA">
+                                    <Card style={{ width: '14rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("TSA", 6)}>
+                                        {   
+                                            indexTab === 6 ?
+                                                <Card.Body>
+
+                                                    <Card.Title>
+                                                        <h1 className="font-weight-bolder text-center">
+                                                            TSA
+                                                        </h1>
+                                                    </Card.Title>
+
+                                                    <Card.Text>
+                                                        <div className="text-center font-weight-bolder">
+                                                            Talent Scouting Academy
+                                                        </div>
+                                                    </Card.Text>
+
+                                                </Card.Body>
+                                            :
+                                                <Card.Body>
+
+                                                    <Card.Title>
+                                                        <h1 className="font-weight-bolder text-muted text-center">
+                                                            TSA
+                                                        </h1>
+                                                    </Card.Title>
+
+                                                    <Card.Text>
+                                                        <div className="text-center text-muted font-weight-bolder">
+                                                            Talent Scouting Academy
+                                                        </div>
+                                                    </Card.Text>
+
+                                                </Card.Body>
+                                        }
+
+                                        {
+                                            indexTab === 6 ?
+                                                <div className="bg-primary" style={{height:"10px"}}>
+
+                                                </div>
+                                            :
+                                                <div className="bg-gray" style={{height:"10px"}}>
+
+                                                </div>
+                                        }
+                                    </Card>
+                                </Link>
+                            </div>
+                        </Carousel.Item>
+                        {/* <Carousel.Item>
+                            <div className="row">
                                 <Link href="#TSA">
                                     <Card style={{ width: '15rem', height:"15rem", cursor:"pointer" }} onClick={() => handleActive("TSA", 6)}>
                                         {   
@@ -992,9 +1045,8 @@ const Beranda = () => {
                                     </Card>
                                 </Link>
                             </div>
-                            
 
-                        </Carousel.Item>
+                        </Carousel.Item> */}
                     </Carousel>
                 </div>
 
@@ -1006,7 +1058,7 @@ const Beranda = () => {
                             Multi Media Designer
                         </h1>
                         <div>
-                            <Link href="#home">
+                            <Link href="/detail/akademi/id">
                                 <a className="text-primary d-flex alignment-content-center font-weight-bolder">
                                     <div className="pt-1" style={{color:"#215480"}}> 
                                         Lihat Semua

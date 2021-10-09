@@ -5,9 +5,9 @@
 /.pnp
 .pnp.js
 /.next
-/ckeditor5
-/ckeditor4
-/ckeditor
+/ckeditor5/
+/ckeditor4/
+/ckeditor/
 
 
 # testing
