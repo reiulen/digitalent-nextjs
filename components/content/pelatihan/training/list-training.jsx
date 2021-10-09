@@ -331,10 +331,7 @@ const ListTraining = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
-                  <div
-                    className="position-relative overflow-hidden mt-3"
-                    style={{ maxWidth: "330px" }}
-                  >
+                  <div className="position-relative overflow-hidden mt-3">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -357,9 +354,8 @@ const ListTraining = ({ token }) => {
 
                 <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className="btn border d-flex align-items-center justify-content-between mt-1 w-100"
                     style={{
-                      minWidth: "280px",
                       color: "#bdbdbd",
                       float: "right",
                     }}

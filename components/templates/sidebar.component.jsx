@@ -461,61 +461,61 @@ const Sidebar = () => {
             data-menu-dropdown-timeout="500"
           >
             {/* <!--begin::Menu Nav--> */}
+            
+              { session && session?.user.user.data.user.roles[0] === "mitra" ? (
+                <ul className="menu-nav">
+                  <li
+                    className={`menu-item menu-item-submenu menu-item-open ${
+                      !getStorageMenu4 ? "" : getStorageMenu4
+                    }`}
+                    onClick={() => activeMenuPartnershipMitra()}
+                    aria-haspopup="true"
+                    data-menu-toggle="hover"
+                  >
+                    
+                    <div className="menu-submenu">
+                      <i className="menu-arrow"></i>
+                      <ul className="menu-subnav">
+                        <li
+                          className="menu-item menu-item-parent"
+                          aria-haspopup="true"
+                        >
+                          <span className="menu-link">
+                            <span className="menu-text">Partnership</span>
+                          </span>
+                        </li>
 
-            {session === undefined ? (
-              ""
-            ) : session.user.user.data.user.roles[0] === "mitra" ? (
-              <ul className="menu-nav">
-                <li
-                  className={`menu-item menu-item-submenu menu-item-open ${
-                    !getStorageMenu4 ? "" : getStorageMenu4
-                  }`}
-                  onClick={() => activeMenuPartnershipMitra()}
-                  aria-haspopup="true"
-                  data-menu-toggle="hover"
-                >
-                  
-                  <div className="menu-submenu">
-                    <i className="menu-arrow"></i>
-                    <ul className="menu-subnav">
-                      <li
-                        className="menu-item menu-item-parent"
-                        aria-haspopup="true"
-                      >
-                        <span className="menu-link">
-                          <span className="menu-text">Partnership</span>
-                        </span>
-                      </li>
+                        {/* start partnership loop */}
 
-                      {/* start partnership loop */}
+                        {listMenuPartnershipMitra.map((items, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={`menu-item ${
+                                items.href === router.pathname
+                                  ? "menu-item-active"
+                                  : ""
+                              }`}
+                              aria-haspopup="true"
+                              onClick={() => activeSubItemPartnershipMitra()}
+                            >
+                              <Link href={items.href}>
+                                <a className="menu-link">
+                                  <span className="menu-text">{items.name}</span>
+                                </a>
+                              </Link>
+                            </li>
+                          );
+                        })}
+                        {/* end partnership loop */}
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              
+              ) : (
 
-                      {listMenuPartnershipMitra.map((items, index) => {
-                        return (
-                          <li
-                            key={index}
-                            className={`menu-item ${
-                              items.href === router.pathname
-                                ? "menu-item-active"
-                                : ""
-                            }`}
-                            aria-haspopup="true"
-                            onClick={() => activeSubItemPartnershipMitra()}
-                          >
-                            <Link href={items.href}>
-                              <a className="menu-link">
-                                <span className="menu-text">{items.name}</span>
-                              </a>
-                            </Link>
-                          </li>
-                        );
-                      })}
-                      {/* end partnership loop */}
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            ) : (
-              <ul className="menu-nav">
+                < ul className="menu-nav">
                 <li
                   className={`menu-item menu-item-submenu ${menuItem1}`}
                   onClick={onSetMenuItem1}
@@ -1104,7 +1104,7 @@ const Sidebar = () => {
                   </div>
                 </li>
               </ul>
-            )}
+              )}
 
             {/* <!--end::Menu Nav--> */}
           </div>
