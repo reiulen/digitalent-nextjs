@@ -12,8 +12,8 @@ import {
   IS_MINIMIZE_SIDEBAR,
 } from "../../redux/types/utils/functionals.type";
 
-const Sidebar = () => {
-  const [session, loading] = useSession();
+const Sidebar = ({session}) => {
+  // const [session, loading] = useSession();
   const dispatch = useDispatch();
   const getStorageMenu2 = sessionStorage.getItem("menu2");
   const getStorageMenu4 = sessionStorage.getItem("menu4");
@@ -462,30 +462,32 @@ const Sidebar = () => {
           >
             {/* <!--begin::Menu Nav--> */}
             
-              { session && session?.user.user.data.user.roles[0] === "mitra" ? (
-                <ul className="menu-nav">
-                  <li
-                    className={`menu-item menu-item-submenu menu-item-open ${
-                      !getStorageMenu4 ? "" : getStorageMenu4
-                    }`}
-                    onClick={() => activeMenuPartnershipMitra()}
-                    aria-haspopup="true"
-                    data-menu-toggle="hover"
-                  >
-                    
-                    <div className="menu-submenu">
-                      <i className="menu-arrow"></i>
-                      <ul className="menu-subnav">
-                        <li
-                          className="menu-item menu-item-parent"
-                          aria-haspopup="true"
-                        >
-                          <span className="menu-link">
-                            <span className="menu-text">Partnership</span>
-                          </span>
-                        </li>
+           
 
-                        {/* start partnership loop */}
+            {!session  ? (
+              ""
+            ) : session?.user?.user?.data?.user?.roles[0] === "mitra" ? (
+              <ul className="menu-nav">
+                <li
+                  className={`menu-item menu-item-submenu menu-item-open ${
+                    !getStorageMenu4 ? "" : getStorageMenu4
+                  }`}
+                  onClick={() => activeMenuPartnershipMitra()}
+                  aria-haspopup="true"
+                  data-menu-toggle="hover"
+                >
+                  
+                  <div className="menu-submenu">
+                    <i className="menu-arrow"></i>
+                    <ul className="menu-subnav">
+                      <li
+                        className="menu-item menu-item-parent"
+                        aria-haspopup="true"
+                      >
+                        <span className="menu-link">
+                          <span className="menu-text">Partnership</span>
+                        </span>
+                      </li>
 
                         {listMenuPartnershipMitra.map((items, index) => {
                           return (

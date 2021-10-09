@@ -1,44 +1,44 @@
 import {
-  PAGE_REQUEST,
-  PAGE_SUCCESS,
-  PAGE_FAIL,
-  SET_PAGE,
+  API_REQUEST,
+  API_SUCCESS,
+  API_FAIL,
+  DETAIL_API_REQUEST,
+  DETAIL_API_SUCCESS,
+  DETAIL_API_FAIL,
+  DETAIL_API_RESET,
+  DELETE_API_SUCCESS,
+  DELETE_API_FAIL,
+  DELETE_API_REQUEST,
+  DELETE_API_RESET,
+  POST_API_REQUEST,
+  POST_API_SUCCESS,
+  POST_API_FAIL,
+  POST_API_RESET,
+  UPDATE_API_REQUEST,
+  UPDATE_API_SUCCESS,
+  UPDATE_API_FAIL,
+  UPDATE_API_RESET,
   LIMIT_CONFIGURATION,
+  SET_PAGE,
   SEARCH_COORPORATION,
-  POST_PAGE_REQUEST,
-  POST_PAGE_SUCCESS,
-  POST_PAGE_FAIL,
-  POST_PAGE_RESET,
-  DELETE_PAGE_REQUEST,
-  DELETE_PAGE_SUCCESS,
-  DELETE_PAGE_FAIL,
-  DELETE_PAGE_RESET,
-  DETAIL_PAGE_REQUEST,
-  DETAIL_PAGE_SUCCESS,
-  DETAIL_PAGE_FAIL,
-  DETAIL_PAGE_RESET,
-  UPDATE_PAGE_REQUEST,
-  UPDATE_PAGE_SUCCESS,
-  UPDATE_PAGE_FAIL,
-  UPDATE_PAGE_RESET,
   CLEAR_ERRORS,
-} from "../../../types/site-management/settings/page.type";
+} from "../../../types/site-management/settings/api.type";
 
-export const allPageReducer = (state = { pages: [] }, action) => {
+export const allApiReducer = (state = { apies: [] }, action) => {
   switch (action.type) {
-    case PAGE_REQUEST:
+    case API_REQUEST:
       return {
         loading: true,
       };
 
-    case PAGE_SUCCESS:
+    case API_SUCCESS:
       return {
         loading: false,
-        pages: action.payload.data,
+        apies: action.payload.data,
         page: 1,
       };
 
-    case PAGE_FAIL:
+    case API_FAIL:
       return {
         loading: false,
         error: action.payload,
@@ -54,26 +54,26 @@ export const allPageReducer = (state = { pages: [] }, action) => {
   }
 };
 
-export const deletePageReducer = (state = {}, action) => {
+export const deleteApiReducer = (state = {}, action) => {
   switch (action.type) {
-    case DELETE_PAGE_REQUEST:
+    case DELETE_API_REQUEST:
       return {
         loading: true,
       };
 
-    case DELETE_PAGE_SUCCESS:
+    case DELETE_API_SUCCESS:
       return {
         loading: false,
         isDeleted: action.payload,
       };
 
-    case DELETE_PAGE_RESET:
+    case DELETE_API_RESET:
       return {
         loading: false,
         isDeleted: false,
       };
 
-    case DELETE_PAGE_FAIL:
+    case DELETE_API_FAIL:
       return {
         loading: false,
         error: action.payload,
@@ -90,27 +90,27 @@ export const deletePageReducer = (state = {}, action) => {
   }
 };
 
-export const newPageReducer = (state = { pages: {} }, action) => {
+export const newApiReducer = (state = { apies: {} }, action) => {
   switch (action.type) {
-    case POST_PAGE_REQUEST:
+    case POST_API_REQUEST:
       return {
         loading: true,
       };
 
-    case POST_PAGE_SUCCESS:
+    case POST_API_SUCCESS:
       return {
         loading: false,
         success: action.payload.message,
-        pages: action.payload.data,
+        apies: action.payload.data,
       };
 
-    case POST_PAGE_FAIL:
+    case POST_API_FAIL:
       return {
         loading: false,
         error: action.payload,
       };
 
-    case POST_PAGE_RESET:
+    case POST_API_RESET:
       return {
         success: false,
       };
@@ -125,27 +125,27 @@ export const newPageReducer = (state = { pages: {} }, action) => {
   }
 };
 
-export const detailPageReducer = (state = { pages: {} }, action) => {
+export const detailApiReducer = (state = { apies: {} }, action) => {
   switch (action.type) {
-    case DETAIL_PAGE_REQUEST:
+    case DETAIL_API_REQUEST:
       return {
         loading: true,
       };
 
-    case DETAIL_PAGE_SUCCESS:
+    case DETAIL_API_SUCCESS:
       return {
         loading: false,
         success: action.payload.message,
-        pages: action.payload.data,
+        apies: action.payload.data,
       };
 
-    case DETAIL_PAGE_FAIL:
+    case DETAIL_API_FAIL:
       return {
         loading: false,
         error: action.payload,
       };
 
-    case DETAIL_PAGE_RESET:
+    case DETAIL_API_RESET:
       return {
         success: false,
       };
@@ -160,27 +160,27 @@ export const detailPageReducer = (state = { pages: {} }, action) => {
   }
 };
 
-export const updatePageReducer = (state = { pages: {} }, action) => {
+export const updateApiReducer = (state = { apies: {} }, action) => {
   switch (action.type) {
-    case UPDATE_PAGE_REQUEST:
+    case UPDATE_API_REQUEST:
       return {
         loadingUpdate: true,
       };
 
-    case UPDATE_PAGE_SUCCESS:
+    case UPDATE_API_SUCCESS:
       return {
         loadingUpdate: false,
         isUpdateSuccess: action.payload.message,
-        pagesUpdate: action.payload.data,
+        apiesUpdate: action.payload.data,
       };
 
-    case UPDATE_PAGE_FAIL:
+    case UPDATE_API_FAIL:
       return {
         loadingUpdate: false,
         errorUpdate: action.payload,
       };
 
-    case UPDATE_PAGE_RESET:
+    case UPDATE_API_RESET:
       return {
         isUpdateSuccess: false,
       };
