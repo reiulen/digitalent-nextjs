@@ -182,6 +182,8 @@ import {
   allPageReducer,
   deletePageReducer,
   newPageReducer,
+  detailPageReducer,
+  updatePageReducer,
 } from "./site-management/settings/page.reducer";
 import {
   allRolesReducer,
@@ -399,6 +401,8 @@ const reducer = combineReducers({
   allPage: allPageReducer,
   deletePage: deletePageReducer,
   newPage: newPageReducer,
+  detailPage: detailPageReducer,
+  updatePage: updatePageReducer,
   // ============== ROLE ============
   allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
   newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,

@@ -11,9 +11,16 @@ import {
   POST_PAGE_REQUEST,
   POST_PAGE_SUCCESS,
   POST_PAGE_FAIL,
+  UPDATE_PAGE_REQUEST,
+  UPDATE_PAGE_SUCCESS,
+  UPDATE_PAGE_FAIL,
+  UPDATE_PAGE_RESET,
   DELETE_PAGE_REQUEST,
   DELETE_PAGE_SUCCESS,
   DELETE_PAGE_FAIL,
+  DETAIL_PAGE_REQUEST,
+  DETAIL_PAGE_SUCCESS,
+  DETAIL_PAGE_FAIL,
   CLEAR_ERRORS,
 } from "../../../types/site-management/settings/page.type";
 
@@ -37,14 +44,12 @@ export const getAllPage =
       };
 
       const { data } = await axios.get(link, config);
-      console.log(data);
 
       dispatch({
         type: PAGE_SUCCESS,
         payload: data,
       });
     } catch (error) {
-      console.log("error asdasd", error);
       dispatch({
         type: PAGE_FAIL,
         payload: error.message,
@@ -106,4 +111,67 @@ export const postPage = (sendData, token) => {
       });
     }
   };
+};
+
+export const getDetailPages = (id, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DETAIL_PAGE_REQUEST,
+    });
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+      `api/setting-page/detail/${id}`;
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: DETAIL_PAGE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DETAIL_PAGE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const updatePage = (sendData, id, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: UPDATE_PAGE_REQUEST,
+    });
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    // let link =
+    //   process.env.END_POINT_API_SITE_MANAGEMENT +
+    //   `api/setting-page/update/${id}`;
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/setting-page/update/${id}`,
+      sendData,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_PAGE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PAGE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };

@@ -200,32 +200,26 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <button
+                                  <Link href={`/site-management/setting/ubah-page/${items.id}`}>
+                                  <a
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                    onClick={() =>
-                                      router.push(
-                                        `/site-management/setting/ubah-page`
-                                      )
-                                    }
                                   >
                                     <IconPencil width="16" height="16" />
                                     <div className="text-hover-show-hapus">
                                       Ubah
                                     </div>
-                                  </button>
-                                  <button
+                                  </a>
+                                  </Link>
+                                  <Link href={`/site-management/setting/preview-page/${items.id}`}>
+                                  <a
                                     className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                                    // onClick={() =>
-                                    //   router.push(
-                                    //     `/site-management/setting/preview-page`
-                                    //   )
-                                    // }
                                   >
                                     <IconEye width="16" height="16" />
                                     <div className="text-hover-show-hapus">
                                       Preview
                                     </div>
-                                  </button>
+                                  </a>
+                                  </Link>
 
                                   <button
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"

@@ -2,27 +2,27 @@ import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
 // import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../redux/store";
-import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-
-const PreviewPage = dynamic(
+import LoadingPage from "../../../../components/LoadingPage";
+import { getDetailPages } from "../../../../redux/actions/site-management/settings/page.actions";
+const UbahPage = dynamic(
   () =>
     import(
-      "../../../../components/content/site-management/settings/page/preview-page"
+      "../../../../components/content/site-management/settings/page/ubah-page"
     ),
   {
     loading: function loadingNow() {
-      return <LoadingSkeleton />;
+      return <LoadingPage />;
     },
     ssr: false,
   }
 );
 
-export default function Pages(props) {
+export default function TambahPages(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <PreviewPage token={session.token} />
+        <UbahPage token={session.token} />
       </div>
     </>
   );
@@ -30,7 +30,7 @@ export default function Pages(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query, req }) => {
+    async ({ params, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -41,19 +41,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(
-      //   getAllArtikel(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     query.publish,
-      //     query.startdate,
-      //     query.enddate,
-      //     session.user.user.data.token
-      //   )
-      // );
+      await store.dispatch(
+        getDetailPages(params.id, session.user.user.data.token)
+      );
       return {
-        props: { session, title: "Preview Page - Site Management" },
+        props: { session, title: "Ubah Page - Site Management" },
       };
     }
 );
