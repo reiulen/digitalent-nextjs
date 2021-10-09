@@ -186,6 +186,13 @@ import {
   updatePageReducer,
 } from "./site-management/settings/page.reducer";
 import {
+  allApiReducer,
+  deleteApiReducer,
+  newApiReducer,
+  updateApiReducer,
+  detailApiReducer,
+} from "./site-management/settings/api.reducer";
+import {
   allRolesReducer,
   newRolesReducer,
   detailRolesReducer,
@@ -403,6 +410,12 @@ const reducer = combineReducers({
   newPage: newPageReducer,
   detailPage: detailPageReducer,
   updatePage: updatePageReducer,
+  // ============ API =======
+  allApi: allApiReducer,
+  deleteApi: deleteApiReducer,
+  newApi: newApiReducer,
+  detailApi: detailApiReducer,
+  updateApi: updateApiReducer,
   // ============== ROLE ============
   allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
   newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,

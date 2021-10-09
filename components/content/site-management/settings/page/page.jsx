@@ -29,7 +29,6 @@ const Table = ({ token }) => {
     pages,
   } = useSelector((state) => state.allPage);
 
-  console.log("pages",pages)
 
   const {
     loading: deleteLoading,
@@ -45,9 +44,6 @@ const Table = ({ token }) => {
   if (allLoading) {
     loading = allLoading;
   }
-  // else if (deleteLoading) {
-  //   loading = deleteLoading;
-  // }
   page = Number(page);
 
   const onNewReset = () => {

@@ -461,6 +461,8 @@ const Sidebar = ({session}) => {
             data-menu-dropdown-timeout="500"
           >
             {/* <!--begin::Menu Nav--> */}
+            
+           
 
             {!session  ? (
               ""
@@ -487,35 +489,35 @@ const Sidebar = ({session}) => {
                         </span>
                       </li>
 
-                      {/* start partnership loop */}
+                        {listMenuPartnershipMitra.map((items, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={`menu-item ${
+                                items.href === router.pathname
+                                  ? "menu-item-active"
+                                  : ""
+                              }`}
+                              aria-haspopup="true"
+                              onClick={() => activeSubItemPartnershipMitra()}
+                            >
+                              <Link href={items.href}>
+                                <a className="menu-link">
+                                  <span className="menu-text">{items.name}</span>
+                                </a>
+                              </Link>
+                            </li>
+                          );
+                        })}
+                        {/* end partnership loop */}
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              
+              ) : (
 
-                      {listMenuPartnershipMitra.map((items, index) => {
-                        return (
-                          <li
-                            key={index}
-                            className={`menu-item ${
-                              items.href === router.pathname
-                                ? "menu-item-active"
-                                : ""
-                            }`}
-                            aria-haspopup="true"
-                            onClick={() => activeSubItemPartnershipMitra()}
-                          >
-                            <Link href={items.href}>
-                              <a className="menu-link">
-                                <span className="menu-text">{items.name}</span>
-                              </a>
-                            </Link>
-                          </li>
-                        );
-                      })}
-                      {/* end partnership loop */}
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            ) : (
-              <ul className="menu-nav">
+                < ul className="menu-nav">
                 <li
                   className={`menu-item menu-item-submenu ${menuItem1}`}
                   onClick={onSetMenuItem1}
@@ -1104,7 +1106,7 @@ const Sidebar = ({session}) => {
                   </div>
                 </li>
               </ul>
-            )}
+              )}
 
             {/* <!--end::Menu Nav--> */}
           </div>
