@@ -5,6 +5,10 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 // import ListTraining from "../../../components/content/pelatihan/training/list-training";
 
 import { getAllTraining } from "../../../redux/actions/pelatihan/training.actions";
+import {
+  dropdownAkademi,
+  dropdownTema,
+} from "../../../redux/actions/pelatihan/function.actions";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
@@ -58,6 +62,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      await store.dispatch(dropdownTema(session.user.user.data.token));
 
       return {
         props: { session, title: "List Pelatihan - Pelatihan" },

@@ -230,6 +230,9 @@ import {
   trainingStep1Reducer,
   registrationStep2Reducer,
   commitmentStep3Reducer,
+  drowpdownAkademiReducers,
+  drowpdownTemaReducers,
+  drowpdownPelatihanReducers,
 } from "./pelatihan/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -428,6 +431,9 @@ const reducer = combineReducers({
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,
   commitmentStep3: commitmentStep3Reducer,
+  drowpdownAkademi: drowpdownAkademiReducers,
+  drowpdownTema: drowpdownTemaReducers,
+  drowpdownPelatihan: drowpdownPelatihanReducers,
   //END PELATIHAN
 });
 

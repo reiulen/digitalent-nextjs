@@ -33,6 +33,12 @@ const ListTraining = ({ token }) => {
     error: allError,
     training,
   } = useSelector((state) => state.allTraining);
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
+  const { error: dropdownErrorTema, data: dataTema } = useSelector(
+    (state) => state.drowpdownTema
+  );
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -67,11 +73,8 @@ const ListTraining = ({ token }) => {
   const [showModalRevisi, setShowModalRevisi] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  const optionsAkademi = dataAkademi.data;
+  const optionsTema = dataTema.data
 
   const optionsStatusPelatihan = [
     { value: "review substansi", label: "Review Substansi" },
@@ -103,6 +106,7 @@ const ListTraining = ({ token }) => {
         type: DELETE_TRAINING_RESET,
       });
     }
+    console.log(optionsAkademi);
   }, [isDeleted]);
 
   const handlePagination = (pageNumber) => {
@@ -649,7 +653,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Penyelenggara</label>
             <Select
-              options={options}
+              options={optionsAkademi}
               defaultValue={penyelenggara}
               onChange={(e) =>
                 setPenyelenggara({ value: e.value, label: e.label })
@@ -659,7 +663,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Akademi</label>
             <Select
-              options={options}
+              options={optionsAkademi}
               defaultValue={academy}
               onChange={(e) => setAcademy({ value: e.value, label: e.label })}
             />
@@ -667,7 +671,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
-              options={options}
+              options={optionsTema}
               defaultValue={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />

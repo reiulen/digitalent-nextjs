@@ -90,20 +90,56 @@ export const commitmentStep3Reducer = (
   }
 };
 
-export const drowpdownReducers = (state = { data: [] }, action) => {
+export const drowpdownAkademiReducers = (state = { data: [] }, action) => {
   switch (action.type) {
     case GET_DROPDOWN_AKADEMI:
       return {
-        ...state,
-        data: action.payload.data,
+        data: action.payload,
       };
-      break;
     case ERROR_DROPDOWN_AKADEMI:
       return {
-        ...state,
         error: action.payload,
       };
-      break;
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownTemaReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_TEMA:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_TEMA:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownPelatihanReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_PELATIHAN:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_PELATIHAN:
+      return {
+        error: action.payload,
+      };
     case CLEAR_ERRORS:
       return {
         ...state,
