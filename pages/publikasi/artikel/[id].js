@@ -11,7 +11,7 @@ import { wrapper } from "../../../redux/store";
 import LoadingPage from "../../../components/LoadingPage";
 
 const EditArtikel = dynamic(
-  () => import("../../../components/content/publikasi/artikel/edit"),
+    () => import("../../../components/content/publikasi/artikel/edit"),
   {
     // suspense: true,
     // loading: () => <LoadingSkeleton />, 
