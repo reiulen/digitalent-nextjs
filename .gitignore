@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 /.next
+/ckeditor5
 
 # testing
 /coverage
