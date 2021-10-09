@@ -174,7 +174,6 @@ export const fetchAllMK = (token) => {
           },
         }
       );
-      console.log("dataSortirAll", dataSortirAll);
 
       let totalData = dataSortirAll.data.data.list_cooperations.length;
       // get total data status aktif
@@ -608,18 +607,30 @@ export const exportFileCSV = (token) => {
         }
       );
 
-      // window.open(
-      //   urlExport.config.url +
-      //     `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`,
-      //   {
-      //     paramssz,
-      //     headers: {
-      //       authorization: `Bearer ${token}`,
-      //     },
-      //   }
-      // );
+      var url =
+        urlExport.config.url +
+        `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}?authorization=Bearer ${token}`;
 
-      // console.log("data", data);
+      fetch(url, {
+        paramssz,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }) // FETCH BLOB FROM IT
+        .then((response) => response.blob())
+        .then((blob) => {
+          // RETRIEVE THE BLOB AND CREATE LOCAL URL
+          var _url = window.URL.createObjectURL(blob);
+          window.open(_url, "_blank").focus();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      // router.push(
+      //   urlExport.config.url +
+      //     `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}?authorization=Bearer ${token}`
+      // );
     } catch (error) {
       console.log("object", error);
     }

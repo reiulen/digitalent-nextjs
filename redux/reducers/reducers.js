@@ -178,7 +178,20 @@ import { allTandaTanganUserReducer } from "./partnership/user/tanda-tangan.reduc
 
 // Site Management
 // ============== role ===============
-import { pageReducer } from "./site-management/settings/page.reducer";
+import {
+  allPageReducer,
+  deletePageReducer,
+  newPageReducer,
+  detailPageReducer,
+  updatePageReducer,
+} from "./site-management/settings/page.reducer";
+import {
+  allApiReducer,
+  deleteApiReducer,
+  newApiReducer,
+  updateApiReducer,
+  detailApiReducer,
+} from "./site-management/settings/api.reducer";
 import {
   allRolesReducer,
   newRolesReducer,
@@ -395,7 +408,17 @@ const reducer = combineReducers({
 
   // SITE MANAGEMENT
   // ============ PAGE =======
-  allPage: pageReducer,
+  allPage: allPageReducer,
+  deletePage: deletePageReducer,
+  newPage: newPageReducer,
+  detailPage: detailPageReducer,
+  updatePage: updatePageReducer,
+  // ============ API =======
+  allApi: allApiReducer,
+  deleteApi: deleteApiReducer,
+  newApi: newApiReducer,
+  detailApi: detailApiReducer,
+  updateApi: updateApiReducer,
   // ============== ROLE ============
   allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
   newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,
