@@ -244,7 +244,7 @@ const SubmitKerjasama = ({ token }) => {
               Dokumen Kerjasama
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={submit}>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -410,7 +410,7 @@ const SubmitKerjasama = ({ token }) => {
                 {pdfFile ? (
                   <div className="mt-3">
                     <button
-                      className="btn btn-primary btn-sm mr-2"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                       type="button"
                       onClick={() => showDocument()}
                     >
@@ -443,7 +443,7 @@ const SubmitKerjasama = ({ token }) => {
                 {!viewPDF && <>No pdf file selected </>}
               </div>
 
-              <div className="form-group row">
+              <div className="form-group row mt-6">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/kerjasama">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">

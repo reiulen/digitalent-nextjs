@@ -10,13 +10,31 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
+import {
+  deleteApi,
+  getAllApi
+} from "../../../../../redux/actions/site-management/settings/api.actions";
+
+import { DELETE_API_RESET } from "../../../../../redux/types/site-management/settings/api.type";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
+  const {loading:allLoading,error,apies} = useSelector(state => state.allApi)
+  console.log("apies",apies)
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
+
+  let loading = false;
+  let { page = 1, cari, success } = router.query;
+  if (allLoading) {
+    loading = allLoading;
+  }
+  page = Number(page);
+
   // function delete
-  const apiDelete = (id) => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
       icon: "warning",
@@ -28,7 +46,7 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        // dispatch delete
+        dispatch(deleteApi(id, token));
       }
     });
   };
@@ -38,6 +56,30 @@ const Table = ({ token }) => {
       shallow: true,
     });
   };
+
+  const handleChangeLimit = (limit,token) => {
+    dispatch(getAllApi(page,cari,limit,token))
+  }
+
+  // useEffect(() => {
+  //   if (isDeleted) {
+  //     Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+  //       (result) => {
+  //         if (result.isConfirmed) {
+  //           dispatch(getAllApi(page,cari,limit,token))
+  //         }
+  //       }
+  //     );
+  //     dispatch({
+  //       type: DELETE_API_RESET,
+  //     });
+  //   }
+  // }, [limit, isDeleted, dispatch, cari]);
+
+  const handleSearch = () => {
+    dispatch(getAllApi(page,search,5,token))
+  };
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -62,10 +104,6 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    // onSubmit={handleSubmit}
-                    className="d-flex align-items-center w-100"
-                  >
                     <div className="row w-100">
                       <div className="col-12 col-sm-6">
                         <div className="position-relative overflow-hidden w-100">
@@ -78,9 +116,7 @@ const Table = ({ token }) => {
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
+                            onChange={(e) => setSearch(e.target.value)}
                           />
                           <button
                             type="submit"
@@ -89,19 +125,23 @@ const Table = ({ token }) => {
                               borderTopLeftRadius: "0",
                               borderBottomLeftRadius: "0",
                             }}
+                            onClick={handleSearch}
                           >
                             Cari
                           </button>
                         </div>
                       </div>
                     </div>
-                  </form>
                 </div>
               </div>
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
+                <LoadingTable loading={loading} />
+                  {loading === false ? (
                 <table className="table table-separate table-head-custom table-checkable">
+
+                  
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
                       <th className="text-left">No</th>
@@ -115,13 +155,25 @@ const Table = ({ token }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">api</td>
-                      <td className="align-middle text-left">url</td>
-                      <td className="align-middle text-left">key</td>
-                      <td className="align-middle text-left">pengguna</td>
-                      <td className="align-middle text-left">masa berlaku</td>
+                    {!apies || (apies && apies.length === 0) ? (
+                        <tr>
+                          <td colSpan="5" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        apies &&
+                        apies.map((items, i) => {
+                          return (
+                    <tr key={i}>
+                      <td className="align-middle text-left">{limit === null
+                                  ? i + 1 * (page * 5) - (5 - 1)
+                                  : i + 1 * (page * limit) - (limit - 1)}</td>
+                      <td className="align-middle text-left">{items.api_name}</td>
+                      <td className="align-middle text-left">url belom ada di api</td>
+                      <td className="align-middle text-left">{items.api_key}</td>
+                      <td className="align-middle text-left">{items.username}</td>
+                      <td className="align-middle text-left">{items.from_date} / {items.to_date}</td>
                       <td className="align-middle text-left">
                         <p
                           className="status-div-red mb-0"
@@ -163,8 +215,15 @@ const Table = ({ token }) => {
                         </div>
                       </td>
                     </tr>
+                    );
+                        })
+                      )}
                   </tbody>
                 </table>
+                  ) : (
+                  ""
+                )}
+                
               </div>
 
               <div className="row">
