@@ -1,3 +1,6 @@
+// parameter
+// cari limit page
+
 import {
   PAGE_REQUEST,
   PAGE_SUCCESS,
@@ -11,66 +14,70 @@ import {
   DELETE_PAGE_REQUEST,
   DELETE_PAGE_SUCCESS,
   DELETE_PAGE_FAIL,
+  CLEAR_ERRORS,
 } from "../../../types/site-management/settings/page.type";
+
 import axios from "axios";
 
-export const fetchPage = (token) => {
-  return async (dispatch, getState) => {
-    let keyword = getState().allPage.keyword || "";
-    let limit = getState().allPage.limit || 5;
-    let perPage = getState().allPage.page || 1;
-
-    const params = {
-      cari: keyword,
-      limit: limit,
-      page: perPage,
-    };
+export const getAllPage =
+  (page = 1, cari = "", limit = 5, token) =>
+  async (dispatch) => {
     try {
-      dispatch({
-        type: PAGE_REQUEST,
-      });
-      const { data } = await axios.get(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-page/all`,
-        {
-          params,
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      dispatch({ type: PAGE_REQUEST });
+      let link =
+        process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/setting-page/all?page=${page}`;
+      if (cari) link = link.concat(`&cari=${cari}`);
+      if (limit) link = link.concat(`&limit=${limit}`);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+      console.log(data);
+
       dispatch({
         type: PAGE_SUCCESS,
         payload: data,
       });
-      console.log("berhasil");
     } catch (error) {
+      console.log("error asdasd", error);
       dispatch({
         type: PAGE_FAIL,
-        payload: error.response.data.message,
+        payload: error.message,
       });
     }
   };
-};
 
-export const setPage = (page) => {
-  return {
-    type: SET_PAGE,
-    page,
-  };
-};
+export const deletePage = (id, token) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_PAGE_REQUEST });
 
-export const limitCooporation = (value) => {
-  return {
-    type: LIMIT_CONFIGURATION,
-    limitValue: value,
-  };
-};
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
 
-export const searchCooporation = (text) => {
-  return {
-    type: SEARCH_COORPORATION,
-    text,
-  };
+    const { data } = await axios.delete(
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+        `api/setting-page/delete/${id}`,
+      config
+    );
+
+    dispatch({
+      type: DELETE_PAGE_SUCCESS,
+      payload: data.status,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_PAGE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };
 
 export const postPage = (sendData, token) => {
@@ -95,33 +102,6 @@ export const postPage = (sendData, token) => {
     } catch (error) {
       dispatch({
         type: POST_PAGE_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
-};
-export const deletePage = (id, token) => {
-  return async (dispatch) => {
-    try {
-      dispatch({
-        type: DELETE_PAGE_REQUEST,
-      });
-      const { data } = await axios.post(
-        `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-page/delete/${id}`,
-        null,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      dispatch({
-        type: DELETE_PAGE_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: DELETE_PAGE_FAIL,
         payload: error.response.data.message,
       });
     }

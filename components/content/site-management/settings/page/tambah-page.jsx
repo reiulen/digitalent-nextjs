@@ -29,14 +29,13 @@ const TambahPage = ({ token }) => {
   const [isi_artikel, setIsiArtikel] = useState("");
   const [pageName, setPageName] = useState("");
   const [pageStatus, setPageStatus] = useState("");
-  const [error, setError] = useState({
+  const [errorr, setError] = useState({
     isi_artikel: "",
     pageName: "",
     pageStatus: "",
   });
 
-  const allPage = useSelector((state) => state.allPage);
-  console.log("allPage post data", allPage);
+  const { loading, error, success } = useSelector((state) => state.newPage);
 
   const notify = (value) =>
     toast.info(`🦄 ${value}`, {
@@ -59,15 +58,15 @@ const TambahPage = ({ token }) => {
     e.preventDefault();
     if (isi_artikel === "") {
       setError({
-        ...error,
+        ...errorr,
         isi_artikel: "Konten tidak boleh kosong",
       });
       notify("Konten tidak boleh kosong");
     } else if (pageName === "") {
-      setError({ ...error, pageName: "page name tidak boleh kosong" });
+      setError({ ...errorr, pageName: "page name tidak boleh kosong" });
       notify("page name tidak boleh kosong");
     } else if (pageStatus === "") {
-      setError({ ...error, pageStatus: "page status tidak boleh kosong" });
+      setError({ ...errorr, pageStatus: "page status tidak boleh kosong" });
       notify("page status tidak boleh kosong");
     } else {
       Swal.fire({
@@ -94,21 +93,32 @@ const TambahPage = ({ token }) => {
   };
 
   useEffect(() => {
-    if (allPage.status === "error") {
-      Swal.fire("Gagal menyimpan data", "", "error")
-    } else if (allPage.status === "success"){
-      Swal.fire("Berhasil Menyimpan data", "", "success").then(() => {
-        router.push("/site-management/setting/page")
-      });
-    }else{
-      ""
-    }
+    // if (allPage.status === "error") {
+    //   Swal.fire("Gagal menyimpan data", "", "error")
+    // } else if (allPage.status === "success"){
+    //   Swal.fire("Berhasil Menyimpan data", "", "success").then(() => {
+    //     router.push("/site-management/setting/page")
+    //   });
+    // }else{
+    //   ""
+    // }
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor,
       ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
     };
+
+    if (success) {
+      Swal.fire("Berhasil Menyimpan data", "", "success").then(() => {
+       router.push({
+        pathname: `/site-management/setting/page`,
+        query: { success: true },
+      });
+      });
+      
+    }
+
     setEditorLoaded(true);
-  }, [allPage.status,allPage.errorPostPage]);
+  }, [dispatch, error, success, router]);
   return (
     <PageWrapper>
       <ToastContainer
