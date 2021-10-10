@@ -10,11 +10,8 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
-import {
-  deleteApi,
-  getAllApi,
-} from "../../../../../redux/actions/site-management/settings/api.actions";
 
+import { deleteApi, getAllApi } from "../../../../../redux/actions/site-management/settings/api.actions";
 import { DELETE_API_RESET } from "../../../../../redux/types/site-management/settings/api.type";
 
 const Table = ({ token }) => {

@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 import { Router, useRouter } from "next/router";
 export default function Custom404() {
+
   const router = useRouter();
+  
   useEffect(() => {
     setTimeout(() => {
       router.push("/");
     }, 1000);
-  }, [router]);
+  });
+
   return (
     <div>
       <h1>Oooooo....</h1>

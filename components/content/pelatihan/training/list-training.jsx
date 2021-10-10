@@ -106,7 +106,7 @@ const ListTraining = ({ token }) => {
         type: DELETE_TRAINING_RESET,
       });
     }
-    console.log(optionsAkademi);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDeleted]);
 
   const handlePagination = (pageNumber) => {

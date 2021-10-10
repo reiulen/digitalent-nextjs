@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
@@ -65,6 +66,7 @@ const ListAcademy = ({ token }) => {
         type: DELETE_ACADEMY_RESET,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDeleted]);
 
   const handlePagination = (pageNumber) => {
@@ -247,7 +249,7 @@ const ListAcademy = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <Image
-                                src={row.file_path + row.logo}
+                                src = {row.file_path + row.logo}
                                 width="111"
                                 height="52"
                                 objectFit="cover"

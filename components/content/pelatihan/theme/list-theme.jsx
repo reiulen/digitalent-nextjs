@@ -73,6 +73,7 @@ const ListTheme = ({ token }) => {
         type: DELETE_THEME_RESET,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDeleted]);
 
   const handlePagination = (pageNumber) => {
