@@ -177,7 +177,7 @@ import { allTandaTanganUserReducer } from "./partnership/user/tanda-tangan.reduc
 // end Partnership
 
 // Site Management
-// ============== role ===============
+// ============== page ===============
 import {
   allPageReducer,
   deletePageReducer,
@@ -185,6 +185,7 @@ import {
   detailPageReducer,
   updatePageReducer,
 } from "./site-management/settings/page.reducer";
+// ============== api ===============
 import {
   allApiReducer,
   deleteApiReducer,
@@ -192,6 +193,24 @@ import {
   updateApiReducer,
   detailApiReducer,
 } from "./site-management/settings/api.reducer";
+// ============== data reference ===============
+import {
+  allDataReferenceReducer,
+  deleteDataReferenceReducer,
+  detailDataReferenceReducer,
+  newDataReferenceReducer,
+  updateDataReferenceReducer,
+} from "./site-management/data-reference.reducers";
+// ============== zonasi ===============
+import {
+  allZonasiReducer,
+  deleteZonasiReducer,
+  detailZonasiReducer,
+  newZonasiReducer,
+  updateZonasiReducer,
+} from "./site-management/zonasi.reducers";
+// ============== roles ===============
+
 import {
   allRolesReducer,
   newRolesReducer,
@@ -419,6 +438,18 @@ const reducer = combineReducers({
   newApi: newApiReducer,
   detailApi: detailApiReducer,
   updateApi: updateApiReducer,
+  // ============ DATA REFERENCE =======
+  allDataReference: allDataReferenceReducer,
+  deleteDataReference: deleteDataReferenceReducer,
+  newDataReference: newDataReferenceReducer,
+  detailDataReference: detailDataReferenceReducer,
+  updateDataReference: updateDataReferenceReducer,
+  // ============ DATA ZONASI =======
+  allZonasi: allZonasiReducer,
+  deleteZonasi: deleteZonasiReducer,
+  newZonasi: newZonasiReducer,
+  detailZonasi: detailZonasiReducer,
+  updateZonasi: updateZonasiReducer,
   // ============== ROLE ============
   allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
   newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,
