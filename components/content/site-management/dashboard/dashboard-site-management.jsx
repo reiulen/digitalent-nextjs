@@ -9,11 +9,10 @@ import { getSession } from "next-auth/client";
 
 const DashboardSiteManagement = () => {
   useEffect(() => {
-    // getSession().then((session) => {
-    //   console.log(session.user.user);
-    // });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getSession]);
+    getSession().then((session) => {
+      console.log(session.user.user);
+    });
+  }, []);
   return (
     <>
       <PageWrapper>

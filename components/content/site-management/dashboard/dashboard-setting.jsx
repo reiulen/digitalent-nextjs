@@ -12,8 +12,7 @@ const DashboardSetting = () => {
     getSession().then((session) => {
       console.log(session.user.user);
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getSession]);
+  }, []);
   return (
     <>
       <PageWrapper>
