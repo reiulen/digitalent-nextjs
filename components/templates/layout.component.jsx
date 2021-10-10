@@ -59,7 +59,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
       setUser(session.user.user.data.user);
       setSession(session)
     });
-  }, [getSession]);
+  }, []);
 
   return (
     <>

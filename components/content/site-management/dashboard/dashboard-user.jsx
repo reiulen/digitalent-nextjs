@@ -12,7 +12,7 @@ const DashboardUser = () => {
     getSession().then((session) => {
       console.log(session.user.user);
     });
-  }, [getSession]);
+  }, []);
   return (
     <>
       <PageWrapper>

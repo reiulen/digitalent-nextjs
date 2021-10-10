@@ -38,7 +38,7 @@ const HeaderMobile = () => {
     getSession().then((session) => {
       setUser(session.user.user.data.user);
     });
-  }, [getSession]);
+  }, []);
 
   return (
     <>
