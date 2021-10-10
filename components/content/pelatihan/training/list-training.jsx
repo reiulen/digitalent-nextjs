@@ -131,9 +131,8 @@ const ListTraining = ({ token }) => {
       link = link.concat(`&status_substansi=${statusSubstansi.value}`);
     if (statusPelatihan)
       link = link.concat(`&status_pelatihan=${statusPelatihan.value}`);
-    if (dateRegister)
-      link = link.concat(`&tanggal_pendaftaran=${dateRegister}`);
-    if (dateStart) link = link.concat(`&tanggal_pelaksanaan=${dateStart}`);
+    if (dateRegister) link = link.concat(`&pendaftaran_mulai=${dateRegister}`);
+    if (dateStart) link = link.concat(`&pelatihan_mulai=${dateStart}`);
     router.push(link);
     setShowModal(false);
   };
@@ -147,6 +146,7 @@ const ListTraining = ({ token }) => {
     setDateRegister(null);
     setDateStart(null);
     router.replace("/pelatihan/pelatihan", undefined, { shallow: true });
+    router.push(`${router.pathname}`);
     setShowModal(false);
   };
 

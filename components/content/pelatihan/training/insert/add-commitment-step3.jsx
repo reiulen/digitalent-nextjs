@@ -84,9 +84,8 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
         ...registrationData,
         ...dataStep3,
       };
-      data.akademi_id =
-        data.akademi_id.value && parseInt(data.akademi_id.value);
-      data.tema_id = data.tema_id.value && parseInt(data.tema_id.value);
+      data.akademi_id = data.akademi_id.value;
+      data.tema_id = data.tema_id.value;
       data.kuota_pendaftar = parseInt(data.kuota_pendaftar);
       data.kuota_peserta = parseInt(data.kuota_peserta);
       data.batch = data.batch.value && data.batch.value;

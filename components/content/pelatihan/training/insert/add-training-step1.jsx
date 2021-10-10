@@ -21,6 +21,12 @@ const AddTrainingStep1 = ({ propsStep }) => {
   const router = useRouter();
 
   const { trainingData } = useSelector((state) => state.trainingStep1);
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
+  const { error: dropdownErrorTema, data: dataTema } = useSelector(
+    (state) => state.drowpdownTema
+  );
 
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
@@ -103,6 +109,8 @@ const AddTrainingStep1 = ({ propsStep }) => {
     { value: "2", label: "Strawberry" },
     { value: "3", label: "Vanilla" },
   ];
+  const optionsAkademi = dataAkademi.data;
+  const optionsTema = dataTema.data;
 
   let optionBatch = [];
   for (let index = 0; index < 20; index++) {
@@ -434,7 +442,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
             <label className="col-form-label font-weight-bold">Akademi</label>
             <Select
               placeholder="Silahkan Pilih Akademi"
-              options={options}
+              options={optionsAkademi}
               defaultValue={academy}
               onChange={(e) => setAcademy({ value: e.value, label: e.label })}
               onBlur={() => simpleValidator.current.showMessageFor("akademi")}
@@ -453,7 +461,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
             <label className="col-form-label font-weight-bold">Tema</label>
             <Select
               placeholder="Silahkan Pilih Tema"
-              options={options}
+              options={optionsTema}
               defaultValue={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
               onBlur={() => simpleValidator.current.showMessageFor("tema")}
