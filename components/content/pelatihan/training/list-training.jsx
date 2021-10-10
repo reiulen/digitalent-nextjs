@@ -74,7 +74,7 @@ const ListTraining = ({ token }) => {
   const [publishValue, setPublishValue] = useState(null);
 
   const optionsAkademi = dataAkademi.data;
-  const optionsTema = dataTema.data
+  const optionsTema = dataTema.data;
 
   const optionsStatusPelatihan = [
     { value: "review substansi", label: "Review Substansi" },
@@ -106,8 +106,7 @@ const ListTraining = ({ token }) => {
         type: DELETE_TRAINING_RESET,
       });
     }
-    console.log(optionsAkademi);
-  }, [isDeleted]);
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;

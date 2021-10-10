@@ -60,7 +60,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
     }
 
     setEditorLoaded(true);
-  }, [dispatch, success]);
+  }, [dispatch, success, router]);
 
   const backHandler = () => {
     const data = {

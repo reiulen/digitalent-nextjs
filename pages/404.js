@@ -6,7 +6,7 @@ export default function Custom404() {
     setTimeout(() => {
       router.push("/");
     }, 1000);
-  }, []);
+  }, [router]);
   return (
     <div>
       <h1>Oooooo....</h1>

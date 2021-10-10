@@ -68,7 +68,7 @@ const AddAcademy = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [success]);
+  }, [success, dispatch, router]);
 
   const handleResetError = () => {
     if (error) {

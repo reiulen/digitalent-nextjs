@@ -65,7 +65,7 @@ const ListAcademy = ({ token }) => {
         type: DELETE_ACADEMY_RESET,
       });
     }
-  }, [isDeleted]);
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -251,6 +251,7 @@ const ListAcademy = ({ token }) => {
                                 width="111"
                                 height="52"
                                 objectFit="cover"
+                                alt={`image` + i}
                               />
                             </td>
                             <td className="align-middle">

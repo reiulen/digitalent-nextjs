@@ -84,7 +84,7 @@ const EditAcademy = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [isUpdated]);
+  }, [isUpdated, dispatch, router]);
 
   const handleResetError = () => {
     if (error) {

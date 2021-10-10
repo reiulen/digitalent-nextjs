@@ -73,7 +73,7 @@ const ListTheme = ({ token }) => {
         type: DELETE_THEME_RESET,
       });
     }
-  }, [isDeleted]);
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
