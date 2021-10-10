@@ -86,6 +86,7 @@ const Table = ({ token }) => {
         type: DELETE_PAGE_RESET,
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, isDeleted, dispatch, cari]);
 
 

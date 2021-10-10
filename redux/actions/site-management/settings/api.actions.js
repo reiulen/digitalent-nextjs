@@ -2,22 +2,27 @@ import {
   API_REQUEST,
   API_SUCCESS,
   API_FAIL,
+
   DETAIL_API_REQUEST,
   DETAIL_API_SUCCESS,
   DETAIL_API_FAIL,
   DETAIL_API_RESET,
+
   DELETE_API_SUCCESS,
   DELETE_API_FAIL,
   DELETE_API_REQUEST,
   DELETE_API_RESET,
+
   POST_API_REQUEST,
   POST_API_SUCCESS,
   POST_API_FAIL,
   POST_API_RESET,
+
   UPDATE_API_REQUEST,
   UPDATE_API_SUCCESS,
   UPDATE_API_FAIL,
   UPDATE_API_RESET,
+  
   LIMIT_CONFIGURATION,
   SET_PAGE,
   SEARCH_COORPORATION,
@@ -26,7 +31,7 @@ import {
 
 import axios from "axios";
 
-export const getAllaApi =
+export const getAllApi =
   (page = 1, cari = "", limit = 5, token) =>
   async (dispatch) => {
     try {
@@ -70,7 +75,7 @@ export const deleteApi = (id, token) => async (dispatch) => {
 
     const { data } = await axios.delete(
       process.env.END_POINT_API_SITE_MANAGEMENT +
-        `/api/setting-api/delete/${id}`,
+        `api/setting-api/delete/${id}`,
       config
     );
 
@@ -115,7 +120,6 @@ export const postApi = (sendData, token) => {
 };
 
 // get detail belom ada endpoint
-
 // export const getDetailPages = (id, token) => async (dispatch) => {
 //   try {
 //     dispatch({

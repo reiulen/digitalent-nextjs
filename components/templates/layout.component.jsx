@@ -59,6 +59,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
       setUser(session.user.user.data.user);
       setSession(session)
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getSession]);
 
   return (
