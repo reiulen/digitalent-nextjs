@@ -2,10 +2,23 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
-import AddRegistration from "../../../../../components/content/pelatihan/training/insert/add-registration-step2";
+// import AddRegistration from "../../../../../components/content/pelatihan/training/insert/add-registration-step2";
 
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const AddRegistration = dynamic(
+  () =>
+    import(
+      "../../../../../components/content/pelatihan/training/insert/add-registration-step2"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function AddRegistrationPage() {
   return (

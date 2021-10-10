@@ -67,7 +67,7 @@ const AlamatEdit = () => {
     if (sesuai) {
       return (
         <>
-          <Form.Group className="mb-3" controlId="formGridAddress1">
+          <Form.Group className="mb-3" controlId="formGridAddress1" key={1}>
             <Form.Label>Alamat Lengkap (Sesuai KTP)</Form.Label>
             <Form.Control
               placeholder="Silahkan Masukkan Alamat Lengkap"
@@ -90,6 +90,7 @@ const AlamatEdit = () => {
             <Form.Group as={Col} md={6} controlId="formGridEmail">
               <Form.Label>Provinsi</Form.Label>
               <Select
+                key={1}
                 placeholder="Silahkan Pilih Provinsi"
                 options={optionsProvinsi}
                 defaultValue={provinsiDomisili}
@@ -112,6 +113,7 @@ const AlamatEdit = () => {
             <Form.Group as={Col} md={6} controlId="formGridKelamin">
               <Form.Label>Kota / Kabupaten</Form.Label>
               <Select
+                key={1}
                 placeholder="Silahkan Pilih Kota / Kabupaten"
                 options={optionsKota}
                 defaultValue={kotaDomisili}
@@ -124,7 +126,122 @@ const AlamatEdit = () => {
               />
               {simpleValidator.current.message(
                 "kota domisili",
-                kotaDomisili,
+                kotaDomisili.value,
+                "required",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+          </Row>
+          <Row className="mb-3">
+            <Form.Group as={Col} md={6} controlId="formGridNik">
+              <Form.Label>Kecamatan</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Silahkan Masukkan Kecamatan"
+                value={kecamatanDomisili}
+                onChange={(e) => setKecamatanDomisili(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("kecamatan domisili")
+                }
+              />
+              {simpleValidator.current.message(
+                "kecamatan domisili",
+                kecamatanDomisili,
+                "required",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+
+            <Form.Group as={Col} md={6} controlId="formGridPassword">
+              <Form.Label>Kode Pos</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Silahkan Masukkan Kode Pos"
+                value={kodePosDomisili}
+                onChange={(e) => setKodePosDomisili(e.target.value)}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("kode pos domisili")
+                }
+              />
+              {simpleValidator.current.message(
+                "kode pos domisili",
+                kodePosDomisili,
+                "required|integer",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+          </Row>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Form.Group className="mb-3" controlId="formGridAddress2" key={2}>
+            <Form.Label>Alamat Lengkap (Sesuai KTP)</Form.Label>
+            <Form.Control
+              placeholder="Silahkan Masukkan Alamat Lengkap"
+              value={alamatDomisili}
+              onChange={(e) => setAlamatDomisili(e.target.value)}
+              onBlur={() =>
+                simpleValidator.current.showMessageFor("alamat domisili")
+              }
+            />
+            {simpleValidator.current.message(
+              "alamat domisili",
+              alamatDomisili,
+              "required",
+              {
+                className: "text-danger",
+              }
+            )}
+          </Form.Group>
+          <Row className="mb-3">
+            <Form.Group as={Col} md={6} controlId="formGridEmail">
+              <Form.Label>Provinsi</Form.Label>
+              <Select
+                key={2}
+                placeholder="Silahkan Pilih Provinsi"
+                options={optionsProvinsi}
+                defaultValue={provinsiDomisili}
+                onChange={(e) =>
+                  setProvinsiDomisili({ label: e.label, value: e.value })
+                }
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("provinsi domisili")
+                }
+              />
+              {simpleValidator.current.message(
+                "provinsi domisili",
+                provinsiDomisili.value,
+                "required",
+                {
+                  className: "text-danger",
+                }
+              )}
+            </Form.Group>
+            <Form.Group as={Col} md={6} controlId="formGridKelamin">
+              <Form.Label>Kota / Kabupaten</Form.Label>
+              <Select
+                key={2}
+                placeholder="Silahkan Pilih Kota / Kabupaten"
+                options={optionsKota}
+                defaultValue={kotaDomisili}
+                onChange={(e) =>
+                  setKotaDomisili({ label: e.label, value: e.value })
+                }
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("kota domisili")
+                }
+              />
+              {simpleValidator.current.message(
+                "kota domisili",
+                kotaDomisili.value,
                 "required",
                 {
                   className: "text-danger",
@@ -185,13 +302,13 @@ const AlamatEdit = () => {
     if (simpleValidator.current.allValid()) {
       const data = {
         alamatKtp,
-        provinsiKtp,
+        provinsi: provinsiKtp.value,
         kodePosKtp,
         kecamatanKtp,
-        kotaKtp,
+        kota: kotaKtp.value,
         alamatDomisili,
-        provinsiDomisili,
-        kotaDomisili,
+        provinsiDomisili: provinsiDomisili.value,
+        kotaDomisili: kotaDomisili.value,
         kecamatanDomisili,
         kodePosDomisili,
       };
