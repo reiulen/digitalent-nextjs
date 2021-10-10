@@ -73,7 +73,7 @@ const Header = () => {
     getSession().then((session) => {
       setUser(session.user.user.data.user);
     });
-  }, [router, getSession]);
+  }, [router]);
 
   return (
     <>

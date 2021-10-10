@@ -38,8 +38,7 @@ const HeaderMobile = () => {
     getSession().then((session) => {
       setUser(session.user.user.data.user);
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getSession]);
+  }, []);
 
   return (
     <>
