@@ -59,11 +59,10 @@ const DetailDokumenKerjasama = ({token}) => {
 
   return (
     <PageWrapper>
-      {success ? (
+      { success && (
         <div
           className="alert alert-custom alert-light-success fade show mb-5"
-          role="alert"
-        >
+          role="alert">
           <div className="alert-icon">
             <i className="flaticon2-checkmark"></i>
           </div>
@@ -82,8 +81,6 @@ const DetailDokumenKerjasama = ({token}) => {
             </button>
           </div>
         </div>
-      ) : (
-        ""
       )}
 
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">

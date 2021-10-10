@@ -24,7 +24,6 @@ const AddAcademy = ({ token }) => {
   const [editorLoaded, setEditorLoaded] = useState(false);
   const { CKEditor, ClassicEditor, Base64UploadAdapter } =
     editorRef.current || {};
-
   const { loading, error, success, academy } = useSelector(
     (state) => state.newAcademy
   );
