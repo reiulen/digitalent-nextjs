@@ -1,7 +1,20 @@
-import LoginUser from "../../components/content/auth/user/login";
+import dynamic from "next/dynamic";
+
+// import LoginUser from "../../components/content/auth/user/login";
 import Beranda from "../../user-component/content/beranda/beranda";
 import { getSession } from "next-auth/client";
-//check login login login
+import LoadingSkeleton from "../../components/LoadingSkeleton";
+//check login login
+
+const LoginUser = dynamic(
+  () => import("../../components/content/auth/user/login"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function LoginUserPage() {
   return (
@@ -19,8 +32,7 @@ export async function getServerSideProps(context) {
   if (session) {
     return {
       redirect: {
-        // destination: "/dashboard",
-        destination: "/subvit",
+        destination: "/peserta",
         permanent: false,
       },
     };

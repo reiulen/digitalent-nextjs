@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 // import EditTheme from "../../../components/content/pelatihan/theme/edit-theme";
 import { getDetailTheme } from "../../../redux/actions/pelatihan/theme.actions";
+import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
@@ -45,6 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(
         getDetailTheme(params.id, session.user.user.data.token)
       );
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
 
       return {
         props: { session, title: "Edit Theme - Pelatihan" },

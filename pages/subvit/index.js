@@ -1,6 +1,18 @@
-import DashbardSubvit from "../../components/content/subvit/dashboard/dashboard-subvit";
+import dynamic from "next/dynamic";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
+// import DashbardSubvit from "../../components/content/subvit/dashboard/dashboard-subvit";
 // import Layout from "../../components/templates/layout.component";
 import { getSession } from "next-auth/client";
+
+const DashbardSubvit = dynamic(
+  () => import("../../components/content/subvit/dashboard/dashboard-subvit"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function Dashboard() {
   return (

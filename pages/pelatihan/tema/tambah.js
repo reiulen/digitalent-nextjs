@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
 // import AddTheme from "../../../components/content/pelatihan/theme/add-theme";
 
 import { wrapper } from "../../../redux/store";
@@ -40,6 +41,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
 
       return {
         props: { session, title: "Tambah Tema - Pelatihan" },

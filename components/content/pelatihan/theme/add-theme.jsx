@@ -27,6 +27,9 @@ const AddTheme = ({ token }) => {
   const { loading, error, success, theme } = useSelector(
     (state) => state.newTheme
   );
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -37,11 +40,7 @@ const AddTheme = ({ token }) => {
 
   const [status, setStatus] = useState();
 
-  const options = [
-    { value: 1, label: "Chocolate" },
-    { value: 2, label: "Strawberry" },
-    { value: 3, label: "Vanilla" },
-  ];
+  const optionsAkademi = dataAkademi.data;
 
   const optionsStatus = [
     { value: "1", label: "Publish" },
@@ -66,8 +65,7 @@ const AddTheme = ({ token }) => {
         query: { success: true },
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [success]);
+  }, [success, dispatch, router]);
 
   const handleResetError = () => {
     if (error) {
@@ -142,7 +140,8 @@ const AddTheme = ({ token }) => {
                   Akademi
                 </label>
                 <Select
-                  options={options}
+                  placeholder="Silahkan Pilih Akademi"
+                  options={optionsAkademi}
                   defaultValue={academy}
                   onChange={(e) => setAcademy(e.value)}
                   onBlur={() =>
@@ -162,7 +161,7 @@ const AddTheme = ({ token }) => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Masukan Nama Tema"
+                  placeholder="Silahkan Masukan Nama Tema"
                   className="form-control"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -219,6 +218,7 @@ const AddTheme = ({ token }) => {
                   Status
                 </label>
                 <Select
+                  placeholder="Silahkan Pilih Status"
                   options={optionsStatus}
                   defaultValue={status}
                   onChange={(e) =>
