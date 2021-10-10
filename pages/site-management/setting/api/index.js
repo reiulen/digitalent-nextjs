@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-import { getAllaApi } from "../../../../redux/actions/site-management/settings/api.actions";
+import { getAllApi } from "../../../../redux/actions/site-management/settings/api.actions";
 import { wrapper } from "../../../../redux/store";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 
@@ -40,7 +40,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       await store.dispatch(
-        getAllaApi(
+        getAllApi(
           query.page,
           query.cari,
           query.limit,
