@@ -184,7 +184,7 @@ import {
   newPageReducer,
   detailPageReducer,
   updatePageReducer,
-} from "./site-management/settings/page.reducer";
+} from "./site-management/settings/page.reducers";
 // ============== api ===============
 import {
   allApiReducer,
@@ -192,7 +192,7 @@ import {
   newApiReducer,
   updateApiReducer,
   detailApiReducer,
-} from "./site-management/settings/api.reducer";
+} from "./site-management/settings/api.reducers";
 // ============== data reference ===============
 import {
   allDataReferenceReducer,
@@ -201,6 +201,14 @@ import {
   newDataReferenceReducer,
   updateDataReferenceReducer,
 } from "./site-management/data-reference.reducers";
+// ============== general ===============
+import {
+  allGeneralReducer,
+  deleteGeneralReducer,
+  detailGeneralReducer,
+  newGeneralReducer,
+  updateGeneralReducer,
+} from "./site-management/settings/general.reducers";
 // ============== zonasi ===============
 import {
   allZonasiReducer,
@@ -215,18 +223,18 @@ import {
   allRolesReducer,
   newRolesReducer,
   detailRolesReducer,
-  updateRoleReducer,
+  updateRolesReducer,
   deleteRolesReducer,
 } from "./site-management/role.reducers";
 
-// ============== master-satuan-penyelenggara ===============
+// ============== unit work ===============
 import {
-  allMasterSatuanKerjaPenyelenggarasReducer,
-  newMasterSatuanKerjaPenyelenggarasReducer,
-  detailMasterSatuanKerjaPenyelenggarasReducer,
-  updateMasterSatuanKerjaPenyelenggaraReducer,
-  deleteMasterSatuanKerjaPenyelenggarasReducer,
-} from "./site-management/master-satuan-kerja-penyelenggara.reducers";
+  allUnitWorkReducer,
+  newUnitWorkReducer,
+  detailUnitWorkReducer,
+  updateUnitWorkReducer,
+  deleteUnitWorkReducer,
+} from "./site-management/unit-work.reducers";
 // End Site Management
 
 //PELATIHAN
@@ -444,23 +452,30 @@ const reducer = combineReducers({
   newDataReference: newDataReferenceReducer,
   detailDataReference: detailDataReferenceReducer,
   updateDataReference: updateDataReferenceReducer,
+  // ============ GENERAL =======
+  allGeneral: allGeneralReducer,
+  deleteGeneral: deleteGeneralReducer,
+  newGeneral: newGeneralReducer,
+  detailGeneral: detailGeneralReducer,
+  updateGeneral: updateGeneralReducer,
   // ============ DATA ZONASI =======
   allZonasi: allZonasiReducer,
   deleteZonasi: deleteZonasiReducer,
   newZonasi: newZonasiReducer,
   detailZonasi: detailZonasiReducer,
   updateZonasi: updateZonasiReducer,
-  // ============== ROLE ============
-  allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
-  newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,
-  deleteMasterSatuanKerjaPenyelenggaras:
-    deleteMasterSatuanKerjaPenyelenggarasReducer,
-  detailMasterSatuanKerjaPenyelenggaras:
-    detailMasterSatuanKerjaPenyelenggarasReducer,
-  updateMasterSatuanKerjaPenyelenggara:
-    updateMasterSatuanKerjaPenyelenggaraReducer,
-
-  // ============== END ROLE ============
+  // ============ UNIT WORK =======
+  allUnitWork: allUnitWorkReducer,
+  deleteUnitWork: deleteUnitWorkReducer,
+  newUnitWork: newUnitWorkReducer,
+  detailUnitWork: detailUnitWorkReducer,
+  updateUnitWork: updateUnitWorkReducer,
+  // ============ ROLE =======
+  allRoles: allRolesReducer,
+  newRoles: newRolesReducer,
+  detailRoles: detailRolesReducer,
+  updateRoles: updateRolesReducer,
+  deleteRoles: deleteRolesReducer,
 
   // END SITE MANAGEMENT
 

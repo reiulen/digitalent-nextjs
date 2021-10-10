@@ -163,7 +163,7 @@ const Table = ({ token }) => {
           },
         }
       );
-      Swal.fire("Berhasil Simpan data", "", "success")
+      Swal.fire("Berhasil Simpan data", "", "success");
     } catch (error) {
       notify(error.response.data.message);
     }
@@ -180,42 +180,40 @@ const Table = ({ token }) => {
       progress: undefined,
     });
 
-
-  
   useEffect(() => {
-      async function getDataMenu(token) {
-        try {
-          let { data } = await axios.get(
-            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
-            {
-              headers: {
-                authorization: `Bearer ${token}`,
-              },
-            }
-          );
+    async function getDataMenu(token) {
+      try {
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-menu/all`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-          setArray(data.data)
-          console.log("response data berhasil",data)
-        } catch (error) {
-          notify(error.response.data.message);
-        }
+        setArray(data.data);
+        console.log("response data berhasil", data);
+      } catch (error) {
+        notify(error.response.data.message);
       }
+    }
 
-      getDataMenu(token);
-    }, [token]);
+    getDataMenu(token);
+  }, [token]);
   return (
     <PageWrapper>
       <ToastContainer
-          position="bottom-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-b">
@@ -246,7 +244,7 @@ const Table = ({ token }) => {
                           <div className="form-group">
                             <label>Menu {i + 1}</label>
                             <input
-                            value={parrent.name}
+                              value={parrent.name}
                               name="inputName"
                               onChange={(e) => handleChangeInput(e, i)}
                               type="text"
@@ -262,7 +260,7 @@ const Table = ({ token }) => {
                           <div className="form-group">
                             <label>Link {i + 1}</label>
                             <input
-                            value={parrent.link}
+                              value={parrent.link}
                               name="inputLink"
                               onChange={(e) => handleChangeInput(e, i)}
                               type="text"
@@ -334,7 +332,7 @@ const Table = ({ token }) => {
                               <div className="form-group">
                                 <label>Sub Link {j + 1}</label>
                                 <input
-                                value={child.link}
+                                  value={child.link}
                                   onChange={(e) => handleChangeInput1(e, i, j)}
                                   name="inputLink"
                                   type="text"
