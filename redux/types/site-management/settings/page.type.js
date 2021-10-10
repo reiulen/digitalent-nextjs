@@ -1,6 +1,7 @@
 export const PAGE_REQUEST = "PAGE_REQUEST";
 export const PAGE_SUCCESS = "PAGE_SUCCESS";
 export const PAGE_FAIL = "PAGE_FAIL";
+
 export const LIMIT_CONFIGURATION = "LIMIT_CONFIGURATION";
 export const SET_PAGE = "SET_PAGE";
 export const SEARCH_COORPORATION = "SEARCH_COORPORATION";

@@ -5,8 +5,17 @@ import {
   STORE_REGISTRATION_STEP2,
   GET_COMMITMENT_STEP3,
   STORE_COMMITMENT_STEP3,
-  RESET_COMMITMENT_STEP3,
+  //dropdown
+  GET_DROPDOWN_AKADEMI,
+  ERROR_DROPDOWN_AKADEMI,
+  GET_DROPDOWN_TEMA,
+  ERROR_DROPDOWN_TEMA,
+  GET_DROPDOWN_PELATIHAN,
+  ERROR_DROPDOWN_PELATIHAN,
+  CLEAR_ERRORS,
 } from "../../types/pelatihan/function.type";
+
+import axios from "axios";
 
 export const getTrainingStep1 = () => async (dispatch) => {
   const data = {
@@ -108,4 +117,73 @@ export const storeCommitmentStep3 = (data) => async (dispatch) => {
     type: STORE_COMMITMENT_STEP3,
     payload: data,
   });
+};
+
+export const dropdownAkademi = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/dropdown`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_AKADEMI,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_AKADEMI,
+      payload: error.message,
+    });
+  }
+};
+
+export const dropdownTema = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_PELATIHAN + `api/v1/tema/dropdown`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_TEMA,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_TEMA,
+      payload: error.message,
+    });
+  }
+};
+
+export const dropdownPelatihan = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_PELATIHAN + `api/v1/pelatihan/dropdown`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_PELATIHAN,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_PELATIHAN,
+      payload: error.message,
+    });
+  }
 };

@@ -177,37 +177,64 @@ import { allTandaTanganUserReducer } from "./partnership/user/tanda-tangan.reduc
 // end Partnership
 
 // Site Management
-// ============== role ===============
+// ============== page ===============
 import {
   allPageReducer,
   deletePageReducer,
   newPageReducer,
   detailPageReducer,
   updatePageReducer,
-} from "./site-management/settings/page.reducer";
+} from "./site-management/settings/page.reducers";
+// ============== api ===============
 import {
   allApiReducer,
   deleteApiReducer,
   newApiReducer,
   updateApiReducer,
   detailApiReducer,
-} from "./site-management/settings/api.reducer";
+} from "./site-management/settings/api.reducers";
+// ============== data reference ===============
+import {
+  allDataReferenceReducer,
+  deleteDataReferenceReducer,
+  detailDataReferenceReducer,
+  newDataReferenceReducer,
+  updateDataReferenceReducer,
+} from "./site-management/data-reference.reducers";
+// ============== general ===============
+import {
+  allGeneralReducer,
+  deleteGeneralReducer,
+  detailGeneralReducer,
+  newGeneralReducer,
+  updateGeneralReducer,
+} from "./site-management/settings/general.reducers";
+// ============== zonasi ===============
+import {
+  allZonasiReducer,
+  deleteZonasiReducer,
+  detailZonasiReducer,
+  newZonasiReducer,
+  updateZonasiReducer,
+} from "./site-management/zonasi.reducers";
+// ============== roles ===============
+
 import {
   allRolesReducer,
   newRolesReducer,
   detailRolesReducer,
-  updateRoleReducer,
+  updateRolesReducer,
   deleteRolesReducer,
 } from "./site-management/role.reducers";
 
-// ============== master-satuan-penyelenggara ===============
+// ============== unit work ===============
 import {
-  allMasterSatuanKerjaPenyelenggarasReducer,
-  newMasterSatuanKerjaPenyelenggarasReducer,
-  detailMasterSatuanKerjaPenyelenggarasReducer,
-  updateMasterSatuanKerjaPenyelenggaraReducer,
-  deleteMasterSatuanKerjaPenyelenggarasReducer,
-} from "./site-management/master-satuan-kerja-penyelenggara.reducers";
+  allUnitWorkReducer,
+  newUnitWorkReducer,
+  detailUnitWorkReducer,
+  updateUnitWorkReducer,
+  deleteUnitWorkReducer,
+} from "./site-management/unit-work.reducers";
 // End Site Management
 
 //PELATIHAN
@@ -243,6 +270,9 @@ import {
   trainingStep1Reducer,
   registrationStep2Reducer,
   commitmentStep3Reducer,
+  drowpdownAkademiReducers,
+  drowpdownTemaReducers,
+  drowpdownPelatihanReducers,
 } from "./pelatihan/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -416,17 +446,36 @@ const reducer = combineReducers({
   newApi: newApiReducer,
   detailApi: detailApiReducer,
   updateApi: updateApiReducer,
-  // ============== ROLE ============
-  allMasterSatuanKerjaPenyelenggaras: allMasterSatuanKerjaPenyelenggarasReducer,
-  newMasterSatuanKerjaPenyelenggaras: newMasterSatuanKerjaPenyelenggarasReducer,
-  deleteMasterSatuanKerjaPenyelenggaras:
-    deleteMasterSatuanKerjaPenyelenggarasReducer,
-  detailMasterSatuanKerjaPenyelenggaras:
-    detailMasterSatuanKerjaPenyelenggarasReducer,
-  updateMasterSatuanKerjaPenyelenggara:
-    updateMasterSatuanKerjaPenyelenggaraReducer,
-
-  // ============== END ROLE ============
+  // ============ DATA REFERENCE =======
+  allDataReference: allDataReferenceReducer,
+  deleteDataReference: deleteDataReferenceReducer,
+  newDataReference: newDataReferenceReducer,
+  detailDataReference: detailDataReferenceReducer,
+  updateDataReference: updateDataReferenceReducer,
+  // ============ GENERAL =======
+  allGeneral: allGeneralReducer,
+  deleteGeneral: deleteGeneralReducer,
+  newGeneral: newGeneralReducer,
+  detailGeneral: detailGeneralReducer,
+  updateGeneral: updateGeneralReducer,
+  // ============ DATA ZONASI =======
+  allZonasi: allZonasiReducer,
+  deleteZonasi: deleteZonasiReducer,
+  newZonasi: newZonasiReducer,
+  detailZonasi: detailZonasiReducer,
+  updateZonasi: updateZonasiReducer,
+  // ============ UNIT WORK =======
+  allUnitWork: allUnitWorkReducer,
+  deleteUnitWork: deleteUnitWorkReducer,
+  newUnitWork: newUnitWorkReducer,
+  detailUnitWork: detailUnitWorkReducer,
+  updateUnitWork: updateUnitWorkReducer,
+  // ============ ROLE =======
+  allRoles: allRolesReducer,
+  newRoles: newRolesReducer,
+  detailRoles: detailRolesReducer,
+  updateRoles: updateRolesReducer,
+  deleteRoles: deleteRolesReducer,
 
   // END SITE MANAGEMENT
 
@@ -451,6 +500,9 @@ const reducer = combineReducers({
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,
   commitmentStep3: commitmentStep3Reducer,
+  drowpdownAkademi: drowpdownAkademiReducers,
+  drowpdownTema: drowpdownTemaReducers,
+  drowpdownPelatihan: drowpdownPelatihanReducers,
   //END PELATIHAN
 });
 

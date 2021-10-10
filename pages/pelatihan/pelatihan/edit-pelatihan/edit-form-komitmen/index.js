@@ -2,10 +2,23 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
-import EditCommitment from "../../../../../components/content/pelatihan/training/edit/edit-commitment-step3";
+// import EditCommitment from "../../../../../components/content/pelatihan/training/edit/edit-commitment-step3";
 
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const EditCommitment = dynamic(
+  () =>
+    import(
+      "../../../../../components/content/pelatihan/training/edit/edit-commitment-step3"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditCommitmentPage() {
   return (

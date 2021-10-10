@@ -2,10 +2,20 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import AddTheme from "../../../components/content/pelatihan/theme/add-theme";
+// import AddTheme from "../../../components/content/pelatihan/theme/add-theme";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const AddTheme = dynamic(
+  () => import("../../../components/content/pelatihan/theme/add-theme"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function AddThemePage(props) {
   const session = props.session.user.user.data;
