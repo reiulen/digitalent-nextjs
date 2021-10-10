@@ -60,6 +60,7 @@ const AddCommitmentStep3 = ({ propsStep, token }) => {
     }
 
     setEditorLoaded(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, success]);
 
   const backHandler = () => {

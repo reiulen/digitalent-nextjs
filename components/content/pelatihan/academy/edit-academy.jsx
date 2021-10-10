@@ -84,6 +84,7 @@ const EditAcademy = ({ token }) => {
         query: { success: true },
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isUpdated]);
 
   const handleResetError = () => {
