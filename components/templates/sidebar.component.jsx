@@ -268,11 +268,11 @@ const Sidebar = ({session}) => {
       name: "Setting CSS",
       href: "/site-management/setting/css-editor",
     },
-    {
-      id: 18,
-      name: "Setting Pelatihan",
-      href: "/site-management/setting/pelatihan",
-    },
+    // {
+    //   id: 18,
+    //   name: "Setting Pelatihan",
+    //   href: "/site-management/setting/pelatihan",
+    // },
   ]);
   const activeMenuSiteManagement = () => {
     if (sessionStorage.getItem("menu-site-management")) {
