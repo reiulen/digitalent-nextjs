@@ -2,12 +2,26 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import ListTraining from "../../../components/content/pelatihan/training/list-training";
+// import ListTraining from "../../../components/content/pelatihan/training/list-training";
 
 import { getAllTraining } from "../../../redux/actions/pelatihan/training.actions";
+import {
+  dropdownAkademi,
+  dropdownTema,
+} from "../../../redux/actions/pelatihan/function.actions";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const ListTraining = dynamic(
+  () => import("../../../components/content/pelatihan/training/list-training"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ListTrainingPage(props) {
   const session = props.session.user.user.data;
@@ -48,6 +62,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
+      await store.dispatch(dropdownTema(session.user.user.data.token));
 
       return {
         props: { session, title: "List Pelatihan - Pelatihan" },

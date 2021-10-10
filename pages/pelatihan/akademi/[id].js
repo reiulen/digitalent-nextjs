@@ -2,11 +2,21 @@ import React from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import EditAcademy from "../../../components/content/pelatihan/academy/edit-academy";
+// import EditAcademy from "../../../components/content/pelatihan/academy/edit-academy";
 import { getDetailAcademy } from "../../../redux/actions/pelatihan/academy.actions";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const EditAcademy = dynamic(
+  () => import("../../../components/content/pelatihan/academy/edit-academy"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditAcademyPage(props) {
   const session = props.session.user.user.data;

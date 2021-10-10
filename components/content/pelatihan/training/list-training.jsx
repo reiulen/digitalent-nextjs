@@ -33,6 +33,12 @@ const ListTraining = ({ token }) => {
     error: allError,
     training,
   } = useSelector((state) => state.allTraining);
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
+  const { error: dropdownErrorTema, data: dataTema } = useSelector(
+    (state) => state.drowpdownTema
+  );
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -67,11 +73,8 @@ const ListTraining = ({ token }) => {
   const [showModalRevisi, setShowModalRevisi] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  const optionsAkademi = dataAkademi.data;
+  const optionsTema = dataTema.data
 
   const optionsStatusPelatihan = [
     { value: "review substansi", label: "Review Substansi" },
@@ -103,6 +106,7 @@ const ListTraining = ({ token }) => {
         type: DELETE_TRAINING_RESET,
       });
     }
+    console.log(optionsAkademi);
   }, [isDeleted]);
 
   const handlePagination = (pageNumber) => {
@@ -331,10 +335,7 @@ const ListTraining = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
-                  <div
-                    className="position-relative overflow-hidden mt-3"
-                    style={{ maxWidth: "330px" }}
-                  >
+                  <div className="position-relative overflow-hidden mt-3">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -357,9 +358,8 @@ const ListTraining = ({ token }) => {
 
                 <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className="btn border d-flex align-items-center justify-content-between mt-1 w-100"
                     style={{
-                      minWidth: "280px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -653,7 +653,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Penyelenggara</label>
             <Select
-              options={options}
+              options={optionsAkademi}
               defaultValue={penyelenggara}
               onChange={(e) =>
                 setPenyelenggara({ value: e.value, label: e.label })
@@ -663,7 +663,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Akademi</label>
             <Select
-              options={options}
+              options={optionsAkademi}
               defaultValue={academy}
               onChange={(e) => setAcademy({ value: e.value, label: e.label })}
             />
@@ -671,7 +671,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
-              options={options}
+              options={optionsTema}
               defaultValue={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
