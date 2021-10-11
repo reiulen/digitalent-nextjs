@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Pagination from "react-js-pagination";
@@ -10,18 +10,139 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Swal from "sweetalert2";
+
+import {
+  updatePage
+} from "../../../../../redux/actions/site-management/settings/page.actions";
 
 const UbahPage = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+
+  const editorRef = useRef();
+  const [editorLoaded, setEditorLoaded] = useState(false);
+  const { CKEditor, ClassicEditor, Base64UploadAdapter } =
+    editorRef.current || {};
+
+  const {
+    loading: allLoading,
+    error,
+    pages,
+    success,
+  } = useSelector((state) => state.detailPage);
+
+
+  const {
+    // loadingUpdate: allLoading,
+
+    errorUpdate,
+    pagesUpdate,
+    isUpdateSuccess,
+  } = useSelector((state) => state.updatePage);
+  console.log("pages detail", pages);
+
+  const [isi_artikel, setIsiArtikel] = useState(pages.content);
+  const [pageName, setPageName] = useState(pages.name);
+  const [pageUrl, setPageUrl] = useState(pages.url);
+  const [pageStatus, setPageStatus] = useState(pages.status);
+  const [errorr, setError] = useState({
+    isi_artikel: "",
+    pageName: "",
+    pageStatus: "",
+  });
 
   const onNewReset = () => {
     router.replace("/site-management/api", undefined, {
       shallow: true,
     });
   };
+
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (isi_artikel === "") {
+      setError({
+        ...errorr,
+        isi_artikel: "Konten tidak boleh kosong",
+      });
+      notify("Konten tidak boleh kosong");
+    } else if (pageName === "") {
+      setError({ ...errorr, pageName: "page name tidak boleh kosong" });
+      notify("page name tidak boleh kosong");
+    } else if (pageStatus === "") {
+      setError({ ...errorr, pageStatus: "page status tidak boleh kosong" });
+      notify("page status tidak boleh kosong");
+    } else {
+      Swal.fire({
+        title: "Apakah anda yakin simpan ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then((result) => {
+        if (result.value) {
+          const sendData = {
+            name: pageName,
+            content: isi_artikel,
+            status: pageStatus,
+            _method:"PUT"
+          };
+          
+          dispatch(updatePage(sendData,router.query.id, token));
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    editorRef.current = {
+      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor,
+      ClassicEditor: require("@ckeditor/ckeditor5-build-classic"),
+    };
+
+    if (isUpdateSuccess) {
+      Swal.fire("Berhasil Mengupdate data", "", "success").then(() => {
+        router.push({
+          pathname: `/site-management/setting/page`,
+          query: { successUpdate: true },
+        });
+      });
+    }
+
+    setEditorLoaded(true);
+  }, [dispatch, error, isUpdateSuccess, router]);
+
   return (
     <PageWrapper>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <form onSubmit={submit}>
       <div className="row">
         <div className="col-12 col-xl-8 order-1">
           <div className="card card-custom card-stretch gutter-b">
@@ -44,12 +165,192 @@ const UbahPage = ({ token }) => {
                 <div
                   className="my-10"
                   style={{
-                    height: "10rem",
                     width: "100%",
-                    border: "1px solid black",
                   }}
                 >
-                  ck editor
+                    <div className="ckeditor">
+                      {editorLoaded ? (
+                        <CKEditor
+                          editor={ClassicEditor}
+                          data={isi_artikel}
+                          onReady={(editor) => {
+                            // You can store the "editor" and use when it is needed.
+                            // console.log("Editor is ready to use!", editor);
+                          }}
+                          onChange={(event, editor) => {
+                            const data = editor.getData();
+                            setIsiArtikel(data);
+                            // console.log({ event, editor, data });
+                          }}
+                          // onBlur={() =>
+                          //   simpleValidator.current.showMessageFor(
+                          //     "isi_artikel"
+                          //   )
+                          // }
+                          config={{
+                            placeholder: "Tulis Deskripsi",
+                            // plugins: [
+                            //   Image, ImageToolbar, ImageCaption, ImageStyle, ImageResize, LinkImage
+                            // ],
+                            // image: {
+                            //   toolbar: [
+                            //     'imageStyle:block',
+                            //     'imageStyle:side',
+                            //     '|',
+                            //     'toggleImageCaption',
+                            //     'imageTextAlternative',
+                            //   ]
+                            // }
+                          }}
+                          // config={{
+                          //   plugins: [
+                          //     Essentials,
+                          //     Paragraph,
+                          //     Bold,
+                          //     Italic,
+                          //     Heading,
+                          //     Indent,
+                          //     IndentBlock,
+                          //     Underline,
+                          //     Strikethrough,
+                          //     BlockQuote,
+                          //     Font,
+                          //     Alignment,
+                          //     List,
+                          //     Link,
+                          //     MediaEmbed,
+                          //     PasteFromOffice,
+                          //     Image,
+                          //     ImageStyle,
+                          //     ImageToolbar,
+                          //     ImageUpload,
+                          //     ImageResize,
+                          //     Base64UploadAdapter,
+                          //     Table,
+                          //     TableToolbar,
+                          //     TextTransformation,
+                          //   ],
+                          //   toolbar: [
+                          //     'heading',
+                          //     '|',
+                          //     'bold',
+                          //     'italic',
+                          //     'underline',
+                          //     'strikethrough',
+                          //     '|',
+                          //     'fontSize',
+                          //     'fontColor',
+                          //     'fontBackgroundColor',
+                          //     '|',
+                          //     'alignment',
+                          //     'outdent',
+                          //     'indent',
+                          //     'bulletedList',
+                          //     'numberedList',
+                          //     'blockQuote',
+                          //     '|',
+                          //     'link',
+                          //     'insertTable',
+                          //     'imageUpload',
+                          //     'mediaEmbed',
+                          //     '|',
+                          //     'undo',
+                          //     'redo',
+                          //   ],
+                          //   heading: {
+                          //     options: [
+                          //       {
+                          //         model: 'paragraph',
+                          //         view: 'p',
+                          //         title: 'Paragraph',
+                          //         class: 'ck-heading_paragraph'
+                          //       },
+                          //       {
+                          //         model: 'heading1',
+                          //         view: 'h1',
+                          //         title: 'Heading 1',
+                          //         class: 'ck-heading_heading1'
+                          //       },
+                          //       {
+                          //         model: 'heading2',
+                          //         view: 'h2',
+                          //         title: 'Heading 2',
+                          //         class: 'ck-heading_heading2'
+                          //       },
+                          //       {
+                          //         model: 'heading3',
+                          //         view: 'h3',
+                          //         title: 'Heading 3',
+                          //         class: 'ck-heading_heading3'
+                          //       }
+                          //     ]
+                          //   },
+                          //   fontSize: {
+                          //     options: [
+                          //       9,
+                          //       10,
+                          //       11,
+                          //       12,
+                          //       13,
+                          //       14,
+                          //       15,
+                          //       16,
+                          //       17,
+                          //       18,
+                          //       19,
+                          //       20,
+                          //       21,
+                          //       23,
+                          //       25,
+                          //       27,
+                          //       29,
+                          //       31,
+                          //       33,
+                          //       35
+                          //     ]
+                          //   },
+                          //   alignment: {
+                          //     options: ['justify', 'left', 'center', 'right']
+                          //   },
+                          //   table: {
+                          //     contentToolbar: [
+                          //       'tableColumn',
+                          //       'tableRow',
+                          //       'mergeTableCells'
+                          //     ]
+                          //   },
+                          //   image: {
+                          //     resizeUnit: 'px',
+                          //     toolbar: [
+                          //       'imageStyle:alignLeft',
+                          //       'imageStyle:full',
+                          //       'imageStyle:alignRight',
+                          //       '|',
+                          //       'imageTextAlternative'
+                          //     ],
+                          //     styles: ['full', 'alignLeft', 'alignRight']
+                          //   },
+                          //   typing: {
+                          //     transformations: {
+                          //       remove: [
+                          //         'enDash',
+                          //         'emDash',
+                          //         'oneHalf',
+                          //         'oneThird',
+                          //         'twoThirds',
+                          //         'oneForth',
+                          //         'threeQuarters'
+                          //       ]
+                          //     }
+                          //   },
+                          //   placeholder: 'Tulis Deskripsi'
+                          // }}
+                        />
+                      ) : (
+                        <p>Tunggu Sebentar</p>
+                      )}
+                    </div>
+                    
                 </div>
                 <div className="form-group row">
                   <div className="col-sm-12 d-flex justify-content-end">
@@ -59,7 +360,7 @@ const UbahPage = ({ token }) => {
                       </a>
                     </Link>
                     <button
-                      type="button"
+                      type="submit"
                       className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                     >
                       Simpan
@@ -80,42 +381,52 @@ const UbahPage = ({ token }) => {
                 Page Attributes
               </h3>
               <form className="w-100">
-              <div className="form-group">
-                <label style={{ fontSize: "16px" }}>Page Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Placeholder"
-                />
-                <span className="form-text text-muted">
+                <div className="form-group">
+                  <label style={{ fontSize: "16px" }}>Page name</label>
+                  <input
+                  onChange={(e)=>setPageName(e.target.value)}
+                    value={pageName}
+                    type="text"
+                    className="form-control"
+                    placeholder="Placeholder"
+                  />
+                  {/* <span className="form-text text-muted">
                     Please enter your full name
-                  </span>
-              </div>
-              <div className="form-group">
-                <label style={{ fontSize: "16px" }}>URL</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Placeholder"
-                />
-                <span className="form-text text-muted">
+                  </span> */}
+                </div>
+                <div className="form-group">
+                  <label style={{ fontSize: "16px" }}>Page url</label>
+                  <input
+                  onChange={(e)=>setPageUrl(e.target.value)}
+                    value={pageUrl}
+                    type="text"
+                    className="form-control"
+                    placeholder="Placeholder"
+                  />
+                  {/* <span className="form-text text-muted">
                     Please enter your full name
-                  </span>
-              </div>
-              <div className="form-group">
-                <label htmlFor="exampleSelect1">Page Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
-                </select>
-                <span className="form-text text-muted">
-                    Please enter your full name
-                  </span>
-              </div>
+                  </span> */}
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleSelect1">Page Status</label>
+                  {pages.status === "Listed" ? (
+                    <select className="form-control" onChange={(e)=>setPageStatus(e.target.value)} id="exampleSelect1">
+                      <option value="Listed">Listed</option>
+                      <option value="Unlisted">Unlisted</option>
+                    </select>
+                  ) : (
+                    <select className="form-control" onChange={(e)=>setPageStatus(e.target.value)} id="exampleSelect1">
+                      <option value="Unlisted">Unlisted</option>
+                      <option value="Listed">Listed</option>
+                    </select>
+                  )}
+                </div>
               </form>
             </div>
           </div>
         </div>
       </div>
+      </form>
     </PageWrapper>
   );
 };

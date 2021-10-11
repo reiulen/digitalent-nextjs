@@ -27,6 +27,9 @@ const AddTheme = ({ token }) => {
   const { loading, error, success, theme } = useSelector(
     (state) => state.newTheme
   );
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -37,15 +40,11 @@ const AddTheme = ({ token }) => {
 
   const [status, setStatus] = useState();
 
-  const options = [
-    { value: 1, label: "Chocolate" },
-    { value: 2, label: "Strawberry" },
-    { value: 3, label: "Vanilla" },
-  ];
+  const optionsAkademi = dataAkademi.data;
 
   const optionsStatus = [
-    { value: 1, label: "Publish" },
-    { value: 0, label: "Unpublish" },
+    { value: "1", label: "Publish" },
+    { value: "0", label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -66,7 +65,7 @@ const AddTheme = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [success]);
+  }, [success, dispatch, router]);
 
   const handleResetError = () => {
     if (error) {
@@ -77,12 +76,12 @@ const AddTheme = ({ token }) => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
-      const statusString = (status.value += "");
+      // const statusString = (status.value += "");
       const data = {
         name,
         deskripsi: description,
         akademi_id: academy,
-        status: statusString,
+        status: status.value,
       };
       dispatch(newTheme(data, token));
     } else {
@@ -141,7 +140,8 @@ const AddTheme = ({ token }) => {
                   Akademi
                 </label>
                 <Select
-                  options={options}
+                  placeholder="Silahkan Pilih Akademi"
+                  options={optionsAkademi}
                   defaultValue={academy}
                   onChange={(e) => setAcademy(e.value)}
                   onBlur={() =>
@@ -161,7 +161,7 @@ const AddTheme = ({ token }) => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Masukan Nama Tema"
+                  placeholder="Silahkan Masukan Nama Tema"
                   className="form-control"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -218,6 +218,7 @@ const AddTheme = ({ token }) => {
                   Status
                 </label>
                 <Select
+                  placeholder="Silahkan Pilih Status"
                   options={optionsStatus}
                   defaultValue={status}
                   onChange={(e) =>

@@ -30,6 +30,9 @@ const ListTheme = ({ token }) => {
     error: deleteError,
     isDeleted,
   } = useSelector((state) => state.deleteTheme);
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
 
   let { page = 1, success } = router.query;
   page = Number(page);
@@ -54,10 +57,10 @@ const ListTheme = ({ token }) => {
   const [status, setStatus] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+  const optionsAkademi = dataAkademi.data;
+  const optionsStatus = [
+    { value: "1", label: "Publish" },
+    { value: "0", label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -73,7 +76,7 @@ const ListTheme = ({ token }) => {
         type: DELETE_THEME_RESET,
       });
     }
-  }, [isDeleted]);
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -294,7 +297,7 @@ const ListTheme = ({ token }) => {
                           <td className="align-middle">{row.name}</td>
                           <td className="align-middle">500 Peminat</td>
                           <td className="align-middle">
-                            {row.status ? (
+                            {row.status === "1" ? (
                               <span className="label label-inline label-light-success font-weight-bold">
                                 Publish
                               </span>
@@ -411,7 +414,7 @@ const ListTheme = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Akademi</label>
             <Select
-              options={options}
+              options={optionsAkademi}
               defaultValue={academy}
               onChange={(e) => setAcademy({ value: e.value, label: e.label })}
             />
@@ -419,7 +422,7 @@ const ListTheme = ({ token }) => {
           <div className="form-group mb-0">
             <label className="p-0">Status</label>
             <Select
-              options={options}
+              options={optionsStatus}
               defaultValue={status}
               onChange={(e) => setStatus({ value: e.value, label: e.label })}
             />

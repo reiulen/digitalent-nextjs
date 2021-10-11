@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 // import Layout from "../../../components/templates/layout.component";
 // import LoadingPage from "../../../components/LoadingPage";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import ListPeserta from "../../../components/content/site-management/user/list-peserta";
+import ListPeserta from "../../../components/content/site-management/user/peserta-dts/list-peserta";
 
 import { getAllSubtanceQuestionBanks } from "../../../redux/actions/subvit/subtance.actions";
 import { wrapper } from "../../../redux/store";

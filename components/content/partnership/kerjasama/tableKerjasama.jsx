@@ -45,7 +45,6 @@ import {
 import { RESET_VALUE_SORTIR } from "../../../../redux/types/partnership/management_cooporation.type";
 
 const Table = ({ token }) => {
-  console.log("token admin", token);
   const router = useRouter();
   let { update, success, successTerima, successReject, successMakeREvisi } =
     router.query;
@@ -55,7 +54,6 @@ const Table = ({ token }) => {
 
   let dispatch = useDispatch();
   const allMK = useSelector((state) => state.allMK);
-  console.log("allMK", allMK);
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
@@ -380,10 +378,10 @@ const Table = ({ token }) => {
           {/* card 1 */}
           <CardPage
             background="bg-light-success "
-            icon="user-white.svg"
+            icon="Done-circle1.svg"
             color="#ffffff"
             value={allMK.totalDataActive}
-            titleValue="Kerjasama"
+            titleValue=""
             title="Kerjasama Aktif"
             publishedVal="1"
             routePublish={() => dispatch(changeValueStatusCard("active"))}
@@ -392,20 +390,20 @@ const Table = ({ token }) => {
           {/* card 2 */}
           <CardPage
             background="bg-light-warning"
-            icon="user-white.svg"
+            icon="Info-circle.svg"
             color="#ffffff"
             value={allMK.totalDataAnother}
-            titleValue="Pengajuan Kerjasama"
+            titleValue=""
             title="Pengajuan Kerjasama"
             publishedVal="1"
             routePublish={() => dispatch(changeValueStatusCard("submission"))}
           />
           <CardPage
             background="bg-light-danger"
-            icon="user-white.svg"
+            icon="Error-circle.svg"
             color="#ffffff"
             value={sumWillExpire}
-            titleValue="Kerjasama akan Habis"
+            titleValue=""
             title="Kerjasama akan Habis"
             publishedVal="1"
             routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
@@ -416,15 +414,15 @@ const Table = ({ token }) => {
 
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="d-flex flex-wrap align-items-center justify-content-between p-8">
+          <div className="d-flex flex-wrap align-items-center justify-content-between px-8 py-4">
             <h1
-              className="card-title font-weight-bolder text-dark"
+              className="card-title font-weight-bolder text-dark mb-0 mt-4"
               style={{ fontSize: "24px" }}
             >
               Kerjasama
             </h1>
             <Link href="/partnership/kerjasama/tambah">
-              <a className="btn btn-rounded-full bg-blue-primary text-white">
+              <a className="btn btn-rounded-full bg-blue-primary text-white mt-4">
                 <IconAdd className="mr-3" width="18" height="16" />
                 Tambah kerjasama
               </a>

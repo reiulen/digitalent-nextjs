@@ -198,15 +198,15 @@ const Table = ({ token }) => {
       )}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
-          <div className="d-flex flex-wrap align-items-center justify-content-between p-8">
+          <div className="d-flex flex-wrap align-items-center justify-content-between px-8 py-4">
             <h1
-              className="card-title font-weight-bolder text-dark"
+              className="card-title font-weight-bolder text-dark mb-0 mt-4"
               style={{ fontSize: "24px" }}
             >
               Master Mitra
             </h1>
             <Link href="/partnership/mitra/tambah">
-              <a className="btn btn-rounded-full bg-blue-primary text-white">
+              <a className="btn btn-rounded-full bg-blue-primary text-white mt-4">
                 <IconAdd
                   className="mr-3"
                   width="16"

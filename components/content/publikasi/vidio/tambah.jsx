@@ -79,7 +79,7 @@ const TambahVidio = ({ token }) => {
     const [isi_video, setIsiVideo] = useState('');
     const [url_video, setUrlVideo] = useState('')
     const [gambar, setGambar] = useState('')
-    const [tag, setTag] = useState('')
+    const [tag, setTag] = useState([])
     const [gambarPreview, setGambarPreview] = useState('/assets/media/default.jpg')
     const [iconPlus, setIconPlus] = useState(
         "/assets/icon/Add.svg"
@@ -88,6 +88,7 @@ const TambahVidio = ({ token }) => {
     const [publish, setPublish] = useState(0)
     const [publishDate, setPublishDate] = useState(null);
     const [disablePublishDate, setDisablePublishDate] = useState(true)
+    const [disableTag, setDisableTag] = useState(false)
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
@@ -117,6 +118,19 @@ const TambahVidio = ({ token }) => {
         //     }
         //     reader.readAsDataURL(e.target.files[0])
         // }
+    }
+
+    const handleTag = (data) => {
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].length; j++) {
+                if (data[i][j] === " ") {
+                    setDisableTag(true)
+                } else {
+                    setDisableTag(false)
+                }
+            }
+        }
+        setTag(data)
     }
 
     const handleChangePublish = (e) => {
@@ -177,7 +191,7 @@ const TambahVidio = ({ token }) => {
                 }
 
                 dispatch(newVideo(data, token))
-                console.log("Unpublish :", data)
+                // console.log("Unpublish :", data)
             } else {
 
                 const data = {
@@ -193,7 +207,7 @@ const TambahVidio = ({ token }) => {
                 }
 
                 dispatch(newVideo(data, token))
-                console.log("Publish :", data)
+                // console.log("Publish :", data)
             }
 
         } else {
@@ -415,12 +429,19 @@ const TambahVidio = ({ token }) => {
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
                                         name="fruits"
-                                        placeHolder="Isi Tag disini dan Enter"
+                                        placeHolder="Isi Tag disini"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
-                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
+                                    {
+                                        disableTag === true ?
+                                            <p className="text-danger">
+                                                Tag tidak bisa terdiri dari "SPACE" character saja
+                                            </p>
+                                            :
+                                            null
+                                    }
                                 </div>
                             </div>
                             <div className="form-group row">

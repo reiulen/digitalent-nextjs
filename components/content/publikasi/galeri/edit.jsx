@@ -106,7 +106,7 @@ const EditGaleri = ({ token }) => {
 
     useEffect(() => {
         handleDataToArr(galeri.gambar)
-    }, [])
+    })
 
     useEffect(() => {
 
@@ -160,6 +160,7 @@ const EditGaleri = ({ token }) => {
     const [disablePublishDate, setDisablePublishDate] = useState(galeri.publish === 0 ? true : false)
     const [image, setImage] = useState(null)
     const [totalImage, setTotalImage] = useState(1)
+    const [disableTag, setDisableTag] = useState(false)
 
     const handleDataToArr = (data) => {
         let arr = []
@@ -321,6 +322,19 @@ const EditGaleri = ({ token }) => {
         ]);
         setTotalImage((totalImage) + 1)
     };
+
+    const handleTag = (data) => {
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].length; j++) {
+                if (data[i][j] === " ") {
+                    setDisableTag(true)
+                } else {
+                    setDisableTag(false)
+                }
+            }
+        }
+        setTag(data)
+    }
 
     const handleData = (temps, onCall) => {
         if (publishDate === null) {
@@ -505,7 +519,7 @@ const EditGaleri = ({ token }) => {
     return (
         <PageWrapper>
             {
-                console.log("Cek Edit Image :",galeri)
+                console.log("Cek Edit Image :", galeri)
             }
 
             {/* {
@@ -716,12 +730,19 @@ const EditGaleri = ({ token }) => {
                                 <div className="col-sm-12">
                                     <TagsInput
                                         value={tag}
-                                        onChange={setTag}
+                                        onChange={(data) => handleTag(data)}
                                         name="fruits"
                                         placeHolder="Isi Tag disini dan Enter"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
-                                    {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
+                                    {
+                                        disableTag === true ?
+                                            <p className="text-danger">
+                                                Tag tidak bisa terdiri dari "SPACE" character saja
+                                            </p>
+                                            :
+                                            null
+                                    }
                                 </div>
                             </div>
 

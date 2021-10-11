@@ -27,7 +27,6 @@ function ReviewDokumenKerjasama({ token }) {
   const [catatanREvisi, setCatatanREvisi] = useState("");
 
   const [note, setNote] = useState("");
-  console.log("note", note);
 
   // const setDataSingle = async (id) => {
     
@@ -185,7 +184,6 @@ function ReviewDokumenKerjasama({ token }) {
       setDokument(data.data.document);
       setCatatanREvisi(data.data.note);
       setNote(data.data.note);
-      console.log("data single", data);
       if(data.data.status_migrates_id.status === "aktif"){
         router.push({
           pathname:"/partnership/user/kerjasama/hasil",
@@ -278,20 +276,20 @@ function ReviewDokumenKerjasama({ token }) {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress active-line"></div>
-                  <div className="circle-progress active-circle">
-                    <span className="title-progress">
-                      Submit Dokumen Kerjasama
+                  <div className="line-progress"></div>
+                  <div className="circle-progress">
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Submit Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress active-line"></div>
-                  <div className="circle-progress active-circle">
-                    <span className="title-progress">
-                      Review Dokumen Kerjasama
+                  <div className="line-progress"></div>
+                  <div className="circle-progress">
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Review Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>

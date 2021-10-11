@@ -117,8 +117,6 @@ const DetailDokumenKerjasama = ({token}) => {
                 },
               }
             );
-            // alert("berhasil");
-            console.log("data",data)
             router.push({
               pathname: `/partnership/user/kerjasama/review-kerjasama-1`,
               query: { successSubmitKerjasama: true,id:data.data.id },
@@ -266,8 +264,8 @@ const DetailDokumenKerjasama = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Submit Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Submit Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>
@@ -276,8 +274,8 @@ const DetailDokumenKerjasama = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Review Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Review Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>

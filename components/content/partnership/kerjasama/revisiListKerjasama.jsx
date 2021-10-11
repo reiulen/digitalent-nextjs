@@ -55,12 +55,12 @@ function RevisiList({ token }) {
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title fz-20 fw-500 text-dark">
+            <h3 className="card-title fz-20 fw-500 text-dark mb-0">
               Review Kerjasama
             </h3>
           </div>
 
-          <div className="card-body pb-28">
+          <div className="card-body pb-28 pt-0">
             <ul style={styleList}>
               {listCardREvisi.length === 0
                 ? ""

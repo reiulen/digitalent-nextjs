@@ -13,6 +13,14 @@ import {
   fetchTtdPartner,
 } from "../../../../redux/actions/partnership/tandaTangan.actions";
 
+
+// 
+
+// import React from "react";
+// import { PDFtoIMG } from "react-pdf-to-image";
+// import file from "../../../../components/assets/pad.pdf";
+
+// 
 const listStyle = {
   padding: "0",
   listStyle: "none",
@@ -63,7 +71,6 @@ export default function PenandatanganVirtual({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const allTandaTangan = useSelector((state) => state.allTandaTangan);
-  console.log("allTandaTangan", allTandaTangan);
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps } = useDropzone({
     accept: ".pdf",
@@ -95,6 +102,7 @@ export default function PenandatanganVirtual({ token }) {
 
   return (
     <PageWrapper>
+      {/* <PDFtoIMG file={file}> */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -321,6 +329,21 @@ export default function PenandatanganVirtual({ token }) {
           </div>
         </div>
       </div>
+    {/* </PDFtoIMG> */}
     </PageWrapper>
   );
 }
+
+
+
+
+
+
+
+// const TestD = () => (
+//   <div>
+    
+//   </div>
+// );
+
+// export default TestD;

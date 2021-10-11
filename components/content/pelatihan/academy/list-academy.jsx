@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
@@ -65,7 +66,7 @@ const ListAcademy = ({ token }) => {
         type: DELETE_ACADEMY_RESET,
       });
     }
-  }, [isDeleted]);
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -251,6 +252,7 @@ const ListAcademy = ({ token }) => {
                                 width="111"
                                 height="52"
                                 objectFit="cover"
+                                alt={`image` + i}
                               />
                             </td>
                             <td className="align-middle">
@@ -268,7 +270,7 @@ const ListAcademy = ({ token }) => {
                             <td className="align-middle">150</td>
                             <td className="align-middle">50 Mitra</td>
                             <td className="align-middle">
-                              {row.status ? (
+                              {row.status === "1" ? (
                                 <span className="label label-inline label-light-success font-weight-bold">
                                   Publish
                                 </span>

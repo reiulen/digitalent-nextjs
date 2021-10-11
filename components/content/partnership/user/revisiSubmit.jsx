@@ -88,8 +88,6 @@ const RevisiSubmit = ({token}) => {
 
   const [lengthListCard, setLengthListCard] = useState("")
   const [indexCard, setIndexCard] = useState("")
-  console.log("lengthListCard",lengthListCard)
-  console.log("indexCard",indexCard)
   const getLengthListCard = async (id) => {
     
   };
@@ -98,8 +96,6 @@ const RevisiSubmit = ({token}) => {
   const handleChange = (e, index) => {
     let dataaa = [...allCooperation];
     dataaa[index].form_content = e.target.value;
-    console.log("dataaa", dataaa);
-    // console.log("index",index)
     setAllCooperation(dataaa);
   };
 
@@ -146,7 +142,6 @@ const RevisiSubmit = ({token}) => {
           },
         }
       );
-      console.log("data list revisi",data.data.length -1)
       setLengthListCard(data.data.length - 1)
     } catch (error) {
       console.log("action getSIngle gagal", error);
@@ -208,8 +203,8 @@ const RevisiSubmit = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Submit Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Submit Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>
@@ -218,8 +213,8 @@ const RevisiSubmit = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Review Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Review Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>

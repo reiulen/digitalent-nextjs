@@ -13,6 +13,7 @@ import {
   deleteTraining,
   clearErrors,
 } from "../../../../redux/actions/pelatihan/training.actions";
+import { DELETE_TRAINING_RESET } from "../../../../redux/types/pelatihan/training.type";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -32,6 +33,12 @@ const ListTraining = ({ token }) => {
     error: allError,
     training,
   } = useSelector((state) => state.allTraining);
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
+  const { error: dropdownErrorTema, data: dataTema } = useSelector(
+    (state) => state.drowpdownTema
+  );
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -66,16 +73,40 @@ const ListTraining = ({ token }) => {
   const [showModalRevisi, setShowModalRevisi] = useState(false);
   const [publishValue, setPublishValue] = useState(null);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+  const optionsAkademi = dataAkademi.data;
+  const optionsTema = dataTema.data;
+
+  const optionsStatusPelatihan = [
+    { value: "review substansi", label: "Review Substansi" },
+    { value: "menunggu", label: "Menunggu" },
+    { value: "pendaftaran", label: "Pendaftaran" },
+    { value: "seleksi administrasi", label: "Seleksi Administrasi" },
+    { value: "seleksi substansi", label: "Seleksi Substansi" },
+    { value: "pelatihan", label: "Pelatihan" },
+    { value: "selesai", label: "Selesai" },
   ];
 
   const optionsStatusSubstansi = [
-    { value: "1", label: "Review Substansi" },
-    { value: "2", label: "Menunggu" },
+    { value: "review", label: "Review" },
+    { value: "revisi", label: "Revisi" },
+    { value: "disetujui", label: "Disetujui" },
+    { value: "ditolak", label: "Ditolak" },
   ];
+
+  useEffect(() => {
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        }
+      );
+      dispatch({
+        type: DELETE_TRAINING_RESET,
+      });
+    }
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -100,9 +131,8 @@ const ListTraining = ({ token }) => {
       link = link.concat(`&status_substansi=${statusSubstansi.value}`);
     if (statusPelatihan)
       link = link.concat(`&status_pelatihan=${statusPelatihan.value}`);
-    if (dateRegister)
-      link = link.concat(`&tanggal_pendaftaran=${dateRegister}`);
-    if (dateStart) link = link.concat(`&tanggal_pelaksanaan=${dateStart}`);
+    if (dateRegister) link = link.concat(`&pendaftaran_mulai=${dateRegister}`);
+    if (dateStart) link = link.concat(`&pelatihan_mulai=${dateStart}`);
     router.push(link);
     setShowModal(false);
   };
@@ -116,6 +146,7 @@ const ListTraining = ({ token }) => {
     setDateRegister(null);
     setDateStart(null);
     router.replace("/pelatihan/pelatihan", undefined, { shallow: true });
+    router.push(`${router.pathname}`);
     setShowModal(false);
   };
 
@@ -303,10 +334,7 @@ const ListTraining = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
-                  <div
-                    className="position-relative overflow-hidden mt-3"
-                    style={{ maxWidth: "330px" }}
-                  >
+                  <div className="position-relative overflow-hidden mt-3">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -329,9 +357,8 @@ const ListTraining = ({ token }) => {
 
                 <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className="btn border d-flex align-items-center justify-content-between mt-1 w-100"
                     style={{
-                      minWidth: "280px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -447,7 +474,7 @@ const ListTraining = ({ token }) => {
                             <td className="align-middle">
                               <div className="d-flex">
                                 <Link
-                                  href={`/pelatihan/pelatihan/edit-pelatihan/${1}`}
+                                  href={`/pelatihan/pelatihan/edit-pelatihan/${row.id}`}
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -459,7 +486,7 @@ const ListTraining = ({ token }) => {
                                   </a>
                                 </Link>
                                 <Link
-                                  href={`/pelatihan/pelatihan/view-pelatihan/${1}`}
+                                  href={`/pelatihan/pelatihan/view-pelatihan/${row.id}`}
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -473,7 +500,7 @@ const ListTraining = ({ token }) => {
                                 {row.status_substansi === "revisi" && (
                                   <button
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
-                                    onClick={() => handleModalRevisi(1)}
+                                    onClick={() => handleModalRevisi(row.id)}
                                     data-toggle="tooltip"
                                     data-placement="bottom"
                                     title="Revisi"
@@ -482,7 +509,7 @@ const ListTraining = ({ token }) => {
                                   </button>
                                 )}
                                 <Link
-                                  href={`/pelatihan/pelatihan/tambah-form-lpj/${1}`}
+                                  href={`/pelatihan/pelatihan/tambah-form-lpj/${row.id}`}
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -495,7 +522,7 @@ const ListTraining = ({ token }) => {
                                 </Link>
                                 {row.status_pelatihan === "pendaftaran" && (
                                   <Link
-                                    href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${1}`}
+                                    href={`/pelatihan/rekap-pendaftaran/detail-rekap-pendaftaran/${row.id}`}
                                   >
                                     <a
                                       className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -521,7 +548,7 @@ const ListTraining = ({ token }) => {
                                     </a>
                                   </Link>
                                 )}
-                                <Link href={`/pelatihan/pelatihan/${1}`}>
+                                <Link href={`/pelatihan/pelatihan/${row.id}`}>
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                     data-toggle="tooltip"
@@ -533,7 +560,7 @@ const ListTraining = ({ token }) => {
                                 </Link>
                                 <button
                                   className="btn btn-link-action bg-blue-secondary text-white"
-                                  onClick={() => handleDelete(1)}
+                                  onClick={() => handleDelete(row.id)}
                                   data-toggle="tooltip"
                                   data-placement="bottom"
                                   title="Hapus"
@@ -553,7 +580,7 @@ const ListTraining = ({ token }) => {
               <div className="row">
                 <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                   <Pagination
-                    activePage={1}
+                    activePage={page}
                     itemsCountPerPage={5}
                     totalItemsCount={10}
                     pageRangeDisplayed={3}
@@ -594,7 +621,7 @@ const ListTraining = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3" }}
                       >
-                        Total Data 6
+                        Total Data {training.total_rows}
                       </p>
                     </div>
                   </div>
@@ -625,7 +652,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Penyelenggara</label>
             <Select
-              options={options}
+              options={optionsAkademi}
               defaultValue={penyelenggara}
               onChange={(e) =>
                 setPenyelenggara({ value: e.value, label: e.label })
@@ -635,7 +662,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Akademi</label>
             <Select
-              options={options}
+              options={optionsAkademi}
               defaultValue={academy}
               onChange={(e) => setAcademy({ value: e.value, label: e.label })}
             />
@@ -643,7 +670,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Tema</label>
             <Select
-              options={options}
+              options={optionsTema}
               defaultValue={theme}
               onChange={(e) => setTheme({ value: e.value, label: e.label })}
             />
@@ -651,7 +678,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Status Substansi</label>
             <Select
-              options={options}
+              options={optionsStatusSubstansi}
               defaultValue={statusSubstansi}
               onChange={(e) =>
                 setStatusSubstansi({ value: e.value, label: e.label })
@@ -661,7 +688,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Status Pelatihan</label>
             <Select
-              options={options}
+              options={optionsStatusPelatihan}
               defaultValue={statusPelatihan}
               onChange={(e) =>
                 setStatusPelatihan({ value: e.value, label: e.label })

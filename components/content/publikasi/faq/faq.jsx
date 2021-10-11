@@ -643,6 +643,7 @@ const Faq = ({token}) => {
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
+                                        
                                         <tbody>
                                             {
                                                 !faq || faq && faq.faq.length === 0 ?

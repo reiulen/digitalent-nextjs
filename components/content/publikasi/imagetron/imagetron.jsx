@@ -84,7 +84,6 @@ const Imagetron = ({ token }) => {
         //         type: UPDATE_IMAGETRON_REQUEST
         //     })
         // }
-        printData()
         // setTimeout(() => {
         //     window.location.reload()
         // }, 8000);
@@ -375,99 +374,10 @@ const Imagetron = ({ token }) => {
     //     />
     // }
 
-    const printData = () => {
-        { console.log("CEK Imagetron :", imagetron) }
-        {
-            return !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
-                <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
-                imagetron && imagetron.data.imagetron.map((row, i) => {
-                    return <tr key={row.id}>
-                        <td className='align-middle text-center'>
-                            {
-                                limit === null ?
-                                    <span className="badge badge-secondary text-muted">
-                                        {i + 1 * (page * 5) - (5 - 1)}
-                                    </span>
-                                    :
-                                    <span className="badge badge-secondary text-muted">
-                                        {i + 1 * (page * limit) - (limit - 1)}
-                                    </span>
-                            }
+    // const printData = () => {
+    //     { console.log("CEK Imagetron :", imagetron) }
 
-                        </td>
-                        <td className='text-center'>
-                            <Image
-                                alt={row.judul}
-                                unoptimized={
-                                    process.env.ENVIRONMENT !== "PRODUCTION"
-                                }
-                                loader={process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                    "publikasi/images/" +
-                                    row.gambar}
-                                src={
-                                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                    "publikasi/images/" +
-                                    row.gambar
-                                }
-                                width={80}
-                                height={50}
-                            />
-                            {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
-                        </td>
-                        <td className='align-middle'>{row.nama_kategori}</td>
-                        <td className='align-middle'>{row.judul}</td>
-                        <td className="align-middle">
-                            {row.publish === 1 ? (
-                                row.tanggal_publish
-                            ) : (
-                                <span className="label label-inline label-light-danger font-weight-bold">
-                                    Belum dipublish
-                                </span>
-                            )}
-                        </td>
-                        {/* <td className='align-middle'>{row.dibuat}</td> */}
-                        <td className='align-middle'>Super Admin</td>
-                        <td className="align-middle">
-                            {row.publish === 1 ? (
-                                <span className="label label-inline label-light-success font-weight-bold">
-                                    Publish
-                                </span>
-                            ) : (
-                                <span className="label label-inline label-light-warning font-weight-bold">
-                                    Belum dipublish
-                                </span>
-                            )}
-                        </td>
-                        <td className='align-middle'>Super Admin</td>
-                        <td className="align-middle d-flex justify-content-center">
-
-                            <Link
-                                href={`/publikasi/imagetron/${row.id}`}
-                            >
-                                <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
-                                    <i className="ri-pencil-fill p-0 text-white"></i>
-                                    <div className="text-hover-show-hapus">
-                                        Ubah
-                                    </div>
-                                </a>
-                            </Link>
-
-                            <button
-                                className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
-                                onClick={() => handleDelete(row.id)}
-                            >
-                                <i className="ri-delete-bin-fill p-0 text-white"></i>
-                                <div className="text-hover-show-hapus">
-                                    Hapus
-                                </div>
-                            </button>
-
-                        </td>
-                    </tr>
-
-                })
-        }
-    }
+    // }
 
     // caches.open('v1').then(function(cache) {
     //     cache.delete('/images/image.png').then(function(response) {
@@ -844,7 +754,96 @@ const Imagetron = ({ token }) => {
                                         </thead>
 
                                         <tbody>
-                                            {printData()}
+                                            {
+                                                !imagetron || imagetron && imagetron.data.imagetron.length === 0 ?
+                                                    <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
+                                                    imagetron && imagetron.data.imagetron.map((row, i) => {
+                                                        return <tr key={row.id}>
+                                                            <td className='align-middle text-center'>
+                                                                {
+                                                                    limit === null ?
+                                                                        <span className="badge badge-secondary text-muted">
+                                                                            {i + 1 * (page * 5) - (5 - 1)}
+                                                                        </span>
+                                                                        :
+                                                                        <span className="badge badge-secondary text-muted">
+                                                                            {i + 1 * (page * limit) - (limit - 1)}
+                                                                        </span>
+                                                                }
+
+                                                            </td>
+                                                            <td className='text-center'>
+                                                                <Image
+                                                                    alt={row.judul}
+                                                                    unoptimized={
+                                                                        process.env.ENVIRONMENT !== "PRODUCTION"
+                                                                    }
+                                                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                        "publikasi/images/" +
+                                                                        row.gambar)}
+                                                                    src={
+                                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                        "publikasi/images/" +
+                                                                        row.gambar
+                                                                    }
+                                                                    width={80}
+                                                                    height={50}
+                                                                />
+                                                                {/* <Image alt='name_image' src='https://statik.tempo.co/data/2018/11/29/id_800478/800478_720.jpg' width={80} height={50} /> */}
+                                                            </td>
+                                                            <td className='align-middle'>{row.nama_kategori}</td>
+                                                            <td className='align-middle'>{row.judul}</td>
+                                                            <td className="align-middle">
+                                                                {row.publish === 1 ? (
+                                                                    row.tanggal_publish
+                                                                ) : (
+                                                                    <span className="label label-inline label-light-danger font-weight-bold">
+                                                                        Belum dipublish
+                                                                    </span>
+                                                                )}
+                                                            </td>
+                                                            {/* <td className='align-middle'>{row.dibuat}</td> */}
+                                                            <td className='align-middle'>Super Admin</td>
+                                                            <td className="align-middle">
+                                                                {row.publish === 1 ? (
+                                                                    <span className="label label-inline label-light-success font-weight-bold">
+                                                                        Publish
+                                                                    </span>
+                                                                ) : (
+                                                                    <span className="label label-inline label-light-warning font-weight-bold">
+                                                                        Belum dipublish
+                                                                    </span>
+                                                                )}
+                                                            </td>
+                                                            <td className='align-middle'>{row.role}</td>
+                                                            <td className="align-middle d-flex justify-content-center">
+
+                                                                <Link
+                                                                    href={`/publikasi/imagetron/${row.id}`}
+                                                                >
+                                                                    <a className="btn btn-link-action bg-blue-secondary text-white mr-2 my-5 position-relative btn-delete">
+                                                                        <i className="ri-pencil-fill p-0 text-white"></i>
+                                                                        <div className="text-hover-show-hapus">
+                                                                            Ubah
+                                                                        </div>
+                                                                    </a>
+                                                                </Link>
+
+                                                                <button
+                                                                    className="btn btn-link-action bg-blue-secondary text-white my-5 position-relative btn-delete"
+                                                                    onClick={() => handleDelete(row.id)}
+                                                                >
+                                                                    <i className="ri-delete-bin-fill p-0 text-white"></i>
+                                                                    <div className="text-hover-show-hapus">
+                                                                        Hapus
+                                                                    </div>
+                                                                </button>
+
+                                                            </td>
+                                                        </tr>
+
+                                                    })
+                                            }
                                         </tbody>
                                     </table> : ''
                                 }
