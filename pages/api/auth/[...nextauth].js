@@ -25,6 +25,10 @@ export default NextAuth({
               "http://dts-partnership-dev.majapahit.id/api/authentication/login";
           }
 
+          if (role === "peserta") {
+            link = process.env.END_POINT_API_PELATIHAN + `api/v1/auth/login`;
+          }
+
           const { data } = await axios.post(link, { email, password });
 
           return Promise.resolve(data);

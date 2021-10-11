@@ -41,12 +41,13 @@ const LoginUser = () => {
         redirect: false,
         email,
         password,
-        role: "user",
+        role: "peserta",
         captcha,
       };
       // const result = await signIn("credentials", data);
 
-      router.push("/peserta");
+      console.log(data);
+      // router.push("/peserta");
       // if (result.error) {
       //   toast.error(result.error);
       //   setLoading(false);
