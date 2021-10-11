@@ -273,6 +273,12 @@ import {
   drowpdownAkademiReducers,
   drowpdownTemaReducers,
   drowpdownPelatihanReducers,
+  drowpdownLevelPelatihanReducers,
+  drowpdownMitraReducers,
+  drowpdownZonasiReducers,
+  drowpdownProvinsiReducers,
+  drowpdownKabupatenReducers,
+  drowpdownPenyelenggaraReducers,
 } from "./pelatihan/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
@@ -503,6 +509,12 @@ const reducer = combineReducers({
   drowpdownAkademi: drowpdownAkademiReducers,
   drowpdownTema: drowpdownTemaReducers,
   drowpdownPelatihan: drowpdownPelatihanReducers,
+  drowpdownLevelPelatihan: drowpdownLevelPelatihanReducers,
+  drowpdownMitra: drowpdownMitraReducers,
+  drowpdownZonasi: drowpdownZonasiReducers,
+  drowpdownProvinsi: drowpdownProvinsiReducers,
+  drowpdownKabupaten: drowpdownKabupatenReducers,
+  drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   //END PELATIHAN
 });
 

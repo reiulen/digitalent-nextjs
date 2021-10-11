@@ -11,9 +11,7 @@ export default NextAuth({
   providers: [
     Providers.Credentials({
       async authorize(credentials) {
-        const { email, password, role } = credentials;
-        console.log("email,password,role");
-        console.log(email, password, role);
+        const { email, password, role, capcha } = credentials;
         if (!email || !password) {
           throw new Error("Isi Email atau Password dengan benar");
         }
@@ -29,7 +27,7 @@ export default NextAuth({
             link = process.env.END_POINT_API_PELATIHAN + `api/v1/auth/login`;
           }
 
-          const { data } = await axios.post(link, { email, password });
+          const { data } = await axios.post(link, { email, password, capcha });
 
           return Promise.resolve(data);
         } catch (e) {

@@ -42,22 +42,22 @@ const LoginUser = () => {
         email,
         password,
         role: "peserta",
-        captcha,
+        capcha: captcha,
       };
-      // const result = await signIn("credentials", data);
+      const result = await signIn("credentials", data);
 
-      console.log(data);
-      // router.push("/peserta");
-      // if (result.error) {
-      //   toast.error(result.error);
-      //   setLoading(false);
-      // } else {
-      //   setLoading(false);
-      //   if (data.role === "admin") {
-      //   } else {
-      //     router.push("/partnership/user/kerjasama");
-      //   }
-      // }
+      if (result.error) {
+        toast.error(result.error);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        if (data.role === "admin") {
+        } else if (data.role === "mitra") {
+          router.push("/partnership/user/kerjasama");
+        } else {
+          router.push("/peserta");
+        }
+      }
     } else {
       setLoading(false);
       simpleValidator.current.showMessages();
