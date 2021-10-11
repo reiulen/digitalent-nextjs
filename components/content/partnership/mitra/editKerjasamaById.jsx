@@ -329,19 +329,32 @@ const EditDokumentKerjasamaById = ({ token }) => {
             </h3>
           </div>
 
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal
                 </label>
-                <input
+
+
+                {/* <input
                   readOnly
                   type="date"
                   required
                   value={date}
                   className="form-control"
-                />
+                /> */}
+
+                <input
+                      disabled
+                      type="text"
+                      value={date}
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0"
+                      // placeholder="Masukan Alamat E-mail"
+                    />
+
+
               </div>
 
               <div className="form-group">
@@ -447,7 +460,13 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     />
                   </div>
                   <div className="col-12 col-sm-6">
-                    <div className="form-control">Tahun</div>
+                    <input
+                      disabled
+                      type="text"
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0"
+                      placeholder="Tahun"
+                    />
                   </div>
                 </div>
               </div>
@@ -460,7 +479,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
                   <div className="col-12 col-sm-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2">
                       <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-search-date form-control-sm form-control cursor-pointer disabled-form"
                         onChange={(date) => onChangePeriodeDateStart(date)}
                         value={periodDateStart}
                         minDate={moment().toDate()}
@@ -474,12 +493,13 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     </div>
                   </div>
                   <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         onChange={(date) =>
                           setPeriodDateEnd(moment(date).format("YYYY-MM-DD"))
                         }
+                        disabled
                         value={periodDateEnd}
                         minDate={moment().toDate()}
                         dateFormat="dd/MM/yyyy"
@@ -499,9 +519,18 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Lembaga
                     </label>
-                    <div aria-readonly disabled className="form-control">
+                    {/* <div aria-readonly disabled className="form-control">
                       {isntitusiName}
-                    </div>
+                    </div> */}
+
+                    <input
+                      disabled
+                      type="text"
+                      value={isntitusiName}
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0"
+                      placeholder="Masukan Alamat E-mail"
+                    />
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -509,7 +538,15 @@ const EditDokumentKerjasamaById = ({ token }) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Email
                     </label>
-                    <p className="form-control">{email}</p>
+                    {/* <p className="form-control">{email}</p> */}
+                    <input
+                      disabled
+                      type="text"
+                      value={email}
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0"
+                      placeholder="Masukan Alamat E-mail"
+                    />
                   </div>
                 </div>
               </div>
@@ -530,7 +567,7 @@ const EditDokumentKerjasamaById = ({ token }) => {
               <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label"
+                  className="col-form-label"
                 >
                   Nomor Perjanjian KemKominfo
                 </label>
