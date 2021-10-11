@@ -15,6 +15,18 @@ import {
   ERROR_DROPDOWN_TEMA,
   GET_DROPDOWN_PELATIHAN,
   ERROR_DROPDOWN_PELATIHAN,
+  GET_DROPDOWN_LEVEL_PELATIHAN,
+  ERROR_DROPDOWN_LEVEL_PELATIHAN,
+  GET_DROPDOWN_MITRA,
+  ERROR_DROPDOWN_MITRA,
+  GET_DROPDOWN_ZONASI,
+  ERROR_DROPDOWN_ZONASI,
+  GET_DROPDOWN_PROVINSI,
+  ERROR_DROPDOWN_PROVINSI,
+  GET_DROPDOWN_KABUPATEN,
+  ERROR_DROPDOWN_KABUPATEN,
+  GET_DROPDOWN_PENYELENGGARA,
+  ERROR_DROPDOWN_PENYELENGGARA,
   CLEAR_ERRORS,
 } from "../../types/pelatihan/function.type";
 
@@ -137,6 +149,132 @@ export const drowpdownPelatihanReducers = (state = { data: [] }, action) => {
         data: action.payload,
       };
     case ERROR_DROPDOWN_PELATIHAN:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownLevelPelatihanReducers = (
+  state = { data: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_DROPDOWN_LEVEL_PELATIHAN:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_LEVEL_PELATIHAN:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownMitraReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_MITRA:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_MITRA:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownZonasiReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_ZONASI:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_ZONASI:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownProvinsiReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_PROVINSI:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_PROVINSI:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownKabupatenReducers = (state = { data: [] }, action) => {
+  switch (action.type) {
+    case GET_DROPDOWN_KABUPATEN:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_KABUPATEN:
+      return {
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+
+export const drowpdownPenyelenggaraReducers = (
+  state = { data: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_DROPDOWN_PENYELENGGARA:
+      return {
+        data: action.payload,
+      };
+    case ERROR_DROPDOWN_PENYELENGGARA:
       return {
         error: action.payload,
       };

@@ -19,7 +19,6 @@ const Sidebar = ({ session }) => {
   const allFunctionls = useSelector((state) => state.allFunctionls);
   const router = useRouter();
 
-
   // mitra partnership sementara
   const [menuItem9, setMenuItem9] = useState("");
   const getStorageMenu4 = sessionStorage.getItem("menu4");
@@ -563,192 +562,193 @@ const Sidebar = ({ session }) => {
           data-menu-scroll="1"
           data-menu-dropdown-timeout="500"
         >
+          {!session ? (
+            ""
+          ) : session?.user?.user?.data?.user?.roles[0] === "mitra" ? (
+            <ul className="menu-nav">
+              <li
+                className={`menu-item menu-item-submenu menu-item-open ${
+                  !getStorageMenu4 ? "" : getStorageMenu4
+                }`}
+                onClick={() => activeMenuPartnershipMitra()}
+                aria-haspopup="true"
+                data-menu-toggle="hover"
+              >
+                <div className="menu-submenu">
+                  <i className="menu-arrow"></i>
+                  <ul className="menu-subnav">
+                    <li
+                      className="menu-item menu-item-parent"
+                      aria-haspopup="true"
+                    >
+                      <span className="menu-link">
+                        <span className="menu-text">Partnership</span>
+                      </span>
+                    </li>
 
+                    {listMenuPartnershipMitra.map((items, index) => {
+                      return (
+                        <li
+                          key={index}
+                          className={`menu-item ${
+                            items.href === router.pathname
+                              ? "menu-item-active"
+                              : ""
+                          }`}
+                          aria-haspopup="true"
+                          onClick={() => activeSubItemPartnershipMitra()}
+                        >
+                          <Link href={items.href}>
+                            <a className="menu-link">
+                              <span className="menu-text">{items.name}</span>
+                            </a>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                    {/* end partnership loop */}
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          ) : (
+            <ul className="menu-nav">
+              {menu.map((items, index) => {
+                return (
+                  <li
+                    className={`menu-item menu-item-submenu ${
+                      items.selected ? "menu-item-open" : ""
+                    }`}
+                    aria-haspopup="true"
+                    data-menu-toggle="hover"
+                    key={index}
+                    id="main-menu"
+                    onClick={(e) => handleOpenMenu(index)}
+                  >
+                    <a className="menu-link menu-toggle">
+                      <span className="svg-icon menu-icon d-flex align-items-center">
+                        {/* icon sidebar */}
+                        <Image
+                          alt="icon-sidebar-logo"
+                          src={`/${items.icon}`}
+                          width={58}
+                          height={53}
+                        />
+                      </span>
+                      <span className="menu-text ml-4">{items.name}</span>
+                      <i className="menu-arrow"></i>
+                    </a>
 
-           {!session  ? (
-              ""
-            ) : session?.user?.user?.data?.user?.roles[0] === "mitra" ? (
-              <ul className="menu-nav">
-                <li
-                  className={`menu-item menu-item-submenu menu-item-open ${
-                    !getStorageMenu4 ? "" : getStorageMenu4
-                  }`}
-                  onClick={() => activeMenuPartnershipMitra()}
-                  aria-haspopup="true"
-                  data-menu-toggle="hover"
-                >
-                  <div className="menu-submenu">
-                    <i className="menu-arrow"></i>
-                    <ul className="menu-subnav">
-                      <li
-                        className="menu-item menu-item-parent"
-                        aria-haspopup="true"
-                      >
-                        <span className="menu-link">
-                          <span className="menu-text">Partnership</span>
-                        </span>
-                      </li>
-
-                        {listMenuPartnershipMitra.map((items, index) => {
-                          return (
-                            <li
-                              key={index}
-                              className={`menu-item ${
-                                items.href === router.pathname
-                                  ? "menu-item-active"
-                                  : ""
-                              }`}
-                              aria-haspopup="true"
-                              onClick={() => activeSubItemPartnershipMitra()}
-                            >
-                              <Link href={items.href}>
-                                <a className="menu-link">
-                                  <span className="menu-text">{items.name}</span>
-                                </a>
-                              </Link>
-                            </li>
-                          );
-                        })}
-                        {/* end partnership loop */}
-                      </ul>
-                    </div>
-                  </li>
-                </ul>
-              
-              ) : (
-
-
-          <ul className="menu-nav">
-            {menu.map((items, index) => {
-              return (
-                <li
-                  className={`menu-item menu-item-submenu ${
-                    items.selected ? "menu-item-open" : ""
-                  }`}
-                  aria-haspopup="true"
-                  data-menu-toggle="hover"
-                  key={index}
-                  id="main-menu"
-                  onClick={(e) => handleOpenMenu(index)}
-                >
-                  
-                  <a className="menu-link menu-toggle">
-                    <span className="svg-icon menu-icon d-flex align-items-center">
-                      {/* icon sidebar */}
-                      <Image
-                        alt="icon-sidebar-logo"
-                        src={`/${items.icon}`}
-                        width={58}
-                        height={53}
-                      />
-                    </span>
-                    <span className="menu-text ml-4">{items.name}</span>
-                    <i className="menu-arrow"></i>
-                  </a>
-
-                  {items.child.map((child, i) => {
-                    return (
-                      <div className="menu-submenu" key={i}>
-                        <i className="menu-arrow"></i>
-                        <ul className="menu-subnav">
-                          {child.child.length === 0 ? (
-                            <li
-                              className={`menu-item ${
-                                child.selected ? "menu-item-active" : ""
-                              }`}
-                              aria-haspopup="true"
-                              onClick={(e) => handleActiveSubmenu(e, index, i)}
-                            >
-                              <Link href={child.href}>
-                              <a className="menu-link" style={{paddingLeft:"5.5rem"}}>
-                                {/* <i className="menu-bullet menu-bullet-dot">
-                                  <span></span>
-                                </i> */}
-                                <span className="menu-text">{child.name}</span>
-                              </a>
-                              </Link>
-                            </li>
-                          ) : (
-                            <li
-                              className={`menu-item menu-item-submenu ${
-                                child.selected ? "menu-item-open" : ""
-                              }`}
-                              aria-haspopup="true"
-                              data-menu-toggle="hover"
-                              id="sub-menu"
-                              onClick={(e) =>
-                                handleOpenMenuSubMenu(e, index, i)
-                              }
-                            >
-                              <a
-                                // href="javascript:;"
-                                className="menu-link menu-toggle"
-                                style={{paddingLeft:"5.5rem"}}
+                    {items.child.map((child, i) => {
+                      return (
+                        <div className="menu-submenu" key={i}>
+                          <i className="menu-arrow"></i>
+                          <ul className="menu-subnav">
+                            {child.child.length === 0 ? (
+                              <li
+                                className={`menu-item ${
+                                  child.selected ? "menu-item-active" : ""
+                                }`}
+                                aria-haspopup="true"
+                                onClick={(e) =>
+                                  handleActiveSubmenu(e, index, i)
+                                }
                               >
-                                {/* <i className="menu-bullet menu-bullet-line">
+                                <Link href={child.href}>
+                                  <a
+                                    className="menu-link"
+                                    style={{ paddingLeft: "5.5rem" }}
+                                  >
+                                    {/* <i className="menu-bullet menu-bullet-dot">
                                   <span></span>
                                 </i> */}
-                                <span className="menu-text">{child.name}</span>
-                                {/* <span className="menu-label">
+                                    <span className="menu-text">
+                                      {child.name}
+                                    </span>
+                                  </a>
+                                </Link>
+                              </li>
+                            ) : (
+                              <li
+                                className={`menu-item menu-item-submenu ${
+                                  child.selected ? "menu-item-open" : ""
+                                }`}
+                                aria-haspopup="true"
+                                data-menu-toggle="hover"
+                                id="sub-menu"
+                                onClick={(e) =>
+                                  handleOpenMenuSubMenu(e, index, i)
+                                }
+                              >
+                                <a
+                                  // href="javascript:;"
+                                  className="menu-link menu-toggle"
+                                  style={{ paddingLeft: "5.5rem" }}
+                                >
+                                  {/* <i className="menu-bullet menu-bullet-line">
+                                  <span></span>
+                                </i> */}
+                                  <span className="menu-text">
+                                    {child.name}
+                                  </span>
+                                  {/* <span className="menu-label">
                                   <span className="label label-rounded label-primary">
                                     6
                                   </span>
                                 </span> */}
-                                <i className="menu-arrow"></i>
-                              </a>
-                              <div className="menu-submenu">
-                                <i className="menu-arrow"></i>
-                                <ul className="menu-subnav">
-                                  {child.child.map((child2, idx) => {
-                                    return (
-                                      <li
-                                        className={`menu-item ${
-                                          child2.selected
-                                            ? "menu-item-active"
-                                            : ""
-                                        }`}
-                                        aria-haspopup="true"
-                                        onClick={(e) =>
-                                          handleActiveSubSubmenu(
-                                            e,
-                                            index,
-                                            i,
-                                            idx
-                                          )
-                                        }
-                                        key={idx}
-                                      >
-                                        <Link href={child2.href}>
-                                        <a className="menu-link" style={{paddingLeft:"6.5rem"}}>
-                                          {/* <i className="menu-bullet menu-bullet-dot">
+                                  <i className="menu-arrow"></i>
+                                </a>
+                                <div className="menu-submenu">
+                                  <i className="menu-arrow"></i>
+                                  <ul className="menu-subnav">
+                                    {child.child.map((child2, idx) => {
+                                      return (
+                                        <li
+                                          className={`menu-item ${
+                                            child2.selected
+                                              ? "menu-item-active"
+                                              : ""
+                                          }`}
+                                          aria-haspopup="true"
+                                          onClick={(e) =>
+                                            handleActiveSubSubmenu(
+                                              e,
+                                              index,
+                                              i,
+                                              idx
+                                            )
+                                          }
+                                          key={idx}
+                                        >
+                                          <Link href={child2.href}>
+                                            <a
+                                              className="menu-link"
+                                              style={{ paddingLeft: "6.5rem" }}
+                                            >
+                                              {/* <i className="menu-bullet menu-bullet-dot">
                                             <span></span>
                                           </i> */}
-                                          <span className="menu-text">
-                                            {child2.name}
-                                          </span>
-                                        </a>
-                                        </Link>
-                                      </li>
-                                    );
-                                  })}
-                                </ul>
-                              </div>
-                            </li>
-                          )}
-                        </ul>
-                      </div>
-                    );
-                  })}
-                </li>
-              );
-            })}
-          </ul>
-
-              )}
-
-
-
-
+                                              <span className="menu-text">
+                                                {child2.name}
+                                              </span>
+                                            </a>
+                                          </Link>
+                                        </li>
+                                      );
+                                    })}
+                                  </ul>
+                                </div>
+                              </li>
+                            )}
+                          </ul>
+                        </div>
+                      );
+                    })}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       </div>
       {allFunctionls.isOverlayMobileSidebar &&

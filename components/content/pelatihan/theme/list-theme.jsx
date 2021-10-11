@@ -271,12 +271,14 @@ const ListTheme = ({ token }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {!theme || (theme && theme.rows.length === 0) ? (
+                    {!theme ||
+                    (theme && theme.list === null) ||
+                    theme.list.length === 0 ? (
                       <td className="align-middle text-center" colSpan={8}>
                         Data Masih Kosong
                       </td>
                     ) : (
-                      theme.rows.map((row, i) => (
+                      theme.list.map((row, i) => (
                         <tr key={i}>
                           <td className="text-center">
                             {limit === null
@@ -338,23 +340,24 @@ const ListTheme = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <Pagination
-                    activePage={theme.page}
-                    itemsCountPerPage={theme.total_pages}
-                    totalItemsCount={theme.total_rows}
-                    pageRangeDisplayed={3}
-                    onChange={handlePagination}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-
-                {academy && academy.total_rows > 5 && (
+                {theme && theme.perPage < theme.total && (
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={theme.page}
+                      itemsCountPerPage={theme.perPage}
+                      totalItemsCount={theme.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {academy && academy.total > 5 && (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0 mt-3">
@@ -382,7 +385,7 @@ const ListTheme = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {theme.total_rows}
+                          Total Data {theme.total}
                         </p>
                       </div>
                     </div>

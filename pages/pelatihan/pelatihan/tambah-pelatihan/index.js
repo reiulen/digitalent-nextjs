@@ -23,6 +23,11 @@ import {
   getCommitmentStep3,
   dropdownAkademi,
   dropdownTema,
+  dropdownLevelPelatihan,
+  dropdownMitra,
+  dropdownZonasi,
+  dropdownProvinsi,
+  dropdownKabupaten,
 } from "../../../../redux/actions/pelatihan/function.actions";
 
 import { wrapper } from "../../../../redux/store";
@@ -46,7 +51,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "/login/admin",
             permanent: false,
           },
         };
@@ -57,6 +62,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getCommitmentStep3());
       await store.dispatch(dropdownAkademi(session.user.user.data.token));
       await store.dispatch(dropdownTema(session.user.user.data.token));
+      await store.dispatch(
+        dropdownLevelPelatihan(session.user.user.data.token)
+      );
+      await store.dispatch(dropdownMitra(session.user.user.data.token));
+      await store.dispatch(dropdownZonasi(session.user.user.data.token));
+      await store.dispatch(dropdownProvinsi(session.user.user.data.token));
+      await store.dispatch(dropdownKabupaten(session.user.user.data.token));
 
       return {
         props: { session, title: "Tambah Pelatihan - Pelatihan" },

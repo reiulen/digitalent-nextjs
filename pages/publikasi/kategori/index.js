@@ -26,17 +26,17 @@ const Kategori = dynamic(
 );
 
 export default function KategoriPage(props) {
-    const session = props.session.user.user.data;
-    return (
-        <>
-            <div className="d-flex flex-column flex-root">
-                {/* <Layout title='Kategori - Publikasi'>
+  const session = props.session.user.user.data;
+  return (
+    <>
+      <div className="d-flex flex-column flex-root">
+        {/* <Layout title='Kategori - Publikasi'>
                     <Kategori />
                 </Layout> */}
-                <Kategori token={session.token}/>
-            </div>
-        </>
-    )
+        <Kategori token={session.token} />
+      </div>
+    </>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -46,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "/login/admin",
             permanent: false,
           },
         };

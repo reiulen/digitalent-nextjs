@@ -6,7 +6,7 @@ const Navbar = dynamic(() =>
   import("../../../user-component/components/template/Navbar.component")
 );
 
-const Layout = ({ title = "Peserta - Pelatihan", children }) => {
+const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   return (
     <>
       <Head>
@@ -14,7 +14,7 @@ const Layout = ({ title = "Peserta - Pelatihan", children }) => {
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0,width=device-width" />
       </Head>
-      <Navbar />
+      <Navbar session={session} />
       {children}
     </>
   );

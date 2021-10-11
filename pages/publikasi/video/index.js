@@ -30,10 +30,10 @@ export default function VidioPage(props) {
         {/* <Layout title='Video - Publikasi'>
                     <Vidio />
                 </Layout> */}
-                <Vidio token={session.token}/>
-            </div>
-        </>
-    )
+        <Vidio token={session.token} />
+      </div>
+    </>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
@@ -44,7 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "/login/admin",
             permanent: false,
           },
         };
