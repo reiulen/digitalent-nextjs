@@ -578,7 +578,6 @@ const Sidebar = ({ session }) => {
                   aria-haspopup="true"
                   data-menu-toggle="hover"
                 >
-                  
                   <div className="menu-submenu">
                     <i className="menu-arrow"></i>
                     <ul className="menu-subnav">
