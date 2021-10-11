@@ -136,6 +136,7 @@ const TambahGaleri = ({ token }) => {
         }
 
         // }, [dispatch, error, success, files, router]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch, error, success, router]);
 
 

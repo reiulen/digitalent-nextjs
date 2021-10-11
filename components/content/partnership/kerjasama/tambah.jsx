@@ -185,7 +185,7 @@ const Tambah = ({token}) => {
               Tambah Kerjasama
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={submit}>
               <div className="fv-row mb-10">
                 <label className="required fw-bold fs-6 mb-2">Tanggal</label>
@@ -199,7 +199,7 @@ const Tambah = ({token}) => {
               </div>
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">
                       Lembaga
                     </label>
@@ -230,7 +230,7 @@ const Tambah = ({token}) => {
                 <div className="col-12 col-sm-6">
 
 
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">Email</label>
                     <input
                       disabled
@@ -248,7 +248,7 @@ const Tambah = ({token}) => {
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">
                       Periode Kerjasama
                     </label>
@@ -269,7 +269,7 @@ const Tambah = ({token}) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2"></label>
                     <input
                       disabled
@@ -282,7 +282,7 @@ const Tambah = ({token}) => {
                 </div>
               </div>
 
-              <div className="fv-row mb-10">
+              <div className="fv-row mb-6">
                 <label className="required fw-bold fs-6 mb-2">
                   Judul Kerjasama
                 </label>

@@ -1,8 +1,33 @@
 import React, { useState } from "react";
 import { Col } from "react-bootstrap";
+import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import StepListPelatihan from "../components/StepListPelatihan";
 import Berjalan from "./berjalan";
 import Selesai from "./selesai";
+
+// const StepListPelatihan = dynamic(
+//   () => import("../components/StepListPelatihan"),
+//   {
+//     loading: function loadingNow() {
+//       return <LoadingSkeleton />;
+//     },
+//     ssr: false,
+//   }
+// );
+
+// const Berjalan = dynamic(() => import("./berjalan"), {
+//   loading: function loadingNow() {
+//     return <LoadingSkeleton />;
+//   },
+//   ssr: false,
+// });
+
+// const Selesai = dynamic(() => import("./selesai"), {
+//   loading: function loadingNow() {
+//     return <LoadingSkeleton />;
+//   },
+//   ssr: false,
+// });
 
 const ListPelatihan = () => {
   const [step, setStep] = useState(1);

@@ -12,8 +12,8 @@ import {
   IS_MINIMIZE_SIDEBAR,
 } from "../../redux/types/utils/functionals.type";
 
-const Sidebar = () => {
-  const [session, loading] = useSession();
+const Sidebar = ({session}) => {
+  // const [session, loading] = useSession();
   const dispatch = useDispatch();
   const getStorageMenu2 = sessionStorage.getItem("menu2");
   const getStorageMenu4 = sessionStorage.getItem("menu4");
@@ -268,11 +268,11 @@ const Sidebar = () => {
       name: "Setting CSS",
       href: "/site-management/setting/css-editor",
     },
-    {
-      id: 18,
-      name: "Setting Pelatihan",
-      href: "/site-management/setting/pelatihan",
-    },
+    // {
+    //   id: 18,
+    //   name: "Setting Pelatihan",
+    //   href: "/site-management/setting/pelatihan",
+    // },
   ]);
   const activeMenuSiteManagement = () => {
     if (sessionStorage.getItem("menu-site-management")) {
@@ -461,10 +461,12 @@ const Sidebar = () => {
             data-menu-dropdown-timeout="500"
           >
             {/* <!--begin::Menu Nav--> */}
+            
+           
 
-            {session === undefined ? (
+            {!session  ? (
               ""
-            ) : session.user.user.data.user.roles[0] === "mitra" ? (
+            ) : session?.user?.user?.data?.user?.roles[0] === "mitra" ? (
               <ul className="menu-nav">
                 <li
                   className={`menu-item menu-item-submenu menu-item-open ${
@@ -487,35 +489,35 @@ const Sidebar = () => {
                         </span>
                       </li>
 
-                      {/* start partnership loop */}
+                        {listMenuPartnershipMitra.map((items, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={`menu-item ${
+                                items.href === router.pathname
+                                  ? "menu-item-active"
+                                  : ""
+                              }`}
+                              aria-haspopup="true"
+                              onClick={() => activeSubItemPartnershipMitra()}
+                            >
+                              <Link href={items.href}>
+                                <a className="menu-link">
+                                  <span className="menu-text">{items.name}</span>
+                                </a>
+                              </Link>
+                            </li>
+                          );
+                        })}
+                        {/* end partnership loop */}
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              
+              ) : (
 
-                      {listMenuPartnershipMitra.map((items, index) => {
-                        return (
-                          <li
-                            key={index}
-                            className={`menu-item ${
-                              items.href === router.pathname
-                                ? "menu-item-active"
-                                : ""
-                            }`}
-                            aria-haspopup="true"
-                            onClick={() => activeSubItemPartnershipMitra()}
-                          >
-                            <Link href={items.href}>
-                              <a className="menu-link">
-                                <span className="menu-text">{items.name}</span>
-                              </a>
-                            </Link>
-                          </li>
-                        );
-                      })}
-                      {/* end partnership loop */}
-                    </ul>
-                  </div>
-                </li>
-              </ul>
-            ) : (
-              <ul className="menu-nav">
+                < ul className="menu-nav">
                 <li
                   className={`menu-item menu-item-submenu ${menuItem1}`}
                   onClick={onSetMenuItem1}
@@ -1104,7 +1106,7 @@ const Sidebar = () => {
                   </div>
                 </li>
               </ul>
-            )}
+              )}
 
             {/* <!--end::Menu Nav--> */}
           </div>

@@ -106,7 +106,7 @@ const EditGaleri = ({ token }) => {
 
     useEffect(() => {
         handleDataToArr(galeri.gambar)
-    }, [])
+    })
 
     useEffect(() => {
 
