@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "react-toastify";
 import SimpleReactValidator from "simple-react-validator";
+import axios from "axios";
 
 import AuthWrapper from "../../../wrapper/auth.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -30,6 +31,8 @@ const RegisterUser = () => {
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirm, setHidePasswordConfirm] = useState(true);
 
+  const [messageDontMatch, setMessageDontMatch] = useState(false);
+
   const handlerShowPassword = (value) => {
     setHidePassword(value);
     var input = document.getElementById("input-password");
@@ -50,6 +53,16 @@ const RegisterUser = () => {
     }
   };
 
+  const handlePasswordConfirm = (value) => {
+    if (value !== password) {
+      setMessageDontMatch(true);
+      setPasswordConfirm(value);
+    } else {
+      setMessageDontMatch(false);
+      setPasswordConfirm(value);
+    }
+  };
+
   const handlerSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -57,13 +70,32 @@ const RegisterUser = () => {
       const data = {
         name,
         nik,
-        noHp,
+        nomor_hp: noHp,
         email,
         password,
-        passwordConfirm,
-        captcha,
+        password_confirmasi: passwordConfirm,
+        capcha: captcha,
+        services: verify,
       };
-      console.log(data);
+
+      axios
+        .post(
+          process.env.END_POINT_API_PELATIHAN + `api/v1/auth/register`,
+          data
+        )
+        .then((res) => {
+          setLoading(false);
+          if (res.data.status) {
+            router.push({
+              pathname: "/register/register-otp",
+              query: { email, services: verify },
+            });
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          toast.error(err.response.data.message);
+        });
     } else {
       setLoading(false);
       simpleValidator.current.showMessages();
@@ -135,11 +167,16 @@ const RegisterUser = () => {
                     value={nik}
                     onChange={(e) => setNik(e.target.value)}
                     placeholder="Masukkan NIK"
-                    onBlur={() => simpleValidator.current.showMessageFor("NIK")}
+                    onBlur={() => simpleValidator.current.showMessageFor("nik")}
                   />
-                  {simpleValidator.current.message("NIK", nik, "required", {
-                    className: "text-danger",
-                  })}
+                  {simpleValidator.current.message(
+                    "nik",
+                    nik,
+                    "integer|size:16|required",
+                    {
+                      className: "text-danger",
+                    }
+                  )}
                 </div>
                 <div className="form-group mb-2">
                   <label className="form-auth-label">No. Handphone</label>
@@ -214,7 +251,7 @@ const RegisterUser = () => {
                   {simpleValidator.current.message(
                     "Password",
                     password,
-                    "required",
+                    "required|min:8|max:18",
                     {
                       className: "text-danger",
                     }
@@ -228,7 +265,7 @@ const RegisterUser = () => {
                       type="password"
                       className="form-control form-control-auth pr-10"
                       value={passwordConfirm}
-                      onChange={(e) => setPasswordConfirm(e.target.value)}
+                      onChange={(e) => handlePasswordConfirm(e.target.value)}
                       placeholder="Masukkan Konfirmasi Password"
                       onBlur={() =>
                         simpleValidator.current.showMessageFor(
@@ -258,6 +295,9 @@ const RegisterUser = () => {
                       className: "text-danger",
                     }
                   )}
+                  {messageDontMatch && (
+                    <p className="text-danger">Password tidak sama</p>
+                  )}
                 </div>
 
                 <div className="form-group row mb-4">
@@ -285,10 +325,10 @@ const RegisterUser = () => {
                       <input
                         type="radio"
                         name="verify"
-                        value="nohp"
+                        value="sms"
                         className="form-check-input"
-                        checked={verify === "nohp"}
-                        onClick={() => setVerify("nohp")}
+                        checked={verify === "sms"}
+                        onClick={() => setVerify("sms")}
                         onBlur={() =>
                           simpleValidator.current.showMessageFor("verifikasi")
                         }

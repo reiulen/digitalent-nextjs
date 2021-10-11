@@ -29,14 +29,14 @@ export default function LoginUserPage() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (session) {
-    return {
-      redirect: {
-        destination: "/peserta",
-        permanent: false,
-      },
-    };
-  }
+  // if (session) {
+  //   return {
+  //     redirect: {
+  //       destination: "/peserta",
+  //       permanent: false,
+  //     },
+  //   };
+  // }
 
   return {
     props: {
