@@ -718,6 +718,7 @@ const Sidebar = ({ session }) => {
                                             idx
                                           )
                                         }
+                                        key={idx}
                                       >
                                         <Link href={child2.href}>
                                         <a className="menu-link" style={{paddingLeft:"6.5rem"}}>
