@@ -35,9 +35,13 @@ export default function EditSertifikat({ token }) {
     state => state.singleCertificate
   );
 
-  const { error: updateError, certificate: newCertificate } = useSelector(
-    state => state.newCertificates
-  );
+  const {
+    error: updateError,
+    loading: updateLoading,
+    certificate: updateCertificate,
+  } = useSelector(state => state.updateCertificates);
+
+  console.log("Ini certificates", certificate);
 
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
@@ -77,15 +81,23 @@ export default function EditSertifikat({ token }) {
   const [tandaTanganSyllabusType, setTandaTanganSyllabusType] = useState([
     1, 1, 1, 1,
   ]);
+
+  const didMount = useRef(false);
   // RESET TTD
+
   useEffect(() => {
-    setSignature(prev => {
-      let newArr = [...prev];
-      newArr.forEach(el => {
-        el.set_position = 0;
+    // console.log(number_of_signatures);
+    if (didMount.current) {
+      setSignature(prev => {
+        let newArr = [...prev];
+        newArr.forEach(el => {
+          el.set_position = 0;
+        });
+        return newArr;
       });
-      return newArr;
-    });
+    } else {
+      didMount.current = true;
+    }
   }, [number_of_signatures]);
 
   useEffect(() => {
@@ -283,28 +295,51 @@ export default function EditSertifikat({ token }) {
         }
         console.log("KONDISI DARI SIGNATURE PAS DI DISPATCH", signature);
 
-        signature.forEach((item, i) => {
-          if (item.localSignature) {
+        for (let i = 0; i < number_of_signatures; i++) {
+          console.log(signature[i], "ini signature");
+          if (signature[i].localSignature) {
             formData.append(
               `signature_certificate_image[${i}]`,
-              item.localSignature
-            ); // img signature yang baru di taro
-          } else {
-            formData.append(
-              `signature_certificate_image[${i}]`,
-              item.signature
+              signature[i].localSignature
             );
           }
           formData.append(
             `signature_certificate_position[${i}]`,
-            item.position
+            signature[i].position
           ); //jabatan
           formData.append(
             `signature_certificate_set_position[${i}]`,
-            item.set_position
+            signature[i].set_position
           );
-          formData.append(`signature_certificate_name[${i}]`, item.name);
-        });
+          formData.append(
+            `signature_certificate_name[${i}]`,
+            signature[i].name
+          );
+        }
+
+        // signature.forEach((item, i) => {
+        //   if (item.localSignature) {
+        //     formData.append(
+        //       `signature_certificate_image[${i}]`,
+        //       item.localSignature
+        //     ); // img signature yang baru di taro
+        //   } else {
+        //     console.log("MASUK KESINI SIGNATURENYA", item.signature);
+        //     formData.append(
+        //       `signature_certificate_image[${i}]`,
+        //       item.signature
+        //     );
+        //   }
+        //   formData.append(
+        //     `signature_certificate_position[${i}]`,
+        //     item.position
+        //   ); //jabatan
+        //   formData.append(
+        //     `signature_certificate_set_position[${i}]`,
+        //     item.set_position
+        //   );
+        //   formData.append(`signature_certificate_name[${i}]`, item.name);
+        // });
 
         if (certificate_type == "2 lembar") {
           const dataSyllabus = await convertDivToPng(
@@ -381,7 +416,6 @@ export default function EditSertifikat({ token }) {
     setSyllabus([...syllabus, ""]);
   };
 
-  console.log(signature);
   // useEffect(() => {
   //   console.log(signature, "signatureSyllabus brubah disini");
   // }, [signature]);
@@ -560,7 +594,9 @@ export default function EditSertifikat({ token }) {
                               key={i}
                               style={{
                                 transform: `translateX(${
-                                  signature[i].set_position || 0
+                                  signature[i]?.set_position
+                                    ? signature[i]?.set_position
+                                    : 0
                                 }%)`,
                                 width: "156px",
                                 height: "150px",
@@ -693,10 +729,9 @@ export default function EditSertifikat({ token }) {
                         setNumber_of_signatures(Number(e.target.value))
                       }
                       className="form-control"
+                      defaultValue={number_of_signatures}
                     >
-                      <option defaultValue={1} value={1}>
-                        1 Tanda Tangan
-                      </option>
+                      <option value={1}>1 Tanda Tangan</option>
                       <option value={2}>2 Tanda Tangan</option>
                       <option value={3}>3 Tanda Tangan</option>
                       <option value={4}>4 Tanda Tangan</option>
@@ -776,7 +811,7 @@ export default function EditSertifikat({ token }) {
                                     onChange={(event, editor) => {
                                       const data = editor.getData();
                                       let newArr = [...signature];
-                                      newArr[i].name
+                                      newArr[i]?.name
                                         ? (newArr[i].name = data)
                                         : (newArr[i] = {
                                             ...newArr[i],
@@ -1068,21 +1103,25 @@ export default function EditSertifikat({ token }) {
                     style={{ display: "none" }}
                   />
                 </div>
-                <div className="position-relative">
-                  <label>
-                    <div className="mr-5">
-                      <a
-                        onClick={() => {
-                          setLocalBackground("");
-                          setBackground("");
-                        }}
-                        className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
-                      >
-                        Reset Background
-                      </a>
-                    </div>
-                  </label>
-                </div>
+                {background ? (
+                  <div className="position-relative">
+                    <label>
+                      <div className="mr-5">
+                        <a
+                          onClick={() => {
+                            setLocalBackground("");
+                            setBackground("");
+                          }}
+                          className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                        >
+                          Reset Background
+                        </a>
+                      </div>
+                    </label>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             {certificate_type == "1 lembar" ? (
@@ -1322,10 +1361,9 @@ export default function EditSertifikat({ token }) {
                           )
                         }
                         className="form-control"
+                        defaultValue={number_of_signature_syllabus}
                       >
-                        <option value={1} defaultValue={1}>
-                          1 Tanda Tangan
-                        </option>
+                        <option value={1}>1 Tanda Tangan</option>
                         <option value={2}>2 Tanda Tangan</option>
                         <option value={3}>3 Tanda Tangan</option>
                         <option value={4}>4 Tanda Tangan</option>
@@ -1749,21 +1787,25 @@ export default function EditSertifikat({ token }) {
                       style={{ display: "none" }}
                     />
                   </div>
-                  <div className="position-relative">
-                    <label>
-                      <div className="mr-5">
-                        <a
-                          onClick={() => {
-                            setLocalBackgroundSyllabus("");
-                            setBackground_syllabus("");
-                          }}
-                          className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
-                        >
-                          Reset Background
-                        </a>
-                      </div>
-                    </label>
-                  </div>
+                  {background_syllabus ? (
+                    <div className="position-relative">
+                      <label>
+                        <div className="mr-5">
+                          <a
+                            onClick={() => {
+                              setLocalBackgroundSyllabus("");
+                              setBackground_syllabus("");
+                            }}
+                            className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                          >
+                            Reset Background
+                          </a>
+                        </div>
+                      </label>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
               {certificate_type == "2 lembar" ? (

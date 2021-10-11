@@ -15,6 +15,7 @@ import IconArrow from "../../../assets/icon/Arrow";
 import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
+import moment from "moment";
 
 export default function NamaPelatihan({ token }) {
   // console.log(token);
@@ -30,17 +31,20 @@ export default function NamaPelatihan({ token }) {
     setStartDate(null);
     setEndDate(null);
   };
+
   // #DatePicker
 
   // #Pagination, search, filter
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
+
   const handlePagination = pageNumber => {
     let link = `${router.pathname}?page=${pageNumber}`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
   };
+
   const handleLimit = val => {
     setLimit(val);
     router.push(`${router.pathname}?page=1&limit=${limit}`);
@@ -55,10 +59,80 @@ export default function NamaPelatihan({ token }) {
 
   let { page = 1, keyword, success } = router.query;
 
-  // #REDUX STATE
-
-  // #REDUX STATE
-  // console.log(certificate);
+  const handleSearchDate = () => {
+    if (
+      moment(startDate).format("YYYY-MM-DD") >
+      moment(endDate).format("YYYY-MM-DD")
+    ) {
+      Swal.fire(
+        "Oops !",
+        "Tanggal sebelum tidak boleh melebihi tanggal sesudah.",
+        "error"
+      );
+      setStartDate(null);
+      setEndDate(null);
+    } else if (startDate === null && endDate !== null) {
+      Swal.fire("Oops !", "Tanggal sebelum tidak boleh kosong", "error");
+      setStartDate(null);
+      setEndDate(null);
+    } else if (startDate !== null && endDate === null) {
+      Swal.fire("Oops !", "Tanggal sesudah tidak boleh kosong", "error");
+      setStartDate(null);
+      setEndDate(null);
+    } else if (startDate === null && endDate === null) {
+      Swal.fire("Oops !", "Harap mengisi tanggal terlebih dahulu.", "error");
+      setStartDate(null);
+      setEndDate(null);
+    } else {
+      if (
+        limit !== null &&
+        search !== null &&
+        startDate !== null &&
+        endDate !== null
+      ) {
+        router.push(
+          `${router.pathname}?page=1&keyword=${search}startdate=${moment(
+            startDate
+          ).format("YYYY-MM-DD")}&enddate=${moment(endDate).format(
+            "YYYY-MM-DD"
+          )}&limit=${limit}`
+        );
+      } else if (
+        limit !== null &&
+        search === null &&
+        startDate !== null &&
+        endDate !== null
+      ) {
+        router.push(
+          `${router.pathname}?page=1&startdate=${moment(startDate).format(
+            "YYYY-MM-DD"
+          )}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
+        );
+      } else if (
+        limit !== null &&
+        search === null &&
+        startDate === null &&
+        endDate === null
+      ) {
+        router.push(`${router.pathname}?page=1&limit=${limit}`);
+      } else if (
+        limit !== null &&
+        search !== null &&
+        startDate === null &&
+        endDate === null
+      ) {
+        router.push(
+          `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
+        );
+      } else {
+        router.push(
+          `${router.pathname}?page=1&startdate=${moment(startDate).format(
+            "YYYY-MM-DD"
+          )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
+        );
+      }
+    }
+  };
 
   return (
     <PageWrapper>
@@ -205,7 +279,6 @@ export default function NamaPelatihan({ token }) {
                                     dateFormat="dd/MM/yyyy"
                                     placeholderText="Silahkan Isi Tanggal Dari"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                    minDate={moment().toDate()}
                                     // minDate={addDays(new Date(), 20)}
                                   />
                                 </div>
@@ -225,8 +298,6 @@ export default function NamaPelatihan({ token }) {
                                     startDate={startDate}
                                     endDate={endDate}
                                     dateFormat="dd/MM/yyyy"
-                                    // minDate={startDate}
-                                    minDate={moment().toDate()}
                                     maxDate={addDays(startDate, 20)}
                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
@@ -294,11 +365,11 @@ export default function NamaPelatihan({ token }) {
                             <tr key={certificate.id}>
                               <td className="align-middle text-center">
                                 {limit === null ? (
-                                  <span className="badge badge-secondary text-muted">
+                                  <span className="badge ">
                                     {i + 1 * (page * 5) - (5 - 1)}
                                   </span>
                                 ) : (
-                                  <span className="badge badge-secondary text-muted">
+                                  <span className="badge ">
                                     {i + 1 * (page * limit) - (limit - 1)}
                                   </span>
                                 )}
@@ -373,6 +444,7 @@ export default function NamaPelatihan({ token }) {
                           }}
                           onChange={e => handleLimit(e.target.value)}
                           onBlur={e => handleLimit(e.target.value)}
+                          defaultValue={"5"}
                         >
                           <option
                             value="5"
