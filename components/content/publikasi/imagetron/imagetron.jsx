@@ -84,9 +84,6 @@ const Imagetron = ({ token }) => {
         //         type: UPDATE_IMAGETRON_REQUEST
         //     })
         // }
-        // setTimeout(() => {
-        //     window.location.reload()
-        // }, 8000);
 
         if (isDeleted) {
             Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
@@ -762,11 +759,12 @@ const Imagetron = ({ token }) => {
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
-                                                                        <span className="badge badge-secondary text-muted">
+                                                                        // <span className="badge badge-secondary text-muted">
+                                                                        <span>
                                                                             {i + 1 * (page * 5) - (5 - 1)}
                                                                         </span>
                                                                         :
-                                                                        <span className="badge badge-secondary text-muted">
+                                                                        <span>
                                                                             {i + 1 * (page * limit) - (limit - 1)}
                                                                         </span>
                                                                 }
@@ -803,7 +801,7 @@ const Imagetron = ({ token }) => {
                                                                 )}
                                                             </td>
                                                             {/* <td className='align-middle'>{row.dibuat}</td> */}
-                                                            <td className='align-middle'>Super Admin</td>
+                                                            <td className='align-middle'>{row.dibuat}</td>
                                                             <td className="align-middle">
                                                                 {row.publish === 1 ? (
                                                                     <span className="label label-inline label-light-success font-weight-bold">

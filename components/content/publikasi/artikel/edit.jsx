@@ -103,13 +103,13 @@ const EditArtikel = ({ token }) => {
   const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel);
   const [gambar, setGambar] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      artikel.gambar
+    "publikasi/images/" +
+    artikel.gambar
   );
   const [gambarDB, setGambardb] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      artikel.gambar
+    "publikasi/images/" +
+    artikel.gambar
   );
   // const [gambar, setGambar] = useState(artikel.gambar);
   // const [gambarPreview, setGambarPreview] = useState(
@@ -118,8 +118,8 @@ const EditArtikel = ({ token }) => {
   const [iconPlus, setIconPlus] = useState("/assets/icon/Add.svg");
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      artikel.gambar
+    "publikasi/images/" +
+    artikel.gambar
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
@@ -190,18 +190,18 @@ const EditArtikel = ({ token }) => {
   };
 
   const handleTag = (data) => {
-    for (let i = 0; i < data.length; i++){
-      for (let j = 0; j < data[i].length; j++){
-        if (data[i][j] === " "){
-          setDisableTag (true)
+    for (let i = 0; i < data.length; i++) {
+      for (let j = 0; j < data[i].length; j++) {
+        if (data[i][j] === " ") {
+          setDisableTag(true)
         } else {
-          setDisableTag (false)
+          setDisableTag(false)
         }
       }
     }
-
+    console.log("Data Tag :", data)
     setTag(data)
-    
+
   }
 
   const onSubmit = (e) => {
@@ -561,7 +561,7 @@ const EditArtikel = ({ token }) => {
         {/* {
           console.log (kategori)
         } */}
-        
+
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -679,17 +679,17 @@ const EditArtikel = ({ token }) => {
                               "isi_artikel"
                             )
                           }
-                          // config={
-                          //   {
-                          //     //   ckfinder: {
-                          //     //   // Upload the images to the server using the CKFinder QuickUpload command.
-                          //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
-                          //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
-                          //     // }
-                          //     allowedContent: true
+                        // config={
+                        //   {
+                        //     //   ckfinder: {
+                        //     //   // Upload the images to the server using the CKFinder QuickUpload command.
+                        //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
+                        //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
+                        //     // }
+                        //     allowedContent: true
 
-                          //   }
-                          // }
+                        //   }
+                        // }
                         />
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -897,16 +897,16 @@ const EditArtikel = ({ token }) => {
                       onChange={(data) => handleTag(data)}
                       name="fruits"
                       placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
-                      seprators={["Enter", "Tab"]}
-                      // onBlur={() => simpleValidator.current.showMessageFor('tag')}
+                      // seprators={["Enter", "Tab"]}
+                    // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
                     {
                       disableTag === true ?
-                          <p className="text-danger">
-                              Tag tidak bisa terdiri dari 1 character "SPACE"
-                          </p>
-                      :
-                          null
+                        <p className="text-danger">
+                          Tag tidak bisa terdiri dari 1 character "SPACE"
+                        </p>
+                        :
+                        null
                     }
                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                   </div>
@@ -931,9 +931,8 @@ const EditArtikel = ({ token }) => {
                           onChange={(e) => handleChangePublish(e)}
                         />
                         <span
-                          className={`sliders round ${
-                            publish ? "text-white" : "pl-2"
-                          }`}
+                          className={`sliders round ${publish ? "text-white" : "pl-2"
+                            }`}
                         ></span>
                       </label>
                     </div>

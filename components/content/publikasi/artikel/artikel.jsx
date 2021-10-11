@@ -676,11 +676,11 @@ const Artikel = ({token}) => {
                               <td className='align-middle text-center'>
                                 {
                                   limit === null ?
-                                    <span className="badge badge-secondary text-muted">
+                                    <span>
                                       {i + 1 * (page * 5) - (5 - 1)}
                                     </span>
                                     :
-                                    <span className="badge badge-secondary text-muted">
+                                    <span>
                                       {i + 1 * (page * limit) - (limit - 1)}
                                     </span>
                                 }
