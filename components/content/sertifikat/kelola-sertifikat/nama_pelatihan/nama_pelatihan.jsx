@@ -54,6 +54,11 @@ export default function NamaPelatihanID({ token }) {
     router.push(link);
   };
 
+  // console.log("masuk halaman ini");
+  // useEffect(() => {
+  //   console.log(loading, "INI LOADING");
+  // }, [loading]);
+
   return (
     <PageWrapper>
       {/* error START */}
@@ -299,7 +304,7 @@ export default function NamaPelatihanID({ token }) {
                                   {certificate.theme.name}
                                 </td>
                                 <td className="align-middle">
-                                  {certificate.nama_sertifikat}
+                                  {certificate.name}
                                 </td>
                                 <td className="align-middle">
                                   {certificate.certificate_type}

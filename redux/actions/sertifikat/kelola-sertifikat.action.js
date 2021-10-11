@@ -21,6 +21,9 @@ import {
   PUBLISHED_SERTIFIKAT_REQUEST,
   PUBLISHED_SERTIFIKAT_SUCCESS,
   PUBLISHED_SERTIFIKAT_FAIL,
+  UPDATE_SERTIFIKAT_REQUEST,
+  UPDATE_SERTIFIKAT_SUCCESS,
+  UPDATE_SERTIFIKAT_FAIL,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
 export const getAllSertifikat =
@@ -180,6 +183,7 @@ export const getSingleSertifikat =
 export const getPublishedSertifikat = (id, token) => async dispatch => {
   try {
     dispatch({ type: PUBLISHED_SERTIFIKAT_REQUEST });
+
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
       `api/manage_certificates/image/${id}`;
@@ -196,5 +200,38 @@ export const getPublishedSertifikat = (id, token) => async dispatch => {
     }
   } catch (error) {
     dispatch({ type: PUBLISHED_SERTIFIKAT_FAIL, payload: error.message });
+  }
+};
+
+export const updateSertifikat = (id, formData, token) => async dispatch => {
+  try {
+    dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
+    let link =
+      process.env.END_POINT_API_SERTIFIKAT +
+      `api/manage_certificates/update/${id}`;
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token.token}`,
+      },
+    };
+
+    const { data } = await axios.post(link, formData, config);
+
+    if (data) {
+      console.log(data);
+      dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
+    }
+  } catch (error) {
+    console.log("ERRRRRRRRROR", error.response.data.message, "masukedispatch");
+    dispatch({
+      type: UPDATE_SERTIFIKAT_FAIL,
+      payload: error.message,
+      // payload: error.response.data.message,
+    });
   }
 };
