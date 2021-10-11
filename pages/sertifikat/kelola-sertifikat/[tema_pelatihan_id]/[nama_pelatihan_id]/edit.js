@@ -1,10 +1,8 @@
+import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import { getSingleSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { wrapper } from "../../../../../redux/store";
-import Pagination from "react-js-pagination";
 
 const EditSertifikat = dynamic(
   () =>
@@ -25,14 +23,14 @@ export default function KelokaSertifikatPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditSertifikat />
+        <EditSertifikat token={session} />
       </div>
     </>
   );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
