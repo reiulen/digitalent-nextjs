@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 
 // import LoginUser from "../../components/content/auth/user/login";
-import Beranda from "../../user-component/content/beranda/beranda";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
 //check login login
@@ -21,7 +20,6 @@ export default function LoginUserPage() {
     <>
       <div className="d-flex flex-column flex-root">
         <LoginUser />
-        {/* <Beranda /> */}
       </div>
     </>
   );
@@ -29,6 +27,7 @@ export default function LoginUserPage() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
+  // console.log(session.user.user.data); untuk cek role user
   if (session) {
     return {
       redirect: {

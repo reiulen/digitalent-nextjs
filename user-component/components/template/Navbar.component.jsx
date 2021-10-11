@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { signOut } from "next-auth/client";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 
@@ -16,7 +17,11 @@ import {
   Dropdown,
 } from "react-bootstrap";
 
-const NavbarComponent = () => {
+const NavbarComponent = ({ session }) => {
+  const handlerLogout = () => {
+    signOut();
+  };
+
   return (
     <>
       <Navbar bg="white" expand="lg" className="shadow" sticky="top">
@@ -175,7 +180,7 @@ const NavbarComponent = () => {
                 <i className="ri-notification-2-fill"></i>
               </Nav.Link>
               <NavDropdown
-                title="Hallo Admin"
+                title={`${session.name}`}
                 id="basic-nav-dropdown"
                 className="font-weight-bolder mb-0 pb-0"
               >
@@ -200,11 +205,13 @@ const NavbarComponent = () => {
                 <NavDropdown.Item href="#" className="navdropdown-child">
                   Pengaturan
                 </NavDropdown.Item>
-                <Link href="/login" passHref>
-                  <NavDropdown.Item href="#" className="navdropdown-child">
-                    Keluar
-                  </NavDropdown.Item>
-                </Link>
+                <NavDropdown.Item
+                  href="#"
+                  className="navdropdown-child"
+                  onClick={() => handlerLogout()}
+                >
+                  Keluar
+                </NavDropdown.Item>
               </NavDropdown>
             </Nav>
           </Navbar.Collapse>

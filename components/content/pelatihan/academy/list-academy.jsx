@@ -234,12 +234,14 @@ const ListAcademy = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {!academy || (academy && academy.rows.length === 0) ? (
+                      {!academy ||
+                      (academy && academy.list === null) ||
+                      academy.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Masih Kosong
                         </td>
                       ) : (
-                        academy.rows.map((row, i) => (
+                        academy.list.map((row, i) => (
                           <tr key={i}>
                             <td className="text-center">
                               {limit === null
@@ -312,23 +314,24 @@ const ListAcademy = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <Pagination
-                    activePage={academy.page}
-                    itemsCountPerPage={academy.total_pages}
-                    totalItemsCount={academy.total_rows}
-                    pageRangeDisplayed={3}
-                    onChange={handlePagination}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-
-                {academy && academy.total_rows > 5 && (
+                {academy && academy.perPage < academy.total && (
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={academy.page}
+                      itemsCountPerPage={academy.perPage}
+                      totalItemsCount={academy.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {academy && academy.total > 5 && (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0 mt-3">
@@ -356,7 +359,7 @@ const ListAcademy = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {academy.total_rows}
+                          Total Data {academy.total}
                         </p>
                       </div>
                     </div>
