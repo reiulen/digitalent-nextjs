@@ -22,7 +22,8 @@ const AddAcademy = ({ token }) => {
   const router = useRouter();
 
   const [editorLoaded, setEditorLoaded] = useState(false);
-  const { CKEditor, ClassicEditor, Base64UploadAdapter } = editorRef.current || {};
+  const { CKEditor, ClassicEditor, Base64UploadAdapter } =
+    editorRef.current || {};
   const { loading, error, success, academy } = useSelector(
     (state) => state.newAcademy
   );
@@ -66,7 +67,7 @@ const AddAcademy = ({ token }) => {
         query: { success: true },
       });
     }
-  });
+  }, [success, dispatch, router]);
 
   const handleResetError = () => {
     if (error) {

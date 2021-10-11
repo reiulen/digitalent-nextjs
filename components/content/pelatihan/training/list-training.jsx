@@ -74,7 +74,7 @@ const ListTraining = ({ token }) => {
   const [publishValue, setPublishValue] = useState(null);
 
   const optionsAkademi = dataAkademi.data;
-  const optionsTema = dataTema.data
+  const optionsTema = dataTema.data;
 
   const optionsStatusPelatihan = [
     { value: "review substansi", label: "Review Substansi" },
@@ -106,8 +106,7 @@ const ListTraining = ({ token }) => {
         type: DELETE_TRAINING_RESET,
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDeleted]);
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -132,9 +131,8 @@ const ListTraining = ({ token }) => {
       link = link.concat(`&status_substansi=${statusSubstansi.value}`);
     if (statusPelatihan)
       link = link.concat(`&status_pelatihan=${statusPelatihan.value}`);
-    if (dateRegister)
-      link = link.concat(`&tanggal_pendaftaran=${dateRegister}`);
-    if (dateStart) link = link.concat(`&tanggal_pelaksanaan=${dateStart}`);
+    if (dateRegister) link = link.concat(`&pendaftaran_mulai=${dateRegister}`);
+    if (dateStart) link = link.concat(`&pelatihan_mulai=${dateStart}`);
     router.push(link);
     setShowModal(false);
   };
@@ -148,6 +146,7 @@ const ListTraining = ({ token }) => {
     setDateRegister(null);
     setDateStart(null);
     router.replace("/pelatihan/pelatihan", undefined, { shallow: true });
+    router.push(`${router.pathname}`);
     setShowModal(false);
   };
 

@@ -66,8 +66,7 @@ const ListAcademy = ({ token }) => {
         type: DELETE_ACADEMY_RESET,
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDeleted]);
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -249,10 +248,11 @@ const ListAcademy = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <Image
-                                src = {row.file_path + row.logo}
+                                src={row.file_path + row.logo}
                                 width="111"
                                 height="52"
                                 objectFit="cover"
+                                alt={`image` + i}
                               />
                             </td>
                             <td className="align-middle">
