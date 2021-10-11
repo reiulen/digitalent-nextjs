@@ -45,11 +45,8 @@
     "file-saver": "^2.0.5",
     "gulp": "4.0.2",
     "html-to-image": "^1.8.5",
-<<<<<<< HEAD
     "js-cookie": "^3.0.1",
-=======
     "i": "^0.3.7",
->>>>>>> e88cf0af8c79996ecf8e0851c1a0e11406898a18
     "lodash.debounce": "^4.0.8",
     "moment": "^2.29.1",
     "next": "^11.1.2",
