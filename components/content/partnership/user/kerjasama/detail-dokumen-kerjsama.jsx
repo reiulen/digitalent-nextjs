@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { getSingleCooperation } from "../../../../../redux/actions/partnership/user/cooperation.actions";
 
-const DetailDokumenKerjasama = ({token}) => {
+const DetailDokumenKerjasama = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   let { success } = router.query;
@@ -20,26 +20,26 @@ const DetailDokumenKerjasama = ({token}) => {
   const [pdfFIle, setPdfFIle] = useState("");
   const [showPdf, setShowPdf] = useState(false);
 
-  const getSingleValue = async (id) => {
-    try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/${id}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setPdfFIle(data.data.document_file);
-    } catch (error) {
-      console.log("action getSingleValue gagal", error);
-    }
-  };
-
   useEffect(() => {
+    async function getSingleValue(id) {
+      try {
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/cooperations/proposal/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setPdfFIle(data.data.document_file);
+      } catch (error) {
+        console.log("action getSingleValue gagal", error);
+      }
+    }
+
     getSingleValue(router.query.id);
-    dispatch(getSingleCooperation(router.query.id,token));
-  }, [dispatch, router.query.id,token]);
+    dispatch(getSingleCooperation(router.query.id, token));
+  }, [dispatch, router.query.id, token]);
 
   return (
     <PageWrapper>
@@ -124,7 +124,8 @@ const DetailDokumenKerjasama = ({token}) => {
                   <option value="Kategori" selected>
                     {allCooperationUser.cooperationById.length === 0
                       ? ""
-                      : allCooperationUser.cooperationById.data.cooperation_category.name}
+                      : allCooperationUser.cooperationById.data
+                          .cooperation_category.name}
                   </option>
                 </select>
               </div>
@@ -146,7 +147,8 @@ const DetailDokumenKerjasama = ({token}) => {
                       value={
                         allCooperationUser.cooperationById.length === 0
                           ? ""
-                          : allCooperationUser.cooperationById.data.period_date_start
+                          : allCooperationUser.cooperationById.data
+                              .period_date_start
                       }
                       dateFormat="dd/MM/yyyy"
                       placeholderText="Dari Tanggal"
@@ -162,7 +164,8 @@ const DetailDokumenKerjasama = ({token}) => {
                       value={
                         allCooperationUser.cooperationById.length === 0
                           ? ""
-                          : allCooperationUser.cooperationById.data.period_date_end
+                          : allCooperationUser.cooperationById.data
+                              .period_date_end
                       }
                       // startDate={startDate}
                       // endDate={endDate}
@@ -276,7 +279,8 @@ const DetailDokumenKerjasama = ({token}) => {
                   value={
                     allCooperationUser.cooperationById.length === 0
                       ? ""
-                      : allCooperationUser.cooperationById.data.agreement_number_partner
+                      : allCooperationUser.cooperationById.data
+                          .agreement_number_partner
                   }
                   readOnly
                   className="form-control"
@@ -292,7 +296,8 @@ const DetailDokumenKerjasama = ({token}) => {
                   value={
                     allCooperationUser.cooperationById.length === 0
                       ? ""
-                      : allCooperationUser.cooperationById.data.agreement_number_kemkominfo
+                      : allCooperationUser.cooperationById.data
+                          .agreement_number_kemkominfo
                   }
                   readOnly
                   className="form-control"
@@ -305,16 +310,16 @@ const DetailDokumenKerjasama = ({token}) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Tanggal Penandatanganan
                     </label>
-                        <input
-                          readOnly
-                          value={
-                            allCooperationUser.cooperationById.length === 0
-                              ? ""
-                              : allCooperationUser.cooperationById.data.signing_date
-                          }
-                          type="date"
-                          className="form-control"
-                        />
+                    <input
+                      readOnly
+                      value={
+                        allCooperationUser.cooperationById.length === 0
+                          ? ""
+                          : allCooperationUser.cooperationById.data.signing_date
+                      }
+                      type="date"
+                      className="form-control"
+                    />
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -322,27 +327,30 @@ const DetailDokumenKerjasama = ({token}) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Dokumen Kerjasama
                     </label>
-                        <div className="position-relative overflow-hidden w-100 ">
-                         
-                          <input
-                            disabled
-                            type="text"
-                            className="form-control"
-                            placeholder={`${pdfFIle}`}
-                          />
-                          <button
-                            type="button"
-                            className="btn right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                              backgroundColor:"#D7E1EA",
-                              color:"#6C6C6C"
-                            }}
-                            onClick={()=>window.open(`https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`)}
-                          >
-                            Buka File
-                          </button>
+                    <div className="position-relative overflow-hidden w-100 ">
+                      <input
+                        disabled
+                        type="text"
+                        className="form-control"
+                        placeholder={`${pdfFIle}`}
+                      />
+                      <button
+                        type="button"
+                        className="btn right-center-absolute"
+                        style={{
+                          borderTopLeftRadius: "0",
+                          borderBottomLeftRadius: "0",
+                          backgroundColor: "#D7E1EA",
+                          color: "#6C6C6C",
+                        }}
+                        onClick={() =>
+                          window.open(
+                            `https://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/partnership/files/document_cooperations/${pdfFIle}`
+                          )
+                        }
+                      >
+                        Buka File
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -382,12 +390,10 @@ const DetailDokumenKerjasama = ({token}) => {
 
               {/* start loop */}
 
-              
-
               {allCooperationUser.cooperationById.length === 0 ? (
                 ""
-              ) : allCooperationUser.cooperationById.data.cooperation_category.data_content
-                  .cooperation_form === "-" ? (
+              ) : allCooperationUser.cooperationById.data.cooperation_category
+                  .data_content.cooperation_form === "-" ? (
                 <h1 className="my-4">Data kerja sama tidak ada</h1>
               ) : (
                 allCooperationUser.cooperationById.data.cooperation_category.data_content.map(

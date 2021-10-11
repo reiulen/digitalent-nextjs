@@ -76,7 +76,7 @@ const FilterBar = () => {
             </div>
 
             <div>
-                <button className="btn btn-primary-rounded-full">
+                <button className="btn btn-primary-new">
                     <i className="ri-search-line mr-2"></i>
                     Search
                 </button>

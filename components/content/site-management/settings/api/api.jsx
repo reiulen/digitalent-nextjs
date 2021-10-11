@@ -11,12 +11,37 @@ import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 
+import { deleteApi, getAllApi } from "../../../../../redux/actions/site-management/settings/api.actions";
+import { DELETE_API_RESET } from "../../../../../redux/types/site-management/settings/api.type";
+
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
+  const {
+    loading: allLoading,
+    error,
+    apies,
+  } = useSelector((state) => state.allApi);
+  const {
+    loading: deleteLoading,
+    error: errorDelete,
+    isDeleted,
+  } = useSelector((state) => state.deleteApi);
+
+  console.log("apies", apies);
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
+
+  let loading = false;
+  let { page = 1, cari, success } = router.query;
+  if (allLoading) {
+    loading = allLoading;
+  }
+  page = Number(page);
+
   // function delete
-  const apiDelete = (id) => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
       icon: "warning",
@@ -28,7 +53,7 @@ const Table = ({ token }) => {
       dismissOnDestroy: false,
     }).then(async (result) => {
       if (result.value) {
-        // dispatch delete
+        dispatch(deleteApi(id, token));
       }
     });
   };
@@ -38,6 +63,30 @@ const Table = ({ token }) => {
       shallow: true,
     });
   };
+
+  const handleChangeLimit = (limit, token) => {
+    dispatch(getAllApi(page, cari, limit, token));
+  };
+
+  useEffect(() => {
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            dispatch(getAllApi(page, cari, limit, token));
+          }
+        }
+      );
+      dispatch({
+        type: DELETE_API_RESET,
+      });
+    }
+  }, [limit, isDeleted, dispatch, cari,page,token]);
+
+  const handleSearch = () => {
+    dispatch(getAllApi(page, search, 5, token));
+  };
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -62,131 +111,158 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    // onSubmit={handleSubmit}
-                    className="d-flex align-items-center w-100"
-                  >
-                    <div className="row w-100">
-                      <div className="col-12 col-sm-6">
-                        <div className="position-relative overflow-hidden w-100">
-                          <IconSearch
-                            style={{ left: "10" }}
-                            className="left-center-absolute"
-                          />
-                          <input
-                            id="kt_datatable_search_query"
-                            type="text"
-                            className="form-control pl-10"
-                            placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
-                          />
-                          <button
-                            type="submit"
-                            className="btn bg-blue-primary text-white right-center-absolute"
-                            style={{
-                              borderTopLeftRadius: "0",
-                              borderBottomLeftRadius: "0",
-                            }}
-                          >
-                            Cari
-                          </button>
-                        </div>
+                  <div className="row w-100">
+                    <div className="col-12 col-sm-6">
+                      <div className="position-relative overflow-hidden w-100">
+                        <IconSearch
+                          style={{ left: "10" }}
+                          className="left-center-absolute"
+                        />
+                        <input
+                          id="kt_datatable_search_query"
+                          type="text"
+                          className="form-control pl-10"
+                          placeholder="Ketik disini untuk Pencarian..."
+                          onChange={(e) => setSearch(e.target.value)}
+                        />
+                        <button
+                          type="submit"
+                          className="btn bg-blue-primary text-white right-center-absolute"
+                          style={{
+                            borderTopLeftRadius: "0",
+                            borderBottomLeftRadius: "0",
+                          }}
+                          onClick={handleSearch}
+                        >
+                          Cari
+                        </button>
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">API</th>
-                      <th className="text-left align-middle">URL</th>
-                      <th className="text-left align-middle">KEY</th>
-                      <th className="text-left align-middle">Pengguna</th>
-                      <th className="text-left align-middle">Masa Berlaku</th>
-                      <th className="text-left align-middle">Status</th>
-                      <th className="text-left align-middle">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">api</td>
-                      <td className="align-middle text-left">url</td>
-                      <td className="align-middle text-left">key</td>
-                      <td className="align-middle text-left">pengguna</td>
-                      <td className="align-middle text-left">masa berlaku</td>
-                      <td className="align-middle text-left">
-                        <p
-                          className="status-div-red mb-0"
-                          style={{ width: "max-content" }}
-                        >
-                          Tidak aktif
-                        </p>
-                      </td>
-                      <td className="align-middle text-left">
-                        <div className="d-flex align-items-center">
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/setting/api/ubah-api`)
-                            }
-                          >
-                            <IconPencil width="16" height="16" />
-                            <div className="text-hover-show-hapus">Ubah</div>
-                          </button>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/setting/api/detail-api`)
-                            }
-                          >
-                            <IconEye width="16" height="16" />
-                            <div className="text-hover-show-hapus">Detail</div>
-                          </button>
+                <LoadingTable loading={loading} />
+                {loading === false ? (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">API</th>
+                        <th className="text-left align-middle">URL</th>
+                        <th className="text-left align-middle">KEY</th>
+                        <th className="text-left align-middle">Pengguna</th>
+                        <th className="text-left align-middle">Masa Berlaku</th>
+                        <th className="text-left align-middle">Status</th>
+                        <th className="text-left align-middle">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {!apies || (apies && apies.length === 0) ? (
+                        <tr>
+                          <td colSpan="8" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        apies &&
+                        apies.map((items, i) => {
+                          return (
+                            <tr key={i}>
+                              <td className="align-middle text-left">
+                                {limit === null
+                                  ? i + 1 * (page * 5) - (5 - 1)
+                                  : i + 1 * (page * limit) - (limit - 1)}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.api_name}
+                              </td>
+                              <td className="align-middle text-left">
+                                url belom ada di api
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.api_key}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.username}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.from_date} / {items.to_date}
+                              </td>
+                              <td className="align-middle text-left">
+                                <p
+                                  className="status-div-red mb-0"
+                                  style={{ width: "max-content" }}
+                                >
+                                  Tidak aktif
+                                </p>
+                              </td>
+                              <td className="align-middle text-left">
+                                <div className="d-flex align-items-center">
+                                  <Link
+                                    href={`/site-management/setting/api/ubah-api/${items.id}`}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </a>
+                                  </Link>
+                                  <Link
+                                    href={`/site-management/setting/api/detail-api/${items.id}`}
+                                  >
+                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                      <IconEye width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Detail
+                                      </div>
+                                    </a>
+                                  </Link>
 
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            // onClick={() =>
-                            //   apiDelete(items.id)
-                            // }
-                          >
-                            <IconDelete width="16" height="16" />
-                            <div className="text-hover-show-hapus">Hapus</div>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() => handleDelete(items.id)}
+                                  >
+                                    <IconDelete width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                ) : (
+                  ""
+                )}
               </div>
 
-              <div className="row">
+              <div className="row mt-6">
                 <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                 {apies && apies.perPage < apies.total && (
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={apies.perPage}
+                      totalItemsCount={apies.total}
+                      pageRangeDisplayed={3}
+                      onChange={(page) => dispatch(getAllApi(page))}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
                 </div>
 
                 <div className="table-total ml-auto">
@@ -202,6 +278,9 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) =>
+                          handleChangeLimit(e.target.value,token)
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>

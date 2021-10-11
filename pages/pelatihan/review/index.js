@@ -2,10 +2,20 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import ListReview from "../../../components/content/pelatihan/review/list-review";
+// import ListReview from "../../../components/content/pelatihan/review/list-review";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const ListReview = dynamic(
+  () => import("../../../components/content/pelatihan/review/list-review"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ListReviewPage() {
   return (

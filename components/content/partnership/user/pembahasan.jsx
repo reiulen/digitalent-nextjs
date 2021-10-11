@@ -75,8 +75,8 @@ function Pembahasan({token}) {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Submit Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Submit Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>
@@ -85,8 +85,8 @@ function Pembahasan({token}) {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Review Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Review Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>

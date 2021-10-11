@@ -12,7 +12,7 @@ const DashboardSetting = () => {
     getSession().then((session) => {
       console.log(session.user.user);
     });
-  }, [getSession]);
+  }, []);
   return (
     <>
       <PageWrapper>

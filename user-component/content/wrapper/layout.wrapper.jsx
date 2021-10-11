@@ -9,6 +9,10 @@ const NavigationBar = dynamic (() => import ("../../../components/templates/navb
     ssr: false,
 })
 
+const Footer = dynamic (() => import ("../../../components/templates/footer.component"), {
+    ssr: false,
+})
+
 const Layout = ({ children, title }) => {
 
     return (
@@ -25,6 +29,7 @@ const Layout = ({ children, title }) => {
                 </div>
             </div>
 
+            <Footer />
         
         </>
     )

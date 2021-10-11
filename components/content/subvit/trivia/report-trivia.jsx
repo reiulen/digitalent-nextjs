@@ -207,7 +207,7 @@ const ReportTrivia = ({ token }) => {
                         <th>Peserta Test</th>
                         <th>Pelatihan</th>
                         <th>Total Pengerjaan</th>
-                        <th>Status</th>
+                        <th className="align-middle text-center">Status</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -255,20 +255,22 @@ const ReportTrivia = ({ token }) => {
                                 </div>
                               </td>
 
-                              <td className="align-middle">
-                                {row.status ? (
-                                  <td className="align-middle">
-                                    <span className="label label-inline label-light-success font-weight-bold">
-                                      Diterima
-                                    </span>
-                                  </td>
-                                ) : (
-                                  <td className="align-middle">
-                                    <span className="label label-inline label-light-danger font-weight-bold">
-                                      Ditolak
-                                    </span>
-                                  </td>
-                                )}
+                              <td className="align-middle ">
+                                <center>
+                                  {row.status ? (
+                                    <td className="align-middle ">
+                                      <span className="label label-inline label-light-success font-weight-bold">
+                                        Diterima
+                                      </span>
+                                    </td>
+                                  ) : (
+                                    <td className="align-middle">
+                                      <span className="label label-inline label-light-danger font-weight-bold">
+                                        Ditolak
+                                      </span>
+                                    </td>
+                                  )}
+                                </center>
                               </td>
                             </tr>
                           );
