@@ -318,13 +318,22 @@ const EditDokumentKerjasama = ({ token }) => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Tanggal
                 </label>
-                <input
+                {/* <input
                   readOnly
                   type="date"
                   required
                   value={date}
                   className="form-control"
-                />
+                /> */}
+
+                <input
+                      disabled
+                      type="text"
+                      value={date}
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0"
+                      // placeholder="Masukan Alamat E-mail"
+                    />
               </div>
 
               <div className="form-group">
@@ -428,7 +437,14 @@ const EditDokumentKerjasama = ({ token }) => {
                     />
                   </div>
                   <div className="col-12 col-sm-6">
-                    <div className="form-control">Tahun</div>
+                    {/* <div className="form-control">Tahun</div> */}
+                    <input
+                      disabled
+                      type="text"
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0"
+                      placeholder="Tahun"
+                    />
                   </div>
                 </div>
               </div>
@@ -455,10 +471,10 @@ const EditDokumentKerjasama = ({ token }) => {
                     </div>
                   </div>
                   <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
-                        readOnly
+                        disabled
                         onChange={(date) =>
                           setPeriodDateEnd(moment(date).format("YYYY-MM-DD"))
                         }
@@ -482,9 +498,17 @@ const EditDokumentKerjasama = ({ token }) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Lembaga
                     </label>
-                    <div aria-readonly disabled className="form-control">
+                    {/* <div aria-readonly disabled className="form-control">
                       {isntitusiName}
-                    </div>
+                    </div> */}
+                    <input
+                      disabled
+                      type="text"
+                      value={isntitusiName}
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0"
+                      placeholder="Masukan Alamat E-mail"
+                    />
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -492,7 +516,14 @@ const EditDokumentKerjasama = ({ token }) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Email
                     </label>
-                    <p className="form-control">{email}</p>
+                    <input
+                      disabled
+                      type="text"
+                      value={email}
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0"
+                      placeholder="Masukan Alamat E-mail"
+                    />
                   </div>
                 </div>
               </div>
@@ -628,7 +659,7 @@ const EditDokumentKerjasama = ({ token }) => {
                 {showDokument ? (
                   <iframe
                     className="my-4 border"
-                    src={`http://dts-partnership-dev.majapahit.id/storage/partnership/files/document_cooperations/${document}`}
+                    src={`${process.env.END_POINT_API_IMAGE_PARTNERSHIP}partnership/files/document_cooperations/${document}`}
                     frameBorder="0"
                     scrolling="auto"
                     height={"500px"}

@@ -53,28 +53,28 @@ const TambahMitra = ({ token }) => {
         ...error,
         agency_logo: "Harus isi gambar logo dengan format png/jpg",
       });
-      notify("Harus isi gambar logo dengan format png");
+      // notify("Harus isi gambar logo dengan format png");
     } else if (institution_name === "") {
       setError({ ...error, institution_name: "Harus isi nama lembaga" });
-      notify("Harus isi nama lembaga");
+      // notify("Harus isi nama lembaga");
     } else if (email === "") {
       setError({ ...error, email: "Harus isi email" });
-      notify("Harus isi email");
+      // notify("Harus isi email");
     } else if (wesite === "") {
       setError({ ...error, wesite: "Harus isi nama website" });
-      notify("Harus isi nama website");
+      // notify("Harus isi nama website");
     } else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
-      notify("Harus isi alamat");
+      // notify("Harus isi alamat");
     } else if (indonesia_provinces_id === "") {
       setError({
         ...error,
         indonesia_provinces_id: "Harus isi pilih provinsi",
       });
-      notify("Harus isi pilih provinsi");
+      // notify("Harus isi pilih provinsi");
     } else if (indonesia_cities_id === "") {
       setError({ ...error, indonesia_cities_id: "Harus isi pilih kota/kab" });
-      notify("Harus isi pilih kota/kab");
+      // notify("Harus isi pilih kota/kab");
     } else if (
       postal_code === "" ||
       postal_code.length < 5 ||
@@ -84,19 +84,19 @@ const TambahMitra = ({ token }) => {
         ...error,
         postal_code: "Harus isi kode pos minimal dan maksimal 5 karakter",
       });
-      notify("Harus isi kode pos minimal dan maksimal 5 karakter");
+      // notify("Harus isi kode pos minimal dan maksimal 5 karakter");
     } else if (pic_name === "") {
       setError({ ...error, pic_name: "Harus isi nama PIC" });
-      notify("Harus isi nama PIC");
+      // notify("Harus isi nama PIC");
     } else if (pic_contact_number === "" || pic_contact_number.length < 9) {
       setError({
         ...error,
         pic_contact_number: "Harus isi No. Kontak PIC dan minimal 9 karakter",
       });
-      notify("Harus isi No. Kontak PIC");
+      // notify("Harus isi No. Kontak PIC");
     } else if (pic_email === "") {
       setError({ ...error, pic_email: "Harus isi Email PIC" });
-      notify("Harus isi Email PIC");
+      // notify("Harus isi Email PIC");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
@@ -260,11 +260,11 @@ const TambahMitra = ({ token }) => {
         {/* {loading ? <LoadingPage loading={loading} /> : ""} */}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title font-weight-bolder text-dark">
+            <h3 className="card-title font-weight-bolder text-dark" style={{ fontSize: "24px" }}>
               Tambah Mitra
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={submit}>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -395,7 +395,7 @@ const TambahMitra = ({ token }) => {
                   <div className="modal-content">
                     <div className="modal-header">
                       <h5 className="modal-title" id="exampleModalLongTitle">
-                        Gambar Logo
+                        Logo Gambar
                       </h5>
                       <button
                         type="button"
@@ -428,7 +428,7 @@ const TambahMitra = ({ token }) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Masukan Alamat Lengkap
+                  Alamat Lengkap
                 </label>
                 <input
                   onFocus={() => setError({ ...error, address: "" })}
@@ -530,6 +530,25 @@ const TambahMitra = ({ token }) => {
                 <div className="col-12 col-sm-6">
                   <div className="form-group">
                     <label htmlFor="staticEmail" className="col-form-label">
+                      Nama Person In Charge (PIC)
+                    </label>
+                    <input
+                      onFocus={() => setError({ ...error, pic_name: "" })}
+                      type="text"
+                      className="form-control"
+                      placeholder="Masukkan Nama"
+                      onChange={(e) => setPic_name(e.target.value)}
+                    />
+                    {error.pic_name ? (
+                      <p className="error-text">{error.pic_name}</p>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="col-12 col-sm-6">
+                  <div className="form-group">
+                    <label htmlFor="staticEmail" className="col-form-label">
                       Nomor Handphone Person In Charge (PIC)
                     </label>
                     <input
@@ -545,25 +564,6 @@ const TambahMitra = ({ token }) => {
                     />
                     {error.pic_contact_number ? (
                       <p className="error-text">{error.pic_contact_number}</p>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-                <div className="col-12 col-sm-6">
-                  <div className="form-group">
-                    <label htmlFor="staticEmail" className="col-form-label">
-                      Nama Person In Charge (PIC)
-                    </label>
-                    <input
-                      onFocus={() => setError({ ...error, pic_name: "" })}
-                      type="text"
-                      className="form-control"
-                      placeholder="Masukkan Nama"
-                      onChange={(e) => setPic_name(e.target.value)}
-                    />
-                    {error.pic_name ? (
-                      <p className="error-text">{error.pic_name}</p>
                     ) : (
                       ""
                     )}

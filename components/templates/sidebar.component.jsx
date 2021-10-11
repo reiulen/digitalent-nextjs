@@ -6,6 +6,8 @@ import IconArrow2 from "../../components/assets/icon/Arrow2";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/client";
 
+// import Dashboard from '../../components/assets/icon/sidebar_temp/Dashboard.svg'
+
 import {
   IS_ASSIDE_MOBILE_SIDEBAR,
   IS_OVERLAY_SIDEBAR_MOBILE,
@@ -13,283 +15,36 @@ import {
 } from "../../redux/types/utils/functionals.type";
 
 const Sidebar = ({ session }) => {
+<<<<<<< HEAD
   // const [session, loading] = useSession();
+=======
+  console.log("session sidebar",session)
+>>>>>>> 271be04e53af7ac550e574af29aa036c5f71d0de
   const dispatch = useDispatch();
-  const getStorageMenu2 = sessionStorage.getItem("menu2");
-  const getStorageMenu4 = sessionStorage.getItem("menu4");
-  const getStorageMenu3 = sessionStorage.getItem("menu3");
-  const getStorageMenuPartnership = sessionStorage.getItem("menu-partnership");
-  const getStorageMenuSiteManagement = sessionStorage.getItem(
-    "menu-site-management"
-  );
-  const getStorageMenuSiteManagementUser = sessionStorage.getItem(
-    "menu-site-management-user"
-  );
-  const getStorageMenuSertifikat = sessionStorage.getItem("menu-sertifikat");
-
-  const allFunctionls = useSelector(state => state.allFunctionls);
-
+  const allFunctionls = useSelector((state) => state.allFunctionls);
   const router = useRouter();
-  const [menuItem1, setMenuItem1] = useState("");
-  const [menuItem2, setMenuItem2] = useState("");
-  // publikasi
-  const [menuItem3, setMenuItem3] = useState("");
-  // partnership
-  const [menuItem4, setMenuItem4] = useState("");
-  const [menuItem5, setMenuItem5] = useState("");
-  // subvit
-  const [menuItem6, setMenuItem6] = useState("");
-  const [menuItem7, setMenuItem7] = useState("");
-  const [menuItem8, setMenuItem8] = useState("");
-  const [menuItemS, setMenuItemS] = useState("");
-  // user-mitra
+
+
+  // mitra partnership sementara
   const [menuItem9, setMenuItem9] = useState("");
-
-  const onSetMenuItem1 = () => {
-    if (menuItem1 !== "") {
-      setMenuItem1("");
+  const getStorageMenu4 = sessionStorage.getItem("menu4");
+  // function show sub menu partnership user-mitra
+  const activeMenuPartnershipMitra = () => {
+    if (sessionStorage.getItem("menu4")) {
+      sessionStorage.removeItem("menu4");
     } else {
-      setMenuItem1("menu-item-open");
+      sessionStorage.setItem("menu4", "menu-item-open");
+    }
+    setMenuItem9(!sessionStorage.getItem("menu4") ? "" : "menu-item-open");
+  };
+  // function active submenu partnership user-mitra
+  const activeSubItemPartnershipMitra = () => {
+    if (sessionStorage.getItem("menu4")) {
+      sessionStorage.removeItem("menu4");
+    } else {
+      sessionStorage.setItem("menu4", "menu-item-open");
     }
   };
-
-  const onSetMenuItem2 = () => {
-    if (menuItem2 !== "") {
-      setMenuItem2("");
-    } else {
-      setMenuItem2("menu-item-open");
-    }
-  };
-
-  const onSetMenuItem3 = () => {
-    if (menuItem3 !== "") {
-      setMenuItem3("");
-    } else {
-      setMenuItem3("menu-item-open");
-    }
-  };
-
-  // ----------------------------------- start publikasi
-
-  // list publikasi submenu
-  const [listMenuPublikasi, setListMenuPublikasi] = useState([
-    { id: 1, name: "Dashboard", href: "/publikasi/dashboard-publikasi" },
-    {
-      id: 2,
-      name: "Artikel",
-      href: "/publikasi/artikel",
-    },
-    {
-      id: 3,
-      name: "Artikel Peserta",
-      href: "/publikasi/artikel-peserta",
-    },
-    {
-      id: 4,
-      name: "Berita",
-      href: "/publikasi/berita",
-    },
-    {
-      id: 5,
-      name: "Video",
-      href: "/publikasi/video",
-    },
-    {
-      id: 6,
-      name: "Galeri",
-      href: "/publikasi/galeri",
-    },
-    {
-      id: 7,
-      name: "Kategori",
-      href: "/publikasi/kategori",
-    },
-    {
-      id: 8,
-      name: "FAQ",
-      href: "/publikasi/faq",
-    },
-    {
-      id: 9,
-      name: "Imagetron",
-      href: "/publikasi/imagetron",
-    },
-    {
-      id: 10,
-      name: "Pengaturan",
-      href: "/publikasi/pengaturan",
-    },
-  ]);
-  // function active submenu publikasi
-  const activeSubItemPublikasi = () => {
-    if (sessionStorage.getItem("menu2")) {
-      sessionStorage.removeItem("menu2");
-    } else {
-      sessionStorage.setItem("menu2", "menu-item-open");
-    }
-  };
-  // function show sub menu publikasi
-  const activeMenuPublikasi = () => {
-    if (sessionStorage.getItem("menu2")) {
-      sessionStorage.removeItem("menu2");
-    } else {
-      sessionStorage.setItem("menu2", "menu-item-open");
-    }
-    setMenuItem3(!sessionStorage.getItem("menu2") ? "" : "menu-item-open");
-  };
-
-  // ----------------------------------- end publikasi
-
-  // ----------------------------------- start partnership
-
-  // list partnership submenu
-  const [listMenuPartnership, setListMenuPartnership] = useState([
-    { id: 1, name: "Dashboard", href: "/partnership/dashboard" },
-    {
-      id: 2,
-      name: "Kerjasama",
-      href: "/partnership/kerjasama",
-    },
-    {
-      id: 3,
-      name: "Master Mitra",
-      href: "/partnership/mitra",
-    },
-    {
-      id: 4,
-      name: "Master Kategori Kerjasama",
-      href: "/partnership/master-kategori-kerjasama",
-    },
-    {
-      id: 5,
-      name: "Tanda Tangan Digital",
-      href: "/partnership/tanda-tangan",
-    },
-  ]);
-
-  const activeSubItemPartnership = () => {
-    if (sessionStorage.getItem("menu-partnership")) {
-      sessionStorage.removeItem("menu-partnership");
-    } else {
-      sessionStorage.setItem("menu-partnership", "menu-item-open");
-    }
-  };
-
-  const activeMenuPartnership = () => {
-    if (sessionStorage.getItem("menu-partnership")) {
-      sessionStorage.removeItem("menu-partnership");
-    } else {
-      sessionStorage.setItem("menu-partnership", "menu-item-open");
-    }
-    setMenuItem4(
-      !sessionStorage.getItem("menu-partnership") ? "" : "menu-item-open"
-    );
-  };
-  // ----------------------------------- end partnership
-  // list site management submenu
-  const [listMenuSiteManagement, setListMenuSiteManagement] = useState([
-    { id: 1, name: "Dashboard", href: "/site-management/dashboard" },
-    {
-      id: 2,
-      name: "User",
-      href: "/site-management/user",
-    },
-    {
-      id: 3,
-      name: "User Peserta DTS",
-      href: "/site-management/user/peserta-dts",
-    },
-    {
-      id: 4,
-      name: "User Administrator",
-      href: "/site-management/user/administrator",
-    },
-    {
-      id: 5,
-      name: "User Mitra",
-      href: "/site-management/user/mitra",
-    },
-    {
-      id: 6,
-      name: "Role",
-      href: "/site-management/role",
-    },
-    {
-      id: 7,
-      name: "Export Data",
-      href: "/site-management/export-data",
-    },
-    {
-      id: 8,
-      name: "Master Data",
-      href: "/site-management/master-data",
-    },
-    {
-      id: 9,
-      name: "Master Zonasi",
-      href: "/site-management/master-data/master-zonasi",
-    },
-    {
-      id: 10,
-      name: "Master Satuan Kerja",
-      href: "/site-management/master-data/master-satuan-kerja-penyelenggara",
-    },
-    {
-      id: 11,
-      name: "Data Reference",
-      href: "/site-management/reference",
-    },
-    {
-      id: 12,
-      name: "Setting",
-      href: "/site-management/setting",
-    },
-    {
-      id: 13,
-      name: "Setting General",
-      href: "/site-management/setting/general",
-    },
-    {
-      id: 14,
-      name: "Setting Page",
-      href: "/site-management/setting/page",
-    },
-    {
-      id: 15,
-      name: "Setting Menu",
-      href: "/site-management/setting/menu",
-    },
-    {
-      id: 16,
-      name: "Setting API",
-      href: "/site-management/setting/api",
-    },
-    {
-      id: 17,
-      name: "Setting CSS",
-      href: "/site-management/setting/css-editor",
-    },
-    // {
-    //   id: 18,
-    //   name: "Setting Pelatihan",
-    //   href: "/site-management/setting/pelatihan",
-    // },
-  ]);
-  const activeMenuSiteManagement = () => {
-    if (sessionStorage.getItem("menu-site-management")) {
-      sessionStorage.removeItem("menu-site-management");
-    } else {
-      sessionStorage.setItem("menu-site-management", "menu-item-open");
-    }
-    setMenuItem7(
-      !sessionStorage.getItem("menu-site-management") ? "" : "menu-item-open"
-    );
-  };
-  // ----------------------------------- end site management
-
-  // ----------------------------------- start user-mitra
-
-  // list partnership user-mitra submenu
   const [listMenuPartnershipMitra, setListMenuPartnershipMitra] = useState([
     { id: 1, name: "Kerjasama", href: "/partnership/user/kerjasama" },
     {
@@ -303,94 +58,7 @@ const Sidebar = ({ session }) => {
       href: "/partnership/user/tanda-tangan-digital",
     },
   ]);
-  // function active submenu partnership user-mitra
-  const activeSubItemPartnershipMitra = () => {
-    if (sessionStorage.getItem("menu4")) {
-      sessionStorage.removeItem("menu4");
-    } else {
-      sessionStorage.setItem("menu4", "menu-item-open");
-    }
-  };
-  // function show sub menu partnership user-mitra
-  const activeMenuPartnershipMitra = () => {
-    if (sessionStorage.getItem("menu4")) {
-      sessionStorage.removeItem("menu4");
-    } else {
-      sessionStorage.setItem("menu4", "menu-item-open");
-    }
-    setMenuItem9(!sessionStorage.getItem("menu4") ? "" : "menu-item-open");
-  };
-
-  // ----------------------------------- end user-mitra
-
-  const onSetMenuItem5 = () => {
-    if (menuItem5 !== "") {
-      setMenuItem5("");
-    } else {
-      setMenuItem5("menu-item-open");
-    }
-  };
-
-  // ----------------------------------- start subvit
-
-  // list subvit submenu
-  const [listMenuSubvit, setListMenuSubvit] = useState([
-    { id: 1, name: "Dashboard", href: "/subvit" },
-    { id: 2, name: "Tes Substansi", href: "/subvit/substansi" },
-    {
-      id: 3,
-      name: "Survey",
-      href: "/subvit/survey",
-    },
-    {
-      id: 4,
-      name: "TRIVIA",
-      href: "/subvit/trivia",
-    },
-  ]);
-  // function active submenu subvit
-  const activeSubItemSubvit = () => {
-    if (sessionStorage.getItem("menu3")) {
-      sessionStorage.removeItem("menu3");
-    } else {
-      sessionStorage.setItem("menu3", "menu-item-open");
-    }
-  };
-  // function show sub menu subvit
-  const activeMenuSubvit = () => {
-    if (sessionStorage.getItem("menu3")) {
-      sessionStorage.removeItem("menu3");
-    } else {
-      sessionStorage.setItem("menu3", "menu-item-open");
-    }
-    setMenuItem6(!sessionStorage.getItem("menu3") ? "" : "menu-item-open");
-  };
-
-  // ----------------------------------- end subvit
-
-  const onSetMenuItem7 = () => {
-    if (menuItem7 !== "") {
-      setMenuItem7("");
-    } else {
-      setMenuItem7("menu-item-open");
-    }
-  };
-
-  const onSetMenuItem8 = () => {
-    if (menuItem8 !== "") {
-      setMenuItem8("");
-    } else {
-      setMenuItem8("menu-item-open");
-    }
-  };
-
-  const onSetMenuItemS = () => {
-    if (menuItemS !== "") {
-      setMenuItemS("");
-    } else {
-      setMenuItemS("menu-item-open");
-    }
-  };
+  // end mitra partnership sementara
   const activeProfileAndOverlay = () => {
     dispatch({
       type: IS_ASSIDE_MOBILE_SIDEBAR,
@@ -399,71 +67,508 @@ const Sidebar = ({ session }) => {
       type: IS_OVERLAY_SIDEBAR_MOBILE,
     });
   };
-
-  // START LIST MENU SERTIFIKAT
-  const [listMenuSertifikat, setListMenuSertifikat] = useState([
+  const [menu, setMenu] = useState([
     {
       id: 1,
-      name: "Kelola Sertifikat",
-      href: "/sertifikat/kelola-sertifikat",
+      name: "Dashboard",
+      href: "/dashboard",
+      selected: false,
+      icon: "assets/icon/sidebar_temp/Dashboard.svg",
+      child: [],
+    },
+    {
+      id: 2,
+      name: "Pelatihan",
+      href: "",
+      icon: "assets/icon/sidebar_temp/Pelatihan.svg",
+      selected: false,
+      child: [
+        {
+          id: 1,
+          name: "Akademi",
+          href: "/pelatihan/akademi",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Tema",
+          href: "/pelatihan/tema",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Pelatihan",
+          href: "/pelatihan/pelatihan",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Review Pelatihan",
+          href: "/pelatihan/review",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Rekap Pendaftaran",
+          href: "/pelatihan/rekap-pendaftaran",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Report Pelatihan",
+          href: "/pelatihan/report-pelatihan",
+          selected: false,
+          child: [],
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Publikasi",
+      href: "",
+      icon: "assets/icon/sidebar_temp/Publikasi.svg",
+      selected: false,
+      child: [
+        {
+          id: 1,
+          name: "Dashboard",
+          href: "/publikasi/dashboard-publikasi",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 1,
+          name: "Artikel",
+          href: "/publikasi/artikel",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Artikel Peserta",
+          href: "/publikasi/artikel-peserta",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Berita",
+          href: "/publikasi/berita",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Video",
+          href: "/publikasi/video",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Galeri",
+          href: "/publikasi/galeri",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Kategori",
+          href: "/publikasi/kategori",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "FAQ",
+          href: "/publikasi/faq",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Imagetron",
+          href: "/publikasi/imagetron",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Pengaturan",
+          href: "/publikasi/pengaturan",
+          selected: false,
+          child: [],
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Partnership",
+      href: "",
+      icon: "assets/icon/sidebar_temp/Partnership.svg",
+      selected: false,
+      child: [
+        {
+          id: 1,
+          name: "Dashboard",
+          href: "/partnership/dashboard",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 1,
+          name: "Kerjasama",
+          href: "/partnership/kerjasama",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Mitra",
+          href: "/partnership/mitra",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Master Kategori Kerjasama",
+          href: "/partnership/master-kategori-kerjasama",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Tanda Tangan Digital",
+          href: "/partnership/tanda-tangan",
+          selected: false,
+          child: [],
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Sertifikat",
+      href: "",
+      icon: "assets/icon/sidebar_temp/Sertifikat.svg",
+      selected: false,
+      child: [
+        {
+          id: 1,
+          name: "Kelola Sertifikat",
+          href: "/sertifikat/kelola-sertifikat",
+          selected: false,
+          child: [],
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Subvit",
+      href: "",
+      icon: "assets/icon/sidebar_temp/Subvit.svg",
+      selected: false,
+      child: [
+        {
+          id: 1,
+          name: "Subvit",
+          href: "/subvit",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Tes Substansi",
+          href: "/subvit/substansi",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Survey",
+          href: "/subvit/survey",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "TRIVIA",
+          href: "/subvit/trivia",
+          selected: false,
+          child: [],
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "Site Management",
+      href: "",
+      icon: "assets/icon/sidebar_temp/SiteManagement.svg",
+      selected: false,
+      child: [
+        {
+          id: 1,
+          name: "Dashboard",
+          href: "/site-management/dashboard",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "User",
+          href: "/site-management/user",
+          selected: false,
+          child: [
+            {
+              id: 2,
+              name: "Peserta DTS",
+              href: "/site-management/user/peserta-dts",
+              selected: false,
+              child: [],
+            },
+            {
+              id: 2,
+              name: "Administrator",
+              href: "/site-management/user/administrator",
+              selected: false,
+              child: [],
+            },
+            {
+              id: 2,
+              name: "Mitra",
+              href: "/site-management/user/mitra",
+              selected: false,
+              child: [],
+            },
+          ],
+        },
+        {
+          id: 2,
+          name: "Role",
+          href: "/site-management/role",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Export Data",
+          href: "/site-management/export-data",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Master Data",
+          href: "/site-management/master-data",
+          selected: false,
+          child: [
+            {
+              id: 2,
+              name: "Master Zonasi",
+              href: "/site-management/master-data/master-zonasi",
+              selected: false,
+              child: [],
+            },
+            {
+              id: 2,
+              name: "Master Satuan Kerja",
+              href: "/site-management/master-data/master-satuan-kerja-penyelenggara",
+              selected: false,
+              child: [],
+            },
+          ],
+        },
+        {
+          id: 2,
+          name: "Data Reference",
+          href: "/site-management/reference",
+          selected: false,
+          child: [],
+        },
+        {
+          id: 2,
+          name: "Setting",
+          href: "/site-management/setting",
+          selected: false,
+          child: [
+            {
+              id: 2,
+              name: "General",
+              href: "/site-management/setting/general",
+              selected: false,
+              child: [],
+            },
+            {
+              id: 2,
+              name: "Page",
+              href: "/site-management/setting/page",
+              selected: false,
+              child: [],
+            },
+            {
+              id: 2,
+              name: "Menu",
+              href: "/site-management/setting/menu",
+              selected: false,
+              child: [],
+            },
+            {
+              id: 2,
+              name: "API",
+              href: "/site-management/setting/api",
+              selected: false,
+              child: [],
+            },
+            {
+              id: 2,
+              name: "CSS",
+              href: "/site-management/setting/css-editor",
+              selected: false,
+              child: [],
+            },
+            {
+              id: 2,
+              name: "Pelatihan",
+              href: "/site-management/setting/pelatihan",
+              selected: false,
+              child: [],
+            },
+          ],
+        },
+      ],
     },
   ]);
 
-  // function show sub menu Sertifikat
-  const activeSubItemSertifikat = () => {
-    if (sessionStorage.getItem("menu-sertifikat")) {
-      sessionStorage.removeItem("menu-sertifikat");
-    } else {
-      sessionStorage.setItem("menu-sertifikat", "menu-item-open");
-    }
+  const handleOpenMenu = (i) => {
+    let _temp = [...menu];
+    _temp.map((items, idxMenu) => {
+      if (i === idxMenu) {
+        _temp[i] = { ...items, selected: items.selected ? false : true };
+      }
+    });
+    setMenu(_temp);
   };
-  // function show active menu Sertifikat
-  const activeMenuSertifikat = () => {
-    if (sessionStorage.getItem("menu-sertifikat")) {
-      sessionStorage.removeItem("menu-sertifikat");
-    } else {
-      sessionStorage.setItem("menu-sertifikat", "menu-item-open");
-    }
-    setMenuItem3(
-      !sessionStorage.getItem("menu-sertifikat") ? "" : "menu-item-open"
-    );
+
+  const handleOpenMenuSubMenu = (e, iMenu, iSubMenu) => {
+    let _temp = [...menu];
+    _temp.map((items, index) => {
+      if (index === iMenu) {
+        _temp[iMenu] = { ...items, selected: true };
+        _temp[iMenu].child[iSubMenu] = {
+          ..._temp[iMenu].child[iSubMenu],
+          selected: _temp[iMenu].child[iSubMenu].selected ? false : true,
+        };
+      }
+    });
+    setMenu(_temp);
+    e.stopPropagation();
   };
-  // END LIST MENU SERTIFIKAT
+
+  const handleActiveSubmenu = (e, iMenu, iSubMenu) => {
+    let _temp = [...menu];
+    _temp.map((items, index) => {
+      if (index === iMenu) {
+        _temp[iMenu] = { ...items, selected: true };
+        items.child.map((itemsp, indxx) => {
+          if (indxx === iSubMenu) {
+            _temp[iMenu].child[indxx] = {
+              ...itemsp,
+              selected: itemsp.selected ? false : true,
+            };
+          } else {
+            _temp[iMenu].child[indxx] = { ...itemsp, selected: false };
+          }
+        });
+      }
+    });
+    setMenu(_temp);
+    e.stopPropagation();
+  };
+
+  const handleActiveSubSubmenu = (e, iMenu, iSubMenu, iSubSubMenu) => {
+    let _temp = [...menu];
+    _temp.map((items, index) => {
+      if (index === iMenu) {
+        _temp[iMenu] = { ...items, selected: true };
+        items.child.map((itemsp, indxx) => {
+          if (indxx === iSubMenu) {
+            // selected child true do always open
+            _temp[iMenu].child[indxx] = {
+              ...itemsp,
+              selected: true,
+            };
+            // selected child2 true do active or noneactive
+            itemsp.child.map((itemsz, indxz) => {
+              if (indxz === iSubSubMenu) {
+                _temp[iMenu].child[indxx].child[indxz] = {
+                  ...itemsz,
+                  selected: itemsz.selected ? false : true,
+                };
+              } else {
+                _temp[iMenu].child[indxx].child[indxz] = {
+                  ...itemsz,
+                  selected: false,
+                };
+              }
+            });
+          }
+        });
+      }
+    });
+    setMenu(_temp);
+    e.stopPropagation();
+  };
 
   return (
-    <>
-      {/* <!--begin::Aside--> */}
-      <div
-        className={`aside aside-left aside-fixed d-flex flex-column flex-row-auto scroll-hidden ${
-          allFunctionls.isAsideMobileSidebar &&
-          allFunctionls.isAsideMobileSidebar
-            ? "aside-on"
-            : ""
-        }`}
-        // aside-on
-        id="kt_aside"
-        style={{ overflow: "scroll" }}
-      >
-        {/* <!--begin::Brand--> */}
-        <div className="brand flex-column-auto" id="kt_brand">
-          {/* <!--begin::Logo--> */}
-          <a className="brand-logo">
-            <Image
-              alt="icon-sidebar-logo"
-              src="/assets/logo/logo-6.svg"
-              width={58}
-              height={53}
-            />
-          </a>
-        </div>
-        {/* <!--end::Brand--> */}
+    <div
+      className={`aside aside-left aside-fixed d-flex flex-column flex-row-auto scroll-hidden ${
+        allFunctionls.isAsideMobileSidebar && allFunctionls.isAsideMobileSidebar
+          ? "aside-on"
+          : ""
+      } `}
+      id="kt_aside"
+      style={{ overflow: "scroll" }}
+    >
+      {/* <Image src={menu[0].icon} width={23} height={23} alt={`icon`} /> */}
 
-        {/* <!--begin::Aside Menu--> */}
+      <div className="brand flex-column-auto" id="kt_brand">
+        {/* <a href="index.html" className="brand-logo">
+          <img alt="Logo" src="assets/media/logos/logo-light.png" />
+        </a> */}
+
+        <a className="brand-logo">
+          <Image
+            alt="icon-sidebar-logo"
+            src="/assets/logo/logo-6.svg"
+            width={58}
+            height={53}
+          />
+        </a>
+
+        <button className="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
+          <span className="svg-icon svg-icon svg-icon-xl">
+            {/* icon header right */}
+            icon
+          </span>
+        </button>
+      </div>
+      <div
+        className="aside-menu-wrapper flex-column-fluid"
+        id="kt_aside_menu_wrapper"
+        style={{ zIndex: "999999999" }}
+      >
         <div
-          className="aside-menu-wrapper flex-column-fluid"
-          id="kt_aside_menu_wrapper"
-          style={{ zIndex: "999999999" }}
+          id="kt_aside_menu"
+          className="aside-menu my-4"
+          data-menu-vertical="1"
+          data-menu-scroll="1"
+          data-menu-dropdown-timeout="500"
         >
+<<<<<<< HEAD
           {/* <!--begin::Menu Container--> */}
           <div
             id="kt_aside_menu"
@@ -1077,25 +1182,207 @@ const Sidebar = ({ session }) => {
                 </div>
               </li>
             </ul>
+=======
 
-            {/* <!--end::Menu Nav--> */}
-          </div>
-          {/* <!--end::Menu Container--> */}
+
+           {!session  ? (
+              ""
+            ) : session?.user?.user?.data?.user?.roles[0] === "mitra" ? (
+              <ul className="menu-nav">
+                <li
+                  className={`menu-item menu-item-submenu menu-item-open ${
+                    !getStorageMenu4 ? "" : getStorageMenu4
+                  }`}
+                  onClick={() => activeMenuPartnershipMitra()}
+                  aria-haspopup="true"
+                  data-menu-toggle="hover"
+                >
+                  <div className="menu-submenu">
+                    <i className="menu-arrow"></i>
+                    <ul className="menu-subnav">
+                      <li
+                        className="menu-item menu-item-parent"
+                        aria-haspopup="true"
+                      >
+                        <span className="menu-link">
+                          <span className="menu-text">Partnership</span>
+                        </span>
+                      </li>
+
+                        {listMenuPartnershipMitra.map((items, index) => {
+                          return (
+                            <li
+                              key={index}
+                              className={`menu-item ${
+                                items.href === router.pathname
+                                  ? "menu-item-active"
+                                  : ""
+                              }`}
+                              aria-haspopup="true"
+                              onClick={() => activeSubItemPartnershipMitra()}
+                            >
+                              <Link href={items.href}>
+                                <a className="menu-link">
+                                  <span className="menu-text">{items.name}</span>
+                                </a>
+                              </Link>
+                            </li>
+                          );
+                        })}
+                        {/* end partnership loop */}
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              
+              ) : (
+
+
+          <ul className="menu-nav">
+            {menu.map((items, index) => {
+              return (
+                <li
+                  className={`menu-item menu-item-submenu ${
+                    items.selected ? "menu-item-open" : ""
+                  }`}
+                  aria-haspopup="true"
+                  data-menu-toggle="hover"
+                  key={index}
+                  id="main-menu"
+                  onClick={(e) => handleOpenMenu(index)}
+                >
+                  
+                  <a className="menu-link menu-toggle">
+                    <span className="svg-icon menu-icon d-flex align-items-center">
+                      {/* icon sidebar */}
+                      <Image
+                        alt="icon-sidebar-logo"
+                        src={`/${items.icon}`}
+                        width={58}
+                        height={53}
+                      />
+                    </span>
+                    <span className="menu-text ml-4">{items.name}</span>
+                    <i className="menu-arrow"></i>
+                  </a>
+
+                  {items.child.map((child, i) => {
+                    return (
+                      <div className="menu-submenu" key={i}>
+                        <i className="menu-arrow"></i>
+                        <ul className="menu-subnav">
+                          {child.child.length === 0 ? (
+                            <li
+                              className={`menu-item ${
+                                child.selected ? "menu-item-active" : ""
+                              }`}
+                              aria-haspopup="true"
+                              onClick={(e) => handleActiveSubmenu(e, index, i)}
+                            >
+                              <Link href={child.href}>
+                              <a className="menu-link" style={{paddingLeft:"5.5rem"}}>
+                                {/* <i className="menu-bullet menu-bullet-dot">
+                                  <span></span>
+                                </i> */}
+                                <span className="menu-text">{child.name}</span>
+                              </a>
+                              </Link>
+                            </li>
+                          ) : (
+                            <li
+                              className={`menu-item menu-item-submenu ${
+                                child.selected ? "menu-item-open" : ""
+                              }`}
+                              aria-haspopup="true"
+                              data-menu-toggle="hover"
+                              id="sub-menu"
+                              onClick={(e) =>
+                                handleOpenMenuSubMenu(e, index, i)
+                              }
+                            >
+                              <a
+                                // href="javascript:;"
+                                className="menu-link menu-toggle"
+                                style={{paddingLeft:"5.5rem"}}
+                              >
+                                {/* <i className="menu-bullet menu-bullet-line">
+                                  <span></span>
+                                </i> */}
+                                <span className="menu-text">{child.name}</span>
+                                {/* <span className="menu-label">
+                                  <span className="label label-rounded label-primary">
+                                    6
+                                  </span>
+                                </span> */}
+                                <i className="menu-arrow"></i>
+                              </a>
+                              <div className="menu-submenu">
+                                <i className="menu-arrow"></i>
+                                <ul className="menu-subnav">
+                                  {child.child.map((child2, idx) => {
+                                    return (
+                                      <li
+                                        className={`menu-item ${
+                                          child2.selected
+                                            ? "menu-item-active"
+                                            : ""
+                                        }`}
+                                        aria-haspopup="true"
+                                        onClick={(e) =>
+                                          handleActiveSubSubmenu(
+                                            e,
+                                            index,
+                                            i,
+                                            idx
+                                          )
+                                        }
+                                        key={idx}
+                                      >
+                                        <Link href={child2.href}>
+                                        <a className="menu-link" style={{paddingLeft:"6.5rem"}}>
+                                          {/* <i className="menu-bullet menu-bullet-dot">
+                                            <span></span>
+                                          </i> */}
+                                          <span className="menu-text">
+                                            {child2.name}
+                                          </span>
+                                        </a>
+                                        </Link>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              </div>
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    );
+                  })}
+                </li>
+              );
+            })}
+          </ul>
+
+              )}
+
+
+
+>>>>>>> 271be04e53af7ac550e574af29aa036c5f71d0de
+
         </div>
-        {/* <!--end::Aside Menu--> */}
-        {allFunctionls.isOverlayMobileSidebar &&
-        allFunctionls.isOverlayMobileSidebar ? (
-          <div
-            className="aside-overlay"
-            style={{ zIndex: "1" }}
-            onClick={() => activeProfileAndOverlay()}
-          ></div>
-        ) : (
-          ""
-        )}
       </div>
-      {/* <!--end::Aside--> */}
-    </>
+      {allFunctionls.isOverlayMobileSidebar &&
+      allFunctionls.isOverlayMobileSidebar ? (
+        <div
+          className="aside-overlay"
+          style={{ zIndex: "1" }}
+          onClick={() => activeProfileAndOverlay()}
+        ></div>
+      ) : (
+        ""
+      )}
+    </div>
   );
 };
 
