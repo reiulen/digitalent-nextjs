@@ -80,7 +80,7 @@ export const getDetailGaleri = (id, token) => async (dispatch) => {
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${id}`
 
         const { data } = await axios.get(link, config)
-        console.log("Action Detail : ", data)
+        // console.log("Action Detail : ", data)
 
         dispatch({
             type: DETAIL_GALERI_SUCCESS,
@@ -153,8 +153,9 @@ export const updateGaleri = (galeriData, token) => async (dispatch) => {
         };
 
         let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${galeriData.id}`
-
+        
         const { data } = await axios.post(link, galeriData, config)
+        console.log("Action Update Galeri : ", data)
 
         dispatch({
             type: UPDATE_GALERI_SUCCESS,
@@ -205,14 +206,14 @@ export const viewGaleri = (galeriData, token) => async (dispatch) => {
             },
         };
         
-        let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/${galeriData.id}`
+        let link = process.env.END_POINT_API_PUBLIKASI + `api/gallery/show/${galeriData.id}`
         
-        const { data } = await axios.post(link, galeriData, config)
+        const { data } = await axios.get(link, config)
         console.log("Action View Galeri : ", data)
 
         dispatch({
             type: VIEW_GALERI_SUCCESS,
-            payload: data
+            payload: data.status
         })
 
     } catch (error) {

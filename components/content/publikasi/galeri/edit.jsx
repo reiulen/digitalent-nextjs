@@ -388,7 +388,8 @@ const EditGaleri = ({ token }) => {
 
         if (success) {
             dispatch({
-                type: NEW_GALERI_RESET,
+                type: UPDATE_GALERI_RESET,
+                // type: NEW_GALERI_RESET,
             });
         }
 
@@ -732,7 +733,7 @@ const EditGaleri = ({ token }) => {
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
                                         name="fruits"
-                                        placeHolder="Isi Tag disini dan Enter"
+                                        placeHolder="Isi Tag disini"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
                                     {
