@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Row, Figure, Button } from "react-bootstrap";
+import { Card, Col, Row, Badge, Button } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
 import style from "../../../../styles/peserta/dashboard.module.css";
@@ -20,6 +20,11 @@ const Berjalan = () => {
                       objectFit="cover"
                       className={`${style.figure_img} img-fluid`}
                     />
+                    <Card.ImgOverlay>
+                      <Badge bg="secondary text-white text-uppercase">
+                        Pelatihan Online
+                      </Badge>
+                    </Card.ImgOverlay>
                   </Col>
                   <Col md={9} className="px-10 pt-5">
                     <div className="d-flex flex-row justify-content-start align-items-center">
@@ -101,6 +106,11 @@ const Berjalan = () => {
                       objectFit="cover"
                       className={`${style.figure_img} img-fluid`}
                     />
+                    <Card.ImgOverlay>
+                      <Badge bg="secondary text-white text-uppercase">
+                        Pelatihan Online
+                      </Badge>
+                    </Card.ImgOverlay>
                   </Col>
                   <Col md={9} className="px-10 pt-5">
                     <div className="d-flex flex-row justify-content-start align-items-center">

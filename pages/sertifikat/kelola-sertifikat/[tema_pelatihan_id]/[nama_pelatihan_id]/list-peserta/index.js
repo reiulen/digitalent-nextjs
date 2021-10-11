@@ -31,14 +31,14 @@ export default function KelokaSertifikatPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       console.log(query, "ini query list peserta");
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "/login/admin",
             permanent: false,
           },
         };
