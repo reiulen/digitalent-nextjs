@@ -37,18 +37,32 @@ const EditArtikel = ({ token }) => {
   });
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
+<<<<<<< HEAD
+  const simpleValidator = useRef(
+    new SimpleReactValidator({
+      locale: "id",
+      messages: {
+        url: "Format url berupa: https://www.example.com",
+      },
+    })
+  );
+  const [, forceUpdate] = useState();
+  // const forceUpdate = React.useReducer(() => ({}))[1]
+  const { artikel } = useSelector(state => state.detailArtikel);
+=======
   const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
   const [, forceUpdate] = useState();
   // const forceUpdate = React.useReducer(() => ({}))[1]
   const { artikel } = useSelector((state) => state.detailArtikel);
+>>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
   const { error, success, loading } = useSelector(
-    (state) => state.updatedArtikel
+    state => state.updatedArtikel
   );
   const {
     loading: allLoading,
     error: allError,
     kategori,
-  } = useSelector((state) => state.allKategori);
+  } = useSelector(state => state.allKategori);
   // const session = getSession({ req });
 
   // if (!session) {
@@ -76,12 +90,15 @@ const EditArtikel = ({ token }) => {
   useEffect(() => {
     // dispatch(getAllKategori(session.user.user.data.token))
 
+<<<<<<< HEAD
+=======
     editorRef.current = {
       CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
       ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
       // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
     }
 
+>>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
     setEditorLoaded(true);
     if (success) {
       // setJudulArtikel('')
@@ -133,9 +150,9 @@ const EditArtikel = ({ token }) => {
     artikel.publish === 0 ? true : false
   );
   const [_method, setMethod] = useState("put");
-  const [disableTag, setDisableTag] = useState(false)
+  const [disableTag, setDisableTag] = useState(false);
 
-  const onChangeGambar = (e) => {
+  const onChangeGambar = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     // console.log (e.target.files[0].type)
     // console.log (e.target.files[0])
@@ -167,7 +184,7 @@ const EditArtikel = ({ token }) => {
     }
   };
 
-  const handleChangePublish = (e) => {
+  const handleChangePublish = e => {
     // setPublish(e.target.checked);
     setDisablePublishDate(!disablePublishDate);
     // console.log (e.target.checked)
@@ -180,7 +197,7 @@ const EditArtikel = ({ token }) => {
     }
   };
 
-  const handlePublishDate = (date) => {
+  const handlePublishDate = date => {
     // let result = moment(date).format("YYYY-MM-DD")
     if (disablePublishDate === false) {
       // setPublishDate(result)
@@ -189,6 +206,20 @@ const EditArtikel = ({ token }) => {
     }
   };
 
+<<<<<<< HEAD
+  const handleTag = data => {
+    if (data.includes(" ")) {
+      setTag([]);
+      alert("tag");
+      setDisableTag(true);
+    } else {
+      setTag(data);
+      setDisableTag(false);
+    }
+
+    console.log(data);
+  };
+=======
   const handleTag = (data) => {
     for (let i = 0; i < data.length; i++){
       for (let j = 0; j < data[i].length; j++){
@@ -203,8 +234,9 @@ const EditArtikel = ({ token }) => {
     setTag(data)
     
   }
+>>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       if (error) {
@@ -334,7 +366,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Ya !",
             cancelButtonText: "Batal",
-          }).then((result) => {
+          }).then(result => {
             if (result.isConfirmed) {
               // if (success) {
               //   dispatch({
@@ -370,7 +402,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Ya !",
             cancelButtonText: "Batal",
-          }).then((result) => {
+          }).then(result => {
             if (result.isConfirmed) {
               // if (success) {
               //   dispatch({
@@ -447,7 +479,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Ya !",
             cancelButtonText: "Batal",
-          }).then((result) => {
+          }).then(result => {
             if (result.isConfirmed) {
               // if (success) {
               //   dispatch({
@@ -483,7 +515,7 @@ const EditArtikel = ({ token }) => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Ya !",
             cancelButtonText: "Batal",
-          }).then((result) => {
+          }).then(result => {
             if (result.isConfirmed) {
               // if (success) {
               //   dispatch({
@@ -561,7 +593,7 @@ const EditArtikel = ({ token }) => {
         {/* {
           console.log (kategori)
         } */}
-        
+
         {error ? (
           <div
             className="alert alert-custom alert-light-danger fade show mb-5"
@@ -637,7 +669,7 @@ const EditArtikel = ({ token }) => {
                       className="form-control"
                       placeholder="Isi Judul disini"
                       value={judul_artikel}
-                      onChange={(e) => setJudulArtikel(e.target.value)}
+                      onChange={e => setJudulArtikel(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("judul_artikel")
                       }
@@ -665,7 +697,7 @@ const EditArtikel = ({ token }) => {
                           ck-editor__editable
                           editor={ClassicEditor}
                           data={isi_artikel}
-                          onReady={(editor) => {
+                          onReady={editor => {
                             // You can store the "editor" and use when it is needed.
                             // console.log("Editor is ready to use!", editor);
                           }}
@@ -846,8 +878,8 @@ const EditArtikel = ({ token }) => {
                       id=""
                       className="form-control"
                       value={kategori_id}
-                      onChange={(e) => setKategoriId(e.target.value)}
-                      onBlur={(e) => {
+                      onChange={e => setKategoriId(e.target.value)}
+                      onBlur={e => {
                         setKategoriId(e.target.value);
                         simpleValidator.current.showMessageFor("kategori_id");
                       }}
@@ -860,7 +892,7 @@ const EditArtikel = ({ token }) => {
                       ) : (
                         kategori &&
                         kategori.kategori &&
-                        kategori.kategori.map((row) => {
+                        kategori.kategori.map(row => {
                           return row.jenis_kategori == "Artikel" ? (
                             <option
                               key={row.id}
@@ -894,20 +926,17 @@ const EditArtikel = ({ token }) => {
                     <TagsInput
                       value={tag}
                       // onChange={setTag}
-                      onChange={(data) => handleTag(data)}
+                      onChange={data => handleTag(data)}
                       name="fruits"
                       placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
                       seprators={["Enter", "Tab"]}
                       // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
-                    {
-                      disableTag === true ?
-                          <p className="text-danger">
-                              Tag tidak bisa terdiri dari 1 character "SPACE"
-                          </p>
-                      :
-                          null
-                    }
+                    {disableTag === true ? (
+                      <p className="text-danger">
+                        Tag tidak bisa terdiri dari 1 character "SPACE"
+                      </p>
+                    ) : null}
                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                   </div>
                 </div>
@@ -928,7 +957,7 @@ const EditArtikel = ({ token }) => {
                           checked={publish}
                           type="checkbox"
                           // onChange={(checked) => setPublish(checked)}
-                          onChange={(e) => handleChangePublish(e)}
+                          onChange={e => handleChangePublish(e)}
                         />
                         <span
                           className={`sliders round ${
@@ -971,7 +1000,7 @@ const EditArtikel = ({ token }) => {
                         <DatePicker
                           className="form-search-date form-control-sm form-control"
                           selected={publishDate}
-                          onChange={(date) => handlePublishDate(date)}
+                          onChange={date => handlePublishDate(date)}
                           // onChange={(date) => setPublishDate(date)}
                           selectsStart
                           startDate={publishDate}

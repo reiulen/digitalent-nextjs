@@ -240,7 +240,7 @@ const DetailDokumenKerjasama = ({token}) => {
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Submit Kerjasama</span>
+                    <span className="title-progress" style={{display:"block"}}>Submit Kerjasama</span>
                   </div>
                 </div>
               </div>

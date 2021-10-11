@@ -179,7 +179,21 @@ export const exportFileCSV = (token) => {
           },
         }
       );
-      router.push(urlExport.config.url);
+      var url = urlExport.config.url + `?authorization=Bearer ${token}`;
+
+      fetch(url, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.blob())
+        .then((blob) => {
+          var _url = window.URL.createObjectURL(blob);
+          window.open(_url, "_blank").focus();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } catch (error) {
       console.log("object", error);
     }
