@@ -326,7 +326,7 @@ const EditMitra = ({ token }) => {
               Ubah Mitra
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -725,7 +725,9 @@ const EditMitra = ({ token }) => {
                 )}
               </div>
 
-              <div className="form-group">
+              <div className="row">
+                <div className="col-12 col-sm-6">
+                  <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nama Person In Charge (PIC)
                 </label>
@@ -743,8 +745,8 @@ const EditMitra = ({ token }) => {
                   ""
                 )}
               </div>
-
-              <div className="form-group">
+                </div>
+                <div className="col-12 col-sm-6"><div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Nomor Handphone Person In Charge (PIC)
                 </label>
@@ -761,7 +763,12 @@ const EditMitra = ({ token }) => {
                 ) : (
                   ""
                 )}
+              </div></div>
               </div>
+
+              
+
+              
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
