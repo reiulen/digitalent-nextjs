@@ -2,6 +2,12 @@ import {
   API_REQUEST,
   API_SUCCESS,
   API_FAIL,
+  GET_LIST_API_REQUEST,
+  GET_LIST_API_SUCCESS,
+  GET_LIST_API_FAIL,
+  GET_LIST_FIELD_REQUEST,
+  GET_LIST_FIELD_SUCCESS,
+  GET_LIST_FIELD_FAIL,
   DETAIL_API_REQUEST,
   DETAIL_API_SUCCESS,
   DETAIL_API_FAIL,
@@ -24,29 +30,59 @@ import {
   CLEAR_ERRORS,
 } from "../../../types/site-management/settings/api.type";
 
-export const allApiReducer = (state = { apies: [] }, action) => {
+const statuslist = {
+  idle: "idle",
+  process: "process",
+  success: "success",
+  error: "error",
+};
+
+const initialState = {
+  page: 1,
+  limit: 5,
+  cari: "",
+  status: statuslist.idle,
+};
+
+export const allApiReducer = (state = initialState, action) => {
   switch (action.type) {
     case API_REQUEST:
       return {
-        loading: true,
+        ...state,
+        status: statuslist.process,
       };
 
     case API_SUCCESS:
       return {
-        loading: false,
-        apies: action.payload.data,
-        page: 1,
+        ...state,
+        status: statuslist.success,
+        data: action.payload.data,
       };
 
     case API_FAIL:
       return {
-        loading: false,
-        error: action.payload,
+        ...state,
+        status: statuslist.error,
       };
 
-    case CLEAR_ERRORS:
+    case SEARCH_COORPORATION:
       return {
-        error: null,
+        ...state,
+        cari: action.text,
+        page: 1,
+      };
+
+    case SET_PAGE:
+      return {
+        ...state,
+        page: action.page,
+      };
+
+    case LIMIT_CONFIGURATION:
+      return {
+        ...state,
+        limit: action.limitValue,
+        page: 1,
       };
 
     default:
@@ -113,6 +149,7 @@ export const newApiReducer = (state = { apies: {} }, action) => {
     case POST_API_RESET:
       return {
         success: false,
+        error: false,
       };
 
     case CLEAR_ERRORS:
@@ -188,6 +225,55 @@ export const updateApiReducer = (state = { apies: {} }, action) => {
     case CLEAR_ERRORS:
       return {
         errorUpdate: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const listApiReducer = (state = { listApi: [] }, action) => {
+  switch (action.type) {
+    case GET_LIST_API_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_LIST_API_SUCCESS:
+      return {
+        loading: false,
+        listApi: action.payload.data,
+      };
+
+    case GET_LIST_API_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const listFieldReducer = (state = { listField: [] }, action) => {
+  switch (action.type) {
+    case GET_LIST_FIELD_REQUEST:
+      return {
+        loading: true,
+      };
+
+    case GET_LIST_FIELD_SUCCESS:
+      return {
+        loading: false,
+        listField: action.payload.data,
+        dataSortir: action.sortirData,
+      };
+
+    case GET_LIST_FIELD_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
       };
 
     default:

@@ -192,6 +192,8 @@ import {
   newApiReducer,
   updateApiReducer,
   detailApiReducer,
+  listApiReducer,
+  listFieldReducer,
 } from "./site-management/settings/api.reducers";
 // ============== data reference ===============
 import {
@@ -440,6 +442,8 @@ const reducer = combineReducers({
   newPage: newPageReducer,
   detailPage: detailPageReducer,
   updatePage: updatePageReducer,
+  listApi: listApiReducer,
+  listField: listFieldReducer,
   // ============ API =======
   allApi: allApiReducer,
   deleteApi: deleteApiReducer,

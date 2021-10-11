@@ -15,7 +15,6 @@ import {
 } from "../../redux/types/utils/functionals.type";
 
 const Sidebar = ({ session }) => {
-  console.log("session sidebar",session)
   const dispatch = useDispatch();
   const allFunctionls = useSelector((state) => state.allFunctionls);
   const router = useRouter();
