@@ -240,7 +240,7 @@ const ListSurvey = ({ token }) => {
               <Link href="/subvit/survey/tambah">
                 <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
                   <i className="ri-add-fill"></i>
-                  Tambah Soal
+                  Tambah Survey
                 </a>
               </Link>
             </div>
@@ -401,8 +401,8 @@ const ListSurvey = ({ token }) => {
                   <div className="table-pagination">
                     <Pagination
                       activePage={page}
-                      itemsCountPerPage={survey.perPage}
-                      totalItemsCount={survey.total}
+                      itemsCountPerPage={survey && survey.perPage}
+                      totalItemsCount={survey && survey.total}
                       pageRangeDisplayed={3}
                       onChange={handlePagination}
                       nextPageText={">"}
@@ -441,7 +441,7 @@ const ListSurvey = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {survey.total}
+                          Total Data {survey && survey.total}
                         </p>
                       </div>
                     </div>
