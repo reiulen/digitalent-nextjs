@@ -26,37 +26,43 @@ import {
 
 import axios from "axios";
 
-export const getAllDataReference =
-  (page = 1, cari = "", limit = 5, token) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: DATA_REFERENCE_REQUEST });
-      let link =
-        process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/all?page=${page}`;
-      if (cari) link = link.concat(`&cari=${cari}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
+export const getAllDataReference = (token) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: DATA_REFERENCE_REQUEST });
 
-      const config = {
+    let pageState = getState().allDataReference.page || 1;
+    let cariState = getState().allDataReference.cari || "";
+    let limitState = getState().allDataReference.limit || 5;
+
+    const params = {
+      page: pageState,
+      cari: cariState,
+      limit: limitState,
+    };
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/list`,
+      {
+        params,
         headers: {
-          Authorization: "Bearer " + token,
+          authorization: `Bearer ${token}`,
         },
-      };
+      }
+    );
 
-      const { data } = await axios.get(link, config);
+    dispatch({
+      type: DATA_REFERENCE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DATA_REFERENCE_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
-      dispatch({
-        type: DATA_REFERENCE_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: DATA_REFERENCE_FAIL,
-        payload: error.message,
-      });
-    }
-  };
-
+// deelte tidak ada
 export const deleteDataReference = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_DATA_REFERENCE_REQUEST });
@@ -172,3 +178,24 @@ export const updateDataReference =
       });
     }
   };
+
+export const setPage = (page) => {
+  return {
+    type: SET_PAGE,
+    page,
+  };
+};
+
+export const searchCooporation = (text) => {
+  return {
+    type: SEARCH_COORPORATION,
+    text,
+  };
+};
+
+export const limitCooporation = (value) => {
+  return {
+    type: LIMIT_CONFIGURATION,
+    limitValue: value,
+  };
+};

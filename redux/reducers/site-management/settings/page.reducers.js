@@ -24,29 +24,59 @@ import {
   CLEAR_ERRORS,
 } from "../../../types/site-management/settings/page.type";
 
-export const allPageReducer = (state = { pages: [] }, action) => {
+const statuslist = {
+  idle: "idle",
+  process: "process",
+  success: "success",
+  error: "error",
+};
+
+const initialState = {
+  page: 1,
+  limit: 5,
+  cari: "",
+  status: statuslist.idle,
+};
+
+export const allPageReducer = (state = initialState, action) => {
   switch (action.type) {
     case PAGE_REQUEST:
       return {
-        loading: true,
+        ...state,
+        status: statuslist.process,
       };
 
     case PAGE_SUCCESS:
       return {
-        loading: false,
-        pages: action.payload.data,
-        page: 1,
+        ...state,
+        status: statuslist.success,
+        data: action.payload.data,
       };
 
     case PAGE_FAIL:
       return {
-        loading: false,
-        error: action.payload,
+        ...state,
+        status: statuslist.error,
       };
 
-    case CLEAR_ERRORS:
+    case SEARCH_COORPORATION:
       return {
-        error: null,
+        ...state,
+        cari: action.text,
+        page: 1,
+      };
+
+    case SET_PAGE:
+      return {
+        ...state,
+        page: action.page,
+      };
+
+    case LIMIT_CONFIGURATION:
+      return {
+        ...state,
+        limit: action.limitValue,
+        page: 1,
       };
 
     default:

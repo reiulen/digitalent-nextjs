@@ -32,7 +32,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getDetailSubtanceQuestionBanks(query.id, session.user.user.data.token)
       );
       return {
-        props: { session, title: "Clone Bank Soal Tes Subtansi - Subvit" },
+        props: { session, title: "Clone Bank Soal Test Subtansi - Subvit" },
       };
     }
 );

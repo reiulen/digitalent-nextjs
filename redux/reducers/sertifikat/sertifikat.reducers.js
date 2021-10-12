@@ -126,6 +126,7 @@ export const singleSertifikatReducer = (
       return {
         loading: true,
       };
+
     case SINGLE_SERTIFIKAT_SUCCESS:
       return {
         loading: false,
@@ -137,6 +138,7 @@ export const singleSertifikatReducer = (
         loading: false,
         error: action.payload,
       };
+
     case CLEAR_ERRORS:
       return {
         ...state,

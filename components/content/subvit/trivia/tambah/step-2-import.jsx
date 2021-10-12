@@ -24,6 +24,7 @@ import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from "../../../../ButtonAction";
+import styles from "../edit/step.module.css";
 import axios from "axios";
 
 const StepTwo = ({ token }) => {
@@ -555,7 +556,7 @@ const StepTwo = ({ token }) => {
                 <div className="col-sm-12 col-md-12 pt-4">
                   <div className="float-right">
                     <button
-                      className="btn btn-light-ghost-rounded-full font-weight-bold mr-2"
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                       type="submit"
                     >
                       Simpan & Lanjut
