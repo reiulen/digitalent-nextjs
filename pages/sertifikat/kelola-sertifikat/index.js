@@ -23,7 +23,7 @@ const KelolaSertifikat = dynamic(
 
 export default function KelokaSertifikatPage(props) {
   const session = props.session.user.user.data;
-  console.log(session);
+
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -42,11 +42,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-<<<<<<< HEAD
-            destination: "/",
-=======
             destination: "/login/admin",
->>>>>>> 2d41cddb1eb5d4962e28ef6bb4f36c83cb916253
             permanent: false,
           },
         };

@@ -33,6 +33,7 @@ export default function TambahMasterSertifikat({ token }) {
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
   const [certificate_name, setCertificate_name] = useState("");
+  const [namaPeserta, setNamaPeserta] = useState("");
 
   const [date, setDate] = useState(new Date());
 
@@ -249,7 +250,6 @@ export default function TambahMasterSertifikat({ token }) {
     return data;
   };
 
-  const [namaPeserta, setNamaPeserta] = useState("");
   // # END IMAGE
   const handlePost = async (e, status) => {
     try {
@@ -314,7 +314,6 @@ export default function TambahMasterSertifikat({ token }) {
           );
         });
 
-        console.log(signature_certificate_set_position);
         const data = await convertDivToPng(divReference.current); // convert bg 1
         formData.append("certificate_result", data);
 
@@ -336,10 +335,10 @@ export default function TambahMasterSertifikat({ token }) {
 
         dispatch(newSertifikat(id, formData, token));
 
-        // router.push({
-        //   pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
-        //   query: { success: true },
-        // });
+        router.push({
+          pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
+          query: { success: true },
+        });
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
