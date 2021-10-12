@@ -157,7 +157,7 @@ const DetailTrivia = ({ token }) => {
 
           <div className="card-body">
             <div className="row">
-              <div className="col-md-5">
+              <div className="col-md-6">
                 <div className="row">
                   <div
                     className="col title-1 font-weight-bold"

@@ -212,7 +212,7 @@ const CheckboxComponent = ({
       </div>
 
       <div className="form-group row">
-        <div className="col-sm-6 col-md-3">
+        <div className="col-sm-7 col-md-4">
           {answer.length < 6 ? (
             <button
               type="button"
