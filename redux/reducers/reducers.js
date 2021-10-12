@@ -261,11 +261,11 @@ import {
   newTrainingReducer,
   allTrainingReducer,
   deleteTrainingReducer,
+  updateStatusReducer,
 } from "./pelatihan/training.reducers";
 //END PELATIHAN
 
 // functional reducer
-
 import {
   trainingStep1Reducer,
   registrationStep2Reducer,
@@ -515,6 +515,7 @@ const reducer = combineReducers({
   drowpdownProvinsi: drowpdownProvinsiReducers,
   drowpdownKabupaten: drowpdownKabupatenReducers,
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
+  updateStatus: updateStatusReducer,
   //END PELATIHAN
 });
 

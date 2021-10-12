@@ -599,7 +599,7 @@ const Sidebar = ({ session }) => {
                           aria-haspopup="true"
                           onClick={() => activeSubItemPartnershipMitra()}
                         >
-                          <Link href={items.href}>
+                          <Link href={items.href} passHref>
                             <a className="menu-link">
                               <span className="menu-text">{items.name}</span>
                             </a>
@@ -655,7 +655,7 @@ const Sidebar = ({ session }) => {
                                   handleActiveSubmenu(e, index, i)
                                 }
                               >
-                                <Link href={child.href}>
+                                <Link href={child.href} passHref>
                                   <a
                                     className="menu-link"
                                     style={{ paddingLeft: "5.5rem" }}
@@ -721,7 +721,7 @@ const Sidebar = ({ session }) => {
                                           }
                                           key={idx}
                                         >
-                                          <Link href={child2.href}>
+                                          <Link href={child2.href} passHref>
                                             <a
                                               className="menu-link"
                                               style={{ paddingLeft: "6.5rem" }}

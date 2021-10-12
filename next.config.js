@@ -140,7 +140,7 @@ module.exports = {
       "http://dts-partnership-dev.s3.ap-southeast-1.amazonaws.com/",
 
     // site management
-    END_POINT_API_SITE_MANAGEMENT: "http://dts-sso-dev.majapahit.id/",
+    END_POINT_API_SITE_MANAGEMENT: "http://api-dts-dev.majapahit.id/sso/",
 
     // pelatihan
     END_POINT_API_PELATIHAN: "http://api-dts-dev.majapahit.id/pelatihan/",
