@@ -26,36 +26,41 @@ import {
 
 import axios from "axios";
 
-export const getAllPage =
-  (page = 1, cari = "", limit = 5, token) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: PAGE_REQUEST });
-      let link =
-        process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-page/all?page=${page}`;
-      if (cari) link = link.concat(`&cari=${cari}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
+export const getAllPage = (token) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: PAGE_REQUEST });
 
-      const config = {
+    let pageState = getState().allPage.page || 1;
+    let cariState = getState().allPage.cari || "";
+    let limitState = getState().allPage.limit || 5;
+
+    const params = {
+      page: pageState,
+      cari: cariState,
+      limit: limitState,
+    };
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-page/all`,
+      {
+        params,
         headers: {
-          Authorization: "Bearer " + token,
+          authorization: `Bearer ${token}`,
         },
-      };
+      }
+    );
 
-      const { data } = await axios.get(link, config);
-
-      dispatch({
-        type: PAGE_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: PAGE_FAIL,
-        payload: error.message,
-      });
-    }
-  };
+    dispatch({
+      type: PAGE_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PAGE_FAIL,
+      payload: error.message,
+    });
+  }
+};
 
 export const deletePage = (id, token) => async (dispatch) => {
   try {
@@ -153,10 +158,6 @@ export const updatePage = (sendData, id, token) => async (dispatch) => {
       },
     };
 
-    // let link =
-    //   process.env.END_POINT_API_SITE_MANAGEMENT +
-    //   `api/setting-page/update/${id}`;
-
     const { data } = await axios.post(
       process.env.END_POINT_API_SITE_MANAGEMENT +
         `api/setting-page/update/${id}`,
@@ -174,4 +175,26 @@ export const updatePage = (sendData, id, token) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
+};
+
+export const setPage = (page) => {
+  return {
+    type: SET_PAGE,
+    page,
+  };
+};
+
+export const searchCooporation = (text) => {
+  console.log("text", text);
+  return {
+    type: SEARCH_COORPORATION,
+    text,
+  };
+};
+
+export const limitCooporation = (value) => {
+  return {
+    type: LIMIT_CONFIGURATION,
+    limitValue: value,
+  };
 };

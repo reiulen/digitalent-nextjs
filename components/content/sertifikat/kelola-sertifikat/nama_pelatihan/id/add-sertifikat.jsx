@@ -33,7 +33,7 @@ export default function TambahMasterSertifikat({ token }) {
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
   const [certificate_name, setCertificate_name] = useState("");
-  const [namaPeserta, setNamaPeserta] = useState("");
+  const [namaPeserta, setNamaPeserta] = useState("Nama Peserta");
 
   const [date, setDate] = useState(new Date());
 
@@ -246,6 +246,7 @@ export default function TambahMasterSertifikat({ token }) {
       cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
+      skipAutoScale: true,
     });
     return data;
   };
@@ -333,12 +334,12 @@ export default function TambahMasterSertifikat({ token }) {
         link.download = "download.png";
         link.click();
 
-        dispatch(newSertifikat(id, formData, token));
+        // dispatch(newSertifikat(id, formData, token));
 
-        router.push({
-          pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
-          query: { success: true },
-        });
+        // router.push({
+        //   pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
+        //   query: { success: true },
+        // });
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -371,6 +372,7 @@ export default function TambahMasterSertifikat({ token }) {
     setSyllabus([...syllabus, ""]);
   };
 
+  console.log(certificate);
   return (
     <PageWrapper>
       {/* error START */}
@@ -428,20 +430,18 @@ export default function TambahMasterSertifikat({ token }) {
           </div>
           {/* END HEADER */}
           {/* START BODY */}
-          <div className="card-body border-top container-fluid">
+          <div className="card-body border-top" style={{ width: "100%" }}>
             <div className="row p-0 ">
               {/* START COL */}
               <div
-                className="border-primary border col-md-8 col-12 position-relative"
-                // style={{ width: "842px" }}
+                className="border-primary border col-lg-8 col-12 position-relative"
+                style={{ fontSize: "100%" }}
               >
                 <div className="p-0" ref={divReference}>
                   {background ? (
                     <Image
                       src={background}
                       alt="fitur"
-                      // height={495}
-                      // width={1400}
                       layout="fill"
                       objectFit="fill"
                     />
@@ -456,36 +456,41 @@ export default function TambahMasterSertifikat({ token }) {
                     </div>
                     <div
                       className="col-12 text-center font-weight-normal p-0 justify-content-center"
-                      style={{ marginTop: "-20px", width: "100%" }}
+                      style={{ marginTop: "-20px" }}
                     >
-                      <label className="font-weight-boldest display-4 w-100 futura">
+                      <label
+                        className="font-weight-boldest w-100"
+                        style={{ fontSize: "200%" }}
+                      >
                         SERTIFIKAT
                       </label>
                       <div className="w-100">Diberikan kepada</div>
                       <div className="my-2">
-                        <span className="mx-2 px-2 font-size-h6 px-10 w-100">
+                        <span
+                          className="mx-2 px-2 px-10 w-100 font-weight-bold"
+                          style={{ fontSize: "150%" }}
+                        >
                           {namaPeserta ? namaPeserta : ""}
                         </span>
                       </div>
                       <div className="w-100">Atas Partisipasi sebagai</div>
-                      <div className="font-weight-normal font-size-h2 w-100">
+                      <div
+                        className="font-weight-bolder w-100"
+                        style={{ fontSize: "125%" }}
+                      >
                         Peserta
                       </div>
                       <div className="w-100">Nama Pelatihan</div>
                       <div
-                        className="text-center font-weight-bolder border-2 w-100"
-                        style={{
-                          fontSize: "20px",
-                          textAlign: "center",
-                          // fontWeight: "bold",
-                        }}
+                        className="text-center font-weight-bolder w-100 "
+                        style={{ fontSize: "125%" }}
                       >
                         {certificate.theme || "Tema Sertifikat"}
                       </div>
                       <div className="mt-2 w-100">
                         <span className="w-100">
                           Program{" "}
-                          <span className="font-size-h6 font-weight-bold w-100">
+                          <span className="font-weight-bold w-100">
                             {
                               certificate?.data?.list_certificate[0]?.academy
                                 .name
@@ -493,7 +498,9 @@ export default function TambahMasterSertifikat({ token }) {
                           </span>{" "}
                           Selama
                         </span>
-                        <span className="mx-2 px-2 border-2 w-100">--/--</span>
+                        <span className="mx-2 px-2 border-2 w-100">
+                          --/--/----
+                        </span>
                       </div>
                       <div className="mt-2 w-100">
                         <span>Digital Talent Scholarship</span>
@@ -510,6 +517,7 @@ export default function TambahMasterSertifikat({ token }) {
                             ? " justify-content-center m-0 p-0 d-flex w-100"
                             : " justify-content-around  m-0 p-0 d-flex w-100"
                         }
+                        style={{ width: "100%", height: "100%" }}
                       >
                         {/* START MAP TTD */}
                         {[...Array(number_of_signatures)].map((el, i) => {
@@ -521,9 +529,9 @@ export default function TambahMasterSertifikat({ token }) {
                                 width: "156px",
                                 height: "150px",
                               }}
-                              className="col-3 p-0"
+                              className="col-3 p-0 px-lg-4"
                             >
-                              <div className="col">
+                              <div className="col p-0 ">
                                 <div
                                   className="col border-2 align-items-center justify-content-center d-flex position-relative"
                                   style={{
@@ -599,7 +607,7 @@ export default function TambahMasterSertifikat({ token }) {
 
               {/* END COL */}
               {/* START FORM Jenis Sertifikat */}
-              <div className="col-md-4 col-12 font-weight-normal tandatangan mt-md-0 mt-20">
+              <div className="col-lg-4 col-12 font-weight-normal tandatangan mt-lg-0 mt-10">
                 <div className="form-group">
                   <label
                     htmlFor="Jenis Sertifikat"
@@ -898,13 +906,21 @@ export default function TambahMasterSertifikat({ token }) {
                                     }
                                   )}
                                 </div>
+
                                 <div className="modal-footer">
                                   <button
                                     type="button"
-                                    className="btn btn-secondary"
+                                    className="btn btn-light-ghost-rounded-full"
                                     data-dismiss="modal"
                                   >
-                                    Tutup
+                                    Batal
+                                  </button>
+                                  <button
+                                    type="button"
+                                    data-dismiss="modal"
+                                    className="btn btn-primary-rounded-full"
+                                  >
+                                    Simpan
                                   </button>
                                 </div>
                               </div>
@@ -918,20 +934,20 @@ export default function TambahMasterSertifikat({ token }) {
                                 type="number"
                                 min={
                                   number_of_signatures == 1
-                                    ? -156
+                                    ? -151
                                     : number_of_signatures == 2
-                                    ? -106
+                                    ? -101
                                     : number_of_signatures == 3
-                                    ? -22
+                                    ? -17
                                     : -14
                                 }
                                 max={
                                   number_of_signatures == 1
-                                    ? 156
+                                    ? 151
                                     : number_of_signatures == 2
-                                    ? 106
+                                    ? 101
                                     : number_of_signatures == 3
-                                    ? 22
+                                    ? 17
                                     : 14
                                 }
                                 className="form-control"
@@ -949,20 +965,20 @@ export default function TambahMasterSertifikat({ token }) {
                                 type="range"
                                 min={
                                   number_of_signatures == 1
-                                    ? -156
+                                    ? -151
                                     : number_of_signatures == 2
-                                    ? -106
+                                    ? -101
                                     : number_of_signatures == 3
-                                    ? -22
+                                    ? -17
                                     : -14
                                 }
                                 max={
                                   number_of_signatures == 1
-                                    ? 156
+                                    ? 151
                                     : number_of_signatures == 2
-                                    ? 106
+                                    ? 101
                                     : number_of_signatures == 3
-                                    ? 22
+                                    ? 17
                                     : 14
                                 }
                                 value={signature_certificate_set_position[i]}
@@ -1029,15 +1045,15 @@ export default function TambahMasterSertifikat({ token }) {
               </div>
             </div>
             {certificate_type == "1 lembar" ? (
-              <div className="row d-flex justify-content-md-end justify-content-center">
+              <div className="row justify-content-lg-end justify-content-center">
                 <Link href="/sertifikat/kelola-sertifikat" passHref>
-                  <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3 col-md-2 col-6 mt-5 mt-md-0">
+                  <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3 col-lg-2 col-md-3 col-12 mt-5 mt-md-0">
                     Batal
                   </a>
                 </Link>
 
                 <a
-                  className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5 col-md-2 col-6 mt-5 mt-md-0 w-50"
+                  className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5 col-lg-2 col-md-3 col-12 mt-5 mt-md-0 w-50"
                   onClick={e => {
                     handlePost(e, 2); // 2 == draft
                   }}
@@ -1046,7 +1062,7 @@ export default function TambahMasterSertifikat({ token }) {
                 </a>
 
                 <a
-                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-2 col-6 mt-5 mt-md-0"
+                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
                   onClick={e => {
                     handlePost(e, 1);
                   }}
@@ -1068,14 +1084,15 @@ export default function TambahMasterSertifikat({ token }) {
             <div className="card-body border-top">
               <div className="row p-0">
                 {/* START COL */}
-                <div className="border-primary p-0 border col-8">
+                <div
+                  className="border-primary p-0 border col-lg-8 col-12"
+                  style={{ width: "100%" }}
+                >
                   <div className="p-0" ref={divReferenceSilabus}>
                     {background_syllabus ? (
                       <Image
                         src={background_syllabus}
                         alt="fitur"
-                        // height={495}
-                        // width={700}
                         layout="fill"
                         objectFit="fill"
                       />
@@ -1087,10 +1104,10 @@ export default function TambahMasterSertifikat({ token }) {
                       style={{ width: "100%" }}
                     >
                       <div
-                        className="pt-19 pl-19 zindex-1 col-10-"
+                        className="pt-19 pl-19 zindex-1 col-12"
                         style={{ height: "370px" }}
                       >
-                        <div style={{ fontSize: "14px", fontWeight: "bold" }}>
+                        <div style={{ fontSize: "120%", fontWeight: "bold" }}>
                           Silabus yang di dapat
                         </div>
                         <div>
@@ -1104,12 +1121,12 @@ export default function TambahMasterSertifikat({ token }) {
                                     style={{
                                       fontSize:
                                         syllabus.length <= 5
-                                          ? "16px"
+                                          ? "120%"
                                           : syllabus.length <= 10
-                                          ? "12px"
+                                          ? "90%"
                                           : syllabus.length <= 15
-                                          ? "10px"
-                                          : "6px",
+                                          ? "80%"
+                                          : "50%",
                                     }}
                                   >
                                     {e}
@@ -1133,6 +1150,7 @@ export default function TambahMasterSertifikat({ token }) {
                               ? " justify-content-center m-0 p-0 d-flex w-100"
                               : " justify-content-around  m-0 p-0 d-flex w-100"
                           }
+                          style={{ width: "100%", height: "100%" }}
                         >
                           {/* START MAP TTD */}
                           {[...Array(number_of_signature_syllabus)].map(
@@ -1142,12 +1160,12 @@ export default function TambahMasterSertifikat({ token }) {
                                   key={i}
                                   style={{
                                     transform: `translateX(${signature_certificate_set_position_syllabus[i]}%)`,
-                                    width: "156px",
+                                    width: "151px",
                                     height: "150px",
                                   }}
-                                  className="col-3 p-0"
+                                  className="col-3 p-0 px-lg-4"
                                 >
-                                  <div className="col">
+                                  <div className="col p-0 ">
                                     <div
                                       className="col border-2 align-items-center justify-content-center d-flex position-relative"
                                       style={{
@@ -1244,7 +1262,7 @@ export default function TambahMasterSertifikat({ token }) {
 
                 {/* END COL */}
                 {/* START FORM Jenis Sertifikat */}
-                <div className="col-4 font-weight-normal overflow-auto">
+                <div className="col-lg-4 col-12 font-weight-normal mt-lg-0 mt-10">
                   {/* END FORM Jenis Sertifikat */}
                   {/* START FORM Tanda tangan */}
                   <div className="form-group mb-2">
@@ -1579,10 +1597,17 @@ export default function TambahMasterSertifikat({ token }) {
                                   <div className="modal-footer">
                                     <button
                                       type="button"
-                                      className="btn btn-secondary"
+                                      className="btn btn-light-ghost-rounded-full"
                                       data-dismiss="modal"
                                     >
-                                      Tutup
+                                      Batal
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-dismiss="modal"
+                                      className="btn btn-primary-rounded-full"
+                                    >
+                                      Simpan
                                     </button>
                                   </div>
                                 </div>
@@ -1596,20 +1621,20 @@ export default function TambahMasterSertifikat({ token }) {
                                   type="number"
                                   min={
                                     number_of_signature_syllabus == 1
-                                      ? -156
+                                      ? -151
                                       : number_of_signature_syllabus == 2
-                                      ? -106
+                                      ? -101
                                       : number_of_signature_syllabus == 3
-                                      ? -22
+                                      ? -17
                                       : -14
                                   }
                                   max={
                                     number_of_signature_syllabus == 1
-                                      ? 156
+                                      ? 151
                                       : number_of_signature_syllabus == 2
-                                      ? 106
+                                      ? 101
                                       : number_of_signature_syllabus == 3
-                                      ? 22
+                                      ? 17
                                       : 14
                                   }
                                   className="form-control"
@@ -1633,20 +1658,20 @@ export default function TambahMasterSertifikat({ token }) {
                                   type="range"
                                   min={
                                     number_of_signature_syllabus == 1
-                                      ? -156
+                                      ? -151
                                       : number_of_signature_syllabus == 2
-                                      ? -106
+                                      ? -101
                                       : number_of_signature_syllabus == 3
-                                      ? -22
+                                      ? -17
                                       : -14
                                   }
                                   max={
                                     number_of_signature_syllabus == 1
-                                      ? 156
+                                      ? 151
                                       : number_of_signature_syllabus == 2
-                                      ? 106
+                                      ? 101
                                       : number_of_signature_syllabus == 3
-                                      ? 22
+                                      ? 17
                                       : 14
                                   }
                                   value={
@@ -1718,20 +1743,15 @@ export default function TambahMasterSertifikat({ token }) {
                 </div>
               </div>
               {certificate_type == "2 lembar" ? (
-                <div className="d-lg-flex justify-content-end">
-                  <Link href="/sertifikat/master-sertifikat/tambah" passHref>
-                    <a
-                      className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
-                      onClick={() => {
-                        // console.log("klik batal");
-                      }}
-                    >
+                <div className="row justify-content-lg-end justify-content-center">
+                  <Link href="/sertifikat/kelola-sertifikat" passHref>
+                    <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3 col-lg-2 col-md-3 col-12 mt-5 mt-md-0">
                       Batal
                     </a>
                   </Link>
 
                   <a
-                    className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
+                    className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5 col-lg-2 col-md-3 col-12 mt-5 mt-md-0 w-50"
                     onClick={e => {
                       handlePost(e, 2); // 2 == draft
                     }}
@@ -1740,7 +1760,7 @@ export default function TambahMasterSertifikat({ token }) {
                   </a>
 
                   <a
-                    className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
+                    className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
                     onClick={e => {
                       handlePost(e, 1);
                     }}

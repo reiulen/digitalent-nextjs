@@ -26,37 +26,43 @@ import {
 
 import axios from "axios";
 
-export const getAllZonasi =
-  (page = 1, cari = "", limit = 5, token) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: ZONASI_REQUEST });
-      let link =
-        process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/zonasi/list?page=${page}`;
-      if (cari) link = link.concat(`&cari=${cari}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
+export const getAllZonasi = (token) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: ZONASI_REQUEST });
 
-      const config = {
+    let pageState = getState().allZonasi.page || 1;
+    let cariState = getState().allZonasi.cari || "";
+    let limitState = getState().allZonasi.limit || 5;
+
+    const params = {
+      page: pageState,
+      cari: cariState,
+      limit: limitState,
+    };
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/zonasi/list`,
+      {
+        params,
         headers: {
-          Authorization: "Bearer " + token,
+          authorization: `Bearer ${token}`,
         },
-      };
+      }
+    );
 
-      const { data } = await axios.get(link, config);
+    dispatch({
+      type: ZONASI_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ZONASI_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
-      dispatch({
-        type: ZONASI_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: ZONASI_FAIL,
-        payload: error.message,
-      });
-    }
-  };
-
+// delete zonasi tidak ada
 export const deleteZonasi = (id, token) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ZONASI_REQUEST });
@@ -169,4 +175,26 @@ export const updateZonasi = (sendData, id, token) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
+};
+
+// belom dicek udah dubuat belom di type nya
+export const setPage = (page) => {
+  return {
+    type: SET_PAGE,
+    page,
+  };
+};
+
+export const searchCooporation = (text) => {
+  return {
+    type: SEARCH_COORPORATION,
+    text,
+  };
+};
+
+export const limitCooporation = (value) => {
+  return {
+    type: LIMIT_CONFIGURATION,
+    limitValue: value,
+  };
 };
