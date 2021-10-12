@@ -16,6 +16,7 @@ import IconClose from "../../../assets/icon/Close";
 import IconFilter from "../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import Select from "react-select";
 
 export default function NamaPelatihan({ token }) {
   // console.log(token);
@@ -24,14 +25,20 @@ export default function NamaPelatihan({ token }) {
   const { loading, error, certificate } = useSelector(
     state => state.allCertificates
   );
+
+  let selectRefAkademi = null;
+  let selectReftTemaPelatihan = null;
+
   // #DatePicker
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+
   const resetValueSort = () => {
     setStartDate(null);
     setEndDate(null);
   };
 
+  console.log(certificate);
   // #DatePicker
 
   // #Pagination, search, filter
@@ -47,7 +54,7 @@ export default function NamaPelatihan({ token }) {
 
   const handleLimit = val => {
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${limit}`);
+    router.push(`${router.pathname}?page=1&limit=${val}`);
   };
 
   const handleSearch = () => {
@@ -57,82 +64,18 @@ export default function NamaPelatihan({ token }) {
   };
   // #Pagination
 
-  let { page = 1, keyword, success } = router.query;
+  const options = [
+    { value: "VSGA", label: "VSGA" },
+    { value: "VGA", label: "VGA" },
+    { value: "ASD", label: "ASD" },
+  ];
 
-  const handleSearchDate = () => {
-    if (
-      moment(startDate).format("YYYY-MM-DD") >
-      moment(endDate).format("YYYY-MM-DD")
-    ) {
-      Swal.fire(
-        "Oops !",
-        "Tanggal sebelum tidak boleh melebihi tanggal sesudah.",
-        "error"
-      );
-      setStartDate(null);
-      setEndDate(null);
-    } else if (startDate === null && endDate !== null) {
-      Swal.fire("Oops !", "Tanggal sebelum tidak boleh kosong", "error");
-      setStartDate(null);
-      setEndDate(null);
-    } else if (startDate !== null && endDate === null) {
-      Swal.fire("Oops !", "Tanggal sesudah tidak boleh kosong", "error");
-      setStartDate(null);
-      setEndDate(null);
-    } else if (startDate === null && endDate === null) {
-      Swal.fire("Oops !", "Harap mengisi tanggal terlebih dahulu.", "error");
-      setStartDate(null);
-      setEndDate(null);
-    } else {
-      if (
-        limit !== null &&
-        search !== null &&
-        startDate !== null &&
-        endDate !== null
-      ) {
-        router.push(
-          `${router.pathname}?page=1&keyword=${search}startdate=${moment(
-            startDate
-          ).format("YYYY-MM-DD")}&enddate=${moment(endDate).format(
-            "YYYY-MM-DD"
-          )}&limit=${limit}`
-        );
-      } else if (
-        limit !== null &&
-        search === null &&
-        startDate !== null &&
-        endDate !== null
-      ) {
-        router.push(
-          `${router.pathname}?page=1&startdate=${moment(startDate).format(
-            "YYYY-MM-DD"
-          )}&enddate=${moment(endDate).format("YYYY-MM-DD")}&limit=${limit}`
-        );
-      } else if (
-        limit !== null &&
-        search === null &&
-        startDate === null &&
-        endDate === null
-      ) {
-        router.push(`${router.pathname}?page=1&limit=${limit}`);
-      } else if (
-        limit !== null &&
-        search !== null &&
-        startDate === null &&
-        endDate === null
-      ) {
-        router.push(
-          `${router.pathname}?page=1&limit=${limit}&keyword=${search}`
-        );
-      } else {
-        router.push(
-          `${router.pathname}?page=1&startdate=${moment(startDate).format(
-            "YYYY-MM-DD"
-          )}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
-        );
-      }
-    }
-  };
+  const [nama, setNama] = useState();
+  useEffect(() => {
+    console.log(nama);
+  }, [nama]);
+
+  let { page = 1, keyword, success } = router.query;
 
   return (
     <PageWrapper>
@@ -206,26 +149,16 @@ export default function NamaPelatihan({ token }) {
                       className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
-                      style={{
-                        color: "#464646",
-                        minWidth: "230px",
-                      }}
+                      style={{ color: "#464646", minWidth: "230px" }}
                     >
                       <div className="d-flex align-items-center">
                         <IconFilter className="mr-3" />
-                        Pilih Akademi
+                        Pilih Filter
                       </div>
                       <IconArrow fill="#E4E6EF" width="11" height="11" />
                     </button>
-
-                    {/* START MODAL UNFINISH*/}
-                    <form
-                      // id="kt_docs_formvalidation_text"
-                      className="form text-left"
-                      // action="#"
-                      // autoComplete="off"
-                      // onSubmit={handleSubmitSearchMany}
-                    >
+                    {/* modal */}
+                    <form className="form text-left">
                       <div
                         className="modal fade"
                         id="exampleModalCenter"
@@ -241,7 +174,7 @@ export default function NamaPelatihan({ token }) {
                           <div className="modal-content">
                             <div className="modal-header">
                               <h5
-                                className="modal-title font-weight-bold"
+                                className="modal-title"
                                 id="exampleModalLongTitle"
                               >
                                 Filter
@@ -251,7 +184,6 @@ export default function NamaPelatihan({ token }) {
                                 className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
-                                onClick={() => resetValueSort()}
                               >
                                 <IconClose />
                               </button>
@@ -259,67 +191,69 @@ export default function NamaPelatihan({ token }) {
 
                             <div
                               className="modal-body text-left"
-                              style={{
-                                height: "200px",
-                              }}
+                              style={{ height: "400px" }}
                             >
-                              <div className="mb-10 col-12">
+                              <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
-                                  Tanggal
+                                  Akademi
                                 </label>
-
-                                <div>
-                                  <DatePicker
-                                    className="form-search-date form-control-sm form-control"
-                                    selected={startDate}
-                                    onChange={date => setStartDate(date)}
-                                    selectsStart
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    dateFormat="dd/MM/yyyy"
-                                    placeholderText="Silahkan Isi Tanggal Dari"
-                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                    // minDate={addDays(new Date(), 20)}
-                                  />
-                                </div>
+                                <Select
+                                  ref={ref => (selectRefAkademi = ref)}
+                                  className="basic-single"
+                                  classNamePrefix="select"
+                                  placeholder="Semua"
+                                  // defaultValue={certificate.list_certificate[0]}
+                                  isDisabled={false}
+                                  isLoading={false}
+                                  isClearable={false}
+                                  isRtl={false}
+                                  isSearchable={true}
+                                  name="color"
+                                  onChange={e => {
+                                    console.log(e);
+                                    setNama(e);
+                                  }}
+                                  options={options}
+                                />
                               </div>
-
-                              <div className="mb-10 col-12">
+                              <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
-                                  Tanggal
+                                  Tema Pelatihan
                                 </label>
-
-                                <div>
-                                  <DatePicker
-                                    className="form-search-date form-control-sm form-control"
-                                    selected={endDate}
-                                    onChange={date => setEndDate(date)}
-                                    selectsEnd
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    dateFormat="dd/MM/yyyy"
-                                    maxDate={addDays(startDate, 20)}
-                                    placeholderText="Silahkan Isi Tanggal Sampai"
-                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                    // minDate={addDays(new Date(), 20)}
-                                  />
-                                </div>
+                                <Select
+                                  ref={ref => (selectReftTemaPelatihan = ref)}
+                                  className="basic-single"
+                                  classNamePrefix="select"
+                                  placeholder="Semua"
+                                  defaultValue={certificate.list_certificate[0]}
+                                  isDisabled={false}
+                                  isLoading={false}
+                                  isClearable={false}
+                                  isRtl={false}
+                                  isSearchable={true}
+                                  name="color"
+                                  onChange={e =>
+                                    setValueKerjaSama(e?.cooperation_categories)
+                                  }
+                                  options={certificate.list_certificate}
+                                />
                               </div>
                             </div>
                             <div className="modal-footer">
                               <div className="d-flex justify-content-end align-items-center">
                                 <button
-                                  className="btn btn-white-ghost-rounded-full"
+                                  className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                   type="button"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
                                   onClick={() => resetValueSort()}
                                 >
                                   Reset
                                 </button>
                                 <button
-                                  className="btn btn-primary-rounded-full ml-4"
+                                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
-                                  data-dismiss="modal"
-                                  onClick={() => handleSearchDate()}
+                                  onClick={e => handleSubmitSearchMany(e)}
                                 >
                                   Terapkan
                                 </button>
@@ -429,7 +363,7 @@ export default function NamaPelatihan({ token }) {
                     />
                   </div>
                 )}
-                {certificate ? (
+                {certificate && certificate.total ? (
                   <div className="table-total ml-auto">
                     <div className="row mt-3">
                       <div className="col-4 mr-0 p-0 my-auto">
@@ -446,30 +380,10 @@ export default function NamaPelatihan({ token }) {
                           onBlur={e => handleLimit(e.target.value)}
                           defaultValue={"5"}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="15"
-                            selected={limit == "15" ? true : false}
-                          >
-                            15
-                          </option>
-                          <option
-                            value="20"
-                            selected={limit == "20" ? true : false}
-                          >
-                            20
-                          </option>
+                          <option>5</option>
+                          <option>10</option>
+                          <option>15</option>
+                          <option>20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -477,7 +391,7 @@ export default function NamaPelatihan({ token }) {
                           className="align-middle my-auto"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {certificate.list_certificate.length}
+                          Total Data {certificate.total}
                         </p>
                       </div>
                     </div>
