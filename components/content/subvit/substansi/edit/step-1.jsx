@@ -114,7 +114,7 @@ const StepOne = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInputPublish step="1"></StepInputPublish>
           <div className="card-header border-0">
-            <h2 className="card-title h2 text-dark">Ubah Tes Substansi</h2>
+            <h2 className="card-title h2 text-dark">Ubah Test Substansi</h2>
           </div>
           <div className="card-body pt-0">
             <form onSubmit={onSubmit}>

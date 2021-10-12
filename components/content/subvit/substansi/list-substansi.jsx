@@ -229,7 +229,7 @@ const ListSubstansi = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Tes Substansi
+              List Test Substansi
             </h1>
             <div className="card-toolbar">
               <Link href="/subvit/substansi/tipe-soal">

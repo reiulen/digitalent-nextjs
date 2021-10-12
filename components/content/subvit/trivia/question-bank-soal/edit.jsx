@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import Swal from "sweetalert2";
+import styles from "../edit/step.module.css";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -374,7 +375,7 @@ const EditSoalTrivia = ({ token }) => {
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="btn btn-light-ghost-rounded-full mr-2"
+                  className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                 >
                   Kembali
                 </button>
