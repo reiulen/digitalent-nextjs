@@ -14,9 +14,11 @@ const EditImagetron = dynamic(
   () => import("../../../components/content/publikasi/imagetron/edit"),
   {
     // suspense: true,
-    // loading: () => <LoadingSkeleton />, 
-    loading: function loadingNow() { return <LoadingPage /> },
-    ssr: false
+    // loading: () => <LoadingSkeleton />,
+    loading: function loadingNow() {
+      return <LoadingPage />;
+    },
+    ssr: false,
   }
 );
 

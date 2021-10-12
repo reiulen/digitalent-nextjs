@@ -2,10 +2,23 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-import ViewReviewTraining from "../../../../components/content/pelatihan/review/view/view-data-training";
+// import ViewReviewTraining from "../../../../components/content/pelatihan/review/view/view-data-training";
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const ViewReviewTraining = dynamic(
+  () =>
+    import(
+      "../../../../components/content/pelatihan/review/view/view-data-training"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ViewReviewTrainingPage() {
   return (
@@ -24,7 +37,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/login/admin",
             permanent: false,
           },
         };

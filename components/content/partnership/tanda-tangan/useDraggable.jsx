@@ -28,11 +28,14 @@ export default function useDraggable(el) {
     el && el?.current?.addEventListener("mousedown", handleMouseDown);
 
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       el && el?.current?.removeEventListener("mousedown", handleMouseDown);
     };
   }, [dx, dy,el]);
 
   useEffect(() => {
-    el.current.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+    if(el.current){
+      el.current.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
+    }
   }, [dx, dy,el]);
 }

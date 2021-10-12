@@ -77,7 +77,6 @@ const ReviewKerjasama = ({ token }) => {
               },
             }
           );
-          console.log("data", data);
           router.push({
             pathname: "/partnership/kerjasama/",
             query: { successTerima: true },
@@ -90,7 +89,6 @@ const ReviewKerjasama = ({ token }) => {
   };
 
   const rejectDokument = (e) => {
-    console.log("rejectDokument");
     e.preventDefault();
 
     Swal.fire({
@@ -115,7 +113,6 @@ const ReviewKerjasama = ({ token }) => {
             }
           );
 
-          console.log("data asdasd", data);
           router.push({
             pathname: "/partnership/kerjasama/",
             query: { successReject: true },
@@ -138,7 +135,6 @@ const ReviewKerjasama = ({ token }) => {
             },
           }
         );
-        console.log("data sdfsdf", data);
         setTitle(data.data.title);
         setDate(data.data.submission_date);
         setCooperationID(data.data.cooperation_category);
@@ -196,13 +192,13 @@ const ReviewKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3
-              className="card-title font-weight-bolder text-dark"
+              className="card-title font-weight-bolder text-dark mb-0"
               style={{ fontSize: "24px" }}
             >
               Review Kerjasama {mitra && mitra}
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             {statusInfo && statusInfo === "Sudah direview" ? (
               <form>
                 <div className="form-group">

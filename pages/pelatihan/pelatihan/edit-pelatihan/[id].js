@@ -2,10 +2,23 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-import EditTraining from "../../../../components/content/pelatihan/training/edit/edit-training-step1";
+// import EditTraining from "../../../../components/content/pelatihan/training/edit/edit-training-step1";
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const EditTraining = dynamic(
+  () =>
+    import(
+      "../../../../components/content/pelatihan/training/edit/edit-training-step1"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function EditTrainingPage() {
   return (
@@ -25,7 +38,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/login/admin",
             permanent: false,
           },
         };

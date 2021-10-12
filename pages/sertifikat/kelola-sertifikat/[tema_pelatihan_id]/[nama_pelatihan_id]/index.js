@@ -5,7 +5,7 @@ import { getSession } from "next-auth/client";
 import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
 import { getSingleSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
-const KelolaSertifikatID = dynamic(
+const NamaPelatihanID = dynamic(
   () =>
     import(
       "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/single_sertifikat"
@@ -23,20 +23,20 @@ export default function KelokaSertifikatPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <KelolaSertifikatID token={session} />
+        <NamaPelatihanID token={session} />
       </div>
     </>
   );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  store =>
+  (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/login/admin",
             permanent: false,
           },
         };
@@ -53,8 +53,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+
       return {
-        props: { session, title: "List Peserta - Sertifikat" },
+        props: { session, title: "Detail - Sertifikat" },
       };
     }
 );

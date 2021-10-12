@@ -643,10 +643,11 @@ const Faq = ({token}) => {
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
+                                        
                                         <tbody>
                                             {
                                                 !faq || faq && faq.faq.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={9}>Data Masih Kosong</td> :
+                                                    <td className='align-middle text-center' colSpan={9}>Data Tidak Ditemukan</td> :
                                                     faq && faq.faq.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             {/* <td className='align-middle text-center'>

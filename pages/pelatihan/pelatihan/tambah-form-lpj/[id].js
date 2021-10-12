@@ -2,10 +2,21 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-import AddFormLpj from "../../../../components/content/pelatihan/training/add-form-lpj";
+// import AddFormLpj from "../../../../components/content/pelatihan/training/add-form-lpj";
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const AddFormLpj = dynamic(
+  () =>
+    import("../../../../components/content/pelatihan/training/add-form-lpj"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function AddFormLpjPage() {
   return (
@@ -24,7 +35,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/login/admin",
             permanent: false,
           },
         };

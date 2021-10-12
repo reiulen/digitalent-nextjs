@@ -21,6 +21,9 @@ import {
   SINGLE_SERTIFIKAT_SUCCESS,
   SINGLE_SERTIFIKAT_FAIL,
   CLEAR_ERRORS,
+  PUBLISHED_SERTIFIKAT_REQUEST,
+  PUBLISHED_SERTIFIKAT_SUCCESS,
+  PUBLISHED_SERTIFIKAT_FAIL,
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
 export const allSertifikatReducers = (state = { certificate: [] }, action) => {
@@ -100,6 +103,7 @@ export const detailSertifikatReducer = (
 
     case DETAIL_SERTIFIKAT_FAIL:
       return {
+        loading: false,
         error: action.payload,
       };
     case CLEAR_ERRORS:
@@ -129,6 +133,37 @@ export const singleSertifikatReducer = (
       };
 
     case SINGLE_SERTIFIKAT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const publishedSertifikatReducer = (
+  state = { certificate: {} },
+  action
+) => {
+  switch (action.type) {
+    case PUBLISHED_SERTIFIKAT_REQUEST:
+      return {
+        loading: true,
+      };
+    case PUBLISHED_SERTIFIKAT_SUCCESS:
+      return {
+        loading: false,
+        certificate: action.payload,
+      };
+
+    case PUBLISHED_SERTIFIKAT_FAIL:
       return {
         error: action.payload,
       };

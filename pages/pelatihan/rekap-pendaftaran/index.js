@@ -2,10 +2,20 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import ListSummary from "../../../components/content/pelatihan/summary/list-summary";
+// import ListSummary from "../../../components/content/pelatihan/summary/list-summary";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const ListSummary = dynamic(
+  () => import("../../../components/content/pelatihan/summary/list-summary"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ListSummaryPage() {
   return (
@@ -24,7 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/login/admin",
             permanent: false,
           },
         };

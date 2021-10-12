@@ -23,7 +23,6 @@ import AlertBar from "../components/BarAlert";
 import IconArrow from "../../../assets/icon/Arrow";
 
 const Table = ({ token }) => {
-  console.log("token",token)
   let dispatch = useDispatch();
   let router = useRouter();
   const { success, update } = router.query;

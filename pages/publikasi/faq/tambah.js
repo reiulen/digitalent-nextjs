@@ -4,52 +4,58 @@ import { getSession } from "next-auth/client";
 import Layout from "../../../components/templates/layout.component";
 // import Tambah from "../../../components/content/publikasi/faq/tambah";
 
-import { getAllKategoriInput } from '../../../redux/actions/publikasi/kategori.actions'
-import { wrapper } from '../../../redux/store'
+import { getAllKategoriInput } from "../../../redux/actions/publikasi/kategori.actions";
+import { wrapper } from "../../../redux/store";
 
 import LoadingPage from "../../../components/LoadingPage";
 
 const Tambah = dynamic(
-    () => import("../../../components/content/publikasi/faq/tambah"),
-    { 
-        // suspense: true,
-        // loading: () => <LoadingSkeleton />, 
-        loading: function loadingNow () {return <LoadingPage /> }, 
-        ssr: false
-    }
+  () => import("../../../components/content/publikasi/faq/tambah"),
+  {
+    // suspense: true,
+    // loading: () => <LoadingSkeleton />,
+    loading: function loadingNow() {
+      return <LoadingPage />;
+    },
+    ssr: false,
+  }
 );
 
 export default function TambahPage(props) {
-    const session = props.session.user.user.data;
-    return (
-        <>
-            <div className="d-flex flex-column flex-root">
-                <Tambah token={session.token}/>
-            </div>
-        </>
-    )
+  const session = props.session.user.user.data;
+  return (
+    <>
+      <div className="d-flex flex-column flex-root">
+        <Tambah token={session.token} />
+      </div>
+    </>
+  );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, req }) => {
-    
-    const session = await getSession({ req });
-    // console.log (`from artikel create ${session}`)
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params, req }) => {
+      const session = await getSession({ req });
+      // console.log (`from artikel create ${session}`)
 
-    if (!session) {
+      if (!session) {
         return {
-            redirect: {
-            destination: "/",
+          redirect: {
+            destination: "/login/admin",
             permanent: false,
-            },
+          },
         };
-    }
-    
-    await store.dispatch(getAllKategoriInput("Faq", session.user.user.data.token))
+      }
 
-    return {
+      await store.dispatch(
+        getAllKategoriInput("Faq", session.user.user.data.token)
+      );
+
+      return {
         props: { session, title: "Tambah Faq - Publikasi" },
-    };
-})
+      };
+    }
+);
 
 // export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
 //     await store.dispatch(getAllKategoriInput("Faq"));

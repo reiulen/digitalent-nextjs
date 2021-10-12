@@ -30,6 +30,9 @@ const ListTheme = ({ token }) => {
     error: deleteError,
     isDeleted,
   } = useSelector((state) => state.deleteTheme);
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
 
   let { page = 1, success } = router.query;
   page = Number(page);
@@ -54,10 +57,10 @@ const ListTheme = ({ token }) => {
   const [status, setStatus] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+  const optionsAkademi = dataAkademi.data;
+  const optionsStatus = [
+    { value: "1", label: "Publish" },
+    { value: "0", label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -73,7 +76,7 @@ const ListTheme = ({ token }) => {
         type: DELETE_THEME_RESET,
       });
     }
-  }, [isDeleted]);
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -268,12 +271,14 @@ const ListTheme = ({ token }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    {!theme || (theme && theme.rows.length === 0) ? (
+                    {!theme ||
+                    (theme && theme.list === null) ||
+                    theme.list.length === 0 ? (
                       <td className="align-middle text-center" colSpan={8}>
                         Data Masih Kosong
                       </td>
                     ) : (
-                      theme.rows.map((row, i) => (
+                      theme.list.map((row, i) => (
                         <tr key={i}>
                           <td className="text-center">
                             {limit === null
@@ -294,7 +299,7 @@ const ListTheme = ({ token }) => {
                           <td className="align-middle">{row.name}</td>
                           <td className="align-middle">500 Peminat</td>
                           <td className="align-middle">
-                            {row.status ? (
+                            {row.status === "1" ? (
                               <span className="label label-inline label-light-success font-weight-bold">
                                 Publish
                               </span>
@@ -335,23 +340,24 @@ const ListTheme = ({ token }) => {
               </div>
 
               <div className="row">
-                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <Pagination
-                    activePage={theme.page}
-                    itemsCountPerPage={theme.total_pages}
-                    totalItemsCount={theme.total_rows}
-                    pageRangeDisplayed={3}
-                    onChange={handlePagination}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-
-                {academy && academy.total_rows > 5 && (
+                {theme && theme.perPage < theme.total && (
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={theme.page}
+                      itemsCountPerPage={theme.perPage}
+                      totalItemsCount={theme.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {academy && academy.total > 5 && (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0 mt-3">
@@ -379,7 +385,7 @@ const ListTheme = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {theme.total_rows}
+                          Total Data {theme.total}
                         </p>
                       </div>
                     </div>
@@ -411,7 +417,7 @@ const ListTheme = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Akademi</label>
             <Select
-              options={options}
+              options={optionsAkademi}
               defaultValue={academy}
               onChange={(e) => setAcademy({ value: e.value, label: e.label })}
             />
@@ -419,7 +425,7 @@ const ListTheme = ({ token }) => {
           <div className="form-group mb-0">
             <label className="p-0">Status</label>
             <Select
-              options={options}
+              options={optionsStatus}
               defaultValue={status}
               onChange={(e) => setStatus({ value: e.value, label: e.label })}
             />

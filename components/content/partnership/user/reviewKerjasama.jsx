@@ -69,7 +69,6 @@ function ReviewKerjasama({token}) {
           },
         }
       );
-      console.log("data",data)
 
       // console.log("data a a a ssss", data.data.status_migrates_id.status);
       if(data.data.status_migrates_id.status === "pengajuan-revisi"){
@@ -78,7 +77,7 @@ function ReviewKerjasama({token}) {
           query:{id:router.query.id}
         })
       }
-      if(data.data.status_migrates_id.status === "pengajuan-selesai"){
+      if((data.data.status_migrates_id.status === "pengajuan-selesai") || (data.data.status_migrates_id.status === "pengajuan-pembahasan")  ){
         router.push({
           pathname:"/partnership/user/kerjasama/pembahasan-2",
           query:{id:router.query.id}
@@ -170,8 +169,8 @@ function ReviewKerjasama({token}) {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Submit Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Submit Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>
@@ -180,8 +179,8 @@ function ReviewKerjasama({token}) {
                 <div className="progress-items">
                   <div className="line-progress"></div>
                   <div className="circle-progress">
-                    <span className="title-progress">
-                      Review Dokumen Kerjasama
+                    <span className="title-progress text-center" style={{top:"-4rem"}}>
+                      Review Dokumen<br/>Kerjasama
                     </span>
                   </div>
                 </div>

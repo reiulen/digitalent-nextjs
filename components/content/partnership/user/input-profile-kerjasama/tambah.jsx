@@ -162,16 +162,20 @@ const Tambah = ({token}) => {
                 },
               }
             );
-            router.push({
-              pathname: "/partnership/user/profile-lembaga/input-profile",
-              query: { successInputProfile: true },
-            });
+            if(router.query.isProfile){
+                router.push({
+                pathname: "/partnership/user/kerjasama/submit-kerjasama",
+                query: { isProfile: true },
+              });
+            }
+            else{
+              router.push({
+                pathname: "/partnership/user/profile-lembaga/input-profile",
+                query: { successInputProfile: true },
+              });
+            }
           } catch (error) {
             notify(error.response.data.message);
-            // notify(
-            //   "cek field kab/kota anda apakah sudah sesuai dengan provinsi yang ada"
-            // );
-
           }
         }
       });
@@ -397,11 +401,11 @@ const Tambah = ({token}) => {
         />
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
-            <h3 className="card-title text-dark fw-600 fz-20">
+            <h3 className="card-title text-dark fw-600 fz-20 mb-0">
               Profile Lembaga
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form
               // id="kt_docs_formvalidation_text"
               // className="form"
@@ -409,7 +413,7 @@ const Tambah = ({token}) => {
               // autoComplete="off"
               // onSubmit={submit}
             >
-              <div className="form-group mb-10">
+              <div className="form-group mb-6">
                 <label htmlFor="staticE mail" className="col-form-label">
                   Nama Lembaga
                 </label>

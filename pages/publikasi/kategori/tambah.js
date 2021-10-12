@@ -28,34 +28,34 @@ export default function TambahPage(props) {
         {/* <Layout title='Tambah Kategori'>
                     <Tambah />
                 </Layout> */}
-        <Tambah token={session.token}/>
+        <Tambah token={session.token} />
       </div>
     </>
   );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(store => async ({ params, req }) => {
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params, req }) => {
+      const session = await getSession({ req });
+      console.log(`from kategori create ${session}`);
 
-  const session = await getSession({ req });
-  console.log(`from kategori create ${session}`)
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/login/admin",
+            permanent: false,
+          },
+        };
+      }
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
-    };
-  }
+      await store.dispatch(getAllKategori(session.user.user.data.token));
 
-  await store.dispatch(getAllKategori(session.user.user.data.token))
-
-  return {
-    props: { session, title: "Tambah Kategori - Publikasi" },
-  }
-})
-
-
+      return {
+        props: { session, title: "Tambah Kategori - Publikasi" },
+      };
+    }
+);
 
 // export async function getServerSideProps(context) {
 //   const session = await getSession({ req: context.req });

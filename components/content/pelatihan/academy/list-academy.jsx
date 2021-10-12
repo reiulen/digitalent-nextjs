@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
@@ -11,7 +12,10 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
 
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAcademy } from "../../../../redux/actions/pelatihan/academy.actions";
+import {
+  deleteAcademy,
+  clearErrors,
+} from "../../../../redux/actions/pelatihan/academy.actions";
 import { DELETE_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
 
 const ListAcademy = ({ token }) => {
@@ -62,7 +66,7 @@ const ListAcademy = ({ token }) => {
         type: DELETE_ACADEMY_RESET,
       });
     }
-  }, [isDeleted]);
+  }, [isDeleted, dispatch]);
 
   const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
@@ -212,7 +216,7 @@ const ListAcademy = ({ token }) => {
             <div className="table-page mt-5">
               <div className="table-responsive">
                 <LoadingTable loading={loading} />
-                {loading === false ? (
+                {loading === false && (
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead
                       style={{ background: "#F3F6F9" }}
@@ -230,12 +234,14 @@ const ListAcademy = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {!academy || (academy && academy.rows.length === 0) ? (
+                      {!academy ||
+                      (academy && academy.list === null) ||
+                      academy.list.length === 0 ? (
                         <td className="align-middle text-center" colSpan={8}>
                           Data Masih Kosong
                         </td>
                       ) : (
-                        academy.rows.map((row, i) => (
+                        academy.list.map((row, i) => (
                           <tr key={i}>
                             <td className="text-center">
                               {limit === null
@@ -248,6 +254,7 @@ const ListAcademy = ({ token }) => {
                                 width="111"
                                 height="52"
                                 objectFit="cover"
+                                alt={`image` + i}
                               />
                             </td>
                             <td className="align-middle">
@@ -265,7 +272,7 @@ const ListAcademy = ({ token }) => {
                             <td className="align-middle">150</td>
                             <td className="align-middle">50 Mitra</td>
                             <td className="align-middle">
-                              {row.status ? (
+                              {row.status === "1" ? (
                                 <span className="label label-inline label-light-success font-weight-bold">
                                   Publish
                                 </span>
@@ -303,29 +310,28 @@ const ListAcademy = ({ token }) => {
                       )}
                     </tbody>
                   </table>
-                ) : (
-                  ""
                 )}
               </div>
 
               <div className="row">
-                <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
-                  <Pagination
-                    activePage={academy.page}
-                    itemsCountPerPage={academy.total_pages}
-                    totalItemsCount={academy.total_rows}
-                    pageRangeDisplayed={3}
-                    onChange={handlePagination}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemClass="page-item"
-                    linkClass="page-link"
-                  />
-                </div>
-
-                {academy && academy.total_rows > 5 && (
+                {academy && academy.perPage < academy.total && (
+                  <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
+                    <Pagination
+                      activePage={academy.page}
+                      itemsCountPerPage={academy.perPage}
+                      totalItemsCount={academy.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {academy && academy.total > 5 && (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0 mt-3">
@@ -353,7 +359,7 @@ const ListAcademy = ({ token }) => {
                           className="align-middle mt-3"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {academy.total_rows}
+                          Total Data {academy.total}
                         </p>
                       </div>
                     </div>

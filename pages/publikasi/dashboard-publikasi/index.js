@@ -12,49 +12,49 @@ import { wrapper } from "../../../redux/store";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 
 const DashboardPublikasi = dynamic(
-    () =>
-        import(
-            "../../../components/content/publikasi/dashboard-publikasi/dashboard-publikasi"
-        ),
-    {
-        // suspense: true,
-        // loading: () => <LoadingSkeleton />,
-        loading: function loadingNow() {
-            return <LoadingSkeleton />;
-        },
-        ssr: false,
-    }
+  () =>
+    import(
+      "../../../components/content/publikasi/dashboard-publikasi/dashboard-publikasi"
+    ),
+  {
+    // suspense: true,
+    // loading: () => <LoadingSkeleton />,
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
 );
 
 export default function DashboardPage(props) {
-    const session = props.session.user.user.data;
-    return (
-        <>
-            <div className="d-flex flex-column flex-root">
-                <DashboardPublikasi token={session.token} />
-            </div>
-        </>
-    );
+  const session = props.session.user.user.data;
+  return (
+    <>
+      <div className="d-flex flex-column flex-root">
+        <DashboardPublikasi token={session.token} />
+      </div>
+    </>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-    store =>
-        async ({ query, req }) => {
-            const session = await getSession({ req });
-            if (!session) {
-                return {
-                    redirect: {
-                        destination: "/",
-                        permanent: false,
-                    },
-                };
-            }
+  (store) =>
+    async ({ query, req }) => {
+      const session = await getSession({ req });
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/login/admin",
+            permanent: false,
+          },
+        };
+      }
 
-            await store.dispatch(
-                getAllDashboardPublikasi(session.user.user.data.token)
-            );
-            return {
-                props: { session, title: "Dashboard - Publikasi" },
-            };
-        }
+      await store.dispatch(
+        getAllDashboardPublikasi(session.user.user.data.token)
+      );
+      return {
+        props: { session, title: "Dashboard - Publikasi" },
+      };
+    }
 );

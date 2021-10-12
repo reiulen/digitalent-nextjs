@@ -10,34 +10,89 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
+import {
+  deletePage,
+  getAllPage
+} from "../../../../../redux/actions/site-management/settings/page.actions";
+
+import { DELETE_PAGE_RESET } from "../../../../../redux/types/site-management/settings/page.type";
 
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  // function delete
-  const pageDelete = (id) => {
+  
+
+  const {
+    loading: allLoading,
+    error,
+    pages,
+  } = useSelector((state) => state.allPage);
+
+
+  const {
+    loading: deleteLoading,
+    error: deleteError,
+    isDeleted,
+  } = useSelector((state) => state.deletePage);
+
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(null);
+
+  let loading = false;
+  let { page = 1, cari, success } = router.query;
+  if (allLoading) {
+    loading = allLoading;
+  }
+  page = Number(page);
+
+  const onNewReset = () => {
+    router.replace("site-management/setting/page", undefined, {
+      shallow: true,
+    });
+  };
+
+  const handleDelete = (id) => {
     Swal.fire({
-      title: "Apakah anda yakin ingin menghapus data ?",
+      title: "Apakah anda yakin menghapus data ?",
+      text: "Data ini tidak bisa dikembalikan !",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        // dispatch delete
+      cancelButtonText: "Batal",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deletePage(id, token));
       }
     });
   };
 
-  const onNewReset = () => {
-    router.replace("/site-management/setting/page", undefined, {
-      shallow: true,
-    });
+  const handleChangeLimit = (limit,token) => {
+    dispatch(getAllPage(page,cari,limit,token))
+  }
+
+  useEffect(() => {
+    if (isDeleted) {
+      Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
+        (result) => {
+          if (result.isConfirmed) {
+            dispatch(getAllPage(page,cari,limit,token))
+          }
+        }
+      );
+      dispatch({
+        type: DELETE_PAGE_RESET,
+      });
+    }
+  }, [limit, isDeleted, dispatch, cari,page,token]);
+
+
+  const handleSearch = () => {
+    dispatch(getAllPage(page,search,5,token))
   };
+
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -62,10 +117,6 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    // onSubmit={handleSubmit}
-                    className="d-flex align-items-center w-100"
-                  >
                     <div className="row w-100">
                       <div className="col-12 col-sm-6">
                         <div className="position-relative overflow-hidden w-100">
@@ -78,9 +129,7 @@ const Table = ({ token }) => {
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
+                            onChange={(e) => setSearch(e.target.value)}
                           />
                           <button
                             type="submit"
@@ -89,98 +138,129 @@ const Table = ({ token }) => {
                               borderTopLeftRadius: "0",
                               borderBottomLeftRadius: "0",
                             }}
+                            onClick={handleSearch}
                           >
                             Cari
                           </button>
                         </div>
                       </div>
                     </div>
-                  </form>
                 </div>
               </div>
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">Page Name</th>
-                      <th className="text-left align-middle">Link Url</th>
-                      <th className="text-left align-middle">Status</th>
-                      <th className="text-left align-middle">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">page name</td>
-                      <td className="align-middle text-left">link url</td>
-                      <td className="align-middle text-left">
-                        <p
-                          className="status-div-red mb-0"
-                          style={{ width: "max-content" }}
-                        >
-                          Tidak aktif
-                        </p>
-                      </td>
-                      <td className="align-middle text-left">
-                        <div className="d-flex align-items-center">
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/setting/ubah-page`)
-                            }
-                          >
-                            <IconPencil width="16" height="16" />
-                            <div className="text-hover-show-hapus">Ubah</div>
-                          </button>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/setting/preview-page`)
-                            }
-                          >
-                            <IconEye width="16" height="16" />
-                            <div className="text-hover-show-hapus">Preview</div>
-                          </button>
+                <LoadingTable loading={loading} />
 
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            // onClick={() =>
-                            //   pageDelete(items.id)
-                            // }
-                          >
-                            <IconDelete width="16" height="16" />
-                            <div className="text-hover-show-hapus">Hapus</div>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                {loading === false ? (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
+                      <tr>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">Page Name</th>
+                        <th className="text-left align-middle">Link Url</th>
+                        <th className="text-left align-middle">Status</th>
+                        <th className="text-left align-middle">Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {!pages || (pages && pages.artikel.length === 0) ? (
+                        <tr>
+                          <td colSpan="5" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        pages &&
+                        pages.artikel.map((items, i) => {
+                          return (
+                            <tr key={i}>
+                              <td className="align-middle text-left">
+                                {limit === null
+                                  ? i + 1 * (page * 5) - (5 - 1)
+                                  : i + 1 * (page * limit) - (limit - 1)}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.name}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.url}
+                              </td>
+                              <td className="align-middle text-left">
+                                <p
+                                  className="status-div-red mb-0"
+                                  style={{ width: "max-content" }}
+                                >
+                                  {items.status}
+                                </p>
+                              </td>
+                              <td className="align-middle text-left">
+                                <div className="d-flex align-items-center">
+                                  <Link href={`/site-management/setting/ubah-page/${items.id}`}>
+                                  <a
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                  >
+                                    <IconPencil width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
+                                  </a>
+                                  </Link>
+                                  <Link href={`/site-management/setting/preview-page/${items.id}`}>
+                                  <a
+                                    className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                  >
+                                    <IconEye width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Preview
+                                    </div>
+                                  </a>
+                                  </Link>
+
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      handleDelete(items.id)
+                                    }
+                                  >
+                                    <IconDelete width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Hapus
+                                    </div>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
+                ) : (
+                  ""
+                )}
               </div>
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                  {pages && pages.perPage < pages.total && (
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={page}
+                      itemsCountPerPage={pages.perPage}
+                      totalItemsCount={pages.total}
+                      pageRangeDisplayed={3}
+                      onChange={(page) => dispatch(getAllPage(page))}
+
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
                 </div>
 
                 <div className="table-total ml-auto">
@@ -196,6 +276,9 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) =>
+                          handleChangeLimit(e.target.value,token)
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>

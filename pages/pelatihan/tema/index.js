@@ -2,11 +2,22 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-import ListTheme from "../../../components/content/pelatihan/theme/list-theme";
+// import ListTheme from "../../../components/content/pelatihan/theme/list-theme";
 import { getAllTheme } from "../../../redux/actions/pelatihan/theme.actions";
+import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const ListTheme = dynamic(
+  () => import("../../../components/content/pelatihan/theme/list-theme"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function ListThemePage(props) {
   const session = props.session.user.user.data;
@@ -26,7 +37,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/login/admin",
             permanent: false,
           },
         };
@@ -42,6 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
+      await store.dispatch(dropdownAkademi(session.user.user.data.token));
 
       return {
         props: { session, title: "List Tema - Pelatihan" },

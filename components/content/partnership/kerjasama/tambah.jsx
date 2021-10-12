@@ -56,34 +56,34 @@ const Tambah = ({token}) => {
 
     if (institution_name === "") {
       setError({ ...error, institution_name: "Harus pilih nama lembaga" });
-      notify("Harus pilih nama lembaga");
+      // notify("Harus pilih nama lembaga");
     } else if (date === "") {
       setError({ ...error, date: "Filed tanggal tidak boleh kosong" });
-      notify("Filed tanggal tidak boleh kosong");
+      // notify("Filed tanggal tidak boleh kosong");
     } else if (title === "") {
       setError({ ...error, title: "Filed judul kerjasama tidak boleh kosong" });
-      notify("Filed judul kerjasama tidak boleh kosong");
+      // notify("Filed judul kerjasama tidak boleh kosong");
     } else if (cooperationC_id === "") {
       setError({
         ...error,
         cooperationC_id: "Filed kategori kerjasama tidak boleh kosong",
       });
-      notify("Filed kategori kerjasama tidak boleh kosong");
+      // notify("Filed kategori kerjasama tidak boleh kosong");
     } else if (period === "") {
       setError({ ...error, period: "Filed periode tidak boleh kosong" });
-      notify("Filed periode tidak boleh kosong");
+      // notify("Filed periode tidak boleh kosong");
     } else if (periodUnit === "") {
       setError({
         ...error,
         periodUnit: "Filed period unit tidak boleh kosong",
       });
-      notify("Filed period unit tidak boleh kosong");
+      // notify("Filed period unit tidak boleh kosong");
     } else if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Filed kerjasama form tidak boleh kosong",
       });
-      notify("Filed kerjasama form tidak boleh kosong");
+      // notify("Filed kerjasama form tidak boleh kosong");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ?",
@@ -185,21 +185,32 @@ const Tambah = ({token}) => {
               Tambah Kerjasama
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={submit}>
               <div className="fv-row mb-10">
                 <label className="required fw-bold fs-6 mb-2">Tanggal</label>
-                <input
+                {/* <input
                   readOnly
                   value={date}
                   type="text"
                   className="form-control mb-3 mb-lg-0"
-                />
+                /> */}
+
+                <input
+                      disabled
+                      type="text"
+                      value={date}
+                      name="text_input"
+                      className="form-control mb-3 mb-lg-0"
+                      // placeholder="Masukan Alamat E-mail"
+                    />
+
+
                 {error.date ? <p className="error-text">{error.date}</p> : ""}
               </div>
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">
                       Lembaga
                     </label>
@@ -228,23 +239,27 @@ const Tambah = ({token}) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
+
+
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">Email</label>
                     <input
-                      readOnly
+                      disabled
                       type="text"
                       value={allMK.email}
                       name="text_input"
-                      className="form-control form-control-solid mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0"
                       placeholder="Masukan Alamat E-mail"
                     />
                   </div>
+
+
                 </div>
               </div>
 
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">
                       Periode Kerjasama
                     </label>
@@ -265,7 +280,7 @@ const Tambah = ({token}) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-10">
+                  <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2"></label>
                     <input
                       disabled
@@ -278,7 +293,7 @@ const Tambah = ({token}) => {
                 </div>
               </div>
 
-              <div className="fv-row mb-10">
+              <div className="fv-row mb-6">
                 <label className="required fw-bold fs-6 mb-2">
                   Judul Kerjasama
                 </label>

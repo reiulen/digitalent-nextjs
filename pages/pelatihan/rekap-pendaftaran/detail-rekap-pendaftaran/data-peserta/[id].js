@@ -2,10 +2,23 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
-import DataParticipant from "../../../../../components/content/pelatihan/summary/data-participant";
+// import DataParticipant from "../../../../../components/content/pelatihan/summary/data-participant";
 
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const DataParticipant = dynamic(
+  () =>
+    import(
+      "../../../../../components/content/pelatihan/summary/data-participant"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function DataParticipantPage() {
   return (
@@ -24,7 +37,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/login/admin",
             permanent: false,
           },
         };

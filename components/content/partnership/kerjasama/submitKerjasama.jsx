@@ -244,7 +244,7 @@ const SubmitKerjasama = ({ token }) => {
               Dokumen Kerjasama
             </h3>
           </div>
-          <div className="card-body">
+          <div className="card-body pt-0">
             <form onSubmit={submit}>
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
@@ -280,16 +280,17 @@ const SubmitKerjasama = ({ token }) => {
                     )}
                   </div>
                   <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
                         className="form-search-date form-control-sm form-control cursor-pointer"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
-                        readOnly
+                        disabled
                         selectsEnd
                         value={newDate}
                         startDate={startDate}
                         endDate={endDate}
+                        
                         // minDate={startDate}
                         minDate={moment().toDate()}
                         maxDate={addDays(startDate, 20)}
@@ -409,7 +410,7 @@ const SubmitKerjasama = ({ token }) => {
                 {pdfFile ? (
                   <div className="mt-3">
                     <button
-                      className="btn btn-primary btn-sm mr-2"
+                      className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                       type="button"
                       onClick={() => showDocument()}
                     >
@@ -442,7 +443,7 @@ const SubmitKerjasama = ({ token }) => {
                 {!viewPDF && <>No pdf file selected </>}
               </div>
 
-              <div className="form-group row">
+              <div className="form-group row mt-6">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href="/partnership/kerjasama">
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">

@@ -37,6 +37,9 @@ const EditTheme = ({ token }) => {
   const { loading, error, isUpdated } = useSelector(
     (state) => state.updateTheme
   );
+  const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
+    (state) => state.drowpdownAkademi
+  );
 
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
   const [, forceUpdate] = useState();
@@ -50,19 +53,14 @@ const EditTheme = ({ token }) => {
 
   const [status, setStatus] = useState(
     theme.status === "0"
-      ? { value: 0, label: "Unpublish" }
-      : { value: 1, label: "Publish" }
+      ? { value: "0", label: "Unpublish" }
+      : { value: "1", label: "Publish" }
   );
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
-
+  const optionsAkademi = dataAkademi.data;
   const optionsStatus = [
-    { value: 1, label: "Publish" },
-    { value: 0, label: "Unpublish" },
+    { value: "1", label: "Publish" },
+    { value: "0", label: "Unpublish" },
   ];
 
   useEffect(() => {
@@ -83,7 +81,7 @@ const EditTheme = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [isUpdated]);
+  }, [isUpdated, dispatch, router]);
 
   const handleResetError = () => {
     if (error) {
@@ -95,6 +93,7 @@ const EditTheme = ({ token }) => {
     e.preventDefault();
     if (simpleValidator.current.allValid()) {
       const statusString = (status.value += "");
+      // const akademiString = (academy.value += "");
       const idInt = parseInt(id);
       const data = {
         name,
@@ -103,6 +102,7 @@ const EditTheme = ({ token }) => {
         akademi_id: academy.value,
         id: idInt,
       };
+      // console.log(data);
       dispatch(updateTheme(data, token));
     } else {
       simpleValidator.current.showMessages();
@@ -110,7 +110,7 @@ const EditTheme = ({ token }) => {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "Isi data yang bener dong lu !",
+        text: "Isi data dengan benar !",
       });
     }
   };
@@ -160,9 +160,11 @@ const EditTheme = ({ token }) => {
                   Akademi
                 </label>
                 <Select
-                  options={options}
+                  options={optionsAkademi}
                   defaultValue={academy}
-                  onChange={(e) => setAcademy(e.value)}
+                  onChange={(e) =>
+                    setAcademy({ label: e.label, value: e.value })
+                  }
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("akademi")
                   }
@@ -239,7 +241,9 @@ const EditTheme = ({ token }) => {
                 <Select
                   options={optionsStatus}
                   defaultValue={status}
-                  onChange={(e) => setStatus(e.value)}
+                  onChange={(e) =>
+                    setStatus({ value: e.value, label: e.label })
+                  }
                   onBlur={() =>
                     simpleValidator.current.showMessageFor("status")
                   }

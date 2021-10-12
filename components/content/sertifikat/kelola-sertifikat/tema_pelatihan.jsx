@@ -19,7 +19,10 @@ import { useSelector } from "react-redux";
 export default function NamaPelatihan({ token }) {
   // console.log(token);
   const router = useRouter();
-  // const {loading, error,}
+
+  const { loading, error, certificate } = useSelector(
+    state => state.allCertificates
+  );
   // #DatePicker
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -53,9 +56,7 @@ export default function NamaPelatihan({ token }) {
   let { page = 1, keyword, success } = router.query;
 
   // #REDUX STATE
-  const { loading, error, certificate } = useSelector(
-    state => state.allCertificates
-  );
+
   // #REDUX STATE
   // console.log(certificate);
 
@@ -315,6 +316,7 @@ export default function NamaPelatihan({ token }) {
                               <td className="align-middle d-flex">
                                 <Link
                                   href={`/sertifikat/kelola-sertifikat/${certificate.theme.academy.id}`}
+                                  passHref
                                 >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"

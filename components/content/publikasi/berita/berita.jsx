@@ -637,7 +637,7 @@ const Berita = ({token}) => {
                                         <tbody>
                                             {
                                                 !berita || berita && berita.berita.length === 0 ?
-                                                    <td className='align-middle text-center' colSpan={8}>Data Masih Kosong</td> :
+                                                    <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
                                                     berita && berita.berita.map((row, i) => {
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
@@ -677,8 +677,8 @@ const Berita = ({token}) => {
                                                                 }
                                                             </td>
                                                             <td className='align-middle'>
-                                                                {row.dibuat}
-                                                                {/* Super Admin */}
+                                                                {/* {row.dibuat} */}
+                                                                Super Admin
                                                             </td>
                                                             <td className='align-middle'>
                                                                 {row.publish === 1 ?
@@ -692,7 +692,10 @@ const Berita = ({token}) => {
                                                                 }
 
                                                             </td>
-                                                            <td className='align-middle'>{row.role}</td>
+                                                            <td className='align-middle'>
+                                                                {/* {row.role} */}
+                                                                Super Admin
+                                                            </td>
                                                             <td className="align-middle d-flex">
 
                                                                 <Link

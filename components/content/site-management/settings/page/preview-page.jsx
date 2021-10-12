@@ -18,21 +18,32 @@ const styleHeader = {
 };
 
 const styleCardContent = {
-  position:"relative",
-  top:"-4rem"
-}
+  position: "relative",
+  top: "-4rem",
+};
 
 const listNumber = {
-  listStyleType:"decimal"
-}
+  listStyleType: "decimal",
+};
 // const styleBgHeader = {
 //   position:"absolute",
 //   inset:"0",
 // }
 
+
+
+//   console.log("pages detail preview",pages)
+
 const TentangKami = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
+
+  const {
+    loading: allLoading,
+    error,
+    pages,
+    success,
+  } = useSelector((state) => state.detailPage);
 
   const onNewReset = () => {
     router.replace("/site-management/api", undefined, {
@@ -74,11 +85,31 @@ const TentangKami = ({ token }) => {
                   </div>
                 </div> */}
                 <div className="card-body fz-16">
-                  <p>Program Digital Talent Scholarship adalah program pelatihan pengembangan kompetensi yang telah diberikan kepada talenta digital Indonesia sejak tahun 2018. Program Digital Talent Scholarship tahun 2021 didesain untuk menciptakan ekosistem seimbang dalam memaksimalkan peran pentahelix (pemerintah, komunitas/masyarakat, institusi pendidikan tinggi, dunia usaha, dan media) untuk menjadi fasilitator dan akselerator pendukung ekonomi digital.</p>
-                  <p>
-Program Digital Talent Scholarship bertujuan untuk meningkatkan keterampilan dan daya saing, produktivitas, profesionalisme SDM bidang teknologi informasi dan komunikasi bagi angkatan kerja muda Indonesia, masyarakat umum, dan aparatur sipil negara.
+                  <div
+                className="ml-2"
+                dangerouslySetInnerHTML={{ __html: pages.content }}
+              />
+                  {/* <p>
+                    Program Digital Talent Scholarship adalah program pelatihan
+                    pengembangan kompetensi yang telah diberikan kepada talenta
+                    digital Indonesia sejak tahun 2018. Program Digital Talent
+                    Scholarship tahun 2021 didesain untuk menciptakan ekosistem
+                    seimbang dalam memaksimalkan peran pentahelix (pemerintah,
+                    komunitas/masyarakat, institusi pendidikan tinggi, dunia
+                    usaha, dan media) untuk menjadi fasilitator dan akselerator
+                    pendukung ekonomi digital.
                   </p>
-                  <p>Program DTS 2021 secara garis besar dibagi menjadi delapan akademi, yaitu:</p>
+                  <p>
+                    Program Digital Talent Scholarship bertujuan untuk
+                    meningkatkan keterampilan dan daya saing, produktivitas,
+                    profesionalisme SDM bidang teknologi informasi dan
+                    komunikasi bagi angkatan kerja muda Indonesia, masyarakat
+                    umum, dan aparatur sipil negara.
+                  </p>
+                  <p>
+                    Program DTS 2021 secara garis besar dibagi menjadi delapan
+                    akademi, yaitu:
+                  </p>
                   <ul style={listNumber}>
                     <li>Fresh Graduate Academy (FGA)</li>
                     <li>Vocational School Graduate Academy (VSGA)</li>
@@ -88,19 +119,8 @@ Program Digital Talent Scholarship bertujuan untuk meningkatkan keterampilan dan
                     <li>Digital Entrepreneurship Academy (DEA)</li>
                     <li>Digital Leadership Academy (DLA)</li>
                     <li>Talent Scouting Academy (TSA)</li>
-                  </ul>
-                  
-                  
-
-
-
-
-
-
-
-
-
-</div>
+                  </ul> */}
+                </div>
               </div>
             </div>
           </div>

@@ -166,10 +166,9 @@ export const fetchAllMK = (token) => {
           },
         }
       );
-      let dataSortirAll = await await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index`,
+      let dataSortirAll = await axios.get(
+        `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/index?page=1&limit=1000`,
         {
-          paramss,
           headers: {
             authorization: `Bearer ${token}`,
           },
@@ -607,17 +606,24 @@ export const exportFileCSV = (token) => {
           },
         }
       );
-      router.push(
+      var url =
         urlExport.config.url +
-          `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`
-        // {
-        //   headers: {
-        //     authorization: `Bearer ${token}`,
-        //   },
-        // }
-      );
+        `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}?authorization=Bearer ${token}`;
 
-      // console.log("data", data);
+      fetch(url, {
+        paramssz,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.blob())
+        .then((blob) => {
+          var _url = window.URL.createObjectURL(blob);
+          window.open(_url, "_blank").focus();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } catch (error) {
       console.log("object", error);
     }

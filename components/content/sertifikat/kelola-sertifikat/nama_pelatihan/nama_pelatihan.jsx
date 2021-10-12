@@ -54,6 +54,11 @@ export default function NamaPelatihanID({ token }) {
     router.push(link);
   };
 
+  // console.log("masuk halaman ini");
+  // useEffect(() => {
+  //   console.log(loading, "INI LOADING");
+  // }, [loading]);
+
   return (
     <PageWrapper>
       {/* error START */}
@@ -299,7 +304,7 @@ export default function NamaPelatihanID({ token }) {
                                   {certificate.theme.name}
                                 </td>
                                 <td className="align-middle">
-                                  {certificate.nama_sertifikat}
+                                  {certificate.name}
                                 </td>
                                 <td className="align-middle">
                                   {certificate.certificate_type}
@@ -326,6 +331,7 @@ export default function NamaPelatihanID({ token }) {
                                     <>
                                       <Link
                                         href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
+                                        passHref
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -338,6 +344,7 @@ export default function NamaPelatihanID({ token }) {
                                       </Link>
                                       <Link
                                         href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/edit`}
+                                        passHref
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -352,7 +359,8 @@ export default function NamaPelatihanID({ token }) {
                                   ) : certificate.status.name == "publish" ? (
                                     <>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
+                                        passHref
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/published`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -364,6 +372,7 @@ export default function NamaPelatihanID({ token }) {
                                         </a>
                                       </Link>
                                       <Link
+                                        passHref
                                         href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
                                       >
                                         <a
@@ -379,6 +388,7 @@ export default function NamaPelatihanID({ token }) {
                                   ) : (
                                     <Link
                                       href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/add`}
+                                      passHref
                                     >
                                       <a
                                         className="btn btn-link-action bg-blue-secondary text-white mr-2"

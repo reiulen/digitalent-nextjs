@@ -2,10 +2,21 @@ import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
-import DetailSummary from "../../../../components/content/pelatihan/summary/detail-summary";
+// import DetailSummary from "../../../../components/content/pelatihan/summary/detail-summary";
 
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+
+const DetailSummary = dynamic(
+  () =>
+    import("../../../../components/content/pelatihan/summary/detail-summary"),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
 
 export default function DetailSummaryPage() {
   return (
@@ -24,7 +35,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "/login/admin",
             permanent: false,
           },
         };
