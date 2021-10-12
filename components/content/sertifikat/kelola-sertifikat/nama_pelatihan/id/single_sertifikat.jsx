@@ -19,6 +19,8 @@ export default function KelolasertifikatID({ token }) {
     state => state.singleCertificate
   );
 
+  console.log("ini certificate", certificate);
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -102,7 +104,7 @@ export default function KelolasertifikatID({ token }) {
                       // height={495}
                       // width={1400}
                       layout="fill"
-                      objectFit="cover"
+                      objectFit="fill"
                     />
                   ) : (
                     ""
