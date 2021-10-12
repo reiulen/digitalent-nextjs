@@ -19,6 +19,7 @@ import ObjectiveComponent from "./edit-soal/objective-component";
 import MultipleChoiceComponent from "./edit-soal/multiple-choice-component";
 import TriggeredQuestionComponent from "./edit-soal/triggered-question-component";
 import PertanyaanTerbukaComponent from "./edit-soal/pertanyaan-terbuka-component";
+import styles from "../../trivia/edit/step.module.css";
 
 const EditSoalTrivia = ({ token }) => {
   const dispatch = useDispatch();
@@ -387,7 +388,7 @@ const EditSoalTrivia = ({ token }) => {
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="btn btn-light-ghost-rounded-full mr-2"
+                  className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                 >
                   Kembali
                 </button>

@@ -14,6 +14,7 @@ import { NEW_SURVEY_QUESTION_BANKS_RESET } from "../../../../../redux/types/subv
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 const TambahSurveyStepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -305,7 +306,7 @@ const TambahSurveyStepOne = ({ token }) => {
                 <div className=" text-right">
                   <button
                     type="submit"
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                   >
                     Simpan & Lanjut
                   </button>

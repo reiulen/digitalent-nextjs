@@ -12,6 +12,7 @@ import { UPDATE_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../../redux/types
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 import { useRouter } from "next/router";
 
@@ -131,13 +132,19 @@ const StepOne = ({ token }) => {
                     id=""
                     onChange={(e) => setAcademyId(e.target.value)}
                     className="form-control"
+                    defaultValue={academy_id}
                   >
-                    <option> -Pilih Akademi -</option>
-                    <option value="1" selected>
+                    <option value="" disabled>
                       {" "}
-                      Computer Scientist{" "}
+                      -Pilih Akademi -
                     </option>
-                    <option value="2"> Designer </option>
+                    <option value="1"> VSGA </option>
+                    <option value="2"> FGA </option>
+                    <option value="3">PRO</option>
+                    <option value="4">TA</option>
+                    <option value="5">GTA</option>
+                    <option value="6">DEA</option>
+                    <option value="7"> TSA</option>
                   </select>
                 </div>
               </div>
@@ -155,13 +162,18 @@ const StepOne = ({ token }) => {
                     id=""
                     onChange={(e) => setThemeId(e.target.value)}
                     className="form-control"
+                    defaultValue={theme_id}
                   >
-                    <option> -Pilih Tema-</option>
-                    <option value="1" selected>
+                    <option value="" disabled>
                       {" "}
-                      Cloud Computing{" "}
+                      -Pilih Tema-
                     </option>
-                    <option value="2"> UI/UX Designer </option>
+                    <option value="1"> Cloud Computing Analyst </option>
+                    <option value="2"> Data Management Staff </option>
+                    <option value="3"> Artificial Intelligence </option>
+                    <option value="4"> Cloud Computing </option>
+                    <option value="5"> Data Science Fundamental </option>
+                    <option value="6">Get Connected</option>
                   </select>
                 </div>
               </div>
@@ -179,13 +191,22 @@ const StepOne = ({ token }) => {
                     id=""
                     onChange={(e) => setTrainingId(e.target.value)}
                     className="form-control"
+                    defaultValue={training_id}
                   >
-                    <option> -Pilih Pelatihan-</option>
-                    <option value="1" selected>
+                    <option value="" disabled>
                       {" "}
-                      Google Cloud Computing{" "}
+                      -Pilih Pelatihan-
                     </option>
-                    <option value="2"> Adobe UI/UX Designer </option>
+                    <option value="1"> Mobile App Flutter</option>
+                    <option value="2"> Mobile App React Native </option>
+                    <option value="3"> Web Backend Laravel </option>
+                    <option value="4"> Web Backend Golang </option>
+                    <option value="5"> Web Backend Node Js </option>
+                    <option value="6"> Web Backend Python </option>
+                    <option value="7"> Frontend Web React Js </option>
+                    <option value="8"> Frontend Web Vue Js </option>
+                    <option value="9"> Machine Learning </option>
+                    <option value="10">UI / UX Design</option>
                   </select>
                 </div>
               </div>
@@ -203,13 +224,14 @@ const StepOne = ({ token }) => {
                     id=""
                     onChange={(e) => setCategory(e.target.value)}
                     className="form-control"
+                    defaultValue={category}
                   >
-                    <option> -Pilih Kategori-</option>
-                    <option value="tes_substansi" selected>
+                    <option value="" disabled>
                       {" "}
-                      Tes Substansi{" "}
+                      -Pilih Kategori-
                     </option>
-                    <option value="mid_tes"> Mid Tes </option>
+                    <option value="Test Substansi"> Tes Substansi </option>
+                    <option value="Mid Test"> Mid Tes </option>
                   </select>
                 </div>
               </div>
@@ -217,7 +239,9 @@ const StepOne = ({ token }) => {
               <div className="form-group ">
                 <div className=""></div>
                 <div className=" text-right">
-                  <button className="btn btn-light-ghost-rounded-full mr-2">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                  >
                     Simpan & Lanjut
                   </button>
                   <button

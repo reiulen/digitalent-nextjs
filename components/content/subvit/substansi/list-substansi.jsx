@@ -247,7 +247,7 @@ const ListSubstansi = ({ token }) => {
               <Link href="/subvit/substansi/tambah-step-1">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
                   <i className="ri-add-fill"></i>
-                  Tambah Soal
+                  Tambah Test Subtansi
                 </a>
               </Link>
             </div>
