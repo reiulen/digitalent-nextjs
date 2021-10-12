@@ -14,6 +14,7 @@ import { NEW_TRIVIA_QUESTION_BANKS_RESET } from "../../../../../redux/types/subv
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../edit/step.module.css";
 
 const TambahTriviaStepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -311,7 +312,7 @@ const TambahTriviaStepOne = ({ token }) => {
                 <div className=" text-right">
                   <button
                     type="submit"
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                   >
                     Simpan & Lanjut
                   </button>

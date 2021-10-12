@@ -16,6 +16,7 @@ import LoadingPage from "../../../../LoadingPage";
 import PollingComponent from "./step-2/polling-component";
 import CheckboxComponent from "./step-2/checkbox-component";
 import BlankComponent from "./step-2/blank-component";
+import styles from "../edit/step.module.css";
 
 const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
@@ -536,11 +537,11 @@ const StepTwo = ({ token }) => {
               {handleMethodeInput()}
 
               <div className="form-group row">
-                <div className="col-sm-8">
+                <div className="col-sm-12">
                   <hr />
                   <div className="buttoon float-right">
                     <button
-                      className="btn btn-light-ghost-rounded-full mr-2"
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                       type="submit"
                     >
                       Simpan & Lanjut
@@ -554,8 +555,8 @@ const StepTwo = ({ token }) => {
                     </button>
                   </div>
                 </div>
-                <div className="col-sm-2"></div>
-                <div className="col-sm-2"></div>
+                {/* <div className="col-sm-2"></div> */}
+                {/* <div className="col-sm-2"></div> */}
               </div>
             </form>
           </div>

@@ -13,6 +13,7 @@ import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../redux
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "./step.module.css";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -155,6 +156,7 @@ const StepOne = ({ token }) => {
                     id=""
                     onChange={(event) => handleAcademy(event)}
                     className="form-control"
+                    defaultValue={academy_id}
                   >
                     <option value="" disabled>
                       {" "}
@@ -162,9 +164,14 @@ const StepOne = ({ token }) => {
                     </option>
                     <option value={1} selected>
                       {" "}
-                      Computer Scientist{" "}
+                      VSGA{" "}
                     </option>
-                    <option value={2}> Designer </option>
+                    <option value={2}> FGA </option>
+                    <option value={3}>PRO</option>
+                    <option value={4}>TA</option>
+                    <option value={5}>GTA</option>
+                    <option value={6}>DEA</option>
+                    <option value={7}> TSA</option>
                   </select>
                 </div>
               </div>
@@ -182,14 +189,20 @@ const StepOne = ({ token }) => {
                     id=""
                     onChange={(event) => handleTheme(event)}
                     className="form-control"
+                    defaultValue={theme_id}
                   >
                     <option value="" disabled>
                       -Pilih Tema-
                     </option>
-                    <option value={1} selected>
-                      Cloud Computing
+                    <option value="1" selected>
+                      {""}
+                      Cloud Computing Analyst{""}
                     </option>
-                    <option value={2}> UI/UX Designer </option>
+                    <option value="2"> Data Management Staff </option>
+                    <option value="3"> Artificial Intelligence </option>
+                    <option value="4"> Cloud Computing </option>
+                    <option value="5"> Data Science Fundamental </option>
+                    <option value="6"> Get Connected</option>
                   </select>
                 </div>
               </div>
@@ -207,16 +220,27 @@ const StepOne = ({ token }) => {
                     id=""
                     onChange={(event) => handleTraining(event)}
                     className="form-control"
+                    defaultValue={training_id}
                   >
                     <option value="" disabled>
                       {" "}
                       -Pilih Pelatihan-
                     </option>
-                    <option value={1} selected>
+                    <option value="1"> Mobile App Flutter</option>
+                    <option value="2"> Mobile App React Native </option>
+                    <option value="3"> Web Backend Laravel </option>
+                    <option value="4"> Web Backend Golang </option>
+                    <option value="5"> Web Backend Node Js </option>
+                    <option value="6"> Web Backend Python </option>
+                    <option value="7"> Frontend Web React Js </option>
+                    <option value="8"> Frontend Web Vue Js </option>
+                    <option value="9"> Machine Learning </option>
+                    <option value="10">UI / UX Design</option>
+                    {/* <option value={1} selected>
                       {" "}
                       Google Cloud Computing{" "}
                     </option>
-                    <option value={2}> Adobe UI/UX Designer </option>
+                    <option value={2}> Adobe UI/UX Designer </option> */}
                   </select>
                 </div>
               </div>
@@ -224,7 +248,9 @@ const StepOne = ({ token }) => {
               <div className="form-group">
                 <div className=""></div>
                 <div className=" text-right">
-                  <button className="btn btn-light-ghost-rounded-full mr-2">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                  >
                     Simpan & Lanjut
                   </button>
                   <button

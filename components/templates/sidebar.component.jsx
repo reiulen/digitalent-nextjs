@@ -270,14 +270,14 @@ const Sidebar = ({ session }) => {
       child: [
         {
           id: 1,
-          name: "Subvit",
+          name: "Dashboard",
           href: "/subvit",
           selected: false,
           child: [],
         },
         {
           id: 2,
-          name: "Tes Substansi",
+          name: "Test Substansi",
           href: "/subvit/substansi",
           selected: false,
           child: [],
