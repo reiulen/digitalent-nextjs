@@ -16,8 +16,8 @@ a {
   box-sizing: border-box;
 }
 
-.aside-menu .menu-nav>.menu-item>.menu-heading .menu-text,
-.aside-menu .menu-nav>.menu-item>.menu-link .menu-text {
+.aside-menu .menu-nav > .menu-item > .menu-heading .menu-text,
+.aside-menu .menu-nav > .menu-item > .menu-link .menu-text {
   font-weight: 500 !important;
 }
 
@@ -55,7 +55,7 @@ a {
 }
 
 /* .form-control { */
-  /* background: #f3f6f9 !important;
+/* background: #f3f6f9 !important;
   border: #f3f6f9 !important; */
 /* } */
 
@@ -233,15 +233,29 @@ a {
   position: relative;
 }
 
-.disabled-form input{
-  background-color: #F3F6F9 !important;
+.disabled-form input {
+  background-color: #f3f6f9 !important;
 }
 
-.minimal-image img{
+.minimal-image img {
   min-width: 16px;
   width: 16px;
   min-height: 16px;
   height: 16px;
-
 }
 
+.select-pelatihan {
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.select-pelatihan-success {
+  color: #04aa77;
+  background: #e6f7f1;
+}
+
+.select-pelatihan-danger {
+  color: #ee2d41;
+  background: #fdeaec;
+}

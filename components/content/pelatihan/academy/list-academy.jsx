@@ -174,7 +174,7 @@ const ListAcademy = ({ token }) => {
               List Akademi
             </h1>
             <div className="card-toolbar">
-              <Link href="/pelatihan/akademi/tambah">
+              <Link href="/pelatihan/akademi/tambah-akademi">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
                   <i className="ri-add-fill"></i>
                   Tambah Akademi
@@ -259,18 +259,13 @@ const ListAcademy = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <p className="font-weight-bolder my-0 h6">
-                                {row.name}
+                                {row.slug}
                               </p>
-                              <div
-                                className="my-0"
-                                dangerouslySetInnerHTML={{
-                                  __html: row.deskripsi,
-                                }}
-                              ></div>
+                              <p>{row.name}</p>
                             </td>
-                            <td className="align-middle">50</td>
-                            <td className="align-middle">150</td>
-                            <td className="align-middle">50 Mitra</td>
+                            <td className="align-middle">{row.tema}</td>
+                            <td className="align-middle">{row.pelatihan}</td>
+                            <td className="align-middle">{row.mitra} Mitra</td>
                             <td className="align-middle">
                               {row.status === "1" ? (
                                 <span className="label label-inline label-light-success font-weight-bold">
@@ -284,7 +279,9 @@ const ListAcademy = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <div className="d-flex">
-                                <Link href={`/pelatihan/akademi/${row.id}`}>
+                                <Link
+                                  href={`/pelatihan/akademi/edit-akademi?id=${row.id}`}
+                                >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                     data-toggle="tooltip"
@@ -317,7 +314,7 @@ const ListAcademy = ({ token }) => {
                 {academy && academy.perPage < academy.total && (
                   <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                     <Pagination
-                      activePage={academy.page}
+                      activePage={page}
                       itemsCountPerPage={academy.perPage}
                       totalItemsCount={academy.total}
                       pageRangeDisplayed={3}
