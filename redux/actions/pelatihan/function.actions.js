@@ -12,6 +12,18 @@ import {
   ERROR_DROPDOWN_TEMA,
   GET_DROPDOWN_PELATIHAN,
   ERROR_DROPDOWN_PELATIHAN,
+  GET_DROPDOWN_LEVEL_PELATIHAN,
+  ERROR_DROPDOWN_LEVEL_PELATIHAN,
+  GET_DROPDOWN_MITRA,
+  ERROR_DROPDOWN_MITRA,
+  GET_DROPDOWN_ZONASI,
+  ERROR_DROPDOWN_ZONASI,
+  GET_DROPDOWN_PROVINSI,
+  ERROR_DROPDOWN_PROVINSI,
+  GET_DROPDOWN_KABUPATEN,
+  ERROR_DROPDOWN_KABUPATEN,
+  GET_DROPDOWN_PENYELENGGARA,
+  ERROR_DROPDOWN_PENYELENGGARA,
   CLEAR_ERRORS,
 } from "../../types/pelatihan/function.type";
 
@@ -183,6 +195,144 @@ export const dropdownPelatihan = (token) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ERROR_DROPDOWN_PELATIHAN,
+      payload: error.message,
+    });
+  }
+};
+
+export const dropdownLevelPelatihan = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/5`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_LEVEL_PELATIHAN,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_LEVEL_PELATIHAN,
+      payload: error.message,
+    });
+  }
+};
+
+export const dropdownMitra = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_PARTNERSHIP_MITRA + `api/option/mitra`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_MITRA,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_MITRA,
+      payload: error.message,
+    });
+  }
+};
+
+export const dropdownZonasi = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/zonasi/list`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_ZONASI,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_ZONASI,
+      payload: error.message,
+    });
+  }
+};
+
+export const dropdownProvinsi = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/8`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_PROVINSI,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_PROVINSI,
+      payload: error.message,
+    });
+  }
+};
+
+export const dropdownKabupaten = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/10`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_KABUPATEN,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_KABUPATEN,
+      payload: error.message,
+    });
+  }
+};
+
+export const dropdownPenyelenggara = (token) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    const { data } = await axios.get(
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/9`,
+      config
+    );
+    dispatch({
+      type: GET_DROPDOWN_PENYELENGGARA,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: ERROR_DROPDOWN_PENYELENGGARA,
       payload: error.message,
     });
   }

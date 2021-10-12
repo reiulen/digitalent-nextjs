@@ -24,6 +24,7 @@ import {
   newSertifikat,
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import axios from "axios";
+import * as moment from "moment";
 
 export default function TambahMasterSertifikat({ token }) {
   const router = useRouter();
@@ -33,6 +34,8 @@ export default function TambahMasterSertifikat({ token }) {
   const divReferenceSilabus = useRef(null);
   const [namaPeserta, setNamaPeserta] = useState("Nama Peserta");
   const [certificate_name, setCertificate_name] = useState("");
+
+  const [date, setDate] = useState(new Date());
 
   // #Redux state
   const {
@@ -50,9 +53,7 @@ export default function TambahMasterSertifikat({ token }) {
 
   // #START FORM DATA
   const [certificate_type, setCertificate_type] = useState(
-    certificate.data.list_certificate[0].certificate_type
-      ? certificate.data.list_certificate[0].certificate_type
-      : "1 lembar"
+    certificate.data.list_certificate[0].certificate_type || "1 lembar"
   );
 
   const [number_of_signatures, setNumber_of_signatures] = useState(1);
@@ -69,8 +70,6 @@ export default function TambahMasterSertifikat({ token }) {
 
   const [signature_certificate_position, setSignature_certificate_position] =
     useState([]);
-
-  const [certificate_result, setCertificate_result] = useState();
 
   // START SYLLABUS
   const [number_of_signature_syllabus, setNumber_of_signature_syllabus] =
@@ -110,7 +109,6 @@ export default function TambahMasterSertifikat({ token }) {
 
   // #START MODAL
   const [tandaTanganType, setTandaTanganType] = useState([1, 1, 1, 1]);
-  const [tandaTangan, setTandaTangan] = useState("");
   const signCanvas = useRef({});
 
   const handleImageTandaTangan = (e, index) => {
@@ -225,30 +223,12 @@ export default function TambahMasterSertifikat({ token }) {
   const [, forceUpdate] = useState();
 
   const convertDivToPng = async div => {
-    // toPng(div, {
-    //   cacheBust: true,
-    //   canvasWidth: 842,
-    //   canvasHeight: 595,
-    // })
-    //   .then(image => {
-    //     return image;
-    //   })
-    //   .catch(e => {
-    //     console.log(e);
-    //   });
     const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
     });
     return data;
-    // .then(image => {
-    //   return image;
-    //   console.log("ini imagenya", image, "ini imagenyaaaaaaa");
-    // })
-    // .catch(err => {
-    //   console.log(err);
-    // });
   };
 
   // # END IMAGE
@@ -280,21 +260,16 @@ export default function TambahMasterSertifikat({ token }) {
           number_of_signature_syllabus
         );
         signature_certificate_name.forEach((item, i) => {
-          formData.append(
-            `signature_certificate_name[${i}]`,
-            item ? item : null
-          );
-        });
+          formData.append(`signature_certificate_name[${i}]`, item);
+        }); // nama
         signature_certificate_image.forEach((item, i) => {
           formData.append(`signature_certificate_image[${i}]`, item);
-        });
+        }); // nih buat signature
         signature_certificate_position.forEach((item, i) => {
           formData.append(`signature_certificate_position[${i}]`, item);
-        });
-        signature_certificate_position.forEach((item, i) => {
-          formData.append(`signature_certificate_position[${i}]`, item);
-        });
+        }); //nih buat posisi
         signature_certificate_set_position.forEach((item, i) => {
+          console.log(item, "ini item dari foreach", typeof item);
           formData.append(`signature_certificate_set_position[${i}]`, item);
         });
 
@@ -313,9 +288,6 @@ export default function TambahMasterSertifikat({ token }) {
         signature_certificate_position_syllabus.forEach((item, i) => {
           formData.append(`signature_certificate_position[${i}]`, item);
         });
-        signature_certificate_position_syllabus.forEach((item, i) => {
-          formData.append(`signature_certificate_position[${i}]`, item);
-        });
         signature_certificate_set_position_syllabus?.forEach((item, i) => {
           formData.append(
             `signature_certificate_set_position_syllabus[${i}]`,
@@ -323,57 +295,31 @@ export default function TambahMasterSertifikat({ token }) {
           );
         });
 
-        if (status == 2) {
-          formData.append("status_migrate_id", status);
-          dispatch(newSertifikat(id, formData, token));
+        console.log(signature_certificate_set_position);
+        const data = await convertDivToPng(divReference.current); // convert bg 1
+        formData.append("certificate_result", data);
+
+        if (certificate_type == "2 lembar") {
+          const dataSyllabus = await convertDivToPng(
+            divReferenceSilabus.current
+          ); //convert bg 2
+          formData.append("certificate_result_syllabus", dataSyllabus);
+          console.log("ini data syllabus masuk kesini");
+          console.log("ini datanya", dataSyllabus);
         }
 
-        if (status == 1) {
-          // publish
-          // HARUS DI LAKUKAN PENGECEKAN DISINI
+        formData.append("status_migrate_id", status);
 
-          formData.append("status_migrate_id", status);
-          const data = await convertDivToPng(divReference.current);
-          console.log(
-            "ini div yang di convert",
-            data,
-            "ini div yang di convert"
-          );
-          formData.append("certificate_result", data);
+        // if (status == 2) {
+        // formData.append("status_migrate_id", status);
+        // dispatch(newSertifikat(id, formData, token));
+        // }
+        // if (status == 1) {
+        //   // publish
+        //   // HARUS DI LAKUKAN PENGECEKAN DISINI
+        // }
+        dispatch(newSertifikat(id, formData, token));
 
-          if (certificate_type == "2 lembar") {
-            const dataSyllabus = await convertDivToPng(
-              divReferenceSilabus.current
-            );
-            formData.append("certificate_result_syllabus", dataSyllabus);
-          }
-          dispatch(newSertifikat(id, formData, token));
-          // toPng(divReference.current, {
-          //   cacheBust: true,
-          //   canvasWidth: 842,
-          //   canvasHeight: 595,
-          // })
-          //   .then(image => {
-          //     result = image;
-          //   })
-          //   .catch(err => {
-          //     console.log(err);
-          //   });
-
-          // if (certificate_type == "2 lembar") {
-          //   toPng(divReferenceSilabus.current, {
-          //     cacheBust: true,
-          //     canvasWidth: 842,
-          //     canvasHeight: 595,
-          //   })
-          //     .then(image => {
-          //       result_syllabus = image;
-          //     })
-          //     .catch(err => {
-          //       console.log(err);
-          //     });
-          // }
-        }
         router.push({
           pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
           query: { success: true },
@@ -471,7 +417,7 @@ export default function TambahMasterSertifikat({ token }) {
             <div className="row p-0">
               {/* START COL */}
               <div
-                className="border-primary border col-8 h-500px"
+                className="border-primary border col-8 h-500px position-relative"
                 // style={{ width: "842px" }}
               >
                 <div className="p-0" ref={divReference}>
@@ -482,21 +428,21 @@ export default function TambahMasterSertifikat({ token }) {
                       // height={495}
                       // width={1400}
                       layout="fill"
-                      objectFit="cover"
+                      objectFit="fill"
                     />
                   ) : (
                     ""
                   )}
                   <div className="row align-items-center zindex-1">
                     <div className="position-relative">
-                      <input
-                        type="text"
-                        className="m-6 text-center"
-                        placeholder="Nomor Sertifikat"
+                      <div
+                        className="m-6 text-center px-4 border-2"
                         style={{
                           borderStyle: "dashed",
                         }}
-                      />
+                      >
+                        Nomer Sertifikat
+                      </div>
                     </div>
                     <div
                       className="col-12 text-center font-weight-normal p-0 justify-content-center"
@@ -527,7 +473,7 @@ export default function TambahMasterSertifikat({ token }) {
                           // fontWeight: "bold",
                         }}
                       >
-                        {certificate?.theme}
+                        {certificate.theme || "Tema Sertifikat"}
                       </div>
                       <div className="mt-2 w-100">
                         <span className="w-100">
@@ -557,11 +503,8 @@ export default function TambahMasterSertifikat({ token }) {
                         </span>
                       </div>
                       <div className="my-4 w-100 text-center">
-                        <span
-                          className="mx-2 px-2 border-2"
-                          style={{ borderStyle: "dashed" }}
-                        >
-                          Jakarta, DD/MM/YYYY
+                        <span className="mx-2 px-2 border-2">
+                          Jakarta {moment(date).format("DD/MM/YYYY")}
                         </span>
                       </div>
                       <div
@@ -1136,7 +1079,7 @@ export default function TambahMasterSertifikat({ token }) {
                         // height={495}
                         // width={700}
                         layout="fill"
-                        objectFit="cover"
+                        objectFit="fill"
                       />
                     ) : (
                       ""

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Row, Col, Card, Figure, Button } from "react-bootstrap";
+import { Row, Col, Card, Figure, Button, Badge } from "react-bootstrap";
 import style from "../../../../styles/peserta/dashboard.module.css";
 
 import CardPage from "../../../../components/CardPage";
@@ -151,6 +151,11 @@ const Dashboard = () => {
                         objectFit="cover"
                         className={`${style.figure_img} img-fluid`}
                       />
+                      <Card.ImgOverlay>
+                        <Badge bg="secondary text-white text-uppercase">
+                          Pelatihan Online
+                        </Badge>
+                      </Card.ImgOverlay>
                     </Col>
                     <Col md={9} className="px-10 pt-5">
                       <div className="d-flex flex-row justify-content-start align-items-center">
@@ -233,6 +238,11 @@ const Dashboard = () => {
                         objectFit="cover"
                         className={`${style.figure_img} img-fluid`}
                       />
+                      <Card.ImgOverlay>
+                        <Badge bg="secondary text-white text-uppercase">
+                          Pelatihan Online
+                        </Badge>
+                      </Card.ImgOverlay>
                     </Col>
                     <Col md={9} className="px-10 pt-5">
                       <div className="d-flex flex-row justify-content-start align-items-center">
@@ -340,7 +350,7 @@ const Dashboard = () => {
             </Card.Header>
             <Card.Body>
               <Row>
-                <Col style={{ width: "230px" }}>
+                <Col>
                   <Card className="shadow mb-3">
                     <Card.Body className="text-center">
                       <Image
@@ -350,13 +360,13 @@ const Dashboard = () => {
                       />
                       <p className="" className={style.text_link}>
                         <Link href="/pelatihan/pelatihan/tambah-pelatihan">
-                          Lihat Beasiswa
+                          Universitas Indonesia
                         </Link>
                       </p>
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col style={{ width: "230px" }}>
+                <Col>
                   <Card className="shadow mb-3">
                     <Card.Body className="text-center">
                       <Image
@@ -366,13 +376,13 @@ const Dashboard = () => {
                       />
                       <p className="" className={style.text_link}>
                         <Link href="/pelatihan/pelatihan/tambah-pelatihan">
-                          Lihat Beasiswa
+                          Institut Teknologi Bandung
                         </Link>
                       </p>
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col style={{ width: "230px" }}>
+                <Col>
                   <Card className="shadow mb-3">
                     <Card.Body className="text-center">
                       <Image
@@ -382,13 +392,13 @@ const Dashboard = () => {
                       />
                       <p className="" className={style.text_link}>
                         <Link href="/pelatihan/pelatihan/tambah-pelatihan">
-                          Lihat Beasiswa
+                          Universitas Indonesia
                         </Link>
                       </p>
                     </Card.Body>
                   </Card>
                 </Col>
-                <Col style={{ width: "230px" }}>
+                <Col>
                   <Card className="shadow mb-3">
                     <Card.Body className="text-center">
                       <Image
@@ -398,23 +408,7 @@ const Dashboard = () => {
                       />
                       <p className="" className={style.text_link}>
                         <Link href="/pelatihan/pelatihan/tambah-pelatihan">
-                          Lihat Beasiswa
-                        </Link>
-                      </p>
-                    </Card.Body>
-                  </Card>
-                </Col>
-                <Col style={{ width: "230px" }}>
-                  <Card className="shadow mb-3">
-                    <Card.Body className="text-center">
-                      <Image
-                        src="/assets/media/mitra-icon/logo-itb-1.svg"
-                        width={200}
-                        height={110}
-                      />
-                      <p className="" className={style.text_link}>
-                        <Link href="/pelatihan/pelatihan/tambah-pelatihan">
-                          Lihat Beasiswa
+                          Institut Teknologi Bandung
                         </Link>
                       </p>
                     </Card.Body>

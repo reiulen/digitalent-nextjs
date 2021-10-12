@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Col, Row, Figure, Button } from "react-bootstrap";
+import { Card, Col, Row, Button, Badge } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
 import style from "../../../../styles/peserta/dashboard.module.css";
@@ -20,6 +20,11 @@ const Selesai = () => {
                       objectFit="cover"
                       className={`${style.figure_img} img-fluid`}
                     />
+                    <Card.ImgOverlay>
+                      <Badge bg="secondary text-white text-uppercase">
+                        Pelatihan Online
+                      </Badge>
+                    </Card.ImgOverlay>
                   </Col>
                   <Col md={9} className="px-10 pt-5">
                     <div className="d-flex flex-row justify-content-start align-items-center">
@@ -57,7 +62,7 @@ const Selesai = () => {
                             <span
                               className={`${style.text_date_register} pl-2`}
                             >
-                              Test Substansi
+                              Status : Lulus Pelatihan
                             </span>
                           </div>
                         </div>
@@ -72,8 +77,8 @@ const Selesai = () => {
                           className="btn-rounded-full ml-auto bg-blue-primary btn-block d-flex justify-content-center mb-5"
                           size="sm"
                         >
-                          <i className="ri-eye-fill mr-2"></i>
-                          Lihat Sertifikat
+                          <i className="ri-download-cloud-2-fill mr-2"></i>
+                          Lihat Sertifikasi
                         </Button>
                       </Col>
                       <Col md={6}>
@@ -101,6 +106,11 @@ const Selesai = () => {
                       objectFit="cover"
                       className={`${style.figure_img} img-fluid`}
                     />
+                    <Card.ImgOverlay>
+                      <Badge bg="secondary text-white text-uppercase">
+                        Pelatihan Online
+                      </Badge>
+                    </Card.ImgOverlay>
                   </Col>
                   <Col md={9} className="px-10 pt-5">
                     <div className="d-flex flex-row justify-content-start align-items-center">
@@ -121,7 +131,6 @@ const Selesai = () => {
                         </h4>
                       </div>
                     </div>
-
                     <Row className="mt-10">
                       <Col md={6}>
                         <div className="d-flex flex-row">
@@ -136,9 +145,9 @@ const Selesai = () => {
                           <div className="date d-flex align-items-center align-middle">
                             <i className="ri-group-line"></i>
                             <span
-                              className={`${style.text_date_register} pl-2 text-danger`}
+                              className={`${style.text_date_register} pl-2`}
                             >
-                              Tidak Lulus Pelatihan
+                              Status : Lulus Pelatihan
                             </span>
                           </div>
                         </div>
@@ -148,24 +157,24 @@ const Selesai = () => {
                     <hr />
                     <Row>
                       <Col md={6} className="mb-5">
-                        {/* <Button
+                        <Button
                           variant="primary"
                           className="btn-rounded-full ml-auto bg-blue-primary btn-block d-flex justify-content-center mb-5"
                           size="sm"
                         >
                           <i className="ri-download-cloud-2-fill mr-2"></i>
-                          Download Bukti Pendaftaran
-                        </Button> */}
+                          Lihat Sertifikasi
+                        </Button>
                       </Col>
                       <Col md={6} className="mb-5">
-                        {/* <Button
+                        <Button
                           variant="primary"
-                          className="btn-rounded-full btn-block d-flex justify-content-center mb-5"
+                          className="btn-rounded-full btn-block d-flex justify-content-center mb-5 invisible"
                           size="sm"
                         >
-                          Kerjakan Test Substansi
-                          <i className="ri-arrow-right-s-line ml-2"></i>
-                        </Button> */}
+                          Upload Sertifikasi
+                          <i className="ri-upload-2-line ml-2"></i>
+                        </Button>
                       </Col>
                     </Row>
                   </Col>

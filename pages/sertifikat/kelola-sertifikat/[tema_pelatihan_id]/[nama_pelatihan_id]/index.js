@@ -5,7 +5,7 @@ import { getSession } from "next-auth/client";
 import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
 import { getSingleSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
-const KelolaSertifikatID = dynamic(
+const NamaPelatihanID = dynamic(
   () =>
     import(
       "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/single_sertifikat"
@@ -23,7 +23,7 @@ export default function KelokaSertifikatPage(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <KelolaSertifikatID token={session} />
+        <NamaPelatihanID token={session} />
       </div>
     </>
   );
@@ -36,7 +36,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "http://dts-dev.majapahit.id/",
+            destination: "/login/admin",
             permanent: false,
           },
         };

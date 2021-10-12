@@ -606,7 +606,6 @@ export const exportFileCSV = (token) => {
           },
         }
       );
-
       var url =
         urlExport.config.url +
         `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}?authorization=Bearer ${token}`;
@@ -616,21 +615,15 @@ export const exportFileCSV = (token) => {
         headers: {
           authorization: `Bearer ${token}`,
         },
-      }) // FETCH BLOB FROM IT
+      })
         .then((response) => response.blob())
         .then((blob) => {
-          // RETRIEVE THE BLOB AND CREATE LOCAL URL
           var _url = window.URL.createObjectURL(blob);
           window.open(_url, "_blank").focus();
         })
         .catch((err) => {
           console.log(err);
         });
-
-      // router.push(
-      //   urlExport.config.url +
-      //     `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}?authorization=Bearer ${token}`
-      // );
     } catch (error) {
       console.log("object", error);
     }
