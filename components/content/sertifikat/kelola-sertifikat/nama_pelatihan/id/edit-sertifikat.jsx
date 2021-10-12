@@ -35,9 +35,13 @@ export default function EditSertifikat({ token }) {
     state => state.singleCertificate
   );
 
-  const { error: updateError, certificate: newCertificate } = useSelector(
-    state => state.newCertificates
-  );
+  const {
+    error: updateError,
+    loading: updateLoading,
+    certificate: updateCertificate,
+  } = useSelector(state => state.updateCertificates);
+
+  console.log("Ini certificates", certificate);
 
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
@@ -77,15 +81,23 @@ export default function EditSertifikat({ token }) {
   const [tandaTanganSyllabusType, setTandaTanganSyllabusType] = useState([
     1, 1, 1, 1,
   ]);
+
+  const didMount = useRef(false);
   // RESET TTD
+
   useEffect(() => {
-    setSignature(prev => {
-      let newArr = [...prev];
-      newArr.forEach(el => {
-        el.set_position = 0;
+    // console.log(number_of_signatures);
+    if (didMount.current) {
+      setSignature(prev => {
+        let newArr = [...prev];
+        newArr.forEach(el => {
+          el.set_position = 0;
+        });
+        return newArr;
       });
-      return newArr;
-    });
+    } else {
+      didMount.current = true;
+    }
   }, [number_of_signatures]);
 
   useEffect(() => {
@@ -100,13 +112,17 @@ export default function EditSertifikat({ token }) {
 
   // #START MODAL
   const [tandaTanganType, setTandaTanganType] = useState([1, 1, 1, 1]);
-  const [tandaTangan, setTandaTangan] = useState("");
   const signCanvas = useRef({});
 
+  const [imageName, setImageName] = useState([]);
+  const [imageNameSyllabus, setImageNameSyllabus] = useState([]);
+
   const handleImageTandaTangan = (e, i) => {
-    // console.log(e.target.name, "INI TARGET NAME", typeof e.target.name);
     if (e.target.name === "image") {
       const reader = new FileReader();
+      let arr = [...imageName];
+      arr[i] = e.target.files[0].name;
+      setImageName(arr);
       reader.onload = () => {
         if (reader.readyState === 2) {
           const data = reader.result;
@@ -124,6 +140,10 @@ export default function EditSertifikat({ token }) {
   };
 
   const handleCanvasTandaTangan = (e, i) => {
+    let arr = [...imageName];
+    arr[i] = "";
+    setImageName("");
+
     const data = signCanvas.current.toDataURL();
     let newArr = [...signature];
     newArr[i]?.localSignature
@@ -143,9 +163,13 @@ export default function EditSertifikat({ token }) {
   // #END MODAL
 
   // #START LEMBAR 2
-  const handleImageTandaTanganSyllabus = (e, index) => {
+  const handleImageTandaTanganSyllabus = (e, i) => {
     if (e.target.name === "image") {
       const reader = new FileReader();
+      let arr = [...imageNameSyllabus];
+      arr[i] = e.target.files[0].name;
+      setImageNameSyllabus(arr);
+
       reader.onload = () => {
         if (reader.readyState === 2) {
           const data = reader.result;
@@ -163,6 +187,10 @@ export default function EditSertifikat({ token }) {
   };
 
   const handleCanvasTandaTanganSyllabus = (e, i) => {
+    let arr = [...imageNameSyllabus];
+    arr[i] = "";
+    setImageNameSyllabus("");
+
     const data = signCanvas.current.toDataURL();
     let newArr = [...signatureSyllabus];
     newArr[i]?.localSignature
@@ -252,7 +280,6 @@ export default function EditSertifikat({ token }) {
   const handlePost = async (e, status) => {
     try {
       e.preventDefault();
-      // console.log(simpleValidator.current.fields["Tanda tangan"])
       if (certificate_type == "1 lembar") {
         simpleValidator.current.fields.Jabatan = true;
         simpleValidator.current.fields.Nama = true;
@@ -283,28 +310,27 @@ export default function EditSertifikat({ token }) {
         }
         console.log("KONDISI DARI SIGNATURE PAS DI DISPATCH", signature);
 
-        signature.forEach((item, i) => {
-          if (item.localSignature) {
+        for (let i = 0; i < number_of_signatures; i++) {
+          console.log(signature[i], "ini signature");
+          if (signature[i].localSignature) {
             formData.append(
               `signature_certificate_image[${i}]`,
-              item.localSignature
-            ); // img signature yang baru di taro
-          } else {
-            formData.append(
-              `signature_certificate_image[${i}]`,
-              item.signature
+              signature[i].localSignature
             );
           }
           formData.append(
             `signature_certificate_position[${i}]`,
-            item.position
+            signature[i].position
           ); //jabatan
           formData.append(
             `signature_certificate_set_position[${i}]`,
-            item.set_position
+            signature[i].set_position
           );
-          formData.append(`signature_certificate_name[${i}]`, item.name);
-        });
+          formData.append(
+            `signature_certificate_name[${i}]`,
+            signature[i].name
+          );
+        }
 
         if (certificate_type == "2 lembar") {
           const dataSyllabus = await convertDivToPng(
@@ -381,7 +407,6 @@ export default function EditSertifikat({ token }) {
     setSyllabus([...syllabus, ""]);
   };
 
-  console.log(signature);
   // useEffect(() => {
   //   console.log(signature, "signatureSyllabus brubah disini");
   // }, [signature]);
@@ -444,20 +469,15 @@ export default function EditSertifikat({ token }) {
           </div>
           {/* END HEADER */}
           {/* START BODY */}
-          <div className="card-body border-top">
+          <div className="card-body border-top" style={{ width: "100%" }}>
             <div className="row p-0">
               {/* START COL */}
-              <div
-                className="border-primary border col-8 h-500px position-relative"
-                // style={{ width: "842px" }}
-              >
+              <div className="border-primary border col-lg-8 col-12 position-relative">
                 <div className="p-0" ref={divReference}>
                   {localBackground ? (
                     <Image
                       src={localBackground}
                       alt="fitur"
-                      // height={495}
-                      // width={1400}
                       layout="fill"
                       objectFit="fill"
                     />
@@ -465,8 +485,6 @@ export default function EditSertifikat({ token }) {
                     <Image
                       src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background/${background}`}
                       alt="fitur"
-                      // height={495}
-                      // width={1400}
                       layout="fill"
                       objectFit="fill"
                     />
@@ -475,43 +493,40 @@ export default function EditSertifikat({ token }) {
                   )}
                   <div className="row align-items-center zindex-1">
                     <div className="position-relative">
-                      <div
-                        className="m-6 text-center px-4 border-2"
-                        style={{
-                          borderStyle: "dashed",
-                        }}
-                      >
+                      <div className="m-6 text-center px-4 border-2">
                         Nomer Sertifikat
                       </div>
                     </div>
                     <div
                       className="col-12 text-center font-weight-normal p-0 justify-content-center"
-                      style={{ marginTop: "-20px", width: "100%" }}
+                      style={{ marginTop: "-20px" }}
                     >
-                      <label className="font-weight-boldest display-4 w-100 futura">
+                      <label
+                        className="font-weight-boldest w-100"
+                        style={{ fontSize: "200%" }}
+                      >
                         SERTIFIKAT
                       </label>
                       <div className="w-100">Diberikan kepada</div>
                       <div className="my-2">
                         <span
-                          className="mx-2 px-2 font-size-h6 px-10 w-100"
-                          style={{ borderStyle: namaPeserta ? "dashed" : "" }}
+                          className="mx-2 px-2 font-weight-bold w-100"
+                          style={{ fontSize: "150%" }}
                         >
                           {namaPeserta ? namaPeserta : ""}
                         </span>
                       </div>
                       <div className="w-100">Atas Partisipasi sebagai</div>
-                      <div className="font-weight-normal font-size-h2 w-100">
+                      <div
+                        className="font-weight-bolder w-100"
+                        style={{ fontSize: "125%" }}
+                      >
                         Peserta
                       </div>
                       <div className="w-100">Nama Pelatihan</div>
                       <div
-                        className="text-center font-weight-bolder border-2 w-100"
-                        style={{
-                          fontSize: "20px",
-                          textAlign: "center",
-                          // fontWeight: "bold",
-                        }}
+                        className="text-center font-weight-bolder w-100"
+                        style={{ fontSize: "125%" }}
                       >
                         {certificate?.data?.certificate?.theme?.name ||
                           "Tema Sertifikat"}
@@ -519,27 +534,19 @@ export default function EditSertifikat({ token }) {
                       <div className="mt-2 w-100">
                         <span className="w-100">
                           Program{" "}
-                          <span className="font-size-h6 font-weight-bold w-100">
+                          <span className="font-weight-bold w-100">
                             {certificate?.data?.certificate?.academy.name ||
                               "Nama Akademi"}
                           </span>{" "}
                           Selama
                         </span>
-                        <span
-                          className="mx-2 px-2 border-2 w-100"
-                          style={{ borderStyle: "dashed" }}
-                        >
-                          Waktu Pelatihan
+                        <span className="mx-2 px-2 border-2 w-100">
+                          --/--/----
                         </span>
                       </div>
                       <div className="mt-2 w-100">
                         <span>Digital Talent Scholarship</span>
-                        <span
-                          className="mx-2 px-2 border-2"
-                          style={{ borderStyle: "dashed" }}
-                        >
-                          Tahun
-                        </span>
+                        <span className="mx-2 px-2 border-2">----</span>
                       </div>
                       <div className="my-4 w-100 text-center">
                         <span className="mx-2 px-2 border-2">
@@ -560,14 +567,16 @@ export default function EditSertifikat({ token }) {
                               key={i}
                               style={{
                                 transform: `translateX(${
-                                  signature[i].set_position || 0
+                                  signature[i]?.set_position
+                                    ? signature[i]?.set_position
+                                    : 0
                                 }%)`,
-                                width: "156px",
+                                width: "151px",
                                 height: "150px",
                               }}
-                              className="col-3 p-0"
+                              className="col-3 p-0 px-lg-4"
                             >
-                              <div className="col">
+                              <div className="col p-0">
                                 <div
                                   className="col border-2 align-items-center justify-content-center d-flex position-relative"
                                   style={{
@@ -647,7 +656,7 @@ export default function EditSertifikat({ token }) {
 
               {/* END COL */}
               {/* START FORM Jenis Sertifikat */}
-              <div className="col-4 font-weight-normal overflow-auto">
+              <div className="col-lg-4 col-12 tandatangan mt-lg-0 mt-10 font-weight-normal tandatangan">
                 <div className="form-group">
                   <label
                     htmlFor="Jenis Sertifikat"
@@ -693,10 +702,9 @@ export default function EditSertifikat({ token }) {
                         setNumber_of_signatures(Number(e.target.value))
                       }
                       className="form-control"
+                      defaultValue={number_of_signatures}
                     >
-                      <option defaultValue={1} value={1}>
-                        1 Tanda Tangan
-                      </option>
+                      <option value={1}>1 Tanda Tangan</option>
                       <option value={2}>2 Tanda Tangan</option>
                       <option value={3}>3 Tanda Tangan</option>
                       <option value={4}>4 Tanda Tangan</option>
@@ -776,7 +784,7 @@ export default function EditSertifikat({ token }) {
                                     onChange={(event, editor) => {
                                       const data = editor.getData();
                                       let newArr = [...signature];
-                                      newArr[i].name
+                                      newArr[i]?.name
                                         ? (newArr[i].name = data)
                                         : (newArr[i] = {
                                             ...newArr[i],
@@ -857,7 +865,9 @@ export default function EditSertifikat({ token }) {
                                         className="custom-file-label"
                                         htmlFor="customFile"
                                       >
-                                        Choose file
+                                        {imageName[i]
+                                          ? imageName[i]
+                                          : "Choose File"}
                                       </label>
                                     </div>
                                   ) : (
@@ -954,10 +964,17 @@ export default function EditSertifikat({ token }) {
                                 <div className="modal-footer">
                                   <button
                                     type="button"
-                                    className="btn btn-secondary"
+                                    className="btn btn-light-ghost-rounded-full"
                                     data-dismiss="modal"
                                   >
-                                    Tutup
+                                    Batal
+                                  </button>
+                                  <button
+                                    type="button"
+                                    data-dismiss="modal"
+                                    className="btn btn-primary-rounded-full"
+                                  >
+                                    Simpan
                                   </button>
                                 </div>
                               </div>
@@ -971,20 +988,20 @@ export default function EditSertifikat({ token }) {
                                 type="number"
                                 min={
                                   number_of_signatures == 1
-                                    ? -156
+                                    ? -151
                                     : number_of_signatures == 2
-                                    ? -106
+                                    ? -101
                                     : number_of_signatures == 3
-                                    ? -22
+                                    ? -17
                                     : -14
                                 }
                                 max={
                                   number_of_signatures == 1
-                                    ? 156
+                                    ? 151
                                     : number_of_signatures == 2
-                                    ? 106
+                                    ? 101
                                     : number_of_signatures == 3
-                                    ? 22
+                                    ? 17
                                     : 14
                                 }
                                 className="form-control"
@@ -1006,20 +1023,20 @@ export default function EditSertifikat({ token }) {
                                 type="range"
                                 min={
                                   number_of_signatures == 1
-                                    ? -156
+                                    ? -151
                                     : number_of_signatures == 2
-                                    ? -106
+                                    ? -101
                                     : number_of_signatures == 3
-                                    ? -22
+                                    ? -17
                                     : -14
                                 }
                                 max={
                                   number_of_signatures == 1
-                                    ? 156
+                                    ? 151
                                     : number_of_signatures == 2
-                                    ? 106
+                                    ? 101
                                     : number_of_signatures == 3
-                                    ? 22
+                                    ? 17
                                     : 14
                                 }
                                 value={signature[i]?.set_position || 0}
@@ -1068,38 +1085,37 @@ export default function EditSertifikat({ token }) {
                     style={{ display: "none" }}
                   />
                 </div>
-                <div className="position-relative">
-                  <label>
-                    <div className="mr-5">
-                      <a
-                        onClick={() => {
-                          setLocalBackground("");
-                          setBackground("");
-                        }}
-                        className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
-                      >
-                        Reset Background
-                      </a>
-                    </div>
-                  </label>
-                </div>
+                {background ? (
+                  <div className="position-relative">
+                    <label>
+                      <div className="mr-5">
+                        <a
+                          onClick={() => {
+                            setLocalBackground("");
+                            setBackground("");
+                          }}
+                          className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                        >
+                          Reset Background
+                        </a>
+                      </div>
+                    </label>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
             {certificate_type == "1 lembar" ? (
-              <div className="d-lg-flex justify-content-end">
+              <div className="row justify-content-lg-end justify-content-center">
                 <Link href="/sertifikat/master-sertifikat/tambah" passHref>
-                  <a
-                    className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
-                    onClick={() => {
-                      // console.log("klik batal");
-                    }}
-                  >
+                  <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3 col-lg-2 col-md-3 col-12 mt-5 mt-md-0">
                     Batal
                   </a>
                 </Link>
 
                 <a
-                  className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
+                  className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5 col-lg-2 col-md-3 col-12 mt-5 mt-md-0 w-50"
                   onClick={e => {
                     handlePost(e, 2); // 2 == draft
                   }}
@@ -1108,7 +1124,7 @@ export default function EditSertifikat({ token }) {
                 </a>
 
                 <a
-                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
+                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
                   onClick={e => {
                     handlePost(e, 1);
                   }}
@@ -1130,7 +1146,7 @@ export default function EditSertifikat({ token }) {
             <div className="card-body border-top">
               <div className="row p-0">
                 {/* START COL */}
-                <div className="border-primary p-0 border col-8 h-500px">
+                <div className="border-primary p-0 border col-lg-8 col-12">
                   <div className="p-0" ref={divReferenceSilabus}>
                     {localBackgroundSyllabus ? (
                       <Image
@@ -1216,14 +1232,14 @@ export default function EditSertifikat({ token }) {
                                     transform: `translateX(${
                                       signatureSyllabus[i]?.set_position || 0
                                     }%)`,
-                                    width: "156px",
+                                    width: "151px",
                                     height: "150px",
                                   }}
-                                  className="col-3 p-0"
+                                  className="col-3 p-0 px-lg-4"
                                 >
-                                  <div className="col">
+                                  <div className="col p-0">
                                     <div
-                                      className="col border-2 align-items-center justify-content-center d-flex position-relative"
+                                      className="col align-items-center justify-content-center d-flex position-relative"
                                       style={{
                                         borderStyle:
                                           signatureSyllabus[i]?.signature ||
@@ -1306,7 +1322,7 @@ export default function EditSertifikat({ token }) {
 
                 {/* END COL */}
                 {/* START FORM Jenis Sertifikat */}
-                <div className="col-4 font-weight-normal overflow-auto">
+                <div className="col-lg-4 col-12 font-weight-normal mt-lg-0 mt-10 tandatangan">
                   {/* END FORM Jenis Sertifikat */}
                   {/* START FORM Tanda tangan */}
                   <div className="form-group mb-2">
@@ -1322,10 +1338,9 @@ export default function EditSertifikat({ token }) {
                           )
                         }
                         className="form-control"
+                        defaultValue={number_of_signature_syllabus}
                       >
-                        <option value={1} defaultValue={1}>
-                          1 Tanda Tangan
-                        </option>
+                        <option value={1}>1 Tanda Tangan</option>
                         <option value={2}>2 Tanda Tangan</option>
                         <option value={3}>3 Tanda Tangan</option>
                         <option value={4}>4 Tanda Tangan</option>
@@ -1520,7 +1535,9 @@ export default function EditSertifikat({ token }) {
                                           className="custom-file-label"
                                           htmlFor="customFile"
                                         >
-                                          Choose file
+                                          {imageNameSyllabus[i]
+                                            ? imageNameSyllabus[i]
+                                            : "Choose File"}
                                         </label>
                                       </div>
                                     ) : (
@@ -1631,10 +1648,17 @@ export default function EditSertifikat({ token }) {
                                   <div className="modal-footer">
                                     <button
                                       type="button"
-                                      className="btn btn-secondary"
+                                      className="btn btn-light-ghost-rounded-full"
                                       data-dismiss="modal"
                                     >
-                                      Tutup
+                                      Batal
+                                    </button>
+                                    <button
+                                      type="button"
+                                      data-dismiss="modal"
+                                      className="btn btn-primary-rounded-full"
+                                    >
+                                      Simpan
                                     </button>
                                   </div>
                                 </div>
@@ -1648,20 +1672,20 @@ export default function EditSertifikat({ token }) {
                                   type="number"
                                   min={
                                     number_of_signature_syllabus == 1
-                                      ? -156
+                                      ? -151
                                       : number_of_signature_syllabus == 2
-                                      ? -106
+                                      ? -101
                                       : number_of_signature_syllabus == 3
-                                      ? -22
+                                      ? -17
                                       : -14
                                   }
                                   max={
                                     number_of_signature_syllabus == 1
-                                      ? 156
+                                      ? 151
                                       : number_of_signature_syllabus == 2
-                                      ? 106
+                                      ? 101
                                       : number_of_signature_syllabus == 3
-                                      ? 22
+                                      ? 17
                                       : 14
                                   }
                                   className="form-control"
@@ -1685,20 +1709,20 @@ export default function EditSertifikat({ token }) {
                                   type="range"
                                   min={
                                     number_of_signature_syllabus == 1
-                                      ? -156
+                                      ? -151
                                       : number_of_signature_syllabus == 2
-                                      ? -106
+                                      ? -101
                                       : number_of_signature_syllabus == 3
-                                      ? -22
+                                      ? -17
                                       : -14
                                   }
                                   max={
                                     number_of_signature_syllabus == 1
-                                      ? 156
+                                      ? 151
                                       : number_of_signature_syllabus == 2
-                                      ? 106
+                                      ? 101
                                       : number_of_signature_syllabus == 3
-                                      ? 22
+                                      ? 17
                                       : 14
                                   }
                                   value={
@@ -1749,38 +1773,37 @@ export default function EditSertifikat({ token }) {
                       style={{ display: "none" }}
                     />
                   </div>
-                  <div className="position-relative">
-                    <label>
-                      <div className="mr-5">
-                        <a
-                          onClick={() => {
-                            setLocalBackgroundSyllabus("");
-                            setBackground_syllabus("");
-                          }}
-                          className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
-                        >
-                          Reset Background
-                        </a>
-                      </div>
-                    </label>
-                  </div>
+                  {background_syllabus ? (
+                    <div className="position-relative">
+                      <label>
+                        <div className="mr-5">
+                          <a
+                            onClick={() => {
+                              setLocalBackgroundSyllabus("");
+                              setBackground_syllabus("");
+                            }}
+                            className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
+                          >
+                            Reset Background
+                          </a>
+                        </div>
+                      </label>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
               {certificate_type == "2 lembar" ? (
-                <div className="d-lg-flex justify-content-end">
+                <div className="row justify-content-lg-end justify-content-center">
                   <Link href="/sertifikat/master-sertifikat/tambah" passHref>
-                    <a
-                      className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
-                      onClick={() => {
-                        // console.log("klik batal");
-                      }}
-                    >
+                    <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3 col-lg-2 col-md-3 col-12 mt-5 mt-md-0">
                       Batal
                     </a>
                   </Link>
 
                   <a
-                    className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5"
+                    className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5 col-lg-2 col-md-3 col-12 mt-5 mt-md-0 w-50"
                     onClick={e => {
                       handlePost(e, 2); // 2 == draft
                     }}
@@ -1789,7 +1812,7 @@ export default function EditSertifikat({ token }) {
                   </a>
 
                   <a
-                    className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3"
+                    className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
                     onClick={e => {
                       handlePost(e, 1);
                     }}

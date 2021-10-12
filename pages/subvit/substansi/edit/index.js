@@ -33,7 +33,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "Ubah Tes Substansi Step 1 - Subvit" },
+        props: { session, title: "Ubah Test Substansi Step 1 - Subvit" },
       };
     }
 );
