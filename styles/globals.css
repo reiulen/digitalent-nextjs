@@ -240,15 +240,10 @@ a {
 .disabled-form input {
   background-color: #f3f6f9 !important;
 }
-<<<<<<< HEAD
-=======
 
-.minimal-image img{
+.minimal-image img {
   min-width: 16px;
   width: 16px;
   min-height: 16px;
   height: 16px;
-
 }
-
->>>>>>> e88cf0af8c79996ecf8e0851c1a0e11406898a18

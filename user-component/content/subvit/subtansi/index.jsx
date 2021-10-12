@@ -1,5 +1,5 @@
 import Navigationbar from "../../../../components/templates/navbar.component";
-import { Card, Col, Container, Form, Row } from "react-bootstrap";
+import { Card, Col, Container, Form, Modal, Row } from "react-bootstrap";
 import styles from "./content.module.css";
 import Footer from "../footer/index";
 import { useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import HeaderUser from "../header";
 import axios from "axios";
 import Image from "next/dist/client/image";
+
 // import Cookies from "js-cookie";
 
 const SubtansiUser = () => {
@@ -15,51 +16,58 @@ const SubtansiUser = () => {
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
+  const [numberAnswer, setNumberAnswer] = useState(false);
+  const [modalSoal, setModalSoal] = useState(false);
 
+  const handleModalSoal = () => {
+    setModalSoal(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalSoal(false);
+  };
   const handleNumber = (val) => {
     console.log(val);
     // e.preventDefault();
     setNumberPage(val);
-    router.push(`/user/subvit/subtansi/${val + 1}`);
+    router.push(`/peserta/subvit/subtansi/${val + 1}`);
   };
 
   const handleBack = () => {
     const page = parseInt(router.query.id) - 1;
     if (parseInt(router.query.id) === 1) {
-      router.push(`${router.pathname.slice(0, 21)}/1`);
+      router.push(`${router.pathname.slice(0, 24)}/1`);
     } else {
-      router.push(`${router.pathname.slice(0, 21)}/${page}`);
+      router.push(`${router.pathname.slice(0, 24)}/${page}`);
     }
   };
   function startTimer(duration, display) {
     var timer = duration,
-      hours,
       minutes,
       seconds;
     setInterval(function () {
-      hours = parseInt(timer / 3600, 10);
-      minutes = parseInt(timer / 60 / 60, 10);
+      minutes = parseInt(timer / 60, 10);
       seconds = parseInt(timer % 60, 10);
 
       minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
 
-      display.textContent = hours + ":" + minutes + ":" + seconds;
+      display.textContent = minutes + ":" + seconds;
 
       if (--timer <= 0) {
-        router.push("/done");
+        router.replace(`${router.pathname.slice(0, 8)}/done`);
       }
     }, 1000);
   }
   useEffect(() => {
     window.onload = function () {
-      var fiveMinutes = 120 * 60,
+      var fiveMinutes = 1 * 60,
         display = document.querySelector("#time");
       startTimer(fiveMinutes, display);
     };
-    console.log(router.query.id);
-    console.log(numberPage); // eslint-disable-next-line react-hooks/exhaustive-deps
+
     getRandomSoal();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -70,26 +78,32 @@ const SubtansiUser = () => {
       )
       .then((res) => setData(res.data.data));
   };
-
-  const listAnswerMultiple = [];
-
+  let list = [];
   const handleAnswer = (e) => {
     console.log(e);
 
     setAnswer(e.option);
     localStorage.setItem(`${router.query.id}`, e.option);
 
-    console.log(listAnswer);
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      list.push(key);
+      // key.includes(parseInt(router.query.id)) && setNumberAnswer(true);
+      // console.log(localStorage.getItem(key));
+      // if (localStorage.getItem(key) === e.option) {
+      //   setNumberAnswer(true);
+      // }
+    }
+    console.log(list);
   };
 
   return (
     <>
-      <Navigationbar />
       <HeaderUser />
-      <Container fluid style={{ padding: "30px 10px" }}>
+      <Container className={styles.base}>
         <Card className={styles.mainCard}>
           <Row>
-            <Col sm={1}>
+            <Col sm={1} xs={6}>
               <Card className={styles.back} onClick={handleBack}>
                 <i
                   className="ri-arrow-left-s-line"
@@ -100,14 +114,25 @@ const SubtansiUser = () => {
             <Col sm={6} className={styles.academy}>
               {data.academy}
             </Col>
-            <Col sm={5}>
+            <Col sm={5} xs={6}>
               <Card className={styles.time} id="time">
-                02:00:00
+                02:00
               </Card>
             </Col>
           </Row>
           <Row style={{ marginTop: "20px" }}>
-            <Col sm={6}>
+            <Col xs={6} className={styles.totalSoalResponsive}>
+              Soal {router.query.id} dari{" "}
+              {data.list_questions && data.list_questions.length}
+            </Col>
+            <Col
+              xs={6}
+              className={styles.daftarSoalResponsive}
+              onClick={handleModalSoal}
+            >
+              Daftar Soal
+            </Col>
+            <Col sm={6} xs={12}>
               <p className={styles.nameTest}>
                 Tes Subtansi
                 <span
@@ -226,26 +251,17 @@ const SubtansiUser = () => {
             </Col>
             <Col sm={1}></Col>
             <Col sm={3}>
-              <p
-                style={{
-                  fontFamily: "Poppins",
-                  fontStyle: "normal",
-                  fontWeight: 600,
-                  fontSize: "14px",
-                  lineHeight: "140%",
-                  color: "#1B283F",
-                }}
-              >
+              <p style={{}} className={styles.daftarSoal}>
                 Daftar Soal
               </p>
-              <Row style={{ marginTop: "40px" }}>
+              <Row className={styles.rowNumber}>
                 {data.list_questions &&
                   data.list_questions.map((item, index) => {
                     return (
                       <Col key={index} style={{ width: "20%" }}>
                         <Card
                           className={
-                            parseInt(numberPage) === parseInt(router.query.id)
+                            index + 1 === parseInt(router.query.id)
                               ? styles.cardChoosed
                               : styles.cardChoose
                           }
@@ -253,7 +269,7 @@ const SubtansiUser = () => {
                         >
                           <p
                             className={
-                              numberPage === router.query.id
+                              index + 1 === parseInt(router.query.id)
                                 ? styles.textCardNumber
                                 : styles.textCard
                             }
@@ -273,6 +289,39 @@ const SubtansiUser = () => {
           />
         </Card>
       </Container>
+
+      <Modal show={modalSoal} onHide={handleCloseModal} centered>
+        <Modal.Body>
+          <h1>Daftar Soal</h1>
+          <Row className={styles.rowNumberResponsive}>
+            {data.list_questions &&
+              data.list_questions.map((item, index) => {
+                return (
+                  <Col key={index} style={{ width: "20%" }}>
+                    <Card
+                      className={
+                        index + 1 === parseInt(router.query.id)
+                          ? styles.cardChoosed
+                          : styles.cardChoose
+                      }
+                      onClick={() => handleNumber(index)}
+                    >
+                      <p
+                        className={
+                          index + 1 === parseInt(router.query.id)
+                            ? styles.textCardNumber
+                            : styles.textCard
+                        }
+                      >
+                        {index + 1}
+                      </p>
+                    </Card>
+                  </Col>
+                );
+              })}
+          </Row>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };

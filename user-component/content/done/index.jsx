@@ -2,7 +2,7 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import Header from "../subvit/header/index";
 import styles from "./done.module.css";
 import { useRouter } from "next/router";
-import Navigationbar from "../../../components/templates/navbar.component";
+
 import doneImage from "../../../public/assets/media/logos/Group 240.png";
 import Image from "next/dist/client/image";
 
@@ -10,11 +10,10 @@ const Done = () => {
   const router = useRouter();
   // console.log(window.innerHeight());
   const handleDone = () => {
-    router.push("/");
+    router.push(`${router.pathname.slice(0, 8)}`);
   };
   return (
     <>
-      <Navigationbar />
       <Header />
       <Container
         style={{
@@ -42,7 +41,7 @@ const Done = () => {
                 />
               </center>
             </Col>
-            <Col sm={6} style={{ padding: "60px  180px 60px 0px" }}>
+            <Col sm={6} className={styles.colThanks}>
               <h1 className={styles.thanks}>TERIMA KASIH.</h1>
               <p className={styles.bodyDone}>
                 Terima Kasih telah Mengikuti Test Substansi.

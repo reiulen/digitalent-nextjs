@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Card, Col, Modal, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Modal, Row } from "react-bootstrap";
 import { useRouter } from "next/router";
 import styles from "./footer.module.css";
 
@@ -19,22 +19,22 @@ const Footer = ({ number, answer }) => {
 
   const handleDone = () => {
     localStorage.clear();
-    location.replace("/user/done");
+    location.replace("/peserta/done");
   };
 
   const handleNext = () => {
     const page = parseInt(router.query.id) + 1;
-    router.push(`${router.pathname.slice(0, 21)}/${page}`);
+    router.push(`${router.pathname.slice(0, 24)}/${page}`);
   };
 
   const handleBack = () => {
     const page = parseInt(router.query.id) - 1;
-    router.push(`${router.pathname.slice(0, 21)}/${page}`);
+    router.push(`${router.pathname.slice(0, 24)}/${page}`);
   };
   return (
     <>
-      <Row style={{ marginTop: "50px" }}>
-        <Col sm={6}>
+      <Row style={{ marginTop: "50px" }} className={styles.footerNormal}>
+        <Col sm={6} xs={6}>
           <Button
             className={styles.back}
             onClick={handleBack}
@@ -43,6 +43,7 @@ const Footer = ({ number, answer }) => {
           >
             Kembali
           </Button>
+
           <Button className={styles.help} onClick={() => setShowModal(true)}>
             <i
               className="ri-error-warning-fill"
@@ -51,7 +52,7 @@ const Footer = ({ number, answer }) => {
             Bantuan
           </Button>
         </Col>
-        <Col sm={6} style={{ textAlign: "right" }}>
+        <Col sm={6} xs={6} style={{ textAlign: "right" }}>
           <Button
             className={styles.next}
             onClick={handleNext}
@@ -60,6 +61,7 @@ const Footer = ({ number, answer }) => {
           >
             Lewati Soal
           </Button>
+
           {parseInt(router.query.id) === number ? (
             <Button className={styles.done} onClick={() => handleSubmit()}>
               Selesai
@@ -75,6 +77,61 @@ const Footer = ({ number, answer }) => {
           )}
         </Col>
       </Row>
+
+      <Container className={styles.footerResponsive}>
+        <Row>
+          <Col xs={6}>
+            <Button
+              className={styles.btnBackResponsive}
+              onClick={handleBack}
+              disabled={parseInt(router.query.id) === 1}
+            >
+              <i
+                className="ri-arrow-left-s-line"
+                style={{ fontSize: "15px", padding: "0px", color: "#215480" }}
+              ></i>
+            </Button>
+            <Button
+              className={styles.btnHelpResponsive}
+              onClick={() => setShowModal(true)}
+            >
+              <i
+                className="ri-error-warning-fill"
+                style={{ fontSize: "18px", padding: "0px" }}
+              ></i>
+            </Button>
+          </Col>
+          <Col xs={6} style={{ textAlign: "right" }}>
+            <Button
+              className={styles.nextResponsive}
+              onClick={handleNext}
+              disabled={parseInt(router.query.id) === number}
+              variant="link"
+            >
+              Lewati
+            </Button>
+            {parseInt(router.query.id) === number ? (
+              <Button
+                className={styles.btnNextResponsive}
+                onClick={() => handleSubmit()}
+              >
+                Selesai
+              </Button>
+            ) : (
+              <Button
+                className={styles.btnNextResponsive}
+                onClick={handleNext}
+                disabled={parseInt(router.query.id) === number}
+              >
+                <i
+                  className="ri-arrow-right-s-line"
+                  style={{ fontSize: "15px", padding: "0px", color: "#fff" }}
+                ></i>
+              </Button>
+            )}
+          </Col>
+        </Row>
+      </Container>
 
       <Modal
         show={showModal}

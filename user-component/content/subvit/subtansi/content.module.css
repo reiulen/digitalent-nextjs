@@ -1,3 +1,67 @@
+@media (max-width: 412px) {
+  .mainCard {
+    padding: 20px !important;
+    border-radius: 0px !important;
+    height: 100% !important;
+  }
+  .base {
+    padding: 0px !important;
+  }
+  .academy {
+    display: none;
+  }
+  .rowNumber {
+    display: none;
+  }
+  .totalSoal {
+    display: none;
+  }
+  .daftarSoal {
+    display: none;
+  }
+  .totalSoalResponsive {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    color: #80808f;
+    display: inline !important;
+    margin-bottom: 10px;
+  }
+  .daftarSoalResponsive {
+    display: inline !important;
+    text-align: right;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 160%;
+    color: #4299e1;
+    cursor: pointer;
+  }
+  .rowNumberResponsive {
+    margin-top: 20px;
+  }
+}
+.totalSoalResponsive {
+  display: none;
+}
+.daftarSoalResponsive {
+  display: none;
+}
+.daftarSoal {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  color: #1b283f;
+}
+.base {
+  padding: 20px 30px;
+}
+
 .mainCard {
   background: #ffffff;
   /* Card */
@@ -54,7 +118,6 @@
   font-weight: bold;
   font-size: 12px;
   line-height: 140%;
-
   color: #04aa77;
 }
 .textCard {
