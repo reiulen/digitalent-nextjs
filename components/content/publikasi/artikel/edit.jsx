@@ -149,16 +149,21 @@ const EditArtikel = ({ token }) => {
     // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setGambar(reader.result);
-          setGambarPreview(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-      // console.log (reader.readAsDataURL(e.target.files[0]))
-      setGambarName(e.target.files[0].name);
+      if (e.target.files[0].size > 5000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setGambar(reader.result);
+            setGambarPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        // console.log (reader.readAsDataURL(e.target.files[0]))
+        setGambarName(e.target.files[0].name);
+      }
     } else {
       // setGambar("")
       // setGambarPreview("/assets/media/default.jpg")
@@ -904,7 +909,7 @@ const EditArtikel = ({ token }) => {
                       onChange={data => handleTag(data)}
                       name="fruits"
                       placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
-                      // seprators={["Enter", "Tab"]}
+                    // seprators={["Enter", "Tab"]}
                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
                     {

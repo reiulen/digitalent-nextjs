@@ -300,7 +300,7 @@ const Artikel = ({token}) => {
 
   return (
     <PageWrapper>
-      {/* {console.log(artikel)} */}
+      {console.log(artikel)}
       {/* {console.log(token)} */}
       {error ? (
         <div
@@ -389,7 +389,7 @@ const Artikel = ({token}) => {
             // color="#74BBB7"
             value="64"
             titleValue="K"
-            title="Total Yang Baca"
+            title="Total Pembaca"
             publishedVal=""
             routePublish={() => handlePublish("")}
           />
@@ -401,7 +401,7 @@ const Artikel = ({token}) => {
             // color="#F65464"
             value={artikel && artikel.unpublish != "" ? artikel.unpublish : 0}
             titleValue="Artikel"
-            title="Total Belum Publish"
+            title="Total Belum Dipublish"
             publishedVal="0"
             routePublish={() => handlePublish("0")}
           />
@@ -693,10 +693,11 @@ const Artikel = ({token}) => {
                                   unoptimized={
                                     process.env.ENVIRONMENT !== "PRODUCTION"
                                   }
-                                  // loader={() => process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                  //   "publikasi/images/" +
-                                  //   artikel.gambar + `?w=80&q=75`
-                                  // }
+                                  loader={process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                    "publikasi/images/" +
+                                    artikel.gambar
+                                    // artikel.gambar + `?w=80&q=75`
+                                  }
                                   // src={artikel.gambar}
                                   src={
                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
