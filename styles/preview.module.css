@@ -60,3 +60,18 @@
         font-size: 7px;
     }
 }
+
+
+.title-Pratinjau{
+    border: 1px solid black;
+    font-size: 50px;
+    font-weight: 600;
+    z-index: 1000;
+    /* width: 100%;
+    position: absolute; */
+    /* height: 150px;
+    z-index: 0; */
+    /* background-image: url(/static/assets/media/backdrop.svg) no-repeat;
+    background-size: cover; */
+    /* min-height: 100%; */
+}

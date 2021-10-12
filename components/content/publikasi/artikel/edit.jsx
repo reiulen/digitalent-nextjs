@@ -211,7 +211,7 @@ const EditArtikel = ({ token }) => {
         }
       }
     }
-    console.log("Data Tag :", data)
+    // console.log("Data Tag :", data)
     setTag(data)
 
   }
@@ -906,10 +906,10 @@ const EditArtikel = ({ token }) => {
                     <TagsInput
                       value={tag}
                       // onChange={setTag}
-                      onChange={data => handleTag(data)}
+                      onChange={(data) => handleTag(data)}
                       name="fruits"
                       placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
-                    // seprators={["Enter", "Tab"]}
+                      seprators={["Enter", "Tab"]}
                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
                     {

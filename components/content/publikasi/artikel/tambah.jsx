@@ -367,7 +367,7 @@ const TambahArtikel = ({ token }) => {
 
               dispatch(newArtikel(data, token));
 
-              // console.log(data);
+              // console.log("Publish :", data);
             }
           });
       }
@@ -881,7 +881,7 @@ const TambahArtikel = ({ token }) => {
                     {
                       disableTag === true ?
                         <p className="text-danger">
-                          Tag tidak bisa terdiri dari "SPACE" character saja
+                          Tag tidak bisa terdiri dari 1 character "SPACE"
                         </p>
                         :
                         null
