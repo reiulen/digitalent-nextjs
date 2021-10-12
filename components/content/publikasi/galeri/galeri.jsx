@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import styles from '../../../../styles/previewGaleri.module.css'
 
 import Pagination from 'react-js-pagination';
 import { css } from '@emotion/react'
@@ -45,6 +46,7 @@ const Galeri = ({ token }) => {
     const [publishValue, setPublishValue] = useState(null)
     const [index_galleri, setIndexGalleri] = useState(null)
     const [disableEndDate, setDisableEndDate] = useState(true)
+    const [previewImage, setPreviewImage] = useState(0)
 
     let loading = false
 
@@ -296,13 +298,70 @@ const Galeri = ({ token }) => {
 
     const handlePreview = (i, id) => {
         const data = {
-            id,
-            _method: "PUT",
-            isview: "1"
+            id
         }
+
         dispatch(viewGaleri(data, token))
         setIndexGalleri(i)
-        console.log("INDEEEXX : ", data, token)
+        console.log("INDEEEXX : ", data)
+    }
+
+    const printImage = () => {
+        return galeri && galeri.gallery.length !== 0 && index_galleri !== null ?
+            <>
+                <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel" style={{ position: 'relative' }}>
+                    <div className="carousel-inner" style={{ position: 'absolute', left: '-12px' }}>
+                        <div className="carousel-item active">
+                            <div className={styles['img-prevModal']}>
+                                <Image
+                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                        "publikasi/images/" +
+                                        galeri.gallery[index_galleri].gambar)}
+                                    src={
+                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                        "publikasi/images/" +
+                                        galeri.gallery[index_galleri].gambar
+                                    }
+                                    alt='image'
+                                    layout='fill'
+                                    objectFit='fill'
+                                />
+                            </div>
+                        </div>
+                        <div className="carousel-item">
+                            <div className={styles['img-prevModal']}>
+                                <Image
+                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                        "publikasi/images/" +
+                                        galeri.gallery[1].gambar)}
+                                    src={
+                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                        "publikasi/images/" +
+                                        galeri.gallery[1].gambar
+                                    }
+                                    alt='image'
+                                    layout='fill'
+                                    objectFit='fill'
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <button className="carousel-control-prev" type="button" data-target="#carouselExampleIndicators" data-slide="prev"
+                        style={{ position: 'absolute', left: '-14px', top: '250px', border: 'none', background: 'none' }}
+                    >
+                        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button className="carousel-control-next" type="button" data-target="#carouselExampleIndicators" data-slide="next"
+                        style={{ position: 'absolute', right: '7px', top: '250px', border: 'none', background: 'none' }}
+                    >
+                        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </>
+            :
+            null
     }
 
     const resetValueSort = () => {
@@ -614,16 +673,17 @@ const Galeri = ({ token }) => {
                                                 !galeri || galeri && galeri.gallery.length === 0 ?
                                                     <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> :
                                                     galeri && galeri.gallery.map((row, i) => {
-                                                        { console.log("INI ROWW ID : ", i + 1, row) }
+                                                        // { console.log("INI ROWW ID : ", i + 1, row) }
                                                         return <tr key={row.id}>
                                                             <td className='align-middle text-center'>
                                                                 {
                                                                     limit === null ?
-                                                                        <span className="badge badge-secondary text-muted">
+                                                                        // <span className="badge badge-secondary text-muted">
+                                                                        <span>
                                                                             {i + 1 * (page * 5) - (5 - 1)}
                                                                         </span>
                                                                         :
-                                                                        <span className="badge badge-secondary text-muted">
+                                                                        <span>
                                                                             {i + 1 * (page * limit) - (limit - 1)}
                                                                         </span>
                                                                 }
@@ -636,7 +696,7 @@ const Galeri = ({ token }) => {
                                                                     unoptimized={
                                                                         process.env.ENVIRONMENT !== "PRODUCTION"
                                                                     }
-                                                                    loader={()=>(process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                                         "publikasi/images/" +
                                                                         row.gambar)}
                                                                     src={
@@ -808,7 +868,7 @@ const Galeri = ({ token }) => {
             {/* Modal */}
             <div className="modal fade" id="galleryModalPreview" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content" style={{ height: '500px' }}>
+                    <div className="modal-content">
                         {/* <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -818,15 +878,48 @@ const Galeri = ({ token }) => {
                         {/* {
                             console.log (galeri)
                         } */}
-                        <div className="modal-body text-center" style={{ position: 'relative' }}>
-                            <div className="row" style={{ position: 'absolute', left: '13px', top: '0', bottom: '0', right: '0', width: '750px', background: '#fff' }}>
+                        <div className={styles['modal-body']}>
+                            <div className={styles['posModal']}>
                                 <div className="col-6">
-                                    {/* {console.log("Cek Modal Image :", galeri)} */}
-                                    {
+                                    {/* {console.log("Cek Modal Image :", galeri.gallery)} */}
+                                    {printImage()}
+                                    {/* {
+                                        galeri && galeri.gallery.length !== 0 ?
+                                            galeri.gallery.map((row, i) => {
+                                                // { console.log("Cek Data :", row) }
+                                                return (
+                                                    <div className={styles['img-prevModal']}>
+                                                        <Image
+                                                            key={i}
+                                                            unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                                            loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                "publikasi/images/" +
+                                                                row.gambar)}
+                                                            src={
+                                                                process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                                "publikasi/images/" +
+                                                                row.gambar
+                                                            }
+
+                                                            alt='image'
+                                                            layout='fill'
+                                                            objectFit='fill'
+                                                        />
+                                                    </div>
+                                                )
+                                            })
+
+                                            :
+                                            null
+                                    } */}
+
+                                    {/* {galeri.gallery[previewImage].gambar} */}
+                                    {/* {
                                         galeri && galeri.gallery.length !== 0 && index_galleri !== null ?
                                             <>
-                                                <div style={{ height: '350px', width: '100%' }}>
+                                                <div className={styles['img-prevModal']}>
                                                     <Image
+                                                        unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
                                                         loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
                                                             "publikasi/images/" +
                                                             galeri.gallery[index_galleri].gambar)}
@@ -835,7 +928,6 @@ const Galeri = ({ token }) => {
                                                             "publikasi/images/" +
                                                             galeri.gallery[index_galleri].gambar
                                                         }
-
                                                         alt='image'
                                                         layout='fill'
                                                         objectFit='fill'
@@ -844,31 +936,31 @@ const Galeri = ({ token }) => {
                                             </>
                                             :
                                             null
-                                    }
+                                    } */}
                                 </div>
                                 {/* <div className="col-1"></div> */}
-                                <div className="col-6" style={{ padding: '30px' }}>
-                                    {console.log("CEK :",galeri.gallery)}
+                                <div className="col-6" style={{ padding: '30px'}}>
+                                    {/* {console.log("CEK :",galeri.gallery)} */}
                                     {
                                         galeri && galeri.gallery.length !== 0 && index_galleri !== null ?
                                             <>
-                                                <div className="row mb-1 justify-content-between">
-                                                    <h3 className="col-10" style={{ fontWeight: 'bold', textAlign: 'left' }}>
+                                                <div className="mb-1 justify-content-between" style={{display:'flex', marginLeft: '-12px'}}>
+                                                    <h3 className="col-10" style={{ fontWeight: 'bold', textAlign: 'left',marginLeft:'-12px' }}>
                                                         {galeri.gallery[index_galleri].judul}
                                                     </h3>
                                                     <button type="button" className="col-1 flaticon2-delete" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
                                                 </div>
                                                 <div className="row mb-4" style={{ textAlign: 'left' }}>
                                                     <div className="col-6">
-                                                        <div style={{ fontSize: '11px' }}
+                                                        <div style={{ fontSize: '11px', marginLeft: '-10px' }}
                                                             className="mb-1 p-0 d-flex align-items-center">
                                                             <i className="flaticon2-calendar-4"></i>
                                                             <span className="ml-2">
-                                                                Publish: {moment( galeri.gallery[index_galleri].tanggal_publish ).format('LL')}
+                                                                Publish: {moment(galeri.gallery[index_galleri].tanggal_publish).format('LL')}
                                                             </span>
                                                         </div>
 
-                                                        <div style={{ fontSize: '11px' }}
+                                                        <div style={{ fontSize: '11px', marginLeft: '-10px' }}
                                                             className="mb-1 p-0 d-flex align-items-center">
                                                             <i className="flaticon2-user"></i>
                                                             <span className="ml-2">
@@ -878,25 +970,33 @@ const Galeri = ({ token }) => {
                                                         </div>
                                                     </div>
 
-                                                    <div style={{ fontSize: '11px' }}
-                                                        className="col-6 mb-1 p-0 d-flex align-items-center">
-                                                        <i className="ri-dashboard-line"></i>
-                                                        <span className="ml-2">
-                                                            {/* User : Super Admin */}
-                                                            Kategori : {galeri.gallery[index_galleri].nama_kategori}
-                                                        </span>
+                                                    <div className="col-6">
+                                                        <div style={{ fontSize: '11px', marginLeft: '-10px' }}
+                                                            className="mb-1 p-0 d-flex align-items-center">
+                                                            <i className="ri-dashboard-line"></i>
+                                                            <span className="ml-2">
+                                                                {/* User : Super Admin */}
+                                                                Kategori : {galeri.gallery[index_galleri].nama_kategori}
+                                                            </span>
+                                                        </div>
                                                     </div>
 
                                                 </div>
                                                 <hr style={{ width: '375px', marginLeft: '-30px' }} />
-                                                <div className=" row mb-1">
-                                                    <p style={{ textAlign: 'left', width: '100%', height: '260px', flexWrap: 'wrap', overflow: 'auto' }}
+                                                <div className="row mb-1">
+                                                    <p className={styles['description-img']}
                                                         dangerouslySetInnerHTML={{ __html: galeri.gallery[index_galleri].isi_galleri }}>
                                                     </p>
-                                                    <span className="label label-inline label-light-success font-weight-bold">
-                                                        {/* {galeri.gallery[index_galleri].nama_kategori} */}
-                                                        Publish
-                                                    </span>
+                                                    {
+                                                        galeri.gallery[index_galleri].tag !== null ?
+                                                            galeri.gallery[index_galleri].tag.map((row, i) => {
+                                                                // { console.log("Cek Tag :", row) }
+                                                                return (
+                                                                    <span className="mr-3 label label-inline label-light-success font-weight-bold">{row}</span>
+                                                                )
+                                                            })
+                                                            : null
+                                                    }
                                                 </div>
                                             </>
                                             :
