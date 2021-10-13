@@ -102,12 +102,7 @@ export default function KelolasertifikatID({ token }) {
             <div className="card-title d-flex">
               <div className="text-dark">Nama Sertifikat :</div>
               <div className="mx-6">
-                <div
-                  type="text"
-                  className="form-control "
-                  // placeholder="Masukan Nama Sertifikat"
-                  // value={certificate.data.certificate.name}
-                >
+                <div type="text" className="form-control w-100 h-100">
                   {certificate?.data?.certificate?.name
                     ? certificate?.data?.certificate?.name
                     : "Nama Sertifikat"}
@@ -131,8 +126,8 @@ export default function KelolasertifikatID({ token }) {
             <div className="row p-0 justify-content-center">
               {/* START COL */}
               <div
-                className=" position-relative p-0"
-                style={{ width: "781px", height: "552px" }}
+                className="position-relative p-0"
+                style={{ width: "842px", height: "595px" }}
                 ref={divReference}
               >
                 <Image
@@ -142,33 +137,24 @@ export default function KelolasertifikatID({ token }) {
                   objectFit="fill"
                 />
                 <div
-                  className="position-absolute w-100 text-center"
-                  style={{ marginTop: "128px" }}
+                  className="position-absolute w-100 text-center "
+                  style={{ marginTop: "145px" }}
                 >
-                  <span
-                    className="font-size-h5 px-5 border-2"
-                    style={{ borderStyle: "dashed" }}
-                  >
-                    Nama Peserta
-                  </span>
+                  <span className="font-size-h5 px-5">Nama Peserta</span>
                 </div>
               </div>
               {/* END COL */}
             </div>
             <div className="row mt-10 col-12">
-              <div className="position-relative">
-                <label>
-                  <div className="mr-5">
-                    <a
-                      onClick={e => {
-                        handleDownload(e);
-                      }}
-                      className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
-                    >
-                      Unduh
-                    </a>
-                  </div>
-                </label>
+              <div className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
+                <a
+                  className="text-center"
+                  onClick={e => {
+                    handleDownload(e);
+                  }}
+                >
+                  Unduh
+                </a>
               </div>
             </div>
           </div>

@@ -128,7 +128,7 @@ export default function NamaPelatihan({ token }) {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-6 col-xl-6 col-sm-9">
+                <div className="col-lg-6 col-xl-6 col-sm-6">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -152,7 +152,7 @@ export default function NamaPelatihan({ token }) {
                     </button>
                   </div>
                 </div>
-                <div className="col-lg-6 col-xl-6 col-sm-9">
+                <div className="col-lg-6 col-sm-6">
                   <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                     {/* sortir by modal */}
                     <button

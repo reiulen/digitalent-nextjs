@@ -36,6 +36,24 @@
     font-size: 3.8vw;
 }
 
+.responsive-margin {
+    margin-top: 35px;
+}
+
+.responsive-font-size {
+    font-size: 3vw;
+}
+
+@media(min-width: 768px) {
+    .responsive-margin {
+        margin-top: 115px;
+    }
+
+    .responsive-font-size {
+        font-size: 1.5vw;
+    }
+}
+
 @media (min-width: 992px) {
     .h-100px {
         height: 100px !important
@@ -52,4 +70,23 @@
     .a4-font-normal {
         font-size: 0.75vw;
     }
+
+    .responsive-margin {
+        margin-top: 140px;
+    }
+
+    .responsive-font-size {
+        font-size: 1.5vw;
+    }
+}
+
+@media (min-width: 1200px) {
+    .responsive-margin {
+        margin-top: 143px;
+    }
+
+    .responsive-font-size {
+        font-size: 1vw;
+    }
+
 }
