@@ -12,7 +12,6 @@ import IconAdd from "../../../assets/icon/Add";
 import IconSearch from "../../../assets/icon/Search";
 import AlertBar from "../../partnership/components/BarAlert";
 
-
 import {
   getAllDataReference,
   setPage,
@@ -25,7 +24,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allDataReference = useSelector((state) => state.allDataReference);
-
+console.log("allDataReference",allDataReference)
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
     setValueSearch(value);
@@ -38,7 +37,13 @@ const Table = ({ token }) => {
 
   useEffect(() => {
     dispatch(getAllDataReference(token));
-  }, [dispatch, allDataReference.cari, allDataReference.page, allDataReference.limit, token]);
+  }, [
+    dispatch,
+    allDataReference.cari,
+    allDataReference.page,
+    allDataReference.limit,
+    token,
+  ]);
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -123,85 +128,101 @@ const Table = ({ token }) => {
                 {allDataReference.status === "process" ? (
                   <LoadingTable />
                 ) : (
-                <table className="table table-separate table-head-custom table-checkable">
-                  <thead style={{ background: "#F3F6F9" }}>
-                    <tr>
-                      <th className="text-left">No</th>
-                      <th className="text-left align-middle">Data Reference</th>
-                      <th className="text-left align-middle">Status</th>
-                      <th className="text-left align-middle">Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {allDataReference.data.list_role.length === 0 ? (
+                  <table className="table table-separate table-head-custom table-checkable">
+                    <thead style={{ background: "#F3F6F9" }}>
                       <tr>
-                        <td colSpan="4" className="text-center">
-                          <h4>Data tidak ditemukan</h4>
-                        </td>
+                        <th className="text-left">No</th>
+                        <th className="text-left align-middle">
+                          Data Reference
+                        </th>
+                        <th className="text-left align-middle">Status</th>
+                        <th className="text-left align-middle">Aksi</th>
                       </tr>
-                    ) : (
-                      allDataReference.data.list_role.map((items, index) => {
-                        return (
-                    <tr key={index}>
-                      <td className="align-middle text-left"> {allDataReference.page === 1
-                                ? index + 1
-                                : (allDataReference.page - 1) * allDataReference.limit +
-                                  (index + 1)}</td>
-                      <td className="align-middle text-left">{items.name}</td>
-                      <td className="align-middle text-left">
-                        <p
-                          className="status-div-red mb-0"
-                          style={{ width: "max-content" }}
-                        >
-                          {items.status}
-                        </p>
-                      </td>
-                      <td className="align-middle text-left">
-                        <div className="d-flex align-items-center">
-                          <button
-                            className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/reference/ubah-reference-dengan-relasi`)
-                            }
-                          >
-                            <IconPencil width="16" height="16" />
-                            <div className="text-hover-show-hapus">Ubah</div>
-                          </button>
-                          <button
-                            className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
-                            onClick={() =>
-                              router.push(`/site-management/reference/detail-refrence`)
-                            }
-                          >
-                            <IconEye width="16" height="16" />
-                            <div className="text-hover-show-hapus">Detail</div>
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                    );
-                      })
-                    )}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {allDataReference.data.list_reference.length === 0 ? (
+                        <tr>
+                          <td colSpan="4" className="text-center">
+                            <h4>Data tidak ditemukan</h4>
+                          </td>
+                        </tr>
+                      ) : (
+                        allDataReference.data.list_reference.map((items, index) => {
+                          return (
+                            <tr key={index}>
+                              <td className="align-middle text-left">
+                                {" "}
+                                {allDataReference.page === 1
+                                  ? index + 1
+                                  : (allDataReference.page - 1) *
+                                      allDataReference.limit +
+                                    (index + 1)}
+                              </td>
+                              <td className="align-middle text-left">
+                                {items.name}
+                              </td>
+                              <td className="align-middle text-left">
+                                <p
+                                  className="status-div-red mb-0"
+                                  style={{ width: "max-content" }}
+                                >
+                                  {items.status}
+                                </p>
+                              </td>
+                              <td className="align-middle text-left">
+                                <div className="d-flex align-items-center">
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push(
+                                        `/site-management/reference/ubah-reference-dengan-relasi`
+                                      )
+                                    }
+                                  >
+                                    <IconPencil width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Ubah
+                                    </div>
+                                  </button>
+                                  <button
+                                    className="btn btn-link-action bg-blue-secondary ml-3 position-relative btn-delete"
+                                    onClick={() =>
+                                      router.push(
+                                        `/site-management/reference/detail-refrence`
+                                      )
+                                    }
+                                  >
+                                    <IconEye width="16" height="16" />
+                                    <div className="text-hover-show-hapus">
+                                      Detail
+                                    </div>
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
+                    </tbody>
+                  </table>
                 )}
               </div>
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                 <Pagination
-                        activePage={allDataReference.page}
-                        itemsCountPerPage={allDataReference.data.perPage}
-                        totalItemsCount={allDataReference.data.total}
-                        pageRangeDisplayed={3}
-                        onChange={(page) => dispatch(setPage(page))}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
+                  <Pagination
+                    activePage={allDataReference.page}
+                    itemsCountPerPage={allDataReference.data.perPage}
+                    totalItemsCount={allDataReference.data.total}
+                    pageRangeDisplayed={3}
+                    onChange={(page) => dispatch(setPage(page))}
+                    nextPageText={">"}
+                    prevPageText={"<"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                  />
                 </div>
 
                 <div className="table-total ml-auto">
@@ -233,8 +254,9 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data {allDataReference.data &&
-                          allDataReference.data.total} List Data
+                        Total Data{" "}
+                        {allDataReference.data && allDataReference.data.total}{" "}
+                        List Data
                       </p>
                     </div>
                   </div>
