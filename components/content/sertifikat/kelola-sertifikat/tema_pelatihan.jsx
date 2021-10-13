@@ -27,8 +27,10 @@ export default function NamaPelatihan({ token }) {
   );
 
   const resetValueSort = () => {
-    setAcademy(null);
+    console.log(temaPelatihan, academy, "ini sebelum di reset");
+    setAcademy("");
     setDisable(true);
+    setTemaPelatihan("");
   };
   // #DatePicker
 
@@ -55,14 +57,23 @@ export default function NamaPelatihan({ token }) {
   };
   // #Pagination
 
-  const options = [
-    { value: "FGA", label: "FGA" },
-    { value: "GTA", label: "GTA" },
-    { value: "ASD", label: "ASD" },
-  ];
-
   const [academy, setAcademy] = useState("");
   const [temaPelatihan, setTemaPelatihan] = useState("");
+  const [disable, setDisable] = useState(true);
+  const [dataTemaPelatihan, setDataTemaPelatihan] = useState([]);
+  const [dataAcademy, setDataAcademy] = useState([]);
+
+  useEffect(() => {
+    let arr = [];
+    certificate.list_certificate.forEach((el, i) => {
+      arr.push({
+        value: el.theme.academy.name,
+        label: el.theme.academy.name,
+      });
+    });
+    console.log("ini arr", arr);
+    setDataAcademy(arr);
+  }, [certificate.list_certificate]);
 
   let { page = 1, keyword } = router.query;
 
@@ -83,8 +94,6 @@ export default function NamaPelatihan({ token }) {
       }
     }
   };
-  const [disable, setDisable] = useState(true);
-  const [dataTemaPelatihan, setDataTemaPelatihan] = useState([]);
 
   const handleSelectAcademy = e => {
     setAcademy(e.value);
@@ -108,7 +117,6 @@ export default function NamaPelatihan({ token }) {
     setDataTemaPelatihan(newArr);
   };
 
-  console.log(certificate.list_certificate);
   return (
     <PageWrapper>
       {/* error START */}
@@ -233,7 +241,6 @@ export default function NamaPelatihan({ token }) {
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
-                                  // defaultValue={options[0].value}
                                   isDisabled={false}
                                   isLoading={false}
                                   isClearable={false}
@@ -243,7 +250,7 @@ export default function NamaPelatihan({ token }) {
                                   onChange={e => {
                                     handleSelectAcademy(e);
                                   }}
-                                  options={options}
+                                  options={dataAcademy}
                                 />
                               </div>
                               <div className="fv-row mb-10">
