@@ -409,7 +409,7 @@ export default function TambahMasterSertifikat({ token }) {
           <div className="card-header border-0 d-flex justify-content-lg-between row p-10">
             <div className="card-title d-flex my-auto">
               <div className="text-dark">Nama Sertifikat :</div>
-              <div className="mx-6 p-0">
+              <div className="px-6 p-0 w-100">
                 <input
                   type="text"
                   className="form-control"

@@ -113,11 +113,11 @@ export default function ListPesertaID({ token }) {
           {/* END HEADER */}
           {/* START BODY */}
           <div className="card-body border-top">
-            <div className="row p-0 justify-content-center">
+            <div className="d-flex p-0 justify-content-center">
               {/* START COL */}
               <div
-                className=" position-relative p-0"
-                style={{ width: "781px", height: "552px" }}
+                className="position-relative p-0"
+                style={{ width: "44vw", height: "63vh" }}
                 ref={divReference}
               >
                 <Image

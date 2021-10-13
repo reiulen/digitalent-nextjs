@@ -23,6 +23,19 @@
     height: auto !important
 }
 
+.a4-paper {
+    height: 21cm/2;
+    width: 29.7cm/2;
+}
+
+.a4-font-header {
+    font-size: 4.8vw;
+}
+
+.a4-font-normal {
+    font-size: 3.8vw;
+}
+
 @media (min-width: 992px) {
     .h-100px {
         height: 100px !important
@@ -30,5 +43,13 @@
 
     .tandatangan {
         overflow: auto;
+    }
+
+    .a4-font-header {
+        font-size: 1.8vw;
+    }
+
+    .a4-font-normal {
+        font-size: 0.75vw;
     }
 }
