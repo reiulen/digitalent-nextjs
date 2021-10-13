@@ -16,6 +16,7 @@ import { UPDATE_SUBTANCE_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../red
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 const StepThree = ({ token }) => {
   const dispatch = useDispatch();
@@ -377,7 +378,7 @@ const StepThree = ({ token }) => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
                   >
                     Simpan & Lanjut

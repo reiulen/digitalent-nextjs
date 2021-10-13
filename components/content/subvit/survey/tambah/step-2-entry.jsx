@@ -16,6 +16,7 @@ import LoadingPage from "../../../../LoadingPage";
 import ObjectiveComponent from "./step-2/objective-component";
 import MultipleChoiceComponent from "./step-2/multiple-choice-component";
 import TriggeredQuestionComponent from "./step-2/triggered-question-component";
+import styles from "../../trivia/edit/step.module.css";
 
 const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
@@ -598,7 +599,7 @@ const StepTwo = ({ token }) => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
                   >
                     Simpan & Lanjut

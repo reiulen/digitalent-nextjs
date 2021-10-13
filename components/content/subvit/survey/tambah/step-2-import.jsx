@@ -25,6 +25,7 @@ import StepInput from "/components/StepInput";
 import LoadingTable from "../../../../LoadingTable";
 import ButtonAction from "../../../../ButtonAction";
 import axios from "axios";
+import styles from "../../trivia/edit/step.module.css";
 
 const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
@@ -548,7 +549,7 @@ const StepTwo = ({ token }) => {
                 <div className="col-sm-12 pt-3">
                   <div className="float-right">
                     <button
-                      className="btn btn-light-ghost-rounded-full font-weight-bold mr-2"
+                      className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                       type="submit"
                     >
                       Simpan & Lanjut
