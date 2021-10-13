@@ -1,4 +1,4 @@
-import ForgotPassword from "../../../../components/content/partnership/user/auth/ForgotPassword";
+import ForgotPassword from "../../../../components/content/partnership/user/auth/forgotPassword";
 import { getSession } from "next-auth/client";
 
 export default function ForgotPasswordMitra() {
