@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Image from "next/image";
 
+// import { useEmblaCarousel } from "embla-carousel";
+
 import { 
     Carousel, 
 } from "react-bootstrap";
@@ -46,22 +48,44 @@ const ImagetronCarousel = () => {
 
     // const settings = {
     //     dots: false,
-    //     infinite: false,
-    //     speed: 500,
     //     slidesToShow: 1,
     //     slidesToScroll: 1,
     //     arrows: false,
     //     swipeToSlide: true,
+    //     className: "center",
+    //     centerMode: true,
+    //     infinite: false,
+    //     centerPadding: "60px",
+    //     speed: 500
     // }
 
+    // const [emblaRef, embla] = useEmblaCarousel({
+
+    //     align: "start",
+    //     // aligns the first slide to the start
+    //     // of the viewport else will align it to the middle.
+    
+    //     loop: true,
+    //     // we need the carousel to loop to the
+    //     // first slide once it reaches the last slide.
+    
+    //     skipSnaps: false,
+    //     // Allow the carousel to skip scroll snaps if
+    //     // it's dragged vigorously.
+    
+    //     inViewThreshold: 0.7,
+    //     // percentage of a slide that need's to be visible
+    //     // inorder to be considered in view, 0.7 is 70%.
+    // });
 
     return (
+        
         <Carousel 
-            nextIcon={false} 
+            nextIcon={true} 
             nextLabel={false} 
             prevIcon={false} 
             prevLabel={false} 
-            indicators={false}
+            indicators={true}
         >
             <Carousel.Item>
                 <Image
@@ -94,6 +118,8 @@ const ImagetronCarousel = () => {
                 />
             </Carousel.Item>
         </Carousel>
+        
+        
 
         // #React Carousel 
         // <Carousel
@@ -150,7 +176,7 @@ const ImagetronCarousel = () => {
         // <Slider {...settings}>
         //     <div>
         //         <Image
-        //             width={1500}
+        //             width={1000}
         //             height={500}
         //             src={`/assets/media/carousel-01.svg`}
         //             // objectFit="fill"
@@ -160,7 +186,7 @@ const ImagetronCarousel = () => {
         //     </div>
         //     <div>
         //         <Image
-        //             width={1500}
+        //             width={1000}
         //             height={500}
         //             src={`/assets/media/banner-02.svg`}
         //             // objectFit="fill"
@@ -170,7 +196,7 @@ const ImagetronCarousel = () => {
         //     </div>
         //     <div>
         //     <Image
-        //         width={1500}
+        //         width={1000}
         //         height={500}
         //         src={`/assets/media/tahapan-pendaftaran.svg`}
         //         // objectFit="fill"

@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import Image from "next/image";
 
+import { useDispatch, useSelector } from "react-redux";
+
 import { 
     Nav, 
     Button,
@@ -29,11 +31,26 @@ const Navigationbar = dynamic(() => import("../../../components/templates/navbar
   });
 
 const Beranda = () => {
+    const {
+        akademi,
+    } = useSelector((state) => state.allAkademi);
 
+    const {
+        tema,
+    } = useSelector((state) => state.temaByAkademi);
+
+    const {
+        pelatihan,
+    } = useSelector((state) => state.pelatihanByTema);
+    
     const [activeTab, setActiveTab] = useState ("VSGA")
     const [indexTab, setIndexTab] = useState (0)
     const [show,setShow] = useState(false)
     const [showDetail, setShowDetail] = useState(false)
+
+    useEffect(() => {
+
+    }, [])
 
     const handleMouseEnter = () =>{
         setShow(true)
@@ -63,173 +80,143 @@ const Beranda = () => {
     return (
         <BerandaWrapper title= "Digitalent">
             <div className="bg-white">
+                {
+                    console.log (akademi)
+                }
+
+                {
+                    console.log (tema)
+                }
+
+                {
+                    console.log (pelatihan)
+                }
+
                 <Navigationbar />
 
                 <ImagetronCarousel />
 
                 {/* Akademi */}
-
-                <div className="mb-3">
-                    <Slider
-                        dots= {false}
-                        infinite= {false}
-                        speed= {500}
-                        slidesToShow= {4}
-                        slidesToScroll= {1}
-                        arrows= {false}
-                        swipeToSlide= {true}
-                    >
-
-                        <Link href="#VSGA">
-                            <Card style={{ width: '23rem', height:"7rem", cursor:"pointer" }} onClick={() => handleActive("VSGA", 0)}>
+                {/* <div className="mb-3">
+                    {
+                        akademi ?
+                            <Slider
+                                dots= {false}
+                                infinite= {false}
+                                speed= {500}
+                                slidesToShow= {4}
+                                slidesToScroll= {1}
+                                arrows= {false}
+                                swipeToSlide= {true}
+                            >
                                 {
-                                    indexTab === 0 ?
-                                        <Card.Body className="row bg-secondary rounded">
+                                    akademi.map ((el, i) => {
+                                        return (
+                                            <Link href="#" key={i}>
+                                                <Card style={{ width: '23rem', height:"7rem", cursor:"pointer" }} onClick={() => handleActive(el.slug, i)}>
+                                                    {
+                                                        indexTab === i ?
+                                                            <Card.Body className="row bg-secondary rounded">
 
-                                            <div className="col-5">
-                                                <div>
-                                                    <h1 className="font-weight-bolder text-white">
-                                                        VSGA
-                                                    </h1>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-7" style={{marginTop: "-2vh"}}>
-                                                <div>
-                                                    <div className=" font-weight-bolder text-white ">
-                                                        Vocational School Graduate Academy
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                                <div className="col-5">
+                                                                    <div>
+                                                                        <h1 className="font-weight-bolder text-white">
+                                                                            {el.slug}
+                                                                        </h1>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div className="col-7" style={{marginTop: "-2vh"}}>
+                                                                    <div>
+                                                                        <div className=" font-weight-bolder text-white ">
+                                                                            {el.name}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-                                        </Card.Body>
-                                    :
-                                        <Card.Body className="row rounded">
+                                                            </Card.Body>
+                                                        :
+                                                            <Card.Body className="row rounded">
 
-                                            <div className="col-5">
-                                                <div>
-                                                    <h1 className="font-weight-bolder">
-                                                        VSGA
-                                                    </h1>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-7" style={{marginTop: "-2vh"}}>
-                                                <div>
-                                                    <div className=" font-weight-bolder ">
-                                                        Vocational School Graduate Academy
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                                <div className="col-5">
+                                                                    <div>
+                                                                        <h1 className="font-weight-bolder">
+                                                                            {el.slug}
+                                                                        </h1>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <div className="col-7" style={{marginTop: "-2vh"}}>
+                                                                    <div>
+                                                                        <div className=" font-weight-bolder ">
+                                                                            {el.name}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-                                        </Card.Body>
+                                                            </Card.Body>
+                                                    }
+                                                    
+                                                </Card>
+                                            </Link>
+                                        )
+                                    })
                                 }
-                                
-                            </Card>
-                        </Link>
 
-                        <Link href="#VSGA">
-                            <Card style={{ width: '23rem', height:"7rem", cursor:"pointer" }} onClick={() => handleActive("VSGA", 0)}>
-                                {
-                                    indexTab === 0 ?
-                                        <Card.Body className="row bg-secondary rounded">
-
-                                            <div className="col-5">
-                                                <div>
-                                                    <h1 className="font-weight-bolder text-white">
-                                                        VSGA
-                                                    </h1>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-7" style={{marginTop: "-2vh"}}>
-                                                <div>
-                                                    <div className=" font-weight-bolder text-white ">
-                                                        Vocational School Graduate Academy
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </Card.Body>
-                                    :
-                                        <Card.Body className="row rounded">
-
-                                            <div className="col-5">
-                                                <div>
-                                                    <h1 className="font-weight-bolder">
-                                                        VSGA
-                                                    </h1>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-7" style={{marginTop: "-2vh"}}>
-                                                <div>
-                                                    <div className=" font-weight-bolder ">
-                                                        Vocational School Graduate Academy
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </Card.Body>
-                                }
-                                
-                            </Card>
-                        </Link>
-
-                        <Link href="#VSGA">
-                            <Card style={{ width: '23rem', height:"7rem", cursor:"pointer" }} onClick={() => handleActive("VSGA", 0)}>
-                                {
-                                    indexTab === 0 ?
-                                        <Card.Body className="row bg-secondary rounded">
-
-                                            <div className="col-5">
-                                                <div>
-                                                    <h1 className="font-weight-bolder text-white">
-                                                        VSGA
-                                                    </h1>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-7" style={{marginTop: "-2vh"}}>
-                                                <div>
-                                                    <div className=" font-weight-bolder text-white ">
-                                                        Vocational School Graduate Academy
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </Card.Body>
-                                    :
-                                        <Card.Body className="row rounded">
-
-                                            <div className="col-5">
-                                                <div>
-                                                    <h1 className="font-weight-bolder">
-                                                        VSGA
-                                                    </h1>
-                                                </div>
-                                            </div>
-                                            
-                                            <div className="col-7" style={{marginTop: "-2vh"}}>
-                                                <div>
-                                                    <div className=" font-weight-bolder ">
-                                                        Vocational School Graduate Academy
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </Card.Body>
-                                }
-                                
-                            </Card>
-                        </Link>
-
-                    </Slider>
-                </div>
+                            </Slider>
+                        :
+                            <div>
+                                Harap menunggu
+                            </div>
+                    }
+                    
+                </div> */}
                 
                 {/* Tema-1 */}
+            
                 <div className="my-5">
-                    <div className="d-flex justify-content-between">
+                    {/* {
+                        tema ?
+                            tema.map ((el, i) => {
+                                return (
+                                    <div className="d-flex justify-content-between" key={i}>
+                                        <h1 className="text-left font-weight-bolder ml-5">
+                                             {el.name}
+                                         </h1>
+                                         <div>
+                                             <Link href="/detail/akademi/id">
+                                                 <a className="text-primary d-flex alignment-content-center font-weight-bolder">
+                                                     <div className="pt-1" style={{color:"#215480"}}> 
+                                                         Lihat Semua
+                                                     </div>
+                                                     <i className="ri-arrow-right-s-line " style={{color:"#215480"}}></i>
+                                                 </a>
+                                             </Link>
+                                         </div>
+                                    </div> 
+                                )
+                            })
+                            // <div className="d-flex justify-content-between">
+                            //     <h1 className="text-left font-weight-bolder ml-5">
+                            //         Multi Media Designer
+                            //     </h1>
+                            //     <div>
+                            //         <Link href="/detail/akademi/id">
+                            //             <a className="text-primary d-flex alignment-content-center font-weight-bolder">
+                            //                 <div className="pt-1" style={{color:"#215480"}}> 
+                            //                     Lihat Semua
+                            //                 </div>
+                            //                 <i className="ri-arrow-right-s-line " style={{color:"#215480"}}></i>
+                            //             </a>
+                            //         </Link>
+                            //     </div>
+                            // </div>
+                        :   
+                            <div>
+                                Harap Menunggu
+                            </div>
+                    } */}
+                    {/* <div className="d-flex justify-content-between">
                         <h1 className="text-left font-weight-bolder ml-5">
                             Multi Media Designer
                         </h1>
@@ -243,13 +230,9 @@ const Beranda = () => {
                                 </a>
                             </Link>
                         </div>
-                    </div>
+                    </div> */}
 
                     {/* {
-                        renderAcademicTheme()
-                    } */}
-
-                    {
                         showDetail === true ?
                             <div className="d-flex justify-content-center my-5">
                                 <Card className="col-10 shadow" style={{height:"20rem"}}>
@@ -287,13 +270,6 @@ const Beranda = () => {
                                                 src={`/assets/media/Image-theme.svg`} 
                                                 style={{marginTop:"-10vh"}}
                                             />
-                                            {/* <Image 
-                                                src={`/assets/media/Image-theme.svg`}
-                                                // layout="fill"
-                                                objectFit="cover"
-                                                width={800}
-                                                height={800}
-                                            /> */}
                                         </div>
                                         <div className="col-8">
                                             <Card.Body>
@@ -447,16 +423,6 @@ const Beranda = () => {
                                                         null
                                                 }  
             
-                                                        {/* <div className="my-5">
-                                                            <button 
-                                                                // className="btn "
-                                                                className="btn btn-outline-primary rounded-pill btn-block" 
-                                                                onClick={() => handleQuickView()}
-                                                            >
-                                                                Quick View
-                                                            </button>
-                                                        </div> */}
-            
                                             </Card.Body>
             
                                         </Card>
@@ -536,16 +502,6 @@ const Beranda = () => {
                                                         null
                                                 }  
             
-                                                        {/* <div className="my-5">
-                                                            <button 
-                                                                // className="btn "
-                                                                className="btn btn-outline-primary rounded-pill btn-block" 
-                                                                onClick={() => handleQuickView()}
-                                                            >
-                                                                Quick View
-                                                            </button>
-                                                        </div> */}
-            
                                             </Card.Body>
             
                                         </Card>
@@ -623,17 +579,7 @@ const Beranda = () => {
                                                         </div>
                                                     :
                                                         null
-                                                }  
-            
-                                                        {/* <div className="my-5">
-                                                            <button 
-                                                                // className="btn "
-                                                                className="btn btn-outline-primary rounded-pill btn-block" 
-                                                                onClick={() => handleQuickView()}
-                                                            >
-                                                                Quick View
-                                                            </button>
-                                                        </div> */}
+                                                } 
             
                                             </Card.Body>
             
@@ -644,12 +590,12 @@ const Beranda = () => {
                                 </Carousel.Item>
             
                             </Carousel>
-                    }
+                    } */}
                     
                 </div>
 
                 {/* Tema-2 */}
-                <div className="my-5">
+                {/* <div className="my-5">
                     <div className="d-flex justify-content-between">
                         <h1 className="text-left font-weight-bolder ml-5">
                             Multi Media Designer
@@ -665,10 +611,6 @@ const Beranda = () => {
                             </Link>
                         </div>
                     </div>
-
-                    {/* {
-                        renderAcademicTheme()
-                    } */}
 
                     {
                         showDetail === true ?
@@ -708,13 +650,6 @@ const Beranda = () => {
                                                 src={`/assets/media/Image-theme.svg`} 
                                                 style={{marginTop:"-10vh"}}
                                             />
-                                            {/* <Image 
-                                                src={`/assets/media/Image-theme.svg`}
-                                                // layout="fill"
-                                                objectFit="cover"
-                                                width={800}
-                                                height={800}
-                                            /> */}
                                         </div>
                                         <div className="col-8">
                                             <Card.Body>
@@ -868,16 +803,6 @@ const Beranda = () => {
                                                         null
                                                 }  
             
-                                                        {/* <div className="my-5">
-                                                            <button 
-                                                                // className="btn "
-                                                                className="btn btn-outline-primary rounded-pill btn-block" 
-                                                                onClick={() => handleQuickView()}
-                                                            >
-                                                                Quick View
-                                                            </button>
-                                                        </div> */}
-            
                                             </Card.Body>
             
                                         </Card>
@@ -957,16 +882,6 @@ const Beranda = () => {
                                                         null
                                                 }  
             
-                                                        {/* <div className="my-5">
-                                                            <button 
-                                                                // className="btn "
-                                                                className="btn btn-outline-primary rounded-pill btn-block" 
-                                                                onClick={() => handleQuickView()}
-                                                            >
-                                                                Quick View
-                                                            </button>
-                                                        </div> */}
-            
                                             </Card.Body>
             
                                         </Card>
@@ -1045,16 +960,6 @@ const Beranda = () => {
                                                     :
                                                         null
                                                 }  
-            
-                                                        {/* <div className="my-5">
-                                                            <button 
-                                                                // className="btn "
-                                                                className="btn btn-outline-primary rounded-pill btn-block" 
-                                                                onClick={() => handleQuickView()}
-                                                            >
-                                                                Quick View
-                                                            </button>
-                                                        </div> */}
             
                                             </Card.Body>
             
@@ -1067,10 +972,10 @@ const Beranda = () => {
                             </Carousel>
                     }
                     
-                </div>
+                </div> */}
 
                 {/* Tema-3 */}
-                <div className="my-5">
+                {/* <div className="my-5">
                     <div className="d-flex justify-content-between">
                         <h1 className="text-left font-weight-bolder ml-5">
                             Multi Media Designer
@@ -1086,10 +991,6 @@ const Beranda = () => {
                             </Link>
                         </div>
                     </div>
-
-                    {/* {
-                        renderAcademicTheme()
-                    } */}
 
                     {
                         showDetail === true ?
@@ -1129,13 +1030,6 @@ const Beranda = () => {
                                                 src={`/assets/media/Image-theme.svg`} 
                                                 style={{marginTop:"-10vh"}}
                                             />
-                                            {/* <Image 
-                                                src={`/assets/media/Image-theme.svg`}
-                                                // layout="fill"
-                                                objectFit="cover"
-                                                width={800}
-                                                height={800}
-                                            /> */}
                                         </div>
                                         <div className="col-8">
                                             <Card.Body>
@@ -1289,16 +1183,6 @@ const Beranda = () => {
                                                         null
                                                 }  
             
-                                                        {/* <div className="my-5">
-                                                            <button 
-                                                                // className="btn "
-                                                                className="btn btn-outline-primary rounded-pill btn-block" 
-                                                                onClick={() => handleQuickView()}
-                                                            >
-                                                                Quick View
-                                                            </button>
-                                                        </div> */}
-            
                                             </Card.Body>
             
                                         </Card>
@@ -1378,16 +1262,6 @@ const Beranda = () => {
                                                         null
                                                 }  
             
-                                                        {/* <div className="my-5">
-                                                            <button 
-                                                                // className="btn "
-                                                                className="btn btn-outline-primary rounded-pill btn-block" 
-                                                                onClick={() => handleQuickView()}
-                                                            >
-                                                                Quick View
-                                                            </button>
-                                                        </div> */}
-            
                                             </Card.Body>
             
                                         </Card>
@@ -1466,16 +1340,6 @@ const Beranda = () => {
                                                     :
                                                         null
                                                 }  
-            
-                                                        {/* <div className="my-5">
-                                                            <button 
-                                                                // className="btn "
-                                                                className="btn btn-outline-primary rounded-pill btn-block" 
-                                                                onClick={() => handleQuickView()}
-                                                            >
-                                                                Quick View
-                                                            </button>
-                                                        </div> */}
             
                                             </Card.Body>
             
@@ -1488,7 +1352,7 @@ const Beranda = () => {
                             </Carousel>
                     }
                     
-                </div>
+                </div> */}
 
                 <div className="col-12 text-center my-5">
                     <button className="btn btn-outline-primary rounded-pill ">

@@ -1,6 +1,12 @@
+import { getSession } from "next-auth/client";
+
 import LoginAdmin from "../components/content/auth/admin/login";
 import Beranda from "../user-component/content/beranda/beranda"
-import { getSession } from "next-auth/client";
+
+import { wrapper } from "../redux/store";
+import { getAllAkademi } from "../redux/actions/beranda/beranda.actions";
+import { getTemaByAkademi } from "../redux/actions/beranda/beranda.actions";
+import { getPelatihanByTema } from "../redux/actions/beranda/beranda.actions";
 
 export default function HomePage() {
   return (
@@ -24,20 +30,22 @@ export default function HomePage() {
 //   );
 // }
 
-export async function getServerSideProps(context) {
-  // const session = await getSession({ req: context.req });
-  // if (session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/dashboard",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+export const getStaticProps = wrapper.getStaticProps((store) => async({ query, req }) => {
+  await store.dispatch(
+    getAllAkademi()
+  );
+
+  await store.dispatch (
+    getTemaByAkademi()
+  )
+
+  await store.dispatch (
+    getPelatihanByTema()
+  )
 
   return {
     props: {
       data: "auth",
     },
   };
-}
+})
