@@ -257,7 +257,7 @@ const EditGaleri = ({ token }) => {
                         list[index].imageFile = e.target.files[0];
                         list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
                         list[index].imageName = e.target.files[0].name;
-                        console.log("List :", list)
+                        // console.log("List :", list)
                         setImage(list);
                     }
                     // router.reload(window.location.pathname)
@@ -270,10 +270,7 @@ const EditGaleri = ({ token }) => {
                 reader.readAsDataURL(e.target.files[0]);
                 list[index].imageName = e.target.files[0].name;
                 // setImage(list);
-
             }
-
-
         } else {
             e.target.value = null;
             Swal.fire(
