@@ -23,7 +23,8 @@ const Tambah = ({ token }) => {
   const [email, setEmail] = useState("");
   const [wesite, setWesite] = useState("");
   const [agency_logo, setAgency_logo] = useState("");
-  const [agency_logo_api, setAgency_logo_api] = useState("");
+  // const [agency_logo_api, setAgency_logo_api] = useState("");
+  const [imageview, setImageview] = useState("");
   const [address, setAddress] = useState("");
   const [indonesia_provinces_id, setIndonesia_provinces_id] = useState("");
   // console.log("indonesia_provinces_id",indonesia_provinces_id)
@@ -66,13 +67,18 @@ const Tambah = ({ token }) => {
 
     // jika pertama kali data profile kosong
     // else if ((agency_logo === "") && agency_logo_api) {
-    else if (agency_logo_api === "" && agency_logo === "") {
-      setError({
-        ...error,
-        agency_logo: "Harus isi gambar logo dengan format png",
-      });
-      notify("Harus isi gambar logo dengan format png");
-    } else if (address === "") {
+
+//     else if (imageview && agency_logo) {
+// setError({
+//         ...error,
+//         agency_logo: "Harus isi gambar logo dengan format png",
+//       });
+//       notify("Harus isi gambar logo dengan format png");
+
+      
+//     }
+
+     else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
       notify("Harus isi alamat");
     } else if (indonesia_provinces_id === "") {
@@ -280,7 +286,10 @@ const Tambah = ({ token }) => {
         );
 
         if (data) {
-          setAgency_logo_api(
+          // setAgency_logo_api(
+          //   data.data.agency_logo === "-" ? "" : data.data.agency_logo
+          // );
+          setImageview(
             data.data.agency_logo === "-" ? "" : data.data.agency_logo
           );
           setAddress(data.data.address === "-" ? "" : data.data.address);
@@ -486,72 +495,82 @@ const Tambah = ({ token }) => {
                   Gambar Logo
                 </label>
 
-                {!isChangeLogo && agency_logo_api ? (
-                  <div className="position-relative overflow-hidden w-100 ">
-                    <input
-                      disabled
-                      type="text"
-                      className="form-control"
-                      placeholder={`${agency_logo_api}`}
-                    />
-                    <button
-                      type="button"
-                      className="btn right-center-absolute"
-                      style={{
-                        borderTopLeftRadius: "0",
-                        borderBottomLeftRadius: "0",
-                        backgroundColor: "#D7E1EA",
-                        color: "#6C6C6C",
-                      }}
-                      onClick={() =>
-                        window.open(`${process.env.END_POINT_API_IMAGE_PARTNERSHIP}partnership/images/profile-images/${agency_logo_api}
-                        `)
-                      }
-                    >
-                      Buka File
-                    </button>
-                  </div>
-                ) : (
-                  ""
-                )}
-
-                {isChangeLogo || !agency_logo_api ? (
-                  <div className="input-group">
-                    <div className="custom-file">
-                      <input
-                        onFocus={() => setError({ ...error, agency_logo: "" })}
-                        onChange={(e) => onChangeImage(e)}
-                        type="file"
-                        name="logo"
-                        className="custom-file-input cursor-pointer"
-                        id="inputGroupFile04"
-                        accept="image/png,image/jpg"
-                      />
-
-                      <label
-                        className="custom-file-label"
-                        htmlFor="inputGroupFile04"
-                      >
-                        {NamePDF ? NamePDF : "Cari Logo"}
-                      </label>
-                    </div>
-                  </div>
-                ) : (
-                  ""
-                )}
-
-                {agency_logo_api === "" ? (
-                  ""
-                ) : (
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-2"
-                    onClick={() => changeStatusLgo()}
+                {!agency_logo ? (
+                  <div
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    className="shadow-image-form cursor-pointer position-relative"
+                    style={{
+                      maxWidth: "168px",
+                      maxHeight: "168px",
+                      width: "168px",
+                      height: "168px",
+                    }}
                   >
-                    {isChangeLogo ? "Batal Ubah" : "Ubah Logo"}
-                  </button>
+                    <Image
+                      src={process.env.END_POINT_API_IMAGE_PARTNERSHIP +
+                          "partnership/images/profile-images/" +
+                          imageview}
+                      alt="Picture of the author"
+                      layout="fill"
+                      objectFit="fill"
+                    />
+                  </div>
+                ) : (
+                  <div
+                    data-toggle="modal"
+                    data-target="#exampleModalCenter"
+                    className="shadow-image-form cursor-pointer position-relative"
+                    style={{
+                      maxWidth: "168px",
+                      maxHeight: "168px",
+                      width: "168px",
+                      height: "168px",
+                    }}
+                  >
+                    <Image
+                      src={agency_logo}
+                      alt="Picture of the author"
+                      layout="fill"
+                      objectFit="fill"
+                    />
+                  </div>
                 )}
 
+                {agency_logo && imageview ? (
+                  <button
+                    className="btn btn-primary btn-sm my-3 mr-3"
+                    type="button"
+                    onClick={() => setAgency_logo("")}
+                  >
+                    Batal ubah
+                  </button>
+                ) : (
+                  ""
+                )}
+
+
+
+                <div className="input-group">
+                  <div className="custom-file">
+                    <input
+                      onFocus={() => setError({ ...error, agency_logo: "" })}
+                      onChange={(e) => onChangeImage(e)}
+                      type="file"
+                      name="logo"
+                      className="custom-file-input cursor-pointer"
+                      id="inputGroupFile04"
+                      accept="image/png,image/jpg"
+                    />
+
+                    <label
+                      className="custom-file-label"
+                      htmlFor="inputGroupFile04"
+                    >
+                      {NamePDF ? NamePDF : "Cari Logo"}
+                    </label>
+                  </div>
+                </div>
                 {error.agency_logo ? (
                   <p className="error-text">{error.agency_logo}</p>
                 ) : (
@@ -559,9 +578,6 @@ const Tambah = ({ token }) => {
                 )}
               </div>
               {/* modal image show */}
-
-
-              
               <div
                 className="modal fade"
                 id="exampleModalCenter"
@@ -577,7 +593,7 @@ const Tambah = ({ token }) => {
                   <div className="modal-content">
                     <div className="modal-header">
                       <h5 className="modal-title" id="exampleModalLongTitle">
-                        Gambar Logo
+                        Logo Gambar
                       </h5>
                       <button
                         type="button"

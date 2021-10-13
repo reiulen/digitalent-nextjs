@@ -234,7 +234,7 @@ a {
 }
 
 .disabled-form input {
-  background-color: #f3f6f9 !important;
+  background-color: transparent !important;
 }
 
 .minimal-image img {
