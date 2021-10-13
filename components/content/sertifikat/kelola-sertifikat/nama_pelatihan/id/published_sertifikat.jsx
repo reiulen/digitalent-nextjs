@@ -125,21 +125,20 @@ export default function KelolasertifikatID({ token }) {
             <div className="row p-0 justify-content-center">
               {/* START COL */}
               <div
-                className="position-relative p-0 container-fluid"
-                style={{ width: "842px", height: "595px" }}
+                className="position-relative p-0 d-flex"
+                // style={{ width: "842px", height: "595px" }}
                 ref={divReference}
               >
                 <Image
                   src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate_result}`}
                   alt={`image ${certificate.data.certificate_result}`}
-                  layout="fill"
+                  // layout="fill"
                   objectFit="fill"
+                  width={842}
+                  height={595}
                 />
-                <div
-                  className="position-absolute w-100 text-center  "
-                  style={{ marginTop: "135px" }}
-                >
-                  <span className="font-size-h1 px-5 font-weight-boldest">
+                <div className="position-absolute w-100 text-center responsive-margin">
+                  <span className="px-5 font-weight-boldest responsive-font-size">
                     Nama Peserta
                   </span>
                 </div>
@@ -185,10 +184,7 @@ export default function KelolasertifikatID({ token }) {
                     className="position-absolute w-100 text-center"
                     style={{ marginTop: "128px" }}
                   >
-                    <span
-                      className="font-size-h5 px-5 border-2 font-weight-boldest"
-                      style={{ borderStyle: "dashed" }}
-                    >
+                    <span className="font-size-h5 px-5 border-2 font-weight-boldest">
                       Nama Peserta
                     </span>
                   </div>

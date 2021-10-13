@@ -41,15 +41,29 @@ export default function EditSertifikat({ token }) {
     certificate: updateCertificate,
   } = useSelector(state => state.updateCertificates);
 
+  useEffect(() => {
+    if (!certificate) {
+      router.push(
+        {
+          pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
+          query: { success: true },
+        },
+        null,
+        { shallow: false }
+      );
+    }
+  }, [certificate]);
+
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
   const [namaPeserta, setNamaPeserta] = useState("Nama Peserta");
   const [certificate_name, setCertificate_name] = useState(
-    certificate.data.certificate.name || ""
+    certificate?.data?.certificate?.name || ""
   );
-  const [signature, setSignature] = useState(certificate.data.signature); //ttd 1
+
+  const [signature, setSignature] = useState(certificate?.data?.signature); //ttd 1
   const [signatureSyllabus, setSignatureSyllabus] = useState(
-    certificate.data.signature_syllabu
+    certificate?.data?.signature_syllabu
   ); //ttd 2
   const [date, setDate] = useState(new Date());
   // #Redux state
@@ -59,22 +73,22 @@ export default function EditSertifikat({ token }) {
 
   // #START FORM DATA
   const [certificate_type, setCertificate_type] = useState(
-    certificate.data.certificate.certificate_type || "1 lembar"
+    certificate?.data?.certificate?.certificate_type || "1 lembar"
   );
 
   const [number_of_signatures, setNumber_of_signatures] = useState(
-    certificate.data.certificate.number_of_signatures
+    certificate?.data?.certificate?.number_of_signatures
   );
 
   // START SYLLABUS
   const [number_of_signature_syllabus, setNumber_of_signature_syllabus] =
-    useState(1);
+    useState(certificate?.data?.certificate?.number_of_signature_syllabus);
 
   const [syllabus, setSyllabus] = useState(
-    certificate.data.certificate.syllabus || ["", ""]
+    certificate?.data?.certificate?.syllabus || ["", ""]
   );
   const [background_syllabus, setBackground_syllabus] = useState(
-    certificate.data.certificate.background_syllabus || ""
+    certificate?.data?.certificate?.background_syllabus || ""
   );
 
   const [localBackgroundSyllabus, setLocalBackgroundSyllabus] = useState("");
@@ -89,19 +103,20 @@ export default function EditSertifikat({ token }) {
 
   const [imageName, setImageName] = useState([]);
   const [imageNameSyllabus, setImageNameSyllabus] = useState([]);
-  const didMount = useRef(false);
   const [background, setBackground] = useState(
-    certificate.data.certificate.background || ""
+    certificate?.data?.certificate?.background || ""
   );
 
-  const [nomerSertifikat, setNomerSertifikat] = useState("Nomer Sertifikat");
+  const [nomerSertifikat, setNomerSertifikat] = useState("Nomor Sertifikat");
   const [localBackground, setLocalBackground] = useState("");
   const [tanggal, setTanggal] = useState("--/--/----");
   const [tahun, setTahun] = useState("----");
   // RESET TTD
 
+  const didMount = useRef(false);
+  const didMount2 = useRef(false);
+
   useEffect(() => {
-    // console.log(number_of_signatures);
     if (didMount.current) {
       setSignature(prev => {
         let newArr = [...prev];
@@ -116,13 +131,17 @@ export default function EditSertifikat({ token }) {
   }, [number_of_signatures]);
 
   useEffect(() => {
-    setSignatureSyllabus(prev => {
-      let newArr = [...prev];
-      newArr.forEach(el => {
-        el.set_position = 0;
+    if (didMount2.current) {
+      setSignatureSyllabus(prev => {
+        let newArr = [...prev];
+        newArr.forEach(el => {
+          el.set_position = 0;
+        });
+        return newArr;
       });
-      return newArr;
-    });
+    } else {
+      didMount2.current = true;
+    }
   }, [number_of_signature_syllabus]);
 
   // #START MODAL
@@ -279,6 +298,13 @@ export default function EditSertifikat({ token }) {
   const handlePost = async (e, status) => {
     try {
       e.preventDefault();
+      if (status == 1) {
+        setTahun("");
+        setTanggal("");
+        setNamaPeserta("");
+        setNomerSertifikat("");
+      }
+
       if (certificate_type == "1 lembar") {
         simpleValidator.current.fields.Jabatan = true;
         simpleValidator.current.fields.Nama = true;
@@ -301,6 +327,7 @@ export default function EditSertifikat({ token }) {
         formData.append("name", certificate_name);
         formData.append("certificate_type", certificate_type);
         formData.append("number_of_signatures", number_of_signatures);
+
         formData.append(
           "number_of_signature_syllabus",
           number_of_signature_syllabus
@@ -315,12 +342,13 @@ export default function EditSertifikat({ token }) {
         }
 
         for (let i = 0; i < number_of_signatures; i++) {
-          console.log(signature[i], "ini signature");
           if (signature[i].localSignature) {
             formData.append(
               `signature_certificate_image[${i}]`,
               signature[i].localSignature
             );
+          } else {
+            formData.append(`signature_certificate_image[${i}]`, "");
           }
           formData.append(
             `signature_certificate_position[${i}]`,
@@ -337,32 +365,35 @@ export default function EditSertifikat({ token }) {
         }
 
         if (certificate_type == "2 lembar") {
+          for (let i = 0; i < number_of_signature_syllabus; i++) {
+            console.log(signatureSyllabus[i]);
+
+            formData.append(
+              `signature_certificate_position_syllabus[${i}]`,
+              signatureSyllabus[i].position
+            ); //jabatan
+            formData.append(
+              `signature_certificate_set_position_syllabus[${i}]`,
+              signatureSyllabus[i].set_position
+            );
+            formData.append(
+              `signature_certificate_name_syllabus[${i}]`,
+              signatureSyllabus[i].name
+            );
+            if (signatureSyllabus[i].localSignature) {
+              formData.append(
+                `signature_certificate_image_syllabus[${i}]`,
+                signatureSyllabus[i].localSignature
+              );
+            } else {
+              formData.append(`signature_certificate_image_syllabus[${i}]`, "");
+            }
+          }
+
           const dataSyllabus = await convertDivToPng(
             divReferenceSilabus.current
           ); //convert bg 2
           formData.append("certificate_result_syllabus", dataSyllabus);
-
-          signatureSyllabus.forEach((item, i) => {
-            console.log(item, "ini items");
-            if (item.localSignature) {
-              formData.append(
-                `signature_certificate_image_syllabus[${i}]`,
-                item.localSignature
-              ); // img signature yang baru di taro
-            }
-            formData.append(
-              `signature_certificate_position_syllabus[${i}]`,
-              item.position
-            ); //jabatan
-            formData.append(
-              `signature_certificate_set_position_syllabus[${i}]`,
-              item.set_position
-            );
-            formData.append(
-              `signature_certificate_name_syllabus[${i}]`,
-              item.name
-            );
-          });
 
           syllabus.forEach((item, i) => {
             formData.append(`syllabus[${i}]`, item);
@@ -375,10 +406,14 @@ export default function EditSertifikat({ token }) {
 
         dispatch(updateSertifikat(id, formData, token));
 
-        router.push({
-          pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
-          query: { success: true },
-        });
+        router.push(
+          {
+            pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
+            query: { success: true },
+          },
+          null,
+          { shallow: false }
+        );
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -477,14 +512,14 @@ export default function EditSertifikat({ token }) {
                   {localBackground ? (
                     <Image
                       src={localBackground}
-                      alt="fitur"
+                      alt="LocalBackground.png"
                       layout="fill"
                       objectFit="fill"
                     />
                   ) : background ? (
                     <Image
                       src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background/${background}`}
-                      alt="fitur"
+                      alt={`Background Image ${background}`}
                       layout="fill"
                       objectFit="fill"
                     />
@@ -493,8 +528,11 @@ export default function EditSertifikat({ token }) {
                   )}
                   <div className="row align-items-center zindex-1">
                     <div className="position-relative">
-                      <div className="m-6 text-center px-4 border-2">
-                        Nomer Sertifikat
+                      <div
+                        className="m-6 text-center px-4 border-2"
+                        style={{ height: "20px" }}
+                      >
+                        {nomerSertifikat}
                       </div>
                     </div>
                     <div
@@ -541,12 +579,12 @@ export default function EditSertifikat({ token }) {
                           Selama
                         </span>
                         <span className="mx-2 px-2 border-2 w-100">
-                          {/* --/--/---- */}
+                          {tanggal}
                         </span>
                       </div>
                       <div className="mt-2 w-100">
                         <span>Digital Talent Scholarship</span>
-                        {/* <span className="mx-2 px-2 border-2">----</span> */}
+                        <span className="mx-2 px-2 border-2">{tahun}</span>
                       </div>
                       <div className="my-4 w-100 text-center">
                         <span className="mx-2 px-2 border-2">
@@ -885,7 +923,7 @@ export default function EditSertifikat({ token }) {
                                           options={{
                                             minWidth: 1,
                                             maxWidth: 3,
-                                            penColor: "rgb(66, 133, 244)",
+                                            penColor: "black",
                                           }}
                                           onBlur={() =>
                                             simpleValidator.current.showMessageFor(
@@ -1151,7 +1189,7 @@ export default function EditSertifikat({ token }) {
                     {localBackgroundSyllabus ? (
                       <Image
                         src={localBackgroundSyllabus}
-                        alt="fitur"
+                        alt="LocalBackground.png"
                         // height={495}
                         // width={1400}
                         layout="fill"
@@ -1160,7 +1198,7 @@ export default function EditSertifikat({ token }) {
                     ) : background_syllabus ? (
                       <Image
                         src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/background-syllabus/${background_syllabus}`}
-                        alt={`background Image ${background_syllabus}`}
+                        alt={`Background Image ${background_syllabus}`}
                         // height={495}
                         // width={1400}
                         layout="fill"
@@ -1178,7 +1216,7 @@ export default function EditSertifikat({ token }) {
                         style={{ height: "370px" }}
                       >
                         <div style={{ fontSize: "14px", fontWeight: "bold" }}>
-                          Silabus yang di dapat
+                          Silabus yang didapat
                         </div>
                         <div>
                           <ol className="col mt-4">
@@ -1259,7 +1297,7 @@ export default function EditSertifikat({ token }) {
                                         />
                                       ) : signatureSyllabus[i]?.signature ? (
                                         <Image
-                                          src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-images-syllabus/${signatureSyllabus[i]?.signature}`}
+                                          src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/signature-certificate-image-syllabus/${signatureSyllabus[i]?.signature}`}
                                           layout="fill"
                                           alt={`Tanda tangan ${i + 1} `}
                                         />
@@ -1555,7 +1593,7 @@ export default function EditSertifikat({ token }) {
                                             options={{
                                               minWidth: 1,
                                               maxWidth: 3,
-                                              penColor: "rgb(66, 133, 244)",
+                                              penColor: "black",
                                             }}
                                             onBlur={() => {
                                               if (

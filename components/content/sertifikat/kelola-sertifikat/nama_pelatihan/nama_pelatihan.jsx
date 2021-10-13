@@ -19,10 +19,6 @@ import { useSelector } from "react-redux";
 export default function NamaPelatihanID({ token }) {
   const router = useRouter();
   const { query } = router;
-  // console.log(query);
-  // #DatePicker
-
-  // #DatePicker
 
   // #Pagination
   const [limit, setLimit] = useState(null);
@@ -39,11 +35,13 @@ export default function NamaPelatihanID({ token }) {
 
   const handleLimit = val => {
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${limit}`);
+    router.push(
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}/list-peserta?page=1&limit=${val}`
+    );
   };
 
   const handleSearch = () => {
-    let link = `${router.pathname}?page=1&keyword=${search}`;
+    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
   };
@@ -68,10 +66,21 @@ export default function NamaPelatihanID({ token }) {
     }
   };
 
+  const handlePagination = pageNumber => {
+    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?page=${pageNumber}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
+  };
+
   const resetValueSort = () => {
     setStatus(null);
-    router.push(`${router.pathname}`);
+    router.push(
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`
+    );
   };
+
+  console.log(certificate);
 
   return (
     <PageWrapper>
@@ -403,25 +412,24 @@ export default function NamaPelatihanID({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {certificate &&
-                  certificate.data.perPage < certificate.data.total && (
-                    <div className="table-pagination">
-                      <Pagination
-                        activePage={page}
-                        itemsCountPerPage={certificate.perPage}
-                        totalItemsCount={certificate.total}
-                        pageRangeDisplayed={3}
-                        onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  )}
-                {certificate ? (
+                {certificate && (
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={+page}
+                      itemsCountPerPage={certificate.data.perPage}
+                      totalItemsCount={certificate.data.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {certificate && certificate.data.total ? (
                   <div className="table-total ml-auto">
                     <div className="row mt-3">
                       <div className="col-4 mr-0 p-0 my-auto">
@@ -437,30 +445,10 @@ export default function NamaPelatihanID({ token }) {
                           onChange={e => handleLimit(e.target.value)}
                           onBlur={e => handleLimit(e.target.value)}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="15"
-                            selected={limit == "15" ? true : false}
-                          >
-                            15
-                          </option>
-                          <option
-                            value="20"
-                            selected={limit == "20" ? true : false}
-                          >
-                            20
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">

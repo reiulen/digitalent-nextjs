@@ -21,29 +21,35 @@ export default function ListPeserta() {
   const { query } = router;
 
   // #DatePicker
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const resetValueSort = () => {
-    setStartDate(null);
-    setEndDate(null);
-  };
-  // #DatePicker
   const { loading, error, participant } = useSelector(
     state => state.detailParticipant
   );
-  console.log(participant);
+
   // #Pagination
+  const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   // #Pagination
 
   let { page = 1, keyword, success } = router.query;
 
-  const handleLimit = () => {
-    console.log("");
+  const handleLimit = val => {
+    setLimit(val);
+    router.push(
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}/${router.query.nama_pelatihan_id}/list-peserta?page=1&limit=${val}`
+    );
   };
 
   const handleSearch = () => {
-    console.log("");
+    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}/${router.query.nama_pelatihan_id}/list-peserta?page=1&keyword=${search}`;
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
+  };
+
+  const handlePagination = pageNumber => {
+    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}/${router.query.nama_pelatihan_id}/list-peserta?page=${pageNumber}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
   };
 
   return (
@@ -54,7 +60,7 @@ export default function ListPeserta() {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              Kelola Sertifikataa
+              Kelola Sertifikat
             </h3>
           </div>
 
@@ -79,7 +85,9 @@ export default function ListPeserta() {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={() => {
+                        handleSearch();
+                      }}
                     >
                       Cari
                     </button>
@@ -119,11 +127,10 @@ export default function ListPeserta() {
                         </tr>
                       ) : (
                         participant &&
-                        // participant.participant &&
                         participant.data.list_certificate.map(
                           (participant, i) => {
                             return (
-                              <tr key={participant.id}>
+                              <tr key={i}>
                                 <td className="align-middle text-center">
                                   {limit === null ? (
                                     <span className="badge badge-secondary text-muted">
@@ -192,24 +199,23 @@ export default function ListPeserta() {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {participant &&
-                  participant.data.perPage < participant.data.total && (
-                    <div className="table-pagination">
-                      <Pagination
-                        activePage={page}
-                        itemsCountPerPage={participant.data.perPage}
-                        totalItemsCount={participant.data.total}
-                        pageRangeDisplayed={3}
-                        onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  )}
+                {participant && (
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={+page}
+                      itemsCountPerPage={participant.data.perPage}
+                      totalItemsCount={participant.data.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
                 {participant ? (
                   <div className="table-total ml-auto">
                     <div className="row mt-3">
@@ -226,30 +232,10 @@ export default function ListPeserta() {
                           onChange={e => handleLimit(e.target.value)}
                           onBlur={e => handleLimit(e.target.value)}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="15"
-                            selected={limit == "15" ? true : false}
-                          >
-                            15
-                          </option>
-                          <option
-                            value="20"
-                            selected={limit == "20" ? true : false}
-                          >
-                            20
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
