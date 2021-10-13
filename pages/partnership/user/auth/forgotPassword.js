@@ -1,4 +1,4 @@
-import ForgotPassword from "../../../../components/content/partnership/user/auth/ForgotPassword";
+import ForgotPassword from "../../../../components/content/partnership/user/auth/forgotPassword";
 import { getSession } from "next-auth/client";
 
 export default function ForgotPasswordMitra() {
@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
   if (session) {
     return {
       redirect: {
-        destination: "/login/admin",
+        destination: "http://dts-dev.majapahit.id/login/admin",
         permanent: false,
       },
     };
