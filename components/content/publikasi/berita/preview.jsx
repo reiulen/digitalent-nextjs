@@ -67,7 +67,7 @@ const Preview = () => {
                             <div className="col-11 mt-4 d-flex align-items-center">
                                 <div>
                                     <h6>Admin Pokja</h6>
-                                    <span className="text-muted">Oct 12 | 120 dibaca</span>
+                                    <span className="text-muted">{created_at} | 120 dibaca</span>
                                     {/* <span className="text-muted">{moment({created_at}).format("MMM Do")} | 120 dibaca</span> */}
                                 </div>
 
