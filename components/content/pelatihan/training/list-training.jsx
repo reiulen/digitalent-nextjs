@@ -31,8 +31,7 @@ const ListTraining = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  let { page = 1, success } = router.query;
-  page = Number(page);
+  let { success } = router.query;
 
   const {
     loading: allLoading,
@@ -75,6 +74,7 @@ const ListTraining = ({ token }) => {
     error = statusError;
   }
 
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
   const [penyelenggara, setPenyelenggara] = useState(null);
@@ -114,7 +114,6 @@ const ListTraining = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            // window.location.reload();
             dispatch(
               getAllTraining(
                 null,
@@ -164,6 +163,7 @@ const ListTraining = ({ token }) => {
     // if (limit) link = link.concat(`&limit=${limit}`);
     // if (search) link = link.concat(`&keyword=${search}`);
     // router.push(link);
+    setPage(pageNumber);
     dispatch(
       getAllTraining(
         pageNumber,
@@ -184,6 +184,7 @@ const ListTraining = ({ token }) => {
   const handleSearch = () => {
     // let link = `${router.pathname}?page=1&keyword=${search}`;
     // if (limit) link = link.concat(`&limit=${limit}`);
+    setPage(1);
     dispatch(
       getAllTraining(
         1,
@@ -216,6 +217,7 @@ const ListTraining = ({ token }) => {
     // if (dateStart) link = link.concat(`&pelatihan_mulai=${dateStart}`);
     // router.push(link);
     setShowModal(false);
+    setPage(1);
     dispatch(
       getAllTraining(
         1,
@@ -223,9 +225,9 @@ const ListTraining = ({ token }) => {
         limit,
         dateRegister,
         dateStart,
-        statusSubstansi.value,
-        statusPelatihan.value,
-        penyelenggara.value,
+        statusSubstansi != null ? statusSubstansi.value : null,
+        statusPelatihan != null ? statusPelatihan.value : null,
+        penyelenggara != null ? penyelenggara.value : null,
         academy,
         theme,
         token
@@ -241,9 +243,8 @@ const ListTraining = ({ token }) => {
     setStatusPelatihan(null);
     setDateRegister(null);
     setDateStart(null);
-    // router.replace("/pelatihan/pelatihan", undefined, { shallow: true });
-    // router.push(`${router.pathname}`);
     setShowModal(false);
+    setPage(1);
     dispatch(
       getAllTraining(
         1,
@@ -263,7 +264,7 @@ const ListTraining = ({ token }) => {
 
   const handleLimit = (val) => {
     setLimit(val);
-    // router.push(`${router.pathname}?page=1&limit=${val}`);
+    setPage(1);
     dispatch(
       getAllTraining(
         1,
@@ -323,7 +324,7 @@ const ListTraining = ({ token }) => {
     // let link = `${router.pathname}?page=${1}&card=${val}`;
     // if (search) link = link.concat(`&keyword=${search}`);
     // router.push(link);
-    console.log(val, type);
+    setPage(1);
     if (type === "pelatihan") {
       dispatch(
         getAllTraining(
@@ -827,12 +828,13 @@ const ListTraining = ({ token }) => {
                           }}
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
+                          value={limit}
                         >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto pt-3">

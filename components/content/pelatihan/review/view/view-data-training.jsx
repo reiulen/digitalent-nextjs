@@ -1,65 +1,193 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Modal } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepViewPelatihan from "../../../../StepReviewPelatihan";
+import LoadingPage from "../../../../LoadingPage";
 
-const ViewReviewTraining = () => {
+import {
+  revisiReviewPelatihan,
+  tolakReviewPelatihan,
+  clearErrors,
+} from "../../../../../redux/actions/pelatihan/review.actions";
+import {
+  REVISI_REVIEW_RESET,
+  TOLAK_REVIEW_RESET,
+} from "../../../../../redux/types/pelatihan/review.type";
+
+const ViewReviewTraining = ({ token }) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const [note, setNote] = useState("");
+
+  const { id } = router.query;
+  const { error: errorRevisi, revisi } = useSelector(
+    (state) => state.listRevisi
+  );
+  const { error: errorReview, review } = useSelector(
+    (state) => state.getReviewStep1
+  );
+  const {
+    success: successRevisi,
+    loading: loadingReview,
+    error: errorPostRevisi,
+  } = useSelector((state) => state.revisiReview);
+  const {
+    success: successTolak,
+    loading: loadingTolak,
+    error: errorPostTolak,
+  } = useSelector((state) => state.tolakReview);
+
+  let loading;
+  if (loadingReview) {
+    loading = loadingReview;
+  } else if (loadingTolak) {
+    loading = loadingTolak;
+  }
+
+  let error;
+  if (errorRevisi) {
+    error = errorRevisi;
+  } else if (errorReview) {
+    error = errorReview;
+  } else if (errorPostRevisi) {
+    error = errorPostRevisi;
+  } else if (errorPostTolak) {
+    error = errorPostTolak;
+  }
+
   const [dataPelatihan, setDataPelatihan] = useState({
-    peserta: "Tidak",
-    ketentuanPeserta:
-      "Peserta dapat mengikuti pelatihan ini ditahun yang sama pada Akademi ini",
-    namaPelatihan: "UI UX Design",
-    levelPelatihan: "Hard",
-    akademi: "Konoha",
-    tema: "Anime",
-    logoReference: "/assets/media/default.jpg",
-    thumbnail: "/assets/media/default.jpg",
-    silabus: "file.pdf",
-    metodePelatihan: "Jalan Ninja",
-    penyelenggara: "Naruto",
-    mitra: "Sasuke",
-    tanggalPendaftaran: "15 Maret 2021 sd 21 Juni 2021",
-    tanggalPelatihan: "16 Maret 2021 sd 22 Juni 2021",
-    deskripsi: "Lorep Ipsum dicampur dengan bumbu",
+    peserta: review.program_dts,
+    ketentuanPeserta: review.Ketentuan_peserta,
+    namaPelatihan: review.name,
+    levelPelatihan: review.Level_pelatihan,
+    akademi: review.akademi,
+    tema: review.tema,
+    logoReference: review.file_path
+      ? review.file_path + review.logo
+      : "/assets/media/default.jpg",
+    thumbnail: review.file_path
+      ? review.file_path + review.thumbnail
+      : "/assets/media/default.jpg",
+    silabus: review.silabus,
+    metodePelatihan: review.metode_pelatihan,
+    penyelenggara: review.penyelenggara,
+    mitra: review.mitra,
+    tanggalPendaftaran:
+      review.pendaftaran_mulai + " sd " + review.pendaftaran_selesai,
+    tanggalPelatihan:
+      review.pelatihan_mulai + " sd " + review.pelatihan_selesai,
+    deskripsi: review.deskripsi,
   });
   const [kuotaPelatihan, setKuotaPelatihan] = useState({
-    kuotaTargetPendaftar: "1000",
-    kuotaTargetPeserta: "500",
+    kuotaTargetPendaftar: review.kuota_pendaftar,
+    kuotaTargetPeserta: review.kuota_peserta,
     komitmenPeserta: "Iya",
-    lpjPeserta: "Iya",
-    infoSertifikasi: "Ada",
-    metodePelatihan: "Offnine",
-    statusKuota: "Full",
-    alurPendaftaran: "Administrasi - Test Substansi",
+    lpjPeserta: review.lpj_peserta,
+    infoSertifikasi: review.sertifikasi,
+    metodePelatihan: review.metode_pelatihan,
+    statusKuota: review.status_kuota,
+    alurPendaftaran: review.alur_pendaftaran,
     zonasi: "1",
     batch: "2",
   });
   const [alamatPelatihan, setAlamatPelatihan] = useState({
-    alamat: "Jalan Konoha no 2 deket rumah jiraya",
-    provinsi: "Jawabarat",
-    kota: "Ciamis",
+    alamat: review.alamat,
+    provinsi: review.provinsi,
+    kota: review.kabupaten,
     disabilitas: "Umum",
   });
   const [showModal, setShowModal] = useState(false);
 
-  const router = useRouter();
+  useEffect(() => {
+    revisi &&
+      revisi.length !== 0 &&
+      revisi.map((row, i) => {
+        setNote(row.revisi);
+      });
+
+    if (successRevisi) {
+      dispatch({ type: REVISI_REVIEW_RESET });
+      router.push({
+        pathname: `/pelatihan/review`,
+        query: { success: true },
+      });
+    }
+
+    if (successTolak) {
+      dispatch({ type: TOLAK_REVIEW_RESET });
+      router.push({
+        pathname: `/pelatihan/review`,
+        query: { success: true },
+      });
+    }
+  }, [successRevisi, successTolak]);
+
+  const handleRevisi = () => {
+    setShowModal(false);
+    const data = {
+      pelatian_id: parseInt(id),
+      revisi: note,
+    };
+    dispatch(revisiReviewPelatihan(data, token));
+  };
+
+  const handleTolak = () => {
+    const data = {
+      pelatian_id: parseInt(id),
+      status: "ditolak",
+    };
+    dispatch(tolakReviewPelatihan(data, token));
+  };
+
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
 
   return (
     <PageWrapper>
+      {error && (
+        <div
+          className="alert alert-custom alert-light-danger fade show mb-5"
+          role="alert"
+        >
+          <div className="alert-icon">
+            <i className="flaticon-warning"></i>
+          </div>
+          <div className="alert-text">{error}</div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={handleResetError}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
       <StepViewPelatihan
         step={1}
         title1="Data Pelatihan"
         title2="Form Pendaftaran"
         title3="Form Komitmen"
-        link1={`/pelatihan/review/view-pelatihan/${1}`}
-        link2={`/pelatihan/review/view-pelatihan/view-form-pendaftaran/${1}`}
-        link3={`/pelatihan/review/view-pelatihan/view-form-komitmen/${1}`}
+        link1={`/pelatihan/review/view-pelatihan/${id}`}
+        link2={`/pelatihan/review/view-pelatihan/view-form-pendaftaran/${id}`}
+        link3={`/pelatihan/review/view-pelatihan/view-form-komitmen/${id}`}
       />
 
       <div className="col-lg-12 order-1 px-0">
+        {loading && <LoadingPage loading={loading} />}
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-body py-4">
             <h3 className="font-weight-bolder pb-5 pt-4">Data Pelatihan</h3>
@@ -266,6 +394,7 @@ const ViewReviewTraining = () => {
                 <button
                   className="btn btn-rounded-full btn-sm py-3 px-5 btn-danger mr-2"
                   type="button"
+                  onClick={() => handleTolak()}
                 >
                   Tolak
                 </button>
@@ -306,7 +435,12 @@ const ViewReviewTraining = () => {
         <Modal.Body>
           <div className="form-group mb-5">
             <label className="p-0">Isi Catatan</label>
-            <textarea rows="5" className="form-control"></textarea>
+            <textarea
+              rows="5"
+              className="form-control"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+            ></textarea>
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -317,7 +451,11 @@ const ViewReviewTraining = () => {
           >
             Batal
           </button>
-          <button className="btn btn-primary-rounded-full" type="submit">
+          <button
+            className="btn btn-primary-rounded-full"
+            type="button"
+            onClick={() => handleRevisi()}
+          >
             Ajukan Revisi
           </button>
         </Modal.Footer>
