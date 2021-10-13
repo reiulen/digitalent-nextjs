@@ -383,7 +383,6 @@ const DetailDokumenKerjasama = ({ token }) => {
                         type="text"
                         value={period}
                         className="form-control mb-lg-0"
-                        placeholder="Search for..."
                         placeholder="Masukkan Lama Kerjasama"
                         onChange={(e) => onChangePeriod(e)}
                       />
