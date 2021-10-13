@@ -257,7 +257,7 @@ const SubmitKerjasama = ({ token }) => {
                         onFocus={() =>
                           setError({ ...error, period_date_start: "" })
                         }
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-search-date form-control cursor-pointer"
                         selected={startDate}
                         onChange={(date) => onChangePeriodeDateStart(date)}
                         selectsStart
@@ -280,9 +280,9 @@ const SubmitKerjasama = ({ token }) => {
                     )}
                   </div>
                   <div className="col-12 col-sm-6">
-                    <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
+                    <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form disabled-form">
                       <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-search-date form-control cursor-pointer"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         disabled

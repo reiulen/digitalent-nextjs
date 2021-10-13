@@ -178,7 +178,6 @@ a {
 }
 
 /* --------------------------------pembatas-------------- */
-
 .pageNumbers {
   list-style: none;
   display: flex;
@@ -235,6 +234,7 @@ a {
 
 .disabled-form input {
   background-color: transparent !important;
+  border: none !important;
 }
 
 .minimal-image img {
