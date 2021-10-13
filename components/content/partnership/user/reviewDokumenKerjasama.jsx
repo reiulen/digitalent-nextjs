@@ -655,7 +655,7 @@ function ReviewDokumenKerjasama({ token }) {
                       id="customFile"
                       onChange={handlePdfFileChange}
                     />
-                    <label className="custom-file-label" for="customFile">
+                    <label className="custom-file-label" htmlFor="customFile">
                       {NamePDF ? NamePDF : "Belum ada file"}
                     </label>
                   </div>
