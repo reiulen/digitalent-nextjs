@@ -300,7 +300,7 @@ const Artikel = ({token}) => {
 
   return (
     <PageWrapper>
-      {/* {console.log(artikel)} */}
+      {console.log(artikel)}
       {/* {console.log(token)} */}
       {error ? (
         <div
