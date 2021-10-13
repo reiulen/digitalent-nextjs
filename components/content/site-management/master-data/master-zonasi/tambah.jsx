@@ -8,9 +8,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../../assets/icon/Add";
 import IconDelete from "../../../../assets/icon/Delete";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const Tambah = ({ token }) => {
   const router = useRouter();
+
+  const allDataReference = useSelector((state) => state.allDataReference);
+console.log("allDataReference",allDataReference)
 
   return (
     <PageWrapper>

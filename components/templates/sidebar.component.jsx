@@ -15,9 +15,8 @@ import {
 } from "../../redux/types/utils/functionals.type";
 
 const Sidebar = ({ session }) => {
-  // console.log("session sidebar",session)
   const dispatch = useDispatch();
-  const allFunctionls = useSelector((state) => state.allFunctionls);
+  const allFunctionls = useSelector(state => state.allFunctionls);
   const router = useRouter();
 
   // mitra partnership sementara
@@ -270,14 +269,14 @@ const Sidebar = ({ session }) => {
       child: [
         {
           id: 1,
-          name: "Subvit",
+          name: "Dashboard",
           href: "/subvit",
           selected: false,
           child: [],
         },
         {
           id: 2,
-          name: "Tes Substansi",
+          name: "Test Substansi",
           href: "/subvit/substansi",
           selected: false,
           child: [],
@@ -438,7 +437,7 @@ const Sidebar = ({ session }) => {
     },
   ]);
 
-  const handleOpenMenu = (i) => {
+  const handleOpenMenu = i => {
     let _temp = [...menu];
     _temp.map((items, idxMenu) => {
       if (i === idxMenu) {
@@ -529,12 +528,10 @@ const Sidebar = ({ session }) => {
       style={{ overflow: "scroll" }}
     >
       {/* <Image src={menu[0].icon} width={23} height={23} alt={`icon`} /> */}
-
       <div className="brand flex-column-auto" id="kt_brand">
         {/* <a href="index.html" className="brand-logo">
           <img alt="Logo" src="assets/media/logos/logo-light.png" />
         </a> */}
-
         <a className="brand-logo">
           <Image
             alt="icon-sidebar-logo"
@@ -543,7 +540,6 @@ const Sidebar = ({ session }) => {
             height={53}
           />
         </a>
-
         <button className="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
           <span className="svg-icon svg-icon svg-icon-xl">
             {/* icon header right */}
@@ -599,7 +595,7 @@ const Sidebar = ({ session }) => {
                           aria-haspopup="true"
                           onClick={() => activeSubItemPartnershipMitra()}
                         >
-                          <Link href={items.href}>
+                          <Link href={items.href} passHref>
                             <a className="menu-link">
                               <span className="menu-text">{items.name}</span>
                             </a>
@@ -624,7 +620,7 @@ const Sidebar = ({ session }) => {
                     data-menu-toggle="hover"
                     key={index}
                     id="main-menu"
-                    onClick={(e) => handleOpenMenu(index)}
+                    onClick={e => handleOpenMenu(index)}
                   >
                     <a className="menu-link menu-toggle">
                       <span className="svg-icon menu-icon d-flex align-items-center">
@@ -651,11 +647,9 @@ const Sidebar = ({ session }) => {
                                   child.selected ? "menu-item-active" : ""
                                 }`}
                                 aria-haspopup="true"
-                                onClick={(e) =>
-                                  handleActiveSubmenu(e, index, i)
-                                }
+                                onClick={e => handleActiveSubmenu(e, index, i)}
                               >
-                                <Link href={child.href}>
+                                <Link href={child.href} passHref>
                                   <a
                                     className="menu-link"
                                     style={{ paddingLeft: "5.5rem" }}
@@ -677,7 +671,7 @@ const Sidebar = ({ session }) => {
                                 aria-haspopup="true"
                                 data-menu-toggle="hover"
                                 id="sub-menu"
-                                onClick={(e) =>
+                                onClick={e =>
                                   handleOpenMenuSubMenu(e, index, i)
                                 }
                               >
@@ -711,7 +705,7 @@ const Sidebar = ({ session }) => {
                                               : ""
                                           }`}
                                           aria-haspopup="true"
-                                          onClick={(e) =>
+                                          onClick={e =>
                                             handleActiveSubSubmenu(
                                               e,
                                               index,
@@ -721,7 +715,7 @@ const Sidebar = ({ session }) => {
                                           }
                                           key={idx}
                                         >
-                                          <Link href={child2.href}>
+                                          <Link href={child2.href} passHref>
                                             <a
                                               className="menu-link"
                                               style={{ paddingLeft: "6.5rem" }}

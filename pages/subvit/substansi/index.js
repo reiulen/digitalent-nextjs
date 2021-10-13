@@ -55,7 +55,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       );
 
       return {
-        props: { session, title: "List Tes Substansi - Subvit" },
+        props: { session, title: "List Test Substansi - Subvit" },
       };
     }
 );

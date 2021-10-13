@@ -24,7 +24,7 @@ import axios from "axios";
 
 export const getAllAcademy =
   (page = null, keyword = "", limit = null, token) =>
-  async (dispatch) => {
+  async dispatch => {
     try {
       dispatch({ type: ACADEMY_REQUEST });
 
@@ -53,7 +53,7 @@ export const getAllAcademy =
     }
   };
 
-export const getDetailAcademy = (id, token) => async (dispatch) => {
+export const getDetailAcademy = (id, token) => async dispatch => {
   try {
     let link =
       process.env.END_POINT_API_PELATIHAN + `api/v1/akademi/detail?id=${id}`;
@@ -78,7 +78,7 @@ export const getDetailAcademy = (id, token) => async (dispatch) => {
   }
 };
 
-export const newAcademy = (academyData, token) => async (dispatch) => {
+export const newAcademy = (academyData, token) => async dispatch => {
   try {
     dispatch({
       type: NEW_ACADEMY_REQUEST,
@@ -108,7 +108,7 @@ export const newAcademy = (academyData, token) => async (dispatch) => {
   }
 };
 
-export const updateAcademy = (academyData, token) => async (dispatch) => {
+export const updateAcademy = (academyData, token) => async dispatch => {
   try {
     dispatch({
       type: UPDATE_ACADEMY_REQUEST,
@@ -138,7 +138,7 @@ export const updateAcademy = (academyData, token) => async (dispatch) => {
   }
 };
 
-export const deleteAcademy = (id, token) => async (dispatch) => {
+export const deleteAcademy = (id, token) => async dispatch => {
   try {
     dispatch({ type: DELETE_ACADEMY_REQUEST });
 
@@ -165,7 +165,7 @@ export const deleteAcademy = (id, token) => async (dispatch) => {
   }
 };
 
-export const clearErrors = () => async (dispatch) => {
+export const clearErrors = () => async dispatch => {
   dispatch({
     type: CLEAR_ERRORS,
   });

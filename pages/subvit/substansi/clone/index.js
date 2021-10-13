@@ -27,7 +27,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { session, title: "Clone Bank Soal Tes Subtansi - Subvit" },
+        props: { session, title: "Clone Bank Soal Test Subtansi - Subvit" },
       };
     }
 );

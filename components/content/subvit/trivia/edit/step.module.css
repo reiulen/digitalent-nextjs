@@ -1,0 +1,14 @@
+@media (max-width: 412px) {
+  .btnResponsive {
+    width: 100%;
+    margin-top: 10px !important;
+  }
+}
+
+.btnNext {
+  background-color: white !important;
+  border: white;
+}
+.btnNext:hover {
+  background-color: #d7e1ea !important;
+}

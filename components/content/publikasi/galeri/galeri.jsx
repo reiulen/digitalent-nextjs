@@ -303,7 +303,7 @@ const Galeri = ({ token }) => {
 
         dispatch(viewGaleri(data, token))
         setIndexGalleri(i)
-        console.log("INDEEEXX : ", data)
+        // console.log("INDEEEXX : ", data)
     }
 
     const printImage = () => {

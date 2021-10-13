@@ -197,7 +197,7 @@ const ListTipeSoal = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px", lineHeight: "33px" }}
             >
-              Tipe Soal Tes Substansi
+              Tipe Soal Test Substansi
             </h1>
             <div className="card-toolbar">
               <Link href="/subvit/substansi/tipe-soal/tambah">

@@ -140,45 +140,29 @@ export const clearErrors = () => async dispatch => {
   });
 };
 
-export const getSingleSertifikat =
-  (
-    id,
-    page = 1,
-    keyword = "",
-    limit = 5,
-    publish = null,
-    startdate = null,
-    enddate = null,
-    token
-  ) =>
-  async dispatch => {
-    try {
-      dispatch({ type: SINGLE_SERTIFIKAT_REQUEST });
-      let link =
-        process.env.END_POINT_API_SERTIFIKAT +
-        `api/manage_certificates/${id}?page=${page}`;
-      if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
-      if (publish) link = link.concat(`&publish=${publish}`);
-      if (startdate) link = link.concat(`&startdate=${startdate}`);
-      if (enddate) link = link.concat(`&enddate=${enddate}`);
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
+export const getSingleSertifikat = (id, token) => async dispatch => {
+  try {
+    dispatch({ type: SINGLE_SERTIFIKAT_REQUEST });
+    let link =
+      process.env.END_POINT_API_SERTIFIKAT + `api/manage_certificates/${id}`;
 
-      const { data } = await axios.get(link, config);
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-      // console.log(data.data.list_certificate[0], " ini data nya");
+    const { data } = await axios.get(link, config);
 
-      if (data) {
-        dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
-      }
-    } catch (error) {
-      dispatch({ type: SINGLE_SERTIFIKAT_FAIL, payload: error.message });
+    console.log(data.data.signature, " ini data nya");
+
+    if (data) {
+      dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
     }
-  };
+  } catch (error) {
+    dispatch({ type: SINGLE_SERTIFIKAT_FAIL, payload: error.message });
+  }
+};
 
 export const getPublishedSertifikat = (id, token) => async dispatch => {
   try {
@@ -223,11 +207,12 @@ export const updateSertifikat = (id, formData, token) => async dispatch => {
     const { data } = await axios.post(link, formData, config);
 
     if (data) {
-      console.log(data);
+      console.log("ini dari update sertifikat", data);
       dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    console.log("ERRRRRRRRROR", error.response.data.message, "masukedispatch");
+    // console.log("ERRRRRRRRROR", error.response.data.message, "masukedispatch");
+    console.log(error.response);
     dispatch({
       type: UPDATE_SERTIFIKAT_FAIL,
       payload: error.message,
