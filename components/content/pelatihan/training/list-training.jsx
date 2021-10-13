@@ -156,7 +156,7 @@ const ListTraining = ({ token }) => {
         type: CLEAR_STATUS,
       });
     }
-  }, [isDeleted, statusSuccess, dispatch]);
+  }, [isDeleted, statusSuccess, dispatch, token]);
 
   const handlePagination = (pageNumber) => {
     // let link = `${router.pathname}?page=${pageNumber}`;

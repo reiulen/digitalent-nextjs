@@ -125,7 +125,7 @@ const ViewReviewTraining = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [successRevisi, successTolak]);
+  }, [successRevisi, successTolak, dispatch, revisi, router]);
 
   const handleRevisi = () => {
     setShowModal(false);

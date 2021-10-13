@@ -114,7 +114,7 @@ const ReviewFormRegister = ({ token }) => {
         query: { success: true },
       });
     }
-  }, [successRevisi, successTolak]);
+  }, [successRevisi, successTolak, dispatch, revisi, router]);
 
   const readerElementHandler = (row, i) => {
     switch (row.element) {
