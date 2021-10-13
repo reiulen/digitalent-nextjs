@@ -21,6 +21,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allUnitWork = useSelector((state) => state.allUnitWork);
+  console.log("object",allUnitWork)
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {

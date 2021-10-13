@@ -24,6 +24,7 @@ const Table = ({ token }) => {
   const router = useRouter();
 
   const allZonasi = useSelector((state) => state.allZonasi);
+  console.log("allZonasi",allZonasi)
 
   const [valueSearch, setValueSearch] = useState("");
   const handleChangeValueSearch = (value) => {
@@ -134,13 +135,13 @@ const Table = ({ token }) => {
                                   : (allZonasi.page - 1) * allZonasi.limit +
                                     (index + 1)}
                               </td>
-                              <td className="align-middle text-left">api</td>
+                              <td className="align-middle text-left">{items.label}</td>
                               <td className="align-middle text-left">
                                 <p
                                   className="status-div-red mb-0"
                                   style={{ width: "max-content" }}
                                 >
-                                  Tidak aktif
+                                  {items.value === 1 ? "Aktif" : "Nonaktif"}
                                 </p>
                               </td>
                               <td className="align-middle text-left">
