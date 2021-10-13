@@ -265,6 +265,16 @@ import {
   deleteTrainingReducer,
   updateStatusReducer,
 } from "./pelatihan/training.reducers";
+import {
+  allListReviewReducer,
+  cardReviewReducer,
+  listRevisiReducer,
+  getReviewStep1Reducer,
+  getReviewStep2Reducer,
+  getReviewStep3Reducer,
+  revisiReviewReducer,
+  tolakReviewReducer,
+} from "./pelatihan/review.reducers";
 //END PELATIHAN
 
 // functional reducer
@@ -515,6 +525,16 @@ const reducer = combineReducers({
   allTraining: allTrainingReducer,
   newTraining: newTrainingReducer,
   deleteTraining: deleteTrainingReducer,
+
+  // ========== review pelatihan ========
+  allListReview: allListReviewReducer,
+  cardReview: cardReviewReducer,
+  listRevisi: listRevisiReducer,
+  getReviewStep1: getReviewStep1Reducer,
+  getReviewStep2: getReviewStep2Reducer,
+  getReviewStep3: getReviewStep3Reducer,
+  revisiReview: revisiReviewReducer,
+  tolakReview: tolakReviewReducer,
 
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,

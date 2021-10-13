@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-// import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../redux/store";
 import LoadingPage from "../../../../components/LoadingPage";
 import { getDetailPages } from "../../../../redux/actions/site-management/settings/page.actions";
@@ -35,7 +34,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };

@@ -98,6 +98,20 @@ export default function TambahMasterSertifikat({ token }) {
   const [tandaTanganSyllabusType, setTandaTanganSyllabusType] = useState([
     1, 1, 1, 1,
   ]);
+
+  const [tandaTanganType, setTandaTanganType] = useState([1, 1, 1, 1]);
+  const signCanvas = useRef({});
+
+  const [imageName, setImageName] = useState([]);
+  const [imageNameSyllabus, setImageNameSyllabus] = useState([]);
+  const [background_syllabus, setBackground_syllabus] = useState("");
+  const [background, setBackground] = useState("");
+
+  const [nomerSertifikat, setNomerSertifikat] = useState("Nomer Sertifikat");
+  const [localBackground, setLocalBackground] = useState("");
+  const [tanggal, setTanggal] = useState("--/--/----");
+  const [tahun, setTahun] = useState("----");
+
   // RESET TTD
   useEffect(() => {
     setSignature_certificate_set_position([0, 0, 0, 0]);
@@ -106,13 +120,6 @@ export default function TambahMasterSertifikat({ token }) {
   useEffect(() => {
     setSignature_certificate_set_position_syllabus([0, 0, 0, 0]);
   }, [number_of_signature_syllabus]);
-
-  // #START MODAL
-  const [tandaTanganType, setTandaTanganType] = useState([1, 1, 1, 1]);
-  const signCanvas = useRef({});
-
-  const [imageName, setImageName] = useState([]);
-  const [imageNameSyllabus, setImageNameSyllabus] = useState([]);
 
   const handleImageTandaTangan = (e, index) => {
     if (e.target.name === "image") {
@@ -195,7 +202,6 @@ export default function TambahMasterSertifikat({ token }) {
   // #END SECTION 2
 
   // # START BACKGROUND IMAGE 1
-  const [background, setBackground] = useState("");
   const onChangeBackground = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
 
@@ -219,7 +225,6 @@ export default function TambahMasterSertifikat({ token }) {
   // # END BACKGROUND IMAGE 1
 
   // # START BACKGROUND IMAGE 2
-  const [background_syllabus, setBackground_syllabus] = useState("");
   const onChangeBackgroundLembar2 = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
     if (type.includes(e.target.files[0].type)) {
@@ -267,9 +272,13 @@ export default function TambahMasterSertifikat({ token }) {
       if (simpleValidator.current.allValid()) {
         dispatch(newSertifikat(id, formData, token));
 
-        setNamaPeserta("");
+        if (status == 1) {
+          setTahun("");
+          setTanggal("");
+          setNamaPeserta("");
+          setNomerSertifikat("");
+        }
         let formData = new FormData();
-        // formData.append("name", certificate.data.list_certificate[0].name);
         formData.append("name", certificate_name);
 
         formData.append("background", background);
@@ -329,17 +338,12 @@ export default function TambahMasterSertifikat({ token }) {
 
         formData.append("status_migrate_id", status);
 
-        var link = document.createElement("a");
-        link.href = data;
-        link.download = "download.png";
-        link.click();
+        dispatch(newSertifikat(id, formData, token));
 
-        // dispatch(newSertifikat(id, formData, token));
-
-        // router.push({
-        //   pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
-        //   query: { success: true },
-        // });
+        router.push({
+          pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
+          query: { success: true },
+        });
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -372,7 +376,6 @@ export default function TambahMasterSertifikat({ token }) {
     setSyllabus([...syllabus, ""]);
   };
 
-  console.log(certificate);
   return (
     <PageWrapper>
       {/* error START */}
@@ -409,7 +412,7 @@ export default function TambahMasterSertifikat({ token }) {
           <div className="card-header border-0 d-flex justify-content-lg-between row p-10">
             <div className="card-title d-flex my-auto">
               <div className="text-dark">Nama Sertifikat :</div>
-              <div className="mx-6 p-0">
+              <div className="px-6 p-0 w-100">
                 <input
                   type="text"
                   className="form-control"
@@ -451,12 +454,13 @@ export default function TambahMasterSertifikat({ token }) {
                   <div className="row align-items-center zindex-1">
                     <div className="position-relative">
                       <div className="m-6 text-center px-4 border-2">
-                        Nomer Sertifikat
+                        {/* {nomerSertifikat} */}
                       </div>
                     </div>
                     <div
-                      className="col-12 text-center font-weight-normal p-0 justify-content-center"
-                      style={{ marginTop: "-20px" }}
+                      className={`col-12 text-center font-weight-normal p-0 justify-content-center ${
+                        !nomerSertifikat ? "mt-10" : ""
+                      }`}
                     >
                       <label
                         className="font-weight-boldest w-100"
@@ -499,12 +503,12 @@ export default function TambahMasterSertifikat({ token }) {
                           Selama
                         </span>
                         <span className="mx-2 px-2 border-2 w-100">
-                          --/--/----
+                          {/* --/--/---- */}
                         </span>
                       </div>
                       <div className="mt-2 w-100">
                         <span>Digital Talent Scholarship</span>
-                        <span className="mx-2 px-2 border-2">----</span>
+                        <span className="mx-2 px-2 border-2">{/* ---- */}</span>
                       </div>
                       <div className="my-4 w-100 text-center">
                         <span className="mx-2 px-2 border-2">

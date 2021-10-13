@@ -41,8 +41,6 @@ export default function EditSertifikat({ token }) {
     certificate: updateCertificate,
   } = useSelector(state => state.updateCertificates);
 
-  console.log("Ini certificates", certificate);
-
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
   const [namaPeserta, setNamaPeserta] = useState("Nama Peserta");
@@ -75,14 +73,31 @@ export default function EditSertifikat({ token }) {
   const [syllabus, setSyllabus] = useState(
     certificate.data.certificate.syllabus || ["", ""]
   );
+  const [background_syllabus, setBackground_syllabus] = useState(
+    certificate.data.certificate.background_syllabus || ""
+  );
+
+  const [localBackgroundSyllabus, setLocalBackgroundSyllabus] = useState("");
 
   // END SYLLABUS
   // #END FORM DATA
   const [tandaTanganSyllabusType, setTandaTanganSyllabusType] = useState([
     1, 1, 1, 1,
   ]);
+  const [tandaTanganType, setTandaTanganType] = useState([1, 1, 1, 1]);
+  const signCanvas = useRef({});
 
+  const [imageName, setImageName] = useState([]);
+  const [imageNameSyllabus, setImageNameSyllabus] = useState([]);
   const didMount = useRef(false);
+  const [background, setBackground] = useState(
+    certificate.data.certificate.background || ""
+  );
+
+  const [nomerSertifikat, setNomerSertifikat] = useState("Nomer Sertifikat");
+  const [localBackground, setLocalBackground] = useState("");
+  const [tanggal, setTanggal] = useState("--/--/----");
+  const [tahun, setTahun] = useState("----");
   // RESET TTD
 
   useEffect(() => {
@@ -111,11 +126,6 @@ export default function EditSertifikat({ token }) {
   }, [number_of_signature_syllabus]);
 
   // #START MODAL
-  const [tandaTanganType, setTandaTanganType] = useState([1, 1, 1, 1]);
-  const signCanvas = useRef({});
-
-  const [imageName, setImageName] = useState([]);
-  const [imageNameSyllabus, setImageNameSyllabus] = useState([]);
 
   const handleImageTandaTangan = (e, i) => {
     if (e.target.name === "image") {
@@ -210,15 +220,9 @@ export default function EditSertifikat({ token }) {
   // #END SECTION 2
 
   // # START BACKGROUND IMAGE 1
-  const [background, setBackground] = useState(
-    certificate.data.certificate.background || ""
-  );
-
-  const [localBackground, setLocalBackground] = useState("");
 
   const onChangeBackground = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
-
     if (type.includes(e.target.files[0].type)) {
       const reader = new FileReader();
       reader.onload = () => {
@@ -239,11 +243,6 @@ export default function EditSertifikat({ token }) {
   // # END BACKGROUND IMAGE 1
 
   // # START BACKGROUND IMAGE 2
-  const [background_syllabus, setBackground_syllabus] = useState(
-    certificate.data.certificate.background_syllabus || ""
-  );
-
-  const [localBackgroundSyllabus, setLocalBackgroundSyllabus] = useState("");
 
   const onChangeBackgroundLembar2 = e => {
     const type = ["image/jpg", "image/png", "image/jpeg"];
@@ -290,7 +289,13 @@ export default function EditSertifikat({ token }) {
 
       if (simpleValidator.current.allValid()) {
         let formData = new FormData();
-        setNamaPeserta("");
+
+        if (status == 1) {
+          setTahun("");
+          setTanggal("");
+          setNamaPeserta("");
+          setNomerSertifikat("");
+        }
 
         formData.append("_method", "put");
         formData.append("name", certificate_name);
@@ -308,7 +313,6 @@ export default function EditSertifikat({ token }) {
         if (localBackgroundSyllabus) {
           formData.append("background_syllabus", localBackgroundSyllabus);
         }
-        console.log("KONDISI DARI SIGNATURE PAS DI DISPATCH", signature);
 
         for (let i = 0; i < number_of_signatures; i++) {
           console.log(signature[i], "ini signature");
@@ -406,10 +410,6 @@ export default function EditSertifikat({ token }) {
   const handleAddInput = () => {
     setSyllabus([...syllabus, ""]);
   };
-
-  // useEffect(() => {
-  //   console.log(signature, "signatureSyllabus brubah disini");
-  // }, [signature]);
 
   return (
     <PageWrapper>
@@ -541,12 +541,12 @@ export default function EditSertifikat({ token }) {
                           Selama
                         </span>
                         <span className="mx-2 px-2 border-2 w-100">
-                          --/--/----
+                          {/* --/--/---- */}
                         </span>
                       </div>
                       <div className="mt-2 w-100">
                         <span>Digital Talent Scholarship</span>
-                        <span className="mx-2 px-2 border-2">----</span>
+                        {/* <span className="mx-2 px-2 border-2">----</span> */}
                       </div>
                       <div className="my-4 w-100 text-center">
                         <span className="mx-2 px-2 border-2">

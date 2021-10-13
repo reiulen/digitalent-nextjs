@@ -9,7 +9,7 @@ import DatePicker from "react-datepicker";
 import { addDays } from "date-fns";
 import LoadingTable from "../../../../LoadingTable";
 import Pagination from "react-js-pagination";
-
+import Select from "react-select";
 // #Icon
 import IconArrow from "../../../../assets/icon/Arrow";
 import IconClose from "../../../../assets/icon/Close";
@@ -21,12 +21,7 @@ export default function NamaPelatihanID({ token }) {
   const { query } = router;
   // console.log(query);
   // #DatePicker
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const resetValueSort = () => {
-    setStartDate(null);
-    setEndDate(null);
-  };
+
   // #DatePicker
 
   // #Pagination
@@ -39,7 +34,6 @@ export default function NamaPelatihanID({ token }) {
     state => state.detailCertificates
   );
 
-  // console.log(certificate, "ini sertifikat nya");
   // #REDUX STATE
   let { page = 1, keyword, success } = router.query;
 
@@ -54,10 +48,30 @@ export default function NamaPelatihanID({ token }) {
     router.push(link);
   };
 
-  // console.log("masuk halaman ini");
-  // useEffect(() => {
-  //   console.log(loading, "INI LOADING");
-  // }, [loading]);
+  const [status, setStatus] = useState(null);
+
+  const options = [
+    { value: "draft", label: "Draft" },
+    { value: "belum tersedia", label: "Belum Tersedia" },
+    { value: "publish", label: "Publish" },
+  ];
+
+  const handleFilter = e => {
+    console.log(status, " ini status");
+    console.log(router, "ini router");
+    if (!status) {
+      Swal.fire("Oops !", "Harap memilih Status terlebih dahulu.", "error");
+    } else {
+      let link = `${query.tema_pelatihan_id}?page=${1}`;
+      if (status) link = link.concat(`&keyword=${status}`);
+      router.push(link);
+    }
+  };
+
+  const resetValueSort = () => {
+    setStatus(null);
+    router.push(`${router.pathname}`);
+  };
 
   return (
     <PageWrapper>
@@ -100,7 +114,7 @@ export default function NamaPelatihanID({ token }) {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-6 col-xl-6 col-sm-9">
+                <div className="col-lg-6 col-xl-6 col-sm-6">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -124,7 +138,7 @@ export default function NamaPelatihanID({ token }) {
                     </button>
                   </div>
                 </div>
-                <div className="col-lg-6 col-xl-6 col-sm-9">
+                <div className="col-lg-6 col-xl-6 col-sm-6">
                   <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                     {/* sortir by modal */}
                     <button
@@ -159,7 +173,7 @@ export default function NamaPelatihanID({ token }) {
                           <div className="modal-content">
                             <div className="modal-header">
                               <h5
-                                className="modal-title font-weight-bold"
+                                className="modal-title"
                                 id="exampleModalLongTitle"
                               >
                                 Filter
@@ -169,75 +183,49 @@ export default function NamaPelatihanID({ token }) {
                                 className="close"
                                 data-dismiss="modal"
                                 aria-label="Close"
-                                onClick={() => resetValueSort()}
                               >
                                 <IconClose />
                               </button>
                             </div>
 
-                            <div
-                              className="modal-body text-left"
-                              style={{
-                                height: "200px",
-                              }}
-                            >
-                              <div className="mb-10 col-12">
+                            <div className="modal-body text-left">
+                              <div className="fv-row mb-10">
                                 <label className="required fw-bold fs-6 mb-2">
-                                  Tanggal
+                                  Status
                                 </label>
-
-                                <div>
-                                  <DatePicker
-                                    className="form-search-date form-control-sm form-control"
-                                    selected={startDate}
-                                    onChange={date => setStartDate(date)}
-                                    selectsStart
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    dateFormat="dd/MM/yyyy"
-                                    placeholderText="Silahkan Isi Tanggal Dari"
-                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                    minDate={moment().toDate()}
-                                  />
-                                </div>
-                              </div>
-
-                              <div className="mb-10 col-12">
-                                <label className="required fw-bold fs-6 mb-2">
-                                  Tanggal
-                                </label>
-
-                                <div>
-                                  <DatePicker
-                                    className="form-search-date form-control-sm form-control"
-                                    selected={endDate}
-                                    onChange={date => setEndDate(date)}
-                                    selectsEnd
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    dateFormat="dd/MM/yyyy"
-                                    minDate={moment().toDate()}
-                                    maxDate={addDays(startDate, 20)}
-                                    placeholderText="Silahkan Isi Tanggal Sampai"
-                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                  />
-                                </div>
+                                <Select
+                                  className="basic-single"
+                                  classNamePrefix="select"
+                                  placeholder="Semua"
+                                  // defaultValue={options[0].value}
+                                  isDisabled={false}
+                                  isLoading={false}
+                                  isClearable={false}
+                                  isRtl={false}
+                                  isSearchable={true}
+                                  name="color"
+                                  onChange={e => {
+                                    setStatus(e.value);
+                                  }}
+                                  options={options}
+                                />
                               </div>
                             </div>
                             <div className="modal-footer">
                               <div className="d-flex justify-content-end align-items-center">
                                 <button
-                                  className="btn btn-white-ghost-rounded-full"
+                                  className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5"
                                   type="button"
+                                  data-dismiss="modal"
+                                  aria-label="Close"
                                   onClick={() => resetValueSort()}
                                 >
                                   Reset
                                 </button>
                                 <button
-                                  className="btn btn-primary-rounded-full ml-4"
+                                  className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
-                                  data-dismiss="modal"
-                                  onClick={() => handleSearchDate()}
+                                  onClick={handleFilter}
                                 >
                                   Terapkan
                                 </button>
@@ -287,11 +275,11 @@ export default function NamaPelatihanID({ token }) {
                               <tr key={certificate.id}>
                                 <td className="align-middle text-center">
                                   {limit === null ? (
-                                    <span className="badge badge-secondary text-muted">
+                                    <span className="badge">
                                       {i + 1 * (page * 5) - (5 - 1)}
                                     </span>
                                   ) : (
-                                    <span className="badge badge-secondary text-muted">
+                                    <span className="badge">
                                       {i + 1 * (page * limit) - (limit - 1)}
                                     </span>
                                   )}
