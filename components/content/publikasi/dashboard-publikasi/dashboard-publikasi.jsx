@@ -103,9 +103,9 @@ const DashbardPublikasi = ({token}) => {
                 {console.log (dashboard_publikasi)}
                 {/* {console.log (dataDashboardGallery)} */}
                 <div className="row">
-                    <div className="col-lg-12 col-xxl-12 mt-4">
+                    <div className="col-lg-12 col-xxl-12 my-5">
                         <div className="card card-custom bg-white">
-                            <div className="card-body pt-2" style={{ backgroundPosition: 'left bottom', backgroundImage: "url('/assets/media/Frame-White.svg')", backgroundRepeat: 'no-repeat' }}>
+                            <div className="card-body pt-2" style={{ backgroundPosition: 'left bottom', backgroundImage: "url('/assets/media/Frame-White.svg')", backgroundRepeat: 'no-repeat', borderRadius:'6px' }}>
                                 <div className="d-flex align-items-center mb-10" >
                                     <div className="d-flex flex-column flex-grow-1 font-weight-bold"  >
                                         <div className="row">

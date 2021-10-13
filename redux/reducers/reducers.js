@@ -192,6 +192,8 @@ import {
   newApiReducer,
   updateApiReducer,
   detailApiReducer,
+  listApiReducer,
+  listFieldReducer,
 } from "./site-management/settings/api.reducers";
 // ============== data reference ===============
 import {
@@ -261,11 +263,11 @@ import {
   newTrainingReducer,
   allTrainingReducer,
   deleteTrainingReducer,
+  updateStatusReducer,
 } from "./pelatihan/training.reducers";
 //END PELATIHAN
 
 // functional reducer
-
 import {
   trainingStep1Reducer,
   registrationStep2Reducer,
@@ -446,6 +448,8 @@ const reducer = combineReducers({
   newPage: newPageReducer,
   detailPage: detailPageReducer,
   updatePage: updatePageReducer,
+  listApi: listApiReducer,
+  listField: listFieldReducer,
   // ============ API =======
   allApi: allApiReducer,
   deleteApi: deleteApiReducer,
@@ -515,6 +519,7 @@ const reducer = combineReducers({
   drowpdownProvinsi: drowpdownProvinsiReducers,
   drowpdownKabupaten: drowpdownKabupatenReducers,
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
+  updateStatus: updateStatusReducer,
   //END PELATIHAN
 });
 

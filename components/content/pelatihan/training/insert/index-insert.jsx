@@ -1,11 +1,32 @@
+import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import StepInputPelatihan from "../../../../StepInputPelatihan";
-
-import AddTrainingStep1 from "./add-training-step1";
-import AddRegistrationStep2 from "./add-registration-step2";
-import AddCommitmentStep3 from "./add-commitment-step3";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { useDispatch, useSelector } from "react-redux";
+
+// import AddTrainingStep1 from "./add-training-step1";
+// import AddRegistrationStep2 from "./add-registration-step2";
+// import AddCommitmentStep3 from "./add-commitment-step3";
+
+const AddTrainingStep1 = dynamic(() => import("./add-training-step1"), {
+  loading: function loadingNow() {
+    return <LoadingSkeleton />;
+  },
+  ssr: false,
+});
+const AddRegistrationStep2 = dynamic(() => import("./add-registration-step2"), {
+  loading: function loadingNow() {
+    return <LoadingSkeleton />;
+  },
+  ssr: false,
+});
+const AddCommitmentStep3 = dynamic(() => import("./add-commitment-step3"), {
+  loading: function loadingNow() {
+    return <LoadingSkeleton />;
+  },
+  ssr: false,
+});
 
 import { clearErrors } from "../../../../../redux/actions/pelatihan/training.actions";
 

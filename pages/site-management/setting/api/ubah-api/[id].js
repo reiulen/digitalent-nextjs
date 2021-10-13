@@ -53,7 +53,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //   )
       // );
       return {
-        props: { session, title: "Tambah API - Site Management" },
+        props: { session, title: "Ubah API - Site Management" },
       };
     }
 );

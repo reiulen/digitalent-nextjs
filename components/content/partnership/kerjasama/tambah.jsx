@@ -18,7 +18,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
 
-const Tambah = ({token}) => {
+const Tambah = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const allMK = useSelector((state) => state.allMK);
@@ -48,8 +48,6 @@ const Tambah = ({token}) => {
     dataaa[index].cooperation = e.target.value;
     setAllCooperation(dataaa);
   };
-
-  
 
   const submit = (e) => {
     e.preventDefault();
@@ -152,7 +150,7 @@ const Tambah = ({token}) => {
     dispatch(fetchListSelectCooperation(token));
     // get cooperation active select
     dispatch(fetchListCooperationSelect(token));
-    dispatch(fetchListCooperationSelectById(token,cooperationC_id));
+    dispatch(fetchListCooperationSelectById(token, cooperationC_id));
     dispatch(fetchListSelectMitra(token));
     setDate(moment(new Date()).format("YYYY-MM-DD"));
   }, [
@@ -160,7 +158,7 @@ const Tambah = ({token}) => {
     allMK.institution_name,
     allMK.idCooporationSelect,
     cooperationC_id,
-    token
+    token,
   ]);
   return (
     <PageWrapper>
@@ -197,14 +195,13 @@ const Tambah = ({token}) => {
                 /> */}
 
                 <input
-                      disabled
-                      type="text"
-                      value={date}
-                      name="text_input"
-                      className="form-control mb-3 mb-lg-0"
-                      // placeholder="Masukan Alamat E-mail"
-                    />
-
+                  disabled
+                  type="text"
+                  value={date}
+                  name="text_input"
+                  className="form-control mb-3 mb-lg-0"
+                  // placeholder="Masukan Alamat E-mail"
+                />
 
                 {error.date ? <p className="error-text">{error.date}</p> : ""}
               </div>
@@ -239,8 +236,6 @@ const Tambah = ({token}) => {
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
-
-
                   <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">Email</label>
                     <input
@@ -252,8 +247,6 @@ const Tambah = ({token}) => {
                       placeholder="Masukan Alamat E-mail"
                     />
                   </div>
-
-
                 </div>
               </div>
 

@@ -24,27 +24,59 @@ import {
   CLEAR_ERRORS,
 } from "../../types/site-management/data-reference.type";
 
-export const allDataReferenceReducer = (
-  state = { dataReference: [] },
-  action
-) => {
+const statuslist = {
+  idle: "idle",
+  process: "process",
+  success: "success",
+  error: "error",
+};
+
+const initialState = {
+  page: 1,
+  limit: 5,
+  cari: "",
+  status: statuslist.idle,
+};
+
+export const allDataReferenceReducer = (state = initialState, action) => {
   switch (action.type) {
     case DATA_REFERENCE_REQUEST:
       return {
-        loading: true,
+        ...state,
+        status: statuslist.process,
       };
 
     case DATA_REFERENCE_SUCCESS:
       return {
-        loading: false,
-        dataReference: action.payload.data,
-        page: 1,
+        ...state,
+        status: statuslist.success,
+        data: action.payload.data,
       };
 
     case DATA_REFERENCE_FAIL:
       return {
-        loading: false,
-        error: action.payload,
+        ...state,
+        status: statuslist.error,
+      };
+
+    case SEARCH_COORPORATION:
+      return {
+        ...state,
+        cari: action.text,
+        page: 1,
+      };
+
+    case SET_PAGE:
+      return {
+        ...state,
+        page: action.page,
+      };
+
+    case LIMIT_CONFIGURATION:
+      return {
+        ...state,
+        limit: action.limitValue,
+        page: 1,
       };
 
     case CLEAR_ERRORS:
@@ -57,6 +89,7 @@ export const allDataReferenceReducer = (
   }
 };
 
+// delete tidak ada
 export const deleteDataReferenceReducer = (state = {}, action) => {
   switch (action.type) {
     case DELETE_DATA_REFERENCE_REQUEST:
