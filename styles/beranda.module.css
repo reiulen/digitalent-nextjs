@@ -1,3 +1,4 @@
+
 .text-dark {
     color: black !important;
 }
@@ -116,5 +117,12 @@
     --rti-s: "0.5rem"; /* spacing */
     --rti-tag: "#edf2f7";
     --rti-tag-remove: "#e53e3e";
+}
+
+.my__carousel_main .div .ol .li {
+    background-color: red;
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
 }
 

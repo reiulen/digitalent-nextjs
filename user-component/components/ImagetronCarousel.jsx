@@ -85,7 +85,8 @@ const ImagetronCarousel = () => {
             nextLabel={false} 
             prevIcon={false} 
             prevLabel={false} 
-            indicators={true}
+            indicators={false}
+            // indicators={true}
         >
             <Carousel.Item>
                 <Image
