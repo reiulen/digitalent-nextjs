@@ -41,8 +41,21 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
+      const getRandomSoal = () => {
+        axios
+          .get(
+            `http://dts-subvit-dev.majapahit.id/api/subtance-question-bank-details/random?training_id=1&theme_id=1&category=Test Substansi`
+          )
+          .then((res) => res.data.data);
+      };
+
       return {
-        props: { data: "auth", session, title: "Test Substansi" },
+        props: {
+          data: "auth",
+          session,
+          getRandomSoal,
+          title: "Test Substansi",
+        },
       };
     }
 );

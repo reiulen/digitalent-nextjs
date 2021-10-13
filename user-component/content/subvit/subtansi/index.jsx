@@ -18,6 +18,10 @@ const SubtansiUser = () => {
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
+  const [count, setCount] = useState(3600 * 2);
+  const [hour, setHour] = useState(0);
+  const [minute, setMinute] = useState(0);
+  const [second, setSecond] = useState(0);
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -41,35 +45,59 @@ const SubtansiUser = () => {
       router.push(`${router.pathname.slice(0, 24)}/${page}`);
     }
   };
-  function startTimer(duration, display) {
-    var timer = duration,
-      minutes,
-      seconds;
-    setInterval(function () {
-      minutes = parseInt(timer / 60, 10);
-      seconds = parseInt(timer % 60, 10);
+  // function startTimer(duration, display) {
+  //   var timer = duration,
+  //     minutes,
+  //     seconds;
+  //   setInterval(function () {
+  //     minutes = parseInt(timer / 60, 10);
+  //     seconds = parseInt(timer % 60, 10);
 
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
+  //     minutes = minutes < 10 ? "0" + minutes : minutes;
+  //     seconds = seconds < 10 ? "0" + seconds : seconds;
 
-      display.textContent = minutes + ":" + seconds;
+  //     display.textContent = minutes + ":" + seconds;
 
-      if (--timer <= 0) {
-        router.replace(`${router.pathname.slice(0, 8)}/done`);
-      }
-    }, 1000);
-  }
+  //     if (--timer <= 0) {
+  //       router.replace(`${router.pathname.slice(0, 8)}/done`);
+  //     }
+  //   }, 1000);
+  // }
   useEffect(() => {
-    window.onload = function () {
-      var fiveMinutes = 1 * 60,
-        display = document.querySelector("#time");
-      startTimer(fiveMinutes, display);
-    };
+    // window.onload = function () {
+    //   var fiveMinutes = 1 * 60,
+    //     display = document.querySelector("#time");
+    //   startTimer(fiveMinutes, display);
+    // };
 
-    getRandomSoal();
+    if (count >= 0) {
+      const secondsLeft = setInterval(() => {
+        setCount((c) => c - 1);
+        let timeLeftVar = secondsToTime(count);
+        setHour(timeLeftVar.h);
+        setMinute(timeLeftVar.m);
+        setSecond(timeLeftVar.s);
+      }, 1000);
+      return () => clearInterval(secondsLeft);
+    } else {
+      console.log("time out");
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [count]);
+
+  const secondsToTime = (secs) => {
+    var hours = Math.floor(secs / (60 * 60));
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+    return {
+      h: hours,
+      m: minutes,
+      s: seconds,
+    };
+  };
 
   const getRandomSoal = () => {
     axios
@@ -116,7 +144,9 @@ const SubtansiUser = () => {
             </Col>
             <Col sm={5} xs={6}>
               <Card className={styles.time} id="time">
-                02:00
+                {hour < 9 ? "0" + hour : hour}:
+                {minute < 9 ? "0" + minute : minute}:
+                {second < 9 ? "0" + second : second}
               </Card>
             </Col>
           </Row>
