@@ -797,13 +797,6 @@ const Table = ({ token }) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="">
                                           Pengajuan - Review

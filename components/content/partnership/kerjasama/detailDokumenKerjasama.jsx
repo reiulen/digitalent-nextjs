@@ -118,7 +118,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                 className="col-form-label fz-14"
                 style={{ color: "#6C6C6C" }}
               >
-                Periode Kerjasama
+                Tanggal
               </label>
               <p className="fz-16">
                 {allMK.cooperationById.length === 0
@@ -289,7 +289,7 @@ const DetailDokumenKerjasama = ({ token }) => {
                     className="col-form-label fz-14"
                     style={{ color: "#6C6C6C" }}
                   >
-                    Kategori kerjasama
+                    Nomor Perjanjian Lembaga
                   </label>
                   <p className="fz-16">
                     {allMK.cooperationById.length === 0
