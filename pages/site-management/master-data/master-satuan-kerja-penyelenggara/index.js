@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import LoadingPage from "../../../../components/LoadingPage";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
+import { getAllUnitWork } from "../../../../redux/actions/site-management/unit-work.actions";
 
 const ListRole = dynamic(
   () =>
@@ -49,6 +50,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //     session.user.user.data.token
       //   )
       // );
+
+      await store.dispatch(getAllUnitWork(session.user.user.data.token));
 
       return {
         props: {

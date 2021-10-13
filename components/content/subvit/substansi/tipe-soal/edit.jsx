@@ -13,6 +13,7 @@ import { UPDATE_SUBTANCE_QUESTION_TYPE_RESET } from "../../../../../redux/types/
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 const EditTipeSoal = ({ token }) => {
   const dispatch = useDispatch();
@@ -73,6 +74,10 @@ const EditTipeSoal = ({ token }) => {
         text: "Isi data dengan benar !",
       });
     }
+  };
+
+  const handleChange = (e) => {
+    setStatus(e.target.value);
   };
 
   return (
@@ -160,26 +165,15 @@ const EditTipeSoal = ({ token }) => {
                   <select
                     name="status"
                     id=""
-                    onChange={(e) => setStatus(e.target.value)}
-                    onBlur={(e) => setStatus(e.target.value)}
+                    onChange={(event) => handleChange(event)}
+                    onBlur={(event) => handleChange(event)}
                     className="form-control"
+                    defaultValue={status}
                   >
-                    {status == false ? (
-                      <>
-                        <option value={false} selected>
-                          {" "}
-                          Draft{" "}
-                        </option>
-                        <option value={true}> Publish </option>
-                      </>
-                    ) : (
-                      <>
-                        <option value={true} selected>
-                          Publish{" "}
-                        </option>
-                        <option value={false}>Draft </option>
-                      </>
-                    )}
+                    <option value={0} selected>
+                      Draft
+                    </option>
+                    <option value={1}> Publish </option>
                   </select>
                 </div>
               </div>
@@ -187,7 +181,7 @@ const EditTipeSoal = ({ token }) => {
               <div className="form-group row">
                 <div className="col-sm-12 text-right">
                   <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     onClick={handleBack}
                   >
                     Kembali

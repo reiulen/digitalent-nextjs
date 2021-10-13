@@ -24,24 +24,59 @@ import {
   CLEAR_ERRORS,
 } from "../../types/site-management/unit-work.type";
 
-export const allUnitWorkReducer = (state = { unitWork: [] }, action) => {
+const statuslist = {
+  idle: "idle",
+  process: "process",
+  success: "success",
+  error: "error",
+};
+
+const initialState = {
+  page: 1,
+  limit: 5,
+  cari: "",
+  status: statuslist.idle,
+};
+
+export const allUnitWorkReducer = (state = initialState, action) => {
   switch (action.type) {
     case UNIT_WORK_REQUEST:
       return {
-        loading: true,
+        ...state,
+        status: statuslist.process,
       };
 
     case UNIT_WORK_SUCCESS:
       return {
-        loading: false,
-        unitWork: action.payload.data,
-        page: 1,
+        ...state,
+        status: statuslist.success,
+        data: action.payload.data,
       };
 
     case UNIT_WORK_FAIL:
       return {
-        loading: false,
-        error: action.payload,
+        ...state,
+        status: statuslist.error,
+      };
+
+    case SEARCH_COORPORATION:
+      return {
+        ...state,
+        cari: action.text,
+        page: 1,
+      };
+
+    case SET_PAGE:
+      return {
+        ...state,
+        page: action.page,
+      };
+
+    case LIMIT_CONFIGURATION:
+      return {
+        ...state,
+        limit: action.limitValue,
+        page: 1,
       };
 
     case CLEAR_ERRORS:

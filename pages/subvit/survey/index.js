@@ -10,7 +10,7 @@ import { getAllSurveyQuestionBanks } from "../../../redux/actions/subvit/survey-
 import { wrapper } from "../../../redux/store";
 
 const ListSurvey = dynamic(
-  () => import("../../../components/content/subvit/substansi/list-substansi"),
+  () => import("../../../components/content/subvit/survey/list-survey"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;

@@ -1,9 +1,8 @@
 import dynamic from "next/dynamic";
 import { getSession } from "next-auth/client";
-// import { getAllArtikel } from "../../../redux/actions/publikasi/artikel.actions";
 import { wrapper } from "../../../../../redux/store";
 import LoadingPage from "../../../../../components/LoadingPage";
-
+import { getDetailApi } from "../../../../../redux/actions/site-management/settings/api.actions";
 const UbahApi = dynamic(
   () =>
     import(
@@ -30,7 +29,7 @@ export default function UbahPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query, req }) => {
+    async ({ params, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -41,17 +40,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(
-      //   getAllArtikel(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     query.publish,
-      //     query.startdate,
-      //     query.enddate,
-      //     session.user.user.data.token
-      //   )
-      // );
+      await store.dispatch(
+        getDetailApi(params.id, session.user.user.data.token)
+      );
       return {
         props: { session, title: "Ubah API - Site Management" },
       };

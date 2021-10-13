@@ -14,6 +14,7 @@ import CardPage from "../../../CardPage";
 import { useDispatch, useSelector } from "react-redux";
 import { Modal } from "react-bootstrap";
 import axios from "axios";
+import styles from "../trivia/edit/step.module.css";
 
 const ReportSurvey = ({ token }) => {
   const dispatch = useDispatch();
@@ -225,7 +226,7 @@ const ReportSurvey = ({ token }) => {
                     <i className="ri-arrow-down-s-line"></i>
                   </button>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-3 ">
                   {/* <button
                     className="btn btn-sm btn-success px-6 font-weight-bold btn-block "
                     type="button"
@@ -234,7 +235,7 @@ const ReportSurvey = ({ token }) => {
                     Export .CSV
                   </button> */}
                   <button
-                    className="btn btn-rounded-full bg-blue-secondary text-white mt-2"
+                    className={`${styles.btnResponsive} btn w-200 btn-rounded-full bg-blue-secondary text-center text-white mt-2`}
                     type="button"
                     onClick={handleExportReport}
                   >
