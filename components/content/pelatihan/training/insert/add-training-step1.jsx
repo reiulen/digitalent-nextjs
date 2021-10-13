@@ -21,6 +21,9 @@ const AddTrainingStep1 = ({ propsStep }) => {
   const router = useRouter();
 
   const { trainingData } = useSelector((state) => state.trainingStep1);
+  const { error: dropdownErrorLevelPelatihan, data: dataLevelPelatihan } = useSelector(
+    (state) => state.drowpdownLevelPelatihan
+  );
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
@@ -104,11 +107,16 @@ const AddTrainingStep1 = ({ propsStep }) => {
   const [tuna_daksa, setTunaDaksa] = useState(trainingData.tuna_daksa);
   // const [disabilitas, setDisabilitas] = useState(trainingData.disabilitas);
 
-  const options = [
-    { value: "1", label: "Chocolate" },
-    { value: "2", label: "Strawberry" },
-    { value: "3", label: "Vanilla" },
-  ];
+  const options = []
+  for (let index = 0; index < dataLevelPelatihan.data.length; index++){
+    let val = { value: dataLevelPelatihan.data[index].id, label: dataLevelPelatihan.data[index].value}
+    options.push (val)
+  }
+  // [
+  //   { value: "1", label: "Chocolate" },
+  //   { value: "2", label: "Strawberry" },
+  //   { value: "3", label: "Vanilla" },
+  // ];
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
 
