@@ -14,3 +14,21 @@
 .futura {
     font-family: 'futura';
 }
+
+.tandatangan {
+    overflow: inherit
+}
+
+.h-100px {
+    height: auto !important
+}
+
+@media (min-width: 992px) {
+    .h-100px {
+        height: 100px !important
+    }
+
+    .tandatangan {
+        overflow: auto;
+    }
+}

@@ -37,24 +37,10 @@ const EditArtikel = ({ token }) => {
   });
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
-<<<<<<< HEAD
-  const simpleValidator = useRef(
-    new SimpleReactValidator({
-      locale: "id",
-      messages: {
-        url: "Format url berupa: https://www.example.com",
-      },
-    })
-  );
-  const [, forceUpdate] = useState();
-  // const forceUpdate = React.useReducer(() => ({}))[1]
-  const { artikel } = useSelector(state => state.detailArtikel);
-=======
   const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
   const [, forceUpdate] = useState();
   // const forceUpdate = React.useReducer(() => ({}))[1]
   const { artikel } = useSelector((state) => state.detailArtikel);
->>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
   const { error, success, loading } = useSelector(
     state => state.updatedArtikel
   );
@@ -90,15 +76,12 @@ const EditArtikel = ({ token }) => {
   useEffect(() => {
     // dispatch(getAllKategori(session.user.user.data.token))
 
-<<<<<<< HEAD
-=======
     editorRef.current = {
       CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
       ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
       // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
     }
 
->>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
     setEditorLoaded(true);
     if (success) {
       // setJudulArtikel('')
@@ -206,20 +189,6 @@ const EditArtikel = ({ token }) => {
     }
   };
 
-<<<<<<< HEAD
-  const handleTag = data => {
-    if (data.includes(" ")) {
-      setTag([]);
-      alert("tag");
-      setDisableTag(true);
-    } else {
-      setTag(data);
-      setDisableTag(false);
-    }
-
-    console.log(data);
-  };
-=======
   const handleTag = (data) => {
     for (let i = 0; i < data.length; i++){
       for (let j = 0; j < data[i].length; j++){
@@ -234,7 +203,6 @@ const EditArtikel = ({ token }) => {
     setTag(data)
     
   }
->>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
 
   const onSubmit = e => {
     e.preventDefault();

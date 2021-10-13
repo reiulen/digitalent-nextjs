@@ -3,6 +3,15 @@ import {
   TRAINING_REQUEST,
   TRAINING_SUCCESS,
   TRAINING_FAIL,
+  // UPDATE STATUS PUBLISH
+  REQUEST_STATUS_PUBLISH,
+  UPDATE_STATUS_PUBLISH,
+  CLEAR_STATUS,
+  FAIL_STATUS_PUBLISH,
+  // UPDATE STATUS PELATIHAN
+  REQUEST_STATUS_PELATIHAN,
+  UPDATE_STATUS_PELATIHAN,
+  FAIL_STATUS_PELATIHAN,
   // NEW TRAINING STEP 1
   NEW_TRAINING_STEP1_REQUEST,
   NEW_TRAINING_STEP1_SUCCESS,
@@ -426,6 +435,45 @@ export const cloneTrainingReducer = (state = { training: {} }, action) => {
       };
 
     case CLONE_TRAINING_RESET:
+      return {
+        success: false,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const updateStatusReducer = (state = { status: {} }, action) => {
+  switch (action.type) {
+    case REQUEST_STATUS_PUBLISH:
+    case REQUEST_STATUS_PELATIHAN:
+      return {
+        loading: true,
+      };
+
+    case UPDATE_STATUS_PUBLISH:
+    case UPDATE_STATUS_PELATIHAN:
+      return {
+        loading: false,
+        success: action.payload.message,
+        status: action.payload.data,
+      };
+
+    case FAIL_STATUS_PUBLISH:
+    case FAIL_STATUS_PELATIHAN:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_STATUS:
       return {
         success: false,
       };

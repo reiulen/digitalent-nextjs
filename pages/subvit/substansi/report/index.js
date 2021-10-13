@@ -41,7 +41,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         )
       );
       return {
-        props: { session, title: "Report Bank Soal Tes Substansi - Subvit" },
+        props: { session, title: "Report Bank Soal Test Substansi - Subvit" },
       };
     }
 );

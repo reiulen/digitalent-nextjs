@@ -323,7 +323,7 @@ export const dropdownPenyelenggara = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/9`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/13`,
       config
     );
     dispatch({

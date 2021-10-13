@@ -41,18 +41,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
       await store.dispatch(
         getSingleSertifikat(
           query.nama_pelatihan_id,
-          query.page,
-          query.keyword,
-          query.limit,
-          query.publish,
-          query.startdate,
-          query.enddate,
           session.user.user.data.token
         )
       );
+
       return {
         props: { session, title: "List Peserta - Sertifikat" },
       };
