@@ -160,7 +160,12 @@ export const getSingleSertifikat = (id, token) => async dispatch => {
       dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    dispatch({ type: SINGLE_SERTIFIKAT_FAIL, payload: error.message });
+    console.log("error masuk sini", error.response.data.message);
+    dispatch({
+      type: SINGLE_SERTIFIKAT_FAIL,
+      // payload: error.message
+      payload: error.response.data.message,
+    });
   }
 };
 
