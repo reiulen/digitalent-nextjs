@@ -12,7 +12,7 @@ import axios from "axios";
 import IconClose from "../../../../assets/icon/Close";
 import Image from "next/image";
 
-const Tambah = ({token}) => {
+const Tambah = ({ token }) => {
   const router = useRouter();
   const { successInputProfile } = router.query;
   // const [startDate, setStartDate] = useState(null);
@@ -66,18 +66,13 @@ const Tambah = ({token}) => {
 
     // jika pertama kali data profile kosong
     // else if ((agency_logo === "") && agency_logo_api) {
-    else if ((agency_logo_api === "") && (agency_logo === "") ) {
-   
-        setError({
-          ...error,
-          agency_logo: "Harus isi gambar logo dengan format png",
-        });
-        notify("Harus isi gambar logo dengan format png");
-  
-    } 
-    
-    
-    else if (address === "") {
+    else if (agency_logo_api === "" && agency_logo === "") {
+      setError({
+        ...error,
+        agency_logo: "Harus isi gambar logo dengan format png",
+      });
+      notify("Harus isi gambar logo dengan format png");
+    } else if (address === "") {
       setError({ ...error, address: "Harus isi alamat" });
       notify("Harus isi alamat");
     } else if (indonesia_provinces_id === "") {
@@ -128,7 +123,6 @@ const Tambah = ({token}) => {
           let formData = new FormData();
           formData.append("institution_name", institution_name);
 
-
           if (agency_logo === "") {
             console.log("no send image");
           } else {
@@ -139,10 +133,16 @@ const Tambah = ({token}) => {
           formData.append("website", wesite);
           formData.append("address", address);
 
-          if((typeof indonesia_provinces_id === "object") && (typeof indonesia_cities_id === "object") ){
-          formData.append("indonesia_cities_id", indonesia_cities_id.id);
-          formData.append("indonesia_provinces_id", indonesia_provinces_id.id);
-          }else{
+          if (
+            typeof indonesia_provinces_id === "object" &&
+            typeof indonesia_cities_id === "object"
+          ) {
+            formData.append("indonesia_cities_id", indonesia_cities_id.id);
+            formData.append(
+              "indonesia_provinces_id",
+              indonesia_provinces_id.id
+            );
+          } else {
             formData.append("indonesia_cities_id", indonesia_cities_id);
             formData.append("indonesia_provinces_id", indonesia_provinces_id);
           }
@@ -162,13 +162,12 @@ const Tambah = ({token}) => {
                 },
               }
             );
-            if(router.query.isProfile){
-                router.push({
+            if (router.query.isProfile) {
+              router.push({
                 pathname: "/partnership/user/kerjasama/submit-kerjasama",
                 query: { isProfile: true },
               });
-            }
-            else{
+            } else {
               router.push({
                 pathname: "/partnership/user/profile-lembaga/input-profile",
                 query: { successInputProfile: true },
@@ -236,11 +235,11 @@ const Tambah = ({token}) => {
   const [citiesAll, setCitiesAll] = useState([]);
 
   // const getDataProvinces = async () => {
-    
+
   // };
 
   // const getProfiles = async () => {
-    
+
   // };
 
   const [isChangeLogo, setIsChangeLogo] = useState(false);
@@ -251,73 +250,76 @@ const Tambah = ({token}) => {
   useEffect(() => {
     async function getDataProvinces(token) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/provinces`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      let dataNewProvinces = data.data.map((items) => {
-        return { ...items, label: items.name, value: items.id };
-      });
-      dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
-      setAllProvinces(dataNewProvinces);
-    } catch (error) {
-      console.log("gagal get province", error);
-    }
-      
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/option/provinces`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        let dataNewProvinces = data.data.map((items) => {
+          return { ...items, label: items.name, value: items.id };
+        });
+        dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
+        setAllProvinces(dataNewProvinces);
+      } catch (error) {
+        console.log("gagal get province", error);
+      }
     }
 
     async function getProfiles(token) {
       try {
-      let { data } = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
+        let { data } = await axios.get(
+          `${process.env.END_POINT_API_PARTNERSHIP_MITRA}api/profiles`,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      if (data) {
-        setAgency_logo_api(
-          data.data.agency_logo === "-" ? "" : data.data.agency_logo
-        );
-        setAddress(data.data.address === "-" ? "" : data.data.address);
-        setPostal_code(
-          data.data.postal_code === "-" ? "" : data.data.postal_code
-        );
-        setPic_name(data.data.pic_name === "-" ? "" : data.data.pic_name);
-        setPic_contact_number(
-          data.data.pic_contact_number === "-"
-            ? ""
-            : data.data.pic_contact_number
-        );
-        setPic_email(data.data.pic_email === "-" ? "" : data.data.pic_email);
-        setWesite(data.data.website === "-" ? "" : data.data.website);
-        setEmail(data.data.email === "-" ? "" : data.data.email);
-        setInstitution_name(
-          data.data.institution_name === "-" ? "" : data.data.institution_name
-        );
-        if ((data.data.city.id !== "-") && data.data.province.id !== "-") {
-          let citiesss = {...data.data.city,label:data.data.city.name,value:data.data.city.id}
-          let provinciesss = {...data.data.province,label:data.data.province.name,value:data.data.province.id}
-          setIndonesia_cities_id(citiesss);
-          setIndonesia_provinces_id(provinciesss);
-        } else {
-          console.log("log")
+        if (data) {
+          setAgency_logo_api(
+            data.data.agency_logo === "-" ? "" : data.data.agency_logo
+          );
+          setAddress(data.data.address === "-" ? "" : data.data.address);
+          setPostal_code(
+            data.data.postal_code === "-" ? "" : data.data.postal_code
+          );
+          setPic_name(data.data.pic_name === "-" ? "" : data.data.pic_name);
+          setPic_contact_number(
+            data.data.pic_contact_number === "-"
+              ? ""
+              : data.data.pic_contact_number
+          );
+          setPic_email(data.data.pic_email === "-" ? "" : data.data.pic_email);
+          setWesite(data.data.website === "-" ? "" : data.data.website);
+          setEmail(data.data.email === "-" ? "" : data.data.email);
+          setInstitution_name(
+            data.data.institution_name === "-" ? "" : data.data.institution_name
+          );
+          if (data.data.city.id !== "-" && data.data.province.id !== "-") {
+            let citiesss = {
+              ...data.data.city,
+              label: data.data.city.name,
+              value: data.data.city.id,
+            };
+            let provinciesss = {
+              ...data.data.province,
+              label: data.data.province.name,
+              value: data.data.province.id,
+            };
+            setIndonesia_cities_id(citiesss);
+            setIndonesia_provinces_id(provinciesss);
+          } else {
+            console.log("log");
+          }
         }
+      } catch (error) {
+        console.log("gagal get province", error);
       }
-    } catch (error) {
-      console.log("gagal get province", error);
     }
-      
-    }
-
-
-
 
     getDataProvinces(token);
     getProfiles(token);
@@ -407,11 +409,11 @@ const Tambah = ({token}) => {
           </div>
           <div className="card-body pt-0">
             <form
-              // id="kt_docs_formvalidation_text"
-              // className="form"
-              // action="#"
-              // autoComplete="off"
-              // onSubmit={submit}
+            // id="kt_docs_formvalidation_text"
+            // className="form"
+            // action="#"
+            // autoComplete="off"
+            // onSubmit={submit}
             >
               <div className="form-group mb-6">
                 <label htmlFor="staticE mail" className="col-form-label">
@@ -421,9 +423,10 @@ const Tambah = ({token}) => {
                   disabled
                   type="text"
                   name="text_input"
-                  className="form-control"
-                  placeholder="Masukan Nama Lembaga"
+                  className="form-control border-0"
+                  // placeholder="Masukan Nama Lembaga"
                   value={institution_name}
+                  style={{backgroundColor:"transparent"}}
                 />
                 {error.institution_name ? (
                   <p className="error-text">{error.institution_name}</p>
@@ -464,9 +467,10 @@ const Tambah = ({token}) => {
                       onFocus={() => setError({ ...error, email: "" })}
                       type="text"
                       name="text_input"
-                      className="form-control"
-                      placeholder="Masukan Alamat E-mail"
+                      className="form-control border-0"
+                      // placeholder="Masukan Alamat E-mail"
                       value={email}
+                      style={{backgroundColor:"transparent"}}
                     />
                     {error.email ? (
                       <p className="error-text">{error.email}</p>
@@ -555,6 +559,9 @@ const Tambah = ({token}) => {
                 )}
               </div>
               {/* modal image show */}
+
+
+              
               <div
                 className="modal fade"
                 id="exampleModalCenter"
@@ -632,8 +639,16 @@ const Tambah = ({token}) => {
                       }
                       className="basic-single"
                       classNamePrefix="select"
-                      placeholder={`${indonesia_provinces_id !== "" ? indonesia_provinces_id.name:"Pilih provinsi"} `}
-                      defaultValue={indonesia_provinces_id !== "" ? indonesia_provinces_id :  allProvinces[0]}
+                      placeholder={`${
+                        indonesia_provinces_id !== ""
+                          ? indonesia_provinces_id.name
+                          : "Pilih provinsi"
+                      } `}
+                      defaultValue={
+                        indonesia_provinces_id !== ""
+                          ? indonesia_provinces_id
+                          : allProvinces[0]
+                      }
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -663,10 +678,12 @@ const Tambah = ({token}) => {
                       }
                       className="basic-single"
                       classNamePrefix="select"
-                      placeholder= {`${indonesia_cities_id !== "" ? indonesia_cities_id.name :"Pilih data Kab/Kota"}`}
-                          
-                      defaultValue={citiesAll[0]
-                      }
+                      placeholder={`${
+                        indonesia_cities_id !== ""
+                          ? indonesia_cities_id.name
+                          : "Pilih data Kab/Kota"
+                      }`}
+                      defaultValue={citiesAll[0]}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -685,18 +702,22 @@ const Tambah = ({token}) => {
                 </div>
               </div>
 
-              <div className="form-group">
+              <div className="form-group position-relative">
                 <label htmlFor="staticEmail" className="col-form-label">
                   Kode Pos
                 </label>
-                <input
-                  onFocus={() => setError({ ...error, postal_code: "" })}
-                  type="number"
-                  value={postal_code && postal_code}
-                  className="form-control"
-                  placeholder="Masukkan Kode Pos"
-                  onChange={(e) => setPostal_code(e.target.value)}
-                />
+
+                <div className="position-relative">
+                  <input
+                    onFocus={() => setError({ ...error, postal_code: "" })}
+                    type="number"
+                    value={postal_code && postal_code}
+                    className="form-control"
+                    placeholder="Masukkan Kode Pos"
+                    onChange={(e) => setPostal_code(e.target.value)}
+                  />
+                  <div className="box-hide-arrow"></div>
+                </div>
                 {error.postal_code ? (
                   <p className="error-text">{error.postal_code}</p>
                 ) : (
@@ -730,6 +751,7 @@ const Tambah = ({token}) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nomor Handphone Person In Charge (PIC)
                     </label>
+                    <div className="position-relative">
                     <input
                       onFocus={() =>
                         setError({ ...error, pic_contact_number: "" })
@@ -742,6 +764,8 @@ const Tambah = ({token}) => {
                       onChange={(e) => setPic_contact_number(e.target.value)}
                       value={pic_contact_number && pic_contact_number}
                     />
+                    <div className="box-hide-arrow"></div>
+                    </div>
                     {error.pic_contact_number ? (
                       <p className="error-text">{error.pic_contact_number}</p>
                     ) : (
@@ -780,7 +804,7 @@ const Tambah = ({token}) => {
 
                   <button
                     type="button"
-                    onClick={(e)=>submit(e)}
+                    onClick={(e) => submit(e)}
                     className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                   >
                     Simpan

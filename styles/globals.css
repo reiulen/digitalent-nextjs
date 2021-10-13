@@ -259,3 +259,13 @@ a {
   color: #ee2d41;
   background: #fdeaec;
 }
+
+.box-hide-arrow{
+      position: absolute;
+      height: 77%;
+      width: 3rem;
+      right: 4px;
+      top: 50%;
+      background-color: white;
+      transform: translateY(-50%);
+}

@@ -379,6 +379,9 @@ const GeneralPage = ({ token }) => {
                 <form onSubmit={submit}>
                   <div className="row">
                     <div className="col-12 col-sm-3">
+
+
+                      
                       <div className="form-group">
                         <label className="mb-8" style={{ fontSize: "16px" }}>
                           Logo Digitalent Scholarship
@@ -450,6 +453,16 @@ const GeneralPage = ({ token }) => {
                           </span>
                         </div>
                       </div>
+
+
+
+
+
+
+
+
+
+
                     </div>
                     <div className="col-12 col-sm-9">
                       <div className="h-100 d-flex align-items-center">
