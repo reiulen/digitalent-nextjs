@@ -104,12 +104,13 @@ const EditGaleri = ({ token }) => {
         </div>
     ));
 
+    // useEffect(() => {
+    //     handleDataToArr(galeri.gambar)
+    // })
+
     useEffect(() => {
+
         handleDataToArr(galeri.gambar)
-    })
-
-    useEffect(() => {
-
         // dispatch(getAllKategori())
 
         files.forEach(file => URL.revokeObjectURL(file.preview));
@@ -242,23 +243,35 @@ const EditGaleri = ({ token }) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
         let list = [...image];
         if (type.includes(e.target.files[0].type)) {
-            // list[index].imageFile = e.target.files[0];
-            const reader = new FileReader();
+            if (e.target.files[0].size > 5000000) {
+                e.target.value = null;
+                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            } else {
+                // list[index].imageFile = e.target.files[0];
+                const reader = new FileReader();
 
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    list[index].imagePreview = reader.result;
-                    list[index].imageBase64 = reader.result;
-                }
-                // router.reload(window.location.pathname)
-                setImage([
-                    ...image,
-                ]);
-            };
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        // list[index].imagePreview = reader.result;
+                        // list[index].imageBase64 = reader.result;
+                        list[index].imageFile = e.target.files[0];
+                        list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+                        list[index].imageName = e.target.files[0].name;
+                        console.log("List :", list)
+                        setImage(list);
+                    }
+                    // router.reload(window.location.pathname)
+                    // setImage([
+                    //     ...image,
+                    // ]);
+                };
 
-            reader.readAsDataURL(e.target.files[0]);
-            list[index].imageName = e.target.files[0].name;
-            setImage(list);
+                console.log(image);
+                reader.readAsDataURL(e.target.files[0]);
+                list[index].imageName = e.target.files[0].name;
+                // setImage(list);
+
+            }
 
 
         } else {
@@ -270,6 +283,37 @@ const EditGaleri = ({ token }) => {
             );
         }
     };
+
+    // const onChangeImage = (e, index) => {
+    //     const type = ["image/jpg", "image/png", "image/jpeg"];
+    //     let list = [...image];
+    //     if (type.includes(e.target.files[0].type)) {
+    //       if (e.target.files[0].size > 5000000) {
+    //         e.target.value = null;
+    //         Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    //       } else {
+    //         list[index].imageFile = e.target.files[0];
+    //         list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+    //         list[index].imageName = e.target.files[0].name;
+    //         console.log(list)
+    //         setImage(list);
+    //       }
+    //       console.log(image);
+    //       // const reader = new FileReader();
+    //       // reader.onload = () => {
+    //       //   if (reader.readyState === 2) {
+    //       //   }
+    //       // };
+    //       // reader.readAsDataURL(e.target.files[0]);
+    //     } else {
+    //       e.target.value = null;
+    //       Swal.fire(
+    //         "Oops !",
+    //         "Data yang bisa dimasukkan hanya berupa data gambar.",
+    //         "error"
+    //       );
+    //     }
+    //   };
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
@@ -355,7 +399,7 @@ const EditGaleri = ({ token }) => {
             }
 
             // dispatch(newGaleri(data, token))
-            dispatch(onCall(data, token))
+            // dispatch(onCall(data, token))
             console.log("Unpublish : ", data)
             // console.log(image)
 
@@ -374,7 +418,7 @@ const EditGaleri = ({ token }) => {
                 _method,
             }
 
-            dispatch(onCall(data, token))
+            // dispatch(onCall(data, token))
             console.log("Publish : ", data)
             // console.log(image)
         }
@@ -519,9 +563,9 @@ const EditGaleri = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log("Cek Edit Image :", galeri)
-            }
+            } */}
 
             {/* {
                 console.log (image)
