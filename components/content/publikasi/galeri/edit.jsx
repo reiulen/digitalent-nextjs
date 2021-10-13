@@ -268,7 +268,7 @@ const EditGaleri = ({ token }) => {
 
                 console.log(image);
                 reader.readAsDataURL(e.target.files[0]);
-                list[index].imageName = e.target.files[0].name;
+                // list[index].imageName = e.target.files[0].name;
                 // setImage(list);
             }
         } else {
@@ -454,7 +454,7 @@ const EditGaleri = ({ token }) => {
                 handleData(temps, updateGaleri)
             }
         }
-
+        console.log("Temp :", temps)
     }
 
     // const onSubmit = (e) => {

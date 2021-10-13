@@ -46,7 +46,7 @@ const Galeri = ({ token }) => {
     const [publishValue, setPublishValue] = useState(null)
     const [index_galleri, setIndexGalleri] = useState(null)
     const [disableEndDate, setDisableEndDate] = useState(true)
-    const [previewImage, setPreviewImage] = useState(0)
+    const [previewImage, setPreviewImage] = useState(false)
 
     let loading = false
 
@@ -307,45 +307,66 @@ const Galeri = ({ token }) => {
     }
 
     const printImage = () => {
+        // console.log("isViewed :", isViewed.judul)
         return galeri && galeri.gallery.length !== 0 && index_galleri !== null ?
             <>
                 <div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel" style={{ position: 'relative' }}>
-                    <div className="carousel-inner" style={{ position: 'absolute', left: '-12px' }}>
+                    <div className="carousel-inner" style={{ position: 'absolute', left: '-13px' }}>
                         <div className="carousel-item active">
-                            <div className={styles['img-prevModal']}>
-                                <Image
-                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                        "publikasi/images/" +
-                                        galeri.gallery[index_galleri].gambar)}
-                                    src={
-                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                        "publikasi/images/" +
-                                        galeri.gallery[index_galleri].gambar
-                                    }
-                                    alt='image'
-                                    layout='fill'
-                                    objectFit='fill'
-                                />
-                            </div>
+                            {
+                                isViewed && isViewed.length !== 0 ?
+                                    isViewed.gambar.map((row, i) => {
+                                        console.log("DAta :", row.id)
+                                        return (
+                                            <div className={styles['img-prevModal']} key={row.id}>
+                                                <Image
+                                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        "publikasi/images/" +
+                                                        row.gambar)}
+                                                    src={
+                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        "publikasi/images/" +
+                                                        row.gambar
+                                                    }
+                                                    alt='image'
+                                                    layout='fill'
+                                                    objectFit='fill'
+                                                />
+                                            </div>
+                                        )
+                                    })
+                                    : null
+                            }
                         </div>
                         <div className="carousel-item">
-                            <div className={styles['img-prevModal']}>
-                                <Image
-                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                        "publikasi/images/" +
-                                        galeri.gallery[1].gambar)}
-                                    src={
-                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                        "publikasi/images/" +
-                                        galeri.gallery[1].gambar
-                                    }
-                                    alt='image'
-                                    layout='fill'
-                                    objectFit='fill'
-                                />
-                            </div>
+                            {
+                                isViewed && isViewed.length !== 0 ?
+                                    // <>
+                                    isViewed.gambar.map((row, i) => {
+                                        console.log("DAta :", row)
+                                        return (
+                                            <div className={styles['img-prevModal']} key={i}>
+                                                <Image
+                                                    unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                                                    loader={() => (process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        "publikasi/images/" +
+                                                        row.gambar)}
+                                                    src={
+                                                        process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                                        "publikasi/images/" +
+                                                        row.gambar
+                                                    }
+                                                    alt='image'
+                                                    layout='fill'
+                                                    objectFit='fill'
+                                                />
+                                            </div>
+                                        )
+                                    })
+                                    // </>
+                                    : null
+                            }
                         </div>
                     </div>
                     <button className="carousel-control-prev" type="button" data-target="#carouselExampleIndicators" data-slide="prev"
@@ -868,7 +889,7 @@ const Galeri = ({ token }) => {
             {/* Modal */}
             <div className="modal fade" id="galleryModalPreview" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
                 <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
+                    <div className="modal-content mr-5" style={{ background: 'none' }}>
                         {/* <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -882,7 +903,14 @@ const Galeri = ({ token }) => {
                             <div className={styles['posModal']}>
                                 <div className="col-6">
                                     {/* {console.log("Cek Modal Image :", galeri.gallery)} */}
-                                    {printImage()}
+                                    <div className={styles['img-left']}>
+                                        {
+                                            isViewed &&
+                                            <>
+                                                {printImage()}
+                                            </>
+                                        }
+                                    </div>
                                     {/* {
                                         galeri && galeri.gallery.length !== 0 ?
                                             galeri.gallery.map((row, i) => {
@@ -938,51 +966,53 @@ const Galeri = ({ token }) => {
                                             null
                                     } */}
                                 </div>
-                                {/* <div className="col-1"></div> */}
-                                <div className="col-6" style={{ padding: '30px'}}>
+                                <div className="col-6" style={{ padding: '30px' }}>
                                     {/* {console.log("CEK :",galeri.gallery)} */}
                                     {
                                         galeri && galeri.gallery.length !== 0 && index_galleri !== null ?
                                             <>
-                                                <div className="mb-1 justify-content-between" style={{display:'flex', marginLeft: '-12px'}}>
-                                                    <h3 className="col-10" style={{ fontWeight: 'bold', textAlign: 'left',marginLeft:'-12px' }}>
+                                                <div className="mb-1 justify-content-between" style={{ display: 'flex', marginLeft: '-12px' }}>
+                                                    <h3 className="col-10" style={{ fontWeight: 'bold', textAlign: 'left', marginLeft: '-12px' }}>
                                                         {galeri.gallery[index_galleri].judul}
                                                     </h3>
                                                     <button type="button" className="col-1 flaticon2-delete" data-dismiss="modal" aria-label="Close" style={{ border: 'none', background: 'none' }}></button>
                                                 </div>
                                                 <div className="row mb-4" style={{ textAlign: 'left' }}>
                                                     <div className="col-6">
-                                                        <div style={{ fontSize: '11px', marginLeft: '-10px' }}
-                                                            className="mb-1 p-0 d-flex align-items-center">
-                                                            <i className="flaticon2-calendar-4"></i>
-                                                            <span className="ml-2">
-                                                                Publish: {moment(galeri.gallery[index_galleri].tanggal_publish).format('LL')}
-                                                            </span>
-                                                        </div>
+                                                        <div className={styles['subMenuPreview']}>
+                                                            <div className="mb-1 p-0 d-flex align-items-center">
+                                                                <div className={styles['iconPreview']}>
+                                                                    <i className="flaticon2-calendar-4"></i>
+                                                                </div>
+                                                                <span className="ml-2">
+                                                                    Publish: {moment(galeri.gallery[index_galleri].tanggal_publish).format('LL')}
+                                                                </span>
+                                                            </div>
 
-                                                        <div style={{ fontSize: '11px', marginLeft: '-10px' }}
-                                                            className="mb-1 p-0 d-flex align-items-center">
-                                                            <i className="flaticon2-user"></i>
-                                                            <span className="ml-2">
-                                                                {/* User : Super Admin */}
-                                                                Author : {galeri.gallery[index_galleri].role}
-                                                            </span>
+                                                            <div className="mb-1 p-0 d-flex align-items-center">
+                                                                <i className="flaticon2-user"></i>
+                                                                <span className="ml-2">
+                                                                    {/* User : Super Admin */}
+                                                                    Author : {galeri.gallery[index_galleri].role}
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
 
                                                     <div className="col-6">
-                                                        <div style={{ fontSize: '11px', marginLeft: '-10px' }}
-                                                            className="mb-1 p-0 d-flex align-items-center">
-                                                            <i className="ri-dashboard-line"></i>
-                                                            <span className="ml-2">
-                                                                {/* User : Super Admin */}
-                                                                Kategori : {galeri.gallery[index_galleri].nama_kategori}
-                                                            </span>
+                                                        <div className={styles['subMenuPreview']}>
+                                                            <div className="mb-1 p-0 d-flex align-items-center">
+                                                                <i className="ri-dashboard-line"></i>
+                                                                <span className="ml-2">
+                                                                    {/* User : Super Admin */}
+                                                                    Kategori : {galeri.gallery[index_galleri].nama_kategori}
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
 
                                                 </div>
-                                                <hr style={{ width: '375px', marginLeft: '-30px' }} />
+                                                <hr className={styles['strip']} />
                                                 <div className="row mb-1">
                                                     <p className={styles['description-img']}
                                                         dangerouslySetInnerHTML={{ __html: galeri.gallery[index_galleri].isi_galleri }}>
@@ -990,9 +1020,12 @@ const Galeri = ({ token }) => {
                                                     {
                                                         galeri.gallery[index_galleri].tag !== null ?
                                                             galeri.gallery[index_galleri].tag.map((row, i) => {
-                                                                // { console.log("Cek Tag :", row) }
                                                                 return (
-                                                                    <span className="mr-3 label label-inline label-light-success font-weight-bold">{row}</span>
+                                                                    <span className="mr-3 label label-inline label-light-success font-weight-bold">
+                                                                        <div className={styles['tagModal']}>
+                                                                            {row}
+                                                                        </div>
+                                                                    </span>
                                                                 )
                                                             })
                                                             : null

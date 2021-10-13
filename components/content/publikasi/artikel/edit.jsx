@@ -206,7 +206,22 @@ const EditArtikel = ({ token }) => {
     }
     // console.log("Data Tag :", data)
     setTag(data)
+  }
 
+  const keyPressTag = (value) => {
+
+    if (value === '' || value === null) { 
+      value.replace(/\s/g, '')
+    }else{
+      setTag(value)
+    }
+    // if(event.key === 13){
+    //   console.log('enter press here! ')
+    //   setDisableTag(true)
+    // }else{
+    //   setDisableTag(false)
+    // }
+    // setTag(event)
   }
 
   const onSubmit = e => {
@@ -348,8 +363,8 @@ const EditArtikel = ({ token }) => {
               //   });
               // }
 
-              dispatch(updateArtikel(data, token));
-              // console.log(data)
+              // dispatch(updateArtikel(data, token));
+              console.log(data)
             }
           });
         } else {
@@ -384,8 +399,8 @@ const EditArtikel = ({ token }) => {
               //   });
               // }
 
-              dispatch(updateArtikel(data, token));
-              // console.log(data)
+              // dispatch(updateArtikel(data, token));
+              console.log(data)
             }
           });
         }
@@ -461,8 +476,8 @@ const EditArtikel = ({ token }) => {
               //   });
               // }
 
-              dispatch(updateArtikel(data, token));
-              // console.log(data)
+              // dispatch(updateArtikel(data, token));
+              console.log(data)
             }
           });
         } else {
@@ -497,8 +512,8 @@ const EditArtikel = ({ token }) => {
               //   });
               // }
 
-              dispatch(updateArtikel(data, token));
-              // console.log(data)
+              // dispatch(updateArtikel(data, token));
+              console.log(data)
             }
           });
         }
@@ -900,6 +915,7 @@ const EditArtikel = ({ token }) => {
                       value={tag}
                       // onChange={setTag}
                       onChange={(data) => handleTag(data)}
+                      // onKeyPress={(data) => keyPressTag(data)}
                       name="fruits"
                       placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
                       seprators={["Enter", "Tab"]}

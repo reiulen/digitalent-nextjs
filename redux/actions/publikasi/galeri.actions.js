@@ -213,7 +213,7 @@ export const viewGaleri = (galeriData, token) => async (dispatch) => {
 
         dispatch({
             type: VIEW_GALERI_SUCCESS,
-            payload: data.status
+            payload: data
         })
 
     } catch (error) {

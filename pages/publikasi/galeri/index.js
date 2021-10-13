@@ -57,9 +57,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
-      await store.dispatch(
-        getDetailGaleri(session.user.user.data.token)
-      );
+      // await store.dispatch(
+      //   getDetailGaleri(session.user.user.data.token)
+      // );
       // await store.dispatch(getAllKategori(session.user.user.data.token))
       return {
         props: { session, title: "Galeri - Publikasi" },
