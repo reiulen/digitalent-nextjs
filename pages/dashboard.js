@@ -19,6 +19,16 @@ export async function getServerSideProps(context) {
     };
   }
 
+  const data = session.user.user.data;
+  if (data.user.roles[0] === "user") {
+    return {
+      redirect: {
+        destination: "/peserta",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: {},
   };
