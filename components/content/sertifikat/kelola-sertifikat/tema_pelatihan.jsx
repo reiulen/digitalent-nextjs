@@ -26,13 +26,6 @@ export default function NamaPelatihan({ token }) {
     state => state.allCertificates
   );
 
-  let selectRefAkademi = null;
-  let selectReftTemaPelatihan = null;
-
-  // #DatePicker
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-
   const resetValueSort = () => {
     setStartDate(null);
     setEndDate(null);
@@ -65,17 +58,33 @@ export default function NamaPelatihan({ token }) {
   // #Pagination
 
   const options = [
-    { value: "VSGA", label: "VSGA" },
-    { value: "VGA", label: "VGA" },
+    { value: "FGA", label: "FGA" },
+    { value: "GTA", label: "GTA" },
     { value: "ASD", label: "ASD" },
   ];
 
-  const [nama, setNama] = useState();
-  useEffect(() => {
-    console.log(nama);
-  }, [nama]);
+  const [academy, setAcademy] = useState("");
+  const [temaPelatihan, setTemaPelatihan] = useState("");
 
   let { page = 1, keyword, success } = router.query;
+
+  const handleFilter = () => {
+    if (!academy && !temaPelatihan) {
+      Swal.fire(
+        "Oops !",
+        "Harap memilih kategori Akademi atau Tema pelatihan terlebih dahulu.",
+        "error"
+      );
+    } else {
+      if (!academy && temaPelatihan) {
+        router.push(`${router.pathname}?page=1&limit=${limit}`);
+      }
+
+      if (!temaPelatihan && academy) {
+        router.push(`${router.pathname}?page=1&keyword=${academy}`);
+      }
+    }
+  };
 
   return (
     <PageWrapper>
@@ -118,7 +127,7 @@ export default function NamaPelatihan({ token }) {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-6 col-xl-6 col-sm-9">
+                <div className="col-lg-6 col-xl-6 col-sm-6">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -142,7 +151,7 @@ export default function NamaPelatihan({ token }) {
                     </button>
                   </div>
                 </div>
-                <div className="col-lg-6 col-xl-6 col-sm-9">
+                <div className="col-lg-6 col-sm-6">
                   <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                     {/* sortir by modal */}
                     <button
@@ -198,11 +207,10 @@ export default function NamaPelatihan({ token }) {
                                   Akademi
                                 </label>
                                 <Select
-                                  ref={ref => (selectRefAkademi = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
-                                  // defaultValue={certificate.list_certificate[0]}
+                                  defaultValue={options[0].value}
                                   isDisabled={false}
                                   isLoading={false}
                                   isClearable={false}
@@ -210,8 +218,7 @@ export default function NamaPelatihan({ token }) {
                                   isSearchable={true}
                                   name="color"
                                   onChange={e => {
-                                    console.log(e);
-                                    setNama(e);
+                                    setAcademy(e.value);
                                   }}
                                   options={options}
                                 />
@@ -221,21 +228,18 @@ export default function NamaPelatihan({ token }) {
                                   Tema Pelatihan
                                 </label>
                                 <Select
-                                  ref={ref => (selectReftTemaPelatihan = ref)}
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
-                                  defaultValue={certificate.list_certificate[0]}
+                                  defaultValue={options[0].value}
                                   isDisabled={false}
                                   isLoading={false}
                                   isClearable={false}
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
-                                  onChange={e =>
-                                    setValueKerjaSama(e?.cooperation_categories)
-                                  }
-                                  options={certificate.list_certificate}
+                                  onChange={e => setTemaPelatihan(e.value)}
+                                  options={options}
                                 />
                               </div>
                             </div>
@@ -253,7 +257,7 @@ export default function NamaPelatihan({ token }) {
                                 <button
                                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
-                                  onClick={e => handleSubmitSearchMany(e)}
+                                  onClick={e => handleFilter(e)}
                                 >
                                   Terapkan
                                 </button>
