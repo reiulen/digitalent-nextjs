@@ -15,6 +15,23 @@ const UbahApi = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
+  const {
+    loading: allLoading,
+    error,
+    apies,
+    success,
+  } = useSelector((state) => state.detailApi);
+  const [nameApi, setNameApi] = useState(apies.api_name)
+  const [nameUser, setNameUser] = useState(apies.username)
+  const [status, setStatus] = useState(apies.status)
+  const [choiceApi, setChoiceApi] = useState(apies.id_api)
+  const [field, setField] = useState(apies.field)
+  const [from, setFrom] = useState(apies.from)
+  const [to, setTo] = useState(apies.to)
+
+
+  console.log("apies",apies)
+
   const onNewReset = () => {
     router.replace("/site-management/api", undefined, {
       shallow: true,
@@ -37,51 +54,75 @@ const UbahApi = ({ token }) => {
               <div className="form-group">
                 <label>Nama API</label>
                 <input
+                value={nameApi}
+                onChange={(e)=>setNameApi(e.target.value)}
                   type="text"
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                <span className="form-text text-muted">
+                {/* <span className="form-text text-muted">
                     Please enter your full name
-                  </span>
+                  </span> */}
               </div>
               <div className="form-group">
                 <label>Nama Pengguna</label>
                 <input
+                value={nameUser}
+                onChange={(e)=>setNameUser(e.target.value)}
                   type="text"
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                <span className="form-text text-muted">
+                {/* <span className="form-text text-muted">
                     Please enter your full name
-                  </span>
+                  </span> */}
               </div>
+
+
+              {apies.status === "Aktif" ? 
+
               <div className="form-group">
                 <label htmlhtmlhtmlhtmlFor="exampleSelect1">Status</label>
                 <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
+                  <option value="Aktif">Aktif</option>
+                  <option value="Nonaktif">Nonaktif</option>
                 </select>
-                <span className="form-text text-muted">
+                {/* <span className="form-text text-muted">
                     Please enter your full name
-                  </span>
+                  </span> */}
               </div>
+              :   
+              <div className="form-group">
+                <label htmlhtmlhtmlhtmlFor="exampleSelect1">Status</label>
+                <select className="form-control" id="exampleSelect1">
+                  <option value="Nonaktif">Nonaktif</option>
+                  <option value="Aktif">Aktif</option>
+                </select>
+                {/* <span className="form-text text-muted">
+                    Please enter your full name
+                  </span> */}
+              </div>
+            }
+
+
+
               <div className="form-group">
                 <label htmlhtmlhtmlhtmlFor="exampleSelect1">Pilih API</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                <span className="form-text text-muted">
+                {/* <span className="form-text text-muted">
                     Please enter your full name
-                  </span>
+                  </span> */}
               </div>
               <div className="form-group">
                 <label htmlhtmlhtmlhtmlFor="exampleSelect1">Field</label>
                 <select className="form-control" id="exampleSelect1">
                   <option>Placeholder</option>
                 </select>
-                <span className="form-text text-muted">
+                {/* <span className="form-text text-muted">
                     Please enter your full name
-                  </span>
+                  </span> */}
               </div>
               <div className="form-group row">
                 <div className="col-lg-6">
@@ -91,9 +132,9 @@ const UbahApi = ({ token }) => {
                     className="form-control"
                     placeholder="Enter full name"
                   />
-                  <span className="form-text text-muted">
+                  {/* <span className="form-text text-muted">
                     Please enter your full name
-                  </span>
+                  </span> */}
                 </div>
                 <div className="col-lg-6">
                   <label>To</label>

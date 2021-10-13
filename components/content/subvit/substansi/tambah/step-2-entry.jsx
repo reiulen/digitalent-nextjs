@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 const StepTwo = ({ token }) => {
   const dispatch = useDispatch();
@@ -459,7 +460,7 @@ const StepTwo = ({ token }) => {
               </div>
 
               <div className="form-group row">
-                <div className="col-sm-6 col-md-3">
+                <div className="col-sm-7 col-md-4">
                   {answer.length < 6 ? (
                     <button
                       type="button"
@@ -514,7 +515,7 @@ const StepTwo = ({ token }) => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
                   >
                     Simpan & Lanjut

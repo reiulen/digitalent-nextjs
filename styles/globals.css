@@ -246,4 +246,24 @@ a {
   width: 16px;
   min-height: 16px;
   height: 16px;
+<<<<<<< HEAD
 }
+=======
+}
+
+.select-pelatihan {
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.select-pelatihan-success {
+  color: #04aa77;
+  background: #e6f7f1;
+}
+
+.select-pelatihan-danger {
+  color: #ee2d41;
+  background: #fdeaec;
+}
+>>>>>>> e9fd67ebdfc85643e47afc0f4fcab064804298f0

@@ -11,6 +11,7 @@ import {
 import { NEW_SUBTANCE_QUESTION_TYPE_RESET } from "../../../../../redux/types/subvit/subtance-question-type.type";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
+import styles from "../../trivia/edit/step.module.css";
 import { useRouter } from "next/router";
 import LoadingPage from "../../../../LoadingPage";
 import { FAIL_COOPERTAION_ACTIVE_SELECT_BY_ID } from "../../../../../redux/types/partnership/management_cooporation.type";
@@ -53,7 +54,7 @@ const TambahTipeSoal = ({ token }) => {
       const data = {
         name,
         value,
-        status: 0,
+        status: status_,
       };
 
       dispatch(newSubtanceQuestionBanksType(data, token));
@@ -77,7 +78,7 @@ const TambahTipeSoal = ({ token }) => {
       const data = {
         name,
         value,
-        status: 1,
+        status: status_,
       };
 
       dispatch(newSubtanceQuestionBanksType(data, token));
@@ -90,6 +91,10 @@ const TambahTipeSoal = ({ token }) => {
         text: "Isi data dengan benar !",
       });
     }
+  };
+
+  const handleChange = (e) => {
+    setStatus_(e.target.value);
   };
 
   return (
@@ -176,19 +181,21 @@ const TambahTipeSoal = ({ token }) => {
                   <select
                     name="training_id"
                     id=""
-                    onChange={(e) => setStatus_(e.target.value)}
-                    onBlur={(e) => setStatus_(e.target.value)}
+                    onChange={(event) => handleChange(event)}
+                    onBlur={(event) => handleChange(event)}
                     className="form-control"
                   >
-                    <option value={true}> Publish </option>
-                    <option value={false}> Draft </option>
+                    <option value={1}> Publish </option>
+                    <option value={0}> Draft </option>
                   </select>
                 </div>
               </div>
 
               <div className="form-group row">
                 <div className="col-sm-12 text-right">
-                  <button className="btn btn-light-ghost-rounded-full mr-2">
+                  <button
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
+                  >
                     Simpan & Lanjut
                   </button>
                   <button

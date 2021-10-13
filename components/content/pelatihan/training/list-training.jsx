@@ -12,8 +12,14 @@ import moment from "moment";
 import {
   deleteTraining,
   clearErrors,
+  getAllTraining,
+  updateStatusPublish,
+  updateStatusPelatihan,
 } from "../../../../redux/actions/pelatihan/training.actions";
-import { DELETE_TRAINING_RESET } from "../../../../redux/types/pelatihan/training.type";
+import {
+  DELETE_TRAINING_RESET,
+  CLEAR_STATUS,
+} from "../../../../redux/types/pelatihan/training.type";
 
 import PageWrapper from "../../../wrapper/page.wrapper";
 import LoadingTable from "../../../LoadingTable";
@@ -33,6 +39,12 @@ const ListTraining = ({ token }) => {
     error: allError,
     training,
   } = useSelector((state) => state.allTraining);
+  const {
+    loading: statusLoading,
+    error: statusError,
+    success: statusSuccess,
+    status,
+  } = useSelector((state) => state.updateStatus);
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
@@ -50,6 +62,8 @@ const ListTraining = ({ token }) => {
     loading = allLoading;
   } else if (deleteLoading) {
     loading = deleteLoading;
+  } else if (statusLoading) {
+    loading = statusLoading;
   }
 
   let error;
@@ -57,6 +71,8 @@ const ListTraining = ({ token }) => {
     error = allError;
   } else if (deleteError) {
     error = deleteError;
+  } else if (statusError) {
+    error = statusError;
   }
 
   const [search, setSearch] = useState("");
@@ -98,7 +114,22 @@ const ListTraining = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            window.location.reload();
+            // window.location.reload();
+            dispatch(
+              getAllTraining(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                token
+              )
+            );
           }
         }
       );
@@ -106,35 +137,100 @@ const ListTraining = ({ token }) => {
         type: DELETE_TRAINING_RESET,
       });
     }
-  }, [isDeleted, dispatch]);
+    if (statusSuccess) {
+      dispatch(
+        getAllTraining(
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          token
+        )
+      );
+      dispatch({
+        type: CLEAR_STATUS,
+      });
+    }
+  }, [isDeleted, statusSuccess, dispatch]);
 
   const handlePagination = (pageNumber) => {
-    let link = `${router.pathname}?page=${pageNumber}`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    if (search) link = link.concat(`&keyword=${search}`);
-    router.push(link);
+    // let link = `${router.pathname}?page=${pageNumber}`;
+    // if (limit) link = link.concat(`&limit=${limit}`);
+    // if (search) link = link.concat(`&keyword=${search}`);
+    // router.push(link);
+    dispatch(
+      getAllTraining(
+        pageNumber,
+        search,
+        limit,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        token
+      )
+    );
   };
 
   const handleSearch = () => {
-    let link = `${router.pathname}?page=1&keyword=${search}`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    router.push(link);
+    // let link = `${router.pathname}?page=1&keyword=${search}`;
+    // if (limit) link = link.concat(`&limit=${limit}`);
+    dispatch(
+      getAllTraining(
+        1,
+        search,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        token
+      )
+    );
+    // router.push(link);
   };
 
   const handleFilter = () => {
-    let link = `${router.pathname}?page=${1}`;
-    if (penyelenggara)
-      link = link.concat(`&penyelenggara=${penyelenggara.value}`);
-    if (academy) link = link.concat(`&akademi=${academy.value}`);
-    if (theme) link = link.concat(`&tema=${theme.value}`);
-    if (statusSubstansi)
-      link = link.concat(`&status_substansi=${statusSubstansi.value}`);
-    if (statusPelatihan)
-      link = link.concat(`&status_pelatihan=${statusPelatihan.value}`);
-    if (dateRegister) link = link.concat(`&pendaftaran_mulai=${dateRegister}`);
-    if (dateStart) link = link.concat(`&pelatihan_mulai=${dateStart}`);
-    router.push(link);
+    // let link = `${router.pathname}?page=${1}`;
+    // if (penyelenggara)
+    //   link = link.concat(`&penyelenggara=${penyelenggara.value}`);
+    // if (academy) link = link.concat(`&akademi=${academy.value}`);
+    // if (theme) link = link.concat(`&tema=${theme.value}`);
+    // if (statusSubstansi)
+    //   link = link.concat(`&status_substansi=${statusSubstansi.value}`);
+    // if (statusPelatihan)
+    //   link = link.concat(`&status_pelatihan=${statusPelatihan.value}`);
+    // if (dateRegister) link = link.concat(`&pendaftaran_mulai=${dateRegister}`);
+    // if (dateStart) link = link.concat(`&pelatihan_mulai=${dateStart}`);
+    // router.push(link);
     setShowModal(false);
+    dispatch(
+      getAllTraining(
+        1,
+        search,
+        limit,
+        dateRegister,
+        dateStart,
+        statusSubstansi.value,
+        statusPelatihan.value,
+        penyelenggara.value,
+        academy,
+        theme,
+        token
+      )
+    );
   };
 
   const handleReset = () => {
@@ -145,14 +241,60 @@ const ListTraining = ({ token }) => {
     setStatusPelatihan(null);
     setDateRegister(null);
     setDateStart(null);
-    router.replace("/pelatihan/pelatihan", undefined, { shallow: true });
-    router.push(`${router.pathname}`);
+    // router.replace("/pelatihan/pelatihan", undefined, { shallow: true });
+    // router.push(`${router.pathname}`);
     setShowModal(false);
+    dispatch(
+      getAllTraining(
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        token
+      )
+    );
   };
 
   const handleLimit = (val) => {
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
+    // router.push(`${router.pathname}?page=1&limit=${val}`);
+    dispatch(
+      getAllTraining(
+        1,
+        null,
+        val,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        token
+      )
+    );
+  };
+
+  const handleStatusPublish = (id, val) => {
+    const data = {
+      status_publish: val,
+      pelatian_id: id,
+    };
+    dispatch(updateStatusPublish(data, token));
+  };
+
+  const handleStatusPelatihan = (id, val) => {
+    const data = {
+      status_pelatihan: val,
+      pelatian_id: id,
+    };
+    dispatch(updateStatusPelatihan(data, token));
   };
 
   const onNewReset = () => {
@@ -176,11 +318,45 @@ const ListTraining = ({ token }) => {
     });
   };
 
-  const handlePublish = (val) => {
-    setPublishValue(val);
-    let link = `${router.pathname}?page=${1}&card=${val}`;
-    if (search) link = link.concat(`&keyword=${search}`);
-    router.push(link);
+  const handlePublish = (val, type) => {
+    // setPublishValue(val);
+    // let link = `${router.pathname}?page=${1}&card=${val}`;
+    // if (search) link = link.concat(`&keyword=${search}`);
+    // router.push(link);
+    console.log(val, type);
+    if (type === "pelatihan") {
+      dispatch(
+        getAllTraining(
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          val,
+          null,
+          null,
+          null,
+          token
+        )
+      );
+    } else {
+      dispatch(
+        getAllTraining(
+          1,
+          null,
+          null,
+          null,
+          null,
+          val,
+          null,
+          null,
+          null,
+          null,
+          token
+        )
+      );
+    }
   };
 
   const handleExportReport = async () => {
@@ -266,7 +442,7 @@ const ListTraining = ({ token }) => {
             titleValue=""
             title="Selesai"
             publishedVal="selesai"
-            routePublish={() => handlePublish("selesai")}
+            routePublish={() => handlePublish("selesai", "pelatihan")}
           />
           <CardPage
             background="bg-secondary"
@@ -276,7 +452,7 @@ const ListTraining = ({ token }) => {
             titleValue=""
             title="Disetujui"
             publishedVal="disetujui"
-            routePublish={() => handlePublish("disetujui")}
+            routePublish={() => handlePublish("disetujui", "substansi")}
           />
           <CardPage
             background="bg-success"
@@ -286,7 +462,7 @@ const ListTraining = ({ token }) => {
             titleValue=""
             title="Revisi"
             publishedVal="revisi"
-            routePublish={() => handlePublish("revisi")}
+            routePublish={() => handlePublish("revisi", "substansi")}
           />
           <CardPage
             background="bg-warning"
@@ -295,8 +471,8 @@ const ListTraining = ({ token }) => {
             value={0}
             titleValue=""
             title="Menunggu Review"
-            publishedVal="menunggu-review"
-            routePublish={() => handlePublish("menunggu-review")}
+            publishedVal="menunggu"
+            routePublish={() => handlePublish("menunggu", "pelatihan")}
           />
           <CardPage
             background="bg-extras"
@@ -306,7 +482,7 @@ const ListTraining = ({ token }) => {
             titleValue=""
             title="Berjalan"
             publishedVal="berjalan"
-            routePublish={() => handlePublish("berjalan")}
+            routePublish={() => handlePublish("berjalan", "pelatihan")}
           />
         </div>
       </div>
@@ -321,8 +497,11 @@ const ListTraining = ({ token }) => {
               List Pelatihan
             </h1>
             <div className="card-toolbar">
-              <Link href="/pelatihan/pelatihan/tambah-pelatihan">
-                <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
+              <Link href="/pelatihan/pelatihan/tambah-pelatihan" passHref>
+                <a
+                  href="#"
+                  className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2"
+                >
                   <i className="ri-add-fill"></i>
                   Tambah Pelatihan
                 </a>
@@ -446,17 +625,27 @@ const ListTraining = ({ token }) => {
                               </p>
                             </td>
                             <td className="align-middle">
-                              {row.status_publish ? (
-                                <span className="label label-inline label-light-success font-weight-bold">
-                                  Publish
-                                </span>
-                              ) : (
-                                <span className="label label-inline label-light-danger font-weight-bold">
-                                  Unpublish
-                                </span>
-                              )}
+                              <div className="position-relative w-max-content">
+                                <select
+                                  name=""
+                                  id=""
+                                  className={`select-pelatihan ${
+                                    row.status_publish === "1"
+                                      ? "select-pelatihan-success"
+                                      : "select-pelatihan-danger"
+                                  }`}
+                                  key={i}
+                                  value={row.status_publish}
+                                  onChange={(e) =>
+                                    handleStatusPublish(row.id, e.target.value)
+                                  }
+                                >
+                                  <option value="1">Publish</option>
+                                  <option value="0">Unpublish</option>
+                                </select>
+                              </div>
                             </td>
-                            <td className="align-middle">
+                            <td className="align-middle text-center">
                               {row.status_substansi === "review" ||
                               row.status_substansi === "disetujui" ? (
                                 <span className="label label-inline label-light-success font-weight-bold">
@@ -469,9 +658,35 @@ const ListTraining = ({ token }) => {
                               )}
                             </td>
                             <td className="align-middle">
-                              <span className="label label-inline label-light-success font-weight-bold">
-                                {row.status_pelatihan}
-                              </span>
+                              <div className="position-relative w-max-content">
+                                <select
+                                  name=""
+                                  id=""
+                                  className="select-pelatihan select-pelatihan-success"
+                                  key={i}
+                                  value={row.status_substansi}
+                                  onChange={(e) =>
+                                    handleStatusPelatihan(
+                                      row.id,
+                                      e.target.value
+                                    )
+                                  }
+                                >
+                                  <option value="review substansi">
+                                    Review Substansi
+                                  </option>
+                                  <option value="menunggu">Menunggu</option>
+                                  <option value="pendaftaran">
+                                    Pendaftaran
+                                  </option>
+                                  <option value="seleksi administrasi">
+                                    Seleksi Administrasi
+                                  </option>
+                                  <option value="pelatihan">Pelatihan</option>
+                                  <option value="selesai">Selesai</option>
+                                  <option value="dibatalkan">Dibatalkan</option>
+                                </select>
+                              </div>
                             </td>
                             <td className="align-middle">
                               <div className="d-flex">

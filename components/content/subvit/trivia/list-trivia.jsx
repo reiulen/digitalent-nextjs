@@ -225,13 +225,13 @@ const ListTrivia = ({ token }) => {
               className="card-title text-dark mt-2"
               style={{ fontSize: "24px" }}
             >
-              List Trivia
+              List TRIVIA
             </h1>
             <div className="card-toolbar">
               <Link href="/subvit/trivia/tambah">
                 <a className="text-white btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2 mr-2">
-                  <i className="ri-pencil-fill"></i>
-                  Tambah Soal
+                  <i className="ri-add-fill"></i>
+                  Tambah TRIVIA
                 </a>
               </Link>
             </div>

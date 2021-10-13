@@ -207,32 +207,32 @@ export const getListField = (id, token) => async (dispatch, getState) => {
   }
 };
 
-// get detail belom ada endpoint
-// export const getDetailPages = (id, token) => async (dispatch) => {
-//   try {
-//     dispatch({
-//       type: DETAIL_API_REQUEST,
-//     });
-//     const config = {
-//       headers: {
-//         Authorization: "Bearer " + token,
-//       },
-//     };
+export const getDetailApi = (id, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: DETAIL_API_REQUEST,
+    });
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
 
-//     let link =
-//       process.env.END_POINT_API_SITE_MANAGEMENT +
-//       `api/setting-page/detail/${id}`;
+    let link =
+      process.env.END_POINT_API_SITE_MANAGEMENT +
+      `api/setting-api/detail/${id}`;
 
-//     const { data } = await axios.get(link, config);
+    const { data } = await axios.get(link, config);
 
-//     dispatch({
-//       type: DETAIL_API_SUCCESS,
-//       payload: data,
-//     });
-//   } catch (error) {
-//     dispatch({
-//       type: DETAIL_API_FAIL,
-//       payload: error.response.data.message,
-//     });
-//   }
-// };
+    dispatch({
+      type: DETAIL_API_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log("error", error);
+    dispatch({
+      type: DETAIL_API_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
