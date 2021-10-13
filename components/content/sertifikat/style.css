@@ -44,6 +44,11 @@
     font-size: 3vw;
 }
 
+.responsive-width {
+    width: 842px !important;
+    height: 595px !important;
+}
+
 @media(min-width: 768px) {
     .responsive-margin {
         margin-top: 115px;

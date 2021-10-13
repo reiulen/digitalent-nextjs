@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, createRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  createRef,
+  useCallback,
+} from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
@@ -8,7 +14,7 @@ import Image from "next/image";
 import { useSelector } from "react-redux";
 import PageWrapper from "../../../../../wrapper/page.wrapper";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import { toPng } from "html-to-image";
+import { toPng, toJpeg } from "html-to-image";
 // #Icon
 
 export default function ListPesertaID({ token }) {
@@ -37,23 +43,53 @@ export default function ListPesertaID({ token }) {
   };
   const divReference = useRef(null);
 
-  const handleDownload = () => {
-    console.log(divReference.current);
+  // const handleDownload = () => {
+  //   // console.log(divReference.current);
+  //   const node = document.getElementById("IMAGE1");
+  //   console.log("ini node", node);
+  //   toJpeg(node, {
+  //     cacheBust: true,
+  //     canvasWidth: 842,
+  //     canvasHeight: 595,
+  //     // height: 595,
+  //     // width: 842,
+  //   })
+  //     .then(image => {
+  //       let img = new Image();
+  //       // img.src = image;
+  //       console.log("INI IMG", img);
+  //       // const result = document.body.appendChild(img);
+  //       // console.log("INI RESULT", result);
+  //       // const link = document.createElement("a");
+  //       // link.append();
+  //       // link.download = "my-image-name.png";
+  //       // link.href = image;
+  //       // link.click();
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
+
+  const handleDownload = useCallback(() => {
+    if (divReference.current === null) {
+      return;
+    }
     toPng(divReference.current, {
-      cacheBust: true,
-      canvasWidth: 842,
+      // cacheBust: true,
       canvasHeight: 595,
+      canvasWidth: 842,
     })
-      .then(image => {
+      .then(dataUrl => {
         const link = document.createElement("a");
         link.download = "my-image-name.png";
-        link.href = image;
+        link.href = dataUrl;
         link.click();
       })
       .catch(err => {
         console.log(err);
       });
-  };
+  }, [divReference]);
 
   return (
     <PageWrapper>
@@ -116,15 +152,18 @@ export default function ListPesertaID({ token }) {
             <div className="d-flex p-0 justify-content-center">
               {/* START COL */}
               <div
-                className="position-relative p-0"
-                style={{ width: "44vw", height: "63vh" }}
+                className="position-relative p-0 d-flex"
+                // style={{ width: "44vw", height: "63vh" }}
                 ref={divReference}
+                id="IMAGE1"
               >
                 <Image
                   src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate?.data?.certificate_result}`}
                   alt={"image"}
-                  layout="fill"
+                  // layout="fill"
                   objectFit="fill"
+                  width={842}
+                  height={595}
                 />
                 <div
                   className="position-absolute w-100 text-center"

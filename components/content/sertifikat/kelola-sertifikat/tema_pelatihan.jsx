@@ -82,7 +82,6 @@ export default function NamaPelatihan({ token }) {
 
       if (!temaPelatihan && academy) {
         router.push(`${router.pathname}?page=1&keyword=${academy}`);
-      } else {
       }
     }
   };
@@ -219,7 +218,6 @@ export default function NamaPelatihan({ token }) {
                                   isSearchable={true}
                                   name="color"
                                   onChange={e => {
-                                    console.log(e);
                                     setAcademy(e.value);
                                   }}
                                   options={options}
