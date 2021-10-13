@@ -405,7 +405,6 @@ const DetailDokumenKerjasama = ({ token }) => {
                       ) : (
                         ""
                       )}
-
               {/* looping */}
               {allCooperationUser.singleCooporationSelect.length === 0
                 ? ""
