@@ -91,6 +91,7 @@ import {
 } from "./subvit/subtance-question-type.reducers";
 import {
   allSubtanceQuestionDetailReducer,
+  randomSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetailReducer,
   deleteSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetailReducer,
@@ -363,6 +364,7 @@ const reducer = combineReducers({
   updateSubtanceQuestionType: updateSubtanceQuestionTypeReducer,
 
   allSubtanceQuestionDetail: allSubtanceQuestionDetailReducer,
+  randomSubtanceQuestionDetail: randomSubtanceQuestionDetailReducer,
   newSubtanceQuestionDetail: newSubtanceQuestionDetailReducer,
   detailSubtanceQuestionDetail: detailSubtanceQuestionDetailReducer,
   updateSubtanceQuestionDetail: updateSubtanceQuestionDetailReducer,

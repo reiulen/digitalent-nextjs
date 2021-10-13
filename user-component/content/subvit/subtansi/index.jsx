@@ -7,12 +7,13 @@ import { useRouter } from "next/router";
 import HeaderUser from "../header";
 import axios from "axios";
 import Image from "next/dist/client/image";
+import { useSelector } from "react-redux";
 
 // import Cookies from "js-cookie";
 
 const SubtansiUser = () => {
   const router = useRouter();
-  const [data, setData] = useState({});
+  const [data] = useState(random_subtance_question_detail);
   const [answer, setAnswer] = useState("");
   const [listAnswer, setListAnswer] = useState([]);
   const [numberPage, setNumberPage] = useState("");
@@ -26,6 +27,12 @@ const SubtansiUser = () => {
   const handleModalSoal = () => {
     setModalSoal(true);
   };
+
+  const {
+    // loading: allLoading,
+    // error: allError,
+    random_subtance_question_detail,
+  } = useSelector((state) => state.randomSubtanceQuestionDetail);
 
   const handleCloseModal = () => {
     setModalSoal(false);
@@ -64,6 +71,8 @@ const SubtansiUser = () => {
   //   }, 1000);
   // }
   useEffect(() => {
+    console.log(random_subtance_question_detail);
+    console.log(data);
     // window.onload = function () {
     //   var fiveMinutes = 1 * 60,
     //     display = document.querySelector("#time");
@@ -74,9 +83,13 @@ const SubtansiUser = () => {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
         let timeLeftVar = secondsToTime(count);
+        console.log(timeLeftVar);
         setHour(timeLeftVar.h);
+        sessionStorage.setItem("hours", hour);
         setMinute(timeLeftVar.m);
+        sessionStorage.setItem("minute", minute);
         setSecond(timeLeftVar.s);
+        sessionStorage.setItem("second", second);
       }, 1000);
       return () => clearInterval(secondsLeft);
     } else {
@@ -99,13 +112,6 @@ const SubtansiUser = () => {
     };
   };
 
-  const getRandomSoal = () => {
-    axios
-      .get(
-        `http://dts-subvit-dev.majapahit.id/api/subtance-question-bank-details/random?training_id=1&theme_id=1&category=Test Substansi`
-      )
-      .then((res) => setData(res.data.data));
-  };
   let list = [];
   const handleAnswer = (e) => {
     console.log(e);
@@ -140,20 +146,30 @@ const SubtansiUser = () => {
               </Card>
             </Col>
             <Col sm={6} className={styles.academy}>
-              {data.academy}
+              {random_subtance_question_detail &&
+                random_subtance_question_detail.academy}
             </Col>
             <Col sm={5} xs={6}>
               <Card className={styles.time} id="time">
-                {hour < 9 ? "0" + hour : hour}:
-                {minute < 9 ? "0" + minute : minute}:
-                {second < 9 ? "0" + second : second}
+                {sessionStorage.getItem("hours") < 9
+                  ? "0" + parseInt(sessionStorage.getItem("hours"))
+                  : parseInt(sessionStorage.getItem("hours"))}
+                :
+                {sessionStorage.getItem("minute") < 9
+                  ? "0" + parseInt(sessionStorage.getItem("minute"))
+                  : parseInt(sessionStorage.getItem("minute"))}
+                :
+                {sessionStorage.getItem("second") < 9
+                  ? "0" + parseInt(sessionStorage.getItem("second"))
+                  : parseInt(sessionStorage.getItem("second"))}
               </Card>
             </Col>
           </Row>
           <Row style={{ marginTop: "20px" }}>
             <Col xs={6} className={styles.totalSoalResponsive}>
               Soal {router.query.id} dari{" "}
-              {data.list_questions && data.list_questions.length}
+              {random_subtance_question_detail.list_questions &&
+                random_subtance_question_detail.list_questions.length}
             </Col>
             <Col
               xs={6}
@@ -173,12 +189,13 @@ const SubtansiUser = () => {
                   {" "}
                   |{" "}
                 </span>
-                {data.theme}
+                {random_subtance_question_detail.theme}
               </p>
             </Col>
             <Col sm={6} className={styles.totalSoal}>
               Soal {router.query.id} dari{" "}
-              {data.list_questions && data.list_questions.length}
+              {random_subtance_question_detail.list_questions &&
+                random_subtance_question_detail.list_questions.length}
             </Col>
           </Row>
           <Row
@@ -189,9 +206,10 @@ const SubtansiUser = () => {
           >
             <Col sm={8}>
               <Row>
-                {data.list_questions &&
-                data.list_questions[parseInt(router.query.id) - 1]
-                  .question_image !== null ? (
+                {random_subtance_question_detail.list_questions &&
+                random_subtance_question_detail.list_questions[
+                  parseInt(router.query.id) - 1
+                ].question_image !== null ? (
                   <>
                     <Col sm={2}>
                       <p>Ini Gambar</p>
@@ -208,9 +226,10 @@ const SubtansiUser = () => {
                           color: "#212121",
                         }}
                       >
-                        {data.list_questions &&
-                          data.list_questions[parseInt(router.query.id) - 1]
-                            .question}
+                        {random_subtance_question_detail.list_questions &&
+                          random_subtance_question_detail.list_questions[
+                            parseInt(router.query.id) - 1
+                          ].question}
                       </p>
                     </Col>
                   </>
@@ -226,16 +245,19 @@ const SubtansiUser = () => {
                       color: "#212121",
                     }}
                   >
-                    {data.list_questions &&
-                      data.list_questions[parseInt(router.query.id) - 1]
-                        .question}
+                    {random_subtance_question_detail.list_questions &&
+                      random_subtance_question_detail.list_questions[
+                        parseInt(router.query.id) - 1
+                      ].question}
                   </p>
                 )}
               </Row>
               <hr />
-              {data.list_questions &&
+              {random_subtance_question_detail.list_questions &&
                 JSON.parse(
-                  data.list_questions[parseInt(router.query.id) - 1].answer
+                  random_subtance_question_detail.list_questions[
+                    parseInt(router.query.id) - 1
+                  ].answer
                 ).map((key, index) => {
                   return (
                     <>
@@ -285,37 +307,42 @@ const SubtansiUser = () => {
                 Daftar Soal
               </p>
               <Row className={styles.rowNumber}>
-                {data.list_questions &&
-                  data.list_questions.map((item, index) => {
-                    return (
-                      <Col key={index} style={{ width: "20%" }}>
-                        <Card
-                          className={
-                            index + 1 === parseInt(router.query.id)
-                              ? styles.cardChoosed
-                              : styles.cardChoose
-                          }
-                          onClick={() => handleNumber(index)}
-                        >
-                          <p
+                {random_subtance_question_detail.list_questions &&
+                  random_subtance_question_detail.list_questions.map(
+                    (item, index) => {
+                      return (
+                        <Col key={index} style={{ width: "20%" }}>
+                          <Card
                             className={
                               index + 1 === parseInt(router.query.id)
-                                ? styles.textCardNumber
-                                : styles.textCard
+                                ? styles.cardChoosed
+                                : styles.cardChoose
                             }
+                            onClick={() => handleNumber(index)}
                           >
-                            {index + 1}
-                          </p>
-                        </Card>
-                      </Col>
-                    );
-                  })}
+                            <p
+                              className={
+                                index + 1 === parseInt(router.query.id)
+                                  ? styles.textCardNumber
+                                  : styles.textCard
+                              }
+                            >
+                              {index + 1}
+                            </p>
+                          </Card>
+                        </Col>
+                      );
+                    }
+                  )}
               </Row>
             </Col>
           </Row>
           <Footer
             answer={answer}
-            number={data.list_questions && data.list_questions.length}
+            number={
+              random_subtance_question_detail.list_questions &&
+              random_subtance_question_detail.list_questions.length
+            }
           />
         </Card>
       </Container>
@@ -324,31 +351,33 @@ const SubtansiUser = () => {
         <Modal.Body>
           <h1>Daftar Soal</h1>
           <Row className={styles.rowNumberResponsive}>
-            {data.list_questions &&
-              data.list_questions.map((item, index) => {
-                return (
-                  <Col key={index} style={{ width: "20%" }}>
-                    <Card
-                      className={
-                        index + 1 === parseInt(router.query.id)
-                          ? styles.cardChoosed
-                          : styles.cardChoose
-                      }
-                      onClick={() => handleNumber(index)}
-                    >
-                      <p
+            {random_subtance_question_detail.list_questions &&
+              random_subtance_question_detail.list_questions.map(
+                (item, index) => {
+                  return (
+                    <Col key={index} style={{ width: "20%" }}>
+                      <Card
                         className={
                           index + 1 === parseInt(router.query.id)
-                            ? styles.textCardNumber
-                            : styles.textCard
+                            ? styles.cardChoosed
+                            : styles.cardChoose
                         }
+                        onClick={() => handleNumber(index)}
                       >
-                        {index + 1}
-                      </p>
-                    </Card>
-                  </Col>
-                );
-              })}
+                        <p
+                          className={
+                            index + 1 === parseInt(router.query.id)
+                              ? styles.textCardNumber
+                              : styles.textCard
+                          }
+                        >
+                          {index + 1}
+                        </p>
+                      </Card>
+                    </Col>
+                  );
+                }
+              )}
           </Row>
         </Modal.Body>
       </Modal>

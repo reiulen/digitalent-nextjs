@@ -1,6 +1,7 @@
 import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { getRandomSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 import { wrapper } from "../../../../redux/store";
 import Layout from "../../../../user-component/components/template/Layout.component";
 
@@ -19,8 +20,8 @@ export default function SubvitUserSubtansi(props) {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Test Substansi" session={session}>
-          <SubtansiUser />
+        <Layout title="Test Substansi - Subvit" session={session}>
+          <SubtansiUser token={session.token} />
         </Layout>
       </div>
     </>
@@ -40,21 +41,21 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+      console.log(store);
 
-      const getRandomSoal = () => {
-        axios
-          .get(
-            `http://dts-subvit-dev.majapahit.id/api/subtance-question-bank-details/random?training_id=1&theme_id=1&category=Test Substansi`
-          )
-          .then((res) => res.data.data);
-      };
-
+      await store.dispatch(
+        getRandomSubtanceQuestionDetail(
+          query.training_id,
+          query.theme_id,
+          query.category,
+          session.user.user.data.token
+        )
+      );
       return {
         props: {
           data: "auth",
           session,
-          getRandomSoal,
-          title: "Test Substansi",
+          title: "Test Substansi - Subvit ",
         },
       };
     }

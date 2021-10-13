@@ -2,6 +2,9 @@ import {
   SUBTANCE_QUESTION_DETAIL_REQUEST,
   SUBTANCE_QUESTION_DETAIL_SUCCESS,
   SUBTANCE_QUESTION_DETAIL_FAIL,
+  SUBTANCE_QUESTION_RANDOM_DETAIL_REQUEST,
+  SUBTANCE_QUESTION_RANDOM_DETAIL_SUCCESS,
+  SUBTANCE_QUESTION_RANDOM_DETAIL_FAIL,
   NEW_SUBTANCE_QUESTION_DETAIL_REQUEST,
   NEW_SUBTANCE_QUESTION_DETAIL_SUCCESS,
   NEW_SUBTANCE_QUESTION_DETAIL_FAIL,
@@ -65,6 +68,42 @@ export const getAllSubtanceQuestionDetail =
     } catch (error) {
       dispatch({
         type: SUBTANCE_QUESTION_DETAIL_FAIL,
+        payload: error.message,
+      });
+    }
+  };
+
+export const getRandomSubtanceQuestionDetail =
+  (training_id = 1, theme_id = 1, category = "", token) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: SUBTANCE_QUESTION_RANDOM_DETAIL_REQUEST });
+
+      let link =
+        process.env.END_POINT_API_SUBVIT +
+        `api/subtance-question-bank-details/random?`;
+      if (training_id) link = link.concat(`&training_id=${training_id}`);
+      if (category) link = link.concat(`&category=${category}`);
+      if (theme_id) link = link.concat(`&theme_id=${theme_id}`);
+      // console.log(link);
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.get(link, config);
+      console.log(data);
+
+      dispatch({
+        type: SUBTANCE_QUESTION_RANDOM_DETAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      // console.log(error.response);
+      dispatch({
+        type: SUBTANCE_QUESTION_RANDOM_DETAIL_FAIL,
         payload: error.message,
       });
     }
