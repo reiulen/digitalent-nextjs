@@ -266,7 +266,7 @@ const RevisiKerjasama = ({ token }) => {
 
               <div className="fv-row mb-10">
                 <label className="required fw-bold fs-6 mb-2">
-                  Nomer Perjanjian Lembaga
+                  Nomor Perjanjian Lembaga
                 </label>
                 <input
                   type="text"
@@ -278,7 +278,7 @@ const RevisiKerjasama = ({ token }) => {
               </div>
               <div className="fv-row mb-10">
                 <label className="required fw-bold fs-6 mb-2">
-                  Nomer Perjanjian Kemkominfo
+                  Nomor Perjanjian Kemkominfo
                 </label>
                 <input
                   type="text"

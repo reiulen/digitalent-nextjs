@@ -522,7 +522,7 @@ const Table = ({ token }) => {
                                         className="basic-single"
                                         classNamePrefix="select"
                                         placeholder="Semua"
-                                        defaultValue={allMK.stateListMitra[0]}
+                                        // defaultValue={allMK.stateListMitra[0]}
                                         isDisabled={false}
                                         isLoading={false}
                                         isClearable={false}
@@ -542,9 +542,9 @@ const Table = ({ token }) => {
                                         className="basic-single"
                                         classNamePrefix="select"
                                         placeholder="Semua"
-                                        defaultValue={
-                                          allMK.stateListKerjaSama[0]
-                                        }
+                                        // defaultValue={
+                                        //   allMK.stateListKerjaSama[0]
+                                        // }
                                         isDisabled={false}
                                         isLoading={false}
                                         isClearable={false}
@@ -568,7 +568,7 @@ const Table = ({ token }) => {
                                         className="basic-single"
                                         classNamePrefix="select"
                                         placeholder="Semua"
-                                        defaultValue={allMK.stateListStatus[0]}
+                                        // defaultValue={allMK.stateListStatus[0]}
                                         isDisabled={false}
                                         isLoading={false}
                                         isClearable={false}
