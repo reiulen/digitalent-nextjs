@@ -198,7 +198,7 @@ const ListTheme = ({ token }) => {
               List Tema
             </h1>
             <div className="card-toolbar">
-              <Link href="/pelatihan/tema/tambah">
+              <Link href="/pelatihan/tema/tambah-tema">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
                   <i className="ri-add-fill"></i>
                   Tambah Tema
@@ -311,7 +311,9 @@ const ListTheme = ({ token }) => {
                           </td>
                           <td className="align-middle">
                             <div className="d-flex">
-                              <Link href={`/pelatihan/tema/${row.id}`}>
+                              <Link
+                                href={`/pelatihan/tema/edit-tema?id=${row.id}`}
+                              >
                                 <a
                                   className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                   data-toggle="tooltip"
@@ -343,7 +345,7 @@ const ListTheme = ({ token }) => {
                 {theme && theme.perPage < theme.total && (
                   <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                     <Pagination
-                      activePage={theme.page}
+                      activePage={page}
                       itemsCountPerPage={theme.perPage}
                       totalItemsCount={theme.total}
                       pageRangeDisplayed={3}
@@ -357,7 +359,7 @@ const ListTheme = ({ token }) => {
                     />
                   </div>
                 )}
-                {academy && academy.total > 5 && (
+                {theme && theme.total > 5 && (
                   <div className="table-total ml-auto">
                     <div className="row">
                       <div className="col-4 mr-0 p-0 mt-3">

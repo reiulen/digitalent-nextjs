@@ -12,33 +12,33 @@ import IconAdd from "../../../assets/icon/Add";
 import IconSearch from "../../../assets/icon/Search";
 import AlertBar from "../../partnership/components/BarAlert";
 
+
+import {
+  getAllDataReference,
+  setPage,
+  searchCooporation,
+  limitCooporation,
+} from "../../../../redux/actions/site-management/data-reference.actions";
+
 const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  // function delete
-  const roleDelete = (id) => {
-    Swal.fire({
-      title: "Apakah anda yakin ingin menghapus data ?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      cancelButtonText: "Batal",
-      confirmButtonText: "Ya !",
-      dismissOnDestroy: false,
-    }).then(async (result) => {
-      if (result.value) {
-        // dispatch delete
-      }
-    });
+  const allDataReference = useSelector((state) => state.allDataReference);
+
+  const [valueSearch, setValueSearch] = useState("");
+  const handleChangeValueSearch = (value) => {
+    setValueSearch(value);
   };
 
-  const onNewReset = () => {
-    router.replace("/site-management/role", undefined, {
-      shallow: true,
-    });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(searchCooporation(valueSearch));
   };
+
+  useEffect(() => {
+    dispatch(getAllDataReference(token));
+  }, [dispatch, allDataReference.cari, allDataReference.page, allDataReference.limit, token]);
   return (
     <PageWrapper>
       <div className="col-lg-12 order-1 px-0">
@@ -82,7 +82,7 @@ const Table = ({ token }) => {
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
                   <form
-                    // onSubmit={handleSubmit}
+                    onSubmit={handleSubmit}
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
@@ -97,9 +97,9 @@ const Table = ({ token }) => {
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            // onChange={(e) =>
-                            //   handleChangeValueSearch(e.target.value)
-                            // }
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
                           />
                           <button
                             type="submit"
@@ -120,6 +120,9 @@ const Table = ({ token }) => {
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
+                {allDataReference.status === "process" ? (
+                  <LoadingTable />
+                ) : (
                 <table className="table table-separate table-head-custom table-checkable">
                   <thead style={{ background: "#F3F6F9" }}>
                     <tr>
@@ -130,15 +133,27 @@ const Table = ({ token }) => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td className="align-middle text-left">1</td>
-                      <td className="align-middle text-left">name</td>
+                    {allDataReference.data.list_role.length === 0 ? (
+                      <tr>
+                        <td colSpan="4" className="text-center">
+                          <h4>Data tidak ditemukan</h4>
+                        </td>
+                      </tr>
+                    ) : (
+                      allDataReference.data.list_role.map((items, index) => {
+                        return (
+                    <tr key={index}>
+                      <td className="align-middle text-left"> {allDataReference.page === 1
+                                ? index + 1
+                                : (allDataReference.page - 1) * allDataReference.limit +
+                                  (index + 1)}</td>
+                      <td className="align-middle text-left">{items.name}</td>
                       <td className="align-middle text-left">
                         <p
                           className="status-div-red mb-0"
                           style={{ width: "max-content" }}
                         >
-                          Tidak aktif
+                          {items.status}
                         </p>
                       </td>
                       <td className="align-middle text-left">
@@ -164,30 +179,29 @@ const Table = ({ token }) => {
                         </div>
                       </td>
                     </tr>
+                    );
+                      })
+                    )}
                   </tbody>
                 </table>
+                )}
               </div>
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                  pagination
-                  {/* <Pagination
-                    activePage={allMKCooporation.page}
-                    itemsCountPerPage={
-                      allMKCooporation?.mk_cooporation?.data?.perPage
-                    }
-                    totalItemsCount={
-                      allMKCooporation?.mk_cooporation?.data?.total
-                    }
-                    pageRangeDisplayed={3}
-                    onChange={(page) => dispatch(setPage(page))}
-                    nextPageText={">"}
-                    prevPageText={"<"}
-                    firstPageText={"<<"}
-                    lastPageText={">>"}
-                    itemclassName="page-item"
-                    linkclassName="page-link"
-                  /> */}
+                 <Pagination
+                        activePage={allDataReference.page}
+                        itemsCountPerPage={allDataReference.data.perPage}
+                        totalItemsCount={allDataReference.data.total}
+                        pageRangeDisplayed={3}
+                        onChange={(page) => dispatch(setPage(page))}
+                        nextPageText={">"}
+                        prevPageText={"<"}
+                        firstPageText={"<<"}
+                        lastPageText={">>"}
+                        itemClass="page-item"
+                        linkClass="page-link"
+                      />
                 </div>
 
                 <div className="table-total ml-auto">
@@ -203,6 +217,9 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
+                        onChange={(e) =>
+                          dispatch(limitCooporation(e.target.value, token))
+                        }
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
@@ -216,7 +233,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data {allDataReference.data &&
+                          allDataReference.data.total} List Data
                       </p>
                     </div>
                   </div>

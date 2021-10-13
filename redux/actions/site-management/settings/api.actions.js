@@ -2,27 +2,28 @@ import {
   API_REQUEST,
   API_SUCCESS,
   API_FAIL,
-
+  GET_LIST_API_REQUEST,
+  GET_LIST_API_SUCCESS,
+  GET_LIST_API_FAIL,
+  GET_LIST_FIELD_REQUEST,
+  GET_LIST_FIELD_SUCCESS,
+  GET_LIST_FIELD_FAIL,
   DETAIL_API_REQUEST,
   DETAIL_API_SUCCESS,
   DETAIL_API_FAIL,
   DETAIL_API_RESET,
-
   DELETE_API_SUCCESS,
   DELETE_API_FAIL,
   DELETE_API_REQUEST,
   DELETE_API_RESET,
-
   POST_API_REQUEST,
   POST_API_SUCCESS,
   POST_API_FAIL,
   POST_API_RESET,
-
   UPDATE_API_REQUEST,
   UPDATE_API_SUCCESS,
   UPDATE_API_FAIL,
   UPDATE_API_RESET,
-  
   LIMIT_CONFIGURATION,
   SET_PAGE,
   SEARCH_COORPORATION,
@@ -31,37 +32,41 @@ import {
 
 import axios from "axios";
 
-export const getAllApi =
-  (page = 1, cari = "", limit = 5, token) =>
-  async (dispatch) => {
-    try {
-      dispatch({ type: API_REQUEST });
-      let link =
-        process.env.END_POINT_API_SITE_MANAGEMENT +
-        `api/setting-api/all?page=${page}`;
-      if (cari) link = link.concat(`&cari=${cari}`);
-      if (limit) link = link.concat(`&limit=${limit}`);
+export const getAllApi = (token) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: API_REQUEST });
 
-      const config = {
+    let pageState = getState().allApi.page || 1;
+    let cariState = getState().allApi.cari || "";
+    let limitState = getState().allApi.limit || 5;
+
+    const params = {
+      page: pageState,
+      cari: cariState,
+      limit: limitState,
+    };
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/setting-api/all`,
+      {
+        params,
         headers: {
-          Authorization: "Bearer " + token,
+          authorization: `Bearer ${token}`,
         },
-      };
+      }
+    );
 
-      const { data } = await axios.get(link, config);
-      console.log("GET data ALL API", data);
-
-      dispatch({
-        type: API_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: API_FAIL,
-        payload: error.response.data.message,
-      });
-    }
-  };
+    dispatch({
+      type: API_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: API_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 
 export const deleteApi = (id, token) => async (dispatch) => {
   try {
@@ -117,6 +122,89 @@ export const postApi = (sendData, token) => {
       });
     }
   };
+};
+
+export const setPage = (page) => {
+  return {
+    type: SET_PAGE,
+    page,
+  };
+};
+
+export const searchCooporation = (text) => {
+  return {
+    type: SEARCH_COORPORATION,
+    text,
+  };
+};
+
+export const limitCooporation = (value) => {
+  return {
+    type: LIMIT_CONFIGURATION,
+    limitValue: value,
+  };
+};
+
+export const getListApi = (token) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: GET_LIST_API_REQUEST });
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/api-list/all`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: GET_LIST_API_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    console.log("error", error);
+    dispatch({
+      type: GET_LIST_API_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+export const getListField = (id, token) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: GET_LIST_FIELD_REQUEST });
+
+    const { data } = await axios.get(
+      `${process.env.END_POINT_API_SITE_MANAGEMENT}api/api-list/fields/${id}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    console.log("data", data.data);
+
+    let dataSortir = data.data.map((items) => {
+      return {
+        ...items,
+        label: items.field_name,
+        value: items.field_name,
+      };
+    });
+
+    dispatch({
+      type: GET_LIST_FIELD_SUCCESS,
+      payload: data,
+      sortirData: dataSortir,
+    });
+  } catch (error) {
+    console.log("error", error);
+    dispatch({
+      type: GET_LIST_FIELD_FAIL,
+      payload: error.response.data.message,
+    });
+  }
 };
 
 // get detail belom ada endpoint

@@ -397,6 +397,7 @@ const UbahPage = ({ token }) => {
                 <div className="form-group">
                   <label style={{ fontSize: "16px" }}>Page url</label>
                   <input
+                  disabled
                   onChange={(e)=>setPageUrl(e.target.value)}
                     value={pageUrl}
                     type="text"

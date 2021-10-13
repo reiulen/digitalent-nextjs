@@ -14,6 +14,7 @@ import { NEW_TRIVIA_QUESTION_BANKS_RESET } from "../../../../../redux/types/subv
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../edit/step.module.css";
 
 const TambahTriviaStepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -185,8 +186,13 @@ const TambahTriviaStepOne = ({ token }) => {
                       {" "}
                       -Pilih Akademi -
                     </option>
-                    <option value="1"> Computer Scientist </option>
-                    <option value="2"> Designer </option>
+                    <option value="1"> VSGA </option>
+                    <option value="2"> FGA </option>
+                    <option value="3">PRO</option>
+                    <option value="4">TA</option>
+                    <option value="5">GTA</option>
+                    <option value="6">DEA</option>
+                    <option value="7"> TSA</option>
                   </select>
                   {simpleValidator.current.message(
                     "akademi",
@@ -219,8 +225,12 @@ const TambahTriviaStepOne = ({ token }) => {
                       {" "}
                       -Pilih Tema-
                     </option>
-                    <option value="1"> Cloud Computing </option>
-                    <option value="2"> UI/UX Designer </option>
+                    <option value="1"> Cloud Computing Analyst </option>
+                    <option value="2"> Data Management Staff </option>
+                    <option value="3"> Artificial Intelligence </option>
+                    <option value="4"> Cloud Computing </option>
+                    <option value="5"> Data Science Fundamental </option>
+                    <option value="6">Get Connected</option>
                   </select>
                   {simpleValidator.current.message(
                     "tema",
@@ -250,8 +260,16 @@ const TambahTriviaStepOne = ({ token }) => {
                       {" "}
                       -Pilih Pelatihan-
                     </option>
-                    <option value="1"> Google Cloud Computing </option>
-                    <option value="1"> Adobe UI/UX Designer </option>
+                    <option value="1"> Mobile App Flutter</option>
+                    <option value="2"> Mobile App React Native </option>
+                    <option value="3"> Web Backend Laravel </option>
+                    <option value="4"> Web Backend Golang </option>
+                    <option value="5"> Web Backend Node Js </option>
+                    <option value="6"> Web Backend Python </option>
+                    <option value="7"> Frontend Web React Js </option>
+                    <option value="8"> Frontend Web Vue Js </option>
+                    <option value="9"> Machine Learning </option>
+                    <option value="10">UI / UX Design</option>
                   </select>
                 </div>
               </div>
@@ -294,7 +312,7 @@ const TambahTriviaStepOne = ({ token }) => {
                 <div className=" text-right">
                   <button
                     type="submit"
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                   >
                     Simpan & Lanjut
                   </button>

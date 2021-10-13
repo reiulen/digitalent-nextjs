@@ -16,6 +16,7 @@ import { UPDATE_TRIVIA_QUESTION_BANKS_PUBLISH_RESET } from "../../../../../redux
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../edit/step.module.css";
 
 const StepThree = ({ token }) => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const StepThree = ({ token }) => {
 
   let { id } = router.query;
   const { loading, error, success } = useSelector(
-    state => state.updateTriviaQuestionBanksPublish
+    (state) => state.updateTriviaQuestionBanksPublish
   );
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
 
@@ -90,7 +91,7 @@ const StepThree = ({ token }) => {
     }
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     if (error) {
@@ -184,7 +185,7 @@ const StepThree = ({ token }) => {
                     className="form-control"
                     name="start_date"
                     selected={startDate}
-                    onChange={date => setStartDate(date)}
+                    onChange={(date) => setStartDate(date)}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("tanggal mulai")
                     }
@@ -214,7 +215,7 @@ const StepThree = ({ token }) => {
                     wrapperClassName="datepicker"
                     className="form-control"
                     selected={endDate}
-                    onChange={date => setEndDate(date)}
+                    onChange={(date) => setEndDate(date)}
                     onBlur={() =>
                       simpleValidator.current.showMessageFor("tanggal sampai")
                     }
@@ -249,7 +250,7 @@ const StepThree = ({ token }) => {
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={jumlah_soal}
-                      onChange={e => setJumlahSoal(e.target.value)}
+                      onChange={(e) => setJumlahSoal(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("jumlah soal")
                       }
@@ -285,7 +286,7 @@ const StepThree = ({ token }) => {
                       className="form-control"
                       aria-describedby="basic-addon2"
                       value={duration}
-                      onChange={e => setDuration(e.target.value)}
+                      onChange={(e) => setDuration(e.target.value)}
                       onBlur={() =>
                         simpleValidator.current.showMessageFor("durasi")
                       }
@@ -323,8 +324,8 @@ const StepThree = ({ token }) => {
                     id=""
                     className="form-control"
                     value={status}
-                    onChange={e => setStatus(e.target.value)}
-                    onBlur={e => {
+                    onChange={(e) => setStatus(e.target.value)}
+                    onBlur={(e) => {
                       setStatus(e.target.value);
                       simpleValidator.current.showMessageFor("status");
                     }}
@@ -349,7 +350,7 @@ const StepThree = ({ token }) => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
                   >
                     Simpan & Lanjut
