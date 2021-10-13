@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import Swal from "sweetalert2";
@@ -9,13 +9,47 @@ import "react-toastify/dist/ReactToastify.css";
 import IconAdd from "../../../../assets/icon/Add";
 import IconDelete from "../../../../assets/icon/Delete";
 import { useDispatch, useSelector } from "react-redux";
-
+import Select from "react-select";
+import { GET_DROPDOWN_KABUPATEN } from "../../../../../redux/types/pelatihan/function.type";
 
 const Tambah = ({ token }) => {
   const router = useRouter();
+  let selectRefProvinsi = null;
 
-  const allDataReference = useSelector((state) => state.allDataReference);
-console.log("allDataReference",allDataReference)
+  const drowpdownProvinsi = useSelector((state) => state.drowpdownProvinsi);
+  let tempOptionsProvinsi = drowpdownProvinsi.data.data;
+  const [provinsi, setProvinsi] = useState([]);
+  const [idProvinsi, setIdProvinsi] = useState("");
+  console.log("idProvinsi", idProvinsi);
+  const [kabupaten, setKabupaten] = useState([]);
+
+  useEffect(() => {
+    let optionProvinsi = tempOptionsProvinsi.map((items) => {
+      return { ...items, label: items.value };
+    });
+    setProvinsi(optionProvinsi);
+  }, [tempOptionsProvinsi]);
+
+  useEffect(() => {
+    if (idProvinsi) {
+      async function getKabupaten(idProvinsi, token) {
+        try {
+          let { data } = await axios.get(
+            `${process.env.END_POINT_API_SITE_MANAGEMENT}api/reference/detail/${idProvinsi}`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          console.log("data get kabupaten", data);
+        } catch (error) {
+          console.log("error get kabupaten", error.response.data.message);
+        }
+      }
+      getKabupaten(idProvinsi, token);
+    }
+  }, [idProvinsi, token]);
 
   return (
     <PageWrapper>
@@ -46,16 +80,39 @@ console.log("allDataReference",allDataReference)
               </div>
 
               {/*  */}
+              
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="form-group mt-4">
                     <label htmlFor="exampleSelect1">Provinsi</label>
-                    <select className="form-control" id="exampleSelect1">
-                      <option>Jawa Barat</option>
-                    </select>
-                    <span className="form-text text-muted">
+                    {/* <select className="form-control" id="exampleSelect1">
+                      <option>Pilih Provinsi</option>
+                      {drowpdownProvinsi.data.data.map((items,index)=>{
+                        return(
+                          <option>{items.value}</option>
+                        )
+                      })}
+                    </select> */}
+
+                    <Select
+                      ref={(ref) => (selectRefProvinsi = ref)}
+                      className="basic-single"
+                      classNamePrefix="select"
+                      placeholder="Pilih provinsi"
+                      // defaultValue={allMK.stateListMitra[0]}
+                      isDisabled={false}
+                      isLoading={false}
+                      isClearable={false}
+                      isRtl={false}
+                      isSearchable={true}
+                      name="color"
+                      onChange={(e) => setIdProvinsi(e?.id)}
+                      options={provinsi}
+                    />
+
+                    {/* <span className="form-text text-muted">
                       Please enter your full name
-                    </span>
+                    </span> */}
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -71,16 +128,16 @@ console.log("allDataReference",allDataReference)
                         </span>
                       </div>
 
-                        <button
-                          type="button"
-                          className="btn"
-                          style={{ backgroundColor: "#EE2D41" }}
-                        >
-                          <IconDelete />
-                        </button>
+                      <button
+                        type="button"
+                        className="btn"
+                        style={{ backgroundColor: "#EE2D41" }}
+                      >
+                        <IconDelete />
+                      </button>
                     </div>
                   </div>
-               </div>
+                </div>
               </div>
 
               <div className="d-flex align-items-center justify-content-end">

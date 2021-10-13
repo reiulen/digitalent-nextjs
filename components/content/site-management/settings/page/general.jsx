@@ -84,7 +84,8 @@ const GeneralPage = ({ token }) => {
 
     if (imageLogo === "") {
       Swal.fire("Gagal simpan", "Form image logo tidak boleh kosong", "error");
-    } else if (caption === "") {
+    } else 
+    if (caption === "") {
       Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
     } else if (description === "") {
       Swal.fire("Gagal simpan", "Form caption tidak boleh kosong", "error");
