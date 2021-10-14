@@ -25,6 +25,35 @@
     margin: 10px;
 }
 
+
+/* Pratinjau Preview */
+
+.titlePratinjau{
+    font-size: 50px;
+    font-weight: 600;
+    margin-top: -100px;
+    width: 99%;
+}
+
+.iconBorder{
+    background-color: #215480;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 39px;
+    margin-right: 3px;
+}
+
+.isiBerita{
+    /* border: 1px solid black; */
+    overflow-wrap: break-word;
+}
+
+.listTag{
+    display: flex;
+}
+
 @media only screen and (max-width: 1024px) {
     .modal-body{
         height: 400px;
@@ -40,6 +69,18 @@
         /* border: 1px solid black; */
         width: 10px;
         font-size: 11px;
+    }
+
+    /* Pratinjau */
+    
+    .iconBorder{
+        background-color: #215480;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        text-align: center;
+        line-height: 39px;
+        margin-right: 3px;
     }
 }
 
@@ -61,17 +102,34 @@
     }
 }
 
-
-.title-Pratinjau{
-    border: 1px solid black;
-    font-size: 50px;
-    font-weight: 600;
-    z-index: 1000;
-    /* width: 100%;
-    position: absolute; */
-    /* height: 150px;
-    z-index: 0; */
-    /* background-image: url(/static/assets/media/backdrop.svg) no-repeat;
-    background-size: cover; */
-    /* min-height: 100%; */
+@media only screen and (max-width: 556px) {
+    .titlePratinjau{
+        font-size: 30px;
+    }
+    .titleSubMenu{
+        font-size: 10px;
+    }
+    .titleSubMenu-2{
+        font-size: 10px;
+        display: flex;
+        align-items: center;
+    }
+    .isiBerita{
+        /* border: 1px solid black; */
+        font-size: 8px;
+    }
+    .listTag{
+        /* border: 1px solid black; */
+        width: 90%;
+        font-size: 8px;
+    }
+    /* .iconBorder{
+        background-color: #215480;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        text-align: center;
+        line-height: 39px;
+        margin-right: 3px;
+    } */
 }
