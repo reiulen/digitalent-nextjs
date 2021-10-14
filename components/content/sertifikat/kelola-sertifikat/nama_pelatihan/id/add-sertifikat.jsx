@@ -1,11 +1,5 @@
 // #Next & React
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  createRef,
-  useCallback,
-} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // #Page, Component & Library
@@ -24,6 +18,7 @@ import {
   newSertifikat,
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import * as moment from "moment";
+import { Modal } from "react-bootstrap";
 
 export default function TambahMasterSertifikat({ token }) {
   const router = useRouter();
@@ -35,6 +30,7 @@ export default function TambahMasterSertifikat({ token }) {
   const divReferenceSilabus = useRef(null);
   const [certificate_name, setCertificate_name] = useState("");
   const [namaPeserta, setNamaPeserta] = useState("Nama Peserta");
+  const [confirmModal, setConfirmModal] = useState(false);
 
   const [date, setDate] = useState(new Date());
 
@@ -292,7 +288,7 @@ export default function TambahMasterSertifikat({ token }) {
   // # END IMAGE
   const handlePost = async (e, status) => {
     try {
-      // e.preventDefault();
+      e.preventDefault();
       if (certificate_type == "1 lembar") {
         simpleValidator.current.fields.Jabatan = true;
         simpleValidator.current.fields.Nama = true;
@@ -310,6 +306,7 @@ export default function TambahMasterSertifikat({ token }) {
           setNamaPeserta("");
           setNomerSertifikat("");
         }
+
         let formData = new FormData();
         formData.append("name", certificate_name);
 
@@ -1105,7 +1102,7 @@ export default function TambahMasterSertifikat({ token }) {
                 <a
                   className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
                   onClick={e => {
-                    handlePost(e, 1);
+                    setConfirmModal(true);
                   }}
                 >
                   Publish
@@ -1806,7 +1803,7 @@ export default function TambahMasterSertifikat({ token }) {
                   <a
                     className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
                     onClick={e => {
-                      handlePost(e, 1);
+                      setConfirmModal(true);
                     }}
                   >
                     Publish
@@ -1929,6 +1926,41 @@ export default function TambahMasterSertifikat({ token }) {
         </div>
         {/* END MODAL SYLLABUS */}
       </div>
+      <>
+        <Modal show={confirmModal} centered>
+          <Modal.Body className="px-10">
+            <div className="row justify-content-center ">
+              <i className="ri-error-warning-line ri-8x text-warning col-12 text-center"></i>
+              <div className="font-size-h1 font-weight-bolder">
+                Publish Sertifikat?
+              </div>
+              <div className="text-center">
+                Pastikan desain sertifikat telah benar. Sertifikat yang telah
+                dipublish tidak dapat diubah kembali
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer className="pb-10 pt-8 d-flex justify-content-center">
+            <button
+              className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
+              onClick={() => {
+                setConfirmModal(!confirmModal);
+              }}
+            >
+              Batal
+            </button>
+            <a
+              className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 text-center"
+              onClick={e => {
+                setConfirmModal(false);
+                handlePost(e, 1);
+              }}
+            >
+              Publish
+            </a>
+          </Modal.Footer>
+        </Modal>
+      </>
     </PageWrapper>
   );
 }

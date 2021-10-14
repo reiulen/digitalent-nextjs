@@ -1,11 +1,5 @@
 // #Next & React
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  createRef,
-  useCallback,
-} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // #Page, Component & Library
@@ -26,6 +20,7 @@ import {
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import axios from "axios";
 import * as moment from "moment";
+import { Modal } from "react-bootstrap";
 
 export default function EditSertifikat({ token }) {
   const router = useRouter();
@@ -65,6 +60,7 @@ export default function EditSertifikat({ token }) {
     }
   }, [isUpdated]);
 
+  const [confirmModal, setConfirmModal] = useState(false);
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
   const [namaPeserta, setNamaPeserta] = useState("Nama Peserta");
@@ -365,7 +361,6 @@ export default function EditSertifikat({ token }) {
         setNamaPeserta("");
         setNomerSertifikat("");
       }
-
       if (certificate_type == "1 lembar") {
         simpleValidator.current.fields.Jabatan = true;
         simpleValidator.current.fields.Nama = true;
@@ -376,13 +371,6 @@ export default function EditSertifikat({ token }) {
 
       if (simpleValidator.current.allValid()) {
         let formData = new FormData();
-
-        if (status == 1) {
-          setTahun("");
-          setTanggal("");
-          setNamaPeserta("");
-          setNomerSertifikat("");
-        }
 
         formData.append("_method", "put");
         formData.append("name", certificate_name);
@@ -464,11 +452,6 @@ export default function EditSertifikat({ token }) {
         formData.append("status_migrate_id", status);
 
         dispatch(updateSertifikat(id, formData, token));
-
-        // router.push({
-        //   pathname: `/sertifikat/kelola-sertifikat/${query.nama_pelatihan_id}`,
-        //   query: { success: true, id: query.theme_id },
-        // });
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -1228,7 +1211,7 @@ export default function EditSertifikat({ token }) {
                   <a
                     className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
                     onClick={e => {
-                      handlePost(e, 1);
+                      setConfirmModal(true);
                     }}
                   >
                     Publish
@@ -1930,7 +1913,7 @@ export default function EditSertifikat({ token }) {
                     <a
                       className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
                       onClick={e => {
-                        handlePost(e, 1);
+                        setConfirmModal(true);
                       }}
                     >
                       Publish
@@ -2056,6 +2039,42 @@ export default function EditSertifikat({ token }) {
       ) : (
         <div></div>
       )}
+
+      <>
+        <Modal show={confirmModal} centered>
+          <Modal.Body className="px-10">
+            <div className="row justify-content-center ">
+              <i className="ri-error-warning-line ri-8x text-warning col-12 text-center"></i>
+              <div className="font-size-h1 font-weight-bolder">
+                Publish Sertifikat?
+              </div>
+              <div className="text-center">
+                Pastikan desain sertifikat telah benar. Sertifikat yang telah
+                dipublish tidak dapat diubah kembali
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer className="pb-10 pt-8 d-flex justify-content-center">
+            <button
+              className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
+              onClick={() => {
+                setConfirmModal(!confirmModal);
+              }}
+            >
+              Batal
+            </button>
+            <a
+              className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 text-center"
+              onClick={e => {
+                setConfirmModal(false);
+                handlePost(e, 1);
+              }}
+            >
+              Publish
+            </a>
+          </Modal.Footer>
+        </Modal>
+      </>
     </PageWrapper>
   );
 }
