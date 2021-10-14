@@ -47,6 +47,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
       await store.dispatch(
         getAllSertifikat(
           query.page,

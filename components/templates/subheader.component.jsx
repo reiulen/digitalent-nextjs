@@ -19,15 +19,11 @@ const convertBreadcrumb = string => {
   let newStr = snakeToPascal(string);
   let result = "";
 
-  // console.log (newStr)
-
   for (let i = 0; i < newStr.length; i++) {
     result = newStr.split("?")[0] + " /";
   }
-  // result.join (" ")
-
+  newStr = newStr.split("%20").join(" ");
   return result;
-
   // return ` ${newStr.charAt(0).toUpperCase() + newStr.slice(1).split("?")[0]} /` ;
   // return ` ${string.charAt(0).toUpperCase() + string.slice(1).split("?")[0]} /` ;
   // string.charAt(0).toUpperCase() + string.slice(1).concat("/").split("?")[0]
