@@ -8,7 +8,7 @@ const PreviewWrapper = ({ children, title }) => {
             <Head>
                 <title>{title}</title>
             </Head>
-            <div className="d-flex flex-column-fluid "style={{backgroundColor: "#ffffff"}}>
+            <div className="d-flex flex-column-fluid" style={{backgroundColor: "#ffffff"}}>
                 <div className="container">
                     {children}
                 </div>

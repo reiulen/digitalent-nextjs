@@ -48,6 +48,8 @@ const StepTwo = ({ token }) => {
   const [answer_key, setAnswerKey] = useState("");
   const [question_type_id, setQuestionTypeId] = useState("");
   const [typeSave, setTypeSave] = useState("lanjut");
+  const [imageSoalName, setImageSoalName] = useState("");
+  const [imageAnswerName, setImageAnswerName] = useState("");
 
   useEffect(() => {
     if (success) {
@@ -71,6 +73,7 @@ const StepTwo = ({ token }) => {
   }, [dispatch, error, success, typeSave, id, metode, router]);
 
   const handleInputChange = (e, index) => {
+    setImageAnswerName(e.target.files[0]);
     const { name, value } = e.target;
     const list = [...answer];
     list[index][name] = value;
@@ -89,6 +92,7 @@ const StepTwo = ({ token }) => {
   };
 
   const handleSoalImage = (e) => {
+    setImageSoalName(e.target.files[0].name);
     if (e.target.name === "question_image") {
       const reader = new FileReader();
       reader.onload = () => {
@@ -363,7 +367,7 @@ const StepTwo = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {imageSoalName ? imageSoalName : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -412,7 +416,9 @@ const StepTwo = ({ token }) => {
                             className="custom-file-label"
                             htmlFor="customFile"
                           >
-                            Choose file
+                            {imageAnswerName
+                              ? imageAnswerName.name
+                              : "Choose file"}
                           </label>
                         </div>
                       </div>

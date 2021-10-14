@@ -19,10 +19,6 @@ import { useSelector } from "react-redux";
 export default function NamaPelatihanID({ token }) {
   const router = useRouter();
   const { query } = router;
-  // console.log(query);
-  // #DatePicker
-
-  // #DatePicker
 
   // #Pagination
   const [limit, setLimit] = useState(null);
@@ -33,46 +29,57 @@ export default function NamaPelatihanID({ token }) {
   const { loading, error, certificate } = useSelector(
     state => state.detailCertificates
   );
+  const [status, setStatus] = useState(null);
 
   // #REDUX STATE
   let { page = 1, keyword, success } = router.query;
 
   const handleLimit = val => {
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${limit}`);
+    router.push(
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=1&limit=${val}`
+    );
   };
 
   const handleSearch = () => {
-    let link = `${router.pathname}?page=1&keyword=${search}`;
+    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
   };
 
-  const [status, setStatus] = useState(null);
-
   const options = [
     { value: "draft", label: "Draft" },
-    { value: "belum tersedia", label: "Belum Tersedia" },
+    { value: "not-yet-available", label: "Belum Tersedia" },
     { value: "publish", label: "Publish" },
   ];
 
   const handleFilter = e => {
-    console.log(status, " ini status");
-    console.log(router, "ini router");
     if (!status) {
       Swal.fire("Oops !", "Harap memilih Status terlebih dahulu.", "error");
     } else {
-      let link = `${query.tema_pelatihan_id}?page=${1}`;
-      if (status) link = link.concat(`&keyword=${status}`);
+      let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=${page}`;
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (status) link = link.concat(`&status=${status}`);
       router.push(link);
     }
   };
 
-  const resetValueSort = () => {
-    setStatus(null);
-    router.push(`${router.pathname}`);
+  const handlePagination = pageNumber => {
+    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?page=${pageNumber}`;
+    if (search) link = link.concat(`&keyword=${search}`);
+    if (limit) link = link.concat(`&limit=${limit}`);
+    router.push(link);
   };
 
+  const resetValueSort = () => {
+    setStatus(null);
+    router.push(
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}`
+    );
+  };
+
+  console.log(certificate);
+  const handleResetError = () => {};
   return (
     <PageWrapper>
       {/* error START */}
@@ -318,7 +325,8 @@ export default function NamaPelatihanID({ token }) {
                                   {certificate.status.name == "draft" ? (
                                     <>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
+                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme.id}&status=view`}
                                         passHref
                                       >
                                         <a
@@ -331,7 +339,7 @@ export default function NamaPelatihanID({ token }) {
                                         </a>
                                       </Link>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/edit`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&status=edit&theme_id=${certificate.theme.id}`}
                                         passHref
                                       >
                                         <a
@@ -348,7 +356,7 @@ export default function NamaPelatihanID({ token }) {
                                     <>
                                       <Link
                                         passHref
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/published`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?status=${certificate.status.name}&id=${certificate.id}&theme_id=${certificate.theme.id}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -361,7 +369,9 @@ export default function NamaPelatihanID({ token }) {
                                       </Link>
                                       <Link
                                         passHref
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
+                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${certificate.id}`}
+                                        // nama pelatihan id pake certificate.id
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -375,7 +385,8 @@ export default function NamaPelatihanID({ token }) {
                                     </>
                                   ) : (
                                     <Link
-                                      href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/add`}
+                                      href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.id}&theme_id=${certificate.theme.id}&theme_name=${certificate.theme.name}`}
+                                      // ${query.tema_pelatihan_id}
                                       passHref
                                     >
                                       <a
@@ -403,25 +414,24 @@ export default function NamaPelatihanID({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {certificate &&
-                  certificate.data.perPage < certificate.data.total && (
-                    <div className="table-pagination">
-                      <Pagination
-                        activePage={page}
-                        itemsCountPerPage={certificate.perPage}
-                        totalItemsCount={certificate.total}
-                        pageRangeDisplayed={3}
-                        onChange={handlePagination}
-                        nextPageText={">"}
-                        prevPageText={"<"}
-                        firstPageText={"<<"}
-                        lastPageText={">>"}
-                        itemClass="page-item"
-                        linkClass="page-link"
-                      />
-                    </div>
-                  )}
-                {certificate ? (
+                {certificate && (
+                  <div className="table-pagination">
+                    <Pagination
+                      activePage={+page}
+                      itemsCountPerPage={certificate.data.perPage}
+                      totalItemsCount={certificate.data.total}
+                      pageRangeDisplayed={3}
+                      onChange={handlePagination}
+                      nextPageText={">"}
+                      prevPageText={"<"}
+                      firstPageText={"<<"}
+                      lastPageText={">>"}
+                      itemClass="page-item"
+                      linkClass="page-link"
+                    />
+                  </div>
+                )}
+                {certificate && certificate.data.total ? (
                   <div className="table-total ml-auto">
                     <div className="row mt-3">
                       <div className="col-4 mr-0 p-0 my-auto">
@@ -437,30 +447,10 @@ export default function NamaPelatihanID({ token }) {
                           onChange={e => handleLimit(e.target.value)}
                           onBlur={e => handleLimit(e.target.value)}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="15"
-                            selected={limit == "15" ? true : false}
-                          >
-                            15
-                          </option>
-                          <option
-                            value="20"
-                            selected={limit == "20" ? true : false}
-                          >
-                            20
-                          </option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="15">15</option>
+                          <option value="20">20</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -468,7 +458,7 @@ export default function NamaPelatihanID({ token }) {
                           className="align-middle my-auto"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {certificate.data.list_certificate.length}
+                          Total Data {certificate.data.total}
                         </p>
                       </div>
                     </div>

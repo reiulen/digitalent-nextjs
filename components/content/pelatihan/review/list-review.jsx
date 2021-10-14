@@ -39,6 +39,8 @@ const ListReview = ({ token }) => {
   const { error: dropdownErrorTema, data: dataTema } = useSelector(
     (state) => state.drowpdownTema
   );
+  const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
+    useSelector((state) => state.drowpdownPenyelenggara);
 
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -56,6 +58,14 @@ const ListReview = ({ token }) => {
 
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
+  const optionsPenyelenggara = [];
+  for (let index = 0; index < dataPenyelenggara.data.length; index++) {
+    let val = {
+      value: dataPenyelenggara.data[index].id,
+      label: dataPenyelenggara.data[index].value,
+    };
+    optionsPenyelenggara.push(val);
+  }
 
   const optionsStatusPelatihan = [
     { value: "review substansi", label: "Review Substansi" },
@@ -348,11 +358,8 @@ const ListReview = ({ token }) => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-8 col-xl-8">
-                  <div
-                    className="position-relative overflow-hidden mt-3"
-                    style={{ maxWidth: "330px" }}
-                  >
+                <div className="col-lg-4 col-xl-4">
+                  <div className="position-relative overflow-hidden mt-3 mb-2">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -373,11 +380,12 @@ const ListReview = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
+                <div className="col-lg-5 col-xl-5"></div>
+
+                <div className="col-lg-3 col-xl-3 justify-content-end d-flex">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className="btn border d-flex align-items-center justify-content-between mt-1 btn-block"
                     style={{
-                      minWidth: "280px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -591,7 +599,7 @@ const ListReview = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Penyelenggara</label>
             <Select
-              options={optionsAkademi}
+              options={optionsPenyelenggara}
               defaultValue={penyelenggara}
               onChange={(e) =>
                 setPenyelenggara({ value: e.value, label: e.label })

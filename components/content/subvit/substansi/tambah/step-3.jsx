@@ -202,7 +202,7 @@ const StepThree = ({ token }) => {
                     htmlFor="staticEmail"
                     className=" col-form-label font-weight-bold pb-0"
                   >
-                    Sampai
+                    Pelaksanaan Sampai
                   </p>
                   <DatePicker
                     wrapperClassName="datepicker"
