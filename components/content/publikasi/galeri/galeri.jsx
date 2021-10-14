@@ -1022,7 +1022,7 @@ const Galeri = ({ token }) => {
                                                         galeri.gallery[index_galleri].tag !== null ?
                                                             galeri.gallery[index_galleri].tag.map((row, i) => {
                                                                 return (
-                                                                    <span className="mr-3 label label-inline label-light-success font-weight-bold">
+                                                                    <span className="mr-3 label label-inline label-light-success font-weight-bold" key={i}>
                                                                         <div className={styles['tagModal']}>
                                                                             {row}
                                                                         </div>
