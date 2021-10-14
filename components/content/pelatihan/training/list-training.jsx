@@ -50,6 +50,9 @@ const ListTraining = ({ token }) => {
   const { error: dropdownErrorTema, data: dataTema } = useSelector(
     (state) => state.drowpdownTema
   );
+  const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } = useSelector(
+    (state) => state.drowpdownPenyelenggara
+  );
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -91,6 +94,11 @@ const ListTraining = ({ token }) => {
 
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
+  const optionsPenyelenggara = []
+  for (let index = 0; index < dataPenyelenggara.data.length; index++){
+    let val = { value: dataPenyelenggara.data[index].id, label: dataPenyelenggara.data[index].value}
+    optionsPenyelenggara.push (val)
+  }
 
   const optionsStatusPelatihan = [
     { value: "review substansi", label: "Review Substansi" },
@@ -874,7 +882,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Penyelenggara</label>
             <Select
-              options={optionsAkademi}
+              options={optionsPenyelenggara}
               defaultValue={penyelenggara}
               onChange={(e) =>
                 setPenyelenggara({ value: e.value, label: e.label })

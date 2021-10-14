@@ -375,9 +375,6 @@ const AddTrainingStep1 = ({ propsStep }) => {
     //   />
     //   <div className="col-lg-12 order-1 px-0">
     <div className="card card-custom card-stretch gutter-b">
-      {
-        console.log (dataLevelPelatihan)
-      }
       <div className="card-body py-4">
         <form onSubmit={submitHandler}>
           <h3 className="font-weight-bolder pb-5 pt-4">Data Pelatihan</h3>
