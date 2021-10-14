@@ -477,7 +477,6 @@ const DetailSubstansi = ({ token }) => {
                     subtance_question_detail.list_questions.length != 0 ? (
                       subtance_question_detail.list_questions.map(
                         (question, i) => {
-                          console.log(question);
                           return (
                             <tr key={question.id}>
                               <td className="align-middle text-center">
