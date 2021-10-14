@@ -47,7 +47,7 @@ export const getAllSubtanceQuestionDetail =
       if (limit) link = link.concat(`&limit=${limit}`);
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (status) link = link.concat(`&status=${status}`);
-      if (category) link = link.concat(`&category=${category}`);
+      if (category) link = link.concat(`&kategori=${category}`);
       if (pelatihan) link = link.concat(`&pelatihan=${pelatihan}`);
 
       const config = {
