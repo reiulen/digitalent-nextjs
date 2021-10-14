@@ -246,7 +246,6 @@ const StepOne = ({ token }) => {
                   onChange={(e) => setTrainingId(e.target.value)}
                   onBlur={(e) => setTrainingId(e.target.value)}
                   className="form-control"
-                  defaultValue={training_id}
                 >
                   <option selected disabled>
                     {" "}
