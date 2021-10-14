@@ -27,7 +27,6 @@ export default function LoginUserPage() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  // console.log(session.user.user.data); untuk cek role user
   if (session) {
     const data = session.user.user.data;
     if (data.user.roles[0] === "user") {
