@@ -297,14 +297,18 @@ const ListTrivia = ({ token }) => {
                         trivia &&
                         trivia.list_trivia.map((row, i) => {
                           const paginate = i + 1 * (page * limit);
-                          const dividers = parseInt(router.query.limit) - 1;
+                          const dividers = limit - 1;
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
                                 <span className="">{paginate - dividers}</span>
                               </td>
                               <td className="align-middle">
-                                <b>{row.academy.name}</b>
+                                <b>
+                                  {row.academy !== null
+                                    ? row.academy.name
+                                    : "-"}
+                                </b>
                                 <p>
                                   {row.theme != null
                                     ? row.training !== null

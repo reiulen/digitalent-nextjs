@@ -67,7 +67,7 @@ const ListAcademy = ({ token }) => {
         type: DELETE_ACADEMY_RESET,
       });
     }
-  }, [isDeleted, dispatch]);
+  }, [isDeleted, dispatch, token]);
 
   const handlePagination = (pageNumber) => {
     setPage(pageNumber);
