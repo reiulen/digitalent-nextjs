@@ -7,6 +7,11 @@ import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
 
+import {
+  getListRevisi,
+  getReviewStep3Revisi,
+} from "../../../../../redux/actions/pelatihan/review.actions";
+
 const ViewReviewCommitment = dynamic(
   () =>
     import(
@@ -20,11 +25,12 @@ const ViewReviewCommitment = dynamic(
   }
 );
 
-export default function ViewReviewCommitmentPage() {
+export default function ViewReviewCommitmentPage(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <ViewReviewCommitment />
+        <ViewReviewCommitment token={session.token} />
       </div>
     </>
   );
@@ -37,11 +43,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
+
+      await store.dispatch(
+        getListRevisi(session.user.user.data.token, params.id)
+      );
+      await store.dispatch(
+        getReviewStep3Revisi(session.user.user.data.token, params.id)
+      );
 
       return {
         props: { session, title: "View Form Komitmen - Pelatihan" },
