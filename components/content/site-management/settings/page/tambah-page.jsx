@@ -69,6 +69,8 @@ const TambahPage = ({ token }) => {
       setError({ ...errorr, pageStatus: "page status tidak boleh kosong" });
       notify("page status tidak boleh kosong");
     } else {
+
+      
       Swal.fire({
         title: "Apakah anda yakin simpan ?",
         // text: "Data ini tidak bisa dikembalikan !",
@@ -89,6 +91,8 @@ const TambahPage = ({ token }) => {
           dispatch(postPage(sendData,token));
         }
       });
+
+
     }
   };
 
@@ -388,9 +392,9 @@ const TambahPage = ({ token }) => {
                       className="form-control"
                       placeholder="Placeholder"
                     />
-                    <span className="form-text text-muted">
+                    {/* <span className="form-text text-muted">
                       Please enter your full name
-                    </span>
+                    </span> */}
                   </div>
                   <div className="form-group">
                     <label htmlFor="exampleSelect1">Page Status</label>
@@ -404,9 +408,9 @@ const TambahPage = ({ token }) => {
                       <option value="Listed">Listed</option>
                       <option value="Unlisted">Unlisted</option>
                     </select>
-                    <span className="form-text text-muted">
+                    {/* <span className="form-text text-muted">
                       Please enter your full name
-                    </span>
+                    </span> */}
                   </div>
                 </div>
               </div>

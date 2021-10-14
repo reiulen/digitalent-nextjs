@@ -114,7 +114,7 @@ const LoginAdmin = () => {
                     }
                   )}
                 </div>
-                <div className="form-group">
+                <div className="form-group mt-6">
                   <label className="form-auth-label">Password</label>
                   <Link
                     href="/partnership/user/auth/recorveryPassword" passHref

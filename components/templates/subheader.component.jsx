@@ -3,19 +3,19 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-const snakeToPascal = (string) => {
+const snakeToPascal = string => {
   return string
     .split("/")
-    .map((snake) =>
+    .map(snake =>
       snake
         .split("-")
-        .map((substr) => substr.charAt(0).toUpperCase() + substr.slice(1))
+        .map(substr => substr.charAt(0).toUpperCase() + substr.slice(1))
         .join(" ")
     )
     .join("/");
 };
 
-const convertBreadcrumb = (string) => {
+const convertBreadcrumb = string => {
   let newStr = snakeToPascal(string);
   let result = "";
 
@@ -44,7 +44,6 @@ const SubHeader = () => {
       const linkPath = router.asPath.split("/");
       // linkPath.splice(0, 2);
       linkPath.shift();
-
       const pathArray = linkPath.map((path, i) => {
         return {
           breadcrumb: path,

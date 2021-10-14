@@ -19,6 +19,8 @@ export default function KelolasertifikatID({ token }) {
     state => state.singleCertificate
   );
 
+  console.log("ini certificate", certificate);
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -87,12 +89,12 @@ export default function KelolasertifikatID({ token }) {
           </div>
           {/* END HEADER */}
           {/* START BODY */}
-          <div className="card-body border-top">
+          <div className="card-body border-top" style={{ width: "100%" }}>
             <div className="row p-0 justify-content-center">
               {/* START COL */}
               <div
-                className="border-primary border col-8 h-500px"
-                // style={{ width: "842px" }}
+                className="border-primary border col-lg-8 col-12 position-relative"
+                style={{ fontSize: "100%" }}
               >
                 <div className="p-0">
                   {certificate.data.certificate.background ? (
@@ -102,48 +104,48 @@ export default function KelolasertifikatID({ token }) {
                       // height={495}
                       // width={1400}
                       layout="fill"
-                      objectFit="cover"
+                      objectFit="fill"
                     />
                   ) : (
                     ""
                   )}
                   <div className="row align-items-center zindex-1">
                     <div className="position-relative">
-                      <input
-                        type="text"
-                        className="m-6 text-center"
-                        placeholder="Nomor Sertifikat"
-                        style={{
-                          borderStyle: "dashed",
-                        }}
-                      />
+                      <div className="m-6 text-center px-4 border-2">
+                        Nomer Sertifikat
+                      </div>
                     </div>
                     <div
                       className="col-12 text-center font-weight-normal p-0 justify-content-center"
-                      style={{ marginTop: "-20px", width: "100%" }}
+                      style={{ marginTop: "-20px" }}
                     >
-                      <label className="font-weight-boldest display-4 w-100 futura">
+                      <label
+                        className="font-weight-boldest w-100 futura"
+                        style={{ fontSize: "200%" }}
+                      >
                         SERTIFIKAT
                       </label>
                       <div className="w-100">Diberikan kepada</div>
                       <div className="my-2">
                         <span
                           className="mx-2 px-2 font-size-h6 px-10 w-100"
-                          style={{ borderStyle: "dashed" }}
+                          style={{ fontSize: "150%" }}
                         >
                           Nama Peserta
                         </span>
                       </div>
                       <div className="w-100">Atas Partisipasi sebagai</div>
-                      <div className="font-weight-normal font-size-h2 w-100">
+                      <div
+                        className="font-weight-normal font-size-h2 w-100"
+                        style={{ fontSize: "125%" }}
+                      >
                         Peserta
                       </div>
                       <div className="w-100">Nama Pelatihan</div>
                       <div
                         className="text-center font-weight-bolder border-2 w-100"
                         style={{
-                          fontSize: "20px",
-                          textAlign: "center",
+                          fontSize: "125%",
                           // fontWeight: "bold",
                         }}
                       >
@@ -157,27 +159,16 @@ export default function KelolasertifikatID({ token }) {
                           </span>{" "}
                           Selama
                         </span>
-                        <span
-                          className="mx-2 px-2 border-2 w-100"
-                          style={{ borderStyle: "dashed" }}
-                        >
+                        <span className="mx-2 px-2 border-2 w-100">
                           Waktu Pelatihan
                         </span>
                       </div>
                       <div className="mt-2 w-100">
                         <span>Digital Talent Scholarship</span>
-                        <span
-                          className="mx-2 px-2 border-2"
-                          style={{ borderStyle: "dashed" }}
-                        >
-                          Tahun
-                        </span>
+                        <span className="mx-2 px-2 border-2">Tahun</span>
                       </div>
                       <div className="my-4 w-100 text-center">
-                        <span
-                          className="mx-2 px-2 border-2"
-                          style={{ borderStyle: "dashed" }}
-                        >
+                        <span className="mx-2 px-2 border-2">
                           Jakarta, DD/MM/YYYY
                         </span>
                       </div>
@@ -187,6 +178,7 @@ export default function KelolasertifikatID({ token }) {
                             ? " justify-content-center m-0 p-0 d-flex w-100"
                             : " justify-content-around  m-0 p-0 d-flex w-100"
                         }
+                        style={{ width: "100%", height: "100%" }}
                       >
                         {/* START MAP TTD */}
                         {certificate.data.signature.map((el, i) => {
@@ -200,7 +192,7 @@ export default function KelolasertifikatID({ token }) {
                               }}
                               className="col-3 p-0"
                             >
-                              <div className="col">
+                              <div className="col p-0">
                                 <div
                                   className="col border-2 align-items-center justify-content-center d-flex position-relative"
                                   style={{
@@ -276,7 +268,7 @@ export default function KelolasertifikatID({ token }) {
             <div className="card-body border-top">
               <div className="row p-0 justify-content-center">
                 {/* START COL */}
-                <div className="border-primary p-0 border col-8 h-500px">
+                <div className="border-primary p-0 border col-lg-8 col-12">
                   <div className="p-0">
                     {certificate.data.certificate.background_syllabus ? (
                       <Image

@@ -12,6 +12,7 @@ import DatePicker from "react-datepicker";
 import SimpleReactValidator from "simple-react-validator";
 import Swal from "sweetalert2";
 import moment from "moment";
+import styles from "../../trivia/edit/step.module.css";
 
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInputPublish from "/components/StepInputPublish";
@@ -61,7 +62,7 @@ const StepTwo = ({ token }) => {
         end_at,
         duration,
         passing_grade,
-        status: 0,
+        status: status,
         questions_to_share: jumlah_soal,
       };
 
@@ -90,7 +91,7 @@ const StepTwo = ({ token }) => {
         end_at,
         duration,
         passing_grade,
-        status: 1,
+        status: status,
         questions_to_share: jumlah_soal,
       };
 
@@ -104,6 +105,10 @@ const StepTwo = ({ token }) => {
         text: "Isi data dengan benar !",
       });
     }
+  };
+
+  const handleChange = (e) => {
+    setStatus(e.target.value);
   };
 
   return (
@@ -333,17 +338,17 @@ const StepTwo = ({ token }) => {
                     id=""
                     className="form-control"
                     value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    onBlur={(e) => {
-                      setStatus(e.target.value);
+                    onChange={(event) => handleChange(event)}
+                    onBlur={(event) => {
+                      handleChange(event);
                       simpleValidator.current.showMessageFor("status");
                     }}
                   >
                     <option value="" selected disabled>
                       -- PILIH STATUS --
                     </option>
-                    <option value={true}> Publish </option>
-                    <option value={false}> Draft </option>
+                    <option value={1}> Publish </option>
+                    <option value={0}> Draft </option>
                   </select>
 
                   {simpleValidator.current.message(
@@ -359,7 +364,7 @@ const StepTwo = ({ token }) => {
                 <div className="col-sm-2"></div>
                 <div className="col-sm-10 text-right">
                   <button
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                     type="submit"
                   >
                     Simpan & Lanjut

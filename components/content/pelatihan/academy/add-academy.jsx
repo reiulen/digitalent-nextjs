@@ -385,6 +385,7 @@ const AddAcademy = ({ token }) => {
                   Status
                 </label>
                 <Select
+                  placeholder="Silahkan Pilih Status"
                   options={optionsStatus}
                   defaultValue={status}
                   onChange={(e) => setStatus(e.value)}

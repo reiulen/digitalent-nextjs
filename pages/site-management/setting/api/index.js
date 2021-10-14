@@ -33,20 +33,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
 
-      await store.dispatch(
-        getAllApi(
-          query.page,
-          query.cari,
-          query.limit,
-          session.user.user.data.token
-        )
-      );
+      await store.dispatch(getAllApi(session.user.user.data.token));
       return {
         props: { session, title: "API - Site Management" },
       };

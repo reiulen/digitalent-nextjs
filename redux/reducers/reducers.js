@@ -192,6 +192,8 @@ import {
   newApiReducer,
   updateApiReducer,
   detailApiReducer,
+  listApiReducer,
+  listFieldReducer,
 } from "./site-management/settings/api.reducers";
 // ============== data reference ===============
 import {
@@ -261,11 +263,24 @@ import {
   newTrainingReducer,
   allTrainingReducer,
   deleteTrainingReducer,
+  updateStatusReducer,
 } from "./pelatihan/training.reducers";
+// =================== review pelatihan ==================
+import {
+  allListReviewReducer,
+  cardReviewReducer,
+  listRevisiReducer,
+  getReviewStep1Reducer,
+  getReviewStep2Reducer,
+  getReviewStep3Reducer,
+  revisiReviewReducer,
+  tolakReviewReducer,
+} from "./pelatihan/review.reducers";
+// =================== rekap pelatihan ==================
+import { allSummaryReducer } from "./pelatihan/summary.reducers";
 //END PELATIHAN
 
 // functional reducer
-
 import {
   trainingStep1Reducer,
   registrationStep2Reducer,
@@ -282,6 +297,15 @@ import {
 } from "./pelatihan/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
+
+
+// BERANDA
+import {
+  allAkademiReducer,
+  temaByAkademiReducer,
+  pelatihanByTemaReducer,
+} from "../reducers/beranda/beranda.reducers"
+//END BERANDA
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -446,6 +470,8 @@ const reducer = combineReducers({
   newPage: newPageReducer,
   detailPage: detailPageReducer,
   updatePage: updatePageReducer,
+  listApi: listApiReducer,
+  listField: listFieldReducer,
   // ============ API =======
   allApi: allApiReducer,
   deleteApi: deleteApiReducer,
@@ -503,6 +529,19 @@ const reducer = combineReducers({
   newTraining: newTrainingReducer,
   deleteTraining: deleteTrainingReducer,
 
+  // ========== review pelatihan ========
+  allListReview: allListReviewReducer,
+  cardReview: cardReviewReducer,
+  listRevisi: listRevisiReducer,
+  getReviewStep1: getReviewStep1Reducer,
+  getReviewStep2: getReviewStep2Reducer,
+  getReviewStep3: getReviewStep3Reducer,
+  revisiReview: revisiReviewReducer,
+  tolakReview: tolakReviewReducer,
+
+  // ========== rekap pelatihan ========
+  allSummary: allSummaryReducer,
+
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,
   commitmentStep3: commitmentStep3Reducer,
@@ -515,7 +554,14 @@ const reducer = combineReducers({
   drowpdownProvinsi: drowpdownProvinsiReducers,
   drowpdownKabupaten: drowpdownKabupatenReducers,
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
+  updateStatus: updateStatusReducer,
   //END PELATIHAN
+
+  //BERANDA
+  allAkademi: allAkademiReducer,
+  temaByAkademi: temaByAkademiReducer,
+  pelatihanByTema:pelatihanByTemaReducer
+  //END BERANDA
 });
 
 export default reducer;

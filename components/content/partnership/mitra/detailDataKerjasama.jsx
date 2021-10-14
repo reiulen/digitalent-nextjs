@@ -632,12 +632,15 @@ const DetailDataKerjasama = ({token}) => {
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue pr-10"
+                                    onChange={e =>
+                                          changeListStatus(e.target.value, items.id)
+                                        }
                                     
                                   >
-                                    <option value="6">Pengajuan-Selesai</option>
                                     <option value="5">
                                       Pengajuan-Pembahasan
                                     </option>
+                                    <option value="6">Pengajuan-Selesai</option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"
@@ -927,7 +930,7 @@ const DetailDataKerjasama = ({token}) => {
                               ) : (
                                     <div className="d-flex align-items-center">
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                        
                                       >
                                         <IconEye
@@ -939,7 +942,7 @@ const DetailDataKerjasama = ({token}) => {
                                           Detail
                                         </div>
                                       </button>
-                                      <button
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                         
                                       >
@@ -948,7 +951,7 @@ const DetailDataKerjasama = ({token}) => {
                                         <div className="text-hover-show-hapus">
                                           Ubah
                                         </div>
-                                      </button>
+                                      </button> */}
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                        

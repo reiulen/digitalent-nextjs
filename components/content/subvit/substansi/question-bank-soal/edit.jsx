@@ -16,6 +16,7 @@ import { UPDATE_SUBTANCE_QUESTION_DETAIL_RESET } from "../../../../../redux/type
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 const EditSoalSubstansi = ({ token }) => {
   const dispatch = useDispatch();
@@ -450,7 +451,7 @@ const EditSoalSubstansi = ({ token }) => {
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="btn btn-light-ghost-rounded-full mr-2"
+                  className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                 >
                   Kembali
                 </button>

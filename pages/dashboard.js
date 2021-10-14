@@ -13,7 +13,17 @@ export async function getServerSideProps(context) {
   if (!session) {
     return {
       redirect: {
-        destination: "/login/admin",
+        destination: "http://dts-dev.majapahit.id/login/admin",
+        permanent: false,
+      },
+    };
+  }
+
+  const data = session.user.user.data;
+  if (data.user.roles[0] === "user") {
+    return {
+      redirect: {
+        destination: "/peserta",
         permanent: false,
       },
     };

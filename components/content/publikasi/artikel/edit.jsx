@@ -37,24 +37,10 @@ const EditArtikel = ({ token }) => {
   });
 
   // const { artikel, error, success } = useSelector(state => state.detailArtikel)
-<<<<<<< HEAD
-  const simpleValidator = useRef(
-    new SimpleReactValidator({
-      locale: "id",
-      messages: {
-        url: "Format url berupa: https://www.example.com",
-      },
-    })
-  );
-  const [, forceUpdate] = useState();
-  // const forceUpdate = React.useReducer(() => ({}))[1]
-  const { artikel } = useSelector(state => state.detailArtikel);
-=======
   const simpleValidator = useRef(new SimpleReactValidator({ locale: 'id' }))
   const [, forceUpdate] = useState();
   // const forceUpdate = React.useReducer(() => ({}))[1]
   const { artikel } = useSelector((state) => state.detailArtikel);
->>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
   const { error, success, loading } = useSelector(
     state => state.updatedArtikel
   );
@@ -90,15 +76,12 @@ const EditArtikel = ({ token }) => {
   useEffect(() => {
     // dispatch(getAllKategori(session.user.user.data.token))
 
-<<<<<<< HEAD
-=======
     editorRef.current = {
       CKEditor: require('@ckeditor/ckeditor5-react').CKEditor, //Added .CKEditor
       ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
       // Base64UploadAdapter: require('@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter')
     }
 
->>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
     setEditorLoaded(true);
     if (success) {
       // setJudulArtikel('')
@@ -120,13 +103,13 @@ const EditArtikel = ({ token }) => {
   const [isi_artikel, setIsiArtikel] = useState(artikel.isi_artikel);
   const [gambar, setGambar] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      artikel.gambar
+    "publikasi/images/" +
+    artikel.gambar
   );
   const [gambarDB, setGambardb] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      artikel.gambar
+    "publikasi/images/" +
+    artikel.gambar
   );
   // const [gambar, setGambar] = useState(artikel.gambar);
   // const [gambarPreview, setGambarPreview] = useState(
@@ -135,8 +118,8 @@ const EditArtikel = ({ token }) => {
   const [iconPlus, setIconPlus] = useState("/assets/icon/Add.svg");
   const [gambarPreview, setGambarPreview] = useState(
     process.env.END_POINT_API_IMAGE_PUBLIKASI +
-      "publikasi/images/" +
-      artikel.gambar
+    "publikasi/images/" +
+    artikel.gambar
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
@@ -159,16 +142,21 @@ const EditArtikel = ({ token }) => {
     // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setGambar(reader.result);
-          setGambarPreview(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-      // console.log (reader.readAsDataURL(e.target.files[0]))
-      setGambarName(e.target.files[0].name);
+      if (e.target.files[0].size > 5000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setGambar(reader.result);
+            setGambarPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+        // console.log (reader.readAsDataURL(e.target.files[0]))
+        setGambarName(e.target.files[0].name);
+      }
     } else {
       // setGambar("")
       // setGambarPreview("/assets/media/default.jpg")
@@ -206,35 +194,35 @@ const EditArtikel = ({ token }) => {
     }
   };
 
-<<<<<<< HEAD
-  const handleTag = data => {
-    if (data.includes(" ")) {
-      setTag([]);
-      alert("tag");
-      setDisableTag(true);
-    } else {
-      setTag(data);
-      setDisableTag(false);
-    }
-
-    console.log(data);
-  };
-=======
   const handleTag = (data) => {
-    for (let i = 0; i < data.length; i++){
-      for (let j = 0; j < data[i].length; j++){
-        if (data[i][j] === " "){
-          setDisableTag (true)
+    for (let i = 0; i < data.length; i++) {
+      for (let j = 0; j < data[i].length; j++) {
+        if (data[i][j] === " ") {
+          setDisableTag(true)
         } else {
-          setDisableTag (false)
+          setDisableTag(false)
         }
       }
     }
-
+    // console.log("Data Tag :", data)
     setTag(data)
-    
   }
->>>>>>> b5aca7e91cee04188eee071ccf3996ff43a03a79
+
+  const keyPressTag = (value) => {
+
+    if (value === '' || value === null) { 
+      value.replace(/\s/g, '')
+    }else{
+      setTag(value)
+    }
+    // if(event.key === 13){
+    //   console.log('enter press here! ')
+    //   setDisableTag(true)
+    // }else{
+    //   setDisableTag(false)
+    // }
+    // setTag(event)
+  }
 
   const onSubmit = e => {
     e.preventDefault();
@@ -711,17 +699,17 @@ const EditArtikel = ({ token }) => {
                               "isi_artikel"
                             )
                           }
-                          // config={
-                          //   {
-                          //     //   ckfinder: {
-                          //     //   // Upload the images to the server using the CKFinder QuickUpload command.
-                          //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
-                          //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
-                          //     // }
-                          //     allowedContent: true
+                        // config={
+                        //   {
+                        //     //   ckfinder: {
+                        //     //   // Upload the images to the server using the CKFinder QuickUpload command.
+                        //     //   // uploadUrl: 'https://example.com/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&responseType=json',
+                        //     //   uploadUrl: process.env.END_POINT_API_PUBLIKASI + `api/artikel/${id}`
+                        //     // }
+                        //     allowedContent: true
 
-                          //   }
-                          // }
+                        //   }
+                        // }
                         />
                       ) : (
                         <p>Tunggu Sebentar</p>
@@ -926,17 +914,21 @@ const EditArtikel = ({ token }) => {
                     <TagsInput
                       value={tag}
                       // onChange={setTag}
-                      onChange={data => handleTag(data)}
+                      onChange={(data) => handleTag(data)}
+                      // onKeyPress={(data) => keyPressTag(data)}
                       name="fruits"
                       placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
                       seprators={["Enter", "Tab"]}
-                      // onBlur={() => simpleValidator.current.showMessageFor('tag')}
+                    // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                     />
-                    {disableTag === true ? (
-                      <p className="text-danger">
-                        Tag tidak bisa terdiri dari 1 character "SPACE"
-                      </p>
-                    ) : null}
+                    {
+                      disableTag === true ?
+                        <p className="text-danger">
+                          Tag tidak bisa terdiri dari 1 character "SPACE"
+                        </p>
+                        :
+                        null
+                    }
                     {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                   </div>
                 </div>
@@ -960,9 +952,8 @@ const EditArtikel = ({ token }) => {
                           onChange={e => handleChangePublish(e)}
                         />
                         <span
-                          className={`sliders round ${
-                            publish ? "text-white" : "pl-2"
-                          }`}
+                          className={`sliders round ${publish ? "text-white" : "pl-2"
+                            }`}
                         ></span>
                       </label>
                     </div>

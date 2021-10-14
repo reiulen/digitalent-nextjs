@@ -23,7 +23,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
@@ -32,7 +32,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         getDetailSubtanceQuestionBanks(query.id, session.user.user.data.token)
       );
       return {
-        props: { session, title: "Clone Bank Soal Tes Subtansi - Subvit" },
+        props: { session, title: "Clone Bank Soal Test Subtansi - Subvit" },
       };
     }
 );

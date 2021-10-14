@@ -1,16 +1,15 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
-// import EditTheme from "../../../components/content/pelatihan/theme/edit-theme";
-import { getDetailTheme } from "../../../redux/actions/pelatihan/theme.actions";
 import { dropdownAkademi } from "../../../redux/actions/pelatihan/function.actions";
+// import AddTheme from "../../../components/content/pelatihan/theme/add-theme";
 
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 
-const EditTheme = dynamic(
-  () => import("../../../components/content/pelatihan/theme/edit-theme"),
+const AddTheme = dynamic(
+  () => import("../../../components/content/pelatihan/theme/add-theme"),
   {
     loading: function loadingNow() {
       return <LoadingSkeleton />;
@@ -19,12 +18,12 @@ const EditTheme = dynamic(
   }
 );
 
-export default function EditThemePage(props) {
+export default function AddThemePage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditTheme token={session.token} />
+        <AddTheme token={session.token} />
       </div>
     </>
   );
@@ -32,24 +31,21 @@ export default function EditThemePage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query, params, req }) => {
+    async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
 
-      await store.dispatch(
-        getDetailTheme(params.id, session.user.user.data.token)
-      );
       await store.dispatch(dropdownAkademi(session.user.user.data.token));
 
       return {
-        props: { session, title: "Edit Theme - Pelatihan" },
+        props: { session, title: "Tambah Tema - Pelatihan" },
       };
     }
 );

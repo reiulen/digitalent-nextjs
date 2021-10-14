@@ -68,6 +68,16 @@ import {
   CLONE_TRAINING_SUCCESS,
   CLONE_TRAINING_FAIL,
   CLEAR_ERRORS,
+  // UPDATE STATUS PUBLISH
+  REQUEST_STATUS_PUBLISH,
+  UPDATE_STATUS_PUBLISH,
+  CLEAR_STATUS_PUBLISH,
+  FAIL_STATUS_PUBLISH,
+  // UPDATE STATUS PELATIHAN
+  REQUEST_STATUS_PELATIHAN,
+  UPDATE_STATUS_PELATIHAN,
+  CLEAR_STATUS_PELATIHAN,
+  FAIL_STATUS_PELATIHAN,
 } from "../../types/pelatihan/training.type";
 
 import axios from "axios";
@@ -599,6 +609,71 @@ export const cloneTraining = (id, token) => async (dispatch) => {
   }
 };
 //END CLONE TRAINING
+
+//UPDATE STATUS PUBLISH
+export const updateStatusPublish = (dataStatus, token) => async (dispatch) => {
+  try {
+    dispatch({
+      type: REQUEST_STATUS_PUBLISH,
+    });
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.post(
+      process.env.END_POINT_API_PELATIHAN +
+        "api/v1/pelatihan/update-status-publish",
+      dataStatus,
+      config
+    );
+
+    dispatch({
+      type: UPDATE_STATUS_PUBLISH,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: FAIL_STATUS_PUBLISH,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//UPDATE STATUS PELATIHAN
+export const updateStatusPelatihan =
+  (dataStatus, token) => async (dispatch) => {
+    try {
+      dispatch({
+        type: REQUEST_STATUS_PELATIHAN,
+      });
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      };
+
+      const { data } = await axios.post(
+        process.env.END_POINT_API_PELATIHAN +
+          "api/v1/pelatihan/update-status-pelatihan",
+        dataStatus,
+        config
+      );
+
+      dispatch({
+        type: UPDATE_STATUS_PELATIHAN,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: FAIL_STATUS_PELATIHAN,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 export const clearErrors = () => async (dispatch) => {
   dispatch({

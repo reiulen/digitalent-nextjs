@@ -36,20 +36,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
+
       await store.dispatch(
         getSingleSertifikat(
           query.nama_pelatihan_id,
-          query.page,
-          query.keyword,
-          query.limit,
-          query.publish,
-          query.startdate,
-          query.enddate,
           session.user.user.data.token
         )
       );

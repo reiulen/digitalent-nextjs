@@ -18,13 +18,13 @@ export async function getServerSideProps(context) {
   if (!session) {
     return {
       redirect: {
-        destination: "/login/admin",
+        destination: "http://dts-dev.majapahit.id/login/admin",
         permanent: false,
       },
     };
   }
 
   return {
-    props: { session, title: "Tambah Bank Soal Tes Substansi - Subvit" },
+    props: { session, title: "Tambah Bank Soal Test Substansi - Subvit" },
   };
 }

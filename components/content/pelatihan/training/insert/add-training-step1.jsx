@@ -21,11 +21,29 @@ const AddTrainingStep1 = ({ propsStep }) => {
   const router = useRouter();
 
   const { trainingData } = useSelector((state) => state.trainingStep1);
+  const { error: dropdownErrorLevelPelatihan, data: dataLevelPelatihan } = useSelector(
+    (state) => state.drowpdownLevelPelatihan
+  );
   const { error: dropdownErrorAkademi, data: dataAkademi } = useSelector(
     (state) => state.drowpdownAkademi
   );
   const { error: dropdownErrorTema, data: dataTema } = useSelector(
     (state) => state.drowpdownTema
+  );
+  const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } = useSelector(
+    (state) => state.drowpdownPenyelenggara
+  );
+  const { error: dropdownErrorMitra, data: dataMitra } = useSelector(
+    (state) => state.drowpdownMitra
+  );
+  const { error: dropdownErrorZonasi, data: dataZonasi } = useSelector(
+    (state) => state.drowpdownZonasi
+  );
+  const { error: dropdownErrorProvinsi, data: dataProvinsi } = useSelector(
+    (state) => state.drowpdownProvinsi
+  );
+  const { error: dropdownErrorKabupaten, data: dataKabupaten } = useSelector(
+    (state) => state.drowpdownKabupaten
   );
 
   const [editorLoaded, setEditorLoaded] = useState(false);
@@ -104,11 +122,13 @@ const AddTrainingStep1 = ({ propsStep }) => {
   const [tuna_daksa, setTunaDaksa] = useState(trainingData.tuna_daksa);
   // const [disabilitas, setDisabilitas] = useState(trainingData.disabilitas);
 
-  const options = [
+  const options = 
+  [
     { value: "1", label: "Chocolate" },
     { value: "2", label: "Strawberry" },
     { value: "3", label: "Vanilla" },
   ];
+
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
 
@@ -116,6 +136,42 @@ const AddTrainingStep1 = ({ propsStep }) => {
   for (let index = 0; index < 20; index++) {
     const val = { value: index + 1, label: index + 1 };
     optionBatch.push(val);
+  }
+
+  const optionsLevelPelatihan = []
+  for (let index = 0; index < dataLevelPelatihan.data.length; index++){
+    let val = { value: dataLevelPelatihan.data[index].id, label: dataLevelPelatihan.data[index].value}
+    optionsLevelPelatihan.push (val)
+  }
+
+  const optionsPenyelenggara = []
+  for (let index = 0; index < dataPenyelenggara.data.length; index++){
+    let val = { value: dataPenyelenggara.data[index].id, label: dataPenyelenggara.data[index].value}
+    optionsPenyelenggara.push (val)
+  }
+
+  const optionsMitra = []
+  for (let index = 0; index < dataMitra.data.length; index++){
+    let val = { value: dataMitra.data[index].id, label: dataMitra.data[index].name}
+    optionsMitra.push (val)
+  }
+
+  const optionsZonasi = []
+  for (let index = 0; index < dataZonasi.data.zonasi.length; index++){
+    let val = { value: dataZonasi.data.zonasi[index].value, label: dataZonasi.data.zonasi[index].label}
+    optionsZonasi.push (val)
+  }
+
+  const optionsProvinsi = []
+  for (let index = 0; index < dataProvinsi.data.length; index++){
+    let val = { value: dataProvinsi.data[index].id, label: dataProvinsi.data[index].value}
+    optionsProvinsi.push (val)
+  }
+
+  const optionsKabupaten = []
+  for (let index = 0; index < dataKabupaten.data.length; index++){
+    let val = { value: dataKabupaten.data[index].id, label: dataKabupaten.data[index].value}
+    optionsKabupaten.push (val)
   }
 
   useEffect(() => {
@@ -369,18 +425,20 @@ const AddTrainingStep1 = ({ propsStep }) => {
             <label className="col-form-label font-weight-bold col-sm-2">
               Ketentuan Peserta
             </label>
-            <div className="col-sm-10 my-auto">
-              <div className="form-check form-check-inline ">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  checked={ketentuan}
-                  value={ketentuan}
-                  onClick={() => setKetentuan(!ketentuan)}
-                  onBlur={() =>
-                    simpleValidator.current.showMessageFor("ketentuan")
-                  }
-                />
+            <div className="col-sm-10 ">
+              <div className="d-flex flex-row  align-items-start pt-2">
+                <div className="form-check form-check-inline pt-1">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    checked={ketentuan}
+                    value={ketentuan}
+                    onClick={() => setKetentuan(!ketentuan)}
+                    onBlur={() =>
+                      simpleValidator.current.showMessageFor("ketentuan")
+                    }
+                  />
+                </div>
                 <label className="form-check-label">
                   Peserta dapat mengikuti pelatihan <br /> ini ditahun yang sama
                   pada Akademi ini
@@ -421,15 +479,17 @@ const AddTrainingStep1 = ({ propsStep }) => {
             <label className="col-form-label font-weight-bold">
               Level Pelatihan
             </label>
-            <Select
-              placeholder="Silahkan Pilih Level Pelatihan"
-              options={options}
-              defaultValue={level}
-              onChange={(e) => setLevel({ value: e.value, label: e.label })}
-              onBlur={() =>
-                simpleValidator.current.showMessageFor("level pelatihan")
-              }
-            />
+            <div className="position-relative" style={{ zIndex: "6" }}>
+              <Select
+                placeholder="Silahkan Pilih Level Pelatihan"
+                options={optionsLevelPelatihan}
+                defaultValue={level}
+                onChange={(e) => setLevel({ value: e.value, label: e.label })}
+                onBlur={() =>
+                  simpleValidator.current.showMessageFor("level pelatihan")
+                }
+              />
+            </div>
             {simpleValidator.current.message(
               "level pelatihan",
               level.value,
@@ -440,13 +500,15 @@ const AddTrainingStep1 = ({ propsStep }) => {
 
           <div className="form-group mb-4">
             <label className="col-form-label font-weight-bold">Akademi</label>
-            <Select
-              placeholder="Silahkan Pilih Akademi"
-              options={optionsAkademi}
-              defaultValue={academy}
-              onChange={(e) => setAcademy({ value: e.value, label: e.label })}
-              onBlur={() => simpleValidator.current.showMessageFor("akademi")}
-            />
+            <div className="position-relative" style={{ zIndex: "5" }}>
+              <Select
+                placeholder="Silahkan Pilih Akademi"
+                options={optionsAkademi}
+                defaultValue={academy}
+                onChange={(e) => setAcademy({ value: e.value, label: e.label })}
+                onBlur={() => simpleValidator.current.showMessageFor("akademi")}
+              />
+            </div>
             {simpleValidator.current.message(
               "akademi",
               academy.value,
@@ -459,13 +521,15 @@ const AddTrainingStep1 = ({ propsStep }) => {
 
           <div className="form-group mb-4">
             <label className="col-form-label font-weight-bold">Tema</label>
-            <Select
-              placeholder="Silahkan Pilih Tema"
-              options={optionsTema}
-              defaultValue={theme}
-              onChange={(e) => setTheme({ value: e.value, label: e.label })}
-              onBlur={() => simpleValidator.current.showMessageFor("tema")}
-            />
+            <div className="position-relative" style={{ zIndex: "4" }}>
+              <Select
+                placeholder="Silahkan Pilih Tema"
+                options={optionsTema}
+                defaultValue={theme}
+                onChange={(e) => setTheme({ value: e.value, label: e.label })}
+                onBlur={() => simpleValidator.current.showMessageFor("tema")}
+              />
+            </div>
             {simpleValidator.current.message("tema", theme.value, "required", {
               className: "text-danger",
             })}
@@ -615,7 +679,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
             </label>
             <Select
               placeholder="Silahkan Pilih Penyelenggara"
-              options={options}
+              options={optionsPenyelenggara}
               defaultValue={organizer}
               onChange={(e) => setOrganizer({ value: e.value, label: e.label })}
               onBlur={() =>
@@ -638,7 +702,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
             </label>
             <Select
               placeholder="Silahkan Pilih Mitra"
-              options={options}
+              options={optionsMitra}
               defaultValue={mitra}
               onChange={(e) => setMitra({ value: e.value, label: e.label })}
               onBlur={() => simpleValidator.current.showMessageFor("mitra")}
@@ -655,22 +719,25 @@ const AddTrainingStep1 = ({ propsStep }) => {
               <label className="col-form-label font-weight-bold">
                 Tanggal Mulai
               </label>
-              <DatePicker
-                wrapperClassName="datepicker"
-                className="form-control w-100 d-block"
-                name="start_date"
-                selected={startDateRegistration}
-                onChange={(date) => setStartDateRegistration(date)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("tanggal mulai")
-                }
-                selectsStart
-                startDate={startDateRegistration}
-                endDate={endDateRegistration}
-                dateFormat="dd/MM/yyyy"
-                autoComplete="off"
-                placeholderText="Silahkan Pilih Tanggal Dari"
-              />
+              <div className="position-relative">
+                <DatePicker
+                  wrapperClassName="datepicker"
+                  className="form-control w-100 d-block"
+                  name="start_date"
+                  selected={startDateRegistration}
+                  onChange={(date) => setStartDateRegistration(date)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("tanggal mulai")
+                  }
+                  selectsStart
+                  startDate={startDateRegistration}
+                  endDate={endDateRegistration}
+                  dateFormat="dd/MM/yyyy"
+                  autoComplete="off"
+                  placeholderText="Silahkan Pilih Tanggal Dari"
+                />
+                <i className="ri-calendar-line right-center-absolute pr-3"></i>
+              </div>
               {simpleValidator.current.message(
                 "tanggal mulai",
                 startDateRegistration,
@@ -682,22 +749,25 @@ const AddTrainingStep1 = ({ propsStep }) => {
               <label className="col-form-label font-weight-bold">
                 Tanggal Sampai
               </label>
-              <DatePicker
-                wrapperClassName="datepicker"
-                className="form-control w-100"
-                selected={endDateRegistration}
-                onChange={(date) => setEndDateRegistration(date)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("tanggal sampai")
-                }
-                selectsEnd
-                startDate={startDateRegistration}
-                endDate={endDateRegistration}
-                minDate={startDateRegistration}
-                dateFormat="dd/MM/yyyy"
-                autoComplete="off"
-                placeholderText="Silahkan Pilih Tanggal Sampai"
-              />
+              <div className="position-relative">
+                <DatePicker
+                  wrapperClassName="datepicker"
+                  className="form-control w-100"
+                  selected={endDateRegistration}
+                  onChange={(date) => setEndDateRegistration(date)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("tanggal sampai")
+                  }
+                  selectsEnd
+                  startDate={startDateRegistration}
+                  endDate={endDateRegistration}
+                  minDate={startDateRegistration}
+                  dateFormat="dd/MM/yyyy"
+                  autoComplete="off"
+                  placeholderText="Silahkan Pilih Tanggal Sampai"
+                />
+                <i className="ri-calendar-line right-center-absolute pr-3"></i>
+              </div>
               {simpleValidator.current.message(
                 "tanggal sampai",
                 endDateRegistration,
@@ -714,22 +784,25 @@ const AddTrainingStep1 = ({ propsStep }) => {
               <label className="col-form-label font-weight-bold">
                 Tanggal Mulai
               </label>
-              <DatePicker
-                wrapperClassName="datepicker"
-                className="form-control w-100 d-block"
-                name="start_date"
-                selected={startDateTraining}
-                onChange={(date) => setStartDateTraining(date)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("tanggal mulai")
-                }
-                selectsStart
-                startDate={startDateTraining}
-                endDate={endDateTraining}
-                dateFormat="dd/MM/yyyy"
-                autoComplete="off"
-                placeholderText="Silahkan Pilih Tanggal Dari"
-              />
+              <div className="position-relative">
+                <DatePicker
+                  wrapperClassName="datepicker"
+                  className="form-control w-100 d-block"
+                  name="start_date"
+                  selected={startDateTraining}
+                  onChange={(date) => setStartDateTraining(date)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("tanggal mulai")
+                  }
+                  selectsStart
+                  startDate={startDateTraining}
+                  endDate={endDateTraining}
+                  dateFormat="dd/MM/yyyy"
+                  autoComplete="off"
+                  placeholderText="Silahkan Pilih Tanggal Dari"
+                />
+                <i className="ri-calendar-line right-center-absolute pr-3"></i>
+              </div>
               {simpleValidator.current.message(
                 "tanggal mulai",
                 startDateTraining,
@@ -741,22 +814,25 @@ const AddTrainingStep1 = ({ propsStep }) => {
               <label className="col-form-label font-weight-bold">
                 Tanggal Sampai
               </label>
-              <DatePicker
-                wrapperClassName="datepicker"
-                className="form-control w-100"
-                selected={endDateTraining}
-                onChange={(date) => setEndDateTraining(date)}
-                onBlur={() =>
-                  simpleValidator.current.showMessageFor("tanggal sampai")
-                }
-                selectsEnd
-                startDate={startDateTraining}
-                endDate={endDateTraining}
-                minDate={startDateTraining}
-                dateFormat="dd/MM/yyyy"
-                autoComplete="off"
-                placeholderText="Silahkan Pilih Tanggal Sampai"
-              />
+              <div className="position-relative">
+                <DatePicker
+                  wrapperClassName="datepicker"
+                  className="form-control w-100"
+                  selected={endDateTraining}
+                  onChange={(date) => setEndDateTraining(date)}
+                  onBlur={() =>
+                    simpleValidator.current.showMessageFor("tanggal sampai")
+                  }
+                  selectsEnd
+                  startDate={startDateTraining}
+                  endDate={endDateTraining}
+                  minDate={startDateTraining}
+                  dateFormat="dd/MM/yyyy"
+                  autoComplete="off"
+                  placeholderText="Silahkan Pilih Tanggal Sampai"
+                />
+                <i className="ri-calendar-line right-center-absolute pr-3"></i>
+              </div>
               {simpleValidator.current.message(
                 "tanggal sampai",
                 endDateTraining,
@@ -1050,7 +1126,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
               <label className="col-form-label font-weight-bold">Zonasi</label>
               <Select
                 placeholder="Silahkan Pilih Level Zonasi"
-                options={options}
+                options={optionsZonasi}
                 defaultValue={zonasi}
                 onChange={(e) => setZonasi({ value: e.value, label: e.label })}
                 onBlur={() => simpleValidator.current.showMessageFor("zonasi")}
@@ -1166,7 +1242,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
               </label>
               <Select
                 placeholder="Silahkan Pilih Provinsi"
-                options={options}
+                options={optionsProvinsi}
                 defaultValue={province}
                 onChange={(e) =>
                   setProvince({ value: e.value, label: e.label })
@@ -1190,7 +1266,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
               </label>
               <Select
                 placeholder="Silahkan Pilih Kota / Kabupaten"
-                options={options}
+                options={optionsKabupaten}
                 defaultValue={city}
                 onChange={(e) => setCity({ value: e.value, label: e.label })}
                 onBlur={() =>
@@ -1265,7 +1341,7 @@ const AddTrainingStep1 = ({ propsStep }) => {
               <button
                 className="btn btn-light-ghost-rounded-full mr-2"
                 type="button"
-                onClick={() => router.back()}
+                onClick={() => router.push("/pelatihan/pelatihan")}
               >
                 Batal
               </button>

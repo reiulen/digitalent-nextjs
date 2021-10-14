@@ -60,9 +60,7 @@ const RegisterMitra = () => {
       notify(allAuthentication.errorRegister);
     } else if (allAuthentication.status === "success"){
       // jika sukses
-      Swal.fire("Berhasil", "Email Password Reset berhasil dikirim ulang", "success").then(() => {
-        router.push("/partnership/user/auth/forgotPassword")
-      });
+      Swal.fire("Berhasil", "Link reset password telah dikirm, silahkan cek email anda", "success")
     }else{
       ""
     }

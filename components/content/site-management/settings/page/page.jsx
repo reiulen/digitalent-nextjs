@@ -12,7 +12,10 @@ import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
 import {
   deletePage,
-  getAllPage
+  getAllPage,
+  setPage,
+  searchCooporation,
+  limitCooporation,
 } from "../../../../../redux/actions/site-management/settings/page.actions";
 
 import { DELETE_PAGE_RESET } from "../../../../../redux/types/site-management/settings/page.type";
@@ -21,38 +24,24 @@ const Table = ({ token }) => {
   let dispatch = useDispatch();
   const router = useRouter();
 
-  
-
-  const {
-    loading: allLoading,
-    error,
-    pages,
-  } = useSelector((state) => state.allPage);
-
-
+  const allPage = useSelector((state) => state.allPage);
   const {
     loading: deleteLoading,
     error: deleteError,
     isDeleted,
   } = useSelector((state) => state.deletePage);
 
-  const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(null);
-
-  let loading = false;
-  let { page = 1, cari, success } = router.query;
-  if (allLoading) {
-    loading = allLoading;
-  }
-  page = Number(page);
-
-  const onNewReset = () => {
-    router.replace("site-management/setting/page", undefined, {
-      shallow: true,
-    });
+  const [valueSearch, setValueSearch] = useState("");
+  const handleChangeValueSearch = (value) => {
+    setValueSearch(value);
   };
 
-  const handleDelete = (id) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(searchCooporation(valueSearch));
+  };
+
+  const handleDelete = (id, token) => {
     Swal.fire({
       title: "Apakah anda yakin menghapus data ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -69,29 +58,24 @@ const Table = ({ token }) => {
     });
   };
 
-  const handleChangeLimit = (limit,token) => {
-    dispatch(getAllPage(page,cari,limit,token))
-  }
+  useEffect(() => {
+    dispatch(getAllPage(token));
+  }, [dispatch, allPage.cari, allPage.page,allPage.limit, token]);
 
   useEffect(() => {
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            dispatch(getAllPage(page,cari,limit,token))
+            dispatch(getAllPage(token));
           }
         }
       );
-      dispatch({
-        type: DELETE_PAGE_RESET,
-      });
     }
-  }, [limit, isDeleted, dispatch, cari,page,token]);
-
-
-  const handleSearch = () => {
-    dispatch(getAllPage(page,search,5,token))
-  };
+    dispatch({
+      type: DELETE_PAGE_RESET,
+    });
+  }, [isDeleted, dispatch, token]);
 
   return (
     <PageWrapper>
@@ -117,6 +101,7 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
+                  <form onSubmit={handleSubmit}>
                     <div className="row w-100">
                       <div className="col-12 col-sm-6">
                         <div className="position-relative overflow-hidden w-100">
@@ -129,7 +114,9 @@ const Table = ({ token }) => {
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) =>
+                              handleChangeValueSearch(e.target.value)
+                            }
                           />
                           <button
                             type="submit"
@@ -138,21 +125,21 @@ const Table = ({ token }) => {
                               borderTopLeftRadius: "0",
                               borderBottomLeftRadius: "0",
                             }}
-                            onClick={handleSearch}
                           >
                             Cari
                           </button>
                         </div>
                       </div>
                     </div>
+                  </form>
                 </div>
               </div>
             </div>
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <LoadingTable loading={loading} />
-
-                {loading === false ? (
+                {allPage.status === "process" ? (
+                  <LoadingTable />
+                ) : (
                   <table className="table table-separate table-head-custom table-checkable">
                     <thead style={{ background: "#F3F6F9" }}>
                       <tr>
@@ -164,21 +151,21 @@ const Table = ({ token }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {!pages || (pages && pages.artikel.length === 0) ? (
+                      {allPage.data.setting_page.length === 0 ? (
                         <tr>
                           <td colSpan="5" className="text-center">
                             <h4>Data tidak ditemukan</h4>
                           </td>
                         </tr>
                       ) : (
-                        pages &&
-                        pages.artikel.map((items, i) => {
+                        allPage.data.setting_page.map((items, index) => {
                           return (
-                            <tr key={i}>
+                            <tr key={index}>
                               <td className="align-middle text-left">
-                                {limit === null
-                                  ? i + 1 * (page * 5) - (5 - 1)
-                                  : i + 1 * (page * limit) - (limit - 1)}
+                                {allPage.page === 1
+                                  ? index + 1
+                                  : (allPage.page - 1) * allPage.limit +
+                                    (index + 1)}
                               </td>
                               <td className="align-middle text-left">
                                 {items.name}
@@ -196,31 +183,31 @@ const Table = ({ token }) => {
                               </td>
                               <td className="align-middle text-left">
                                 <div className="d-flex align-items-center">
-                                  <Link href={`/site-management/setting/ubah-page/${items.id}`}>
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                  <Link
+                                    href={`/site-management/setting/ubah-page/${items.id}`}
                                   >
-                                    <IconPencil width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Ubah
-                                    </div>
-                                  </a>
+                                    <a className="btn btn-link-action bg-blue-secondary position-relative btn-delete">
+                                      <IconPencil width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Ubah
+                                      </div>
+                                    </a>
                                   </Link>
-                                  <Link href={`/site-management/setting/preview-page/${items.id}`}>
-                                  <a
-                                    className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
+                                  <Link
+                                    href={`/site-management/setting/preview-page/${items.id}`}
                                   >
-                                    <IconEye width="16" height="16" />
-                                    <div className="text-hover-show-hapus">
-                                      Preview
-                                    </div>
-                                  </a>
+                                    <a className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete">
+                                      <IconEye width="16" height="16" />
+                                      <div className="text-hover-show-hapus">
+                                        Preview
+                                      </div>
+                                    </a>
                                   </Link>
 
                                   <button
                                     className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                     onClick={() =>
-                                      handleDelete(items.id)
+                                      handleDelete(items.id, token)
                                     }
                                   >
                                     <IconDelete width="16" height="16" />
@@ -236,22 +223,18 @@ const Table = ({ token }) => {
                       )}
                     </tbody>
                   </table>
-                ) : (
-                  ""
                 )}
               </div>
 
               <div className="row">
                 <div className="table-pagination paginate-cs">
-                  {pages && pages.perPage < pages.total && (
                   <div className="table-pagination">
                     <Pagination
-                      activePage={page}
-                      itemsCountPerPage={pages.perPage}
-                      totalItemsCount={pages.total}
+                      activePage={allPage.page}
+                      itemsCountPerPage={allPage.data.perPage}
+                      totalItemsCount={allPage.data.total}
                       pageRangeDisplayed={3}
-                      onChange={(page) => dispatch(getAllPage(page))}
-
+                      onChange={(page) => dispatch(setPage(page))}
                       nextPageText={">"}
                       prevPageText={"<"}
                       firstPageText={"<<"}
@@ -260,7 +243,6 @@ const Table = ({ token }) => {
                       linkClass="page-link"
                     />
                   </div>
-                )}
                 </div>
 
                 <div className="table-total ml-auto">
@@ -277,7 +259,7 @@ const Table = ({ token }) => {
                           color: "#9E9E9E",
                         }}
                         onChange={(e) =>
-                          handleChangeLimit(e.target.value,token)
+                          dispatch(limitCooporation(e.target.value,token))
                         }
                       >
                         <option value="5">5</option>
@@ -292,7 +274,8 @@ const Table = ({ token }) => {
                         className="align-middle mt-3"
                         style={{ color: "#B5B5C3", whiteSpace: "nowrap" }}
                       >
-                        Total Data 9 List Data
+                        Total Data {allPage.data &&
+                          allPage.data.total} List Data
                       </p>
                     </div>
                   </div>

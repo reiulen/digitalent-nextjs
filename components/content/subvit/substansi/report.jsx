@@ -11,6 +11,7 @@ import LoadingTable from "../../../LoadingTable";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
+import styles from "../trivia/edit/step.module.css";
 
 import {
   getAllSubtanceQuestionBanks,
@@ -239,7 +240,7 @@ const ListSubstansi = ({ token }) => {
           <div className="card-header border-0 align-items-center row">
             <div className="col-lg-10 col-xl-10">
               <h3 className="card-title font-weight-bolder text-dark">
-                Report Tes Substansi{" "}
+                Report Test Substansi{" "}
                 {publishValue === null || ""
                   ? ""
                   : `- ${
@@ -278,7 +279,7 @@ const ListSubstansi = ({ token }) => {
                   </div>
                 </div>
                 <div className="col-md-1"></div>
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <button
                     className="btn border d-flex align-items-center justify-content-between mt-2 btn-block"
                     style={{
@@ -295,9 +296,9 @@ const ListSubstansi = ({ token }) => {
                   </button>
                 </div>
 
-                <div className="col-md-2">
+                <div className="col-md-3">
                   <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
+                    className={`${styles.btnResponsive} btn w-200 btn-rounded-full bg-blue-secondary text-center text-white mt-2`}
                     type="button"
                     onClick={handleExportReport}
                   >

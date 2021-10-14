@@ -202,7 +202,7 @@ export const viewGaleriReducer = (state = {}, action) => {
         case VIEW_GALERI_SUCCESS:
             return {
                 loading: false,
-                isViewed: action.payload,
+                isViewed: action.payload.data,
                 success: true
             }
 

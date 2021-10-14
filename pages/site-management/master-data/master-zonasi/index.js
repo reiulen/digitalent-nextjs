@@ -4,6 +4,8 @@ import LoadingPage from "../../../../components/LoadingPage";
 import { wrapper } from "../../../../redux/store";
 import { getSession } from "next-auth/client";
 
+import { getAllZonasi } from "../../../../redux/actions/site-management/zonasi.actions";
+
 const ListRole = dynamic(
   () =>
     import(
@@ -49,6 +51,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       //     session.user.user.data.token
       //   )
       // );
+
+      await store.dispatch(getAllZonasi(session.user.user.data.token));
 
       return {
         props: { session, title: "Master Zonasi - Site Management" },
