@@ -164,7 +164,7 @@ const DetailDokumenKerjasama = ({ token }) => {
     }
   };
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -241,10 +241,12 @@ const DetailDokumenKerjasama = ({ token }) => {
                   <div className="circle-progress active-circle">
                     <span
                       className="title-progress"
-                      style={{ display: "block" }}
                     >
                       Submit Kerjasama
                     </span>
+
+                   
+
                   </div>
                 </div>
               </div>
