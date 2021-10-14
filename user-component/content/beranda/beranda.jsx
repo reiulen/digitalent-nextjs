@@ -6,25 +6,23 @@ import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 
 import { 
-    Nav, 
-    Button,
     Card,
     Carousel,
     Badge
 } from "react-bootstrap";
 
-import Slider from "react-slick";
-import CarouselMulti from "react-multi-carousel";
+// import Slider from "react-slick";
+// import CarouselMulti from "react-multi-carousel";
 
 import ImagetronCarousel from "../../components/ImagetronCarousel";
-import AkademiCarousel from "../../components/AkademiCarousel";
+// import AkademiCarousel from "../../components/AkademiCarousel";
 import Footer from "../../../components/templates/footer.component"
 import BerandaWrapper from "../../../components/wrapper/beranda.wrapper";
 
 import "../../../styles/beranda.module.css"
-import "react-multi-carousel/lib/styles.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import "react-multi-carousel/lib/styles.css";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 
 const Navigationbar = dynamic(() => import("../../../components/templates/navbar.component"), {
     ssr: false,
@@ -48,6 +46,9 @@ const Beranda = () => {
     const [show,setShow] = useState(false)
     const [showDetail, setShowDetail] = useState(false)
     const [akademiItem, setAkademiItem] = useState (null)
+    const [trainingItem, setTrainingItem] = useState (null)
+    const [slideAkademiToShow, setSlideAkademiToShow] = useState(4)
+    const [slideTrainingToShow, setSlideTrainingToShow] = useState(3)
 
     useEffect(() => {
         handleIndexShow ()
@@ -60,11 +61,24 @@ const Beranda = () => {
         let arr = []
 
         if (akademi.length !== 0) {
-            for (let i = 0; i < akademi.length; i+= 3){
-                arr.push (akademi.slice (i, i + 3))
+            for (let i = 0; i < akademi.length; i+= slideAkademiToShow){
+                arr.push (akademi.slice (i, i + slideAkademiToShow))
             }
 
             setAkademiItem(arr)
+        }
+        // console.log (arr)
+    }
+
+    const handleTrainingCarousel = () => {
+        let arr = []
+
+        if (training.length !== 0) {
+            for (let i = 0; i < training.length; i+= slideTrainingToShow){
+                arr.push (training.slice (i, i + slideTrainingToShow))
+            }
+
+            setTrainingItem(arr)
         }
         // console.log (arr)
     }
@@ -131,7 +145,7 @@ const Beranda = () => {
     return (
         <BerandaWrapper title= "Digitalent">
             <div className="bg-white">
-                {/* {
+                {
                     console.log (akademi)
                 }
 
@@ -149,50 +163,107 @@ const Beranda = () => {
 
                 {
                     console.log (showDetail)
-                } */}
+                }
 
                 <Navigationbar />
 
                 <ImagetronCarousel />
 
                 {/* Akademi */}
-                <div className="mb-3">
-                <Carousel
-                    indicators={false}
-                >
-                    <Carousel.Item>
-                        <div className="row d-flex justify-content-around"> 
-                            <div className="bg-secondary">
-                                Item1
-                            </div>
-                            <div className="bg-secondary">
-                                Item2
-                            </div>
-                            <div className="bg-secondary">
-                                Item3
-                            </div>
+                {
+                    akademiItem ? 
+                        <div className="my-5">
+                            <Carousel
+                                indicators={false}
+                            >
+                                {
+                                    akademiItem.map ((el, i) => {
+                                        return (
+                                            <Carousel.Item key={i}>
+                                                <div className="row d-flex justify-content-around mx-5 px-5">
+                                                    {
+                                                        el.map ((element, index) => {
+                                                            return (
+                                                                <div key={i} className="row bg-secondary text-white rounded d-flex align-content-center" style={{height: "8vh"}}>
+                                                                    <div className="col-6 text-center">
+                                                                        <h1 className="font-weight-bolder">
+                                                                            {element.slug}
+                                                                        </h1>
+                                                                    </div>
+                                                                    <div className="col-6">
+                                                                        {element.name}
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                                
+                                            </Carousel.Item>
+                                        )
+                                    })
+                                }
+                            </Carousel>
                         </div>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                        <div className="row d-flex justify-content-around"> 
-                            <div className="bg-secondary">
-                                Item4
-                            </div>
-                            <div className="bg-secondary">
-                                Item5
-                            </div>
-                            <div className="bg-secondary">
-                                Item6
-                            </div>
-                        </div>
-                    </Carousel.Item>
-                </Carousel>
-                </div>
+                    :
+                        null
+                }
+                
                     
-                {/* Tema-1 */}
-                <div className="my-5">
-                    
-                </div>
+                {/* Tema */}
+                {
+                    tema && pelatihan && trainingItem ?
+                        
+                        tema.map ((el, i) => {
+                            return (
+                                <div key={i} > 
+                                    <div className="my-5 mx-5 row d-flex justify-content-between">
+                                        <div>
+                                            <h1 className="font-weight-bolder">
+                                                {el.Name}
+                                            </h1>
+                                        </div>
+                                        <div className="text-primary">
+                                            <Link href="#">
+                                                Lihat Semua
+                                            </Link>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <Carousel
+                                            indicators={false}
+                                        >
+                                            {
+                                                trainingItem.map ((elemen, index) => {
+                                                    return (
+                                                        <Carousel.Item key={i}>
+                                                            <Card style={{ width: '18rem' }}>
+                                                                <Card.Img variant="top" src="holder.js/100px180" />
+                                                                <Card.Body>
+                                                                    <Card.Title>Card Title</Card.Title>
+                                                                    <Card.Text>
+                                                                        Some quick example text to build on the card title and make up the bulk of
+                                                                        the card's content.
+                                                                    </Card.Text>
+                                                                    <Button variant="primary">Go somewhere</Button>
+                                                                </Card.Body>
+                                                            </Card>
+                                                        </Carousel.Item>
+                                                    )
+                                                })
+                                            }
+
+                                        </Carousel>
+                                    </div>
+                                </div>
+                                
+                            )
+                        })
+                        
+                       
+                    :
+                        null
+                }
 
                 <div className="col-12 text-center my-5">
                     <button className="btn btn-outline-primary rounded-pill ">
