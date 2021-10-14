@@ -17,10 +17,13 @@ import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
+import FormSubmit from './submitKerjasama'
 
 const Tambah = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const {formSubmit} = router.query
+  console.log("formSubmit",formSubmit)
   const allMK = useSelector((state) => state.allMK);
   // state form data 1
   const [institution_name, setInstitution_name] = useState("");
@@ -109,8 +112,13 @@ const Tambah = ({ token }) => {
 
           sessionStorage.setItem("dataBefore", JSON.stringify(allDataPart));
 
+          // router.push({
+          //   pathname: "/partnership/kerjasama/submit",
+          //   query:{formSubmit:true}
+          // });
           router.push({
-            pathname: "/partnership/kerjasama/submit",
+            pathname: "/partnership/kerjasama/tambah",
+            query:{formSubmit:true}
           });
         }
       });
@@ -160,8 +168,10 @@ const Tambah = ({ token }) => {
     cooperationC_id,
     token,
   ]);
+
   return (
     <PageWrapper>
+      {!formSubmit ?
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <ToastContainer
           position="bottom-right"
@@ -301,11 +311,7 @@ const Tambah = ({ token }) => {
                         placeholder="Masukkan Lama Kerjasama"
                         onChange={(e) => onChangePeriod(e)}
                       />
-                      {error.period ? (
-                      <p className="error-text">{error.period}</p>
-                    ) : (
-                      ""
-                    )}
+                      
                       <div className="input-group-append">
                         <button
                           className="btn btn-secondary"
@@ -320,6 +326,11 @@ const Tambah = ({ token }) => {
                   </div>
                 </div>
               </div>
+              {error.period ? (
+                      <p className="error-text mb-4 mt-0">{error.period}</p>
+                    ) : (
+                      ""
+                    )}
 
               <div className="fv-row mb-6">
                 <label className="required fw-bold fs-6 mb-2">
@@ -425,6 +436,7 @@ const Tambah = ({ token }) => {
           </div>
         </div>
       </div>
+       : <FormSubmit token={token} /> }
     </PageWrapper>
   );
 };

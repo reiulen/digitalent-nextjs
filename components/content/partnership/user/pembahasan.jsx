@@ -127,8 +127,8 @@ function Pembahasan({token}) {
                 <div className="form-group row">
                   <div className="col-sm-12 d-flex justify-content-end">
                     <Link href="/partnership/user/tanda-tangan-digital" passHref>
-                      <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
-                        Input Tanda Tangan Digital
+                      <a className="btn bg-blue-secondary btn-rounded-full text-white mr-5">
+                        Tanda Tangan Digital
                       </a>
                     </Link>
 
@@ -142,7 +142,7 @@ function Pembahasan({token}) {
                         }}
                         passHref
                       >
-                        <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                        <a className="btn btn-rounded-full bg-blue-primary text-white">
                           Submit Dokumen Kerjasama
                         </a>
                       </Link>

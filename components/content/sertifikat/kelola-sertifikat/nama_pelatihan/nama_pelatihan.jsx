@@ -15,23 +15,25 @@ import IconArrow from "../../../../assets/icon/Arrow";
 import IconClose from "../../../../assets/icon/Close";
 import IconFilter from "../../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
+import { clearErrors } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 
 export default function NamaPelatihanID({ token }) {
   const router = useRouter();
   const { query } = router;
-
+  const { loading, error, certificate } = useSelector(
+    state => state.detailCertificates
+  );
   // #Pagination
   const [limit, setLimit] = useState(null);
   const [search, setSearch] = useState("");
   // #Pagination
 
-  // #REDUX STATE
-  const { loading, error, certificate } = useSelector(
-    state => state.detailCertificates
-  );
+  if (!certificate) {
+    router.replace(`/sertifikat/kelola-sertifikat`);
+  }
+
   const [status, setStatus] = useState(null);
 
-  // #REDUX STATE
   let { page = 1, keyword, success } = router.query;
 
   const handleLimit = val => {
@@ -78,8 +80,20 @@ export default function NamaPelatihanID({ token }) {
     );
   };
 
-  console.log(certificate);
-  const handleResetError = () => {};
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  };
+
+  const onNewReset = () => {
+    router.replace(
+      `/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}?id=${query.id}`,
+      null,
+      { shallow: true }
+    );
+  };
+
   return (
     <PageWrapper>
       {/* error START */}
@@ -109,12 +123,71 @@ export default function NamaPelatihanID({ token }) {
       ) : (
         ""
       )}
+
+      {router.query.update ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            {router.query.message}
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {router.query.created ? (
+        <div
+          className="alert alert-custom alert-light-success fade show mb-5"
+          role="alert"
+          style={{ backgroundColor: "#C9F7F5" }}
+        >
+          <div className="alert-icon">
+            <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
+          </div>
+          <div className="alert-text" style={{ color: "#1BC5BD" }}>
+            {router.query.message}
+          </div>
+          <div className="alert-close">
+            <button
+              type="button"
+              className="close"
+              data-dismiss="alert"
+              aria-label="Close"
+              onClick={() => onNewReset()}
+            >
+              <span aria-hidden="true">
+                <i className="ki ki-close"></i>
+              </span>
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
       {/* error END */}
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title font-weight-bolder text-dark">
-              {certificate.theme}
+              {certificate?.theme}
             </h3>
           </div>
 
@@ -339,7 +412,7 @@ export default function NamaPelatihanID({ token }) {
                                         </a>
                                       </Link>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&status=edit&theme_id=${certificate.theme.id}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme.id}&status=edit`}
                                         passHref
                                       >
                                         <a
