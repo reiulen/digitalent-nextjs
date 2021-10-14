@@ -76,7 +76,7 @@ export const cardReviewReducer = (state = { review: {} }, action) => {
   }
 };
 
-export const listRevisiReducer = (state = { revisi: {} }, action) => {
+export const listRevisiReducer = (state = { revisi: [] }, action) => {
   switch (action.type) {
     case GET_LIST_REVISI_SUCCESS:
       return {
