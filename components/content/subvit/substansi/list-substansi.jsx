@@ -336,7 +336,7 @@ const ListSubstansi = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 <b>
-                                  {subtance !== null
+                                  {subtance.academy !== null
                                     ? subtance.academy.name
                                     : "-"}
                                 </b>
