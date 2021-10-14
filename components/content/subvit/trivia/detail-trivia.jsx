@@ -223,7 +223,7 @@ const DetailTrivia = ({ token }) => {
                 className="btn btn-primary-rounded-full px-7 font-weight-bold btn-block"
                 onClick={handleModal}
               >
-                <i className="ri-pencil-fill"></i>
+                <i className="ri-add-fill"></i>
                 Tambah Soal
               </a>
             </div>

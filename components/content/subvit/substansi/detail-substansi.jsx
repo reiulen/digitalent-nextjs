@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteSubtanceQuestionDetail,
   clearErrors,
+  getAllSubtanceQuestionDetail,
 } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
 const DetailSubstansi = ({ token }) => {
@@ -46,7 +47,8 @@ const DetailSubstansi = ({ token }) => {
         }
       );
     }
-  }, [isDeleted]);
+    dispatch(getAllSubtanceQuestionDetail(id));
+  }, [isDeleted, dispatch, id]);
 
   const [status, setStatus] = useState("");
   const [kategori, setKategori] = useState(null);
@@ -133,6 +135,11 @@ const DetailSubstansi = ({ token }) => {
   const handleReset = () => {
     // console.log("work");
     setShowModal(false);
+    setStatus("");
+    setKategori("");
+    setPelatihan("");
+    let link = `${router.pathname}?id=${id}`;
+    router.push(link);
   };
 
   const getStartEndAt = (start, end) => {
@@ -470,6 +477,7 @@ const DetailSubstansi = ({ token }) => {
                     subtance_question_detail.list_questions.length != 0 ? (
                       subtance_question_detail.list_questions.map(
                         (question, i) => {
+                          console.log(question);
                           return (
                             <tr key={question.id}>
                               <td className="align-middle text-center">
