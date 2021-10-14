@@ -123,9 +123,11 @@ const EditArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
-  const [users_id, setUserId] = useState(artikel.users_id);
+  const [users_id, setUserId] = useState(3);
+  // const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
-  const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
+  // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
+  const [publish, setPublish] = useState(artikel.publish);
   const [publishDate, setPublishDate] = useState(
     artikel.tanggal_publish ? new Date(artikel.tanggal_publish) : null
   );

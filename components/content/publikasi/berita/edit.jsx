@@ -16,7 +16,7 @@ import { NEW_BERITA_RESET, UPDATE_BERITA_RESET } from '../../../../redux/types/p
 import PageWrapper from '../../../wrapper/page.wrapper';
 import LoadingPage from '../../../LoadingPage';
 
-const EditBerita = ({token}) => {
+const EditBerita = ({ token }) => {
     const editorRef = useRef()
     const dispatch = useDispatch()
     const router = useRouter();
@@ -73,7 +73,7 @@ const EditBerita = ({token}) => {
         "/assets/icon/Add.svg"
     );
     const [gambarPreview, setGambarPreview] = useState(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + berita.gambar);
-    const [gambarName, setGambarName] = useState (berita.gambar)
+    const [gambarName, setGambarName] = useState(berita.gambar)
     const [kategori_id, setKategoriId] = useState(berita.kategori_id)
     const [users_id, setUserId] = useState(berita.users_id)
     const [tag, setTag] = useState(berita.tag)
@@ -81,51 +81,56 @@ const EditBerita = ({token}) => {
     // const [publish, setPublish] = useState(berita.publish === 1 ? true : false)
     const [_method, setMethod] = useState("put")
     // const [publishDate, setPublishDate] = useState(null);
-    const [publishDate, setPublishDate] = useState(berita.tanggal_publish ? (new Date (berita.tanggal_publish)) : null);
+    const [publishDate, setPublishDate] = useState(berita.tanggal_publish ? (new Date(berita.tanggal_publish)) : null);
     const [disablePublishDate, setDisablePublishDate] = useState(berita.publish === 0 ? true : false)
     const [disableTag, setDisableTag] = useState(false)
-    
+
 
     const onChangeGambar = (e) => {
         const type = ["image/jpg", "image/png", "image/jpeg"]
         // console.log (e.target.files[0].type)
         // console.log (e.target.files[0])
         // console.log ("check")
-    
-        if (type.includes (e.target.files[0].type)){
-          const reader = new FileReader();
-          reader.onload = () => {
-            if (reader.readyState === 2) {
-              setGambar(reader.result);
-              setGambarPreview(reader.result);
+
+        if (type.includes(e.target.files[0].type)) {
+            if (e.target.files[0].size > 5000000) {
+                e.target.value = null;
+                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            } else {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        setGambar(reader.result);
+                        setGambarPreview(reader.result);
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0])
+                // console.log (reader.readAsDataURL(e.target.files[0]))
+                setGambarName(e.target.files[0].name)
             }
-          };
-          reader.readAsDataURL(e.target.files[0])
-          // console.log (reader.readAsDataURL(e.target.files[0]))
-          setGambarName(e.target.files[0].name)
-        } 
-        else {
-          // setGambar("")
-          // setGambarPreview("/assets/media/default.jpg")
-          // setGambarName(null)
-          // simpleValidator.current.showMessages();
-          // forceUpdate(1);
-          e.target.value = null
-          Swal.fire(
-            'Oops !',
-            'Data yang bisa dimasukkan hanya berupa data gambar.',
-            'error'
-          )
         }
-      };
+        else {
+            // setGambar("")
+            // setGambarPreview("/assets/media/default.jpg")
+            // setGambarName(null)
+            // simpleValidator.current.showMessages();
+            // forceUpdate(1);
+            e.target.value = null
+            Swal.fire(
+                'Oops !',
+                'Data yang bisa dimasukkan hanya berupa data gambar.',
+                'error'
+            )
+        }
+    };
 
     const handleChangePublish = (e) => {
         setPublish(e.target.checked);
         setDisablePublishDate(!disablePublishDate)
         // console.log (e.target.checked)
 
-        if (e.target.checked === false){
-            setPublishDate (null)
+        if (e.target.checked === false) {
+            setPublishDate(null)
         }
     };
 
@@ -139,40 +144,40 @@ const EditBerita = ({token}) => {
     }
 
     const handleTag = (data) => {
-        for (let i = 0; i < data.length; i++){
-          for (let j = 0; j < data[i].length; j++){
-            if (data[i][j] === " "){
-              setDisableTag (true)
-            } else {
-              setDisableTag (false)
+        for (let i = 0; i < data.length; i++) {
+            for (let j = 0; j < data[i].length; j++) {
+                if (data[i][j] === " ") {
+                    setDisableTag(true)
+                } else {
+                    setDisableTag(false)
+                }
             }
-          }
         }
-    
+
         setTag(data)
-        
+
     }
 
     const onSubmit = (e) => {
         e.preventDefault()
-        if (simpleValidator.current.allValid() && disableTag === false){
+        if (simpleValidator.current.allValid() && disableTag === false) {
             if (error) {
                 dispatch(clearErrors())
             }
-    
+
             if (success) {
                 dispatch({
                     // type: NEW_BERITA_RESET
                     type: UPDATE_BERITA_RESET
                 })
-            } 
+            }
 
             if (publish === true) {
                 setPublish(1)
-              
+
             } else if (publish === false) {
                 setPublish(0)
-    
+
             }
 
             if (gambarDB !== gambar) {
@@ -190,7 +195,7 @@ const EditBerita = ({token}) => {
                         publish,
                         id,
                         _method,
-                        tanggal_publish : moment(today).format("YYYY-MM-DD")
+                        tanggal_publish: moment(today).format("YYYY-MM-DD")
                     }
 
                     Swal.fire({
@@ -205,11 +210,11 @@ const EditBerita = ({token}) => {
                     })
                         .then((result) => {
                             if (result.isConfirmed) {
-                            dispatch(updateBerita(data, token));
-                            // console.log(data)
-                        }
-                    });
-        
+                                dispatch(updateBerita(data, token));
+                                // console.log(data)
+                            }
+                        });
+
                 } else {
 
                     const data = {
@@ -222,7 +227,7 @@ const EditBerita = ({token}) => {
                         publish,
                         id,
                         _method,
-                        tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                        tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
                     }
 
                     Swal.fire({
@@ -236,18 +241,18 @@ const EditBerita = ({token}) => {
                         cancelButtonText: "Batal",
                     })
                         .then((result) => {
-                          if (result.isConfirmed) {
-                            dispatch(updateBerita(data, token));
-                            // console.log(data)
-                        }
-                    });
+                            if (result.isConfirmed) {
+                                dispatch(updateBerita(data, token));
+                                // console.log(data)
+                            }
+                        });
                 }
-                
+
 
             } else {
 
-                if (publishDate === null){
-                    let today = new Date 
+                if (publishDate === null) {
+                    let today = new Date
 
                     const data = {
                         judul_berita,
@@ -259,9 +264,9 @@ const EditBerita = ({token}) => {
                         publish,
                         id,
                         _method,
-                        tanggal_publish : moment(today).format("YYYY-MM-DD")
+                        tanggal_publish: moment(today).format("YYYY-MM-DD")
                     }
-    
+
                     Swal.fire({
                         title: "Apakah anda yakin ?",
                         text: "Data ini akan diedit !",
@@ -273,12 +278,12 @@ const EditBerita = ({token}) => {
                         cancelButtonText: "Batal",
                     })
                         .then((result) => {
-                          if (result.isConfirmed) {
-                            dispatch(updateBerita(data, token));
-                            // console.log(data)
-                        }
-                    });
-                    
+                            if (result.isConfirmed) {
+                                dispatch(updateBerita(data, token));
+                                // console.log(data)
+                            }
+                        });
+
                 } else {
                     const data = {
                         judul_berita,
@@ -290,9 +295,9 @@ const EditBerita = ({token}) => {
                         publish,
                         id,
                         _method,
-                        tanggal_publish : moment(publishDate).format("YYYY-MM-DD")
+                        tanggal_publish: moment(publishDate).format("YYYY-MM-DD")
                     }
-    
+
                     Swal.fire({
                         title: "Apakah anda yakin ?",
                         text: "Data ini akan diedit !",
@@ -304,13 +309,13 @@ const EditBerita = ({token}) => {
                         cancelButtonText: "Batal",
                     })
                         .then((result) => {
-                          if (result.isConfirmed) {
-                            dispatch(updateBerita(data, token));
-                            // console.log(data)
-                        }
-                    });
+                            if (result.isConfirmed) {
+                                dispatch(updateBerita(data, token));
+                                // console.log(data)
+                            }
+                        });
                 }
-                
+
             }
         } else {
             simpleValidator.current.showMessages();
@@ -325,7 +330,7 @@ const EditBerita = ({token}) => {
     }
 
     const onNewReset = () => {
-        dispatch({ 
+        dispatch({
             // type: NEW_BERITA_RESET 
             type: UPDATE_BERITA_RESET
         })
@@ -333,10 +338,10 @@ const EditBerita = ({token}) => {
 
     return (
         <>
-        {
-            console.log (berita)
-        }
-        {
+            {
+                console.log(berita)
+            }
+            {
                 // console.log (kategori)
             }
             <PageWrapper>
@@ -380,13 +385,13 @@ const EditBerita = ({token}) => {
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                     <div className="col-sm-12">
-                                        <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_berita")}/>
+                                        <input type="text" className="form-control" placeholder="Isi Judul disini" value={judul_berita} onChange={(e) => setJudulBerita(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_berita")} />
                                         {simpleValidator.current.message(
-                                        "judul_berita",
-                                        judul_berita,
-                                        "required|min:5|max:50",
-                                        { className: "text-danger" }
-                                    )}
+                                            "judul_berita",
+                                            judul_berita,
+                                            "required|min:5|max:50",
+                                            { className: "text-danger" }
+                                        )}
                                     </div>
                                 </div>
 
@@ -412,7 +417,7 @@ const EditBerita = ({token}) => {
                                                         "isi_berita"
                                                     )
                                                 }
-                                                config ={{placeholder: "Tulis Deskripsi"}}
+                                                config={{ placeholder: "Tulis Deskripsi" }}
                                             /> : <p>Tunggu Sebentar</p>}
                                             {simpleValidator.current.message(
                                                 "isi_berita",
@@ -426,73 +431,73 @@ const EditBerita = ({token}) => {
 
                                 <div className="form-group">
                                     <label
-                                    htmlFor="staticEmail"
-                                    className="col-sm-4 col-form-label font-weight-bolder"
+                                        htmlFor="staticEmail"
+                                        className="col-sm-4 col-form-label font-weight-bolder"
                                     >
-                                    Upload Thumbnail
+                                        Upload Thumbnail
                                     </label>
                                     <div className="ml-3 row">
-                                    <figure
-                                        className="avatar item-rtl"
-                                        data-toggle="modal"
-                                        data-target="#exampleModalCenter"
-                                    >
-                                        <Image
-                                        src={gambarPreview}
-                                        alt="image"
-                                        width={160}
-                                        height={160}
-                                        objectFit="cover"
-                                        />
-                                    </figure>
-                                    <div>
-                                        <label htmlFor="inputGroupFile04" className="icon-plus">
-                                        <Image
-                                            src={iconPlus}
-                                            alt="plus"
-                                            width={60}
-                                            height={60} 
-                                        />
-                                        </label>
-                                        
-                                        <input
-                                        type="file"
-                                        name="gambar"
-                                        className="custom-file-input"
-                                        id="inputGroupFile04"
-                                        onChange={onChangeGambar}
-                                        accept="image/*"
-                                        onBlur={() =>
-                                            simpleValidator.current.showMessageFor("gambar")
-                                        }
-                                        style={{display: "none"}}
-                                        />
-                                    </div>
-                                    
+                                        <figure
+                                            className="avatar item-rtl"
+                                            data-toggle="modal"
+                                            data-target="#exampleModalCenter"
+                                        >
+                                            <Image
+                                                src={gambarPreview}
+                                                alt="image"
+                                                width={160}
+                                                height={160}
+                                                objectFit="cover"
+                                            />
+                                        </figure>
+                                        <div>
+                                            <label htmlFor="inputGroupFile04" className="icon-plus">
+                                                <Image
+                                                    src={iconPlus}
+                                                    alt="plus"
+                                                    width={60}
+                                                    height={60}
+                                                />
+                                            </label>
+
+                                            <input
+                                                type="file"
+                                                name="gambar"
+                                                className="custom-file-input"
+                                                id="inputGroupFile04"
+                                                onChange={onChangeGambar}
+                                                accept="image/*"
+                                                onBlur={() =>
+                                                    simpleValidator.current.showMessageFor("gambar")
+                                                }
+                                                style={{ display: "none" }}
+                                            />
+                                        </div>
+
                                     </div>
 
                                     <div className="ml-3">
-                                    {simpleValidator.current.message(
-                                        "gambar",
-                                        gambar,
-                                        "required",
-                                        { className: "text-danger" }
-                                    )}
-                                    {
-                                        gambarName !== null ?
-                                        <small className="text-danger">{gambarName}</small>
-                                        :
-                                        null
-                                    }
+                                        {simpleValidator.current.message(
+                                            "gambar",
+                                            gambar,
+                                            "required",
+                                            { className: "text-danger" }
+                                        )}
+                                        {
+                                            gambarName !== null ?
+                                                <small className="text-danger">{gambarName}</small>
+                                                :
+                                                null
+                                        }
                                     </div>
 
                                     <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
                                         <p>
-                                        Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
+                                            Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                         </p>
-                                        
+
                                     </div>
-                                    
+
                                 </div>
 
                                 {/* <div className="form-group row">
@@ -518,7 +523,7 @@ const EditBerita = ({token}) => {
                                         <small>{gambarName}</small>
                                     </div>
                                 </div> */}
-                                
+
 
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Kategori</label>
@@ -549,22 +554,22 @@ const EditBerita = ({token}) => {
                                 <div className="form-group">
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
                                     <div className="col-sm-12">
-                                    <TagsInput
-                                        value={tag}
-                                        onChange={(data) => handleTag(data)}
-                                        // onChange={setTag}
-                                        name="tag"
-                                        placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
-                                        seprators={["Enter", "Tab"]}
-                                    />
-                                    {
-                                        disableTag === true ?
-                                            <p className="text-danger">
-                                                Tag tidak bisa terdiri dari "SPACE" character saja
-                                            </p>
-                                        :
-                                            null
-                                    }
+                                        <TagsInput
+                                            value={tag}
+                                            onChange={(data) => handleTag(data)}
+                                            // onChange={setTag}
+                                            name="tag"
+                                            placeHolder="Isi Tag disini dan tekan `Enter` atau `Tab`."
+                                            seprators={["Enter", "Tab"]}
+                                        />
+                                        {
+                                            disableTag === true ?
+                                                <p className="text-danger">
+                                                    Tag tidak bisa terdiri dari "SPACE" character saja
+                                                </p>
+                                                :
+                                                null
+                                        }
                                         {/* <input type="text" className="form-control" placeholder="Isi Tag disini" value={tag} onChange={e => setTag(e.target.value)} /> */}
                                     </div>
                                 </div>
@@ -574,26 +579,25 @@ const EditBerita = ({token}) => {
                                         htmlFor="staticEmail"
                                         className="ml-5 pl-4 font-weight-bolder"
                                     >
-                                        Publish 
+                                        Publish
                                     </label>
                                     <div className="col-sm-1 ml-4">
                                         <div className="">
-                                        <label className="switches">
-                                            <input
-                                            // required
-                                            className="checkbox"
-                                            checked={publish}
-                                            type="checkbox"
-                                            // onChange={(checked) => setPublish(checked)}
-                                            onChange={(e) => handleChangePublish(e)}
-                                            />
-                                            <span
-                                            className={`sliders round ${
-                                                publish ? "text-white" : "pl-2"
-                                            }`}
-                                            >
-                                            </span>
-                                        </label>
+                                            <label className="switches">
+                                                <input
+                                                    // required
+                                                    className="checkbox"
+                                                    checked={publish}
+                                                    type="checkbox"
+                                                    // onChange={(checked) => setPublish(checked)}
+                                                    onChange={(e) => handleChangePublish(e)}
+                                                />
+                                                <span
+                                                    className={`sliders round ${publish ? "text-white" : "pl-2"
+                                                        }`}
+                                                >
+                                                </span>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -604,21 +608,21 @@ const EditBerita = ({token}) => {
                                             <label className='col-sm-5 col-form-label font-weight-bolder'>Set Tanggal Publish</label>
                                             <div className="col-sm-12">
                                                 <div className="input-group">
-                                                <DatePicker
-                                                    className="form-search-date form-control-sm form-control"
-                                                    selected={publishDate}
-                                                    onChange={(date) => handlePublishDate(date)}
-                                                    // onChange={(date) => setPublishDate(date)}
-                                                    selectsStart
-                                                    startDate={publishDate}
-                                                    // endDate={endDate}
-                                                    dateFormat="dd/MM/yyyy"
-                                                    placeholderText="Silahkan Isi Tanggal Publish"
-                                                    wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                                    // minDate={moment().toDate()}
-                                                // minDate={addDays(new Date(), 20)}
-                                                    disabled = {disablePublishDate === true || disablePublishDate === null}
-                                                />
+                                                    <DatePicker
+                                                        className="form-search-date form-control-sm form-control"
+                                                        selected={publishDate}
+                                                        onChange={(date) => handlePublishDate(date)}
+                                                        // onChange={(date) => setPublishDate(date)}
+                                                        selectsStart
+                                                        startDate={publishDate}
+                                                        // endDate={endDate}
+                                                        dateFormat="dd/MM/yyyy"
+                                                        placeholderText="Silahkan Isi Tanggal Publish"
+                                                        wrapperClassName="col-12 col-lg-12 col-xl-12"
+                                                        // minDate={moment().toDate()}
+                                                        // minDate={addDays(new Date(), 20)}
+                                                        disabled={disablePublishDate === true || disablePublishDate === null}
+                                                    />
                                                 </div>
                                                 {/* {
                                                     disablePublishDate === true ?
@@ -628,11 +632,11 @@ const EditBerita = ({token}) => {
                                                 } */}
                                             </div>
                                         </div>
-                                    :
+                                        :
                                         null
                                 }
 
-                                
+
 
                                 <div className="form-group row">
                                     <div className="col-sm-2"></div>
