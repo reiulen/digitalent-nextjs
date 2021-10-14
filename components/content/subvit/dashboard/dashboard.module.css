@@ -1,0 +1,256 @@
+.textCardTwo {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 140%;
+  /* or 28px */
+  padding-bottom: 12px;
+  color: #80808f !important;
+}
+.cardTwo {
+  padding: 3px 10px !important;
+}
+.btnDropdown {
+  padding: 4px 20px !important;
+  background: #4299e1 !important;
+  border-radius: 30px;
+  border: #4299e1 !important;
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+
+  text-align: center;
+
+  /* Neutral/White */
+
+  color: #ffffff;
+}
+.btnDropdown select {
+  /* for Firefox */
+  -moz-appearance: none !important;
+  /* for Safari, Chrome, Opera */
+  -webkit-appearance: none !important;
+}
+.btnDropdown:focus {
+  box-shadow: inset #4299e1 !important;
+  border: #4299e1 !important;
+}
+.btnDropdown:active {
+  box-shadow: inset #4299e1 !important;
+  border: #4299e1 !important;
+}
+.optionDropdown {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+  border: #4299e1 !important;
+  text-align: center;
+  border-radius: 30px;
+  /* Neutral/White */
+
+  color: #ffffff;
+}
+.cardPeserta,
+.cardSubstansi,
+.cardSurvey,
+.cardTrivia {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  padding: 8px;
+}
+.cardPesertaBody {
+  padding: 10px;
+}
+.headPeserta {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  /* or 22px */
+
+  /* Lama/Neutral/80 */
+
+  color: #464e5f;
+}
+.subHeadPeserta {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 140%;
+  /* identical to box height, or 20px */
+
+  /* Lama/Neutral/70 */
+
+  color: #80808f;
+}
+.labelChart {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 28px;
+  line-height: 120%;
+  /* or 56px */
+
+  text-align: center;
+
+  /* Lama/Neutral/80 */
+
+  color: #464e5f !important;
+}
+.subTextTotal {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 15px;
+  /* identical to box height */
+
+  /* Lama/Neutral/70 */
+
+  color: #80808f;
+}
+.substansi {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 140%;
+  /* or 22px */
+
+  /* Brand/Primary/Primary */
+
+  color: #215480;
+}
+.survey {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 140%;
+  /* or 22px */
+
+  /* Brand/Secondary/Secondary */
+
+  color: #4299e1;
+}
+.trivia {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 140%;
+  /* or 22px */
+
+  /* Brand/Extras/Extras */
+
+  color: #4cbde2;
+}
+.cardList {
+  border: transparent;
+  margin: 20px;
+}
+.cardNumber {
+  background: #f2f7fc;
+  border-radius: 8px;
+  border: #f2f7fc;
+  padding: 12px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 160%;
+  /* or 22px */
+
+  text-align: center;
+
+  /* Brand/Primary/Primary */
+
+  color: #215480;
+}
+.theme {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 160%;
+  /* identical to box height, or 26px */
+
+  /* Neutral/Heading */
+
+  color: #1f1f1f;
+}
+.training {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+
+  /* Neutral/Body */
+
+  color: #6c6c6c;
+}
+.total {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+
+  /* Neutral/Body */
+
+  color: #6c6c6c;
+}
+.note {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 18px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+
+  /* Neutral/Body */
+
+  color: #6c6c6c;
+}
+.btnNext {
+  background: #4299e1 !important;
+  border-radius: 8px;
+  border: #4299e1 !important;
+  margin: 5px;
+}
+.rowBottom {
+  margin-top: 10px !important;
+}
+.total {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 22px */
+
+  /* Neutral/Body */
+
+  color: #6c6c6c;
+}

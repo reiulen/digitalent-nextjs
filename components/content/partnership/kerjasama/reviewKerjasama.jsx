@@ -210,7 +210,7 @@ const ReviewKerjasama = ({ token }) => {
                     type="date"
                     required
                     value={dateView && dateView}
-                    className="form-control"
+                    className="form-control border-0"
                   />
                 </div>
                 <div className="form-group">
@@ -223,7 +223,7 @@ const ReviewKerjasama = ({ token }) => {
                     value={titleView && titleView}
                     onChange={(e) => setTitle(e.target.value)}
                     type="text"
-                    className="form-control"
+                    className="form-control border-0"
                     placeholder="Judul Kerjasama"
                   />
                 </div>
@@ -234,8 +234,8 @@ const ReviewKerjasama = ({ token }) => {
                   <select
                     name=""
                     id=""
-                    className="form-control"
-                    disabled
+                    className="form-control border-0"
+                    readOnly
                     value={cooperationIDView.id}
                   >
                     <option>{cooperationIDView.name}</option>
@@ -356,7 +356,7 @@ const ReviewKerjasama = ({ token }) => {
                     type="date"
                     required
                     value={date && date}
-                    className="form-control"
+                    className="form-control border-0"
                   />
                 </div>
                 <div className="form-group">
@@ -369,7 +369,7 @@ const ReviewKerjasama = ({ token }) => {
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     type="text"
-                    className="form-control"
+                    className="form-control border-0"
                     placeholder="Judul Kerjasama"
                   />
                 </div>
@@ -377,16 +377,47 @@ const ReviewKerjasama = ({ token }) => {
                   <label htmlFor="staticEmail" className="col-form-label">
                     Kategori kerjasama
                   </label>
-                  <select
+                  <input
                     name=""
                     id=""
-                    className="form-control"
+                    className="form-control border-0"
                     disabled
-                    value={cooperationID.id}
-                  >
-                    <option>{cooperationID.name}</option>
-                  </select>
+                    value={cooperationID.name}
+                    style={{backgroundColor:"transparent"}}
+                  />
+                  
+                  
                 </div>
+
+
+                {/* <div className="row mb-4">
+                <div className="col-12 col-sm-12">
+                  <div className="form-group mb-0">
+                    <label>Periode</label>
+                    <div className="input-group">
+                      <input
+                        onFocus={() => setError({ ...error, period: "" })}
+                        type="text"
+                        value={period}
+                        disabled
+                        className="form-control mb-lg-0 border-0"
+                        placeholder="Masukkan Lama Kerjasama"
+                        onChange={(e) => onChangePeriod(e)}
+                      />
+                      <div className="input-group-append">
+                        <button
+                          className="btn btn-secondary"
+                          type="button"
+                          disabled
+                        >
+                          Tahun
+                        </button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div> */}
 
                 <div className="form-group">
                   <label htmlFor="staticEmail" className="col-form-label">
@@ -398,13 +429,13 @@ const ReviewKerjasama = ({ token }) => {
                         required
                         readOnly
                         type="number"
-                        className="form-control mt-2"
+                        className="form-control mt-2 border-0"
                         onChange={(e) => setPeriod(e.target.value)}
                         value={period}
                       />
                     </div>
                     <div className="col-12 col-sm-6">
-                      <div className="form-control mt-2">Tahun</div>
+                      <div className="form-control mt-2 border-0">Tahun</div>
                     </div>
                   </div>
                 </div>
@@ -427,7 +458,7 @@ const ReviewKerjasama = ({ token }) => {
                             id={i}
                             cols="30"
                             rows="5"
-                            className="form-control"
+                            className="form-control border-0"
                           ></textarea>
                         </div>
                       );

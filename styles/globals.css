@@ -1,3 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap");
+
 html,
 body {
   padding: 0;
@@ -178,7 +182,6 @@ a {
 }
 
 /* --------------------------------pembatas-------------- */
-
 .pageNumbers {
   list-style: none;
   display: flex;
@@ -234,7 +237,8 @@ a {
 }
 
 .disabled-form input {
-  background-color: #f3f6f9 !important;
+  background-color: transparent !important;
+  border: none !important;
 }
 
 .minimal-image img {
@@ -258,4 +262,14 @@ a {
 .select-pelatihan-danger {
   color: #ee2d41;
   background: #fdeaec;
+}
+
+.box-hide-arrow{
+      position: absolute;
+      height: 77%;
+      width: 3rem;
+      right: 4px;
+      top: 50%;
+      background-color: white;
+      transform: translateY(-50%);
 }

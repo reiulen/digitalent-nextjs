@@ -2,6 +2,12 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession, session } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
+import {
+  fetchAllMK,
+  fetchListSelectMitra,
+  fetchListSelectCooperation,
+  fetchListSelectStatus,
+} from "../../../redux/actions/partnership/managementCooporation.actions";
 const Table = dynamic(
   () =>
     import("../../../components/content/partnership/kerjasama/tableKerjasama"),
@@ -20,7 +26,7 @@ export default function KerjaSamaPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  () =>
+  (store) =>
     async ({ req }) => {
       const session = await getSession({ req });
       if (!session) {
@@ -31,6 +37,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(fetchAllMK(session.user.user.data.token));
+      await store.dispatch(fetchListSelectMitra(session.user.user.data.token));
+      await store.dispatch(
+        fetchListSelectCooperation(session.user.user.data.token)
+      );
+      await store.dispatch(fetchListSelectStatus(session.user.user.data.token));
 
       return {
         props: { session, title: "Kerjasama - Partnership" },

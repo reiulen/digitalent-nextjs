@@ -6316,11 +6316,25 @@
   dependencies:
     "@panva/asn1.js" "^1.0.0"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> e88cf0af8c79996ecf8e0851c1a0e11406898a18
 "jquery@>=1.8.0":
   "integrity" "sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw=="
   "resolved" "https://registry.npmjs.org/jquery/-/jquery-3.6.0.tgz"
   "version" "3.6.0"
 
+<<<<<<< HEAD
+"js-cookie@^3.0.1":
+  "integrity" "sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw=="
+  "resolved" "https://registry.npmjs.org/js-cookie/-/js-cookie-3.0.1.tgz"
+  "version" "3.0.1"
+
+=======
+>>>>>>> 2d74140b5ae7185965f5da421bfe360cfa1f543b
+=======
+>>>>>>> e88cf0af8c79996ecf8e0851c1a0e11406898a18
 "js-tokens@^3.0.0 || ^4.0.0", "js-tokens@^4.0.0":
   "integrity" "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="
   "resolved" "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
