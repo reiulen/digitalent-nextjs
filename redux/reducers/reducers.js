@@ -261,6 +261,7 @@ import {
 // ====================== pelatihan =====================
 import {
   newTrainingReducer,
+  cardTrainingReducer,
   allTrainingReducer,
   deleteTrainingReducer,
   updateStatusReducer,
@@ -526,6 +527,7 @@ const reducer = combineReducers({
   deleteTheme: deleteThemeReducer,
   // ========== pelatihan ===========
   allTraining: allTrainingReducer,
+  cardTraining: cardTrainingReducer,
   newTraining: newTrainingReducer,
   deleteTraining: deleteTrainingReducer,
 
