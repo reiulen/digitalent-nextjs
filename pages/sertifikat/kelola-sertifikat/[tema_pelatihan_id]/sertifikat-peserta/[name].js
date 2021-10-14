@@ -49,7 +49,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           session.user.user.data.token
         )
       );
-      console.log(query, "querynya ada disini");
       await store.dispatch(
         getDetailParticipant(
           //   query.nama_pelatihan_id,

@@ -42,7 +42,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      console.log(query);
       await store.dispatch(
         getDetailParticipant(
           query.id,

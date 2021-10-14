@@ -64,6 +64,7 @@ export default function NamaPelatihan({ token }) {
   };
 
   const handleFilter = e => {
+    e.preventDefault();
     if (!academy && !temaPelatihan) {
       Swal.fire(
         "Oops !",
@@ -283,7 +284,7 @@ export default function NamaPelatihan({ token }) {
                                 <button
                                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
-                                  onClick={handleFilter}
+                                  onClick={e => handleFilter(e)}
                                 >
                                   Terapkan
                                 </button>

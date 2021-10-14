@@ -34,7 +34,7 @@ export default function KelokaSertifikatPage(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
       const session = await getSession({ req });
       if (!session) {
@@ -45,7 +45,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-      console.log("ini querynya", query);
       await store.dispatch(
         getDetailSertifikat(
           query.id,
