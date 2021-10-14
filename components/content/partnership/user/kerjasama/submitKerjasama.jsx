@@ -52,31 +52,31 @@ const DetailDokumenKerjasama = ({ token }) => {
 
     if (date === "") {
       setError({ ...error, date: "Harus isi data tanggal" });
-      notify("Harus isi data tanggal");
+      // notify("Harus isi data tanggal");
     } else if (title === "") {
       setError({ ...error, title: "Judul kerjasama tidak boleh kosong" });
-      notify("Judul kerjasama tidak boleh kosong");
+      // notify("Judul kerjasama tidak boleh kosong");
     } else if (cooperationC_id === "") {
       setError({
         ...error,
         cooperationC_id: "Kategori kerjasama tidak boleh kosong",
       });
-      notify("Kategori kerjasama tidak boleh kosong");
+      // notify("Kategori kerjasama tidak boleh kosong");
     } else if (period === "") {
       setError({
         ...error,
         period: "Periode tidak boleh kosong",
       });
-      notify("Periode tidak boleh kosong");
+      // notify("Periode tidak boleh kosong");
     } else if (periodUnit === "") {
       setError({ ...error, periodUnit: "Period unit tidak boleh kosong" });
-      notify("Period unit tidak boleh kosong");
+      // notify("Period unit tidak boleh kosong");
     } else if (AllCooperation === "") {
       setError({
         ...error,
         AllCooperation: "Kerjasama form tidak boleh kosong",
       });
-      notify("Kerjasama form tidak boleh kosong");
+      // notify("Kerjasama form tidak boleh kosong");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
@@ -120,8 +120,7 @@ const DetailDokumenKerjasama = ({ token }) => {
               query: { successSubmitKerjasama: true, id: data.data.id },
             });
           } catch (error) {
-            // alert("gagal");
-            console.log("error", error);
+            notify(error.response.data.message);
           }
 
           // let allDataPart = [

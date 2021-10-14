@@ -1,12 +1,12 @@
 import dynamic from "next/dynamic";
-import LoadingPage from "../../../components/LoadingPage";
+import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
-import { wrapper } from "../../../redux/store";
+import { wrapper } from "../../../../redux/store";
 
 const Edit = dynamic(
   () =>
     import(
-      "../../../components/content/partnership/master-kategori-kerjasama/edit"
+      "../../../../components/content/partnership/master-kategori-kerjasama/edit"
     ),
   { loading: () => <LoadingPage />, ssr: false }
 );
