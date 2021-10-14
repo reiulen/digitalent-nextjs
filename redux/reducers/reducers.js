@@ -299,6 +299,15 @@ import {
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
 
+
+// BERANDA
+import {
+  allAkademiReducer,
+  temaByAkademiReducer,
+  pelatihanByTemaReducer,
+} from "../reducers/beranda/beranda.reducers"
+//END BERANDA
+
 const reducer = combineReducers({
   // PUBLIKASI
   allArtikel: allArtikelReducer,
@@ -549,6 +558,12 @@ const reducer = combineReducers({
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   updateStatus: updateStatusReducer,
   //END PELATIHAN
+
+  //BERANDA
+  allAkademi: allAkademiReducer,
+  temaByAkademi: temaByAkademiReducer,
+  pelatihanByTema:pelatihanByTemaReducer
+  //END BERANDA
 });
 
 export default reducer;

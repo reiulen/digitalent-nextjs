@@ -245,6 +245,37 @@ const TambahGaleri = ({ token }) => {
     //     }
     // }
 
+    // const onChangeImage = (e, index) => {
+    //     const type = ["image/jpg", "image/png", "image/jpeg"];
+    //     let list = [...image];
+    //     if (type.includes(e.target.files[0].type)) {
+    //         if (e.target.files[0].size > 5000000) {
+    //             e.target.value = null;
+    //             Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    //         } else {
+    //             list[index].imageFile = e.target.files[0];
+    //             list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+    //             list[index].imageName = e.target.files[0].name;
+    //             console.log(list)
+    //             setImage(list);
+    //         }
+    //         console.log(image);
+    //         // const reader = new FileReader();
+    //         // reader.onload = () => {
+    //         //   if (reader.readyState === 2) {
+    //         //   }
+    //         // };
+    //         // reader.readAsDataURL(e.target.files[0]);
+    //     } else {
+    //         e.target.value = null;
+    //         Swal.fire(
+    //             "Oops !",
+    //             "Data yang bisa dimasukkan hanya berupa data gambar.",
+    //             "error"
+    //         );
+    //     }
+    // };
+
     const onChangeImage = (e, index) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
         let list = [...image];
@@ -291,6 +322,22 @@ const TambahGaleri = ({ token }) => {
         ]);
         setTotalImage((totalImage) + 1)
     };
+
+    // const onAddImage = () => {
+    //     let newKey = 1;
+    //     if (image.length > 0) {
+    //       newKey = image[image.length - 1].key + 1;
+    //     }
+    //     setImage([
+    //       ...image,
+    //       {
+    //         key: newKey,
+    //         imagePreview: "",
+    //         imageFile: "",
+    //         imageName: "",
+    //       },
+    //     ]);
+    //   };
 
     const onDeleteImage = (index) => {
 
