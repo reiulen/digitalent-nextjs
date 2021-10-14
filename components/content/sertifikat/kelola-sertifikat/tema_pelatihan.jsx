@@ -100,10 +100,7 @@ export default function NamaPelatihan({ token }) {
     setTemaPelatihan("");
     setDisable(false);
     let arr = certificate.list_certificate;
-    // console.log(e.value);
     const test = arr.filter(el => el.theme.academy.name == e.value);
-    // console.log("ini test", test);
-    // console.log(dataTemaPelatihan);
     const newArr = [{}];
     test.forEach((el, i) => {
       newArr[i]["value"]
@@ -116,6 +113,8 @@ export default function NamaPelatihan({ token }) {
     });
     setDataTemaPelatihan(newArr);
   };
+
+  console.log(certificate);
 
   return (
     <PageWrapper>
@@ -356,7 +355,7 @@ export default function NamaPelatihan({ token }) {
                               </td>
                               <td className="align-middle d-flex">
                                 <Link
-                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.academy.id}`}
+                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.name}?id=${certificate.theme.academy.id}`}
                                   passHref
                                 >
                                   <a

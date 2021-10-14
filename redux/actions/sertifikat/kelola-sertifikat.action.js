@@ -92,7 +92,7 @@ export const getDetailSertifikat =
 
       const { data } = await axios.get(link, config);
 
-      // console.log(data.data.list_certificate[0], " ini data nya");
+      // console.log(data, " ini data nya");
 
       if (data) {
         dispatch({ type: DETAIL_SERTIFIKAT_SUCCESS, payload: data });
@@ -183,7 +183,7 @@ export const getPublishedSertifikat = (id, token) => async dispatch => {
     };
 
     const { data } = await axios.get(link, config);
-
+    console.log(data, "ini data dari publish");
     if (data) {
       dispatch({ type: PUBLISHED_SERTIFIKAT_SUCCESS, payload: data });
     }

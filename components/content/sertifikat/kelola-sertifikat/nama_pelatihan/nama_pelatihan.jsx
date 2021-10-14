@@ -81,7 +81,7 @@ export default function NamaPelatihanID({ token }) {
   };
 
   console.log(certificate);
-
+  const handleResetError = () => {};
   return (
     <PageWrapper>
       {/* error START */}
@@ -357,7 +357,8 @@ export default function NamaPelatihanID({ token }) {
                                     <>
                                       <Link
                                         passHref
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/published`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?status=${certificate.status.name}&id=${certificate.id}`}
+                                        // ?status=${certificate.status.name}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -384,7 +385,8 @@ export default function NamaPelatihanID({ token }) {
                                     </>
                                   ) : (
                                     <Link
-                                      href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/add`}
+                                      href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.theme_id}`}
+                                      // ${query.tema_pelatihan_id}
                                       passHref
                                     >
                                       <a

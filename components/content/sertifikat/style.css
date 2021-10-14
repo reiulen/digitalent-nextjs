@@ -37,7 +37,7 @@
 }
 
 .responsive-margin {
-    margin-top: 37px;
+    margin-top: 45px;
 }
 
 .responsive-font-size {
@@ -52,7 +52,7 @@
 /* tablet */
 @media(min-width: 768px) {
     .responsive-margin {
-        margin-top: 115px;
+        margin-top: 130px;
     }
 
     .responsive-font-size {
@@ -80,7 +80,7 @@
     }
 
     .responsive-margin {
-        margin-top: 105px;
+        margin-top: 120px;
     }
 
     .responsive-font-size {
@@ -91,7 +91,7 @@
 /* normal */
 @media (min-width: 1200px) {
     .responsive-margin {
-        margin-top: 140px;
+        margin-top: 150px;
     }
 
     .responsive-font-size {

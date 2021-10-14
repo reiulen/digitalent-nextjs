@@ -22,15 +22,15 @@ export default function KelolasertifikatID({ token }) {
     state => state.singleCertificate
   );
 
-  if (!certificate) {
-    router.replace(
-      {
-        pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
-      },
-      null,
-      { shallow: false }
-    );
-  }
+  // if (!certificate) {
+  //   router.replace(
+  //     {
+  //       pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
+  //     },
+  //     null,
+  //     { shallow: false }
+  //   );
+  // }
 
   const handleResetError = () => {
     if (error) {

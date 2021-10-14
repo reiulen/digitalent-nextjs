@@ -24,7 +24,6 @@ const KelolaSertifikatNamaPelatihanID = dynamic(
 
 export default function KelokaSertifikatPage(props) {
   const session = props.session.user.user.data;
-
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -46,10 +45,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
+      console.log("ini querynya", query);
       await store.dispatch(
         getDetailSertifikat(
-          query.tema_pelatihan_id,
+          query.id,
           query.page,
           query.keyword,
           query.limit,
