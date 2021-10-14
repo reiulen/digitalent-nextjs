@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+<<<<<<< HEAD
+=======
+import styles from "../../../../styles/previewGaleri.module.css";
+>>>>>>> 9c54057a7dd25236275ef5bd51fc462bdebd4cab
 
 import Pagination from "react-js-pagination";
 import { css } from "@emotion/react";
@@ -39,17 +43,17 @@ const Galeri = ({ token }) => {
     loading: allLoading,
     error,
     galeri,
-  } = useSelector(state => state.allGaleri);
+  } = useSelector((state) => state.allGaleri);
   const {
     loading: deleteLoading,
     error: deleteError,
     isDeleted,
-  } = useSelector(state => state.deleteGaleri);
+  } = useSelector((state) => state.deleteGaleri);
   const {
     loading: viewLoading,
     error: viewError,
     isViewed,
-  } = useSelector(state => state.viewedGaleri);
+  } = useSelector((state) => state.viewedGaleri);
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
@@ -80,7 +84,7 @@ const Galeri = ({ token }) => {
 
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        result => {
+        (result) => {
           if (result.isConfirmed) {
             window.location.reload();
           }
@@ -100,7 +104,7 @@ const Galeri = ({ token }) => {
     router.replace("/publikasi/galeri", undefined, { shallow: true });
   };
 
-  const handleDelete = id => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -110,14 +114,14 @@ const Galeri = ({ token }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then(result => {
+    }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteGaleri(id, token));
       }
     });
   };
 
-  const handlePagination = pageNumber => {
+  const handlePagination = (pageNumber) => {
     if (
       limit !== null &&
       search === "" &&
@@ -375,7 +379,7 @@ const Galeri = ({ token }) => {
 
   // };
 
-  const handleLimit = val => {
+  const handleLimit = (val) => {
     setLimit(val);
     if (search === "" && publishValue === null) {
       router.push(`${router.pathname}?page=1&limit=${val}`);
@@ -400,7 +404,7 @@ const Galeri = ({ token }) => {
     }
   };
 
-  const handlePublish = val => {
+  const handlePublish = (val) => {
     if (val !== null || val !== "") {
       setPublishValue(val);
 
@@ -601,7 +605,7 @@ const Galeri = ({ token }) => {
     setDisableEndDate(true);
   };
 
-  const handleStartDate = date => {
+  const handleStartDate = (date) => {
     setStartDate(date);
     setDisableEndDate(false);
   };
@@ -742,7 +746,7 @@ const Galeri = ({ token }) => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -824,7 +828,7 @@ const Galeri = ({ token }) => {
                                   <DatePicker
                                     className="form-search-date form-control-sm form-control"
                                     selected={startDate}
-                                    onChange={date => handleStartDate(date)}
+                                    onChange={(date) => handleStartDate(date)}
                                     selectsStart
                                     startDate={startDate}
                                     endDate={endDate}
@@ -846,7 +850,7 @@ const Galeri = ({ token }) => {
                                   <DatePicker
                                     className="form-search-date form-control-sm form-control"
                                     selected={endDate}
-                                    onChange={date => setEndDate(date)}
+                                    onChange={(date) => setEndDate(date)}
                                     selectsEnd
                                     startDate={startDate}
                                     endDate={endDate}
@@ -1108,8 +1112,8 @@ const Galeri = ({ token }) => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
                           <option
                             value="5"
@@ -1319,7 +1323,10 @@ const Galeri = ({ token }) => {
                           ? galeri.gallery[index_galleri].tag.map((row, i) => {
                               // { console.log("Cek Tag :", row) }
                               return (
-                                <span className="mr-3 label label-inline label-light-success font-weight-bold">
+                                <span
+                                  className="mr-3 label label-inline label-light-success font-weight-bold"
+                                  key={i}
+                                >
                                   {row}
                                 </span>
                               );
