@@ -247,30 +247,45 @@ const EditGaleri = ({ token }) => {
                 e.target.value = null;
                 Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
             } else {
-                // list[index].imageFile = e.target.files[0];
-                const reader = new FileReader();
+                list[index].imageFile = e.target.files[0];
+                list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+                list[index].imageName = e.target.files[0].name;
+                console.log("List :", list)
+                setImage(list);
 
-                reader.onload = () => {
-                    if (reader.readyState === 2) {
-                        // list[index].imagePreview = reader.result;
-                        // list[index].imageBase64 = reader.result;
-                        list[index].imageFile = e.target.files[0];
-                        list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
-                        list[index].imageName = e.target.files[0].name;
-                        // console.log("List :", list)
-                        setImage(list);
-                    }
-                    // router.reload(window.location.pathname)
-                    // setImage([
-                    //     ...image,
-                    // ]);
-                };
-
-                console.log(image);
-                reader.readAsDataURL(e.target.files[0]);
+                console.log("IMAGE :", image);
+                // reader.readAsDataURL(e.target.files[0]);
                 // list[index].imageName = e.target.files[0].name;
                 // setImage(list);
             }
+            // if (e.target.files[0].size > 5000000) {
+            //     e.target.value = null;
+            //     Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            // } else {
+            //     // list[index].imageFile = e.target.files[0];
+            //     const reader = new FileReader();
+
+            //     reader.onload = () => {
+            //         if (reader.readyState === 2) {
+            //             // list[index].imagePreview = reader.result;
+            //             // list[index].imageBase64 = reader.result;
+            //             list[index].imageFile = e.target.files[0];
+            //             list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+            //             list[index].imageName = e.target.files[0].name;
+            //             // console.log("List :", list)
+            //             setImage(list);
+            //         }
+            //         // router.reload(window.location.pathname)
+            //         // setImage([
+            //         //     ...image,
+            //         // ]);
+            //     };
+
+            //     console.log("IMAGE :", image);
+            //     reader.readAsDataURL(e.target.files[0]);
+            //     // list[index].imageName = e.target.files[0].name;
+            //     // setImage(list);
+            // }
         } else {
             e.target.value = null;
             Swal.fire(
