@@ -495,7 +495,7 @@ const Galeri = ({ token }) => {
     };
 
     const printImage = () => {
-        // console.log("isViewed :", isViewed.judul)
+        console.log("isViewed :", isViewed)
         return galeri && galeri.gallery.length !== 0 && index_galleri !== null ? (
             <>
                 <div

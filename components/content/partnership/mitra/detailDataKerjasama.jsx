@@ -268,7 +268,7 @@ const DetailDataKerjasama = ({token}) => {
           </div>
 
           <div className="card-body pt-0">
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="position-relative overflow-hidden w-100 mt-5">
@@ -284,7 +284,8 @@ const DetailDataKerjasama = ({token}) => {
                       onChange={(e) => setKeyWord(e.target.value)}
                     />
                     <button
-                      type="submit"
+                      type="button"
+                      onClick={(e)=>handleSubmit(e)}
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
@@ -434,7 +435,7 @@ const DetailDataKerjasama = ({token}) => {
                   </div>
                 </div>
               </div>
-            </form>
+            {/* </form> */}
 
             {/* table disini */}
 

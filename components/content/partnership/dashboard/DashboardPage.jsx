@@ -21,7 +21,6 @@ export default function DashboardPage({ token }) {
   let dispatch = useDispatch();
   const allDashboard = useSelector((state) => state.allDashboard);
   const [user, setUser] = useState("")
-  console.log("user",user)
 
   const colors = ["#215480", "#4299E1", "#357AB4"];
   const [dataPieChartStatusPengajuan, setDataPieChartStatusPengajuan] =
