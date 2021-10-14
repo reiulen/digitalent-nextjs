@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import Style from "../../../../styles/progressbar.module.css";
+import { getSession } from "next-auth/client";
 
 function Hasil({ token }) {
   const router = useRouter();
@@ -23,10 +24,15 @@ function Hasil({ token }) {
     color: "#626262",
   };
 
+  const [user, setUser] = useState("")
+
   const [status, setStatus] = useState("");
   const [idKerjsama, setIdKerjsama] = useState("");
   // validasi content jika selesai ditolak dan berakhir
   useEffect(() => {
+    getSession().then((session) => {
+      setUser(session.user.user.data.user);
+    });
     setIdKerjsama(router.query.id);
     setStatus(router.query.statusKerjasama);
   }, [router.query.statusKerjasama, router.query.id]);
@@ -112,7 +118,7 @@ function Hasil({ token }) {
                       Selamat, Pengajuan Diterima!
                     </h1>
                     <p className="mt-5 fz-16">
-                      Selamat kepada (nama lembaga) pengajuan kerjasamanya telah diterima. </p>
+                      Selamat kepada {user.name} pengajuan kerjasamanya telah diterima. </p>
                   </div>
 
                   <div className="form-group row">
@@ -162,7 +168,7 @@ function Hasil({ token }) {
                       Kerjasama Berakhir!
                     </h1>
                     <p className="mt-5 fz-16">
-                      Periode kerjasama (nama lembaga) telah berakhir. Silahkan ajukan kembali untuk memperpanjang periode kerjasama.
+                      Periode kerjasama {user.name} telah berakhir. Silahkan ajukan kembali untuk memperpanjang periode kerjasama.
                     </p>
                   </div>
 
@@ -198,7 +204,7 @@ function Hasil({ token }) {
                       Maaf, Pengajuan Ditolak
                     </h1>
                     <p className="mt-5 fz-16">
-                      Mohon maaf pengajuan kerjasama (nama lembaga) ditolak. Anda dapat mengajukan kerjasama lagi di lain waktu.
+                      Mohon maaf pengajuan kerjasama {user.name} ditolak. Anda dapat mengajukan kerjasama lagi di lain waktu.
                     </p>
                   </div>
 

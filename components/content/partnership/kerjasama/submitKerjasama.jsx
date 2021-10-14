@@ -87,7 +87,7 @@ const SubmitKerjasama = ({ token }) => {
       });
       // notify("Harus isi nomor perjanjian kemkominfo");
     } else if (signing_date === "") {
-      setError({ ...error, signing_date: "Harus isi tanggal penandantangan" });
+      setError({ ...error, signing_date: "Harus isi tanggal penandatangan" });
       // notify("Harus isi tanggal penandantangan");
     } else if (document === "") {
       setError({ ...error, document: "Harus unggah file" });
@@ -193,7 +193,7 @@ const SubmitKerjasama = ({ token }) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

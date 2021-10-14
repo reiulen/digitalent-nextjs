@@ -100,7 +100,7 @@ const RevisiSubmit = ({token}) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -255,7 +255,7 @@ const RevisiSubmit = ({token}) => {
                       readOnly
                       value={title && title}
                       type="text"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                     />
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
@@ -264,8 +264,9 @@ const RevisiSubmit = ({token}) => {
                   <div className="form-group mb-10">
                     <label className="required mb-2">Kategori Kerjasama</label>
                     <select
-                      className="form-control remove-icon-default"
+                      className="form-control remove-icon-default border-0"
                       disabled
+                      style={{backgroundColor:"transparent"}}
                     >
                       <option value="">
                         {cooperationID && cooperationID.name}
@@ -285,7 +286,7 @@ const RevisiSubmit = ({token}) => {
                       readOnly
                       value={period && period}
                       type="number"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                     />
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
                   </div>
@@ -293,7 +294,7 @@ const RevisiSubmit = ({token}) => {
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2"></label>
-                    <select className="form-control mt-2" disabled>
+                    <select className="form-control mt-2 border-0" style={{backgroundColor:"transparent"}} disabled>
                       <option value="">Tahun</option>
                     </select>
                     {/* {error.date ? <p className="error-text">{error.date}</p> : ""} */}
@@ -347,7 +348,8 @@ const RevisiSubmit = ({token}) => {
                                 id=""
                                 cols="30"
                                 rows="5"
-                                className="form-control"
+                                className="form-control border-0"
+                                style={{backgroundColor:"transparent"}}
                                 placeholder="Tuliskan Catatan Revisi"
                               ></textarea>
                             </div>
@@ -372,7 +374,8 @@ const RevisiSubmit = ({token}) => {
                     value={note && note}
                     cols="30"
                     rows="5"
-                    className="form-control"
+                    className="form-control border-0"
+                    style={{backgroundColor:"transparent"}}
                     placeholder="Tuliskan Catatan Tambahan"
                   ></textarea>
                 </div>
