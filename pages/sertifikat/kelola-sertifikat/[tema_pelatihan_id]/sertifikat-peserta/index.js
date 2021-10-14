@@ -1,16 +1,15 @@
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../../../../components/LoadingSkeleton";
-import { wrapper } from "../../../../../../redux/store";
+// import LoadingSkeleton from "../../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
-import {
-  getAllParticipant,
-  getDetailParticipant,
-} from "../../../../../../redux/actions/sertifikat/list-peserta.action";
+
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
+import { wrapper } from "../../../../../redux/store";
+import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
 
 const ListPeserta = dynamic(
   () =>
     import(
-      "../../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/list-peserta"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/list-peserta"
     ),
   {
     loading: function loadingNow() {
@@ -31,9 +30,8 @@ export default function KelokaSertifikatPage() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
+  store =>
     async ({ query, req }) => {
-      console.log(query, "ini query list peserta");
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -43,10 +41,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
       console.log(query);
       await store.dispatch(
         getDetailParticipant(
-          query.nama_pelatihan_id,
+          query.id,
           query.page,
           query.keyword,
           query.limit,

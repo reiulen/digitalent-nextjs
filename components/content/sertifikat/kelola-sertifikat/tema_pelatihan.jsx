@@ -25,12 +25,18 @@ export default function NamaPelatihan({ token }) {
   const { loading, error, certificate } = useSelector(
     state => state.allCertificates
   );
+  const [academy, setAcademy] = useState("");
+  const [temaPelatihan, setTemaPelatihan] = useState("");
+  const [disable, setDisable] = useState(true);
+  const [dataTemaPelatihan, setDataTemaPelatihan] = useState([]);
+  const [dataAcademy, setDataAcademy] = useState([]);
+  let { page = 1, keyword } = router.query;
 
   const resetValueSort = () => {
-    console.log(temaPelatihan, academy, "ini sebelum di reset");
     setAcademy("");
     setDisable(true);
     setTemaPelatihan("");
+    router.push(`${router.pathname}?page=${page}`);
   };
   // #DatePicker
 
@@ -51,31 +57,11 @@ export default function NamaPelatihan({ token }) {
   };
 
   const handleSearch = () => {
-    let link = `${router.pathname}?page=1&keyword=${search}`;
+    let link = `${router.pathname}?page=1`;
     if (limit) link = link.concat(`&limit=${limit}`);
+    if (search) link = link.concat(`&keyword=${search}`);
     router.push(link);
   };
-  // #Pagination
-
-  const [academy, setAcademy] = useState("");
-  const [temaPelatihan, setTemaPelatihan] = useState("");
-  const [disable, setDisable] = useState(true);
-  const [dataTemaPelatihan, setDataTemaPelatihan] = useState([]);
-  const [dataAcademy, setDataAcademy] = useState([]);
-
-  useEffect(() => {
-    let arr = [];
-    certificate.list_certificate.forEach((el, i) => {
-      arr.push({
-        value: el.theme.academy.name,
-        label: el.theme.academy.name,
-      });
-    });
-    console.log("ini arr", arr);
-    setDataAcademy(arr);
-  }, [certificate.list_certificate]);
-
-  let { page = 1, keyword } = router.query;
 
   const handleFilter = () => {
     if (!academy && !temaPelatihan) {
@@ -85,15 +71,24 @@ export default function NamaPelatihan({ token }) {
         "error"
       );
     } else {
-      if (!academy && temaPelatihan) {
-        router.push(`${router.pathname}?page=1&limit=${limit}`);
-      }
-
-      if (!temaPelatihan && academy) {
-        router.push(`${router.pathname}?page=1&keyword=${academy}`);
-      }
+      let link = `${router.pathname}?page=1`;
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (academy) link = link.concat(`&academy=${academy}`);
+      if (temaPelatihan) link = link.concat(`&theme=${temaPelatihan}`);
+      router.push(link);
     }
   };
+
+  useEffect(() => {
+    let arr = [];
+    certificate.list_certificate.forEach((el, i) => {
+      arr.push({
+        value: el.theme.academy.name,
+        label: el.theme.academy.name,
+      });
+    });
+    setDataAcademy(arr);
+  }, [certificate.list_certificate]);
 
   const handleSelectAcademy = e => {
     setAcademy(e.value);
@@ -113,8 +108,6 @@ export default function NamaPelatihan({ token }) {
     });
     setDataTemaPelatihan(newArr);
   };
-
-  console.log(certificate);
 
   return (
     <PageWrapper>
@@ -324,7 +317,9 @@ export default function NamaPelatihan({ token }) {
                         certificate.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Masih Kosong
+                            {search
+                              ? "Data Tidak Ditemukan"
+                              : "Data Masih Kosong"}
                           </td>
                         </tr>
                       ) : (

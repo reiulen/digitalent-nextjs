@@ -35,18 +35,18 @@ export default function ListPeserta() {
   const handleLimit = val => {
     setLimit(val);
     router.push(
-      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}/${router.query.nama_pelatihan_id}/list-peserta?page=1&limit=${val}`
+      `/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${query.id}&page=1&limit=${val}`
     );
   };
 
   const handleSearch = () => {
-    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}/${router.query.nama_pelatihan_id}/list-peserta?page=1&keyword=${search}`;
+    let link = `/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${query.id}&page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
   };
 
   const handlePagination = pageNumber => {
-    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}/${router.query.nama_pelatihan_id}/list-peserta?page=${pageNumber}`;
+    let link = `/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${query.id}&page=${pageNumber}`;
     if (search) link = link.concat(`&keyword=${search}`);
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
@@ -98,11 +98,7 @@ export default function ListPeserta() {
             {/* START TABLE */}
             <div className="table-page mt-5">
               <div className="table-responsive">
-                <LoadingTable
-                  // UNFISNISH
-                  loading={loading}
-                  // Isi dengan loading dari dispatch
-                />
+                <LoadingTable loading={loading} />
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
@@ -122,7 +118,9 @@ export default function ListPeserta() {
                         participant.data.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Masih Kosong
+                            {search
+                              ? "Data Tidak Ditemukan"
+                              : "Data Masih Kosong"}
                           </td>
                         </tr>
                       ) : (
@@ -169,7 +167,9 @@ export default function ListPeserta() {
                                   {participant.status == 1 ? (
                                     <>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${query.nama_pelatihan_id}/list-peserta/${participant.name}`}
+                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${query.nama_pelatihan_id}/list-peserta/${participant.name}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta/${participant.name}?id=${participant.training.theme.id}`}
+                                        // ?id=${certificate.id}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"

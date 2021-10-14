@@ -29,6 +29,7 @@ export default function NamaPelatihanID({ token }) {
   const { loading, error, certificate } = useSelector(
     state => state.detailCertificates
   );
+  const [status, setStatus] = useState(null);
 
   // #REDUX STATE
   let { page = 1, keyword, success } = router.query;
@@ -36,32 +37,29 @@ export default function NamaPelatihanID({ token }) {
   const handleLimit = val => {
     setLimit(val);
     router.push(
-      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}/list-peserta?page=1&limit=${val}`
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=1&limit=${val}`
     );
   };
 
   const handleSearch = () => {
-    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?page=1&keyword=${search}`;
+    let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=1&keyword=${search}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     router.push(link);
   };
 
-  const [status, setStatus] = useState(null);
-
   const options = [
     { value: "draft", label: "Draft" },
-    { value: "belum tersedia", label: "Belum Tersedia" },
+    { value: "not-yet-available", label: "Belum Tersedia" },
     { value: "publish", label: "Publish" },
   ];
 
   const handleFilter = e => {
-    console.log(status, " ini status");
-    console.log(router, "ini router");
     if (!status) {
       Swal.fire("Oops !", "Harap memilih Status terlebih dahulu.", "error");
     } else {
-      let link = `${query.tema_pelatihan_id}?page=${1}`;
-      if (status) link = link.concat(`&keyword=${status}`);
+      let link = `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}&page=${page}`;
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (status) link = link.concat(`&status=${status}`);
       router.push(link);
     }
   };
@@ -76,7 +74,7 @@ export default function NamaPelatihanID({ token }) {
   const resetValueSort = () => {
     setStatus(null);
     router.push(
-      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`
+      `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}?id=${router.query.id}`
     );
   };
 
@@ -358,7 +356,6 @@ export default function NamaPelatihanID({ token }) {
                                       <Link
                                         passHref
                                         href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?status=${certificate.status.name}&id=${certificate.id}`}
-                                        // ?status=${certificate.status.name}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -371,7 +368,9 @@ export default function NamaPelatihanID({ token }) {
                                       </Link>
                                       <Link
                                         passHref
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
+                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/list-peserta`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/sertifikat-peserta?id=${certificate.id}`}
+                                        // nama pelatihan id pake certificate.id
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -458,7 +457,7 @@ export default function NamaPelatihanID({ token }) {
                           className="align-middle my-auto"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {certificate.data.list_certificate.length}
+                          Total Data {certificate.data.total}
                         </p>
                       </div>
                     </div>
