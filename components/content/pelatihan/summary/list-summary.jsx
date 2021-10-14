@@ -264,10 +264,7 @@ const ListSummary = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
-                  <div
-                    className="position-relative overflow-hidden mt-3"
-                    style={{ maxWidth: "330px" }}
-                  >
+                  <div className="position-relative overflow-hidden mt-3 mb-2">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -290,9 +287,8 @@ const ListSummary = ({ token }) => {
 
                 <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className="btn border d-flex align-items-center justify-content-between mb-2 w-100"
                     style={{
-                      minWidth: "280px",
                       color: "#bdbdbd",
                       float: "right",
                     }}
@@ -308,7 +304,7 @@ const ListSummary = ({ token }) => {
 
                 <div className="col-md-2">
                   <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
+                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white"
                     type="button"
                     onClick={handleExportReport}
                   >
@@ -343,7 +339,7 @@ const ListSummary = ({ token }) => {
                         </td>
                       ) : (
                         summary.list.map((row, i) => (
-                          <tr>
+                          <tr key={i}>
                             <td className="text-center align-middle">
                               {limit === null
                                 ? i + 1 * (page * 5) - (5 - 1)

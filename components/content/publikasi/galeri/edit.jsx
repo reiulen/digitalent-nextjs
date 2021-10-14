@@ -110,39 +110,38 @@ const EditGaleri = ({ token }) => {
     // })
 
     useEffect(() => {
+      handleDataToArr(galeri.gambar);
+      // dispatch(getAllKategori())
 
-        handleDataToArr(galeri.gambar)
-        // dispatch(getAllKategori())
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
 
-        files.forEach(file => URL.revokeObjectURL(file.preview));
+      // if (success) {
+      //     dispatch({
+      //         type: NEW_GALERI_RESET
+      //     })
+      // }
 
-        // if (success) {
-        //     dispatch({
-        //         type: NEW_GALERI_RESET
-        //     })
-        // }
+      // let temps = []
 
-        // let temps = []
+      // for (let i = 0; i < files.length; i++) {
+      //     const reader = new FileReader()
 
-        // for (let i = 0; i < files.length; i++) {
-        //     const reader = new FileReader()
+      //     reader.onload = () => {
+      //         temps.push(reader.result)
+      //     }
 
-        //     reader.onload = () => {
-        //         temps.push(reader.result)
-        //     }
+      //     reader.readAsDataURL(files[i])
+      // }
 
-        //     reader.readAsDataURL(files[i])
-        // }
+      // setGambar(temps)
 
-        // setGambar(temps)
-
-        if (success) {
-            router.push({
-                pathname: `/publikasi/galeri`,
-                query: { success: true }
-            })
-        }
-    }, [dispatch, error, success, files, router]);
+      if (success) {
+        router.push({
+          pathname: `/publikasi/galeri`,
+          query: { success: true },
+        });
+      }
+    }, [dispatch, error, success, files, router, galeri.gambar]);
 
     const [id, setId] = useState(galeri.id_gallery);
     // const [id, setId] = useState(galeri.id);
