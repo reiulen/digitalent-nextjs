@@ -241,10 +241,12 @@ const DetailDokumenKerjasama = ({ token }) => {
                   <div className="circle-progress active-circle">
                     <span
                       className="title-progress"
-                      style={{ display: "block" }}
                     >
                       Submit Kerjasama
                     </span>
+
+                   
+
                   </div>
                 </div>
               </div>
