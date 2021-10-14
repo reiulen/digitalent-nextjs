@@ -330,7 +330,7 @@ const StepTwo = ({ token }) => {
                       onChange={(e) => setQuestionFile(e.target.files[0])}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {question_file ? question_file.name : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -361,7 +361,7 @@ const StepTwo = ({ token }) => {
                       onChange={(e) => setImageFile(e.target.files[0])}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {image_file ? image_file.name : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -422,11 +422,13 @@ const StepTwo = ({ token }) => {
                           subtance_question_detail.list_questions &&
                           subtance_question_detail.list_questions.map(
                             (question, i) => {
+                              const paginate = i + 1 * (page * limit);
+                              const dividers = limit - 1;
                               return (
                                 <tr key={question.id}>
                                   <td className="align-middle text-center">
                                     <span className="">
-                                      {i + 1 * (page * 5 || limit) - 4}
+                                      {paginate - dividers}
                                     </span>
                                   </td>
                                   <td className="align-middle font-weight-bold">
