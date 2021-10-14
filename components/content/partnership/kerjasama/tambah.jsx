@@ -199,15 +199,16 @@ const Tambah = ({ token }) => {
                   type="text"
                   value={date}
                   name="text_input"
-                  className="form-control mb-3 mb-lg-0"
+                  className="form-control mb-3 mb-lg-0 border-0"
                   // placeholder="Masukan Alamat E-mail"
+                  style={{backgroundColor:"transparent"}}
                 />
 
                 {error.date ? <p className="error-text">{error.date}</p> : ""}
               </div>
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-6">
+                  <div className="fv-row mb-6 position-relative" style={{zIndex:"4"}}>
                     <label className="required fw-bold fs-6 mb-2">
                       Lembaga
                     </label>
@@ -243,14 +244,15 @@ const Tambah = ({ token }) => {
                       type="text"
                       value={allMK.email}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
-                      placeholder="Masukan Alamat E-mail"
+                      className="form-control mb-3 mb-lg-0 border-0"
+                      // placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">
@@ -282,6 +284,39 @@ const Tambah = ({ token }) => {
                       className="form-control mb-3 mb-lg-0 mt-2"
                       placeholder="Tahun"
                     />
+                  </div>
+                </div>
+              </div> */}
+
+              <div className="row mb-4">
+                <div className="col-12 col-sm-6">
+                  <div className="form-group mb-4">
+                    <label>Periode Kerjasama</label>
+                    <div className="input-group">
+                      <input
+                        onFocus={() => setError({ ...error, period: "" })}
+                        type="text"
+                        value={period}
+                        className="form-control mb-lg-0"
+                        placeholder="Masukkan Lama Kerjasama"
+                        onChange={(e) => onChangePeriod(e)}
+                      />
+                      {error.period ? (
+                      <p className="error-text">{error.period}</p>
+                    ) : (
+                      ""
+                    )}
+                      <div className="input-group-append">
+                        <button
+                          className="btn btn-secondary"
+                          type="button"
+                          disabled
+                        >
+                          Tahun
+                        </button>
+                      </div>
+                      
+                    </div>
                   </div>
                 </div>
               </div>

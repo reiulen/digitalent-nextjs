@@ -205,7 +205,7 @@ const TambahMitra = ({ token }) => {
         let dataNewProvinces = data.data.map((items) => {
           return { ...items, label: items.name, value: items.id };
         });
-        dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
+        // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
         console.log("gagal get province", error);
@@ -232,7 +232,7 @@ const TambahMitra = ({ token }) => {
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };
           });
-          dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
+          // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
           console.log("gagal get cities", error);
@@ -457,7 +457,7 @@ const TambahMitra = ({ token }) => {
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder="Pilih provinsi"
-                      defaultValue={allProvinces[0]}
+                      // defaultValue={allProvinces[0]}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -489,7 +489,7 @@ const TambahMitra = ({ token }) => {
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder="Pilih data Kab/Kota"
-                      defaultValue={citiesAll[0]}
+                      // defaultValue={citiesAll[0]}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}

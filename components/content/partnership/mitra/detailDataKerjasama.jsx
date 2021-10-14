@@ -632,12 +632,15 @@ const DetailDataKerjasama = ({token}) => {
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue pr-10"
+                                    onChange={e =>
+                                          changeListStatus(e.target.value, items.id)
+                                        }
                                     
                                   >
-                                    <option value="6">Pengajuan-Selesai</option>
                                     <option value="5">
                                       Pengajuan-Pembahasan
                                     </option>
+                                    <option value="6">Pengajuan-Selesai</option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"

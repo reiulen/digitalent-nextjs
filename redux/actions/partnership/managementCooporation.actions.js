@@ -225,7 +225,7 @@ export const fetchListSelectMitra = (token) => {
       let dataNewLembaga = data.data.map((items) => {
         return { ...items, label: items.name, value: items.id };
       });
-      dataNewLembaga.splice(0, 0, { label: "Semua", value: "" });
+      // dataNewLembaga.splice(0, 0, { label: "Semua", value: "" });
 
       dispatch(successFetchListSelectMitra(dataNewLembaga));
     } catch (error) {
@@ -608,7 +608,7 @@ export const exportFileCSV = (token) => {
       );
       var url =
         urlExport.config.url +
-        `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}?authorization=Bearer ${token}`;
+        `?partner=${partnerState}&categories_cooporation=${categories_cooporationState}&status=${statusState}`;
 
       fetch(url, {
         paramssz,

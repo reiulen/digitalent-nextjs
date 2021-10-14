@@ -102,7 +102,7 @@ const DetailRevisiKerjasama = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
             <h3 className="card-title fz-20 fw-500 text-dark">
-              Detail Kerjasama Revisi
+              Revisi Kerjasama
             </h3>
           </div>
 
@@ -116,7 +116,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                     readOnly
                     value={date && date}
                     type="date"
-                    className="form-control mb-3 mb-lg-0"
+                    className="form-control mb-3 mb-lg-0 border-0"
                   />
                 </div>
               </div>
@@ -130,7 +130,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                       readOnly
                       value={title && title}
                       type="text"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                     />
                   </div>
                 </div>
@@ -138,8 +138,9 @@ const DetailRevisiKerjasama = ({ token }) => {
                   <div className="form-group mb-10">
                     <label className="required mb-2">Kategori Kerjasama</label>
                     <select
-                      className="form-control remove-icon-default"
+                      className="form-control remove-icon-default border-0"
                       disabled
+                      style={{backgroundColor:"transparent"}}
                     >
                       <option value="">
                         {cooperationID && cooperationID.name}
@@ -158,14 +159,14 @@ const DetailRevisiKerjasama = ({ token }) => {
                       readOnly
                       value={period && period}
                       type="number"
-                      className="form-control mb-3 mb-lg-0"
+                      className="form-control mb-3 mb-lg-0 border-0"
                     />
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
                   <div className="form-group mb-10">
                     <label className="required mb-2"></label>
-                    <select className="form-control mt-2" disabled>
+                    <select className="form-control mt-2 border-0 remove-icon-default" disabled style={{backgroundColor:"transparent"}}>
                       <option value="">Tahun</option>
                     </select>
                   </div>
@@ -198,7 +199,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                                 cols="30"
                                 rows="5"
                                 value={items.form_content}
-                                className="form-control"
+                                className="form-control border-0"
                                 placeholder="Tuliskan Tujuan Kerjasama"
                               ></textarea>
                             </div>

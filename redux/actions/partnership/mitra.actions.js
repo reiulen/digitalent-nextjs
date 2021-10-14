@@ -273,16 +273,43 @@ export const exportFileCSVDetail = (token, id) => {
   return async (dispatch, getState) => {
     let statusState = getState().allMitra.statusDetail || "";
     let cooperationState = getState().allMitra.categories_cooporation || "";
+
+    const paramssz = {
+      status: statusState,
+      categories_cooporation: cooperationState,
+    };
+
     try {
       let urlExport = await axios.get(
-        `${process.env.END_POINT_API_PARTNERSHIP}api/partners/excel/export-cooperation/${id}?categories_cooporation=${statusState}&status=${cooperationState}`,
+        `${process.env.END_POINT_API_PARTNERSHIP}api/partners/excel/export-cooperation/${id}`,
         {
+          paramssz,
           headers: {
             authorization: `Bearer ${token}`,
           },
         }
       );
-      router.push(urlExport.config.url);
+
+      var url =
+        urlExport.config.url +
+        `?categories_cooporation=${cooperationState}&status=${statusState}`;
+
+      fetch(url, {
+        paramssz,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.blob())
+        .then((blob) => {
+          var _url = window.URL.createObjectURL(blob);
+          window.open(_url, "_blank").focus();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      // router.push(urlExport.config.url);
     } catch (error) {
       console.log("object", error);
     }

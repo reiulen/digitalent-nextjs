@@ -178,7 +178,6 @@ a {
 }
 
 /* --------------------------------pembatas-------------- */
-
 .pageNumbers {
   list-style: none;
   display: flex;
@@ -234,7 +233,8 @@ a {
 }
 
 .disabled-form input {
-  background-color: #f3f6f9 !important;
+  background-color: transparent !important;
+  border: none !important;
 }
 
 .minimal-image img {
@@ -258,4 +258,14 @@ a {
 .select-pelatihan-danger {
   color: #ee2d41;
   background: #fdeaec;
+}
+
+.box-hide-arrow{
+      position: absolute;
+      height: 77%;
+      width: 3rem;
+      right: 4px;
+      top: 50%;
+      background-color: white;
+      transform: translateY(-50%);
 }
