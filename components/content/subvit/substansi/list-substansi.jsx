@@ -23,13 +23,13 @@ const ListSubstansi = ({ token }) => {
   const router = useRouter();
 
   const { loading, error, subtance } = useSelector(
-    state => state.allSubtanceQuestionBanks
+    (state) => state.allSubtanceQuestionBanks
   );
   const {
     loading: loadingDelete,
     error: errorDelete,
     isDeleted,
-  } = useSelector(state => state.deleteSubtanceQuestionBanks);
+  } = useSelector((state) => state.deleteSubtanceQuestionBanks);
 
   let { page = 1, success } = router.query;
   page = Number(page);
@@ -40,7 +40,7 @@ const ListSubstansi = ({ token }) => {
   useEffect(() => {
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        result => {
+        (result) => {
           if (result.isConfirmed) {
             window.location.reload();
           }
@@ -52,7 +52,7 @@ const ListSubstansi = ({ token }) => {
     }
   }, [dispatch, isDeleted]);
 
-  const handlePagination = pageNumber => {
+  const handlePagination = (pageNumber) => {
     let link = `${router.pathname}?page=${pageNumber}`;
     if (limit) link = link.concat(`&limit=${limit}`);
     if (search) link = link.concat(`&keyword=${search}`);
@@ -68,7 +68,7 @@ const ListSubstansi = ({ token }) => {
     }
   };
 
-  const handleLimit = val => {
+  const handleLimit = (val) => {
     setLimit(val);
     router.push(`${router.pathname}?page=1&limit=${val}`);
   };
@@ -77,7 +77,7 @@ const ListSubstansi = ({ token }) => {
     router.replace("/subvit/substansi", undefined, { shallow: true });
   };
 
-  const getStartAt = date => {
+  const getStartAt = (date) => {
     if (!date) {
       return "-";
     }
@@ -128,7 +128,7 @@ const ListSubstansi = ({ token }) => {
     return `${tanggal} ${bulan} ${tahun}`;
   };
 
-  const isFinish = date => {
+  const isFinish = (date) => {
     if (!date) {
       return "Belum Dilaksanakan";
     }
@@ -143,7 +143,7 @@ const ListSubstansi = ({ token }) => {
     }
   };
 
-  const handleDelete = id => {
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -153,7 +153,7 @@ const ListSubstansi = ({ token }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then(result => {
+    }).then((result) => {
       if (result.isConfirmed) {
         dispatch(deleteSubtanceQuestionBanks(id, token));
       }
@@ -279,7 +279,7 @@ const ListSubstansi = ({ token }) => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={(e) => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -327,12 +327,12 @@ const ListSubstansi = ({ token }) => {
                         subtance &&
                         subtance.list_substance &&
                         subtance.list_substance.map((subtance, i) => {
+                          const paginate = i + 1 * (page * limit);
+                          const dividers = limit - 1;
                           return (
                             <tr key={subtance.id}>
                               <td className="align-middle text-center">
-                                <span className="">
-                                  {i + 1 * (page * 5 || limit) - 4}
-                                </span>
+                                <span className="">{paginate - dividers}</span>
                               </td>
                               <td className="align-middle">
                                 <b>{subtance.academy.name}</b>
@@ -449,13 +449,13 @@ const ListSubstansi = ({ token }) => {
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
-                            width: "65px",
+                            width: "68px",
                             background: "#F3F6F9",
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={e => handleLimit(e.target.value)}
-                          onBlur={e => handleLimit(e.target.value)}
+                          onChange={(e) => handleLimit(e.target.value)}
+                          onBlur={(e) => handleLimit(e.target.value)}
                         >
                           <option>5</option>
                           <option>10</option>
