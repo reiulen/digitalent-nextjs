@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 // import LoginUser from "../../components/content/auth/user/login";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
-//check login login login
+//check deploy thusday 14 oct 21:23
 
 const LoginUser = dynamic(
   () => import("../../components/content/auth/user/login"),

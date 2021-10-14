@@ -96,16 +96,21 @@ const TambahVidio = ({ token }) => {
         // console.log ("check")
 
         if (type.includes(e.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setGambar(reader.result);
-                    setGambarPreview(reader.result);
-                }
-            };
-            reader.readAsDataURL(e.target.files[0])
-            setGambarName(e.target.files[0].name)
-            // console.log (reader.readAsDataURL(e.target.files[0]))
+            if (e.target.files[0].size > 5000000) {
+                e.target.value = null;
+                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            } else {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        setGambar(reader.result);
+                        setGambarPreview(reader.result);
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0])
+                setGambarName(e.target.files[0].name)
+                // console.log (reader.readAsDataURL(e.target.files[0]))
+            }
         }
 
         // if (e.target.name === 'gambar') {
@@ -278,7 +283,7 @@ const TambahVidio = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi Video</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Deskripsi Video</label>
                                 <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='Tulis Deskripsi' name="deskripsi" id="" rows="10" onChange={e => setIsiVideo(e.target.value)} value={isi_video} onBlur={() => simpleValidator.current.showMessageFor("isi_video")}></textarea>
                                     {simpleValidator.current.message("isi_video", isi_video, "required|max:160|min:5", { className: "text-danger" })}
@@ -289,7 +294,7 @@ const TambahVidio = ({ token }) => {
                             <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="col-sm-2 col-form-label font-weight-bolder"
+                                    className="col-sm-4 col-form-label font-weight-bolder"
                                 >
                                     Upload Thumbnail
                                 </label>
@@ -348,7 +353,7 @@ const TambahVidio = ({ token }) => {
                                     }
                                 </div>
 
-                                <div className="mt-3 col-sm-3 text-muted">
+                                <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
                                     <p>
                                         Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
@@ -358,7 +363,7 @@ const TambahVidio = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label className='col-sm-2 col-form-label font-weight-bolder'>Link URL Video</label>
+                                <label className='col-sm-4 col-form-label font-weight-bolder'>Link URL Video</label>
                                 <div className="col-sm-12">
                                     <div className="input-group">
                                         {/* <div className="input-group-prepend">
