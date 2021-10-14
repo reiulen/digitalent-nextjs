@@ -7,7 +7,8 @@ import SimpleReactValidator from 'simple-react-validator'
 import { useDispatch, useSelector } from "react-redux";
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from "next/router";
-import { TagsInput } from "react-tag-input-component";
+import { withContext as ReactTags } from "react-tag-input"
+// import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import DatePicker from 'react-datepicker'
 
@@ -360,10 +361,14 @@ const EditGaleri = ({ token }) => {
         } else {
             const list = [...image];
             list.splice(index, 1);
-            setImage(list);
+            setImage(list, { gambar: gambar, id: id });
             setTotalImage((totalImage) - 1)
+            // const list = [...image];
+            // list.splice(index, 1);
+            // setImage(list);
+            // setTotalImage((totalImage) - 1)
         }
-
+        console.log("Delete Image :", image)
     };
 
     const onAddImage = () => {
@@ -463,7 +468,8 @@ const EditGaleri = ({ token }) => {
         for (let i = 0; i < image.length; i++) {
             flag += 1
 
-            temps.push(image[i].imageBase64)
+            // temps.push(image[i].imageBase64)
+            temps.push(image[i])
 
             if (flag === image.length) {
                 handleData(temps, updateGaleri)
@@ -705,6 +711,7 @@ const EditGaleri = ({ token }) => {
                                                             <div className="position-relative">
                                                                 <label
                                                                     className="circle-bottom"
+                                                                    id={`inputGroupFile${i}`}
                                                                     // htmlFor={`inputGroupFile${i}`}
                                                                     onClick={() => onDeleteImage(i)}
                                                                 >
@@ -785,13 +792,19 @@ const EditGaleri = ({ token }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
                                 <div className="col-sm-12">
-                                    <TagsInput
+                                    <ReactTags
+                                        value={tag}
+                                        handleInputChange={(data) => { handleTag(data) }}
+                                        allowDeleteFromEmptyInput={true}
+                                        placeHolder="Isi Tag disini"
+                                    />
+                                    {/* <TagsInput
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
                                         name="fruits"
                                         placeHolder="Isi Tag disini"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
-                                    />
+                                    /> */}
                                     {
                                         disableTag === true ?
                                             <p className="text-danger">
