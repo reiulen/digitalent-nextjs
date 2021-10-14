@@ -8,6 +8,7 @@ import {
 
 import Layout from "../../../wrapper/layout.wrapper";
 import FilterBar from "../../../../components/FilterBar";
+import SubHeaderComponent from "../../../../components/template/Subheader.component";
 import FilterSide from "../../../../components/FilterSide";
 import TrainingReminder from "../../../../components/TrainingReminder";
 
@@ -16,13 +17,13 @@ import TrainingReminder from "../../../../components/TrainingReminder";
 const DetailAkademi = () => {
     return (
         <Layout title="Detail Akademi">
-            <FilterBar />
-            
-            <div className="my-5 bg-white rounded">
+            <SubHeaderComponent />
+
+            <div className="my-5 bg-white rounded ">
                 <div className="row ">
                     <div className="col-2 py-3 ml-4">
                         <Image 
-                            src={`/assets/media/logo-akademi.svg`}
+                            src={`/assets/media/logo-vsga.svg`}
                             width={150}
                             height={150}
                         />
@@ -45,6 +46,10 @@ const DetailAkademi = () => {
                     </div>
                 </div>
             </div>
+            
+            <FilterBar />
+            
+            
 
             <div className="row">
                 <div className="col-3">

@@ -1151,7 +1151,7 @@ const Beranda = () => {
 
                                                                                
                                                                                 {
-                                                                                    show[index].showButton && show[index].showButton === true ?
+                                                                                    show === true ?
                                                                                         <div className=" col-6 text-right">
                                                                                             <button className="btn btn-white rounded-circle mr-3 p-1 text-center">
                                                                                                 <i className="ri-share-line"></i>
