@@ -363,8 +363,8 @@ const EditArtikel = ({ token }) => {
               //   });
               // }
 
-              // dispatch(updateArtikel(data, token));
-              console.log(data)
+              dispatch(updateArtikel(data, token));
+              // console.log(data)
             }
           });
         } else {
@@ -399,8 +399,8 @@ const EditArtikel = ({ token }) => {
               //   });
               // }
 
-              // dispatch(updateArtikel(data, token));
-              console.log(data)
+              dispatch(updateArtikel(data, token));
+              // console.log(data)
             }
           });
         }
@@ -476,8 +476,8 @@ const EditArtikel = ({ token }) => {
               //   });
               // }
 
-              // dispatch(updateArtikel(data, token));
-              console.log(data)
+              dispatch(updateArtikel(data, token));
+              // console.log(data)
             }
           });
         } else {
@@ -512,8 +512,8 @@ const EditArtikel = ({ token }) => {
               //   });
               // }
 
-              // dispatch(updateArtikel(data, token));
-              console.log(data)
+              dispatch(updateArtikel(data, token));
+              // console.log(data)
             }
           });
         }
