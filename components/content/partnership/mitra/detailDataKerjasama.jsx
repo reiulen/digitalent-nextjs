@@ -931,6 +931,11 @@ const DetailDataKerjasama = ({token}) => {
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                        onClick={() =>
+                                          router.push(
+                                            `/partnership/kerjasama/view/${items.id}`
+                                          )
+                                        }
                                        
                                       >
                                         <IconEye
@@ -954,6 +959,9 @@ const DetailDataKerjasama = ({token}) => {
                                       </button> */}
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          cooperationDelete(items.id)
+                                        }
                                        
                                       >
                                         <IconDelete width="16" height="16" />
