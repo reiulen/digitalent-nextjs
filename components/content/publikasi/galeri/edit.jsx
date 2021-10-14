@@ -644,7 +644,7 @@ const EditGaleri = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi Galeri</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Deskripsi Galeri</label>
                                 <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri}></textarea>
                                     {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}
@@ -652,7 +652,7 @@ const EditGaleri = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Upload Gambar</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Upload Gambar</label>
                                 {/* <div className="col-sm-12">
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
@@ -753,7 +753,7 @@ const EditGaleri = ({ token }) => {
                                                 </button>
                                             </div>
 
-                                            <div className="mt-3 col-sm-3 text-muted">
+                                            <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
                                                 <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                             </div>
                                         </div>

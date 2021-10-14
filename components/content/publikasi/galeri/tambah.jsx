@@ -561,7 +561,7 @@ const TambahGaleri = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Upload Gambar</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Upload Gambar</label>
 
                                 {/* {
                                     totalImage === 1 ?
@@ -1696,7 +1696,7 @@ const TambahGaleri = ({ token }) => {
                                         </button>
                                     </div>
 
-                                    <div className="mt-3 col-sm-3 text-muted">
+                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
                                         <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                     </div>
                                 </div>

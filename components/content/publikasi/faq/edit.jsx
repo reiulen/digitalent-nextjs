@@ -190,7 +190,7 @@ const EditFaq = ({token}) => {
                             <div className="card-body">
                                 <form onSubmit={onSubmit}>
                                     <div className="form-group">
-                                        <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul Pertanyaan</label>
+                                        <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Judul Pertanyaan</label>
                                         <div className="col-sm-12">
                                             <input
                                                 type="text"
