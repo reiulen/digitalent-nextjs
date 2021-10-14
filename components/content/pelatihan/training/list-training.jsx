@@ -90,7 +90,6 @@ const ListTraining = ({ token }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [showModalRevisi, setShowModalRevisi] = useState(false);
-  const [publishValue, setPublishValue] = useState(null);
 
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
@@ -177,13 +176,13 @@ const ListTraining = ({ token }) => {
         pageNumber,
         search,
         limit,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        dateRegister,
+        dateStart,
+        statusSubstansi != null ? statusSubstansi.value : null,
+        statusPelatihan != null ? statusPelatihan.value : null,
+        penyelenggara != null ? penyelenggara.value : null,
+        academy,
+        theme,
         token
       )
     );
