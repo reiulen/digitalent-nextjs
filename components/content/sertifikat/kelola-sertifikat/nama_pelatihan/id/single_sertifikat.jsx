@@ -116,7 +116,7 @@ export default function KelolasertifikatID({ token }) {
                     <div className="row align-items-center zindex-1">
                       <div className="position-relative">
                         <div className="m-6 text-center px-4 border-2">
-                          Nomer Sertifikat
+                          Nomor Sertifikat
                         </div>
                       </div>
                       <div
@@ -296,7 +296,7 @@ export default function KelolasertifikatID({ token }) {
                           style={{ height: "370px" }}
                         >
                           <div style={{ fontSize: "14px", fontWeight: "bold" }}>
-                            Silabus yang di dapat
+                            Silabus yang didapat
                           </div>
                           <div>
                             <ol className="col mt-4">
