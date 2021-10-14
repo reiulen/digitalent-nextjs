@@ -29,7 +29,7 @@ export default function TambahMasterSertifikat({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const { query } = router;
-  console.log(query);
+
   // #Div Reference Lembar 1
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
@@ -45,9 +45,24 @@ export default function TambahMasterSertifikat({ token }) {
     certificate,
   } = useSelector(state => state.detailCertificates);
 
-  const { error, certificate: newCertificate } = useSelector(
-    state => state.newCertificates
-  );
+  const {
+    error,
+    certificate: newCertificate,
+    success,
+  } = useSelector(state => state.newCertificates);
+
+  useEffect(() => {
+    if (newCertificate) {
+      router.push({
+        pathname: `/sertifikat/kelola-sertifikat/${query.theme_name}`,
+        query: {
+          id: query.theme_id,
+          message: newCertificate.message,
+          created: true,
+        },
+      });
+    }
+  }, [newCertificate]);
 
   // #Redux state
   const simpleValidator = useRef(new SimpleReactValidator({ locale: "id" }));
@@ -108,7 +123,7 @@ export default function TambahMasterSertifikat({ token }) {
   const [background_syllabus, setBackground_syllabus] = useState("");
   const [background, setBackground] = useState("");
 
-  const [nomerSertifikat, setNomerSertifikat] = useState("Nomer Sertifikat");
+  const [nomerSertifikat, setNomerSertifikat] = useState("Nomor Sertifikat");
   const [tanggal, setTanggal] = useState("--/--/----");
   const [tahun, setTahun] = useState("----");
 
@@ -122,22 +137,25 @@ export default function TambahMasterSertifikat({ token }) {
   }, [number_of_signature_syllabus]);
 
   const handleImageTandaTangan = (e, index) => {
-    if (e.target.name === "image") {
-      const reader = new FileReader();
-      let arr = [...imageName];
-      arr[index] = e.target.files[0].name;
-      setImageName(arr);
-      reader.onload = () => {
-        // console.log(e.target.files[0].name, "ini filesnya");
-
-        if (reader.readyState === 2) {
-          let newArr = [...signature_certificate_image];
-          newArr[index] = reader.result;
-          setSignature_certificate_image(newArr);
+    if (e.target.files[0].size > 5000000) {
+      e.target.value = null;
+      Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    } else {
+      if (e.target.name === "image") {
+        const reader = new FileReader();
+        let arr = [...imageName];
+        arr[index] = e.target.files[0].name;
+        setImageName(arr);
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            let newArr = [...signature_certificate_image];
+            newArr[index] = reader.result;
+            setSignature_certificate_image(newArr);
+          }
+        };
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
         }
-      };
-      if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
       }
     }
   };
@@ -163,21 +181,26 @@ export default function TambahMasterSertifikat({ token }) {
 
   // #START LEMBAR 2
   const handleImageTandaTanganSyllabus = (e, index) => {
-    if (e.target.name === "image") {
-      const reader = new FileReader();
-      let arr = [...imageNameSyllabus];
-      arr[index] = e.target.files[0].name;
-      setImageNameSyllabus(arr);
+    if (e.target.files[0].size > 5000000) {
+      e.target.value = null;
+      Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    } else {
+      if (e.target.name === "image") {
+        const reader = new FileReader();
+        let arr = [...imageNameSyllabus];
+        arr[index] = e.target.files[0].name;
+        setImageNameSyllabus(arr);
 
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          let newArr = [...signature_certificate_image_syllabus];
-          newArr[index] = reader.result;
-          setSignature_certificate_image_syllabus(newArr);
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            let newArr = [...signature_certificate_image_syllabus];
+            newArr[index] = reader.result;
+            setSignature_certificate_image_syllabus(newArr);
+          }
+        };
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
         }
-      };
-      if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
       }
     }
   };
@@ -203,45 +226,55 @@ export default function TambahMasterSertifikat({ token }) {
 
   // # START BACKGROUND IMAGE 1
   const onChangeBackground = e => {
-    const type = ["image/jpg", "image/png", "image/jpeg"];
-
-    if (type.includes(e.target.files[0].type)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setBackground(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
+    if (e.target.files[0].size > 5000000) {
       e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data background.",
-        "error"
-      );
+      Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    } else {
+      const type = ["image/jpg", "image/png", "image/jpeg"];
+
+      if (type.includes(e.target.files[0].type)) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setBackground(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      } else {
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data background.",
+          "error"
+        );
+      }
     }
   };
   // # END BACKGROUND IMAGE 1
 
   // # START BACKGROUND IMAGE 2
   const onChangeBackgroundLembar2 = e => {
-    const type = ["image/jpg", "image/png", "image/jpeg"];
-    if (type.includes(e.target.files[0].type)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setBackground_syllabus(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
+    if (e.target.files[0].size > 5000000) {
       e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data background.",
-        "error"
-      );
+      Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    } else {
+      const type = ["image/jpg", "image/png", "image/jpeg"];
+      if (type.includes(e.target.files[0].type)) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setBackground_syllabus(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      } else {
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data background.",
+          "error"
+        );
+      }
     }
   };
   const [, forceUpdate] = useState();
@@ -260,7 +293,6 @@ export default function TambahMasterSertifikat({ token }) {
   const handlePost = async (e, status) => {
     try {
       // e.preventDefault();
-      // console.log(simpleValidator.current.fields["Tanda tangan"])
       if (certificate_type == "1 lembar") {
         simpleValidator.current.fields.Jabatan = true;
         simpleValidator.current.fields.Nama = true;
@@ -344,14 +376,6 @@ export default function TambahMasterSertifikat({ token }) {
         formData.append("status_migrate_id", status);
 
         dispatch(newSertifikat(id, formData, token));
-
-        // router.push({
-        //   pathname: `/sertifikat/kelola-sertifikat/${query.theme_name}`,
-        //   query: { id: query.theme_id, success: true },
-        // });
-        router.push(
-          `/sertifikat/kelola-sertifikat/${query.theme_name}?id=${query.theme_id}&success=true`
-        );
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -387,7 +411,7 @@ export default function TambahMasterSertifikat({ token }) {
   return (
     <PageWrapper>
       {/* error START */}
-      {error ? (
+      {error || errorDetail ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -395,7 +419,7 @@ export default function TambahMasterSertifikat({ token }) {
           <div className="alert-icon">
             <i className="flaticon-warning"></i>
           </div>
-          <div className="alert-text">{error}</div>
+          <div className="alert-text">{error || errorDetail}</div>
           <div className="alert-close">
             <button
               type="button"
