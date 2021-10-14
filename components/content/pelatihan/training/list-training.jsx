@@ -16,6 +16,7 @@ import {
   updateStatusPublish,
   updateStatusPelatihan,
 } from "../../../../redux/actions/pelatihan/training.actions";
+import { getListRevisi } from "../../../../redux/actions/pelatihan/review.actions";
 import {
   DELETE_TRAINING_RESET,
   CLEAR_STATUS,
@@ -33,11 +34,17 @@ const ListTraining = ({ token }) => {
 
   let { success } = router.query;
 
+  const { error: errorRevisi, revisi } = useSelector(
+    (state) => state.listRevisi
+  );
   const {
     loading: allLoading,
     error: allError,
     training,
   } = useSelector((state) => state.allTraining);
+  const { error: cardError, training: cardTraining } = useSelector(
+    (state) => state.cardTraining
+  );
   const {
     loading: statusLoading,
     error: statusError,
@@ -50,6 +57,8 @@ const ListTraining = ({ token }) => {
   const { error: dropdownErrorTema, data: dataTema } = useSelector(
     (state) => state.drowpdownTema
   );
+  const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
+    useSelector((state) => state.drowpdownPenyelenggara);
   const {
     loading: deleteLoading,
     error: deleteError,
@@ -72,8 +81,13 @@ const ListTraining = ({ token }) => {
     error = deleteError;
   } else if (statusError) {
     error = statusError;
+  } else if (cardError) {
+    error = cardError;
+  } else if (errorRevisi) {
+    error = errorRevisi;
   }
 
+  const [note, setNote] = useState("");
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
@@ -87,10 +101,17 @@ const ListTraining = ({ token }) => {
 
   const [showModal, setShowModal] = useState(false);
   const [showModalRevisi, setShowModalRevisi] = useState(false);
-  const [publishValue, setPublishValue] = useState(null);
 
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
+  const optionsPenyelenggara = [];
+  for (let index = 0; index < dataPenyelenggara.data.length; index++) {
+    let val = {
+      value: dataPenyelenggara.data[index].id,
+      label: dataPenyelenggara.data[index].value,
+    };
+    optionsPenyelenggara.push(val);
+  }
 
   const optionsStatusPelatihan = [
     { value: "review substansi", label: "Review Substansi" },
@@ -156,34 +177,36 @@ const ListTraining = ({ token }) => {
         type: CLEAR_STATUS,
       });
     }
-  }, [isDeleted, statusSuccess, dispatch, token]);
+
+    if (revisi && revisi.length !== 0) {
+      revisi.map((row, i) => {
+        setNote(row.revisi);
+      });
+      // console.log(Object.keys(revisi).length);
+      // console.log(revisi);
+    }
+  }, [isDeleted, statusSuccess, dispatch, token, revisi]);
 
   const handlePagination = (pageNumber) => {
-    // let link = `${router.pathname}?page=${pageNumber}`;
-    // if (limit) link = link.concat(`&limit=${limit}`);
-    // if (search) link = link.concat(`&keyword=${search}`);
-    // router.push(link);
     setPage(pageNumber);
     dispatch(
       getAllTraining(
         pageNumber,
         search,
         limit,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        dateRegister,
+        dateStart,
+        statusSubstansi != null ? statusSubstansi.value : null,
+        statusPelatihan != null ? statusPelatihan.value : null,
+        penyelenggara != null ? penyelenggara.value : null,
+        academy,
+        theme,
         token
       )
     );
   };
 
   const handleSearch = () => {
-    // let link = `${router.pathname}?page=1&keyword=${search}`;
-    // if (limit) link = link.concat(`&limit=${limit}`);
     setPage(1);
     dispatch(
       getAllTraining(
@@ -200,22 +223,9 @@ const ListTraining = ({ token }) => {
         token
       )
     );
-    // router.push(link);
   };
 
   const handleFilter = () => {
-    // let link = `${router.pathname}?page=${1}`;
-    // if (penyelenggara)
-    //   link = link.concat(`&penyelenggara=${penyelenggara.value}`);
-    // if (academy) link = link.concat(`&akademi=${academy.value}`);
-    // if (theme) link = link.concat(`&tema=${theme.value}`);
-    // if (statusSubstansi)
-    //   link = link.concat(`&status_substansi=${statusSubstansi.value}`);
-    // if (statusPelatihan)
-    //   link = link.concat(`&status_pelatihan=${statusPelatihan.value}`);
-    // if (dateRegister) link = link.concat(`&pendaftaran_mulai=${dateRegister}`);
-    // if (dateStart) link = link.concat(`&pelatihan_mulai=${dateStart}`);
-    // router.push(link);
     setShowModal(false);
     setPage(1);
     dispatch(
@@ -320,12 +330,10 @@ const ListTraining = ({ token }) => {
   };
 
   const handlePublish = (val, type) => {
-    // setPublishValue(val);
-    // let link = `${router.pathname}?page=${1}&card=${val}`;
-    // if (search) link = link.concat(`&keyword=${search}`);
-    // router.push(link);
     setPage(1);
-    if (type === "pelatihan") {
+    const label = val.charAt(0).toUpperCase() + val.slice(1);
+    if (type === "status_pelatihan") {
+      setStatusPelatihan({ label, value: val });
       dispatch(
         getAllTraining(
           1,
@@ -341,7 +349,8 @@ const ListTraining = ({ token }) => {
           token
         )
       );
-    } else {
+    } else if ("status_substansi") {
+      setStatusSubstansi({ label, value: val });
       dispatch(
         getAllTraining(
           1,
@@ -355,6 +364,23 @@ const ListTraining = ({ token }) => {
           null,
           null,
           token
+        )
+      );
+    } else {
+      dispatch(
+        getAllTraining(
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          token,
+          val
         )
       );
     }
@@ -379,6 +405,7 @@ const ListTraining = ({ token }) => {
   };
 
   const handleModalRevisi = (id) => {
+    dispatch(getListRevisi(token, id));
     setShowModalRevisi(true);
   };
 
@@ -439,51 +466,61 @@ const ListTraining = ({ token }) => {
             background="bg-primary"
             icon="new/add-user.svg"
             color="#FFFFFF"
-            value={0}
+            value={cardTraining[0].count}
             titleValue=""
             title="Selesai"
-            publishedVal="selesai"
-            routePublish={() => handlePublish("selesai", "pelatihan")}
+            publishedVal={cardTraining[0].status}
+            routePublish={() =>
+              handlePublish(cardTraining[0].status, cardTraining[0].condisi)
+            }
           />
           <CardPage
             background="bg-secondary"
             icon="new/done-circle.svg"
             color="#FFFFFF"
-            value={0}
+            value={cardTraining[1].count}
             titleValue=""
             title="Disetujui"
-            publishedVal="disetujui"
-            routePublish={() => handlePublish("disetujui", "substansi")}
+            publishedVal={cardTraining[1].status}
+            routePublish={() =>
+              handlePublish(cardTraining[1].status, cardTraining[1].condisi)
+            }
           />
           <CardPage
             background="bg-success"
             icon="new/open-book.svg"
             color="#FFFFFF"
-            value={0}
+            value={cardTraining[2].count}
             titleValue=""
             title="Revisi"
-            publishedVal="revisi"
-            routePublish={() => handlePublish("revisi", "substansi")}
+            publishedVal={cardTraining[2].status}
+            routePublish={() =>
+              handlePublish(cardTraining[2].status, cardTraining[2].condisi)
+            }
           />
           <CardPage
             background="bg-warning"
             icon="new/mail-white.svg"
             color="#FFFFFF"
-            value={0}
+            value={cardTraining[3].count}
             titleValue=""
             title="Menunggu Review"
-            publishedVal="menunggu"
-            routePublish={() => handlePublish("menunggu", "pelatihan")}
+            publishedVal={cardTraining[3].status}
+            routePublish={() =>
+              handlePublish(cardTraining[3].status, cardTraining[3].condisi)
+            }
           />
           <CardPage
             background="bg-extras"
             icon="new/block-white.svg"
             color="#FFFFFF"
-            value={0}
+            value={cardTraining[4].count}
             titleValue=""
             title="Berjalan"
-            publishedVal="berjalan"
-            routePublish={() => handlePublish("berjalan", "pelatihan")}
+            publishedVal={cardTraining[4].status}
+            routePublish={() =>
+              handlePublish(cardTraining[4].status, cardTraining[4].condisi)
+            }
           />
         </div>
       </div>
@@ -514,7 +551,7 @@ const ListTraining = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-6 col-xl-6">
-                  <div className="position-relative overflow-hidden mt-3">
+                  <div className="position-relative overflow-hidden mb-2 mt-3">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -537,7 +574,7 @@ const ListTraining = ({ token }) => {
 
                 <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1 w-100"
+                    className="btn border d-flex align-items-center justify-content-between mb-2 w-100"
                     style={{
                       color: "#bdbdbd",
                       float: "right",
@@ -554,7 +591,7 @@ const ListTraining = ({ token }) => {
 
                 <div className="col-md-2">
                   <button
-                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white mt-2"
+                    className="btn w-100 btn-rounded-full bg-blue-secondary text-white"
                     type="button"
                     onClick={handleExportReport}
                   >
@@ -665,7 +702,7 @@ const ListTraining = ({ token }) => {
                                   id=""
                                   className="select-pelatihan select-pelatihan-success"
                                   key={i}
-                                  value={row.status_substansi}
+                                  value={row.status_pelatihan}
                                   onChange={(e) =>
                                     handleStatusPelatihan(
                                       row.id,
@@ -874,7 +911,7 @@ const ListTraining = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Penyelenggara</label>
             <Select
-              options={optionsAkademi}
+              options={optionsPenyelenggara}
               defaultValue={penyelenggara}
               onChange={(e) =>
                 setPenyelenggara({ value: e.value, label: e.label })
@@ -979,7 +1016,12 @@ const ListTraining = ({ token }) => {
         <Modal.Body>
           <div className="form-group mb-5">
             <label className="p-0">Isi Catatan</label>
-            <textarea rows="5" className="form-control" disabled></textarea>
+            <textarea
+              rows="5"
+              className="form-control"
+              value={note}
+              disabled
+            ></textarea>
           </div>
         </Modal.Body>
         <Modal.Footer>

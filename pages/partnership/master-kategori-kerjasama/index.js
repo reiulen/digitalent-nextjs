@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
+import { fetchAllMKCooporation } from "../../../redux/actions/partnership/mk_cooporation.actions";
 const MasterKategoriKerjasama = dynamic(
   () =>
     import(
@@ -22,7 +23,7 @@ export default function KategoriKerjasama(props) {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  () =>
+  (store) =>
     async ({ req }) => {
       const session = await getSession({ req });
       if (!session) {
@@ -33,6 +34,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      await store.dispatch(fetchAllMKCooporation(session.user.user.data.token));
 
       return {
         props: { session, title: "Master Kategori Kerjasama - Partnership" },

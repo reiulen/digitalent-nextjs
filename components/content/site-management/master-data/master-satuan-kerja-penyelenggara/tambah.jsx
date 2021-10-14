@@ -10,18 +10,110 @@ import IconPencil from "../../../../assets/icon/Pencil";
 import IconDelete from "../../../../assets/icon/Delete";
 import IconAdd from "../../../../assets/icon/Add";
 import IconSearch from "../../../../assets/icon/Search";
+import Select from "react-select";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const TambahApi = ({ token }) => {
-  let dispatch = useDispatch();
   const router = useRouter();
+  let selectRefProvinsi = null;
 
-  const onNewReset = () => {
-    router.replace("/site-management/api", undefined, {
-      shallow: true,
+  const drowpdownProvinsi = useSelector((state) => state.drowpdownProvinsi);
+  let tempOptionsProvinsi = drowpdownProvinsi.data.data;
+  const [provinsi, setProvinsi] = useState([]);
+  const [nameUnitWork, setNameUnitWork] = useState("");
+  const [status, setStatus] = useState("");
+  const [valueProvinsi, setValueProvinsi] = useState("");
+  const [kabupaten, setKabupaten] = useState([]);
+
+  // filter data just region show
+  const changeListProvinsi = (e) => {
+    let data = e.map((items) => {
+      return { ...items, region: items.label };
     });
+    const datas = data.map((items) => {
+      return {
+        region: items.region,
+      };
+    });
+
+    setValueProvinsi(datas)
+
+    console.log("change provinsi value", datas);
   };
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    if (nameUnitWork === "") {
+      Swal.fire(
+        "Gagal simpan",
+        "Form nama satuan kerja tidak boleh kosong",
+        "error"
+      );
+    } else if (status === "") {
+      Swal.fire("Gagal simpan", "Form status tidak boleh kosong", "error");
+    } else if (valueProvinsi === ""){
+      Swal.fire("Gagal simpan", "Form provinsi tidak boleh kosong", "error");
+    } else {
+      Swal.fire({
+        title: "Apakah anda yakin simpan ?",
+        // text: "Data ini tidak bisa dikembalikan !",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        cancelButtonText: "Batal",
+        confirmButtonText: "Ya !",
+        dismissOnDestroy: false,
+      }).then(async (result) => {
+        if (result.value) {
+          const sendData = {
+            name: nameUnitWork,
+            status: status,
+            data:valueProvinsi
+          };
+
+          try {
+            let { data } = await axios.post(
+              `${process.env.END_POINT_API_SITE_MANAGEMENT}api/satuan/store`,
+              sendData,
+              {
+                headers: {
+                  authorization: `Bearer ${token}`,
+                },
+              }
+            );
+
+            Swal.fire("Berhasil", "Data berhasil disimpan", "succes").then(
+              () => {
+                router.push(
+                  `/site-management/master-data/master-satuan-kerja-penyelenggara/`
+                );
+              }
+            );
+          } catch (error) {
+            console.log(error);
+            Swal.fire(
+              "Gagal simpan",
+              `${error.response.data.message}`,
+              "error"
+            );
+          }
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    let optionProvinsi = tempOptionsProvinsi.map((items) => {
+      return { ...items, label: items.value };
+    });
+    setProvinsi(optionProvinsi);
+  }, [tempOptionsProvinsi]);
   return (
     <PageWrapper>
+        <form onSubmit={submit}>
       <div className="col-lg-12 order-1 px-0">
         <div className="card card-custom card-stretch gutter-b">
           <div className="card-header border-0">
@@ -33,28 +125,49 @@ const TambahApi = ({ token }) => {
             </h3>
           </div>
           <div className="card-body pt-0">
-            <form>
+          
               <div className="form-group">
                 <label>Nama Satuan Kerja</label>
                 <input
+                  onChange={(e) => setNameUnitWork(e.target.value)}
                   type="text"
                   className="form-control"
                   placeholder="Placeholder"
                 />
-                <span className="form-text text-muted">
+                {/* <span className="form-text text-muted">
                   Please enter your full name
-                </span>
+                </span> */}
               </div>
               <div className="form-group">
-                <label htmlFor="exampleSelect1">Status</label>
-                <select className="form-control" id="exampleSelect1">
-                  <option>Placeholder</option>
+                <label>Status</label>
+                <select className="form-control" id="exampleSelect1" onChange={(e)=>setStatus(e.target.value)}>
+                  <option value="">Pilih Status</option>
+                  <option value="Aktif">Aktif</option>
+                  <option value="Tidak Aktif">Tidak Aktif</option>
                 </select>
-                <span className="form-text text-muted">
+              </div>
+              <div className="form-group">
+                <label htmlFor="exampleSelect1">Provinsi</label>
+                <Select
+                  ref={(ref) => (selectRefProvinsi = ref)}
+                  className="basic-single"
+                  classNamePrefix="select"
+                  placeholder="Pilih provinsi"
+                  isMulti
+                  // defaultValue={allMK.stateListMitra[0]}
+                  isDisabled={false}
+                  isLoading={false}
+                  isClearable={false}
+                  isRtl={false}
+                  isSearchable={true}
+                  name="color"
+                  onChange={(e) => changeListProvinsi(e)}
+                  options={provinsi}
+                />
+                {/* <span className="form-text text-muted">
                   Please enter your full name
-                </span>
-              </div>{" "}
-            </form>
+                </span> */}
+              </div>
             <div className="form-group row">
               <div className="col-sm-12 d-flex justify-content-end">
                 <Link
@@ -66,7 +179,7 @@ const TambahApi = ({ token }) => {
                   </a>
                 </Link>
                 <button
-                  type="button"
+                  type="submit"
                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white"
                 >
                   Simpan
@@ -76,6 +189,7 @@ const TambahApi = ({ token }) => {
           </div>
         </div>
       </div>
+      </form>
     </PageWrapper>
   );
 };

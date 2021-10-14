@@ -81,13 +81,13 @@ const ListReview = ({ token }) => {
         pageNumber,
         search,
         limit,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        dateRegister,
+        dateStart,
+        statusSubstansi != null ? statusSubstansi.value : null,
+        statusPelatihan != null ? statusPelatihan.value : null,
+        penyelenggara != null ? penyelenggara.value : null,
+        academy,
+        theme,
         token
       )
     );
@@ -185,7 +185,11 @@ const ListReview = ({ token }) => {
 
   const handlePublish = (val, type) => {
     setPage(1);
+    const label = val.charAt(0).toUpperCase() + val.slice(1);
+    // console.log(label);
+    // console.log(val);
     if (type === "pelatihan") {
+      setStatusPelatihan({ label, value: val });
       dispatch(
         getAllListReview(
           1,
@@ -202,6 +206,7 @@ const ListReview = ({ token }) => {
         )
       );
     } else {
+      setStatusSubstansi({ label, value: val });
       dispatch(
         getAllListReview(
           1,
@@ -278,7 +283,6 @@ const ListReview = ({ token }) => {
       )}
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row">
-          {/* {console.log(cardReview[1])} */}
           <CardPage
             background="bg-success"
             icon="new/open-book.svg"
@@ -344,11 +348,8 @@ const ListReview = ({ token }) => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-8 col-xl-8">
-                  <div
-                    className="position-relative overflow-hidden mt-3"
-                    style={{ maxWidth: "330px" }}
-                  >
+                <div className="col-lg-4 col-xl-4">
+                  <div className="position-relative overflow-hidden mt-3 mb-2">
                     <i className="ri-search-line left-center-absolute ml-2"></i>
                     <input
                       type="text"
@@ -369,11 +370,12 @@ const ListReview = ({ token }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-4 col-xl-4 justify-content-end d-flex">
+                <div className="col-lg-5 col-xl-5"></div>
+
+                <div className="col-lg-3 col-xl-3 justify-content-end d-flex">
                   <button
-                    className="btn border d-flex align-items-center justify-content-between mt-1"
+                    className="btn border d-flex align-items-center justify-content-between mt-1 btn-block"
                     style={{
-                      minWidth: "280px",
                       color: "#bdbdbd",
                       float: "right",
                     }}

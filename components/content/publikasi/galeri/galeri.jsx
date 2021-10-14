@@ -3,10 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-<<<<<<< HEAD
-=======
 import styles from "../../../../styles/previewGaleri.module.css";
->>>>>>> 9c54057a7dd25236275ef5bd51fc462bdebd4cab
 
 import Pagination from "react-js-pagination";
 import { css } from "@emotion/react";
@@ -43,17 +40,17 @@ const Galeri = ({ token }) => {
     loading: allLoading,
     error,
     galeri,
-  } = useSelector((state) => state.allGaleri);
+  } = useSelector(state => state.allGaleri);
   const {
     loading: deleteLoading,
     error: deleteError,
     isDeleted,
-  } = useSelector((state) => state.deleteGaleri);
+  } = useSelector(state => state.deleteGaleri);
   const {
     loading: viewLoading,
     error: viewError,
     isViewed,
-  } = useSelector((state) => state.viewedGaleri);
+  } = useSelector(state => state.viewedGaleri);
 
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
@@ -62,7 +59,7 @@ const Galeri = ({ token }) => {
   const [publishValue, setPublishValue] = useState(null);
   const [index_galleri, setIndexGalleri] = useState(null);
   const [disableEndDate, setDisableEndDate] = useState(true);
-  const [previewImage, setPreviewImage] = useState(0);
+  const [previewImage, setPreviewImage] = useState(false);
 
   let loading = false;
 
@@ -84,7 +81,7 @@ const Galeri = ({ token }) => {
 
     if (isDeleted) {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
-        (result) => {
+        result => {
           if (result.isConfirmed) {
             window.location.reload();
           }
@@ -104,7 +101,7 @@ const Galeri = ({ token }) => {
     router.replace("/publikasi/galeri", undefined, { shallow: true });
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     Swal.fire({
       title: "Apakah anda yakin ?",
       text: "Data ini tidak bisa dikembalikan !",
@@ -114,14 +111,14 @@ const Galeri = ({ token }) => {
       cancelButtonColor: "#d33",
       confirmButtonText: "Ya !",
       cancelButtonText: "Batal",
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
         dispatch(deleteGaleri(id, token));
       }
     });
   };
 
-  const handlePagination = (pageNumber) => {
+  const handlePagination = pageNumber => {
     if (
       limit !== null &&
       search === "" &&
@@ -379,7 +376,7 @@ const Galeri = ({ token }) => {
 
   // };
 
-  const handleLimit = (val) => {
+  const handleLimit = val => {
     setLimit(val);
     if (search === "" && publishValue === null) {
       router.push(`${router.pathname}?page=1&limit=${val}`);
@@ -404,7 +401,7 @@ const Galeri = ({ token }) => {
     }
   };
 
-  const handlePublish = (val) => {
+  const handlePublish = val => {
     if (val !== null || val !== "") {
       setPublishValue(val);
 
@@ -505,6 +502,7 @@ const Galeri = ({ token }) => {
   };
 
   const printImage = () => {
+    // console.log("isViewed :", isViewed.judul)
     return galeri && galeri.gallery.length !== 0 && index_galleri !== null ? (
       <>
         <div
@@ -515,47 +513,63 @@ const Galeri = ({ token }) => {
         >
           <div
             className="carousel-inner"
-            style={{ position: "absolute", left: "-12px" }}
+            style={{ position: "absolute", left: "-13px" }}
           >
             <div className="carousel-item active">
-              <div className={styles["img-prevModal"]}>
-                <Image
-                  unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                  loader={() =>
-                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                    "publikasi/images/" +
-                    galeri.gallery[index_galleri].gambar
-                  }
-                  src={
-                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                    "publikasi/images/" +
-                    galeri.gallery[index_galleri].gambar
-                  }
-                  alt="image"
-                  layout="fill"
-                  objectFit="fill"
-                />
-              </div>
+              {isViewed && isViewed.length !== 0
+                ? isViewed.gambar.map((row, i) => {
+                    console.log("DAta :", row.id);
+                    return (
+                      <div className={styles["img-prevModal"]} key={row.id}>
+                        <Image
+                          unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                          loader={() =>
+                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                            "publikasi/images/" +
+                            row.gambar
+                          }
+                          src={
+                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                            "publikasi/images/" +
+                            row.gambar
+                          }
+                          alt="image"
+                          layout="fill"
+                          objectFit="fill"
+                        />
+                      </div>
+                    );
+                  })
+                : null}
             </div>
             <div className="carousel-item">
-              <div className={styles["img-prevModal"]}>
-                <Image
-                  unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
-                  loader={() =>
-                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                    "publikasi/images/" +
-                    galeri.gallery[1].gambar
-                  }
-                  src={
-                    process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                    "publikasi/images/" +
-                    galeri.gallery[1].gambar
-                  }
-                  alt="image"
-                  layout="fill"
-                  objectFit="fill"
-                />
-              </div>
+              {isViewed && isViewed.length !== 0
+                ? // <>
+                  isViewed.gambar.map((row, i) => {
+                    console.log("DAta :", row);
+                    return (
+                      <div className={styles["img-prevModal"]} key={i}>
+                        <Image
+                          unoptimized={process.env.ENVIRONMENT !== "PRODUCTION"}
+                          loader={() =>
+                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                            "publikasi/images/" +
+                            row.gambar
+                          }
+                          src={
+                            process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                            "publikasi/images/" +
+                            row.gambar
+                          }
+                          alt="image"
+                          layout="fill"
+                          objectFit="fill"
+                        />
+                      </div>
+                    );
+                  })
+                : // </>
+                  null}
             </div>
           </div>
           <button
@@ -605,7 +619,7 @@ const Galeri = ({ token }) => {
     setDisableEndDate(true);
   };
 
-  const handleStartDate = (date) => {
+  const handleStartDate = date => {
     setStartDate(date);
     setDisableEndDate(false);
   };
@@ -746,7 +760,7 @@ const Galeri = ({ token }) => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={e => setSearch(e.target.value)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"
@@ -828,7 +842,7 @@ const Galeri = ({ token }) => {
                                   <DatePicker
                                     className="form-search-date form-control-sm form-control"
                                     selected={startDate}
-                                    onChange={(date) => handleStartDate(date)}
+                                    onChange={date => handleStartDate(date)}
                                     selectsStart
                                     startDate={startDate}
                                     endDate={endDate}
@@ -850,7 +864,7 @@ const Galeri = ({ token }) => {
                                   <DatePicker
                                     className="form-search-date form-control-sm form-control"
                                     selected={endDate}
-                                    onChange={(date) => setEndDate(date)}
+                                    onChange={date => setEndDate(date)}
                                     selectsEnd
                                     startDate={startDate}
                                     endDate={endDate}
@@ -1112,8 +1126,8 @@ const Galeri = ({ token }) => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={(e) => handleLimit(e.target.value)}
-                          onBlur={(e) => handleLimit(e.target.value)}
+                          onChange={e => handleLimit(e.target.value)}
+                          onBlur={e => handleLimit(e.target.value)}
                         >
                           <option
                             value="5"
@@ -1128,16 +1142,22 @@ const Galeri = ({ token }) => {
                             10
                           </option>
                           <option
-                            value="15"
-                            selected={limit == "15" ? true : false}
+                            value="30"
+                            selected={limit == "30" ? true : false}
                           >
-                            15
+                            30
                           </option>
                           <option
-                            value="20"
-                            selected={limit == "20" ? true : false}
+                            value="40"
+                            selected={limit == "40" ? true : false}
                           >
-                            20
+                            40
+                          </option>
+                          <option
+                            value="50"
+                            selected={limit == "50" ? true : false}
+                          >
+                            50
                           </option>
                         </select>
                       </div>
@@ -1171,7 +1191,7 @@ const Galeri = ({ token }) => {
         aria-hidden="true"
       >
         <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
+          <div className="modal-content mr-5" style={{ background: "none" }}>
             {/* <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLongTitle">Pratinjau Gambar</h5>
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close">
@@ -1185,7 +1205,9 @@ const Galeri = ({ token }) => {
               <div className={styles["posModal"]}>
                 <div className="col-6">
                   {/* {console.log("Cek Modal Image :", galeri.gallery)} */}
-                  {printImage()}
+                  <div className={styles["img-left"]}>
+                    {isViewed && <>{printImage()}</>}
+                  </div>
                   {/* {
                                         galeri && galeri.gallery.length !== 0 ?
                                             galeri.gallery.map((row, i) => {
@@ -1241,7 +1263,6 @@ const Galeri = ({ token }) => {
                                             null
                                     } */}
                 </div>
-                {/* <div className="col-1"></div> */}
                 <div className="col-6" style={{ padding: "30px" }}>
                   {/* {console.log("CEK :",galeri.gallery)} */}
                   {galeri &&
@@ -1272,46 +1293,43 @@ const Galeri = ({ token }) => {
                       </div>
                       <div className="row mb-4" style={{ textAlign: "left" }}>
                         <div className="col-6">
-                          <div
-                            style={{ fontSize: "11px", marginLeft: "-10px" }}
-                            className="mb-1 p-0 d-flex align-items-center"
-                          >
-                            <i className="flaticon2-calendar-4"></i>
-                            <span className="ml-2">
-                              Publish:{" "}
-                              {moment(
-                                galeri.gallery[index_galleri].tanggal_publish
-                              ).format("LL")}
-                            </span>
-                          </div>
+                          <div className={styles["subMenuPreview"]}>
+                            <div className="mb-1 p-0 d-flex align-items-center">
+                              <div className={styles["iconPreview"]}>
+                                <i className="flaticon2-calendar-4"></i>
+                              </div>
+                              <span className="ml-2">
+                                Publish:{" "}
+                                {moment(
+                                  galeri.gallery[index_galleri].tanggal_publish
+                                ).format("LL")}
+                              </span>
+                            </div>
 
-                          <div
-                            style={{ fontSize: "11px", marginLeft: "-10px" }}
-                            className="mb-1 p-0 d-flex align-items-center"
-                          >
-                            <i className="flaticon2-user"></i>
-                            <span className="ml-2">
-                              {/* User : Super Admin */}
-                              Author : {galeri.gallery[index_galleri].role}
-                            </span>
+                            <div className="mb-1 p-0 d-flex align-items-center">
+                              <i className="flaticon2-user"></i>
+                              <span className="ml-2">
+                                {/* User : Super Admin */}
+                                Author : {galeri.gallery[index_galleri].role}
+                              </span>
+                            </div>
                           </div>
                         </div>
 
                         <div className="col-6">
-                          <div
-                            style={{ fontSize: "11px", marginLeft: "-10px" }}
-                            className="mb-1 p-0 d-flex align-items-center"
-                          >
-                            <i className="ri-dashboard-line"></i>
-                            <span className="ml-2">
-                              {/* User : Super Admin */}
-                              Kategori :{" "}
-                              {galeri.gallery[index_galleri].nama_kategori}
-                            </span>
+                          <div className={styles["subMenuPreview"]}>
+                            <div className="mb-1 p-0 d-flex align-items-center">
+                              <i className="ri-dashboard-line"></i>
+                              <span className="ml-2">
+                                {/* User : Super Admin */}
+                                Kategori :{" "}
+                                {galeri.gallery[index_galleri].nama_kategori}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                      <hr style={{ width: "375px", marginLeft: "-30px" }} />
+                      <hr className={styles["strip"]} />
                       <div className="row mb-1">
                         <p
                           className={styles["description-img"]}
@@ -1321,13 +1339,14 @@ const Galeri = ({ token }) => {
                         ></p>
                         {galeri.gallery[index_galleri].tag !== null
                           ? galeri.gallery[index_galleri].tag.map((row, i) => {
-                              // { console.log("Cek Tag :", row) }
                               return (
                                 <span
                                   className="mr-3 label label-inline label-light-success font-weight-bold"
                                   key={i}
                                 >
-                                  {row}
+                                  <div className={styles["tagModal"]}>
+                                    {row}
+                                  </div>
                                 </span>
                               );
                             })

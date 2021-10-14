@@ -104,43 +104,43 @@ const EditGaleri = ({ token }) => {
         </div>
     ));
 
-    useEffect(() => {
-        handleDataToArr(galeri.gambar)
-    })
+    // useEffect(() => {
+    //     handleDataToArr(galeri.gambar)
+    // })
 
     useEffect(() => {
+      handleDataToArr(galeri.gambar);
+      // dispatch(getAllKategori())
 
-        // dispatch(getAllKategori())
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
 
-        files.forEach(file => URL.revokeObjectURL(file.preview));
+      // if (success) {
+      //     dispatch({
+      //         type: NEW_GALERI_RESET
+      //     })
+      // }
 
-        // if (success) {
-        //     dispatch({
-        //         type: NEW_GALERI_RESET
-        //     })
-        // }
+      // let temps = []
 
-        // let temps = []
+      // for (let i = 0; i < files.length; i++) {
+      //     const reader = new FileReader()
 
-        // for (let i = 0; i < files.length; i++) {
-        //     const reader = new FileReader()
+      //     reader.onload = () => {
+      //         temps.push(reader.result)
+      //     }
 
-        //     reader.onload = () => {
-        //         temps.push(reader.result)
-        //     }
+      //     reader.readAsDataURL(files[i])
+      // }
 
-        //     reader.readAsDataURL(files[i])
-        // }
+      // setGambar(temps)
 
-        // setGambar(temps)
-
-        if (success) {
-            router.push({
-                pathname: `/publikasi/galeri`,
-                query: { success: true }
-            })
-        }
-    }, [dispatch, error, success, files, router]);
+      if (success) {
+        router.push({
+          pathname: `/publikasi/galeri`,
+          query: { success: true },
+        });
+      }
+    }, [dispatch, error, success, files, router, galeri.gambar]);
 
     const [id, setId] = useState(galeri.id_gallery);
     // const [id, setId] = useState(galeri.id);
@@ -242,25 +242,49 @@ const EditGaleri = ({ token }) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
         let list = [...image];
         if (type.includes(e.target.files[0].type)) {
-            // list[index].imageFile = e.target.files[0];
-            const reader = new FileReader();
+            if (e.target.files[0].size > 5000000) {
+                e.target.value = null;
+                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            } else {
+                list[index].imageFile = e.target.files[0];
+                list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+                list[index].imageName = e.target.files[0].name;
+                console.log("List :", list)
+                setImage(list);
 
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    list[index].imagePreview = reader.result;
-                    list[index].imageBase64 = reader.result;
-                }
-                // router.reload(window.location.pathname)
-                setImage([
-                    ...image,
-                ]);
-            };
+                console.log("IMAGE :", image);
+                // reader.readAsDataURL(e.target.files[0]);
+                // list[index].imageName = e.target.files[0].name;
+                // setImage(list);
+            }
+            // if (e.target.files[0].size > 5000000) {
+            //     e.target.value = null;
+            //     Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            // } else {
+            //     // list[index].imageFile = e.target.files[0];
+            //     const reader = new FileReader();
 
-            reader.readAsDataURL(e.target.files[0]);
-            list[index].imageName = e.target.files[0].name;
-            setImage(list);
+            //     reader.onload = () => {
+            //         if (reader.readyState === 2) {
+            //             // list[index].imagePreview = reader.result;
+            //             // list[index].imageBase64 = reader.result;
+            //             list[index].imageFile = e.target.files[0];
+            //             list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+            //             list[index].imageName = e.target.files[0].name;
+            //             // console.log("List :", list)
+            //             setImage(list);
+            //         }
+            //         // router.reload(window.location.pathname)
+            //         // setImage([
+            //         //     ...image,
+            //         // ]);
+            //     };
 
-
+            //     console.log("IMAGE :", image);
+            //     reader.readAsDataURL(e.target.files[0]);
+            //     // list[index].imageName = e.target.files[0].name;
+            //     // setImage(list);
+            // }
         } else {
             e.target.value = null;
             Swal.fire(
@@ -270,6 +294,37 @@ const EditGaleri = ({ token }) => {
             );
         }
     };
+
+    // const onChangeImage = (e, index) => {
+    //     const type = ["image/jpg", "image/png", "image/jpeg"];
+    //     let list = [...image];
+    //     if (type.includes(e.target.files[0].type)) {
+    //       if (e.target.files[0].size > 5000000) {
+    //         e.target.value = null;
+    //         Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    //       } else {
+    //         list[index].imageFile = e.target.files[0];
+    //         list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+    //         list[index].imageName = e.target.files[0].name;
+    //         console.log(list)
+    //         setImage(list);
+    //       }
+    //       console.log(image);
+    //       // const reader = new FileReader();
+    //       // reader.onload = () => {
+    //       //   if (reader.readyState === 2) {
+    //       //   }
+    //       // };
+    //       // reader.readAsDataURL(e.target.files[0]);
+    //     } else {
+    //       e.target.value = null;
+    //       Swal.fire(
+    //         "Oops !",
+    //         "Data yang bisa dimasukkan hanya berupa data gambar.",
+    //         "error"
+    //       );
+    //     }
+    //   };
 
     const handleChangePublish = (e) => {
         // setPublish(e.target.checked);
@@ -355,7 +410,7 @@ const EditGaleri = ({ token }) => {
             }
 
             // dispatch(newGaleri(data, token))
-            dispatch(onCall(data, token))
+            // dispatch(onCall(data, token))
             console.log("Unpublish : ", data)
             // console.log(image)
 
@@ -374,7 +429,7 @@ const EditGaleri = ({ token }) => {
                 _method,
             }
 
-            dispatch(onCall(data, token))
+            // dispatch(onCall(data, token))
             console.log("Publish : ", data)
             // console.log(image)
         }
@@ -388,7 +443,8 @@ const EditGaleri = ({ token }) => {
 
         if (success) {
             dispatch({
-                type: NEW_GALERI_RESET,
+                type: UPDATE_GALERI_RESET,
+                // type: NEW_GALERI_RESET,
             });
         }
 
@@ -412,7 +468,7 @@ const EditGaleri = ({ token }) => {
                 handleData(temps, updateGaleri)
             }
         }
-
+        console.log("Temp :", temps)
     }
 
     // const onSubmit = (e) => {
@@ -518,9 +574,9 @@ const EditGaleri = ({ token }) => {
 
     return (
         <PageWrapper>
-            {
+            {/* {
                 console.log("Cek Edit Image :", galeri)
-            }
+            } */}
 
             {/* {
                 console.log (image)
@@ -732,7 +788,7 @@ const EditGaleri = ({ token }) => {
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
                                         name="fruits"
-                                        placeHolder="Isi Tag disini dan Enter"
+                                        placeHolder="Isi Tag disini"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
                                     />
                                     {

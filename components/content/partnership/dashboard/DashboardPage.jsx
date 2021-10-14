@@ -9,15 +9,19 @@ import { fetchDashboard } from "../../../../redux/actions/partnership/dashboard.
 import IconCompalation from "../../../../public/assets/icon/Compilation.svg";
 import IconFoldercheck from "../../../../public/assets/icon/Foldercheck.svg";
 import IconWarningCircle from "../../../../public/assets/icon/Warningcircle.svg";
-import IconStop from "../../../../public/assets/icon/Stop.svg";
+import IconStop from "../../../../public/assets/icon/folder-forbid-line.svg";
 import Image from "next/image";
 import { PieChart, Pie, Cell } from "recharts";
+import { getSession } from "next-auth/client";
+
 
 import axios from "axios";
 
 export default function DashboardPage({ token }) {
   let dispatch = useDispatch();
   const allDashboard = useSelector((state) => state.allDashboard);
+  const [user, setUser] = useState("")
+  console.log("user",user)
 
   const colors = ["#215480", "#4299E1", "#357AB4"];
   const [dataPieChartStatusPengajuan, setDataPieChartStatusPengajuan] =
@@ -64,13 +68,16 @@ export default function DashboardPage({ token }) {
     }
     fetchDashboards();
     dispatch(fetchDashboard(token));
+    getSession().then((session) => {
+      setUser(session.user.user.data.user);
+    });
   }, [dispatch,token]);
   return (
     <PageWrapper>
       {/* head content */}
 
       <div
-        className="position-relative br-12 bg-neutral py-10 px-6 overflow-hidden"
+        className="position-relative br-12 bg-white py-10 px-6 overflow-hidden"
         style={{ height: "197px", maxHeight: "197px" }}
       >
         <div className="right-center-absolute">
@@ -81,11 +88,9 @@ export default function DashboardPage({ token }) {
           <Image src={ImagePlants} alt="imagehero" />
         </div>
 
-        <h5 className="text-blue-secondary fw-600 fz-18">Hallo Admin A</h5>
-        <p className="text-gray-primary fw-600 fz-12">
-          Sudah Makan Hari ini?
-          <br />
-          Kalau sudah yuk dicheck verifikasi Test untuk hari ini :)
+        <h5 className="text-blue-secondary fw-600 fz-24">Hallo {user.name} !</h5>
+        <p className="text-gray-primary fw-600 fz-16">
+          Selamat Datang di Dashboard Partnership, yuk cek pengajuan kerjasama mitra hari ini.
         </p>
       </div>
       {/* sec 1 */}
@@ -114,12 +119,12 @@ export default function DashboardPage({ token }) {
         <div className="col-12 col-sm-6">
           <div className="br-12 bg-white px-10 py-6 mt-2">
             <h5 className="mt-4 fw-600 fz-16 text-blue-thirty">
-              Berdasarkan Pengajuan aktif dan disetujui
+              Berdasarkan Pengajuan Aktif & Tidak Aktif
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
               {allDashboard.data_dashboard.data?.cooperation_active +
                 allDashboard.data_dashboard.data?.cooperation_approved}{" "}
-              Total Aktif dan Disetujui
+              Total Aktif dan Tidak Aktif
             </h5>
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">
@@ -183,7 +188,7 @@ export default function DashboardPage({ token }) {
                         {allDashboard.data_dashboard.data?.cooperation_approved}
                       </p>
                       <p className="mb-0 mt-2 text-gray-secondary fw-500 fz-12">
-                        Disetujui
+                        Tidak Aktif
                       </p>
                     </div>
                   </div>

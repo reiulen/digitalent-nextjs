@@ -81,7 +81,7 @@ function RevisiList({ token }) {
                             <p className="mt-4" style={{ color: "#ADB5BD" }}>
                               {items.information1}
                             </p>
-                            <p style={{ color: "#ADB5BD" }}>
+                            <p style={{ color: "red" }}>
                               Revisi Versi.{items.version}
                             </p>
                           </div>

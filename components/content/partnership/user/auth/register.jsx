@@ -170,7 +170,7 @@ const RegisterMitra = () => {
               style={{ marginTop: "30px" }}
             >
               <form onSubmit={submit}>
-                <div className="form-group mb-2">
+                <div className="form-group mb-6">
                   <label className="form-auth-label">Nama Lembaga</label>
                   <input
                     type="text"
@@ -180,7 +180,7 @@ const RegisterMitra = () => {
                     placeholder="Masukkan Nama Lembaga"
                   />
                 </div>
-                <div className="form-group mb-2">
+                <div className="form-group mb-6">
                   <label className="form-auth-label">E-mail</label>
                   <input
                     type="email"
@@ -190,7 +190,7 @@ const RegisterMitra = () => {
                     placeholder="Masukkan Email Anda"
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group mb-6">
                   <label className="form-auth-label">Password</label>
                   <div className="position-relative">
                     <input
@@ -216,7 +216,7 @@ const RegisterMitra = () => {
                     )}
                   </div>
                 </div>
-                <div className="form-group">
+                <div className="form-group mb-6">
                   <label className="form-auth-label">Konfirmasi Password</label>
                   <div className="position-relative">
                     <input

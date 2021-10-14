@@ -10,7 +10,7 @@ import { wrapper } from "../../../../redux/store";
 export default function PreviewArtikel(props) {
   const session = props.session.user.user.data;
   return (
-    <div className="wrapper-preview">
+    <div className="wrapper-preview" style={{background:'#fff'}}>
       <div className="d-flex flex-column flex-root content-preview">
         <Preview token={session.token} />
       </div>

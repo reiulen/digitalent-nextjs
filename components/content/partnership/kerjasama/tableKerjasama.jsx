@@ -522,7 +522,7 @@ const Table = ({ token }) => {
                                         className="basic-single"
                                         classNamePrefix="select"
                                         placeholder="Semua"
-                                        defaultValue={allMK.stateListMitra[0]}
+                                        // defaultValue={allMK.stateListMitra[0]}
                                         isDisabled={false}
                                         isLoading={false}
                                         isClearable={false}
@@ -542,9 +542,9 @@ const Table = ({ token }) => {
                                         className="basic-single"
                                         classNamePrefix="select"
                                         placeholder="Semua"
-                                        defaultValue={
-                                          allMK.stateListKerjaSama[0]
-                                        }
+                                        // defaultValue={
+                                        //   allMK.stateListKerjaSama[0]
+                                        // }
                                         isDisabled={false}
                                         isLoading={false}
                                         isClearable={false}
@@ -568,7 +568,7 @@ const Table = ({ token }) => {
                                         className="basic-single"
                                         classNamePrefix="select"
                                         placeholder="Semua"
-                                        defaultValue={allMK.stateListStatus[0]}
+                                        // defaultValue={allMK.stateListStatus[0]}
                                         isDisabled={false}
                                         isLoading={false}
                                         isClearable={false}
@@ -797,13 +797,6 @@ const Table = ({ token }) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="">
                                           Pengajuan - Review
