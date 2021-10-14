@@ -81,13 +81,13 @@ const ListReview = ({ token }) => {
         pageNumber,
         search,
         limit,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        dateRegister,
+        dateStart,
+        statusSubstansi != null ? statusSubstansi.value : null,
+        statusPelatihan != null ? statusPelatihan.value : null,
+        penyelenggara != null ? penyelenggara.value : null,
+        academy,
+        theme,
         token
       )
     );
@@ -185,7 +185,11 @@ const ListReview = ({ token }) => {
 
   const handlePublish = (val, type) => {
     setPage(1);
+    const label = val.charAt(0).toUpperCase() + val.slice(1);
+    // console.log(label);
+    // console.log(val);
     if (type === "pelatihan") {
+      setStatusPelatihan({ label, value: val });
       dispatch(
         getAllListReview(
           1,
@@ -202,6 +206,7 @@ const ListReview = ({ token }) => {
         )
       );
     } else {
+      setStatusSubstansi({ label, value: val });
       dispatch(
         getAllListReview(
           1,
@@ -278,7 +283,6 @@ const ListReview = ({ token }) => {
       )}
       <div className="col-lg-12 col-md-12 col-sm-12">
         <div className="row">
-          {/* {console.log(cardReview[1])} */}
           <CardPage
             background="bg-success"
             icon="new/open-book.svg"

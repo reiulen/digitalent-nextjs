@@ -28,6 +28,7 @@ import {
   dropdownZonasi,
   dropdownProvinsi,
   dropdownKabupaten,
+  dropdownPenyelenggara,
 } from "../../../../redux/actions/pelatihan/function.actions";
 
 import { wrapper } from "../../../../redux/store";
@@ -69,6 +70,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(dropdownZonasi(session.user.user.data.token));
       await store.dispatch(dropdownProvinsi(session.user.user.data.token));
       await store.dispatch(dropdownKabupaten(session.user.user.data.token));
+      await store.dispatch(dropdownPenyelenggara(session.user.user.data.token));
 
       return {
         props: { session, title: "Tambah Pelatihan - Pelatihan" },

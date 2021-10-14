@@ -25,7 +25,7 @@ export default function DashboardPage(props) {
   return (
     <>
       <Layout title="Dashboard Peserta - Pelatihan" session={session}>
-        <Dashboard />
+        <Dashboard session={session} />
       </Layout>
     </>
   );
@@ -45,14 +45,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
       const data = session.user.user.data;
       console.log(data);
-      // if (data.roles.length === 0 || data.roles[0] !== "user") {
-      //   return {
-      //     redirect: {
-      //       destination: "/login",
-      //       permanent: false,
-      //     },
-      //   };
-      // }
+      if (data.roles[0] !== "user") {
+        return {
+          redirect: {
+            destination: "/login",
+            permanent: false,
+          },
+        };
+      }
 
       return {
         props: { data: "auth", session, title: "Dashboard - Peserta" },

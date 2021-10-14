@@ -265,6 +265,7 @@ import {
   deleteTrainingReducer,
   updateStatusReducer,
 } from "./pelatihan/training.reducers";
+// =================== review pelatihan ==================
 import {
   allListReviewReducer,
   cardReviewReducer,
@@ -275,6 +276,8 @@ import {
   revisiReviewReducer,
   tolakReviewReducer,
 } from "./pelatihan/review.reducers";
+// =================== rekap pelatihan ==================
+import { allSummaryReducer } from "./pelatihan/summary.reducers";
 //END PELATIHAN
 
 // functional reducer
@@ -294,6 +297,15 @@ import {
 } from "./pelatihan/function.reducers";
 import { allProvinsiReducer, allKotaReducer } from "./utils/utils.reducers";
 import { reducerFunctionals } from "./utils/functionals.reducer";
+
+
+// BERANDA
+import {
+  allAkademiReducer,
+  temaByAkademiReducer,
+  pelatihanByTemaReducer,
+} from "../reducers/beranda/beranda.reducers"
+//END BERANDA
 
 const reducer = combineReducers({
   // PUBLIKASI
@@ -527,6 +539,9 @@ const reducer = combineReducers({
   revisiReview: revisiReviewReducer,
   tolakReview: tolakReviewReducer,
 
+  // ========== rekap pelatihan ========
+  allSummary: allSummaryReducer,
+
   trainingStep1: trainingStep1Reducer,
   registrationStep2: registrationStep2Reducer,
   commitmentStep3: commitmentStep3Reducer,
@@ -541,6 +556,12 @@ const reducer = combineReducers({
   drowpdownPenyelenggara: drowpdownPenyelenggaraReducers,
   updateStatus: updateStatusReducer,
   //END PELATIHAN
+
+  //BERANDA
+  allAkademi: allAkademiReducer,
+  temaByAkademi: temaByAkademiReducer,
+  pelatihanByTema:pelatihanByTemaReducer
+  //END BERANDA
 });
 
 export default reducer;
