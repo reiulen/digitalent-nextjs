@@ -96,16 +96,21 @@ const TambahVidio = ({ token }) => {
         // console.log ("check")
 
         if (type.includes(e.target.files[0].type)) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setGambar(reader.result);
-                    setGambarPreview(reader.result);
-                }
-            };
-            reader.readAsDataURL(e.target.files[0])
-            setGambarName(e.target.files[0].name)
-            // console.log (reader.readAsDataURL(e.target.files[0]))
+            if (e.target.files[0].size > 5000000) {
+                e.target.value = null;
+                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            } else {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        setGambar(reader.result);
+                        setGambarPreview(reader.result);
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0])
+                setGambarName(e.target.files[0].name)
+                // console.log (reader.readAsDataURL(e.target.files[0]))
+            }
         }
 
         // if (e.target.name === 'gambar') {
