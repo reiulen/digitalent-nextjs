@@ -191,8 +191,8 @@ const RegisterMitra = () => {
                   />
                 </div>
                 <div className="form-group mb-6">
-                  <label className="form-auth-label">Password</label>
-                  <div className="position-relative">
+                  <label className="form-auth-label">Passwdord</label>
+                  <div className="position-relative mb-4">
                     <input
                       id="input-password"
                       type="password"
@@ -201,6 +201,9 @@ const RegisterMitra = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Masukkan Password Anda"
                     />
+
+                    
+                    
                     {hidePassword === true ? (
                       <i
                         className="ri-eye-fill right-center-absolute cursor-pointer"
@@ -215,6 +218,7 @@ const RegisterMitra = () => {
                       />
                     )}
                   </div>
+                  <span className="text-white">Minimal 8 Karakter yang berisi kombinasi huruf besar, huruf kecil, angka, dan simbol.</span>
                 </div>
                 <div className="form-group mb-6">
                   <label className="form-auth-label">Konfirmasi Password</label>

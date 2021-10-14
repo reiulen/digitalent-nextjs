@@ -21,7 +21,6 @@ export default function DashboardPage({ token }) {
   let dispatch = useDispatch();
   const allDashboard = useSelector((state) => state.allDashboard);
   const [user, setUser] = useState("")
-  console.log("user",user)
 
   const colors = ["#215480", "#4299E1", "#357AB4"];
   const [dataPieChartStatusPengajuan, setDataPieChartStatusPengajuan] =
@@ -206,7 +205,7 @@ export default function DashboardPage({ token }) {
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
               {allDashboard.data_dashboard.data?.cooperation_will_expired +
-                allDashboard.data_dashboard.data?.cooperation_rejected}
+                allDashboard.data_dashboard.data?.cooperation_rejected}{" "}
               Akan Berakhir & Ditolak
             </h5>
             <div className="wrapper-chart-pie">

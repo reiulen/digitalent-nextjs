@@ -36,7 +36,7 @@
 }
 
 .iconBorder{
-    background-color: #215480;
+    background-color: #007CFF;
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -52,6 +52,12 @@
 
 .listTag{
     display: flex;
+}
+
+.titleSubMenu-2{
+    display: flex;
+    align-items: center;
+    margin-left: -13px
 }
 
 @media only screen and (max-width: 1024px) {
@@ -111,8 +117,6 @@
     }
     .titleSubMenu-2{
         font-size: 10px;
-        display: flex;
-        align-items: center;
     }
     .isiBerita{
         /* border: 1px solid black; */

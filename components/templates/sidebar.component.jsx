@@ -563,7 +563,7 @@ const Sidebar = ({ session }) => {
           className="aside-menu my-4"
           data-menu-vertical="1"
           data-menu-scroll="1"
-          data-menu-dropdown-timeout="500"
+          // data-menu-dropdown-timeout="500"
         >
           {!session ? (
             ""

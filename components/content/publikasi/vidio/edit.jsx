@@ -589,7 +589,7 @@ const EditVideo = ({ token }) => {
                                 </div>
 
                                 <div className="form-group">
-                                    <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Link URL Video:</label>
+                                    <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Link URL Video:</label>
                                     <div className="col-sm-12 input-group">
                                         {/* <div className="input-group-prepend">
                                             <div className="input-group-text">https://</div>
