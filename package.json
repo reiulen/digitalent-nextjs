@@ -45,7 +45,7 @@
     "embla-carousel": "^5.0.1",
     "file-saver": "^2.0.5",
     "gulp": "4.0.2",
-    "html-to-image": "^1.8.5",
+    "html-to-image": "^1.9.0",
     "i": "^0.3.7",
     "js-cookie": "^3.0.1",
     "lodash.debounce": "^4.0.8",

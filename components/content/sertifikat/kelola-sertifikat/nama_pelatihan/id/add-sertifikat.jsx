@@ -280,7 +280,6 @@ export default function TambahMasterSertifikat({ token }) {
       cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
-      skipAutoScale: true,
     });
     return data;
   };

@@ -36,11 +36,11 @@
     font-size: 3.8vw;
 }
 
-.responsive-margin {
-    margin-top: 45px;
+.responsive-margin-peserta {
+    margin-top: 35px;
 }
 
-.responsive-font-size {
+.responsive-font-size-peserta {
     font-size: 10px;
 }
 
@@ -51,12 +51,12 @@
 
 /* tablet */
 @media(min-width: 768px) {
-    .responsive-margin {
-        margin-top: 130px;
+    .responsive-margin-peserta {
+        margin-top: 115px;
     }
 
-    .responsive-font-size {
-        font-size: 18px;
+    .responsive-font-size-peserta {
+        font-size: 16px;
     }
 }
 
@@ -79,22 +79,22 @@
         font-size: 0.75vw;
     }
 
-    .responsive-margin {
-        margin-top: 120px;
+    .responsive-margin-peserta {
+        margin-top: 105px;
     }
 
-    .responsive-font-size {
-        font-size: 22px;
+    .responsive-font-size-peserta {
+        font-size: 20px;
     }
 }
 
 /* normal */
 @media (min-width: 1200px) {
-    .responsive-margin {
-        margin-top: 150px;
+    .responsive-margin-peserta {
+        margin-top: 140px;
     }
 
-    .responsive-font-size {
+    .responsive-font-size-peserta {
         font-size: 24px;
     }
 

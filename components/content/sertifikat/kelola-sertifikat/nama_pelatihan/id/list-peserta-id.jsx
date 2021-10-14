@@ -39,6 +39,7 @@ export default function ListPesertaID({ token }) {
     }
   };
   const divReference = useRef(null);
+  const divReferenceSyllabus = useRef(null);
 
   const handleDownload = useCallback(() => {
     if (divReference.current === null) {
@@ -49,16 +50,37 @@ export default function ListPesertaID({ token }) {
       canvasHeight: 595,
       canvasWidth: 842,
     })
-      .then(dataUrl => {
+      .then(image => {
         const link = document.createElement("a");
-        link.download = "my-image-name.png";
-        link.href = dataUrl;
+        link.download = `Sertifikat - ${query.name}.png`;
+        link.href = image;
         link.click();
       })
       .catch(err => {
         console.log(err);
       });
-  }, [divReference]);
+  }, [divReference, query.name]);
+
+  const handleDownloadSyllabus = useCallback(() => {
+    if (divReferenceSyllabus.current == null) {
+      return;
+    }
+
+    toPng(divReferenceSyllabus.current, {
+      cacheBust: true,
+      canvasWidth: 842,
+      canvasHeight: 595,
+    })
+      .then(image => {
+        const link = document.createElement("a");
+        link.download = `Sertifikat - ${query.name} - Syllabus.png`;
+        link.href = image;
+        link.click();
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [divReferenceSyllabus, query.name]);
 
   return (
     <PageWrapper>
@@ -94,15 +116,10 @@ export default function ListPesertaID({ token }) {
         <div className="card card-custom card-stretch gutter-b">
           {/* START HEADER */}
           <div className="card-header border-0 d-flex justify-content-lg-between row my-auto py-10">
-            <div className="card-title d-flex">
-              <div className="text-dark">Nama Sertifikat :</div>
+            <div className="card-title d-flex ">
+              <div className="text-dark ">Nama Sertifikat :</div>
               <div className="mx-6">
-                <div
-                  type="text"
-                  className="form-control "
-                  // placeholder="Masukan Nama Sertifikat"
-                  // value={certificate.data.certificate.name}
-                >
+                <div type="text" className="form-control w-100 h-100">
                   {certificate?.data?.certificate?.name || "Nama sertifikat"}
                 </div>
               </div>
@@ -123,11 +140,7 @@ export default function ListPesertaID({ token }) {
           <div className="card-body border-top">
             <div className="d-flex p-0 justify-content-center">
               {/* START COL */}
-              <div
-                className="position-relative p-0 d-flex"
-                ref={divReference}
-                id="IMAGE1"
-              >
+              <div className="position-relative p-0 d-flex" ref={divReference}>
                 <Image
                   src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate?.data?.certificate_result}`}
                   alt={"image"}
@@ -136,26 +149,24 @@ export default function ListPesertaID({ token }) {
                   width={842}
                   height={595}
                 />
-                <div className="position-absolute w-100 text-center responsive-margin">
-                  <span className="font-size-h3">{query.name}</span>
+                <div className="position-absolute w-100 text-center responsive-margin-peserta responsive-font-peserta">
+                  <span className="responsive-font-size-peserta font-weight-bolder">
+                    {query.name}
+                  </span>
                 </div>
               </div>
               {/* END COL */}
             </div>
-            <div className="row mt-10 col-12">
-              <div className="position-relative">
-                <label>
-                  <div className="mr-5">
-                    <a
-                      onClick={e => {
-                        handleDownload(e);
-                      }}
-                      className="btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
-                    >
-                      Unduh
-                    </a>
-                  </div>
-                </label>
+            <div className="row mx-0 mt-10 col-12">
+              <div className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
+                <a
+                  className="text-center"
+                  onClick={e => {
+                    handleDownload(e);
+                  }}
+                >
+                  Unduh
+                </a>
               </div>
             </div>
           </div>
@@ -164,25 +175,33 @@ export default function ListPesertaID({ token }) {
         {/* START SECTION 2 */}
         {type == "2 lembar" ? (
           <div className="card card-custom card-stretch gutter-b">
-            {/* START BODY */}
             <div className="card-body border-top">
               <div className="row p-0 justify-content-center">
                 {/* START COL */}
-                <div className="p-0 col-12 h-500px">
-                  <div className="p-0">
-                    <Image
-                      src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate?.data?.certificate_result_syllabus}`}
-                      alt="fitur"
-                      // height={495}
-                      // width={700}
-                      layout="fill"
-                      objectFit="contain"
-                    />
-                  </div>
+                <div
+                  className="p-0 position-relative"
+                  ref={divReferenceSyllabus}
+                >
+                  <Image
+                    src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate?.data?.certificate_result_syllabus}`}
+                    alt="fitur"
+                    width={842}
+                    height={595}
+                    objectFit="fill"
+                  />
                 </div>
-
                 {/* END COL */}
-                {/* START FORM Jenis Sertifikat */}
+              </div>
+              <div className="row mt-10 col-12">
+                <div className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4">
+                  <a
+                    onClick={e => {
+                      handleDownloadSyllabus(e);
+                    }}
+                  >
+                    Unduh
+                  </a>
+                </div>
               </div>
             </div>
             {/* END BODY */}
