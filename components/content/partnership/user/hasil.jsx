@@ -100,7 +100,7 @@ function Hasil({ token }) {
               <div className={`row my-10 ${Style.clearRow}`}>
                 <div className="col-12 col-sm-6">
                   <Image
-                    src="/assets/icon/konfirmasi-1.svg"
+                    src="/assets/icon/hasilAktif.svg"
                     height={300}
                     width={400}
                     alt="konfirmasi-1"
@@ -109,14 +109,10 @@ function Hasil({ token }) {
                 <div className="col-12 col-sm-6">
                   <div className="d-flex flex-column align-items-start justify-content-center h-100">
                     <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
-                      Selamat!
+                      Selamat, Pengajuan Diterima!
                     </h1>
                     <p className="mt-5 fz-16">
-                      Terima Kasih telah Melakukan Pengajuan Kerjasama{" "}
-                    </p>
-                    <p className="fz-16">
-                      Dengan Kami. Pengajuan Kerjasamamu telah berhasil.
-                    </p>
+                      Selamat kepada (nama lembaga) pengajuan kerjasamanya telah diterima. </p>
                   </div>
 
                   <div className="form-group row">
@@ -126,6 +122,7 @@ function Hasil({ token }) {
                       Kembali
                     </a>
                   </Link> */}
+{/* 
                       <button
                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                         onClick={() =>
@@ -134,8 +131,17 @@ function Hasil({ token }) {
                           )
                         }
                       >
-                        Detail
-                      </button>
+                        Kembali
+                      </button> */}
+
+                      <Link href="/partnership/user/kerjasama">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                      Kembali
+                    </a>
+                  </Link>
+
+
+
                     </div>
                   </div>
                 </div>
@@ -144,7 +150,7 @@ function Hasil({ token }) {
               <div className={`row my-10 ${Style.clearRow}`}>
                 <div className="col-12 col-sm-6">
                   <Image
-                    src="/assets/icon/konfirmasi-1.svg"
+                    src="/assets/icon/berakhirIcon.svg"
                     height={300}
                     width={400}
                     alt="konfirmasi-1"
@@ -153,13 +159,10 @@ function Hasil({ token }) {
                 <div className="col-12 col-sm-6">
                   <div className="d-flex flex-column align-items-start justify-content-center h-100">
                     <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
-                      Berakhir
+                      Kerjasama Berakhir!
                     </h1>
                     <p className="mt-5 fz-16">
-                      Periode kerjasamamu telah berakhir.
-                    </p>
-                    <p className="fz-16">
-                      Ajukan kembali untuk memperpanjang periode kerjasama.
+                      Periode kerjasama (nama lembaga) telah berakhir. Silahkan ajukan kembali untuk memperpanjang periode kerjasama.
                     </p>
                   </div>
 
@@ -170,16 +173,11 @@ function Hasil({ token }) {
                       Kembali
                     </a>
                   </Link> */}
-                      <button
-                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                        onClick={() =>
-                          router.push(
-                            `/partnership/user/kerjasama/${idKerjsama}`
-                          )
-                        }
-                      >
-                        Detail
-                      </button>
+                      <Link href="/partnership/user/kerjasama">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                      Kembali
+                    </a>
+                  </Link>
                     </div>
                   </div>
                 </div>
@@ -188,7 +186,7 @@ function Hasil({ token }) {
               <div className={`row my-10 ${Style.clearRow}`}>
                 <div className="col-12 col-sm-6">
                   <Image
-                    src="/assets/icon/konfirmasi-1.svg"
+                    src="/assets/icon/tolakIcon.svg"
                     height={300}
                     width={400}
                     alt="konfirmasi-1"
@@ -197,13 +195,10 @@ function Hasil({ token }) {
                 <div className="col-12 col-sm-6">
                   <div className="d-flex flex-column align-items-start justify-content-center h-100">
                     <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
-                      Mohon Maaf
+                      Maaf, Pengajuan Ditolak
                     </h1>
                     <p className="mt-5 fz-16">
-                      Pengajuan kerja sama anda tidak berhasil.
-                    </p>
-                    <p className="fz-16">
-                      Silakan ajukan kembali di lain waktu.
+                      Mohon maaf pengajuan kerjasama (nama lembaga) ditolak. Anda dapat mengajukan kerjasama lagi di lain waktu.
                     </p>
                   </div>
 
@@ -214,16 +209,11 @@ function Hasil({ token }) {
                       Kembali
                     </a>
                   </Link> */}
-                      <button
-                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                        onClick={() =>
-                          router.push(
-                            `/partnership/user/kerjasama/${idKerjsama}`
-                          )
-                        }
-                      >
-                        Detail
-                      </button>
+                      <Link href="/partnership/user/kerjasama">
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                      Kembali
+                    </a>
+                  </Link>
                     </div>
                   </div>
                 </div>
