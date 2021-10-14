@@ -29,12 +29,15 @@ export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
   // console.log(session.user.user.data); untuk cek role user
   if (session) {
-    return {
-      redirect: {
-        destination: "/peserta",
-        permanent: false,
-      },
-    };
+    const data = session.user.user.data;
+    if (data.user.roles[0] === "user") {
+      return {
+        redirect: {
+          destination: "/peserta",
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {
