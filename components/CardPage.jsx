@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import styles from "../styles/previewGaleri.module.css"
 
 const CardPage = ({
   background,
@@ -18,19 +19,19 @@ const CardPage = ({
       style={
         publishedVal !== ""
           ? {
-              cursor: "pointer",
-              backgroundImage: "url('/assets/media/card-img.svg')",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "right top",
-              backgroundSize: "100px",
-            }
+            cursor: "pointer",
+            backgroundImage: "url('/assets/media/card-img.svg')",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "right top",
+            backgroundSize: "100px",
+          }
           : {
-              cursor: "default",
-              backgroundImage: "url('/assets/media/card-img.svg')",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "right top",
-              backgroundSize: "100px",
-            }
+            cursor: "default",
+            backgroundImage: "url('/assets/media/card-img.svg')",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "right top",
+            backgroundSize: "100px",
+          }
       }
     >
       <span className="svg-icon svg-icon-3x svg-icon-warning d-block my-2">
@@ -49,7 +50,7 @@ const CardPage = ({
             {/* {titleValue} */}
           </p>
           <p
-            className={`font-weight-bold font-size-h2 ml-2 my-auto`}
+            className={`${styles.hideTitle} font-weight-bold font-size-h2 ml-2 my-auto`}
             style={{ color: color }}
           >
             {/* {value}  */}
