@@ -3,6 +3,8 @@ import dynamic from "next/dynamic";
 import LoadingPage from "../../../../../components/LoadingPage";
 import { wrapper } from "../../../../../redux/store";
 import { getSession } from "next-auth/client";
+import { getDetailUnitWork } from "../../../../../redux/actions/site-management/unit-work.actions";
+import { dropdownProvinsi } from "../../../../../redux/actions/pelatihan/function.actions";
 
 const ListRole = dynamic(
   () =>
@@ -30,7 +32,7 @@ export default function RoleList(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
-    async ({ query, req }) => {
+    async ({ params, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -41,19 +43,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
 
-      // await store.dispatch(
-      //   getAllRoles(
-      //     query.page,
-      //     query.keyword,
-      //     query.limit,
-      //     session.user.user.data.token
-      //   )
-      // );
+      await store.dispatch(dropdownProvinsi(session.user.user.data.token));
+
+      await store.dispatch(
+        getDetailUnitWork(params.id, session.user.user.data.token)
+      );
 
       return {
         props: {
           session,
-          title: "Tambah Satuan Kerja Penyelenggara - Site Management",
+          title: "Ubah Satuan Kerja Penyelenggara - Site Management",
         },
       };
     }

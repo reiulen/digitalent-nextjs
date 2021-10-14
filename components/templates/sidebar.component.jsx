@@ -16,7 +16,7 @@ import {
 
 const Sidebar = ({ session }) => {
   const dispatch = useDispatch();
-  const allFunctionls = useSelector(state => state.allFunctionls);
+  const allFunctionls = useSelector((state) => state.allFunctionls);
   const router = useRouter();
 
   // mitra partnership sementara
@@ -40,16 +40,23 @@ const Sidebar = ({ session }) => {
     }
   };
   const [listMenuPartnershipMitra, setListMenuPartnershipMitra] = useState([
-    { id: 1, name: "Kerjasama", href: "/partnership/user/kerjasama" },
+    {
+      id: 1,
+      name: "Kerjasama",
+      href: "/partnership/user/kerjasama",
+      icon: "assets/icon/sidebar_temp/mitra-kerja.svg",
+    },
     {
       id: 2,
       name: "Profil Lembaga",
       href: "/partnership/user/profile-lembaga/input-profile",
+      icon: "assets/icon/sidebar_temp/mitra-prof.svg",
     },
     {
       id: 3,
       name: "Tanda Tangan Digital",
       href: "/partnership/user/tanda-tangan-digital",
+      icon: "assets/icon/sidebar_temp/mitra-ttd.svg",
     },
   ]);
   // end mitra partnership sementara
@@ -437,7 +444,7 @@ const Sidebar = ({ session }) => {
     },
   ]);
 
-  const handleOpenMenu = i => {
+  const handleOpenMenu = (i) => {
     let _temp = [...menu];
     _temp.map((items, idxMenu) => {
       if (i === idxMenu) {
@@ -563,6 +570,7 @@ const Sidebar = ({ session }) => {
             ""
           ) : session?.user?.user?.data?.user?.roles[0] === "mitra" ? (
             <ul className="menu-nav">
+              <p className="fz-12 fw-400 text-white ml-4">Partnership</p>
               <li
                 className={`menu-item menu-item-submenu menu-item-open ${
                   !getStorageMenu4 ? "" : getStorageMenu4
@@ -595,11 +603,24 @@ const Sidebar = ({ session }) => {
                           aria-haspopup="true"
                           onClick={() => activeSubItemPartnershipMitra()}
                         >
+                          {/* <div className="ml-6 " > */}
                           <Link href={items.href} passHref>
-                            <a className="menu-link">
-                              <span className="menu-text">{items.name}</span>
+                            <a
+                              className="menu-link"
+                              style={{ paddingLeft: "1.5rem" }}
+                            >
+                              <Image
+                                alt="icon-sidebar-logo"
+                                src={`/${items.icon}`}
+                                width={24}
+                                height={24}
+                              />
+                              <span className="menu-text ml-6">
+                                {items.name}
+                              </span>
                             </a>
                           </Link>
+                          {/* </div> */}
                         </li>
                       );
                     })}
@@ -611,7 +632,7 @@ const Sidebar = ({ session }) => {
           ) : (
             <ul className="menu-nav">
               {menu.map((items, index) => {
-                return (
+                return index === 0 ? (
                   <li
                     className={`menu-item menu-item-submenu ${
                       items.selected ? "menu-item-open" : ""
@@ -620,7 +641,35 @@ const Sidebar = ({ session }) => {
                     data-menu-toggle="hover"
                     key={index}
                     id="main-menu"
-                    onClick={e => handleOpenMenu(index)}
+                    // onClick={e => handleOpenMenu(index)}
+                  >
+                    {/* <Link href={items.href} passHref> */}
+                      <button className="btn menu-link" onClick={()=>router.push('/dashboard')}>
+                        <span className="svg-icon menu-icon d-flex align-items-center">
+                          {/* icon sidebar */}
+                          <Image
+                            alt="icon-sidebar-logo"
+                            src={`/${items.icon}`}
+                            width={24}
+                            height={24}
+                          />
+                        </span>
+                        <span className="menu-text ml-2">{items.name}</span>
+
+                        {/* <i className="menu-arrow"></i> */}
+                      </button>{" "}
+                    {/* </Link> */}
+                  </li>
+                ) : (
+                  <li
+                    className={`menu-item menu-item-submenu ${
+                      items.selected ? "menu-item-open" : ""
+                    }`}
+                    aria-haspopup="true"
+                    data-menu-toggle="hover"
+                    key={index}
+                    id="main-menu"
+                    onClick={(e) => handleOpenMenu(index)}
                   >
                     <a className="menu-link menu-toggle">
                       <span className="svg-icon menu-icon d-flex align-items-center">
@@ -628,11 +677,12 @@ const Sidebar = ({ session }) => {
                         <Image
                           alt="icon-sidebar-logo"
                           src={`/${items.icon}`}
-                          width={58}
-                          height={53}
+                          width={24}
+                          height={24}
                         />
                       </span>
                       <span className="menu-text ml-4">{items.name}</span>
+
                       <i className="menu-arrow"></i>
                     </a>
 
@@ -647,7 +697,9 @@ const Sidebar = ({ session }) => {
                                   child.selected ? "menu-item-active" : ""
                                 }`}
                                 aria-haspopup="true"
-                                onClick={e => handleActiveSubmenu(e, index, i)}
+                                onClick={(e) =>
+                                  handleActiveSubmenu(e, index, i)
+                                }
                               >
                                 <Link href={child.href} passHref>
                                   <a
@@ -671,7 +723,7 @@ const Sidebar = ({ session }) => {
                                 aria-haspopup="true"
                                 data-menu-toggle="hover"
                                 id="sub-menu"
-                                onClick={e =>
+                                onClick={(e) =>
                                   handleOpenMenuSubMenu(e, index, i)
                                 }
                               >
@@ -705,7 +757,7 @@ const Sidebar = ({ session }) => {
                                               : ""
                                           }`}
                                           aria-haspopup="true"
-                                          onClick={e =>
+                                          onClick={(e) =>
                                             handleActiveSubSubmenu(
                                               e,
                                               index,

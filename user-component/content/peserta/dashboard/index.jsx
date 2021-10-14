@@ -5,10 +5,16 @@ import { Row, Col, Card, Figure, Button, Badge } from "react-bootstrap";
 import style from "../../../../styles/peserta/dashboard.module.css";
 
 import CardPage from "../../../../components/CardPage";
+import { useRouter } from "next/router";
 
 const Dashboard = ({ session }) => {
   console.log(session);
   const handlePublish = (val) => {};
+
+  const handlePage = () => {
+    router.push(`peserta/subvit/subtansi/1`);
+  };
+
   return (
     <>
       <div className="container-fluid p-6">
@@ -211,6 +217,7 @@ const Dashboard = ({ session }) => {
                             variant="primary"
                             className="btn-rounded-full btn-block d-flex justify-content-center mb-5"
                             size="sm"
+                            onClick={handlePage}
                           >
                             Kerjakan Test Substansi
                             <i className="ri-arrow-right-s-line ml-2"></i>

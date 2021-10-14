@@ -66,8 +66,8 @@ function Hasil({ token }) {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress text-center" style={{top:"-4rem"}}>
                       Submit Dokumen<br/>Kerjasama
                     </span>
@@ -76,8 +76,8 @@ function Hasil({ token }) {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress text-center" style={{top:"-4rem"}}>
                       Review Dokumen<br/>Kerjasama
                     </span>

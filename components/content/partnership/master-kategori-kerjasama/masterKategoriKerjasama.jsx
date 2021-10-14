@@ -86,7 +86,7 @@ const Table = ({ token }) => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menghapus data
+            Berhasil menambahkan data
           </div>
           <div className="alert-close">
             <button
@@ -115,7 +115,7 @@ const Table = ({ token }) => {
             <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#c51b1b" }}>
-            Berhasil menyimpan data
+            Berhasil menghapus data
           </div>
           <div className="alert-close">
             <button
