@@ -298,6 +298,14 @@ const ReviewFormRegister = ({ token }) => {
     dispatch(tolakReviewPelatihan(data, token));
   };
 
+  const handleSetuju = () => {
+    const data = {
+      pelatian_id: parseInt(id),
+      status: "disetujui",
+    };
+    dispatch(tolakReviewPelatihan(data, token));
+  };
+
   const handleResetError = () => {
     if (error) {
       dispatch(clearErrors());
@@ -370,7 +378,11 @@ const ReviewFormRegister = ({ token }) => {
                 >
                   Revisi
                 </button>
-                <button className="btn btn-primary-rounded-full" type="button">
+                <button
+                  className="btn btn-primary-rounded-full"
+                  type="button"
+                  onClick={() => handleSetuju()}
+                >
                   Setujui
                 </button>
               </div>
