@@ -35,7 +35,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      // console.log(session.user.user.data); untuk cek role user
       if (!session) {
         return {
           redirect: {
