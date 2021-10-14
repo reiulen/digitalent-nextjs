@@ -21,7 +21,7 @@ const Layout = dynamic(() =>
 );
 
 export default function DashboardPage(props) {
-  const session = props.session.user.user.data;
+  const session = props.session.user.user.data.user;
   return (
     <>
       <Layout title="Dashboard Peserta - Pelatihan" session={session}>
@@ -44,8 +44,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
         };
       }
       const data = session.user.user.data;
-      console.log(data);
-      if (data.roles[0] !== "user") {
+      if (data.user.roles[0] !== "user") {
         return {
           redirect: {
             destination: "/login",

@@ -7,6 +7,7 @@ import SimpleReactValidator from 'simple-react-validator'
 import { useDispatch, useSelector } from "react-redux";
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from "next/router";
+// import { withContext as ReactTags } from "react-tag-input"
 import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import DatePicker from 'react-datepicker'
@@ -109,38 +110,39 @@ const EditGaleri = ({ token }) => {
     // })
 
     useEffect(() => {
-      handleDataToArr(galeri.gambar);
-      // dispatch(getAllKategori())
 
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
+        handleDataToArr(galeri.gambar)
+        // dispatch(getAllKategori())
 
-      // if (success) {
-      //     dispatch({
-      //         type: NEW_GALERI_RESET
-      //     })
-      // }
+        files.forEach(file => URL.revokeObjectURL(file.preview));
 
-      // let temps = []
+        // if (success) {
+        //     dispatch({
+        //         type: NEW_GALERI_RESET
+        //     })
+        // }
 
-      // for (let i = 0; i < files.length; i++) {
-      //     const reader = new FileReader()
+        // let temps = []
 
-      //     reader.onload = () => {
-      //         temps.push(reader.result)
-      //     }
+        // for (let i = 0; i < files.length; i++) {
+        //     const reader = new FileReader()
 
-      //     reader.readAsDataURL(files[i])
-      // }
+        //     reader.onload = () => {
+        //         temps.push(reader.result)
+        //     }
 
-      // setGambar(temps)
+        //     reader.readAsDataURL(files[i])
+        // }
 
-      if (success) {
-        router.push({
-          pathname: `/publikasi/galeri`,
-          query: { success: true },
-        });
-      }
-    }, [dispatch, error, success, files, router, galeri.gambar]);
+        // setGambar(temps)
+
+        if (success) {
+            router.push({
+                pathname: `/publikasi/galeri`,
+                query: { success: true }
+            })
+        }
+    }, [dispatch, error, success, files, router]);
 
     const [id, setId] = useState(galeri.id_gallery);
     // const [id, setId] = useState(galeri.id);
@@ -166,6 +168,7 @@ const EditGaleri = ({ token }) => {
         let arr = []
 
 
+        // for (let i = 0; i < data.length; i++) {
         for (let i = 0; i < data.length; i++) {
             // const reader = new FileReader();
             // getBase64FromUrl(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)
@@ -359,10 +362,14 @@ const EditGaleri = ({ token }) => {
         } else {
             const list = [...image];
             list.splice(index, 1);
-            setImage(list);
+            setImage(list, { id: id, gambar: gambar });
             setTotalImage((totalImage) - 1)
+            // const list = [...image];
+            // list.splice(index, 1);
+            // setImage(list);
+            // setTotalImage((totalImage) - 1)
         }
-
+        console.log("Delete Image :", image)
     };
 
     const onAddImage = () => {
@@ -462,7 +469,8 @@ const EditGaleri = ({ token }) => {
         for (let i = 0; i < image.length; i++) {
             flag += 1
 
-            temps.push(image[i].imageBase64)
+            // temps.push(image[i].imageBase64)
+            temps.push(image[i])
 
             if (flag === image.length) {
                 handleData(temps, updateGaleri)
@@ -637,7 +645,7 @@ const EditGaleri = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi Galeri</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Deskripsi Galeri</label>
                                 <div className="col-sm-12">
                                     <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri}></textarea>
                                     {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}
@@ -645,7 +653,7 @@ const EditGaleri = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Upload Gambar</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Upload Gambar</label>
                                 {/* <div className="col-sm-12">
                                     <div {...getRootProps({ className: 'dropzone' })} style={{ background: '#f3f6f9', border: ' 1px dashed #3699FF', height: '100px' }}>
                                         <input {...getInputProps()} />
@@ -704,6 +712,7 @@ const EditGaleri = ({ token }) => {
                                                             <div className="position-relative">
                                                                 <label
                                                                     className="circle-bottom"
+                                                                    id={`inputGroupFile${i}`}
                                                                     // htmlFor={`inputGroupFile${i}`}
                                                                     onClick={() => onDeleteImage(i)}
                                                                 >
@@ -745,7 +754,7 @@ const EditGaleri = ({ token }) => {
                                                 </button>
                                             </div>
 
-                                            <div className="mt-3 col-sm-3 text-muted">
+                                            <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
                                                 <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                             </div>
                                         </div>

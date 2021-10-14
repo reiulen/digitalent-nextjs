@@ -38,6 +38,8 @@ const ListSummary = ({ token }) => {
   const { error: dropdownErrorTema, data: dataTema } = useSelector(
     (state) => state.drowpdownTema
   );
+  const { error: dropdownErrorPenyelenggara, data: dataPenyelenggara } =
+    useSelector((state) => state.drowpdownPenyelenggara);
 
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -54,6 +56,14 @@ const ListSummary = ({ token }) => {
 
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
+  const optionsPenyelenggara = [];
+  for (let index = 0; index < dataPenyelenggara.data.length; index++) {
+    let val = {
+      value: dataPenyelenggara.data[index].id,
+      label: dataPenyelenggara.data[index].value,
+    };
+    optionsPenyelenggara.push(val);
+  }
 
   const optionsStatusPelatihan = [
     { value: "review substansi", label: "Review Substansi" },
@@ -79,13 +89,13 @@ const ListSummary = ({ token }) => {
         pageNumber,
         search,
         limit,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
+        dateRegister,
+        dateStart,
+        statusSubstansi != null ? statusSubstansi.value : null,
+        statusPelatihan != null ? statusPelatihan.value : null,
+        penyelenggara != null ? penyelenggara.value : null,
+        academy,
+        theme,
         token
       )
     );
@@ -492,7 +502,7 @@ const ListSummary = ({ token }) => {
           <div className="form-group mb-5">
             <label className="p-0">Penyelenggara</label>
             <Select
-              options={optionsAkademi}
+              options={optionsPenyelenggara}
               defaultValue={penyelenggara}
               onChange={(e) =>
                 setPenyelenggara({ value: e.value, label: e.label })

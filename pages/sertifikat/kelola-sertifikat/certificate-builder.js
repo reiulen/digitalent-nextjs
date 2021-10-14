@@ -52,9 +52,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
           query.page,
           query.keyword,
           query.limit,
-          query.publish,
-          query.startdate,
-          query.enddate,
+          query.status,
           session.user.user.data.token
         )
       );

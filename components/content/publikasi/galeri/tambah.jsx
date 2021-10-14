@@ -280,25 +280,28 @@ const TambahGaleri = ({ token }) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
         let list = [...image];
         if (type.includes(e.target.files[0].type)) {
-            list[index].imageFile = e.target.files[0];
-            const reader = new FileReader();
+            if (e.target.files[0].size > 5000000) {
+                e.target.value = null;
+                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            } else {
+                list[index].imageFile = e.target.files[0];
+                const reader = new FileReader();
 
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    list[index].imagePreview = reader.result;
-                }
-                // router.reload(window.location.pathname)
-                setImage([
-                    ...image,
-                ]);
-            };
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        list[index].imagePreview = reader.result;
+                    }
+                    // router.reload(window.location.pathname)
+                    setImage([
+                        ...image,
+                    ]);
+                };
 
-            reader.readAsDataURL(e.target.files[0]);
-            list[index].imageName = e.target.files[0].name;
+                reader.readAsDataURL(e.target.files[0]);
+                list[index].imageName = e.target.files[0].name;
 
-            setImage(list);
-
-
+                setImage(list);
+            }
         } else {
             e.target.value = null;
             Swal.fire(
@@ -561,7 +564,7 @@ const TambahGaleri = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Upload Gambar</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Upload Gambar</label>
 
                                 {/* {
                                     totalImage === 1 ?
@@ -1696,7 +1699,7 @@ const TambahGaleri = ({ token }) => {
                                         </button>
                                     </div>
 
-                                    <div className="mt-3 col-sm-3 text-muted">
+                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
                                         <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                     </div>
                                 </div>

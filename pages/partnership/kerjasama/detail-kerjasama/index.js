@@ -13,6 +13,7 @@ const DetailKerjasama = dynamic(
 
 export default function detailDokumenKerjasama(props) {
   const session = props.session.user.user.data;
+
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -36,7 +37,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { session, title: "Detail Data Kerjasama - Partnership" },
+        props: {
+          session,
+          title: "Detail Data Kerjasama - Partnership",
+        },
       };
     }
 );

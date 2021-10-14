@@ -76,6 +76,8 @@ export default function DashboardPage({ token }) {
     <PageWrapper>
       {/* head content */}
 
+      
+
       <div
         className="position-relative br-12 bg-white py-10 px-6 overflow-hidden"
         style={{ height: "197px", maxHeight: "197px" }}
@@ -204,15 +206,15 @@ export default function DashboardPage({ token }) {
             </h5>
             <h5 className="fw-500 fz-14 text-gray-secondary">
               {allDashboard.data_dashboard.data?.cooperation_will_expired +
-                allDashboard.data_dashboard.data?.cooperation_rejected}{" "}
+                allDashboard.data_dashboard.data?.cooperation_rejected}
               Akan Berakhir & Ditolak
             </h5>
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">
-                {!allDashboard.data_dashboard.data?.cooperation_will_expired
-                  ? 0
-                  : allDashboard.data_dashboard.data?.cooperation_will_expired +
+                {allDashboard.data_dashboard.data?.cooperation_will_expired +
                     allDashboard.data_dashboard.data?.cooperation_rejected}
+
+                    
               </span>
 
               <PieChart width={450} height={350}>

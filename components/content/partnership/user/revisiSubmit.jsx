@@ -239,7 +239,7 @@ const RevisiSubmit = ({token}) => {
                     readOnly
                     value={date && date}
                     type="date"
-                    className="form-control mb-3 mb-lg-0"
+                    className="form-control mb-3 mb-lg-0 border-0"
                   />
                   {/* icon calender */}
                 </div>

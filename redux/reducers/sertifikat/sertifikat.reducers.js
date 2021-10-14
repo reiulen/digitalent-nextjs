@@ -51,7 +51,7 @@ export const allSertifikatReducers = (state = { certificate: [] }, action) => {
   }
 };
 
-export const newSertifikatReducer = (state = { certificate: {} }, action) => {
+export const newSertifikatReducer = (state = {}, action) => {
   switch (action.type) {
     case NEW_SERTIFIKAT_REQUEST:
       return {
@@ -62,7 +62,7 @@ export const newSertifikatReducer = (state = { certificate: {} }, action) => {
       return {
         loading: false,
         success: action.payload.message,
-        sertifikat: action.payload.data,
+        certificate: action.payload,
       };
 
     case NEW_SERTIFIKAT_FAIL:
