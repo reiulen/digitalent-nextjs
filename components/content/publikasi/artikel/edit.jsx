@@ -210,9 +210,9 @@ const EditArtikel = ({ token }) => {
 
   const keyPressTag = (value) => {
 
-    if (value === '' || value === null) { 
+    if (value === '' || value === null) {
       value.replace(/\s/g, '')
-    }else{
+    } else {
       setTag(value)
     }
     // if(event.key === 13){
@@ -577,7 +577,7 @@ const EditArtikel = ({ token }) => {
   return (
     <>
       <PageWrapper>
-        {/* {console.log (artikel)} */}
+        {console.log(artikel)}
         {/* {
           console.log (kategori)
         } */}

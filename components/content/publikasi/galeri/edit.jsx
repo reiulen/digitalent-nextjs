@@ -168,6 +168,7 @@ const EditGaleri = ({ token }) => {
         let arr = []
 
 
+        // for (let i = 0; i < data.length; i++) {
         for (let i = 0; i < data.length; i++) {
             // const reader = new FileReader();
             // getBase64FromUrl(process.env.END_POINT_API_IMAGE_PUBLIKASI + "publikasi/images/" + data[i].gambar)

@@ -280,25 +280,28 @@ const TambahGaleri = ({ token }) => {
         const type = ["image/jpg", "image/png", "image/jpeg"];
         let list = [...image];
         if (type.includes(e.target.files[0].type)) {
-            list[index].imageFile = e.target.files[0];
-            const reader = new FileReader();
+            if (e.target.files[0].size > 5000000) {
+                e.target.value = null;
+                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            } else {
+                list[index].imageFile = e.target.files[0];
+                const reader = new FileReader();
 
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    list[index].imagePreview = reader.result;
-                }
-                // router.reload(window.location.pathname)
-                setImage([
-                    ...image,
-                ]);
-            };
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        list[index].imagePreview = reader.result;
+                    }
+                    // router.reload(window.location.pathname)
+                    setImage([
+                        ...image,
+                    ]);
+                };
 
-            reader.readAsDataURL(e.target.files[0]);
-            list[index].imageName = e.target.files[0].name;
+                reader.readAsDataURL(e.target.files[0]);
+                list[index].imageName = e.target.files[0].name;
 
-            setImage(list);
-
-
+                setImage(list);
+            }
         } else {
             e.target.value = null;
             Swal.fire(
