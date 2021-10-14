@@ -7,8 +7,8 @@ import SimpleReactValidator from 'simple-react-validator'
 import { useDispatch, useSelector } from "react-redux";
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from "next/router";
-import { withContext as ReactTags } from "react-tag-input"
-// import { TagsInput } from "react-tag-input-component";
+// import { withContext as ReactTags } from "react-tag-input"
+import { TagsInput } from "react-tag-input-component";
 import Swal from "sweetalert2";
 import DatePicker from 'react-datepicker'
 
@@ -110,38 +110,39 @@ const EditGaleri = ({ token }) => {
     // })
 
     useEffect(() => {
-      handleDataToArr(galeri.gambar);
-      // dispatch(getAllKategori())
 
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
+        handleDataToArr(galeri.gambar)
+        // dispatch(getAllKategori())
 
-      // if (success) {
-      //     dispatch({
-      //         type: NEW_GALERI_RESET
-      //     })
-      // }
+        files.forEach(file => URL.revokeObjectURL(file.preview));
 
-      // let temps = []
+        // if (success) {
+        //     dispatch({
+        //         type: NEW_GALERI_RESET
+        //     })
+        // }
 
-      // for (let i = 0; i < files.length; i++) {
-      //     const reader = new FileReader()
+        // let temps = []
 
-      //     reader.onload = () => {
-      //         temps.push(reader.result)
-      //     }
+        // for (let i = 0; i < files.length; i++) {
+        //     const reader = new FileReader()
 
-      //     reader.readAsDataURL(files[i])
-      // }
+        //     reader.onload = () => {
+        //         temps.push(reader.result)
+        //     }
 
-      // setGambar(temps)
+        //     reader.readAsDataURL(files[i])
+        // }
 
-      if (success) {
-        router.push({
-          pathname: `/publikasi/galeri`,
-          query: { success: true },
-        });
-      }
-    }, [dispatch, error, success, files, router, galeri.gambar]);
+        // setGambar(temps)
+
+        if (success) {
+            router.push({
+                pathname: `/publikasi/galeri`,
+                query: { success: true }
+            })
+        }
+    }, [dispatch, error, success, files, router]);
 
     const [id, setId] = useState(galeri.id_gallery);
     // const [id, setId] = useState(galeri.id);
@@ -360,7 +361,7 @@ const EditGaleri = ({ token }) => {
         } else {
             const list = [...image];
             list.splice(index, 1);
-            setImage(list, { gambar: gambar, id: id });
+            setImage(list, { id: id, gambar: gambar });
             setTotalImage((totalImage) - 1)
             // const list = [...image];
             // list.splice(index, 1);
@@ -791,19 +792,13 @@ const EditGaleri = ({ token }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Tag</label>
                                 <div className="col-sm-12">
-                                    <ReactTags
-                                        value={tag}
-                                        handleInputChange={(data) => { handleTag(data) }}
-                                        allowDeleteFromEmptyInput={true}
-                                        placeHolder="Isi Tag disini"
-                                    />
-                                    {/* <TagsInput
+                                    <TagsInput
                                         value={tag}
                                         onChange={(data) => handleTag(data)}
                                         name="fruits"
                                         placeHolder="Isi Tag disini"
                                     // onBlur={() => simpleValidator.current.showMessageFor('tag')}
-                                    /> */}
+                                    />
                                     {
                                         disableTag === true ?
                                             <p className="text-danger">
