@@ -163,6 +163,7 @@ const EditGaleri = ({ token }) => {
     const [image, setImage] = useState(null)
     const [totalImage, setTotalImage] = useState(1)
     const [disableTag, setDisableTag] = useState(false)
+    const [deleteImg, setDeleteImg] = useState([])
 
     const handleDataToArr = (data) => {
         let arr = []
@@ -362,14 +363,17 @@ const EditGaleri = ({ token }) => {
         } else {
             const list = [...image];
             list.splice(index, 1);
-            setImage(list, { id: id, gambar: gambar });
+            setImage(list, { gambar: gambar, id: id });
             setTotalImage((totalImage) - 1)
+
+            // deleteImg.push(list)
+            // setDeleteImg(list, { gambar: gambar, id: id });
             // const list = [...image];
             // list.splice(index, 1);
             // setImage(list);
             // setTotalImage((totalImage) - 1)
         }
-        console.log("Delete Image :", image)
+        console.log("Delete :", deleteImg)
     };
 
     const onAddImage = () => {
@@ -414,6 +418,7 @@ const EditGaleri = ({ token }) => {
                 tanggal_publish: moment(today).format("YYYY-MM-DD"),
                 id,
                 _method,
+                // image_delete: deleteImg
             }
 
             // dispatch(newGaleri(data, token))
@@ -434,6 +439,7 @@ const EditGaleri = ({ token }) => {
                 tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
                 id,
                 _method,
+                // image_delete: deleteImg
             }
 
             // dispatch(onCall(data, token))
