@@ -80,6 +80,8 @@ const StepTwo = ({ token }) => {
   const [question_file, setQuestionFile] = useState(null);
   const [image_file, setImageFile] = useState(null);
   const [typeSave, setTypeSave] = useState("lanjut");
+  const [fileSoalName, setFileSoalName] = useState("");
+  const [imageFileName, setImageFileName] = useState("");
 
   useEffect(() => {
     dispatch(getAllTriviaQuestionDetail(id, token));
@@ -241,6 +243,16 @@ const StepTwo = ({ token }) => {
     });
   };
 
+  const handleQuestionFile = (e) => {
+    setQuestionFile(e.target.files[0]);
+    setFileSoalName(e.target.files[0].name);
+  };
+
+  const handleImageFile = (e) => {
+    setImageFile(e.target.files[0]);
+    setImageFileName(e.target.files[0].name);
+  };
+
   return (
     <PageWrapper>
       {error ? (
@@ -325,10 +337,10 @@ const StepTwo = ({ token }) => {
                       className="custom-file-input"
                       accept=".csv,.xlsx,.xls"
                       name="question_image"
-                      onChange={(e) => setQuestionFile(e.target.files[0])}
+                      onChange={(event) => handleQuestionFile(event)}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {question_file ? fileSoalName : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -356,10 +368,10 @@ const StepTwo = ({ token }) => {
                       className="custom-file-input"
                       accept=".zip"
                       name="question_image"
-                      onChange={(e) => setImageFile(e.target.files[0])}
+                      onChange={(event) => handleImageFile(event)}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {image_file ? imageFileName : "Choose File"}
                     </label>
                   </div>
                   <span className="text-muted">

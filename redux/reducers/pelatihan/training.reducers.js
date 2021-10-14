@@ -3,6 +3,9 @@ import {
   TRAINING_REQUEST,
   TRAINING_SUCCESS,
   TRAINING_FAIL,
+  //CARD TRAINING
+  CARD_TRAINING_SUCCESS,
+  CARD_TRAINING_FAIL,
   // UPDATE STATUS PUBLISH
   REQUEST_STATUS_PUBLISH,
   UPDATE_STATUS_PUBLISH,
@@ -105,6 +108,29 @@ export const allTrainingReducer = (state = { training: [] }, action) => {
     case TRAINING_FAIL:
       return {
         loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const cardTrainingReducer = (state = { training: {} }, action) => {
+  switch (action.type) {
+    case CARD_TRAINING_SUCCESS:
+      return {
+        training: action.payload.data,
+      };
+
+    case CARD_TRAINING_FAIL:
+      return {
         error: action.payload,
       };
 

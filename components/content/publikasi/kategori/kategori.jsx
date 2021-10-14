@@ -223,8 +223,7 @@ const Kategori = ({ token }) => {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${limit}`);
     } else if (limit !== null && startDate !== null && endDate !== null) {
       router.push(
-        `${
-          router.pathname
+        `${router.pathname
         }?page=1&keyword=${search}&limit=${limit}&startdate=${moment(
           startDate
         ).format("YYYY-MM-DD")}&enddate=${moment(endDate).format("YYYY-MM-DD")}`
@@ -390,9 +389,9 @@ const Kategori = ({ token }) => {
                     <form
                       // id="kt_docs_formvalidation_text"
                       className="form text-left"
-                      // action="#"
-                      // autoComplete="off"
-                      // onSubmit={handleSubmitSearchMany}
+                    // action="#"
+                    // autoComplete="off"
+                    // onSubmit={handleSubmitSearchMany}
                     >
                       <div
                         className="modal fade"
@@ -545,8 +544,8 @@ const Kategori = ({ token }) => {
 
                     <tbody>
                       {!paginateKategori ||
-                      (paginateKategori &&
-                        paginateKategori.kategori.length === 0) ? (
+                        (paginateKategori &&
+                          paginateKategori.kategori.length === 0) ? (
                         <td className="align-middle text-center" colSpan={4}>
                           Data Tidak Ditemukan
                         </td>
@@ -559,11 +558,11 @@ const Kategori = ({ token }) => {
                               {/* <td className='align-middle text-center'>{i + 1 * (page * 5 || limit) - 4}</td> */}
                               <td className="align-middle text-center">
                                 {limit === null ? (
-                                  <span className="badge badge-secondary text-muted">
+                                  <span>
                                     {i + 1 * (page * 5) - (5 - 1)}
                                   </span>
                                 ) : (
-                                  <span className="badge badge-secondary text-muted">
+                                  <span>
                                     {i + 1 * (page * limit) - (limit - 1)}
                                   </span>
                                 )}
@@ -595,18 +594,18 @@ const Kategori = ({ token }) => {
                                 </button>
                               </td>
                               {/* <td className='align-middle text-center'>
-                                                                <ButtonAction icon='write.svg' link={`/publikasi/kategori/${row.id}`} title="Edit"/>
-                                                                <button 
-                                                                    onClick={() => handleDelete(row.id)} 
-                                                                    className='btn mr-1' 
-                                                                    style={{ background: '#F3F6F9', borderRadius: '6px' }}
-                                                                    data-toggle="tooltip" 
-                                                                    data-placement="bottom" 
-                                                                    title="Hapus"
-                                                                >
-                                                                    <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
-                                                                </button>
-                                                            </td> */}
+                                <ButtonAction icon='write.svg' link={`/publikasi/kategori/${row.id}`} title="Edit" />
+                                <button
+                                  onClick={() => handleDelete(row.id)}
+                                  className='btn mr-1'
+                                  style={{ background: '#F3F6F9', borderRadius: '6px' }}
+                                  data-toggle="tooltip"
+                                  data-placement="bottom"
+                                  title="Hapus"
+                                >
+                                  <Image alt='button-action' src={`/assets/icon/trash.svg`} width={18} height={18} />
+                                </button>
+                              </td> */}
                             </tr>
                           );
                         })
@@ -686,30 +685,11 @@ const Kategori = ({ token }) => {
                           onChange={e => handleLimit(e.target.value)}
                           onBlur={e => handleLimit(e.target.value)}
                         >
-                          <option
-                            value="5"
-                            selected={limit == "5" ? true : false}
-                          >
-                            5
-                          </option>
-                          <option
-                            value="10"
-                            selected={limit == "10" ? true : false}
-                          >
-                            10
-                          </option>
-                          <option
-                            value="15"
-                            selected={limit === "15" ? true : false}
-                          >
-                            15
-                          </option>
-                          <option
-                            value="20"
-                            selected={limit === "20" ? true : false}
-                          >
-                            20
-                          </option>
+                          <option value='5' selected={limit == "5" ? true : false}>5</option>
+                          <option value='10' selected={limit == "10" ? true : false}>10</option>
+                          <option value='30' selected={limit == "30" ? true : false}>30</option>
+                          <option value='40' selected={limit == "40" ? true : false}>40</option>
+                          <option value='50' selected={limit == "50" ? true : false}>50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">

@@ -28,10 +28,10 @@ import {
 
 import { DELETE_ARTIKEL_RESET } from "../../../../redux/types/publikasi/artikel.type";
 
-const Artikel = ({token}) => {
+const Artikel = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
-  
+
   // console.log(artikel, 'INI ARTIKEL')
   const {
     loading: allLoading,
@@ -50,7 +50,7 @@ const Artikel = ({token}) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [publishValue, setPublishValue] = useState(null);
-  const [disableEndDate, setDisableEndDate] = useState (true)
+  const [disableEndDate, setDisableEndDate] = useState(true)
 
   let loading = false;
   let { page = 1, keyword, success } = router.query;
@@ -236,10 +236,10 @@ const Artikel = ({token}) => {
 
     } else if (search !== "" && publishValue === null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}`)
-    
+
     } else if (search === "" && publishValue !== null) {
       router.push(`${router.pathname}?page=1&limit=${val}&publish=${publishValue}`);
-    
+
     } else if (search !== "" && publishValue !== null) {
       router.push(`${router.pathname}?page=1&keyword=${search}&limit=${val}&publish=${publishValue}`)
     }
@@ -281,18 +281,18 @@ const Artikel = ({token}) => {
   const resetValueSort = () => {
     setStartDate(null)
     setEndDate(null)
-    setDisableEndDate (true)
+    setDisableEndDate(true)
   }
 
   const handleStartDate = (date) => {
-    setStartDate (date)
-    setDisableEndDate (false)
+    setStartDate(date)
+    setDisableEndDate(false)
   }
 
   // const handleEndDate = (date) => {
   //   if (startDate === null) {
   //     setDisableEndDate (true)
-      
+
   //   } else {
   //     setEndDate (date)
   //   }
@@ -389,7 +389,7 @@ const Artikel = ({token}) => {
             // color="#74BBB7"
             value="64"
             titleValue="K"
-            title="Total Yang Baca"
+            title="Total Pembaca"
             publishedVal=""
             routePublish={() => handlePublish("")}
           />
@@ -401,7 +401,7 @@ const Artikel = ({token}) => {
             // color="#F65464"
             value={artikel && artikel.unpublish != "" ? artikel.unpublish : 0}
             titleValue="Artikel"
-            title="Total Belum Publish"
+            title="Total Belum Dipublish"
             publishedVal="0"
             routePublish={() => handlePublish("0")}
           />
@@ -417,7 +417,7 @@ const Artikel = ({token}) => {
             <div className="card-toolbar">
               <Link href="/publikasi/artikel/tambah">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bold btn-block ">
-                <i className="ri-add-line pb-1 text-white mr-2 "></i>
+                  <i className="ri-add-line pb-1 text-white mr-2 "></i>
                   Tambah Artikel
                 </a>
               </Link>
@@ -526,7 +526,7 @@ const Artikel = ({token}) => {
                                     dateFormat="dd/MM/yyyy"
                                     placeholderText="Silahkan Isi Tanggal Dari"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                    // minDate={moment().toDate()}
+                                  // minDate={moment().toDate()}
                                   // minDate={addDays(new Date(), 20)}
                                   />
                                 </div>
@@ -551,7 +551,7 @@ const Artikel = ({token}) => {
                                     maxDate={addDays(startDate, 20)}
                                     placeholderText="Silahkan Isi Tanggal Sampai"
                                     wrapperClassName="col-12 col-lg-12 col-xl-12"
-                                    disabled = {disableEndDate === true || disableEndDate === null}
+                                    disabled={disableEndDate === true || disableEndDate === null}
                                   // minDate={addDays(new Date(), 20)}
                                   />
                                 </div>
@@ -560,7 +560,7 @@ const Artikel = ({token}) => {
                                     <small className="text-muted">
                                       Mohon isi Tanggal Dari terlebih dahulu
                                     </small>
-                                  :
+                                    :
                                     null
                                 }
                               </div>
@@ -643,7 +643,7 @@ const Artikel = ({token}) => {
 
                 {loading === false ? (
                   <table className="table table-separate table-head-custom table-checkable">
-                    <thead style={{ background: "#F3F6F9"}}>
+                    <thead style={{ background: "#F3F6F9" }}>
                       <tr>
                         <th className="text-center">No</th>
                         <th>Thumbnail</th>
@@ -659,7 +659,7 @@ const Artikel = ({token}) => {
                     <tbody>
                       {!artikel || (artikel && artikel.artikel.length === 0) ? (
                         <tr>
-                          <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td> 
+                          <td className='align-middle text-center' colSpan={8}>Data Tidak Ditemukan</td>
                         </tr>
                       ) : (
                         artikel &&
@@ -676,11 +676,11 @@ const Artikel = ({token}) => {
                               <td className='align-middle text-center'>
                                 {
                                   limit === null ?
-                                    <span className="badge badge-secondary text-muted">
+                                    <span>
                                       {i + 1 * (page * 5) - (5 - 1)}
                                     </span>
                                     :
-                                    <span className="badge badge-secondary text-muted">
+                                    <span>
                                       {i + 1 * (page * limit) - (limit - 1)}
                                     </span>
                                 }
@@ -693,10 +693,11 @@ const Artikel = ({token}) => {
                                   unoptimized={
                                     process.env.ENVIRONMENT !== "PRODUCTION"
                                   }
-                                  // loader={() => process.env.END_POINT_API_IMAGE_PUBLIKASI +
-                                  //   "publikasi/images/" +
-                                  //   artikel.gambar + `?w=80&q=75`
-                                  // }
+                                  loader={process.env.END_POINT_API_IMAGE_PUBLIKASI +
+                                    "publikasi/images/" +
+                                    artikel.gambar
+                                    // artikel.gambar + `?w=80&q=75`
+                                  }
                                   // src={artikel.gambar}
                                   src={
                                     process.env.END_POINT_API_IMAGE_PUBLIKASI +
@@ -838,7 +839,7 @@ const Artikel = ({token}) => {
                 {artikel ? (
                   <div className="table-total ml-auto">
                     <div className="row">
-                      <div className="col-4 mr-0 p-0 mt-3">
+                      <div className="col-4 mr-0 mt-3">
                         <select
                           className="form-control"
                           id="exampleFormControlSelect2"
@@ -853,8 +854,9 @@ const Artikel = ({token}) => {
                         >
                           <option value='5' selected={limit == "5" ? true : false}>5</option>
                           <option value='10' selected={limit == "10" ? true : false}>10</option>
-                          <option value='15' selected={limit == "15" ? true : false}>15</option>
-                          <option value='20' selected={limit == "20" ? true : false}>20</option>
+                          <option value='30' selected={limit == "30" ? true : false}>30</option>
+                          <option value='40' selected={limit == "40" ? true : false}>40</option>
+                          <option value='50' selected={limit == "50" ? true : false}>50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto">
@@ -862,7 +864,7 @@ const Artikel = ({token}) => {
                           className="align-middle mt-5 pt-1"
                           style={{ color: "#B5B5C3" }}
                         >
-                          Total Data {artikel.total}
+                          Total Data {artikel.total} List Data
                         </p>
                       </div>
                     </div>
