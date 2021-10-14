@@ -19,7 +19,6 @@ import moment from "moment";
 import Select from "react-select";
 
 export default function NamaPelatihan({ token }) {
-  // console.log(token);
   const router = useRouter();
 
   const { loading, error, certificate } = useSelector(
@@ -109,7 +108,7 @@ export default function NamaPelatihan({ token }) {
     });
     setDataTemaPelatihan(newArr);
   };
-
+  const handleResetError = () => {};
   return (
     <PageWrapper>
       {/* error START */}
@@ -353,7 +352,7 @@ export default function NamaPelatihan({ token }) {
                               </td>
                               <td className="align-middle d-flex">
                                 <Link
-                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.name}?id=${certificate.theme.academy.id}`}
+                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.name}?id=${certificate.id}`}
                                   passHref
                                 >
                                   <a

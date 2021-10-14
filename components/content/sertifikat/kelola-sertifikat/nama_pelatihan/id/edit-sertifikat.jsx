@@ -1,11 +1,5 @@
 // #Next & React
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  createRef,
-  useCallback,
-} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // #Page, Component & Library
@@ -26,12 +20,12 @@ import {
 } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import axios from "axios";
 import * as moment from "moment";
+import { Modal } from "react-bootstrap";
 
 export default function EditSertifikat({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
   const { query } = router;
-  console.log(query);
   // #Div Reference Lembar 1
   const { loading, error, certificate } = useSelector(
     state => state.singleCertificate
@@ -40,7 +34,7 @@ export default function EditSertifikat({ token }) {
   const {
     error: updateError,
     loading: updateLoading,
-    certificate: updateCertificate,
+    isUpdated,
   } = useSelector(state => state.updateCertificates);
 
   if (!certificate) {
@@ -53,6 +47,20 @@ export default function EditSertifikat({ token }) {
     );
   }
 
+  useEffect(() => {
+    if (isUpdated) {
+      router.push({
+        pathname: `/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}`,
+        query: {
+          update: true,
+          id: query.theme_id,
+          message: isUpdated.message,
+        },
+      });
+    }
+  }, [isUpdated]);
+
+  const [confirmModal, setConfirmModal] = useState(false);
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
   const [namaPeserta, setNamaPeserta] = useState("Nama Peserta");
@@ -146,23 +154,28 @@ export default function EditSertifikat({ token }) {
   // #START MODAL
 
   const handleImageTandaTangan = (e, i) => {
-    if (e.target.name === "image") {
-      const reader = new FileReader();
-      let arr = [...imageName];
-      arr[i] = e.target.files[0].name;
-      setImageName(arr);
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          const data = reader.result;
-          let newArr = [...signature];
-          newArr[i]?.localSignature
-            ? (newArr[i]["localSignature"] = data)
-            : (newArr[i] = { ...newArr[i], localSignature: data });
-          setSignature(newArr);
+    if (e.target.files[0].size > 5000000) {
+      e.target.value = null;
+      Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    } else {
+      if (e.target.name === "image") {
+        const reader = new FileReader();
+        let arr = [...imageName];
+        arr[i] = e.target.files[0].name;
+        setImageName(arr);
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            const data = reader.result;
+            let newArr = [...signature];
+            newArr[i]?.localSignature
+              ? (newArr[i]["localSignature"] = data)
+              : (newArr[i] = { ...newArr[i], localSignature: data });
+            setSignature(newArr);
+          }
+        };
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
         }
-      };
-      if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
       }
     }
   };
@@ -191,25 +204,60 @@ export default function EditSertifikat({ token }) {
   // #END MODAL
 
   // #START LEMBAR 2
+  // const onChangeImage = (e, index) => {
+  //   const type = ["image/jpg", "image/png", "image/jpeg"];
+  //   let list = [...image];
+  //   if (type.includes(e.target.files[0].type)) {
+  //     if (e.target.files[0].size > 5000000) {
+  //       e.target.value = null;
+  //       Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+  //     } else {
+  //       list[index].imageFile = e.target.files[0];
+  //       list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+  //       list[index].imageName = e.target.files[0].name;
+  //       console.log(list)
+  //       setImage(list);
+  //     }
+  //     console.log(image);
+  //     // const reader = new FileReader();
+  //     // reader.onload = () => {
+  //     //   if (reader.readyState === 2) {
+  //     //   }
+  //     // };
+  //     // reader.readAsDataURL(e.target.files[0]);
+  //   } else {
+  //     e.target.value = null;
+  //     Swal.fire(
+  //       "Oops !",
+  //       "Data yang bisa dimasukkan hanya berupa data gambar.",
+  //       "error"
+  //     );
+  //   }
+  // };
   const handleImageTandaTanganSyllabus = (e, i) => {
-    if (e.target.name === "image") {
-      const reader = new FileReader();
-      let arr = [...imageNameSyllabus];
-      arr[i] = e.target.files[0].name;
-      setImageNameSyllabus(arr);
+    if (e.target.files[0].size > 5000000) {
+      e.target.value = null;
+      Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    } else {
+      if (e.target.name === "image") {
+        const reader = new FileReader();
+        let arr = [...imageNameSyllabus];
+        arr[i] = e.target.files[0].name;
+        setImageNameSyllabus(arr);
 
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          const data = reader.result;
-          let newArr = [...signatureSyllabus];
-          newArr[i]?.localSignature
-            ? (newArr[i]["localSignature"] = data)
-            : (newArr[i] = { ...newArr[i], localSignature: data });
-          setSignatureSyllabus(newArr);
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            const data = reader.result;
+            let newArr = [...signatureSyllabus];
+            newArr[i]?.localSignature
+              ? (newArr[i]["localSignature"] = data)
+              : (newArr[i] = { ...newArr[i], localSignature: data });
+            setSignatureSyllabus(newArr);
+          }
+        };
+        if (e.target.files[0]) {
+          reader.readAsDataURL(e.target.files[0]);
         }
-      };
-      if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
       }
     }
   };
@@ -240,22 +288,27 @@ export default function EditSertifikat({ token }) {
   // # START BACKGROUND IMAGE 1
 
   const onChangeBackground = e => {
-    const type = ["image/jpg", "image/png", "image/jpeg"];
-    if (type.includes(e.target.files[0].type)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setLocalBackground(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
+    if (e.target.files[0].size > 5000000) {
       e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data background.",
-        "error"
-      );
+      Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    } else {
+      const type = ["image/jpg", "image/png", "image/jpeg"];
+      if (type.includes(e.target.files[0].type)) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setLocalBackground(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      } else {
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data background.",
+          "error"
+        );
+      }
     }
   };
   // # END BACKGROUND IMAGE 1
@@ -263,22 +316,27 @@ export default function EditSertifikat({ token }) {
   // # START BACKGROUND IMAGE 2
 
   const onChangeBackgroundLembar2 = e => {
-    const type = ["image/jpg", "image/png", "image/jpeg"];
-    if (type.includes(e.target.files[0].type)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setLocalBackgroundSyllabus(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
+    if (e.target.files[0].size > 5000000) {
       e.target.value = null;
-      Swal.fire(
-        "Oops !",
-        "Data yang bisa dimasukkan hanya berupa data image.",
-        "error"
-      );
+      Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+    } else {
+      const type = ["image/jpg", "image/png", "image/jpeg"];
+      if (type.includes(e.target.files[0].type)) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setLocalBackgroundSyllabus(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0]);
+      } else {
+        e.target.value = null;
+        Swal.fire(
+          "Oops !",
+          "Data yang bisa dimasukkan hanya berupa data image.",
+          "error"
+        );
+      }
     }
   };
 
@@ -303,7 +361,6 @@ export default function EditSertifikat({ token }) {
         setNamaPeserta("");
         setNomerSertifikat("");
       }
-
       if (certificate_type == "1 lembar") {
         simpleValidator.current.fields.Jabatan = true;
         simpleValidator.current.fields.Nama = true;
@@ -314,13 +371,6 @@ export default function EditSertifikat({ token }) {
 
       if (simpleValidator.current.allValid()) {
         let formData = new FormData();
-
-        if (status == 1) {
-          setTahun("");
-          setTanggal("");
-          setNamaPeserta("");
-          setNomerSertifikat("");
-        }
 
         formData.append("_method", "put");
         formData.append("name", certificate_name);
@@ -365,8 +415,6 @@ export default function EditSertifikat({ token }) {
 
         if (certificate_type == "2 lembar") {
           for (let i = 0; i < number_of_signature_syllabus; i++) {
-            console.log(signatureSyllabus[i]);
-
             formData.append(
               `signature_certificate_position_syllabus[${i}]`,
               signatureSyllabus[i].position
@@ -404,15 +452,6 @@ export default function EditSertifikat({ token }) {
         formData.append("status_migrate_id", status);
 
         dispatch(updateSertifikat(id, formData, token));
-
-        router.push(
-          {
-            pathname: `/sertifikat/kelola-sertifikat/${query.nama_pelatihan_id}`,
-            query: { success: true, id: query.theme_id },
-          },
-          null,
-          { shallow: false }
-        );
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -474,6 +513,7 @@ export default function EditSertifikat({ token }) {
       ) : (
         ""
       )}
+
       {/* error END */}
 
       {certificate ? (
@@ -1171,7 +1211,7 @@ export default function EditSertifikat({ token }) {
                   <a
                     className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
                     onClick={e => {
-                      handlePost(e, 1);
+                      setConfirmModal(true);
                     }}
                   >
                     Publish
@@ -1873,7 +1913,7 @@ export default function EditSertifikat({ token }) {
                     <a
                       className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 col-md-3 col-lg-2 col-12 mt-5 mt-md-0"
                       onClick={e => {
-                        handlePost(e, 1);
+                        setConfirmModal(true);
                       }}
                     >
                       Publish
@@ -1999,6 +2039,42 @@ export default function EditSertifikat({ token }) {
       ) : (
         <div></div>
       )}
+
+      <>
+        <Modal show={confirmModal} centered>
+          <Modal.Body className="px-10">
+            <div className="row justify-content-center ">
+              <i className="ri-error-warning-line ri-8x text-warning col-12 text-center"></i>
+              <div className="font-size-h1 font-weight-bolder">
+                Publish Sertifikat?
+              </div>
+              <div className="text-center">
+                Pastikan desain sertifikat telah benar. Sertifikat yang telah
+                dipublish tidak dapat diubah kembali
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer className="pb-10 pt-8 d-flex justify-content-center">
+            <button
+              className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3"
+              onClick={() => {
+                setConfirmModal(!confirmModal);
+              }}
+            >
+              Batal
+            </button>
+            <a
+              className="btn btn-primary-rounded-full px-6 font-weight-bolder px-6 py-3 text-center"
+              onClick={e => {
+                setConfirmModal(false);
+                handlePost(e, 1);
+              }}
+            >
+              Publish
+            </a>
+          </Modal.Footer>
+        </Modal>
+      </>
     </PageWrapper>
   );
 }
