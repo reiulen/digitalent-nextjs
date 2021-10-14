@@ -22,6 +22,19 @@ const NamaPelatihanID = dynamic(
   }
 );
 
+const EditSertifikat = dynamic(
+  () =>
+    import(
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/edit-sertifikat"
+    ),
+  {
+    loading: function loadingNow() {
+      return <LoadingSkeleton />;
+    },
+    ssr: false,
+  }
+);
+
 const PublishedSertifikat = dynamic(
   () =>
     import(
@@ -43,6 +56,14 @@ export default function KelokaSertifikatPage(props) {
       <>
         <div className="d-flex flex-column flex-root">
           <PublishedSertifikat token={session} />
+        </div>
+      </>
+    );
+  } else if (props.status == "edit") {
+    return (
+      <>
+        <div className="d-flex flex-column flex-root">
+          <EditSertifikat token={session} />
         </div>
       </>
     );
@@ -69,17 +90,18 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
+      console.log(query);
       if (query.status == "publish") {
         await store.dispatch(
           getPublishedSertifikat(query.id, session.user.user.data.token)
         );
+      } else if (query.status == "edit") {
+        await store.dispatch(
+          getSingleSertifikat(query.id, session.user.user.data.token)
+        );
       } else {
         await store.dispatch(
-          getSingleSertifikat(
-            query.nama_pelatihan_id,
-            session.user.user.data.token
-          )
+          getSingleSertifikat(query.id, session.user.user.data.token)
         );
       }
 

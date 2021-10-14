@@ -45,10 +45,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
-
+      // certificate builder pake theme id
       await store.dispatch(
         getDetailSertifikat(
-          query.id,
+          query.theme_id,
           query.page,
           query.keyword,
           query.limit,

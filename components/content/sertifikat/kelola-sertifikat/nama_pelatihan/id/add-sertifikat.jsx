@@ -28,7 +28,8 @@ import * as moment from "moment";
 export default function TambahMasterSertifikat({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  console.log(router);
+  const { query } = router;
+  console.log(query);
   // #Div Reference Lembar 1
   const divReference = useRef(null);
   const divReferenceSilabus = useRef(null);
@@ -266,7 +267,7 @@ export default function TambahMasterSertifikat({ token }) {
         simpleValidator.current.fields["Tanda tangan"] = true;
       }
 
-      const id = router.query.nama_pelatihan_id;
+      const id = query.id;
 
       if (simpleValidator.current.allValid()) {
         dispatch(newSertifikat(id, formData, token));
@@ -294,7 +295,6 @@ export default function TambahMasterSertifikat({ token }) {
           formData.append(`signature_certificate_position[${i}]`, item);
         }); //nih buat posisi
         signature_certificate_set_position.forEach((item, i) => {
-          console.log(item, "ini item dari foreach", typeof item);
           formData.append(`signature_certificate_set_position[${i}]`, item);
         });
 
@@ -345,10 +345,13 @@ export default function TambahMasterSertifikat({ token }) {
 
         dispatch(newSertifikat(id, formData, token));
 
-        router.push({
-          pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
-          query: { success: true },
-        });
+        // router.push({
+        //   pathname: `/sertifikat/kelola-sertifikat/${query.theme_name}`,
+        //   query: { id: query.theme_id, success: true },
+        // });
+        router.push(
+          `/sertifikat/kelola-sertifikat/${query.theme_name}?id=${query.theme_id}&success=true`
+        );
       } else {
         simpleValidator.current.showMessages();
         forceUpdate(1);
@@ -1056,15 +1059,15 @@ export default function TambahMasterSertifikat({ token }) {
             </div>
             {certificate_type == "1 lembar" ? (
               <div className="row justify-content-lg-end justify-content-center">
-                <Link href="/sertifikat/kelola-sertifikat" passHref>
+                <Link
+                  href={`/sertifikat/kelola-sertifikat/${query.theme_name}?id=${query.theme_id}`}
+                  passHref
+                >
                   <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3 col-lg-2 col-md-3 col-12 mt-5 mt-md-0">
                     Batal
                   </a>
                 </Link>
-                {/* <Link
-                  href={`/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`}
-                  passHref
-                > */}
+
                 <a
                   className="btn btn-outline-primary-rounded-full px-6 font-weight-bolder px-6 py-3 mx-5 col-lg-2 col-md-3 col-12 mt-5 mt-md-0 w-50"
                   onClick={e => {
@@ -1758,7 +1761,10 @@ export default function TambahMasterSertifikat({ token }) {
               </div>
               {certificate_type == "2 lembar" ? (
                 <div className="row justify-content-lg-end justify-content-center">
-                  <Link href="/sertifikat/kelola-sertifikat" passHref>
+                  <Link
+                    href={`/sertifikat/kelola-sertifikat/${query.theme_name}?id=${query.theme_id}`}
+                    passHref
+                  >
                     <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3 col-lg-2 col-md-3 col-12 mt-5 mt-md-0">
                       Batal
                     </a>

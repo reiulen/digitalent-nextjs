@@ -325,7 +325,8 @@ export default function NamaPelatihanID({ token }) {
                                   {certificate.status.name == "draft" ? (
                                     <>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
+                                        // href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&theme_id=${certificate.theme.id}&status=view`}
                                         passHref
                                       >
                                         <a
@@ -338,7 +339,7 @@ export default function NamaPelatihanID({ token }) {
                                         </a>
                                       </Link>
                                       <Link
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.id}/edit`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?id=${certificate.id}&status=edit&theme_id=${certificate.theme.id}`}
                                         passHref
                                       >
                                         <a
@@ -355,7 +356,7 @@ export default function NamaPelatihanID({ token }) {
                                     <>
                                       <Link
                                         passHref
-                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?status=${certificate.status.name}&id=${certificate.id}`}
+                                        href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}/${certificate.name}?status=${certificate.status.name}&id=${certificate.id}&theme_id=${certificate.theme.id}`}
                                       >
                                         <a
                                           className="btn btn-link-action bg-blue-secondary text-white mr-2"
@@ -384,7 +385,7 @@ export default function NamaPelatihanID({ token }) {
                                     </>
                                   ) : (
                                     <Link
-                                      href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.theme_id}`}
+                                      href={`/sertifikat/kelola-sertifikat/certificate-builder?id=${certificate.id}&theme_id=${certificate.theme.id}&theme_name=${certificate.theme.name}`}
                                       // ${query.tema_pelatihan_id}
                                       passHref
                                     >

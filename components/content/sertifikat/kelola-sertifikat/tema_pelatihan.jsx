@@ -63,7 +63,7 @@ export default function NamaPelatihan({ token }) {
     router.push(link);
   };
 
-  const handleFilter = () => {
+  const handleFilter = e => {
     if (!academy && !temaPelatihan) {
       Swal.fire(
         "Oops !",
@@ -168,7 +168,9 @@ export default function NamaPelatihan({ token }) {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={() => {
+                        handleSearch();
+                      }}
                     >
                       Cari
                     </button>
@@ -281,7 +283,7 @@ export default function NamaPelatihan({ token }) {
                                 <button
                                   className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                   type="button"
-                                  onClick={e => handleFilter(e)}
+                                  onClick={handleFilter}
                                 >
                                   Terapkan
                                 </button>

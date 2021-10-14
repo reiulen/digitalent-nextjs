@@ -110,7 +110,7 @@ export default function KelolasertifikatID({ token }) {
             </div>
             <div className="card-toolbar">
               <Link
-                href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}`}
+                href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}?id=${query.theme_id}`}
                 passHref
               >
                 <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3">

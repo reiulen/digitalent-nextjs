@@ -154,8 +154,6 @@ export const getSingleSertifikat = (id, token) => async dispatch => {
 
     const { data } = await axios.get(link, config);
 
-    console.log(data.data.signature, " ini data nya");
-
     if (data) {
       dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
     }

@@ -30,6 +30,8 @@ import * as moment from "moment";
 export default function EditSertifikat({ token }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { query } = router;
+  console.log(query);
   // #Div Reference Lembar 1
   const { loading, error, certificate } = useSelector(
     state => state.singleCertificate
@@ -308,7 +310,7 @@ export default function EditSertifikat({ token }) {
         simpleValidator.current.fields["Tanda tangan"] = true;
       }
 
-      const id = router.query.nama_pelatihan_id;
+      const id = query.id;
 
       if (simpleValidator.current.allValid()) {
         let formData = new FormData();
@@ -405,8 +407,8 @@ export default function EditSertifikat({ token }) {
 
         router.push(
           {
-            pathname: `/sertifikat/kelola-sertifikat/${router.query.tema_pelatihan_id}`,
-            query: { success: true },
+            pathname: `/sertifikat/kelola-sertifikat/${query.nama_pelatihan_id}`,
+            query: { success: true, id: query.theme_id },
           },
           null,
           { shallow: false }
@@ -1148,7 +1150,10 @@ export default function EditSertifikat({ token }) {
               </div>
               {certificate_type == "1 lembar" ? (
                 <div className="row justify-content-lg-end justify-content-center">
-                  <Link href="/sertifikat/master-sertifikat/tambah" passHref>
+                  <Link
+                    href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}?id=${query.theme_id}`}
+                    passHref
+                  >
                     <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3 col-lg-2 col-md-3 col-12 mt-5 mt-md-0">
                       Batal
                     </a>
@@ -1847,7 +1852,10 @@ export default function EditSertifikat({ token }) {
                 </div>
                 {certificate_type == "2 lembar" ? (
                   <div className="row justify-content-lg-end justify-content-center">
-                    <Link href="/sertifikat/master-sertifikat/tambah" passHref>
+                    <Link
+                      href={`/sertifikat/kelola-sertifikat/${query.tema_pelatihan_id}?id=${query.theme_id}`}
+                      passHref
+                    >
                       <a className="btn btn-light-ghost-rounded-full px-6 font-weight-bolder px-5 py-3 col-lg-2 col-md-3 col-12 mt-5 mt-md-0">
                         Batal
                       </a>
