@@ -70,7 +70,8 @@ const ReviewKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/accept/${router.query.id}`,null,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/accept/${router.query.id}`,
+            null,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -82,7 +83,13 @@ const ReviewKerjasama = ({ token }) => {
             query: { successTerima: true },
           });
         } catch (error) {
-          console.log("error acceptDokument", error);
+          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+            () => {
+              router.push({
+                pathname: `/partnership/kerjasama`,
+              });
+            }
+          );
         }
       }
     });
@@ -105,7 +112,8 @@ const ReviewKerjasama = ({ token }) => {
       if (result.value) {
         try {
           let { data } = await axios.put(
-            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${router.query.id}`,null,
+            `${process.env.END_POINT_API_PARTNERSHIP}api/cooperations/proposal/reject/${router.query.id}`,
+            null,
             {
               headers: {
                 authorization: `Bearer ${token}`,
@@ -118,11 +126,35 @@ const ReviewKerjasama = ({ token }) => {
             query: { successReject: true },
           });
         } catch (error) {
-          console.log("error acceptDokument", error);
+
+
+
+          Swal.fire("Gagal", `${error.response.data.message}`, "error").then(
+            () => {
+              router.push({
+                pathname: `/partnership/kerjasama`,
+              });
+            }
+          );
+
+
+
         }
       }
     });
   };
+
+  const notify = (value) =>
+    toast.info(`🦄 ${value}`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+
   const [statusInfo, setstatusInfo] = useState("");
   useEffect(() => {
     async function setDataSingle(id, token) {
@@ -383,12 +415,9 @@ const ReviewKerjasama = ({ token }) => {
                     className="form-control border-0"
                     disabled
                     value={cooperationID.name}
-                    style={{backgroundColor:"transparent"}}
+                    style={{ backgroundColor: "transparent" }}
                   />
-                  
-                  
                 </div>
-
 
                 {/* <div className="row mb-4">
                 <div className="col-12 col-sm-12">

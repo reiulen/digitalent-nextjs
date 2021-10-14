@@ -696,12 +696,14 @@ const DetailDataKerjasama = ({token}) => {
                                 <div className="d-flex align-items-center">
                                   <button
                                     className="btn btn-link-action bg-blue-secondary btn-delete mr-2 position-relative"
+
                                     onClick={() =>
                                       router.push({
                                         pathname: `/partnership/mitra/detail/mitra/${items.id}`,
                                         query: { idDetail: getId },
                                       })
                                     }
+                                    
                                   >
                                     <IconEye
                                       width="14"
@@ -931,6 +933,12 @@ const DetailDataKerjasama = ({token}) => {
                                     <div className="d-flex align-items-center">
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                        onClick={() =>
+                                          router.push({
+              pathname: `/partnership/kerjasama/detail-kerjasama`,
+              query: { id:items.id },
+            })
+                                        }
                                        
                                       >
                                         <IconEye
@@ -954,6 +962,9 @@ const DetailDataKerjasama = ({token}) => {
                                       </button> */}
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          cooperationDelete(items.id)
+                                        }
                                        
                                       >
                                         <IconDelete width="16" height="16" />
