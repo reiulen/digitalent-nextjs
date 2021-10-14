@@ -339,7 +339,7 @@ const ListSummary = ({ token }) => {
                         </td>
                       ) : (
                         summary.list.map((row, i) => (
-                          <tr>
+                          <tr key={i}>
                             <td className="text-center align-middle">
                               {limit === null
                                 ? i + 1 * (page * 5) - (5 - 1)
