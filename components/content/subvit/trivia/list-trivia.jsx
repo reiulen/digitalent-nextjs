@@ -304,7 +304,11 @@ const ListTrivia = ({ token }) => {
                                 <span className="">{paginate - dividers}</span>
                               </td>
                               <td className="align-middle">
-                                <b>{row.academy.name}</b>
+                                <b>
+                                  {row.academy !== null
+                                    ? row.academy.name
+                                    : "-"}
+                                </b>
                                 <p>
                                   {row.theme != null
                                     ? row.training !== null

@@ -335,7 +335,11 @@ const ListSubstansi = ({ token }) => {
                                 <span className="">{paginate - dividers}</span>
                               </td>
                               <td className="align-middle">
-                                <b>{subtance.academy.name}</b>
+                                <b>
+                                  {subtance !== null
+                                    ? subtance.academy.name
+                                    : "-"}
+                                </b>
                                 <p>
                                   {subtance.training !== null
                                     ? subtance.training.name
