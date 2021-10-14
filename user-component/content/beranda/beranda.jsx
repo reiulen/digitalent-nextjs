@@ -14,7 +14,6 @@ import {
 } from "react-bootstrap";
 
 import Slider from "react-slick";
-import AliceCarousel from 'react-alice-carousel';
 import CarouselMulti from "react-multi-carousel";
 
 import ImagetronCarousel from "../../components/ImagetronCarousel";
@@ -26,7 +25,6 @@ import "../../../styles/beranda.module.css"
 import "react-multi-carousel/lib/styles.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import 'react-alice-carousel/lib/alice-carousel.css';
 
 const Navigationbar = dynamic(() => import("../../../components/templates/navbar.component"), {
     ssr: false,
@@ -44,30 +42,12 @@ const Beranda = () => {
     const {
         pelatihan,
     } = useSelector((state) => state.pelatihanByTema);
-
-    const responsive = {
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 4,
-            slidesToSlide: 1 // optional, default to 1.
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 2,
-            slidesToSlide: 2 // optional, default to 1.
-        },
-        mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1,
-            slidesToSlide: 1 // optional, default to 1.
-        }
-    };
     
     const [activeTab, setActiveTab] = useState ("VSGA")
     const [indexTab, setIndexTab] = useState (0)
     const [show,setShow] = useState(false)
     const [showDetail, setShowDetail] = useState(false)
-    // const [akademiItem, setAkademiItem] = useState (akademi)
+    const [akademiItem, setAkademiItem] = useState (null)
 
     useEffect(() => {
         handleIndexShow ()
@@ -83,9 +63,10 @@ const Beranda = () => {
             for (let i = 0; i < akademi.length; i+= 3){
                 arr.push (akademi.slice (i, i + 3))
             }
-        }
 
-        console.log (arr)
+            setAkademiItem(arr)
+        }
+        // console.log (arr)
     }
 
     const handleIndexShow = () => {
@@ -150,7 +131,7 @@ const Beranda = () => {
     return (
         <BerandaWrapper title= "Digitalent">
             <div className="bg-white">
-                {
+                {/* {
                     console.log (akademi)
                 }
 
@@ -168,7 +149,7 @@ const Beranda = () => {
 
                 {
                     console.log (showDetail)
-                }
+                } */}
 
                 <Navigationbar />
 
