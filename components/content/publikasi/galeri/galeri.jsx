@@ -869,8 +869,9 @@ const Galeri = ({ token }) => {
                                                 >
                                                     <option value='5' selected={limit == "5" ? true : false}>5</option>
                                                     <option value='10' selected={limit == "10" ? true : false}>10</option>
-                                                    <option value='15' selected={limit == "15" ? true : false}>15</option>
-                                                    <option value='20' selected={limit == "20" ? true : false}>20</option>
+                                                    <option value='30' selected={limit == "30" ? true : false}>30</option>
+                                                    <option value='40' selected={limit == "40" ? true : false}>40</option>
+                                                    <option value='50' selected={limit == "50" ? true : false}>50</option>
                                                 </select>
                                             </div>
                                             <div className="col-8 my-auto">
