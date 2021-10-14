@@ -63,9 +63,10 @@ const ListTrivia = ({ token }) => {
     router.push(link);
   };
 
-  const handleLimit = (val) => {
-    setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${limit}`);
+  const handleLimit = (e) => {
+    console.log(e.target.value);
+    setLimit(e.target.value);
+    router.push(`${router.pathname}?page=1&limit=${e.target.value}`);
   };
 
   const handleDelete = (id) => {
@@ -295,13 +296,12 @@ const ListTrivia = ({ token }) => {
                       ) : (
                         trivia &&
                         trivia.list_trivia.map((row, i) => {
-                          console.log(row);
+                          const paginate = i + 1 * (page * limit);
+                          const dividers = parseInt(router.query.limit) - 1;
                           return (
                             <tr key={row.id}>
                               <td className="align-middle text-center">
-                                <span className="">
-                                  {i + 1 * (page * 5 || limit) - 4}
-                                </span>
+                                <span className="">{paginate - dividers}</span>
                               </td>
                               <td className="align-middle">
                                 <b>{row.academy.name}</b>
@@ -415,13 +415,14 @@ const ListTrivia = ({ token }) => {
                           className="form-control"
                           id="exampleFormControlSelect2"
                           style={{
-                            width: "65px",
+                            width: "68px",
                             background: "#F3F6F9",
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
-                          onChange={(e) => handleLimit(e.target.value)}
-                          onBlur={(e) => handleLimit(e.target.value)}
+                          onChange={(event) => handleLimit(event)}
+                          onBlur={(event) => handleLimit(event)}
+                          value={limit}
                         >
                           <option>5</option>
                           <option>10</option>
