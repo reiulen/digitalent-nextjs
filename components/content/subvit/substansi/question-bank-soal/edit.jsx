@@ -292,7 +292,9 @@ const EditSoalSubstansi = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {subtance_question_detail.question_image
+                        ? question_image
+                        : "Choose file"}
                     </label>
                   </div>
                 </div>

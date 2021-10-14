@@ -174,7 +174,7 @@ const Table = ({ token }) => {
               Master Kategori Kerjasama
             </h3>
             <div className="card-toolbar">
-              <Link href="/partnership/master-kategori-kerjasama/tambah">
+              <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
                   <IconAdd className="mr-3" width="14" height="14" />
                   Tambah Kategori Kerjasama
