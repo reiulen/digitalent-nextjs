@@ -308,18 +308,18 @@ const ReportSurvey = ({ token }) => {
                               </td>
                               <td className="align-middle">
                                 <div>
-                                  <p className="my-0">
+                                  {/* <p className="my-0">
                                     Benar: {row.right_answer} Jawaban
                                   </p>
                                   <p className="my-0">
                                     Salah: {row.wrong_answer} Jawaban
-                                  </p>
+                                  </p> */}
                                   <p className="my-0">
                                     Jumlah: {row.total_questions} Jawaban
                                   </p>
                                 </div>
                               </td>
-                              {row.status ? (
+                              {/* {row.status ? (
                                 <td className="align-middle">
                                   <span className="label label-inline label-light-success font-weight-bold">
                                     Diterima
@@ -331,7 +331,15 @@ const ReportSurvey = ({ token }) => {
                                     Ditolak
                                   </span>
                                 </td>
-                              )}
+                              )} */}
+
+                              {/* Buat Tampilan  */}
+
+                              <td className="align-middle">
+                                <span className="label label-inline label-light-success font-weight-bold">
+                                  Diterima
+                                </span>
+                              </td>
                             </tr>
                           );
                         })
