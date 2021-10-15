@@ -27,7 +27,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/partnership/user/auth/login",
+            destination:
+              "http://dts-dev.majapahit.id/partnership/user/auth/login",
             permanent: false,
           },
         };

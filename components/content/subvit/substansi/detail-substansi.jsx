@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   deleteSubtanceQuestionDetail,
   clearErrors,
+  getAllSubtanceQuestionDetail,
 } from "../../../../redux/actions/subvit/subtance-question-detail.action";
 
 const DetailSubstansi = ({ token }) => {
@@ -46,7 +47,8 @@ const DetailSubstansi = ({ token }) => {
         }
       );
     }
-  }, [isDeleted]);
+    dispatch(getAllSubtanceQuestionDetail(id));
+  }, [isDeleted, dispatch, id]);
 
   const [status, setStatus] = useState("");
   const [kategori, setKategori] = useState(null);
@@ -133,6 +135,11 @@ const DetailSubstansi = ({ token }) => {
   const handleReset = () => {
     // console.log("work");
     setShowModal(false);
+    setStatus("");
+    setKategori("");
+    setPelatihan("");
+    let link = `${router.pathname}?id=${id}`;
+    router.push(link);
   };
 
   const getStartEndAt = (start, end) => {
@@ -225,6 +232,13 @@ const DetailSubstansi = ({ token }) => {
     }
 
     return `${startAt.getDate()} ${startMonth} - ${tanggal} ${bulan} ${tahun}`;
+  };
+
+  const handleStatus = (e) => {
+    setStatus(e.target.value);
+  };
+  const handleKategori = (e) => {
+    setKategori(e.target.value);
   };
 
   return (
@@ -621,23 +635,23 @@ const DetailSubstansi = ({ token }) => {
             <label className="p-0">Status</label>
             <select
               className="form-control"
-              onChange={(e) => setStatus(e.target.value)}
-              onBlur={(e) => setStatus(e.target.value)}
+              onChange={(event) => handleStatus(event)}
+              onBlur={(event) => handleStatus(event)}
               value={status}
             >
               <option value="" selected>
                 Semua
               </option>
-              <option value={true}>Publish</option>
-              <option value={false}>Draft</option>
+              <option value={1}>Publish</option>
+              <option value={0}>Draft</option>
             </select>
           </div>
           <div className="form-group mb-5">
             <label className=" p-0">Tipe Soal</label>
             <select
               className="form-control"
-              onChange={(e) => setKategori(e.target.value)}
-              onBlur={(e) => setKategori(e.target.value)}
+              onChange={(event) => handleKategori(event)}
+              onBlur={(event) => handleKategori(event)}
               value={kategori}
             >
               <option value="">Semua</option>
@@ -647,15 +661,13 @@ const DetailSubstansi = ({ token }) => {
                 <option value="">Data kosong</option>
               ) : (
                 subtance_question_type &&
-                subtance_question_type.list_types
-                  .filter((row) => row.status === 1)
-                  .map((row) => {
-                    return (
-                      <option key={row.id} value={row.id}>
-                        {row.name}
-                      </option>
-                    );
-                  })
+                subtance_question_type.list_types.map((row) => {
+                  return (
+                    <option key={row.id} value={row.name}>
+                      {row.name}
+                    </option>
+                  );
+                })
               )}
             </select>
           </div>

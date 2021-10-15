@@ -21,7 +21,6 @@ export default function DashboardPage({ token }) {
   let dispatch = useDispatch();
   const allDashboard = useSelector((state) => state.allDashboard);
   const [user, setUser] = useState("")
-  console.log("user",user)
 
   const colors = ["#215480", "#4299E1", "#357AB4"];
   const [dataPieChartStatusPengajuan, setDataPieChartStatusPengajuan] =
@@ -75,6 +74,8 @@ export default function DashboardPage({ token }) {
   return (
     <PageWrapper>
       {/* head content */}
+
+      
 
       <div
         className="position-relative br-12 bg-white py-10 px-6 overflow-hidden"
@@ -209,10 +210,10 @@ export default function DashboardPage({ token }) {
             </h5>
             <div className="wrapper-chart-pie">
               <span className="center-absolute fw-700 fz-24">
-                {!allDashboard.data_dashboard.data?.cooperation_will_expired
-                  ? 0
-                  : allDashboard.data_dashboard.data?.cooperation_will_expired +
+                {allDashboard.data_dashboard.data?.cooperation_will_expired +
                     allDashboard.data_dashboard.data?.cooperation_rejected}
+
+                    
               </span>
 
               <PieChart width={450} height={350}>

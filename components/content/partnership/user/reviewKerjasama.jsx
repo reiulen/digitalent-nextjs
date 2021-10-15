@@ -206,9 +206,8 @@ function ReviewKerjasama({token}) {
               </div>
               <div className="col-12 col-sm-6">
                 <div className="d-flex flex-column align-items-start justify-content-center h-100">
-                  <h1 className="fz-40 fw-700" style={{color:"#6C6C6C"}}>Terima Kasih</h1>
-                  <p className="mt-5 fz-16">Kamu telah berhasil melakukan pengajuan kerjasama dengan kami</p>
-                  <p className="fz-16">Dibutuhkan beberapa waktu untuk melakukan proses review pada pengajuanmu.</p>
+                  <h1 className="fz-40 fw-700" style={{color:"#6C6C6C"}}>Pengajuan Terkirim!</h1>
+                  <p className="mt-5 fz-16">Terima kasih telah mengajukan kerjasama bersama Kami. Mohon tunggu dalam beberapa waktu karena Kami akan segera memproses pengajuan kerjasamamu. </p>
                 </div>
 
                 <div className="form-group row">
