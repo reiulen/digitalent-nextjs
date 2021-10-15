@@ -73,17 +73,26 @@ function ReviewKerjasama({token}) {
       // console.log("data a a a ssss", data.data.status_migrates_id.status);
       if(data.data.status_migrates_id.status === "pengajuan-revisi"){
         router.push({
-          pathname:"/partnership/user/kerjasama/review-kerjasama-2",
+          pathname:"/partnership/user/kerjasama/review-list-kerjasama",
           query:{id:router.query.id}
         })
       }
       if((data.data.status_migrates_id.status === "pengajuan-selesai") || (data.data.status_migrates_id.status === "pengajuan-pembahasan")  ){
         router.push({
-          pathname:"/partnership/user/kerjasama/pembahasan-2",
+          pathname:"/partnership/user/kerjasama/pembahasan",
           query:{id:router.query.id}
         })
       }
+      if(data.data.status_migrates_id.status === "dibatalkan" ){
+        router.push({
+          pathname:"/partnership/user/kerjasama/hasil",
+          query:{id:router.query.id,statusKerjasama:data.data.status_migrates_id.status}
+        })
+      }
       setStatus(data.data.status_migrates_id.status);
+      
+
+      
     } catch (error) {
       console.log("gagal get province", error);
     }

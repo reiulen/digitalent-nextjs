@@ -116,7 +116,7 @@ const DetailDokumenKerjasama = ({ token }) => {
               }
             );
             router.push({
-              pathname: `/partnership/user/kerjasama/review-kerjasama-1`,
+              pathname: `/partnership/user/kerjasama/review-kerjasama`,
               query: { successSubmitKerjasama: true, id: data.data.id },
             });
           } catch (error) {

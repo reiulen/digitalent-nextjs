@@ -3,12 +3,13 @@ import PageWrapper from "../../../wrapper/page.wrapper";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
+import DetailRevisiKerjasama from './detailRevisiKerjasama'
 
 function RevisiList({ token }) {
   const router = useRouter();
   const cardContainer = {
     background: "#FFFFFF",
-    boxShadow: "8px 8px 20px rgba(0, 0, 0, 0.15)",
+    border: "1px solid #D7E1EA",
     borderRadius: "5px",
     padding: "16px 32px",
     borderRadius: "12px",
@@ -122,8 +123,25 @@ function RevisiList({ token }) {
                     );
                   })}
             </ul>
+
+            <div className="form-group row mt-10">
+                <div className="col-sm-12 d-flex justify-content-end">
+                  <Link
+                    href={{
+                      pathname: `/partnership/kerjasama`
+                    }}
+                  >
+                    <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
+                      Kembali
+                    </a>
+                  </Link>
+                </div>
+              </div>
           </div>
         </div>
+
+        
+
       </div>
     </PageWrapper>
   );

@@ -272,6 +272,7 @@ const DetailRevisiKerjasama = ({ token }) => {
                   </button>
                 </div>
               </div>
+              
             </form>
           </div>
         </div>

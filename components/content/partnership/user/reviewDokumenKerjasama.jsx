@@ -183,7 +183,7 @@ function ReviewDokumenKerjasama({ token }) {
         setDokument(data.data.document);
         setCatatanREvisi(data.data.note);
         setNote(data.data.note);
-        if (data.data.status_migrates_id.status === "aktif") {
+        if ((data.data.status_migrates_id.status === "aktif") || (data.data.status_migrates_id.status === "dibatalkan") ) {
           router.push({
             pathname: "/partnership/user/kerjasama/hasil",
             query: {
@@ -192,6 +192,16 @@ function ReviewDokumenKerjasama({ token }) {
             },
           });
         }
+
+        if (data.data.status_migrates_id.status === "pengajuan-document" ) {
+          router.push({
+            pathname: "/partnership/user/kerjasama/review-dokumen-kerjasama",
+            query: {
+              id: router.query.id,
+            },
+          });
+        }
+        console.log("data.data.status_migrates_id.status",data.data.status_migrates_id.status)
       } catch (error) {
         console.log("action getSIngle gagal", error);
       }

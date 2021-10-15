@@ -12,7 +12,7 @@ function RevisiList({token}) {
   const router = useRouter();
   const cardContainer = {
     background: "#FFFFFF",
-    boxShadow: "8px 8px 20px rgba(0, 0, 0, 0.15)",
+    border: "1px solid #D7E1EA",
     borderRadius: "5px",
     padding: "16px 32px",
     borderRadius: "12px",
@@ -140,7 +140,7 @@ function RevisiList({token}) {
                     <p className="mt-4" style={{ color: "#ADB5BD" }}>
                       {items.information1}
                     </p>
-                    <p style={{ color: "#ADB5BD" }}>Revisi Versi.{items.version}</p>
+                    <p style={{ color: "#EE2D41" }}>Revisi Versi.{items.version}</p>
                   </div>
 
                   {/* <span style={labelStyle}>{items.information2}</span> */}
@@ -148,7 +148,7 @@ function RevisiList({token}) {
 
                  
                   <Link href={{
-                    pathname:"/partnership/user/kerjasama/pembahasan-1",
+                    pathname:"/partnership/user/kerjasama/revisi",
                     query:{id:router.query.id,version:items.version,information2:items.information2,index:index}
                   }}>
                  <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">Lihat Detail Revisi</a> 
@@ -157,7 +157,7 @@ function RevisiList({token}) {
                 :
 
                 <Link href={{
-                    pathname:"/partnership/user/kerjasama/pembahasan-1",
+                    pathname:"/partnership/user/kerjasama/revisi",
                     query:{id:router.query.id,version:items.version,information2:items.information2,index:index}
                   }}>
                  <a style={labelStyle}>{items.information2}</a> 

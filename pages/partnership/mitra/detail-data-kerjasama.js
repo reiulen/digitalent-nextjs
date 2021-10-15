@@ -2,6 +2,21 @@ import dynamic from "next/dynamic";
 import LoadingPage from "../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
 import { wrapper } from "../../../redux/store";
+import {
+  getSingleValue,
+  searchByKeyDetail,
+  setPageDetail,
+  setLimitDetail,
+  exportFileCSVDetail,
+  fetchListSelectCooperation,
+  fetchListSelectStatus,
+  changeValueStatus,
+  changeValueKerjaSama,
+  deleteCooperation,
+  reloadTable,
+  changeStatusList,
+  changeStatusListCooperation,
+} from "../../../redux/actions/partnership/mitra.actions";
 
 const DetailDataKerjasama = dynamic(
   () =>
@@ -21,7 +36,7 @@ export default function DetailDataKerjasamaPage(props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   () =>
-    async ({ req }) => {
+    async ({ params, req }) => {
       const session = await getSession({ req });
       if (!session) {
         return {
@@ -31,6 +46,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
           },
         };
       }
+
+      dispatch(getSingleValue(token, params.id));
+      dispatch(fetchListSelectCooperation(token));
+      dispatch(fetchListSelectStatus(token));
+
+      await store.dispatch(fetchListSelectStatus(session.user.user.data.token));
+      await store.dispatch(
+        fetchListSelectCooperation(session.user.user.data.token)
+      );
 
       return {
         props: { session, title: "Detail Master Mitra - Paretnership" },

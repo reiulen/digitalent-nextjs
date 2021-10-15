@@ -384,7 +384,7 @@ const RevisiSubmit = ({token}) => {
               <div className="form-group row">
                 <div className="col-sm-12 d-flex justify-content-end">
                   <Link href={{
-                    pathname:"/partnership/user/kerjasama/review-kerjasama-2",
+                    pathname:"/partnership/user/kerjasama/review-list-kerjasama",
                     query:{id:router.query.id}
                   }}>
                     <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary mr-5">
