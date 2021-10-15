@@ -60,6 +60,7 @@ export default function KelolasertifikatID({ token }) {
 
   async function convertDivToPng(div) {
     const data = await toPng(div, {
+      cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
     });
@@ -68,6 +69,7 @@ export default function KelolasertifikatID({ token }) {
 
   async function convertDivToPng2(div) {
     const data = await toPng(div, {
+      cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
     });
