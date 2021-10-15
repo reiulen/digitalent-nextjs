@@ -366,7 +366,7 @@ const EditGaleri = ({ token }) => {
             setImage(list);
             setTotalImage((totalImage) - 1)
 
-            for (let i = 0; i < deleteImg.length; i++) {
+            // for (let i = 0; i < deleteImg.length; i++) {
     
                 // temps.push(image[i].imageBase64)
                 setDeleteImg([{
@@ -378,7 +378,7 @@ const EditGaleri = ({ token }) => {
                 // if (flag === image.length) {
                 //     handleData(temps, updateGaleri)
                 // }
-            }
+            // }
 
             // deleteImg.push(list)
             // setDeleteImg(list, { gambar: gambar, id: id });
@@ -436,7 +436,7 @@ const EditGaleri = ({ token }) => {
             }
 
             // dispatch(newGaleri(data, token))
-            // dispatch(onCall(data, token))
+            dispatch(onCall(data, token))
             console.log("Unpublish : ", data)
             // console.log(image)
 
@@ -456,7 +456,7 @@ const EditGaleri = ({ token }) => {
                 image_delete: deleteImg
             }
 
-            // dispatch(onCall(data, token))
+            dispatch(onCall(data, token))
             console.log("Publish : ", data)
             // console.log(image)
         }
