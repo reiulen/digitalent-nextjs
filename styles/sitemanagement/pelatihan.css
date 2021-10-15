@@ -1,0 +1,52 @@
+
+.prompt{
+   padding: 16px;
+   margin-bottom: 8px;
+   border-radius: 5px;
+   font-size: 16px;
+}
+
+.prompt a{
+    text-decoration: none;
+    color: #1F1F1F;
+}
+
+.prompt:hover{
+    background-color: #ECF5FC;
+    color: #1F1F1F;
+    font-weight: 600;
+}
+
+.prompt h3{
+    padding-left: 16px;
+    color: #6C6C6C;
+    font-weight: normal;
+}
+
+.pelatihan-click{
+    margin-right: 32px;
+}
+
+.active{
+    padding: 16px;
+    background-color: #ECF5FC;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.active a{
+    text-decoration: none;
+}
+
+.active h3{
+    padding-left: 16px;
+    font-weight: 600;
+}
+
+.active:hover{
+    background-color: #ECF5FC;
+    color: #1F1F1F;
+}
+
