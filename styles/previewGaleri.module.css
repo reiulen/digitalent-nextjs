@@ -1,0 +1,132 @@
+/* Modals Preview Publikasi - Galeri */
+
+/* .modal-content{
+    height: 500px;
+    background: #fff;
+    border-radius: 5px;
+} */
+
+.modal-dialog{
+    /* border: 1px solid yellow; */
+    width: 800px;
+    height: 80%;
+}
+
+.modal-body{
+    width: 770px;
+    height: 100%;
+}
+
+.posModal{
+    display: flex;
+    background: #fff;
+}
+
+.img-left{
+    width: 380px;
+}
+
+.img-prevModal{
+    /* border: 1px solid blue; */
+    height: 236px;
+    /* position: relative; */
+}
+
+.subMenuPreview{
+    font-size: 11px;
+    margin-left: -10px;
+}
+
+.description-img{
+    text-align: left;
+    width: 100%;
+    height: 260px;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+}
+
+.strip{
+    width: 390px;
+    margin-left: -35px;
+}
+
+@media only screen and (max-width: 1024px) {
+    .modal-body{
+        height: 400px;
+        width: 650px;
+        margin-left: -75px;
+    }
+    .img-left{
+        width: 320px;
+        margin-left: -2px;
+    }
+    .img-prevModal{
+        height: 227px;
+        /* width: 310px; */
+    }
+    .description-img{
+        height: 235px;
+        /* overflow-y: auto; */
+    }
+    .strip{
+        width: 330px;
+        margin-left: -35px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    /* .modal-body{
+        height: 400px;
+        width: 550px;
+        margin-left: -30px;
+    } */
+    .img-left{
+        width: 320px;
+    }
+    .subMenuPreview{
+        font-size: 9px;
+        margin-left: -10px;
+    }
+    .img-prevModal{
+        height: 218px;        
+    }
+    .description-img{
+        height: 235px;
+        overflow-y: auto;
+    }
+}
+
+@media only screen and (max-width: 556px) {
+    .modal-body{
+        /* border: 1px solid red; */
+        width: 333px;
+        height: 100%;
+        margin-left: 15px;
+    }
+    .img-left{
+        width: 168px;
+        /* margin-left: 0; */
+    }
+    .img-prevModal{
+        height: 160px;        
+    }
+    .subMenuPreview{
+        font-size: 6px;
+    }
+    .iconPreview{
+        font-size: 6px;
+    }
+    .description-img{
+        height: 97px;
+        width: 200px;
+        font-size: 7px;
+    }
+    .tagModal{
+        /* border: 1px solid black; */
+        font-size: 8px;
+    }
+    .hideTitle{
+        display: none;
+    }
+}

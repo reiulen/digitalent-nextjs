@@ -7,8 +7,9 @@ import style from "../../../../styles/peserta/dashboard.module.css";
 import CardPage from "../../../../components/CardPage";
 import { useRouter } from "next/router";
 
-const Dashboard = () => {
+const Dashboard = ({ session }) => {
   const router = useRouter();
+  console.log(session);
   const handlePublish = (val) => {};
 
   const handlePage = () => {
@@ -35,7 +36,7 @@ const Dashboard = () => {
                       <Col md={6}>
                         <Col md={12} className="mt-5">
                           <h3 className="font-weight-bolder text-white">
-                            Selamat Datang User
+                            Selamat Datang {session.name}
                           </h3>
                         </Col>
                         <Col md={12}>

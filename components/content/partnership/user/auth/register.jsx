@@ -48,7 +48,7 @@ const RegisterMitra = () => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -170,7 +170,7 @@ const RegisterMitra = () => {
               style={{ marginTop: "30px" }}
             >
               <form onSubmit={submit}>
-                <div className="form-group mb-2">
+                <div className="form-group mb-6">
                   <label className="form-auth-label">Nama Lembaga</label>
                   <input
                     type="text"
@@ -180,7 +180,7 @@ const RegisterMitra = () => {
                     placeholder="Masukkan Nama Lembaga"
                   />
                 </div>
-                <div className="form-group mb-2">
+                <div className="form-group mb-6">
                   <label className="form-auth-label">E-mail</label>
                   <input
                     type="email"
@@ -190,9 +190,9 @@ const RegisterMitra = () => {
                     placeholder="Masukkan Email Anda"
                   />
                 </div>
-                <div className="form-group">
-                  <label className="form-auth-label">Password</label>
-                  <div className="position-relative">
+                <div className="form-group mb-6">
+                  <label className="form-auth-label">Passwdord</label>
+                  <div className="position-relative mb-4">
                     <input
                       id="input-password"
                       type="password"
@@ -201,6 +201,9 @@ const RegisterMitra = () => {
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Masukkan Password Anda"
                     />
+
+                    
+                    
                     {hidePassword === true ? (
                       <i
                         className="ri-eye-fill right-center-absolute cursor-pointer"
@@ -215,8 +218,9 @@ const RegisterMitra = () => {
                       />
                     )}
                   </div>
+                  <span className="text-white">Minimal 8 Karakter yang berisi kombinasi huruf besar, huruf kecil, angka, dan simbol.</span>
                 </div>
-                <div className="form-group">
+                <div className="form-group mb-6">
                   <label className="form-auth-label">Konfirmasi Password</label>
                   <div className="position-relative">
                     <input

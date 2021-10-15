@@ -20,7 +20,7 @@ const RegisterMitra = () => {
   });
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -60,9 +60,7 @@ const RegisterMitra = () => {
       notify(allAuthentication.errorRegister);
     } else if (allAuthentication.status === "success"){
       // jika sukses
-      Swal.fire("Berhasil", "Email Password Reset berhasil dikirim ulang", "success").then(() => {
-        router.push("/partnership/user/auth/forgotPassword")
-      });
+      Swal.fire("Berhasil", "Link reset password telah dikirm, silahkan cek email anda", "success")
     }else{
       ""
     }
@@ -137,15 +135,30 @@ const RegisterMitra = () => {
                 >
                   Kirim E-mail
                 </button>
-              </form>
+              
               <div className="bottom mt-9 text-center">
                 <p style={{ fontSize: "12px", color: "#ffffff" }}>
                   Belum menerima e-mail?
-                  <Link href="/partnership/user/auth/login" passHref>
-                    <a className="text-primary ml-2">Kirim Ulang</a>
-                  </Link>
+
+
+
+                  {/* <Link href="/partnership/user/auth/login" passHref> */}
+                  <button
+                  type="submit"
+                  className="text-primary ml-2 bg-transparent btn"
+                >
+                  Kirim E-mail
+                </button>
+
+                    {/* <a className="text-primary ml-2">Kirim Ulang</a> */}
+
+                  {/* </Link> */}
                 </p>
               </div>
+
+              </form>
+
+
             </div>
           </div>
         </div>

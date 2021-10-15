@@ -243,7 +243,7 @@ const Table = ({ token }) => {
           </div>
 
           <div className="card-body pt-0">
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
               <div className="table-filter">
                 <div className="row align-items-center">
                   <div className="col-lg-10 col-xl-10">
@@ -262,7 +262,8 @@ const Table = ({ token }) => {
                             onChange={(e) => setKeyWord(e.target.value)}
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e)=>handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -277,7 +278,7 @@ const Table = ({ token }) => {
                   </div>
                 </div>
               </div>
-            </form>
+            {/* </form> */}
 
             <div className="table-page mt-5">
               <div className="table-responsive">
@@ -442,6 +443,9 @@ const Table = ({ token }) => {
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
                       </select>
                     </div>
                     <div className="col-8 my-auto">

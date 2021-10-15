@@ -145,7 +145,7 @@ const TambahMitra = ({ token }) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -205,7 +205,7 @@ const TambahMitra = ({ token }) => {
         let dataNewProvinces = data.data.map((items) => {
           return { ...items, label: items.name, value: items.id };
         });
-        dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
+        // dataNewProvinces.splice(0, 0, { label: "Pilih Provinsi", value: "" });
         setAllProvinces(dataNewProvinces);
       } catch (error) {
         console.log("gagal get province", error);
@@ -232,7 +232,7 @@ const TambahMitra = ({ token }) => {
           let dataNewCitites = data.data.map((items) => {
             return { ...items, label: items.name, value: items.id };
           });
-          dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
+          // dataNewCitites.splice(0, 0, { label: "Pilih Kab/Kota", value: "" });
           setCitiesAll(dataNewCitites);
         } catch (error) {
           console.log("gagal get cities", error);
@@ -457,7 +457,7 @@ const TambahMitra = ({ token }) => {
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder="Pilih provinsi"
-                      defaultValue={allProvinces[0]}
+                      // defaultValue={allProvinces[0]}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -489,7 +489,7 @@ const TambahMitra = ({ token }) => {
                       className="basic-single"
                       classNamePrefix="select"
                       placeholder="Pilih data Kab/Kota"
-                      defaultValue={citiesAll[0]}
+                      // defaultValue={citiesAll[0]}
                       isDisabled={false}
                       isLoading={false}
                       isClearable={false}
@@ -512,6 +512,7 @@ const TambahMitra = ({ token }) => {
                 <label htmlFor="staticEmail" className="col-form-label">
                   Kode Pos
                 </label>
+                <div className="position-relative">
                 <input
                   onFocus={() => setError({ ...error, postal_code: "" })}
                   type="number"
@@ -519,6 +520,9 @@ const TambahMitra = ({ token }) => {
                   placeholder="Masukkan Kode Pos"
                   onChange={(e) => setPostal_code(e.target.value)}
                 />
+                <div className="box-hide-arrow"></div>
+                </div>
+
                 {error.postal_code ? (
                   <p className="error-text">{error.postal_code}</p>
                 ) : (
@@ -532,6 +536,7 @@ const TambahMitra = ({ token }) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nama Person In Charge (PIC)
                     </label>
+                    <div className="position-relative">
                     <input
                       onFocus={() => setError({ ...error, pic_name: "" })}
                       type="text"
@@ -544,6 +549,9 @@ const TambahMitra = ({ token }) => {
                     ) : (
                       ""
                     )}
+                    <div className="box-hide-arrow"></div>
+
+                  </div>
                   </div>
                 </div>
                 <div className="col-12 col-sm-6">
@@ -551,6 +559,7 @@ const TambahMitra = ({ token }) => {
                     <label htmlFor="staticEmail" className="col-form-label">
                       Nomor Handphone Person In Charge (PIC)
                     </label>
+                    <div className="position-relative">
                     <input
                       onFocus={() =>
                         setError({ ...error, pic_contact_number: "" })
@@ -562,6 +571,8 @@ const TambahMitra = ({ token }) => {
                       placeholder="Masukkan NO. Kontak"
                       onChange={(e) => setPic_contact_number(e.target.value)}
                     />
+                    <div className="box-hide-arrow"></div>
+                </div>
                     {error.pic_contact_number ? (
                       <p className="error-text">{error.pic_contact_number}</p>
                     ) : (

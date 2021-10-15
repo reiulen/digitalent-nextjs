@@ -1,13 +1,15 @@
-import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
-import { getSingleSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import { wrapper } from "../../../../../redux/store";
+// import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { getSession } from "next-auth/client";
 
-const EditSertifikat = dynamic(
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
+import { wrapper } from "../../../../../redux/store";
+import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
+
+const ListPeserta = dynamic(
   () =>
     import(
-      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/edit-sertifikat"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/list-peserta"
     ),
   {
     loading: function loadingNow() {
@@ -17,13 +19,11 @@ const EditSertifikat = dynamic(
   }
 );
 
-export default function KelokaSertifikatPage(props) {
-  const session = props.session.user.user.data;
-
+export default function KelokaSertifikatPage() {
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <EditSertifikat token={session} />
+        <ListPeserta />
       </div>
     </>
   );
@@ -36,15 +36,21 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
 
       await store.dispatch(
-        getSingleSertifikat(
-          query.nama_pelatihan_id,
+        getDetailParticipant(
+          query.id,
+          query.page,
+          query.keyword,
+          query.limit,
+          query.publish,
+          query.startdate,
+          query.enddate,
           session.user.user.data.token
         )
       );

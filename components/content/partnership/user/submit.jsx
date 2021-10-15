@@ -79,25 +79,25 @@ const SubmitKerjasama = ({token}) => {
         ...error,
         period_date_start: "Harus isi tanggal priode kerjasama",
       });
-      notify("Harus isi tanggal priode kerjasama");
+      // notify("Harus isi tanggal priode kerjasama");
     } else if (agreement_number_partner === "") {
       setError({
         ...error,
-        agreement_number_partner: "Harus isi nomer perjanjian lembaga",
+        agreement_number_partner: "Harus isi nomor perjanjian lembaga",
       });
-      notify("Harus isi nomer perjanjian lembaga");
+      // notify("Harus isi nomor perjanjian lembaga");
     } else if (agreement_number_kemkominfo === "") {
       setError({
         ...error,
-        agreement_number_kemkominfo: "Harus isi nomer perjanjian kemkominfo",
+        agreement_number_kemkominfo: "Harus isi nomor perjanjian kemkominfo",
       });
-      notify("Harus isi nomer perjanjian kemkominfo");
+      // notify("Harus isi nomor perjanjian kemkominfo");
     } else if (signing_date === "") {
-      setError({ ...error, signing_date: "Harus isi tanggal penandantangan" });
-      notify("Harus isi tanggal penandantangan");
+      setError({ ...error, signing_date: "Harus isi tanggal penandatangan" });
+      // notify("Harus isi tanggal penandantangan");
     } else if (document === "") {
       setError({ ...error, document: "Harus unggah file" });
-      notify("Harus unggah file");
+      // notify("Harus unggah file");
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
@@ -183,7 +183,7 @@ const SubmitKerjasama = ({token}) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -282,8 +282,8 @@ const SubmitKerjasama = ({token}) => {
               </div>
               <div className="col-2">
                 <div className="progress-items">
-                  <div className="line-progress"></div>
-                  <div className="circle-progress">
+                  <div className="line-progress active-line"></div>
+                  <div className="circle-progress active-circle">
                     <span className="title-progress text-center" style={{top:"-4rem"}}>
                       Submit Dokumen<br/>Kerjasama
                     </span>
@@ -323,7 +323,7 @@ const SubmitKerjasama = ({token}) => {
                         onFocus={() =>
                           setError({ ...error, period_date_start: "" })
                         }
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-search-date form-control cursor-pointer"
                         selected={startDate}
                         onChange={(date) => onChangePeriodeDateStart(date)}
                         selectsStart
@@ -348,7 +348,7 @@ const SubmitKerjasama = ({token}) => {
                   <div className="col-12 col-sm-6">
                     <div className="d-flex align-items-center position-relative datepicker-w mt-2 disabled-form">
                       <DatePicker
-                        className="form-search-date form-control-sm form-control cursor-pointer"
+                        className="form-control cursor-pointer border-0"
                         selected={endDate}
                         onChange={(date) => setEndDate(date)}
                         readOnly
@@ -378,7 +378,7 @@ const SubmitKerjasama = ({token}) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Nomer Perjanjian Lembaga
+                  Nomor Perjanjian Lembaga
                 </label>
                 <input
                   onFocus={() =>
@@ -398,7 +398,7 @@ const SubmitKerjasama = ({token}) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Nomer Perjanjian Kemkominfo
+                  Nomor Perjanjian Kemkominfo
                 </label>
                 <input
                   onFocus={() =>
@@ -422,11 +422,11 @@ const SubmitKerjasama = ({token}) => {
 
               <div className="form-group">
                 <label htmlFor="staticEmail" className="col-form-label">
-                  Tanggal Penandantangan
+                  Tanggal Penandatangan
                 </label>
                 <div className="d-flex align-items-center position-relative datepicker-w w-100">
                   <DatePicker
-                    className="form-search-date form-control-sm form-control cursor-pointer"
+                    className="form-search-date form-control cursor-pointer"
                     selected={endDate}
                     onFocus={() => setError({ ...error, signing_date: "" })}
                     onChange={(date) =>

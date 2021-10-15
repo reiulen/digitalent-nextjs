@@ -168,7 +168,8 @@ const SubtansiUser = () => {
           <Row style={{ marginTop: "20px" }}>
             <Col xs={6} className={styles.totalSoalResponsive}>
               Soal {router.query.id} dari{" "}
-              {random_subtance_question_detail.list_questions &&
+              {random_subtance_question_detail &&
+                random_subtance_question_detail.list_questions &&
                 random_subtance_question_detail.list_questions.length}
             </Col>
             <Col
@@ -189,12 +190,14 @@ const SubtansiUser = () => {
                   {" "}
                   |{" "}
                 </span>
-                {random_subtance_question_detail.theme}
+                {random_subtance_question_detail &&
+                  random_subtance_question_detail.theme}
               </p>
             </Col>
             <Col sm={6} className={styles.totalSoal}>
               Soal {router.query.id} dari{" "}
-              {random_subtance_question_detail.list_questions &&
+              {random_subtance_question_detail &&
+                random_subtance_question_detail.list_questions &&
                 random_subtance_question_detail.list_questions.length}
             </Col>
           </Row>
@@ -206,7 +209,8 @@ const SubtansiUser = () => {
           >
             <Col sm={8}>
               <Row>
-                {random_subtance_question_detail.list_questions &&
+                {random_subtance_question_detail &&
+                random_subtance_question_detail.list_questions &&
                 random_subtance_question_detail.list_questions[
                   parseInt(router.query.id) - 1
                 ].question_image !== null ? (
@@ -245,7 +249,8 @@ const SubtansiUser = () => {
                       color: "#212121",
                     }}
                   >
-                    {random_subtance_question_detail.list_questions &&
+                    {random_subtance_question_detail &&
+                      random_subtance_question_detail.list_questions &&
                       random_subtance_question_detail.list_questions[
                         parseInt(router.query.id) - 1
                       ].question}
@@ -253,7 +258,8 @@ const SubtansiUser = () => {
                 )}
               </Row>
               <hr />
-              {random_subtance_question_detail.list_questions &&
+              {random_subtance_question_detail &&
+                random_subtance_question_detail.list_questions &&
                 JSON.parse(
                   random_subtance_question_detail.list_questions[
                     parseInt(router.query.id) - 1
@@ -307,7 +313,8 @@ const SubtansiUser = () => {
                 Daftar Soal
               </p>
               <Row className={styles.rowNumber}>
-                {random_subtance_question_detail.list_questions &&
+                {random_subtance_question_detail &&
+                  random_subtance_question_detail.list_questions &&
                   random_subtance_question_detail.list_questions.map(
                     (item, index) => {
                       return (
@@ -340,6 +347,7 @@ const SubtansiUser = () => {
           <Footer
             answer={answer}
             number={
+              random_subtance_question_detail &&
               random_subtance_question_detail.list_questions &&
               random_subtance_question_detail.list_questions.length
             }
@@ -351,7 +359,8 @@ const SubtansiUser = () => {
         <Modal.Body>
           <h1>Daftar Soal</h1>
           <Row className={styles.rowNumberResponsive}>
-            {random_subtance_question_detail.list_questions &&
+            {random_subtance_question_detail &&
+              random_subtance_question_detail.list_questions &&
               random_subtance_question_detail.list_questions.map(
                 (item, index) => {
                   return (

@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 // import LoginUser from "../../components/content/auth/user/login";
 import { getSession } from "next-auth/client";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
-//check login login
+//check deploy thusday 14 oct 21:23
 
 const LoginUser = dynamic(
   () => import("../../components/content/auth/user/login"),
@@ -27,14 +27,16 @@ export default function LoginUserPage() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  // console.log(session.user.user.data); untuk cek role user
   if (session) {
-    return {
-      redirect: {
-        destination: "/peserta",
-        permanent: false,
-      },
-    };
+    const data = session.user.user.data;
+    if (data.user.roles[0] === "user") {
+      return {
+        redirect: {
+          destination: "/peserta",
+          permanent: false,
+        },
+      };
+    }
   }
 
   return {

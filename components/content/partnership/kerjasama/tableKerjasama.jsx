@@ -51,18 +51,21 @@ const Table = ({ token }) => {
   let selectRefKerjasama = null;
   let selectRefStatus = null;
   let selectRefMitra = null;
+  
+
+ 
 
   let dispatch = useDispatch();
-  const allMK = useSelector(state => state.allMK);
+  const allMK = useSelector((state) => state.allMK);
   const [valueSearch, setValueSearch] = useState("");
   const [valueMitra, setValueMitra] = useState("");
   const [valueStatus, setValueStatus] = useState("");
   const [valueKerjaSama, setValueKerjaSama] = useState("");
   const [isChangeOption, setIsChangeOption] = useState(false);
-  const handleChangeValueSearch = value => {
+  const handleChangeValueSearch = (value) => {
     setValueSearch(value);
   };
-  const handleSubmitSearchMany = event => {
+  const handleSubmitSearchMany = (event) => {
     event.preventDefault();
     dispatch(changeValueMitra(valueMitra));
     dispatch(changeValueStatus(valueStatus));
@@ -76,9 +79,11 @@ const Table = ({ token }) => {
       type: RESET_VALUE_SORTIR,
     });
   };
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
+    
     event.preventDefault();
     dispatch(searchCooporation(valueSearch));
+
   };
 
   const changeListStatus = (e, id) => {
@@ -91,7 +96,7 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then(async result => {
+    }).then(async (result) => {
       if (result.value) {
         let formData = new FormData();
         formData.append("_method", "put");
@@ -108,7 +113,7 @@ const Table = ({ token }) => {
     });
   };
 
-  const cooperationDelete = id => {
+  const cooperationDelete = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin menghapus data ?",
       icon: "warning",
@@ -118,7 +123,7 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then(async result => {
+    }).then(async (result) => {
       if (result.value) {
         dispatch(deleteCooperation(token, id));
         setDeleteBar(true);
@@ -156,7 +161,7 @@ const Table = ({ token }) => {
 
   const [sumWillExpire, setSumWillExpire] = useState(0);
 
-  const cooperationRejection = id => {
+  const cooperationRejection = (id) => {
     Swal.fire({
       title: "Apakah anda yakin ingin batalkan kerjasama ?",
       icon: "warning",
@@ -166,7 +171,7 @@ const Table = ({ token }) => {
       cancelButtonText: "Batal",
       confirmButtonText: "Ya !",
       dismissOnDestroy: false,
-    }).then(async result => {
+    }).then(async (result) => {
       if (result.value) {
         dispatch(rejectCooperation(token, id));
         setIsStatusBar(true);
@@ -177,9 +182,9 @@ const Table = ({ token }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchListSelectMitra(token));
-    dispatch(fetchListSelectCooperation(token));
-    dispatch(fetchListSelectStatus(token));
+    // dispatch(fetchListSelectMitra(token));
+    // dispatch(fetchListSelectCooperation(token));
+    // dispatch(fetchListSelectStatus(token));
     async function getWillExpire(token) {
       try {
         let { data } = await axios.get(
@@ -433,7 +438,7 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form onSubmit={handleSubmit}>
+                  {/* <form onSubmit={handleSubmit}> */}
                     <div className="row">
                       <div className="col-12 col-sm-6">
                         <div className="position-relative overflow-hidden w-100 mt-5">
@@ -442,16 +447,18 @@ const Table = ({ token }) => {
                             className="left-center-absolute"
                           />
                           <input
+                          onKeyPres={(e)=>disabledEnter(e)}
                             id="kt_datatable_search_query"
                             type="text"
                             className="form-control pl-10"
                             placeholder="Ketik disini untuk Pencarian..."
-                            onChange={e =>
+                            onChange={(e) =>
                               handleChangeValueSearch(e.target.value)
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e)=>handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -518,18 +525,18 @@ const Table = ({ token }) => {
                                         Mitra
                                       </label>
                                       <Select
-                                        ref={ref => (selectRefMitra = ref)}
+                                        ref={(ref) => (selectRefMitra = ref)}
                                         className="basic-single"
                                         classNamePrefix="select"
                                         placeholder="Semua"
-                                        defaultValue={allMK.stateListMitra[0]}
+                                        // defaultValue={allMK.stateListMitra[0]}
                                         isDisabled={false}
                                         isLoading={false}
                                         isClearable={false}
                                         isRtl={false}
                                         isSearchable={true}
                                         name="color"
-                                        onChange={e => setValueMitra(e?.name)}
+                                        onChange={(e) => setValueMitra(e?.name)}
                                         options={allMK.stateListMitra}
                                       />
                                     </div>
@@ -538,20 +545,22 @@ const Table = ({ token }) => {
                                         Kategori Kerjasama
                                       </label>
                                       <Select
-                                        ref={ref => (selectRefKerjasama = ref)}
+                                        ref={(ref) =>
+                                          (selectRefKerjasama = ref)
+                                        }
                                         className="basic-single"
                                         classNamePrefix="select"
                                         placeholder="Semua"
-                                        defaultValue={
-                                          allMK.stateListKerjaSama[0]
-                                        }
+                                        // defaultValue={
+                                        //   allMK.stateListKerjaSama[0]
+                                        // }
                                         isDisabled={false}
                                         isLoading={false}
                                         isClearable={false}
                                         isRtl={false}
                                         isSearchable={true}
                                         name="color"
-                                        onChange={e =>
+                                        onChange={(e) =>
                                           setValueKerjaSama(
                                             e?.cooperation_categories
                                           )
@@ -564,18 +573,18 @@ const Table = ({ token }) => {
                                         Status
                                       </label>
                                       <Select
-                                        ref={ref => (selectRefStatus = ref)}
+                                        ref={(ref) => (selectRefStatus = ref)}
                                         className="basic-single"
                                         classNamePrefix="select"
                                         placeholder="Semua"
-                                        defaultValue={allMK.stateListStatus[0]}
+                                        // defaultValue={allMK.stateListStatus[0]}
                                         isDisabled={false}
                                         isLoading={false}
                                         isClearable={false}
                                         isRtl={false}
                                         isSearchable={true}
                                         name="color"
-                                        onChange={e =>
+                                        onChange={(e) =>
                                           setValueStatus(e?.name_en)
                                         }
                                         options={allMK.stateListStatus}
@@ -596,7 +605,9 @@ const Table = ({ token }) => {
                                       <button
                                         className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
                                         type="button"
-                                        onClick={e => handleSubmitSearchMany(e)}
+                                        onClick={(e) =>
+                                          handleSubmitSearchMany(e)
+                                        }
                                       >
                                         Terapkan
                                       </button>
@@ -619,7 +630,7 @@ const Table = ({ token }) => {
                         </div>
                       </div>
                     </div>
-                  </form>
+                  {/* </form> */}
                 </div>
               </div>
             </div>
@@ -743,7 +754,7 @@ const Table = ({ token }) => {
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-green"
                                         key={index}
-                                        onChange={e =>
+                                        onChange={(e) =>
                                           changeListStatus(
                                             e,
                                             items.id,
@@ -770,7 +781,7 @@ const Table = ({ token }) => {
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-red-primary  pr-10"
                                         key={index}
-                                        onChange={e =>
+                                        onChange={(e) =>
                                           changeListStatus(
                                             e,
                                             items.id,
@@ -797,13 +808,6 @@ const Table = ({ token }) => {
                                         name=""
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue"
-                                        // key={index}
-                                        // onChange={(e) =>
-                                        //   changeListStatus(
-                                        //     e.target.value,
-                                        //     items.id
-                                        //   )
-                                        // }
                                       >
                                         <option value="">
                                           Pengajuan - Review
@@ -832,7 +836,7 @@ const Table = ({ token }) => {
                                         id=""
                                         className="form-control remove-icon-default dropdown-arrows-blue pr-10"
                                         key={index}
-                                        onChange={e =>
+                                        onChange={(e) =>
                                           changeListStatus(e, items.id)
                                         }
                                       >
@@ -900,9 +904,10 @@ const Table = ({ token }) => {
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/view/${items.id}`
-                                          )
+                                          router.push({
+                                            pathname: `/partnership/kerjasama/detail-kerjasama`,
+                                            query: { id: items.id },
+                                          })
                                         }
                                       >
                                         <IconEye
@@ -937,9 +942,10 @@ const Table = ({ token }) => {
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/view/${items.id}`
-                                          )
+                                          router.push({
+                                            pathname: `/partnership/kerjasama/detail-kerjasama`,
+                                            query: { id: items.id },
+                                          })
                                         }
                                       >
                                         <IconEye
@@ -971,9 +977,10 @@ const Table = ({ token }) => {
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
                                         onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/view/${items.id}`
-                                          )
+                                          router.push({
+                                            pathname: `/partnership/kerjasama/detail-kerjasama`,
+                                            query: { id: items.id },
+                                          })
                                         }
                                       >
                                         <IconEye
@@ -1140,9 +1147,10 @@ const Table = ({ token }) => {
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
                                         onClick={() =>
-                                          router.push(
-                                            `/partnership/kerjasama/view/${items.id}`
-                                          )
+                                          router.push({
+                                            pathname: `/partnership/kerjasama/detail-kerjasama`,
+                                            query: { id: items.id },
+                                          })
                                         }
                                       >
                                         <IconEye
@@ -1198,7 +1206,7 @@ const Table = ({ token }) => {
                     itemsCountPerPage={allMK?.m_cooporation?.data?.perPage}
                     totalItemsCount={allMK?.m_cooporation?.data?.total}
                     pageRangeDisplayed={3}
-                    onChange={page => dispatch(setPage(page))}
+                    onChange={(page) => dispatch(setPage(page))}
                     nextPageText={">"}
                     prevPageText={"<"}
                     firstPageText={"<<"}
@@ -1219,7 +1227,7 @@ const Table = ({ token }) => {
                           borderColor: "#F3F6F9",
                           color: "#9E9E9E",
                         }}
-                        onChange={e =>
+                        onChange={(e) =>
                           dispatch(limitCooporation(e.target.value))
                         }
                       >

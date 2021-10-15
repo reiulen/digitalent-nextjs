@@ -105,9 +105,18 @@ const DetailSurvey = ({ token }) => {
     });
   };
 
+  // const handleSearch = () => {
+  //   let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`;
+  //   router.push(link);
+  // };
+
   const handleSearch = () => {
-    let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`;
-    router.push(link);
+    console.log(search);
+    router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}`);
+  };
+
+  const handleTextSearch = (e) => {
+    setSearch(e.target.value);
   };
 
   const handleResetError = () => {
@@ -175,10 +184,10 @@ const DetailSurvey = ({ token }) => {
                     <p>Status</p>
                   </div>
                   <div className="col-sm-8 value-1">
-                    <p>{survey.academy ? survey.academy.name : "-"}</p>
-                    <p>{survey.theme ? survey.theme.name : "-"} </p>
-                    <p>{survey.training ? survey.training.name : ""}</p>
-                    <p>{survey.status ? "Publish" : "Draft"}</p>
+                    <p>{survey ? survey.academy.name : "-"}</p>
+                    <p>{survey ? survey.theme.name : "-"} </p>
+                    <p>{survey ? survey.training.name : ""}</p>
+                    <p>{survey ? "Publish" : "Draft"}</p>
                   </div>
                 </div>
               </div>
@@ -194,11 +203,11 @@ const DetailSurvey = ({ token }) => {
                   </div>
                   <div className="col value-1">
                     <p>
-                      {moment(survey.start_at).format("ll")} -{" "}
-                      {moment(survey.end_at).format("ll")}
+                      {moment(survey && survey.start_at).format("ll")} -{" "}
+                      {moment(survey && survey.end_at).format("ll")}
                     </p>
-                    <p>{survey.questions_to_share} Soal</p>
-                    <p>{survey.duration} Menit</p>
+                    <p>{survey && survey.questions_to_share} Soal</p>
+                    <p>{survey && survey.duration} Menit</p>
                   </div>
                 </div>
               </div>
@@ -238,7 +247,7 @@ const DetailSurvey = ({ token }) => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(event) => handleTextSearch(event)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"

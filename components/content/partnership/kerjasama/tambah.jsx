@@ -17,10 +17,13 @@ import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Select from "react-select";
+import FormSubmit from './submitKerjasama'
 
 const Tambah = ({ token }) => {
   const dispatch = useDispatch();
   const router = useRouter();
+  const {formSubmit} = router.query
+  console.log("formSubmit",formSubmit)
   const allMK = useSelector((state) => state.allMK);
   // state form data 1
   const [institution_name, setInstitution_name] = useState("");
@@ -109,8 +112,13 @@ const Tambah = ({ token }) => {
 
           sessionStorage.setItem("dataBefore", JSON.stringify(allDataPart));
 
+          // router.push({
+          //   pathname: "/partnership/kerjasama/submit",
+          //   query:{formSubmit:true}
+          // });
           router.push({
-            pathname: "/partnership/kerjasama/submit",
+            pathname: "/partnership/kerjasama/tambah",
+            query:{formSubmit:true}
           });
         }
       });
@@ -129,7 +137,7 @@ const Tambah = ({ token }) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -160,8 +168,10 @@ const Tambah = ({ token }) => {
     cooperationC_id,
     token,
   ]);
+
   return (
     <PageWrapper>
+      {!formSubmit ?
       <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
         <ToastContainer
           position="bottom-right"
@@ -199,15 +209,16 @@ const Tambah = ({ token }) => {
                   type="text"
                   value={date}
                   name="text_input"
-                  className="form-control mb-3 mb-lg-0"
+                  className="form-control mb-3 mb-lg-0 border-0"
                   // placeholder="Masukan Alamat E-mail"
+                  style={{backgroundColor:"transparent"}}
                 />
 
                 {error.date ? <p className="error-text">{error.date}</p> : ""}
               </div>
               <div className="row">
                 <div className="col-12 col-sm-6">
-                  <div className="fv-row mb-6">
+                  <div className="fv-row mb-6 position-relative" style={{zIndex:"4"}}>
                     <label className="required fw-bold fs-6 mb-2">
                       Lembaga
                     </label>
@@ -243,14 +254,15 @@ const Tambah = ({ token }) => {
                       type="text"
                       value={allMK.email}
                       name="text_input"
-                      className="form-control mb-3 mb-lg-0"
-                      placeholder="Masukan Alamat E-mail"
+                      className="form-control mb-3 mb-lg-0 border-0"
+                      // placeholder="Masukan Alamat E-mail"
+                      style={{backgroundColor:"transparent"}}
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="fv-row mb-6">
                     <label className="required fw-bold fs-6 mb-2">
@@ -284,7 +296,41 @@ const Tambah = ({ token }) => {
                     />
                   </div>
                 </div>
+              </div> */}
+
+              <div className="row mb-4">
+                <div className="col-12 col-sm-6">
+                  <div className="form-group mb-4">
+                    <label>Periode Kerjasama</label>
+                    <div className="input-group">
+                      <input
+                        onFocus={() => setError({ ...error, period: "" })}
+                        type="text"
+                        value={period}
+                        className="form-control mb-lg-0"
+                        placeholder="Masukkan Lama Kerjasama"
+                        onChange={(e) => onChangePeriod(e)}
+                      />
+                      
+                      <div className="input-group-append">
+                        <button
+                          className="btn btn-secondary"
+                          type="button"
+                          disabled
+                        >
+                          Tahun
+                        </button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
               </div>
+              {error.period ? (
+                      <p className="error-text mb-4 mt-0">{error.period}</p>
+                    ) : (
+                      ""
+                    )}
 
               <div className="fv-row mb-6">
                 <label className="required fw-bold fs-6 mb-2">
@@ -390,6 +436,7 @@ const Tambah = ({ token }) => {
           </div>
         </div>
       </div>
+       : <FormSubmit token={token} /> }
     </PageWrapper>
   );
 };

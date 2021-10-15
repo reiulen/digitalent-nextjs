@@ -14,6 +14,7 @@ import { NEW_SUBTANCE_QUESTION_BANKS_RESET } from "../../../../../redux/types/su
 import PageWrapper from "/components/wrapper/page.wrapper";
 import StepInput from "/components/StepInput";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 const StepOne = ({ token }) => {
   const dispatch = useDispatch();
@@ -152,7 +153,7 @@ const StepOne = ({ token }) => {
         <div className="card card-custom card-stretch gutter-b">
           <StepInput step="1"></StepInput>
           <div className="card-header border-0">
-            <h2 className="card-title text-dark h2">Tambah Tes Subtansi</h2>
+            <h2 className="card-title text-dark h2">Tambah Test Subtansi</h2>
           </div>
           <div className="card-body pt-0">
             <form onSubmit={onSubmit}>
@@ -164,6 +165,7 @@ const StepOne = ({ token }) => {
                   Akademi
                 </label>
                 <select
+                  defaultValue={academy_id}
                   name="academy_id"
                   id=""
                   value={academy_id}
@@ -178,8 +180,13 @@ const StepOne = ({ token }) => {
                     {" "}
                     -Pilih Akademi -
                   </option>
-                  <option value="1"> Computer Scientist </option>
-                  <option value="2"> Designer </option>
+                  <option value="1"> VSGA </option>
+                  <option value="2"> FGA </option>
+                  <option value="3">PRO</option>
+                  <option value="4">TA</option>
+                  <option value="5">GTA</option>
+                  <option value="6">DEA</option>
+                  <option value="7"> TSA</option>
                 </select>
                 {simpleValidator.current.message(
                   "academy_id",
@@ -205,13 +212,18 @@ const StepOne = ({ token }) => {
                     simpleValidator.current.showMessageFor("theme_id");
                   }}
                   className="form-control"
+                  defaultValue={theme_id}
                 >
                   <option selected disabled value="">
                     {" "}
                     -Pilih Tema-
                   </option>
-                  <option value="1"> Cloud Computing </option>
-                  <option value="2"> UI/UX Designer </option>
+                  <option value="1"> Cloud Computing Analyst </option>
+                  <option value="2"> Data Management Staff </option>
+                  <option value="3"> Artificial Intelligence </option>
+                  <option value="4"> Cloud Computing </option>
+                  <option value="5"> Data Science Fundamental </option>
+                  <option value="6">Get Connected</option>
                 </select>
                 {simpleValidator.current.message(
                   "theme_id",
@@ -239,8 +251,16 @@ const StepOne = ({ token }) => {
                     {" "}
                     -Pilih Pelatihan-
                   </option>
-                  <option value="1"> Google Cloud Computing </option>
-                  <option value="1"> Adobe UI/UX Designer </option>
+                  <option value="1"> Mobile App Flutter</option>
+                  <option value="2"> Mobile App React Native </option>
+                  <option value="3"> Web Backend Laravel </option>
+                  <option value="4"> Web Backend Golang </option>
+                  <option value="5"> Web Backend Node Js </option>
+                  <option value="6"> Web Backend Python </option>
+                  <option value="7"> Frontend Web React Js </option>
+                  <option value="8"> Frontend Web Vue Js </option>
+                  <option value="9"> Machine Learning </option>
+                  <option value="10">UI / UX Design</option>
                 </select>
               </div>
 
@@ -314,7 +334,7 @@ const StepOne = ({ token }) => {
                 <div className=" text-right">
                   <button
                     type="submit"
-                    className="btn btn-light-ghost-rounded-full mr-2"
+                    className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                   >
                     Simpan & Lanjut
                   </button>

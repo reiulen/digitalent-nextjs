@@ -4,10 +4,10 @@ import Image from "next/image";
 
 const MultipleChoiceComponent = ({ props_answer }) => {
   const [answer, setSoalList] = useState([
-    { key: "A", option: "", image: "" },
-    { key: "B", option: "", image: "" },
-    { key: "C", option: "", image: "" },
-    { key: "D", option: "", image: "" },
+    { key: "A", option: "", image: "", imageName: "Choose File" },
+    { key: "B", option: "", image: "", imageName: "Choose File" },
+    { key: "C", option: "", image: "", imageName: "Choose File" },
+    { key: "D", option: "", image: "", imageName: "Choose File" },
   ]);
 
   const handleInputChange = (e, index) => {
@@ -15,6 +15,7 @@ const MultipleChoiceComponent = ({ props_answer }) => {
     const list = [...answer];
     list[index][name] = value;
     if (name === "image") {
+      list[index]["imageName"] = e.target.files[0].name;
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.readyState === 2) {
@@ -93,7 +94,7 @@ const MultipleChoiceComponent = ({ props_answer }) => {
                     accept="image/png, image/gif, image/jpeg , image/jpg"
                   />
                   <label className="custom-file-label" htmlFor="customFile">
-                    Choose file
+                    {x.imageName}
                   </label>
                 </div>
               </div>
@@ -116,7 +117,7 @@ const MultipleChoiceComponent = ({ props_answer }) => {
       </div>
 
       <div className="form-group row">
-        <div className="col-sm-6 col-md-3">
+        <div className="col-sm-7 col-md-4">
           {answer.length < 6 ? (
             <button
               type="button"

@@ -54,7 +54,7 @@ const EditImagetron = ({ token }) => {
             });
         }
         // window.location.reload()
-        
+
         // if (error) {
         //     dispatch(clearErrors())
         // }
@@ -88,16 +88,21 @@ const EditImagetron = ({ token }) => {
 
     const onChangeGambar = (e) => {
         if (e.target.name === 'gambar') {
-            const reader = new FileReader()
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    setGambar(reader.result)
-                    setGambarPreview(reader.result)
+            if (e.target.files[0].size > 5000000) {
+                e.target.value = null;
+                Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+            } else {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        setGambar(reader.result)
+                        setGambarPreview(reader.result)
+                    }
                 }
+                reader.readAsDataURL(e.target.files[0])
+                setGambarName(e.target.files[0].name)
+                // reader.URL.revokeObjectURL(e.target.files[0])
             }
-            reader.readAsDataURL(e.target.files[0])
-            setGambarName(e.target.files[0].name)
-            // reader.URL.revokeObjectURL(e.target.files[0])
         }
     }
     // console.log("IMAGE PREVIEW : ",gambarPreview)
@@ -235,7 +240,7 @@ const EditImagetron = ({ token }) => {
                         .then((result) => {
                             if (result.isConfirmed) {
 
-                                dispatch(updateImagetron(data,token));
+                                dispatch(updateImagetron(data, token));
                                 // console.log(data)
                             }
                         });
@@ -265,7 +270,7 @@ const EditImagetron = ({ token }) => {
                         .then((result) => {
                             if (result.isConfirmed) {
 
-                                dispatch(updateImagetron(data,token));
+                                dispatch(updateImagetron(data, token));
                                 // console.log(data)
                             }
                         });
@@ -339,7 +344,7 @@ const EditImagetron = ({ token }) => {
             <div className="col-lg-12 col-xxl-12 order-1 order-xxl-2 px-0">
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header">
-                        <h3 className="card-title font-weight-bolder text-dark">Update Imagetron</h3>
+                        <h3 className="card-title font-weight-bolder text-dark">Ubah Imagetron</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
@@ -427,7 +432,7 @@ const EditImagetron = ({ token }) => {
                             <div className="form-group">
                                 <label
                                     htmlFor="staticEmail"
-                                    className="col-sm-2 col-form-label font-weight-bolder"
+                                    className="col-sm-4 col-form-label font-weight-bolder"
                                 >
                                     Upload Thumbnail
                                 </label>
@@ -486,7 +491,7 @@ const EditImagetron = ({ token }) => {
                                     }
                                 </div>
 
-                                <div className="mt-3 col-sm-3 text-muted">
+                                <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
                                     <p>
                                         Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>

@@ -14,6 +14,7 @@ import LoadingTable from "../../../LoadingTable";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteAcademy,
+  getAllAcademy,
   clearErrors,
 } from "../../../../redux/actions/pelatihan/academy.actions";
 import { DELETE_ACADEMY_RESET } from "../../../../redux/types/pelatihan/academy.type";
@@ -33,8 +34,7 @@ const ListAcademy = ({ token }) => {
     isDeleted,
   } = useSelector((state) => state.deleteAcademy);
 
-  let { page = 1, success } = router.query;
-  page = Number(page);
+  let { success } = router.query;
 
   let loading = false;
   if (allLoading) {
@@ -50,6 +50,7 @@ const ListAcademy = ({ token }) => {
     error = deleteError;
   }
 
+  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(null);
 
@@ -58,7 +59,7 @@ const ListAcademy = ({ token }) => {
       Swal.fire("Berhasil ", "Data berhasil dihapus.", "success").then(
         (result) => {
           if (result.isConfirmed) {
-            window.location.reload();
+            dispatch(getAllAcademy(1, null, null, token));
           }
         }
       );
@@ -66,24 +67,26 @@ const ListAcademy = ({ token }) => {
         type: DELETE_ACADEMY_RESET,
       });
     }
-  }, [isDeleted, dispatch]);
+  }, [isDeleted, dispatch, token]);
 
   const handlePagination = (pageNumber) => {
-    let link = `${router.pathname}?page=${pageNumber}`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    if (search) link = link.concat(`&keyword=${search}`);
-    router.push(link);
+    setPage(pageNumber);
+    dispatch(getAllAcademy(pageNumber, search, limit, token));
   };
 
   const handleSearch = () => {
-    let link = `${router.pathname}?page=1&keyword=${search}`;
-    if (limit) link = link.concat(`&limit=${limit}`);
-    router.push(link);
+    // let link = `${router.pathname}?page=1&keyword=${search}`;
+    // if (limit) link = link.concat(`&limit=${limit}`);
+    // router.push(link);
+    setPage(1);
+    dispatch(getAllAcademy(1, search, limit, token));
   };
 
   const handleLimit = (val) => {
     setLimit(val);
-    router.push(`${router.pathname}?page=1&limit=${val}`);
+    // router.push(`${router.pathname}?page=1&limit=${val}`);
+    setPage(1);
+    dispatch(getAllAcademy(1, search, val, token));
   };
 
   const onNewReset = () => {
@@ -174,7 +177,7 @@ const ListAcademy = ({ token }) => {
               List Akademi
             </h1>
             <div className="card-toolbar">
-              <Link href="/pelatihan/akademi/tambah">
+              <Link href="/pelatihan/akademi/tambah-akademi">
                 <a className="btn btn-primary-rounded-full px-6 font-weight-bolder px-5 py-3 mt-2">
                   <i className="ri-add-fill"></i>
                   Tambah Akademi
@@ -259,18 +262,13 @@ const ListAcademy = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <p className="font-weight-bolder my-0 h6">
-                                {row.name}
+                                {row.slug}
                               </p>
-                              <div
-                                className="my-0"
-                                dangerouslySetInnerHTML={{
-                                  __html: row.deskripsi,
-                                }}
-                              ></div>
+                              <p>{row.name}</p>
                             </td>
-                            <td className="align-middle">50</td>
-                            <td className="align-middle">150</td>
-                            <td className="align-middle">50 Mitra</td>
+                            <td className="align-middle">{row.tema}</td>
+                            <td className="align-middle">{row.pelatihan}</td>
+                            <td className="align-middle">{row.mitra} Mitra</td>
                             <td className="align-middle">
                               {row.status === "1" ? (
                                 <span className="label label-inline label-light-success font-weight-bold">
@@ -284,7 +282,9 @@ const ListAcademy = ({ token }) => {
                             </td>
                             <td className="align-middle">
                               <div className="d-flex">
-                                <Link href={`/pelatihan/akademi/${row.id}`}>
+                                <Link
+                                  href={`/pelatihan/akademi/edit-akademi?id=${row.id}`}
+                                >
                                   <a
                                     className="btn btn-link-action bg-blue-secondary text-white mr-2"
                                     data-toggle="tooltip"
@@ -317,7 +317,7 @@ const ListAcademy = ({ token }) => {
                 {academy && academy.perPage < academy.total && (
                   <div className="table-pagination table-pagination pagination-custom col-12 col-md-6">
                     <Pagination
-                      activePage={academy.page}
+                      activePage={page}
                       itemsCountPerPage={academy.perPage}
                       totalItemsCount={academy.total}
                       pageRangeDisplayed={3}
@@ -344,14 +344,15 @@ const ListAcademy = ({ token }) => {
                             borderColor: "#F3F6F9",
                             color: "#9E9E9E",
                           }}
+                          value={limit}
                           onChange={(e) => handleLimit(e.target.value)}
                           onBlur={(e) => handleLimit(e.target.value)}
                         >
-                          <option>5</option>
-                          <option>10</option>
-                          <option>30</option>
-                          <option>40</option>
-                          <option>50</option>
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="30">30</option>
+                          <option value="40">40</option>
+                          <option value="50">50</option>
                         </select>
                       </div>
                       <div className="col-8 my-auto pt-3">

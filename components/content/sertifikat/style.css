@@ -23,6 +23,45 @@
     height: auto !important
 }
 
+.a4-paper {
+    height: 21cm/2;
+    width: 29.7cm/2;
+}
+
+.a4-font-header {
+    font-size: 4.8vw;
+}
+
+.a4-font-normal {
+    font-size: 3.8vw;
+}
+
+.responsive-margin {
+    margin-top: 45px;
+}
+
+.responsive-font-size {
+    font-size: 10px;
+}
+
+.responsive-width {
+    width: 842px !important;
+    height: 595px !important;
+}
+
+/* tablet */
+@media(min-width: 768px) {
+    .responsive-margin {
+        margin-top: 130px;
+    }
+
+    .responsive-font-size {
+        font-size: 18px;
+    }
+}
+
+/* Laptop */
+
 @media (min-width: 992px) {
     .h-100px {
         height: 100px !important
@@ -31,4 +70,32 @@
     .tandatangan {
         overflow: auto;
     }
+
+    .a4-font-header {
+        font-size: 1.8vw;
+    }
+
+    .a4-font-normal {
+        font-size: 0.75vw;
+    }
+
+    .responsive-margin {
+        margin-top: 120px;
+    }
+
+    .responsive-font-size {
+        font-size: 22px;
+    }
+}
+
+/* normal */
+@media (min-width: 1200px) {
+    .responsive-margin {
+        margin-top: 150px;
+    }
+
+    .responsive-font-size {
+        font-size: 24px;
+    }
+
 }

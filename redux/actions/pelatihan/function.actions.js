@@ -116,7 +116,7 @@ export const storeRegistrationStep2 = (data) => async (dispatch) => {
 export const getCommitmentStep3 = () => async (dispatch) => {
   const data = {
     komitmen: "",
-    deskripsi: "",
+    deskripsi_komitmen: "",
   };
   dispatch({
     type: GET_COMMITMENT_STEP3,
@@ -208,7 +208,7 @@ export const dropdownLevelPelatihan = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/5`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/31`,
       config
     );
     dispatch({
@@ -277,7 +277,7 @@ export const dropdownProvinsi = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/8`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/33`,
       config
     );
     dispatch({
@@ -300,7 +300,7 @@ export const dropdownKabupaten = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/10`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/34`,
       config
     );
     dispatch({
@@ -323,7 +323,7 @@ export const dropdownPenyelenggara = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/9`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/25`,
       config
     );
     dispatch({

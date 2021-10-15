@@ -13,10 +13,10 @@ export default function RecoveryPasswordMitra() {
 
 export async function getServerSideProps(context) {
   const session = await getSession({ req: context.req });
-  if (session) {
+  if (!session) {
     return {
       redirect: {
-        destination: "/login/admin",
+        destination: "http://dts-dev.majapahit.id/partnership/user/kerjasama",
         permanent: false,
       },
     };

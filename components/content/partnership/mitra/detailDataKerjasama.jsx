@@ -268,7 +268,7 @@ const DetailDataKerjasama = ({token}) => {
           </div>
 
           <div className="card-body pt-0">
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}> */}
               <div className="row">
                 <div className="col-12 col-sm-6">
                   <div className="position-relative overflow-hidden w-100 mt-5">
@@ -284,7 +284,8 @@ const DetailDataKerjasama = ({token}) => {
                       onChange={(e) => setKeyWord(e.target.value)}
                     />
                     <button
-                      type="submit"
+                      type="button"
+                      onClick={(e)=>handleSubmit(e)}
                       className="btn bg-blue-primary text-white right-center-absolute"
                       style={{
                         borderTopLeftRadius: "0",
@@ -434,7 +435,7 @@ const DetailDataKerjasama = ({token}) => {
                   </div>
                 </div>
               </div>
-            </form>
+            {/* </form> */}
 
             {/* table disini */}
 
@@ -632,12 +633,15 @@ const DetailDataKerjasama = ({token}) => {
                                     name=""
                                     id=""
                                     className="form-control remove-icon-default dropdown-arrows-blue pr-10"
+                                    onChange={e =>
+                                          changeListStatus(e.target.value, items.id)
+                                        }
                                     
                                   >
-                                    <option value="6">Pengajuan-Selesai</option>
                                     <option value="5">
                                       Pengajuan-Pembahasan
                                     </option>
+                                    <option value="6">Pengajuan-Selesai</option>
                                   </select>
                                   <IconArrow
                                     className="right-center-absolute"
@@ -693,12 +697,14 @@ const DetailDataKerjasama = ({token}) => {
                                 <div className="d-flex align-items-center">
                                   <button
                                     className="btn btn-link-action bg-blue-secondary btn-delete mr-2 position-relative"
+
                                     onClick={() =>
                                       router.push({
                                         pathname: `/partnership/mitra/detail/mitra/${items.id}`,
                                         query: { idDetail: getId },
                                       })
                                     }
+                                    
                                   >
                                     <IconEye
                                       width="14"
@@ -927,7 +933,13 @@ const DetailDataKerjasama = ({token}) => {
                               ) : (
                                     <div className="d-flex align-items-center">
                                       <button
-                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        className="btn btn-link-action bg-blue-secondary position-relative btn-delete mr-3"
+                                        onClick={() =>
+                                          router.push({
+              pathname: `/partnership/kerjasama/detail-kerjasama`,
+              query: { id:items.id },
+            })
+                                        }
                                        
                                       >
                                         <IconEye
@@ -939,7 +951,7 @@ const DetailDataKerjasama = ({token}) => {
                                           Detail
                                         </div>
                                       </button>
-                                      <button
+                                      {/* <button
                                         className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"
                                         
                                       >
@@ -948,9 +960,12 @@ const DetailDataKerjasama = ({token}) => {
                                         <div className="text-hover-show-hapus">
                                           Ubah
                                         </div>
-                                      </button>
+                                      </button> */}
                                       <button
                                         className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
+                                        onClick={() =>
+                                          cooperationDelete(items.id)
+                                        }
                                        
                                       >
                                         <IconDelete width="16" height="16" />

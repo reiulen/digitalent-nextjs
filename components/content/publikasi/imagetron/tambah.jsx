@@ -82,16 +82,21 @@ const TambahImagetron = ({ token }) => {
     // console.log ("check")
 
     if (type.includes(e.target.files[0].type)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setGambar(reader.result);
-          setGambarPreview(reader.result);
-        }
-      };
-      reader.readAsDataURL(e.target.files[0])
-      // console.log (reader.readAsDataURL(e.target.files[0]))
-      setGambarName(e.target.files[0].name)
+      if (e.target.files[0].size > 5000000) {
+        e.target.value = null;
+        Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
+      } else {
+        const reader = new FileReader();
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setGambar(reader.result);
+            setGambarPreview(reader.result);
+          }
+        };
+        reader.readAsDataURL(e.target.files[0])
+        // console.log (reader.readAsDataURL(e.target.files[0]))
+        setGambarName(e.target.files[0].name)
+      }
     }
     else {
       // setGambar("")
@@ -171,7 +176,7 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              console.log("Unpublish :",data)
+              console.log("Unpublish :", data)
             }
           });
 
@@ -199,7 +204,7 @@ const TambahImagetron = ({ token }) => {
           .then((result) => {
             if (result.isConfirmed) {
               dispatch(newImagetron(data, token))
-              console.log("Publish :",data)
+              console.log("Publish :", data)
             }
           });
       }
@@ -344,7 +349,7 @@ const TambahImagetron = ({ token }) => {
               <div className="form-group">
                 <label
                   htmlFor="staticEmail"
-                  className="col-sm-2 col-form-label font-weight-bolder"
+                  className="col-sm-4 col-form-label font-weight-bolder"
                 >
                   Upload Thumbnail
                 </label>
@@ -403,7 +408,7 @@ const TambahImagetron = ({ token }) => {
                   }
                 </div>
 
-                <div className="mt-3 col-sm-3 text-muted">
+                <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
                   <p>
                     Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                   </p>

@@ -67,19 +67,19 @@ const TambahTandaTangan = ({token}) => {
     e.preventDefault();
     if (nama === "") {
       setError({ ...error, nama: "Harus isi nama" });
-      notify("Harus isi nama");
+      // notify("Harus isi nama");
     } else if (jabatan === "") {
       setError({ ...error, jabatan: "Harus isi jabatan" });
-      notify("Harus isi jabatan");
+      // notify("Harus isi jabatan");
     } else if (tandaTangan === "") {
       setError({
         ...error,
         tandaTangan:
           "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan",
       });
-      notify(
-        "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan"
-      );
+      // notify(
+      //   "Pastikan sudah mengisi tanda tangan dan tekan tombol Buat tanda tangan"
+      // );
     } else {
       Swal.fire({
         title: "Apakah anda yakin ingin simpan ?",
@@ -111,7 +111,7 @@ const TambahTandaTangan = ({token}) => {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

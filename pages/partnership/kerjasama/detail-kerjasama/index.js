@@ -13,6 +13,7 @@ const DetailKerjasama = dynamic(
 
 export default function detailDokumenKerjasama(props) {
   const session = props.session.user.user.data;
+
   return (
     <>
       <div className="d-flex flex-column flex-root">
@@ -29,14 +30,17 @@ export const getServerSideProps = wrapper.getServerSideProps(
       if (!session) {
         return {
           redirect: {
-            destination: "/login/admin",
+            destination: "http://dts-dev.majapahit.id/login/admin",
             permanent: false,
           },
         };
       }
 
       return {
-        props: { session, title: "Detail Data Kerjasama - Partnership" },
+        props: {
+          session,
+          title: "Detail Data Kerjasama - Partnership",
+        },
       };
     }
 );

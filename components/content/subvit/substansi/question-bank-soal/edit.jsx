@@ -16,6 +16,7 @@ import { UPDATE_SUBTANCE_QUESTION_DETAIL_RESET } from "../../../../../redux/type
 
 import PageWrapper from "../../../../wrapper/page.wrapper";
 import LoadingPage from "../../../../LoadingPage";
+import styles from "../../trivia/edit/step.module.css";
 
 const EditSoalSubstansi = ({ token }) => {
   const dispatch = useDispatch();
@@ -291,7 +292,9 @@ const EditSoalSubstansi = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {subtance_question_detail.question_image
+                        ? question_image
+                        : "Choose file"}
                     </label>
                   </div>
                 </div>
@@ -450,7 +453,7 @@ const EditSoalSubstansi = ({ token }) => {
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="btn btn-light-ghost-rounded-full mr-2"
+                  className={`${styles.btnNext} btn btn-light-ghost-rounded-full mr-2`}
                 >
                   Kembali
                 </button>

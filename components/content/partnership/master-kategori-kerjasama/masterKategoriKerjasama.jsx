@@ -86,7 +86,7 @@ const Table = ({ token }) => {
             <i className="flaticon2-checkmark" style={{ color: "#1BC5BD" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#1BC5BD" }}>
-            Berhasil menghapus data
+            Berhasil menambahkan data
           </div>
           <div className="alert-close">
             <button
@@ -115,7 +115,7 @@ const Table = ({ token }) => {
             <i className="flaticon2-checkmark" style={{ color: "#c51b1b" }}></i>
           </div>
           <div className="alert-text" style={{ color: "#c51b1b" }}>
-            Berhasil menyimpan data
+            Berhasil menghapus data
           </div>
           <div className="alert-close">
             <button
@@ -174,7 +174,7 @@ const Table = ({ token }) => {
               Master Kategori Kerjasama
             </h3>
             <div className="card-toolbar">
-              <Link href="/partnership/master-kategori-kerjasama/tambah">
+              <Link href="/partnership/master-kategori-kerjasama/tambah-kategori-kerjasama">
                 <a className="btn btn-rounded-full bg-blue-primary text-white">
                   <IconAdd className="mr-3" width="14" height="14" />
                   Tambah Kategori Kerjasama
@@ -187,8 +187,8 @@ const Table = ({ token }) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form
-                    onSubmit={handleSubmit}
+                  <div
+                    // onSubmit={handleSubmit}
                     className="d-flex align-items-center w-100"
                   >
                     <div className="row w-100">
@@ -208,7 +208,8 @@ const Table = ({ token }) => {
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e)=>handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -220,7 +221,7 @@ const Table = ({ token }) => {
                         </div>
                       </div>
                     </div>
-                  </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -375,6 +376,7 @@ const Table = ({ token }) => {
                       >
                         <option value="5">5</option>
                         <option value="10">10</option>
+                        <option value="20">20</option>
                         <option value="30">30</option>
                         <option value="40">40</option>
                         <option value="50">50</option>

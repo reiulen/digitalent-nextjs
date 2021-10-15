@@ -300,10 +300,10 @@ const Table = ({token}) => {
           {/* card 1 */}
           <CardPage
             background="bg-light-success "
-            icon="user-white.svg"
+            icon="Done-circle1.svg"
             color="#ffffff"
             value={allCooperationUser.totalDataActive}
-            titleValue="Kerjasama"
+            titleValue=""
             title="Kerjasama Aktif"
             publishedVal="1"
             routePublish={() => dispatch(changeValueStatusCard("active"))}
@@ -312,20 +312,20 @@ const Table = ({token}) => {
           {/* card 2 */}
           <CardPage
             background="bg-light-warning"
-            icon="user-white.svg"
+            icon="Info-circle.svg"
             color="#ffffff"
             value={allCooperationUser.totalDataAnother}
-            titleValue="Pengajuan Kerjasama"
+            titleValue=""
             title="Pengajuan Kerjasama"
             publishedVal="1"
             routePublish={() => dispatch(changeValueStatusCard("submission"))}
           />
           <CardPage
             background="bg-light-danger"
-            icon="user-white.svg"
+            icon="Error-circle.svg"
             color="#ffffff"
             value={sumWillExpire}
-            titleValue="Kerjasama akan Habis"
+            titleValue=""
             title="Kerjasama akan Habis"
             publishedVal="1"
             routePublish={() => dispatch(changeValueStatusCard("will_expire"))}
@@ -376,7 +376,7 @@ const Table = ({token}) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form onSubmit={handleSubmit}>
+                  {/* <form onSubmit={handleSubmit}> */}
                     <div className="row">
                       <div className="col-12 col-sm-6">
                         <div className="position-relative overflow-hidden w-100 mt-5">
@@ -394,7 +394,8 @@ const Table = ({token}) => {
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e)=>handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -538,17 +539,17 @@ const Table = ({token}) => {
                           {/* end modal */}
 
                           {/* btn export */}
-                          <button
+                          {/* <button
                             className="btn btn-rounded-full bg-blue-secondary text-white ml-4 mt-2"
                             type="button"
                             onClick={() => dispatch(exportFileCSV(token))}
                           >
                             Export .xlxs
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </div>
-                  </form>
+                  {/* </form> */}
                 </div>
               </div>
             </div>
