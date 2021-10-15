@@ -34,13 +34,6 @@ const FilterBar = () => {
             </div>
             
             <div className="col-2">
-               
-                {/* <InputGroup className="mb-2 pt-2">
-                    <InputGroup.Text className="col-2 bg-white text-center">
-                        <i className="ri-map-pin-line "></i>
-                    </InputGroup.Text>
-                    <FormControl id="inlineFormInputGroup" placeholder="Jakarta Barat" className="col-6"/>
-                </InputGroup> */}
                 <div>
                     <div className="input-group mb-2 pt-2">
                         <div className="input-group-prepend">
@@ -54,14 +47,6 @@ const FilterBar = () => {
             </div>
 
             <div className="col-3">
-                
-                {/* <InputGroup className="mb-2 pt-2">
-                    <InputGroup.Text className="col-2 bg-white text-center">
-                        <i className="ri-briefcase-4-line "></i>
-                    </InputGroup.Text>
-                    <FormControl id="inlineFormInputGroup" placeholder="Tipe Pelatihan" className="col-7"/>
-                </InputGroup> */}
-
                 <div>   
                     <div className="input-group mb-2 pt-2">
                         <div className="input-group-prepend">
@@ -76,7 +61,7 @@ const FilterBar = () => {
             </div>
 
             <div>
-                <button className="btn btn-primary-new">
+                <button className="btn btn-primary rounded-pill">
                     <i className="ri-search-line mr-2"></i>
                     Search
                 </button>

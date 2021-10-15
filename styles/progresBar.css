@@ -6,13 +6,19 @@
 }
 .progress-items .title-progress{
   white-space: nowrap;
-  white-space: nowrap;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   top: -3rem;
   color: #6C6C6C;
-  font-size: 13px;
+  font-size: 13px;  
+  /* display: none; */
+
+}
+@media (max-width: 1199.98px) {
+  .progress-items .title-progress{
+    display: none;
+  }
 
   
 }

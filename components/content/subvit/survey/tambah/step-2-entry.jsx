@@ -31,6 +31,7 @@ const StepTwo = ({ token }) => {
   const [methodAdd, setMethodAdd] = useState("objective");
   const [question, setSoal] = useState("");
   const [question_image, setSoalImage] = useState("");
+  const [imageName, setImageName] = useState("");
   const [answer, setSoalList] = useState([
     { key: "A", option: "", image: "" },
     { key: "B", option: "", image: "" },
@@ -105,6 +106,7 @@ const StepTwo = ({ token }) => {
   }, [dispatch, success, typeSave, id, metode, router]);
 
   const handleSoalImage = (e) => {
+    setImageName(e.target.files[0].name);
     if (e.target.name === "question_image") {
       const reader = new FileReader();
       reader.onload = () => {
@@ -522,7 +524,7 @@ const StepTwo = ({ token }) => {
                       accept="image/png, image/gif, image/jpeg , image/jpg"
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {imageName ? imageName : "Choose File"}
                     </label>
                   </div>
                   <span className="text-muted">

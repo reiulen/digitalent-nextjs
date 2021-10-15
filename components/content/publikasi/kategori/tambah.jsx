@@ -100,7 +100,7 @@ const TambahKategori = ({ token }) => {
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Nama Kategori</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Nama Kategori</label>
                                 <div className="col-sm-12">
                                     <input
                                         type="text"
@@ -120,7 +120,7 @@ const TambahKategori = ({ token }) => {
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Jenis Kategori</label>
+                                <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Jenis Kategori</label>
                                 <div className="col-sm-12">
                                     <select
                                         value={jenis_kategori}

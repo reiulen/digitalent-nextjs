@@ -105,12 +105,14 @@ const ListTraining = ({ token }) => {
   const optionsAkademi = dataAkademi.data;
   const optionsTema = dataTema.data;
   const optionsPenyelenggara = [];
-  for (let index = 0; index < dataPenyelenggara.data.length; index++) {
-    let val = {
-      value: dataPenyelenggara.data[index].id,
-      label: dataPenyelenggara.data[index].value,
-    };
-    optionsPenyelenggara.push(val);
+  if (dataPenyelenggara) {
+    for (let index = 0; index < dataPenyelenggara.data.length; index++) {
+      let val = {
+        value: dataPenyelenggara.data[index].id,
+        label: dataPenyelenggara.data[index].value,
+      };
+      optionsPenyelenggara.push(val);
+    }
   }
 
   const optionsStatusPelatihan = [

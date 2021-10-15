@@ -330,7 +330,7 @@ const StepTwo = ({ token }) => {
                       onChange={(e) => setQuestionFile(e.target.files[0])}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {question_file ? question_file.name : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -361,7 +361,7 @@ const StepTwo = ({ token }) => {
                       onChange={(e) => setImageFile(e.target.files[0])}
                     />
                     <label className="custom-file-label" htmlFor="customFile">
-                      Choose file
+                      {image_file ? image_file.name : "Choose file"}
                     </label>
                   </div>
                   <span className="text-muted">
@@ -436,13 +436,13 @@ const StepTwo = ({ token }) => {
                                     {question.question}
                                   </td>
                                   <td className="align-middle">
-                                    {question.type.name}
+                                    {question.type && question.type.name}
                                   </td>
                                   <td className="align-middle">
-                                    {question.type.value}
+                                    {question.type && question.type.value}
                                   </td>
                                   <td className="align-middle">
-                                    {question.status ? (
+                                    {question.status === 1 ? (
                                       <span className="label label-inline label-success font-weight-bold">
                                         Publish
                                       </span>

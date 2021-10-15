@@ -1,14 +1,14 @@
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../../../../components/LoadingSkeleton";
-import { wrapper } from "../../../../../../redux/store";
 import { getSession } from "next-auth/client";
-import { getPublishedSertifikat } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import { getDetailParticipant } from "../../../../../../redux/actions/sertifikat/list-peserta.action";
+import { getDetailParticipant } from "../../../../../redux/actions/sertifikat/list-peserta.action";
+import { getPublishedSertifikat } from "../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import { wrapper } from "../../../../../redux/store";
+import LoadingSkeleton from "../../../../../components/LoadingSkeleton";
 
 const ListPesertaId = dynamic(
   () =>
     import(
-      "../../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/list-peserta-id"
+      "../../../../../components/content/sertifikat/kelola-sertifikat/nama_pelatihan/id/list-peserta-id"
     ),
   {
     loading: function loadingNow() {
@@ -44,14 +44,15 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       await store.dispatch(
         getPublishedSertifikat(
-          query.nama_pelatihan_id,
+          //   query.nama_pelatihan_id,
+          query.id,
           session.user.user.data.token
         )
       );
-
       await store.dispatch(
         getDetailParticipant(
-          query.nama_pelatihan_id,
+          //   query.nama_pelatihan_id,
+          query.id,
           query.page,
           query.keyword,
           query.limit,

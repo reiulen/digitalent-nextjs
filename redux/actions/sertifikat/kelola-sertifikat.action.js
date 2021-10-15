@@ -27,15 +27,7 @@ import {
 } from "../../types/sertifikat/kelola-sertifikat.type";
 
 export const getAllSertifikat =
-  (
-    page = 1,
-    keyword = "",
-    limit = 5,
-    publish = null,
-    startdate = null,
-    enddate = null,
-    token
-  ) =>
+  (page = 1, keyword = "", limit = 5, academy = null, theme = null, token) =>
   async dispatch => {
     try {
       dispatch({ type: SERTIFIKAT_REQUEST });
@@ -43,9 +35,8 @@ export const getAllSertifikat =
         process.env.END_POINT_API_SERTIFIKAT +
         `api/manage_certificates?limit=${limit}&page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
-      if (publish) link = link.concat(`&publish=${publish}`);
-      if (startdate) link = link.concat(`&startdate=${startdate}`);
-      if (enddate) link = link.concat(`&enddate=${enddate}`);
+      if (academy) link = link.concat(`&academy=${academy}`);
+      if (theme) link = link.concat(`&theme=${theme}`);
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -53,7 +44,6 @@ export const getAllSertifikat =
       };
 
       const { data } = await axios.get(link, config);
-
       if (data) {
         dispatch({ type: SERTIFIKAT_SUCCESS, payload: data });
       }
@@ -63,16 +53,7 @@ export const getAllSertifikat =
   };
 
 export const getDetailSertifikat =
-  (
-    id,
-    page = 1,
-    keyword = "",
-    limit = 5,
-    publish = null,
-    startdate = null,
-    enddate = null,
-    token
-  ) =>
+  (id, page = 1, keyword = "", limit = 5, status = null, token) =>
   async dispatch => {
     try {
       dispatch({ type: DETAIL_SERTIFIKAT_REQUEST });
@@ -81,9 +62,7 @@ export const getDetailSertifikat =
         `api/manage_certificates/detail/${id}?page=${page}`;
       if (keyword) link = link.concat(`&keyword=${keyword}`);
       if (limit) link = link.concat(`&limit=${limit}`);
-      if (publish) link = link.concat(`&publish=${publish}`);
-      if (startdate) link = link.concat(`&startdate=${startdate}`);
-      if (enddate) link = link.concat(`&enddate=${enddate}`);
+      if (status) link = link.concat(`&status=${status}`);
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -91,8 +70,6 @@ export const getDetailSertifikat =
       };
 
       const { data } = await axios.get(link, config);
-
-      // console.log(data.data.list_certificate[0], " ini data nya");
 
       if (data) {
         dispatch({ type: DETAIL_SERTIFIKAT_SUCCESS, payload: data });
@@ -104,15 +81,11 @@ export const getDetailSertifikat =
 
 export const newSertifikat = (id, formData, token) => async dispatch => {
   try {
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
     dispatch({ type: NEW_SERTIFIKAT_REQUEST });
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
       `api/manage_certificates/store/${id}`;
 
-    // console.log(token, "INI TOKENNNNNNNNNNN!!");
     const config = {
       headers: {
         Authorization: `Bearer ${token.token}`,
@@ -125,11 +98,9 @@ export const newSertifikat = (id, formData, token) => async dispatch => {
       dispatch({ type: NEW_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    console.log(error.response.data.message, "masukedispatch");
     dispatch({
       type: NEW_SERTIFIKAT_FAIL,
       payload: error.message,
-      // payload: error.response.data.message,
     });
   }
 };
@@ -154,13 +125,16 @@ export const getSingleSertifikat = (id, token) => async dispatch => {
 
     const { data } = await axios.get(link, config);
 
-    console.log(data.data.signature, " ini data nya");
-
     if (data) {
       dispatch({ type: SINGLE_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    dispatch({ type: SINGLE_SERTIFIKAT_FAIL, payload: error.message });
+    // console.log("error masuk sini", error.response.data.message);
+    dispatch({
+      type: SINGLE_SERTIFIKAT_FAIL,
+      // payload: error.message
+      payload: error.response.data.message,
+    });
   }
 };
 
@@ -178,7 +152,6 @@ export const getPublishedSertifikat = (id, token) => async dispatch => {
     };
 
     const { data } = await axios.get(link, config);
-
     if (data) {
       dispatch({ type: PUBLISHED_SERTIFIKAT_SUCCESS, payload: data });
     }
@@ -190,9 +163,9 @@ export const getPublishedSertifikat = (id, token) => async dispatch => {
 export const updateSertifikat = (id, formData, token) => async dispatch => {
   try {
     dispatch({ type: UPDATE_SERTIFIKAT_REQUEST });
-    for (var pair of formData.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
+    // for (var pair of formData.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
 
     let link =
       process.env.END_POINT_API_SERTIFIKAT +
@@ -207,12 +180,9 @@ export const updateSertifikat = (id, formData, token) => async dispatch => {
     const { data } = await axios.post(link, formData, config);
 
     if (data) {
-      console.log("ini dari update sertifikat", data);
       dispatch({ type: UPDATE_SERTIFIKAT_SUCCESS, payload: data });
     }
   } catch (error) {
-    // console.log("ERRRRRRRRROR", error.response.data.message, "masukedispatch");
-    console.log(error.response);
     dispatch({
       type: UPDATE_SERTIFIKAT_FAIL,
       payload: error.message,

@@ -376,7 +376,7 @@ const Table = ({token}) => {
             <div className="table-filter">
               <div className="row align-items-center">
                 <div className="col-lg-12 col-xl-12">
-                  <form onSubmit={handleSubmit}>
+                  {/* <form onSubmit={handleSubmit}> */}
                     <div className="row">
                       <div className="col-12 col-sm-6">
                         <div className="position-relative overflow-hidden w-100 mt-5">
@@ -394,7 +394,8 @@ const Table = ({token}) => {
                             }
                           />
                           <button
-                            type="submit"
+                            type="button"
+                            onClick={(e)=>handleSubmit(e)}
                             className="btn bg-blue-primary text-white right-center-absolute"
                             style={{
                               borderTopLeftRadius: "0",
@@ -548,7 +549,7 @@ const Table = ({token}) => {
                         </div>
                       </div>
                     </div>
-                  </form>
+                  {/* </form> */}
                 </div>
               </div>
             </div>

@@ -1,24 +1,24 @@
 import dynamic from "next/dynamic";
-import LoadingSkeleton from "../../../components/LoadingSkeleton";
+import LoadingPage from "../../../../components/LoadingPage";
 import { getSession } from "next-auth/client";
-import { wrapper } from "../../../redux/store";
-const SubmitKerjasama = dynamic(
+import { wrapper } from "../../../../redux/store";
+const Tambah = dynamic(
   () =>
-    import("../../../components/content/partnership/kerjasama/submitKerjasama"),
-  { loading: () => <LoadingSkeleton />, ssr: false }
+    import(
+      "../../../../components/content/partnership/master-kategori-kerjasama/tambah"
+    ),
+  { loading: () => <LoadingPage />, ssr: false }
 );
-
-export default function Submit(props) {
+export default function TambahPage(props) {
   const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <SubmitKerjasama token={session.token} />
+        <Tambah token={session.token} />
       </div>
     </>
   );
 }
-
 export const getServerSideProps = wrapper.getServerSideProps(
   () =>
     async ({ req }) => {
@@ -33,7 +33,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       }
 
       return {
-        props: { session, title: "Dokumen Kerjasama - Partnership" },
+        props: { session, title: "Tambah master kategori - Partnership" },
       };
     }
 );

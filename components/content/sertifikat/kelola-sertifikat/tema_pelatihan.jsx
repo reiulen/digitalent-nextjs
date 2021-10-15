@@ -19,19 +19,24 @@ import moment from "moment";
 import Select from "react-select";
 
 export default function NamaPelatihan({ token }) {
-  // console.log(token);
   const router = useRouter();
 
   const { loading, error, certificate } = useSelector(
     state => state.allCertificates
   );
+  const [academy, setAcademy] = useState("");
+  const [temaPelatihan, setTemaPelatihan] = useState("");
+  const [disable, setDisable] = useState(true);
+  const [dataTemaPelatihan, setDataTemaPelatihan] = useState([]);
+  const [dataAcademy, setDataAcademy] = useState([]);
+  let { page = 1, keyword } = router.query;
 
   const resetValueSort = () => {
-    setStartDate(null);
-    setEndDate(null);
+    setAcademy("");
+    setDisable(true);
+    setTemaPelatihan("");
+    router.push(`${router.pathname}?page=${page}`);
   };
-
-  console.log(certificate);
   // #DatePicker
 
   // #Pagination, search, filter
@@ -51,24 +56,14 @@ export default function NamaPelatihan({ token }) {
   };
 
   const handleSearch = () => {
-    let link = `${router.pathname}?page=1&keyword=${search}`;
+    let link = `${router.pathname}?page=1`;
     if (limit) link = link.concat(`&limit=${limit}`);
+    if (search) link = link.concat(`&keyword=${search}`);
     router.push(link);
   };
-  // #Pagination
 
-  const options = [
-    { value: "FGA", label: "FGA" },
-    { value: "GTA", label: "GTA" },
-    { value: "ASD", label: "ASD" },
-  ];
-
-  const [academy, setAcademy] = useState("");
-  const [temaPelatihan, setTemaPelatihan] = useState("");
-
-  let { page = 1, keyword, success } = router.query;
-
-  const handleFilter = () => {
+  const handleFilter = e => {
+    e.preventDefault();
     if (!academy && !temaPelatihan) {
       Swal.fire(
         "Oops !",
@@ -76,16 +71,44 @@ export default function NamaPelatihan({ token }) {
         "error"
       );
     } else {
-      if (!academy && temaPelatihan) {
-        router.push(`${router.pathname}?page=1&limit=${limit}`);
-      }
-
-      if (!temaPelatihan && academy) {
-        router.push(`${router.pathname}?page=1&keyword=${academy}`);
-      }
+      let link = `${router.pathname}?page=1`;
+      if (limit) link = link.concat(`&limit=${limit}`);
+      if (academy) link = link.concat(`&academy=${academy}`);
+      if (temaPelatihan) link = link.concat(`&theme=${temaPelatihan}`);
+      router.push(link);
     }
   };
 
+  useEffect(() => {
+    let arr = [];
+    certificate.list_certificate.forEach((el, i) => {
+      arr.push({
+        value: el.theme.academy.name,
+        label: el.theme.academy.name,
+      });
+    });
+    setDataAcademy(arr);
+  }, [certificate.list_certificate]);
+
+  const handleSelectAcademy = e => {
+    setAcademy(e.value);
+    setTemaPelatihan("");
+    setDisable(false);
+    let arr = certificate.list_certificate;
+    const test = arr.filter(el => el.theme.academy.name == e.value);
+    const newArr = [{}];
+    test.forEach((el, i) => {
+      newArr[i]["value"]
+        ? (newArr[i]["value"] = el.theme.name)
+        : (newArr[i] = {
+            ...newArr[i],
+            value: el.theme.name,
+            label: el.theme.name,
+          });
+    });
+    setDataTemaPelatihan(newArr);
+  };
+  const handleResetError = () => {};
   return (
     <PageWrapper>
       {/* error START */}
@@ -145,7 +168,9 @@ export default function NamaPelatihan({ token }) {
                         borderTopLeftRadius: "0",
                         borderBottomLeftRadius: "0",
                       }}
-                      onClick={handleSearch}
+                      onClick={() => {
+                        handleSearch();
+                      }}
                     >
                       Cari
                     </button>
@@ -210,7 +235,6 @@ export default function NamaPelatihan({ token }) {
                                   className="basic-single"
                                   classNamePrefix="select"
                                   placeholder="Semua"
-                                  defaultValue={options[0].value}
                                   isDisabled={false}
                                   isLoading={false}
                                   isClearable={false}
@@ -218,9 +242,9 @@ export default function NamaPelatihan({ token }) {
                                   isSearchable={true}
                                   name="color"
                                   onChange={e => {
-                                    setAcademy(e.value);
+                                    handleSelectAcademy(e);
                                   }}
-                                  options={options}
+                                  options={dataAcademy}
                                 />
                               </div>
                               <div className="fv-row mb-10">
@@ -230,16 +254,18 @@ export default function NamaPelatihan({ token }) {
                                 <Select
                                   className="basic-single"
                                   classNamePrefix="select"
-                                  placeholder="Semua"
-                                  defaultValue={options[0].value}
-                                  isDisabled={false}
+                                  placeholder={
+                                    disable ? "Isi kolom akademi" : "Semua"
+                                  }
+                                  // defaultValue={options[0].value}
+                                  isDisabled={disable ? true : false}
                                   isLoading={false}
                                   isClearable={false}
                                   isRtl={false}
                                   isSearchable={true}
                                   name="color"
                                   onChange={e => setTemaPelatihan(e.value)}
-                                  options={options}
+                                  options={dataTemaPelatihan}
                                 />
                               </div>
                             </div>
@@ -282,7 +308,7 @@ export default function NamaPelatihan({ token }) {
                       <tr>
                         <th className="text-center">No</th>
                         <th>Akademi</th>
-                        <th>Nama Pelatihan</th>
+                        <th>Tema Pelatihan</th>
                         <th>Jumlah Sertifikat</th>
                         <th>Aksi</th>
                       </tr>
@@ -293,7 +319,9 @@ export default function NamaPelatihan({ token }) {
                         certificate.list_certificate.length === 0) ? (
                         <tr>
                           <td className="text-center" colSpan={6}>
-                            Data Masih Kosong
+                            {search
+                              ? "Data Tidak Ditemukan"
+                              : "Data Masih Kosong"}
                           </td>
                         </tr>
                       ) : (
@@ -324,7 +352,7 @@ export default function NamaPelatihan({ token }) {
                               </td>
                               <td className="align-middle d-flex">
                                 <Link
-                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.academy.id}`}
+                                  href={`/sertifikat/kelola-sertifikat/${certificate.theme.name}?id=${certificate.id}`}
                                   passHref
                                 >
                                   <a
@@ -350,10 +378,10 @@ export default function NamaPelatihan({ token }) {
               </div>
               {/* START Pagination */}
               <div className="row">
-                {certificate && certificate.perPage < certificate.total && (
+                {certificate && (
                   <div className="table-pagination">
                     <Pagination
-                      activePage={page}
+                      activePage={+page}
                       itemsCountPerPage={certificate.perPage}
                       totalItemsCount={certificate.total}
                       pageRangeDisplayed={3}
@@ -382,7 +410,6 @@ export default function NamaPelatihan({ token }) {
                           }}
                           onChange={e => handleLimit(e.target.value)}
                           onBlur={e => handleLimit(e.target.value)}
-                          defaultValue={"5"}
                         >
                           <option>5</option>
                           <option>10</option>
