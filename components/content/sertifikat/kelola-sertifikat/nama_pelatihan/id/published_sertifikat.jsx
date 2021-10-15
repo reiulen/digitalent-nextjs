@@ -12,9 +12,10 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import PageWrapper from "../../../../../wrapper/page.wrapper";
-import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
 import { toBlob, toJpeg, toPng } from "html-to-image";
-
+import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
+import DomToImage from "dom-to-image";
+import Html2Canvas from "html2canvas";
 export default function KelolasertifikatID({ token }) {
   // console.log(token);
   const router = useRouter();
@@ -30,76 +31,39 @@ export default function KelolasertifikatID({ token }) {
       dispatch(clearErrors());
     }
   };
+
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
 
-  // const handleDownload = async () => {
-  //   const data = await toPng(divReference.current, {
-  //     canvasHeight: 595,
-  //     canvasWidth: 842,
-  //   });
-  //   if (data) {
-  //     const link = document.createElement("a");
-  //     link.download = `Sertifikat.png`;
-  //     link.href = data;
-  //     link.click();
-  //   }
-
-  //   if (type == "2 lembar") {
-  //     const dataSyllabus = await toPng(divReferenceSyllabus.current, {
-  //       cacheBust: true,
-  //       canvasWidth: 842,
-  //       canvasHeight: 595,
-  //     });
-  //     if (dataSyllabus) {
-  //       const link = document.createElement("a");
-  //       link.download = `Sertifikat-Syllabus.png`;
-  //       link.href = dataSyllabus;
-  //       link.click();
-  //     }
-  //   }
-  // };
-
-  const handleDownload = () => {
-    const divRef = document.getElementById("referenceImage");
-    // console.log(divRef);
-    toPng(divReference.current, {
-      canvasHeight: 595,
-      canvasWidth: 842,
+  const convertDivToPng = async div => {
+    const data = await toJpeg(div, {
       cacheBust: true,
-      skipAutoScale: true,
-    })
-      .then(function (dataUrl) {
-        var link = document.createElement("a");
-        // console.log(dataUrl);
-        link.download = "syllabus.jpeg";
-        link.href = dataUrl;
-        link.click();
-      })
-      .catch(e => {
-        console.log(e);
-      });
+      canvasWidth: 842,
+      canvasHeight: 595,
+    });
+    return data;
   };
 
-  const handleDownloadSyllabus = () => {
-    const divRefSyllabus = document.getElementById("referenceImageSyllabus");
-    toPng(divReferenceSyllabus.current, {
-      cacheBust: true,
-      canvasHeight: 595,
-      canvasWidth: 842,
-      skipAutoScale: true,
-    })
-      .then(image => {
-        var link = document.createElement("a");
-        // console.log(image);
-        link.download = "syllabus.jpeg";
-        link.href = image;
-        link.click();
-      })
-      .catch(e => {
-        console.log(e);
-      });
+  const handleDownload = async () => {
+    const data = await convertDivToPng(divReference.current);
+    if (data) {
+      const link = document.createElement("a");
+      link.href = data;
+      link.download = "Sertifikat.png";
+      link.click();
+    }
   };
+
+  const handleDownloadSyllabus = async () => {
+    const dataSyllabus = await convertDivToPng(divReferenceSyllabus.current);
+    if (dataSyllabus) {
+      const link = document.createElement("a");
+      link.href = dataSyllabus;
+      link.download = "Syllabus.png";
+      link.click();
+    }
+  };
+
   return (
     <PageWrapper>
       {/* error START */}
@@ -158,20 +122,15 @@ export default function KelolasertifikatID({ token }) {
           <div className="card-body border-top">
             <div className="row p-0 justify-content-center">
               {/* START COL */}
-              <div
-                className="position-relative p-0 d-flex"
-                ref={divReference}
-                id="referenceImage"
-              >
+              <div className="position-relative p-0 d-flex" ref={divReference}>
                 <Image
                   src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate.data.certificate_result}`}
                   alt={`image ${certificate.data.certificate_result}`}
-                  // layout="fill"
-                  objectFit="fill"
+                  objectFit="contain"
                   width={842}
                   height={595}
                 />
-                <div className="position-absolute w-100 text-center responsive-margin-peserta">
+                <div className="position-absolute w-100 text-center responsive-margin-publish">
                   <span className="font-weight-bolder responsive-font-size-peserta">
                     Nama Peserta
                   </span>
@@ -181,7 +140,7 @@ export default function KelolasertifikatID({ token }) {
             </div>
             <div className="row mt-10 mx-0 col-12">
               <button
-                onClick={handleDownload}
+                onClick={() => handleDownload()}
                 className="position-relative col-12 col-md-2 btn bg-blue-secondary text-white rounded-full font-weight-bolder px-10 py-4"
               >
                 Unduh
@@ -225,7 +184,7 @@ export default function KelolasertifikatID({ token }) {
             {/* END BODY */}
           </div>
         ) : (
-          <div></div>
+          ""
         )}
       </div>
     </PageWrapper>

@@ -41,46 +41,34 @@ export default function ListPesertaID({ token }) {
   const divReference = useRef(null);
   const divReferenceSyllabus = useRef(null);
 
-  const handleDownload = useCallback(() => {
-    if (divReference.current === null) {
-      return;
-    }
-    toPng(divReference.current, {
-      cacheBust: true,
-      canvasHeight: 595,
-      canvasWidth: 842,
-    })
-      .then(image => {
-        const link = document.createElement("a");
-        link.download = `Sertifikat - ${query.name}.png`;
-        link.href = image;
-        link.click();
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [divReference, query.name]);
-
-  const handleDownloadSyllabus = useCallback(() => {
-    if (divReferenceSyllabus.current == null) {
-      return;
-    }
-
-    toPng(divReferenceSyllabus.current, {
+  const convertDivToPng = async div => {
+    const data = await toPng(div, {
       cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
-    })
-      .then(image => {
-        const link = document.createElement("a");
-        link.download = `Sertifikat - ${query.name} - Syllabus.png`;
-        link.href = image;
-        link.click();
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }, [divReferenceSyllabus, query.name]);
+    });
+    return data;
+  };
+
+  const handleDownload = async () => {
+    const data = await convertDivToPng(divReference.current);
+    if (data) {
+      const link = document.createElement("a");
+      link.download = `Sertifikat - ${query.name}.png`;
+      link.href = data;
+      link.click();
+    }
+  };
+
+  const handleDownloadSyllabus = async () => {
+    const data = await convertDivToPng(divReferenceSyllabus.current);
+    if (data) {
+      const link = document.createElement("a");
+      link.download = `Syllabus - ${query.name}.png`;
+      link.href = data;
+      link.click();
+    }
+  };
 
   return (
     <PageWrapper>
@@ -138,18 +126,22 @@ export default function ListPesertaID({ token }) {
           {/* END HEADER */}
           {/* START BODY */}
           <div className="card-body border-top">
-            <div className="d-flex p-0 justify-content-center">
+            <div className="row p-0 justify-content-center">
               {/* START COL */}
-              <div className="position-relative p-0 d-flex" ref={divReference}>
+              <div
+                className={`position-relative p-0 d-flex`}
+                ref={divReference}
+              >
                 <Image
                   src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-images/${certificate?.data?.certificate_result}`}
-                  alt={"image"}
-                  // layout="fill"
+                  alt={`image ${certificate.data.certificate_result}`}
                   objectFit="fill"
                   width={842}
                   height={595}
                 />
-                <div className="position-absolute w-100 text-center responsive-margin-peserta responsive-font-peserta">
+                <div
+                  className={`position-absolute w-100 text-center responsive-margin-publish`}
+                >
                   <span className="responsive-font-size-peserta font-weight-bolder">
                     {query.name}
                   </span>

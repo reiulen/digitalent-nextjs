@@ -222,6 +222,8 @@ export default function TambahMasterSertifikat({ token }) {
 
   // # START BACKGROUND IMAGE 1
   const onChangeBackground = e => {
+    console.log(e.target.files[0]);
+
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
       Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
@@ -501,7 +503,7 @@ export default function TambahMasterSertifikat({ token }) {
                       <div className="my-2">
                         <span
                           className="mx-2 px-2 px-10 w-100 font-weight-bold"
-                          style={{ fontSize: "150%" }}
+                          style={{ fontSize: "150%", height: "29px" }}
                         >
                           {namaPeserta ? namaPeserta : ""}
                         </span>

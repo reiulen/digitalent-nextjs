@@ -24,8 +24,8 @@
 }
 
 .a4-paper {
-    height: 21cm/2;
-    width: 29.7cm/2;
+    height: 595px !important;
+    width: 842px !important;
 }
 
 .a4-font-header {
@@ -37,11 +37,15 @@
 }
 
 .responsive-margin-peserta {
-    margin-top: 35px;
+    top: 38px !important;
+}
+
+.responsive-margin-publish {
+    top: 42px
 }
 
 .responsive-font-size-peserta {
-    font-size: 10px;
+    font-size: 8px !important
 }
 
 .responsive-width {
@@ -52,11 +56,15 @@
 /* tablet */
 @media(min-width: 768px) {
     .responsive-margin-peserta {
-        margin-top: 115px;
+        top: 120px !important
     }
 
     .responsive-font-size-peserta {
-        font-size: 16px;
+        font-size: 16px !important
+    }
+
+    .responsive-margin-publish {
+        top: 135px
     }
 }
 
@@ -80,22 +88,31 @@
     }
 
     .responsive-margin-peserta {
-        margin-top: 105px;
+        top: 110px !important
     }
 
     .responsive-font-size-peserta {
-        font-size: 20px;
+        font-size: 20px !important
     }
+
+    .responsive-margin-publish {
+        top: 125px;
+    }
+
 }
 
 /* normal */
 @media (min-width: 1200px) {
     .responsive-margin-peserta {
-        margin-top: 140px;
+        top: 135px !important
     }
 
     .responsive-font-size-peserta {
-        font-size: 24px;
+        font-size: 24px !important
     }
 
+    .responsive-margin-publish {
+        /* margin-top: 135px !important; */
+        top: 155px !important;
+    }
 }
