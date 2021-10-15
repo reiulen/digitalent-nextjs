@@ -46,7 +46,7 @@ export default function ListPesertaID({ token }) {
       return;
     }
     toPng(divReference.current, {
-      // cacheBust: true,
+      cacheBust: true,
       canvasHeight: 595,
       canvasWidth: 842,
     })
