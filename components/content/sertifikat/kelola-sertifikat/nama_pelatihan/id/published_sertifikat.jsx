@@ -1,22 +1,13 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  createRef,
-  useCallback,
-} from "react";
+import React, { useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Router from "next/router";
-// #Page, Component & Library
 
+// #Page, Component & Library
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import PageWrapper from "../../../../../wrapper/page.wrapper";
 import { toPng } from "html-to-image";
 import { clearErrors } from "../../../../../../redux/actions/sertifikat/kelola-sertifikat.action";
-import DomToImage from "dom-to-image";
-import Html2Canvas from "html2canvas";
 
 export default function KelolasertifikatID({ token }) {
   const router = useRouter();
@@ -44,6 +35,7 @@ export default function KelolasertifikatID({ token }) {
         link.href = dataSyllabus;
         link.download = "Syllabus.png";
         link.click();
+        router.reload();
       }
     } catch (e) {
       console.log(e, "ini errornya");
@@ -59,7 +51,7 @@ export default function KelolasertifikatID({ token }) {
         link.href = data;
         link.download = "Sertifikat.png";
         link.click();
-        // router.reload();
+        router.reload();
       }
     } catch (e) {
       console.log(e, "ini error sertifikat");
@@ -181,7 +173,7 @@ export default function KelolasertifikatID({ token }) {
                 ref={divReferenceSyllabus}
                 id="syllabus"
               >
-                <div className=" position-relative p-0">
+                <div className="position-relative p-0">
                   <Image
                     src={`${process.env.END_POINT_API_IMAGE_SERTIFIKAT}certificate/images/certificate-syllabus-images/${certificate.data.certificate_result_syllabus}`}
                     alt={`image`}
