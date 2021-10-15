@@ -105,9 +105,18 @@ const DetailSurvey = ({ token }) => {
     });
   };
 
+  // const handleSearch = () => {
+  //   let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`;
+  //   router.push(link);
+  // };
+
   const handleSearch = () => {
-    let link = `${router.pathname}?id=${id}&page=1&keyword=${search}`;
-    router.push(link);
+    console.log(search);
+    router.push(`${router.pathname}?id=${id}&page=1&keyword=${search}`);
+  };
+
+  const handleTextSearch = (e) => {
+    setSearch(e.target.value);
   };
 
   const handleResetError = () => {
@@ -238,7 +247,7 @@ const DetailSurvey = ({ token }) => {
                       type="text"
                       className="form-control pl-10"
                       placeholder="Ketik disini untuk Pencarian..."
-                      onChange={(e) => setSearch(e.target.value)}
+                      onChange={(event) => handleTextSearch(event)}
                     />
                     <button
                       className="btn bg-blue-primary text-white right-center-absolute"

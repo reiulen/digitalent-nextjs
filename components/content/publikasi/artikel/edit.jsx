@@ -123,9 +123,11 @@ const EditArtikel = ({ token }) => {
   );
   const [gambarName, setGambarName] = useState(artikel.gambar);
   const [kategori_id, setKategoriId] = useState(artikel.kategori_id); //belum
-  const [users_id, setUserId] = useState(artikel.users_id);
+  const [users_id, setUserId] = useState(3);
+  // const [users_id, setUserId] = useState(artikel.users_id);
   const [tag, setTag] = useState(artikel.tag);
-  const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
+  // const [publish, setPublish] = useState(artikel.publish === 1 ? true : false);
+  const [publish, setPublish] = useState(artikel.publish);
   const [publishDate, setPublishDate] = useState(
     artikel.tanggal_publish ? new Date(artikel.tanggal_publish) : null
   );
@@ -210,9 +212,9 @@ const EditArtikel = ({ token }) => {
 
   const keyPressTag = (value) => {
 
-    if (value === '' || value === null) { 
+    if (value === '' || value === null) {
       value.replace(/\s/g, '')
-    }else{
+    } else {
       setTag(value)
     }
     // if(event.key === 13){
@@ -577,7 +579,7 @@ const EditArtikel = ({ token }) => {
   return (
     <>
       <PageWrapper>
-        {/* {console.log (artikel)} */}
+        {console.log(artikel)}
         {/* {
           console.log (kategori)
         } */}
@@ -727,7 +729,7 @@ const EditArtikel = ({ token }) => {
                 <div className="form-group">
                   <label
                     htmlFor="staticEmail"
-                    className="col-sm-2 col-form-label font-weight-bolder"
+                    className="col-sm-4 col-form-label font-weight-bolder"
                   >
                     Upload Thumbnail
                   </label>
@@ -800,7 +802,7 @@ const EditArtikel = ({ token }) => {
                     ) : null}
                   </div>
 
-                  <div className="mt-3 col-sm-3 text-muted">
+                  <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus
                       visual pada bagian tengah gambar

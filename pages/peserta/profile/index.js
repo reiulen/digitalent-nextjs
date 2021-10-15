@@ -21,7 +21,7 @@ const Layout = dynamic(() =>
 );
 
 export default function ProfilePage(props) {
-  const session = props.session.user.user.data;
+  const session = props.session.user.user.data.user;
   return (
     <>
       <Layout title="Profile Peserta - Pelatihan" session={session}>
@@ -35,8 +35,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ query, req }) => {
       const session = await getSession({ req });
-      // console.log(session.user.user.data); untuk cek role user
       if (!session) {
+        return {
+          redirect: {
+            destination: "/login",
+            permanent: false,
+          },
+        };
+      }
+      const data = session.user.user.data;
+      if (data.user.roles[0] !== "user") {
         return {
           redirect: {
             destination: "/login",

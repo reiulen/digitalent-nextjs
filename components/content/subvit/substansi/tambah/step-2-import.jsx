@@ -422,13 +422,11 @@ const StepTwo = ({ token }) => {
                           subtance_question_detail.list_questions &&
                           subtance_question_detail.list_questions.map(
                             (question, i) => {
-                              const paginate = i + 1 * (page * limit);
-                              const dividers = limit - 1;
                               return (
                                 <tr key={question.id}>
                                   <td className="align-middle text-center">
                                     <span className="">
-                                      {paginate - dividers}
+                                      {i + 1 * (page * 5 || limit) - 4}
                                     </span>
                                   </td>
                                   <td className="align-middle font-weight-bold">
@@ -438,13 +436,13 @@ const StepTwo = ({ token }) => {
                                     {question.question}
                                   </td>
                                   <td className="align-middle">
-                                    {question.type.name}
+                                    {question.type && question.type.name}
                                   </td>
                                   <td className="align-middle">
-                                    {question.type.value}
+                                    {question.type && question.type.value}
                                   </td>
                                   <td className="align-middle">
-                                    {question.status ? (
+                                    {question.status === 1 ? (
                                       <span className="label label-inline label-success font-weight-bold">
                                         Publish
                                       </span>

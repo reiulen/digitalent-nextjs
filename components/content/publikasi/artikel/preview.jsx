@@ -54,7 +54,7 @@ const Preview = () => {
     return (
         <>
             {/* {console.log("Data Awal :", artikel)} */}
-            <div className="" style={{ height: '150px' }}>
+            {/* <div className="" style={{ height: '150px' }}>
                 <Image
                     // className={styles['title-Pratinjau']}
                     src={Backdrop}
@@ -64,13 +64,13 @@ const Preview = () => {
                 // objectPosition="center"
                 >
                 </Image>
-            </div>
+            </div> */}
             <PreviewWrapper title="Pratinjau Artikel - Publikasi">
 
                 <div className="col-lg-12 order-1 px-0 position-relative">
                     <div className="" style={{ height: '100%' }}>
 
-                        <div className="row ml-0">
+                        <div className="ml-0">
                             {/* <div style={{ background: "#F3F6F9" }}
                                 className="mr-5 px-3 py-1 rounded mt-2">
                                 <i className="flaticon2-user"></i>
@@ -94,38 +94,50 @@ const Preview = () => {
                                     {jenis_kategori}: {nama}
                                 </span>
                             </div> */}
-                            <h1 className={styles['titlePratinjau']}>
+                            <h1 className={`${styles.titlePratinjau} font-weight-bold my-5`}>
                                 {judul_artikel}
                             </h1>
 
-                            <div className="col-sm-8 col-md-10 col-11 mt-4 d-flex align-items-center">
-                                <div className={styles['titleSubMenu']}>
-                                    <p>Admin Pokja</p>
-                                    <span className="text-muted">{created_at} | 120 dibaca</span>
-                                    {/* <span className="text-muted">{moment({created_at}).format("MMM Do")} | 120 dibaca</span> */}
-                                </div>
-
+                            <div className="row mb-4">
                                 <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
                                     <div className={styles['titleSubMenu-2']}>
                                         <i className="ri-dashboard-line"></i>
-                                        <span className="ml-1 mr-5 text-muted">
+                                        <span className="ml-2 mr-5 text-muted">
                                             Kategori : {jenis_kategori}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="rounded mt-1" style={{ marginLeft: '25px' }}>
+                                    <div className={styles['titleSubMenu-2']}>
+                                        <i className="flaticon-eye"></i>
+                                        <span className="ml-2 mr-5 text-muted">
+                                            Dibaca 120
                                         </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
-                                <div className={styles['iconBorder']}>
-                                    <i className="socicon-sharethis" style={{ color: '#fff' }}></i>
+                            <div className="row">
+                                <div className="col-sm-8 col-md-10 col-11 mt-4 d-flex align-items-center">
+                                    <div className={styles['titleSubMenu']}>
+                                        <h5 className="font-weight-bold">Admin Pokja</h5>
+                                        <span className="text-muted">22 September 2021</span>
+                                        {/* <span className="text-muted">{moment({created_at}).format('LL')}</span> */}
+                                    </div>
                                 </div>
-                                <div className={styles['iconBorder']}>
-                                    <i className="flaticon-black" style={{ color: '#fff' }}></i>
+
+                                <div className="col-sm-4 col-md-2 col-1 d-flex align-items-center justify-content-end">
+                                    <div className={styles['iconBorder']}>
+                                        <i className="socicon-sharethis" style={{ color: '#fff' }}></i>
+                                    </div>
+                                    <div className={styles['iconBorder']}>
+                                        <i className="flaticon-black" style={{ color: '#fff' }}></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="pt-0" style={{height:'100%'}}>
+                        <div className="pt-0" style={{ height: '100%' }}>
                             {/* <div className="text-center mt-5">
                                     <h3>
                                         {judul_artikel}
@@ -142,7 +154,7 @@ const Preview = () => {
                                     // height= "100%"
                                     width="1200vh"
                                     height="500vh"
-                                    className="mt-5 pt-5"
+                                    className="mt-5 pt-5 rounded"
                                 />
                             </div>
 
@@ -150,21 +162,21 @@ const Preview = () => {
                                     console.log (artikel)
                                 } */}
 
-                            <div className="text-justify my-5" style={{ height: '400px' }}>
+                            <div className="text-justify my-5 p-3" style={{ border: '1px solid #d7e1ea', borderRadius:'10px' }}>
                                 {/* To render html Tag */}
                                 <div dangerouslySetInnerHTML={{ __html: isi_artikel }} className={styles['isiBerita']}></div>
                                 <div className="row">
                                     <div className="col-sm-8 col-md-10 col-11">
                                         <div className="row my-3 ml-0">
-                                        <div className={styles['listTag']}>
+                                            <div className={styles['listTag']}>
                                                 {
                                                     tags.map((el, i) => {
                                                         return (
-                                                            <div style={{ background: "#E1F0FF" }}
+                                                            <div style={{ background: "#fff", border: '1px solid #d7e1ea' }}
                                                                 className="mr-5 px-3 py-1 rounded"
                                                                 key={i}>
                                                                 <div className="text-center">
-                                                                    {el}
+                                                                    #{el}
                                                                 </div>
                                                             </div>
                                                         )

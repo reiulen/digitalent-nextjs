@@ -92,7 +92,7 @@ function ReviewDokumenKerjasama({ token }) {
   };
 
   const notify = (value) =>
-    toast.info(`🦄 ${value}`, {
+    toast.info(`${value}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -348,23 +348,18 @@ function ReviewDokumenKerjasama({ token }) {
                 <div className="col-12 col-sm-6">
                   <div className="d-flex flex-column align-items-start justify-content-center h-100">
                     <h1 className="fz-40 fw-700" style={{ color: "#6C6C6C" }}>
-                      Dokumen Kerjasama Anda Telah Diterima
+                      Dokumen Kerjasama Terkirim!
                     </h1>
                     <p className="mt-5 fz-16">
-                      Terima Kasih telah Melakukan Pengajuan Kerjasama Dengan
-                      Kami.
-                    </p>
-                    <p className="fz-16">
-                      Mohon tunggu beberapa saat untuk proses review berkas yang
-                      anda submit
+                      Terima kasih telah mengirimkan dokumen kerjasama. Mohon tunggu dalam beberapa waktu karena Kami akan segera memproses dokumen kerjasamamu. 
                     </p>
                   </div>
 
                   <div className="form-group row">
                     <div className="col-sm-12 d-flex justify-content-end">
                       <Link href="/partnership/user/kerjasama" passHref>
-                        <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
-                          Selesai
+                        <a className="btn btn-sm btn-white btn-rounded-full text-blue-primary">
+                          Kembali
                         </a>
                       </Link>
 

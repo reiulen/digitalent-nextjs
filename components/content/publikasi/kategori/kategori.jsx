@@ -345,7 +345,7 @@ const Kategori = ({ token }) => {
           <div className="card-body pt-0">
             <div className="table-filter">
               <div className="row align-items-center">
-                <div className="col-lg-6 col-xl-6 col-sm-9">
+                <div className="col-sm-6 col-md-6 col-lg-6 col-xl-6">
                   <div
                     className="position-relative overflow-hidden mt-3"
                     style={{ maxWidth: "330px" }}
@@ -369,11 +369,11 @@ const Kategori = ({ token }) => {
                     </button>
                   </div>
                 </div>
-                <div className="col-lg-6 col-xl-6 col-sm-9">
+                <div className=" col-sm-6 col-md-6 col-lg-6 col-xl-6">
                   <div className="d-flex flex-wrap align-items-center justify-content-end mt-2">
                     {/* sortir by modal */}
                     <button
-                      className="avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
+                      className="col-sm-6 avatar item-rtl btn border d-flex align-items-center justify-content-between mt-2"
                       data-toggle="modal"
                       data-target="#exampleModalCenter"
                       style={{ color: "#464646", minWidth: "230px" }}
