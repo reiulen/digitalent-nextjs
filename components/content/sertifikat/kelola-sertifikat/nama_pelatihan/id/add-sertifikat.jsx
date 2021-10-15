@@ -222,8 +222,6 @@ export default function TambahMasterSertifikat({ token }) {
 
   // # START BACKGROUND IMAGE 1
   const onChangeBackground = e => {
-    console.log(e.target.files[0]);
-
     if (e.target.files[0].size > 5000000) {
       e.target.value = null;
       Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
@@ -362,12 +360,14 @@ export default function TambahMasterSertifikat({ token }) {
           formData.append(`signature_certificate_image_syllabus[${i}]`, item);
         });
         const data = await convertDivToPng(divReference.current); // convert bg 1
+
         formData.append("certificate_result", data);
 
         if (certificate_type == "2 lembar") {
           const dataSyllabus = await convertDivToPng(
             divReferenceSilabus.current
           ); //convert bg 2
+
           formData.append("certificate_result_syllabus", dataSyllabus);
         }
 
@@ -470,7 +470,7 @@ export default function TambahMasterSertifikat({ token }) {
                 className="border-primary border col-lg-8 col-12 position-relative"
                 style={{ fontSize: "100%" }}
               >
-                <div className="p-0" ref={divReference}>
+                <div className="p-0 col-12" ref={divReference}>
                   {background ? (
                     <Image
                       src={background}
@@ -481,7 +481,10 @@ export default function TambahMasterSertifikat({ token }) {
                   ) : (
                     ""
                   )}
-                  <div className="row align-items-center zindex-1">
+                  <div
+                    className="row align-items-center m-0"
+                    style={{ width: "100%" }}
+                  >
                     <div className="position-relative">
                       <div
                         className="m-6 text-center d-flex align-items-center px-4 border-2"
