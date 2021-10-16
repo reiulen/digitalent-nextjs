@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Row, Col, Card, Figure, Button, Badge } from "react-bootstrap";
+import { Row, Col, Card, Figure, Button, Badge, Modal } from "react-bootstrap";
 import style from "../../../../styles/peserta/dashboard.module.css";
 
 import CardPage from "../../../../components/CardPage";
 import { useRouter } from "next/router";
 
 const Dashboard = ({ session }) => {
+  const [isModal, setIsModal] = useState(false);
+
   const router = useRouter();
   console.log(session);
   const handlePublish = (val) => {};
+
+  const handleModal = () => {
+    setIsModal(true);
+  };
+
+  const handleClose = () => {
+    setIsModal(false);
+  };
 
   const handlePage = () => {
     router.push(`peserta/subvit/subtansi/1`);
@@ -218,7 +228,7 @@ const Dashboard = ({ session }) => {
                             variant="primary"
                             className="btn-rounded-full btn-block d-flex justify-content-center mb-5"
                             size="sm"
-                            onClick={handlePage}
+                            onClick={handleModal}
                           >
                             Kerjakan Test Substansi
                             <i className="ri-arrow-right-s-line ml-2"></i>
@@ -685,6 +695,44 @@ const Dashboard = ({ session }) => {
           </Card>
         </Col>
       </div>
+
+      <Modal show={isModal} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title className={style.confirmText}>Konfirmasi</Modal.Title>
+          <button type="button" className="close" onClick={handleClose}>
+            <i className="ri-close-fill" style={{ fontSize: "25px" }}></i>
+          </button>
+        </Modal.Header>
+        <Modal.Body className={style.modalBody}>
+          Peserta wajib membaca penduan test substansi dengan seksama. <br />
+          <br />
+          Dengan ini saya menyatakan sudah membaca semua ketentuan yang berlaku,
+          siap mengikuti test substansi, dan tidak melakukan kecurangan dalam
+          bentuk apapun.
+          <br />
+          <br /> Jika siap, silahkan klik tombol “Mulai Test” untuk memulai test
+          substansi
+          <br />
+          <br />
+          <br />
+          <div style={{ textAlign: "right" }}>
+            <Button
+              variant="link"
+              onClick={handleClose}
+              className={style.btnCancel}
+            >
+              Batal
+            </Button>
+            <Button
+              variant="primary"
+              onClick={handlePage}
+              className={style.btnStart}
+            >
+              Mulai Test
+            </Button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </>
   );
 };
