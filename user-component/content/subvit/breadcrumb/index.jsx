@@ -60,7 +60,7 @@ const Breadcrumb = () => {
                   ? "Trivia"
                   : "test"}
               </Col>
-              <Col sm={6} xs={6} className={styles.textCardRight}>
+              <Col sm={6} xs={6} className={`${styles.textCardRight}`}>
                 <span>
                   <i
                     className="ri-time-fill"
@@ -71,7 +71,9 @@ const Breadcrumb = () => {
                     }}
                   ></i>
                 </span>
-                {thisDay} , <span id="jam"></span>
+                <span>
+                  {thisDay} , <span id="jam"></span>
+                </span>
               </Col>
             </Row>
           </Card>

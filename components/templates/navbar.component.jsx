@@ -17,10 +17,14 @@ import {
   Dropdown,
 } from "react-bootstrap";
 
+// import IconSearch from "../../public/assets/icon/icon-dashboard-peserta/Search"
+import IconLogin from "../../public/assets/icon/icon-dashboard-peserta/Login";
+import IconRegister from "../../public/assets/icon/icon-dashboard-peserta/Register";
+
 const Navigationbar = () => {
   return (
     <>
-      <Navbar bg="white" expand="lg" className="shadow">
+      <Navbar bg="white" expand="lg" className="shadow header-dashboards">
         <Container>
           <Navbar.Brand href="/">
             <Image
@@ -32,9 +36,9 @@ const Navigationbar = () => {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
+            <Nav className="me-auto dropdown-explore">
               <NavDropdown
-                title="Explore"
+                title="Menu"
                 id="basic-nav-dropdown"
                 className="navdropdown-child"
               >
@@ -44,20 +48,6 @@ const Navigationbar = () => {
                 >
                   Beranda
                 </NavDropdown.Item>
-                {/* <NavDropdown.Item href="#action/3.2">Pelatihan</NavDropdown.Item> */}
-                {/* <DropdownButton
-                                    drop='end'
-                                    title="Pelatihan"
-                                    variant="white"
-                                > 
-                                    <Dropdown.Item eventKey="1">VSGA</Dropdown.Item>
-                                    <Dropdown.Item eventKey="2">FGA</Dropdown.Item>
-                                    <Dropdown.Item eventKey="3">PRO</Dropdown.Item>
-                                    <Dropdown.Item eventKey="4">TA</Dropdown.Item>
-                                    <Dropdown.Item eventKey="5">GTA</Dropdown.Item>
-                                    <Dropdown.Item eventKey="6">DEA</Dropdown.Item>
-                                    <Dropdown.Item eventKey="7">TSA</Dropdown.Item>
-                                </DropdownButton> */}
                 <div className="btn-group dropright">
                   <button
                     type="button"
@@ -99,7 +89,6 @@ const Navigationbar = () => {
                     </a>
                   </div>
                 </div>
-                {/* <NavDropdown.Item href="#action/3.3" className="navdropdown-child">Pusat Informasi</NavDropdown.Item> */}
                 <div className="btn-group dropright">
                   <button
                     type="button"
@@ -177,46 +166,38 @@ const Navigationbar = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
-            <Form className="d-flex col-10">
+            <Form className="d-flex col-9">
               <FormControl
                 type="search"
-                placeholder="Search"
+                placeholder="   Search"
                 className="mr-2"
                 aria-label="Search"
               />
               {/* <Button variant="outline-success">Search</Button> */}
+              <i className="ri-search-line left-center-absolute" style={{ left: "17px" }}></i>
             </Form>
             <Nav>
-              <Link href="/register">
-                <a>
-                  {/* <Button className="btn btn-primary rounded-pill ">
-                                    Daftar
-                                </Button> */}
-                  <button className="btn btn-primary-rounded-full rounded-pill btn-sm">
-                    Daftar
-                  </button>
-                </a>
-              </Link>
               <Link href="/login">
                 <a>
-                  {/* <Button className="btn btn-white rounded-pill ">
-                                    Masuk
-                                </Button> */}
-                  <button className="btn btn-outline-primary-rounded-full rounded-pill btn-sm ml-3">
+                  <button className="btn btn-outline-info rounded-pill btn-sm mr-5">
+                    <i className="ri-login-box-line mr-2"></i>
                     Masuk
                   </button>
                 </a>
               </Link>
+              <Link href="/register">
+                <a>
+                  <button className="btn btn-info rounded-pill btn-sm">
+                     <i className="ri-user-line mr-2"></i>
+                    Daftar
+                  </button>
+                </a>
+              </Link>
+              
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
-      {/* <a href="/login">
-                <button className="btn btn-primary-rounded-full rounded-pill btn-sm">
-                    Login
-                </button>
-            </a> */}
     </>
   );
 };

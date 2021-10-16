@@ -8,7 +8,7 @@
 }
 
 .body {
-  padding: 20px;
+  padding: 40px 10px 45px 10px;
 }
 .cardBody {
   background-color: transparent;
@@ -44,7 +44,7 @@
   /* Neutral/White */
 
   color: #ffffff;
-  text-align: right;
+  float: right;
 }
 .mainText {
   font-family: Poppins;
@@ -68,11 +68,40 @@
   font-size: 15px;
   line-height: 140%;
   /* identical to box height, or 28px */
-  margin-bottom: 30px;
+  margin-bottom: 30px !important;
 
   letter-spacing: 0.015em;
 
   /* Neutral/White */
 
   color: #ffffff;
+}
+.name {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 160%;
+  /* or 38px */
+
+  letter-spacing: 0.015em;
+  margin-top: 20px;
+  /* Neutral/White */
+
+  color: #ffffff;
+}
+.nik {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 22px */
+
+  letter-spacing: 0.015em;
+
+  color: #ffffff;
+}
+.imageProfile {
+  border-radius: 50%;
 }
