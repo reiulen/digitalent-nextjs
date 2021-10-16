@@ -8,8 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { 
     Card,
     Carousel,
-    Badge
+    Badge,
+    Button
 } from "react-bootstrap";
+
+import ReactPlayer from 'react-player/youtube'
 
 // import Slider from "react-slick";
 // import CarouselMulti from "react-multi-carousel";
@@ -42,17 +45,19 @@ const Beranda = () => {
     } = useSelector((state) => state.pelatihanByTema);
     
     const [activeTab, setActiveTab] = useState ("VSGA")
+    const [activeAcademy, setActiveAcademy] = useState ("Vacational School Academy")
     const [indexTab, setIndexTab] = useState (0)
     const [show,setShow] = useState(false)
     const [showDetail, setShowDetail] = useState(false)
     const [akademiItem, setAkademiItem] = useState (null)
-    const [trainingItem, setTrainingItem] = useState (null)
+    const [pelatihanItem, setPelatihanItem] = useState (null)
     const [slideAkademiToShow, setSlideAkademiToShow] = useState(4)
-    const [slideTrainingToShow, setSlideTrainingToShow] = useState(3)
+    const [slidePelatihanToShow, setSlidePelatihanToShow] = useState(3)
 
     useEffect(() => {
         handleIndexShow ()
         handleAkademiCarousel()
+        handlePelatihanCarousel()
     }, [])
 
     const handleDragStart = (e) => e.preventDefault();
@@ -70,15 +75,15 @@ const Beranda = () => {
         // console.log (arr)
     }
 
-    const handleTrainingCarousel = () => {
+    const handlePelatihanCarousel = () => {
         let arr = []
 
-        if (training.length !== 0) {
-            for (let i = 0; i < training.length; i+= slideTrainingToShow){
-                arr.push (training.slice (i, i + slideTrainingToShow))
+        if (pelatihan.length !== 0) {
+            for (let i = 0; i < pelatihan.length; i+= slidePelatihanToShow){
+                arr.push (pelatihan.slice (i, i + slidePelatihanToShow))
             }
 
-            setTrainingItem(arr)
+            setPelatihanItem(arr)
         }
         // console.log (arr)
     }
@@ -146,11 +151,11 @@ const Beranda = () => {
         <BerandaWrapper title= "Digitalent">
             <div className="bg-white">
                 {
-                    console.log (akademi)
+                    // console.log (akademi)
                 }
 
                 {
-                    console.log (tema)
+                    // console.log (tema)
                 }
 
                 {
@@ -158,11 +163,15 @@ const Beranda = () => {
                 }
 
                 {
-                    console.log (show)
+                    console.log (pelatihanItem)
                 }
 
                 {
-                    console.log (showDetail)
+                    // console.log (show)
+                }
+
+                {
+                    // console.log (showDetail)
                 }
 
                 <Navigationbar />
@@ -184,7 +193,11 @@ const Beranda = () => {
                                                     {
                                                         el.map ((element, index) => {
                                                             return (
-                                                                <div key={i} className="row bg-secondary text-white rounded d-flex align-content-center" style={{height: "8vh"}}>
+                                                                <div 
+                                                                    key={i} 
+                                                                    className="row bg-secondary text-white rounded d-flex align-content-center" 
+                                                                    style={{height: "8vh", width:"40vh"}}
+                                                                >
                                                                     <div className="col-6 text-center">
                                                                         <h1 className="font-weight-bolder">
                                                                             {element.slug}
@@ -212,7 +225,7 @@ const Beranda = () => {
                     
                 {/* Tema */}
                 {
-                    tema && pelatihan && trainingItem ?
+                    tema  && pelatihan && pelatihanItem ?
                         
                         tema.map ((el, i) => {
                             return (
@@ -225,35 +238,96 @@ const Beranda = () => {
                                         </div>
                                         <div className="text-primary">
                                             <Link href="#">
-                                                Lihat Semua
+                                                <div className="font-weight-bolder d-flex justify-content-center">
+                                                    <span className="mt-1">
+                                                        Lihat Semua
+                                                    </span>  
+                                                    <i className="ri-arrow-right-s-line text-primary"></i> 
+                                                </div>
                                             </Link>
                                         </div>
                                     </div>
-                                    <div>
-                                        <Carousel
-                                            indicators={false}
-                                        >
-                                            {
-                                                trainingItem.map ((elemen, index) => {
-                                                    return (
-                                                        <Carousel.Item key={i}>
-                                                            <Card style={{ width: '18rem' }}>
-                                                                <Card.Img variant="top" src="holder.js/100px180" />
-                                                                <Card.Body>
-                                                                    <Card.Title>Card Title</Card.Title>
-                                                                    <Card.Text>
-                                                                        Some quick example text to build on the card title and make up the bulk of
-                                                                        the card's content.
-                                                                    </Card.Text>
-                                                                    <Button variant="primary">Go somewhere</Button>
-                                                                </Card.Body>
-                                                            </Card>
-                                                        </Carousel.Item>
-                                                    )
-                                                })
-                                            }
+                                    <div className="row d-flex justify-content-around mx-5 px-5">
+                                        {
+                                            pelatihan.map ((row, ind) => {
+                                                return (
+                                                    <Card style={{ width: '30rem' }} className="shadow" key={ind}>
 
-                                        </Carousel>
+                                                        <div className="col-12 mt-3 d-flex flex-row  justify-content-between" style={{position:"absolute"}}>
+                                                            <Badge bg="light">
+                                                                <div className="text-info mt-1">
+                                                                    Pelatihan {row.metode_pelatihan}
+                                                                </div>
+                                                            </Badge>
+
+                                                            <div>
+                                                                <Button className="btn btn-white py-1 pl-2 pr-1 rounded-circle mr-2">
+                                                                    <i className="ri-share-line" />
+                                                                </Button>
+                                                                <Button className="btn btn-white py-1 pl-2 pr-1 mr-2 rounded-circle">
+                                                                    <i className="ri-heart-line" />
+                                                                </Button>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div>
+                                                            <Card.Img 
+                                                                variant="top"  
+                                                                src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${row.gambar}`} 
+                                                            />
+                                                        </div>
+
+                                                        <div className="ml-2 " style={{position:"absolute", marginTop:"28vh"}}>
+                                                            <Image 
+                                                                src={`/assets/media/Frame_6523.svg`}
+                                                                width="50vh"
+                                                                height="50vh"
+                                                                className="rounded"
+                                                            />
+                                                        </div>
+
+                                                        <div className="row d-flex justify-content-between mx-5 mt-3">
+                                                            <div style={{marginLeft:"7vh"}}>
+                                                                {row.mitra}
+                                                            </div>
+                                                            <Badge bg="light">
+                                                                <div className="text-danger mt-1">
+                                                                    {row.status}
+                                                                </div>
+                                                            </Badge>
+                                                        </div>
+
+                                                        <Card.Body>
+                                                            
+                                                            <div>
+                                                                <h4>{row.name}</h4>
+                                                            </div>
+
+                                                            <div className="text-muted">
+                                                                {
+                                                                    activeAcademy
+                                                                }
+                                                            </div>
+
+                                                            <div 
+                                                                className="row my-3" 
+                                                                style={{height:"2px", backgroundColor:"#ADB5BD"}}
+                                                            >
+                                                            </div>
+
+                                                            <div className="d-flex align-content-center">
+                                                                <i className="ri-time-line mr-2"></i>
+                                                                <span className="mt-1">Registrasi: {new Date (row.pendaftaran_mulai).toLocaleDateString("en-GB")} - {new Date (row.pendaftaran_selesai).toLocaleDateString("en-GB")}</span>
+                                                            </div>
+                                                            <div className="d-flex align-content-center">
+                                                                <i className="ri-group-line mr-2"></i>
+                                                                <span className="mt-1">Kuota {row.kuota_peserta} Peserta</span>
+                                                            </div>
+                                                        </Card.Body>
+                                                    </Card>
+                                                )
+                                            })
+                                        }
                                     </div>
                                 </div>
                                 
@@ -266,16 +340,16 @@ const Beranda = () => {
                 }
 
                 <div className="col-12 text-center my-5">
-                    <button className="btn btn-outline-primary rounded-pill ">
+                    <button className="btn btn-outline-info rounded-pill ">
                         <div className="font-weight-bolder">
-                            Muat Lebih Banyak
+                            Lebih Banyak Tema <i className="ri-arrow-right-s-line ml-2"></i>
                         </div>
                     </button>
                 </div>
 
                 {/* H-Banner 01*/}
                 <Image 
-                    src={`/assets/media/tahapan-pendaftaran-new.svg`}
+                    src={`/assets/media/tahapan-pendaftaran-3.svg`}
                     width={1500}
                     height={580}
                     className="my-5"
@@ -293,22 +367,34 @@ const Beranda = () => {
                     {/* Card */}
                     <div className="d-flex justify-content-around my-5">
 
-                        <Card style={{ width: '30rem', height: "35rem" }}>
-                            <Card.Img variant="top" src={`/assets/media/image-29.svg`} />
+                        <Card style={{ width: '30rem', height: "35rem" }}  className="shadow">
+                            <Card.Img 
+                                variant="top" 
+                                src={`/assets/media/image-29.svg`} 
+                            />
 
-                            <div className="ml-3" style={{marginTop:"-35px"}}> 
+                            {/* <div className="ml-3" style={{marginTop:"-35px"}}> 
                                 <Image 
                                     src={`/assets/media/VSGA-tag.svg`}
                                     width={50}
                                     height={25}
                                 />
-                            </div>
+                            </div> */}
                             
                             <Card.Body>
                                 
-                                <Card.Text>
-                                    12 Mei 2021
-                                </Card.Text>
+                                <div className="d-flex justify-content-between">
+                                    <Card.Text>
+                                        12 Mei 2021
+                                    </Card.Text>
+
+                                    <Badge bg="light" className="mb-2">
+                                        <div className="text-info mt-1">
+                                            Kategori
+                                        </div>
+                                    </Badge>
+                                </div>
+                                
 
                                 <Card.Title>
                                     Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
@@ -328,22 +414,34 @@ const Beranda = () => {
                             </Card.Body>
                         </Card>
 
-                        <Card style={{ width: '30rem', height: "35rem" }}>
-                            <Card.Img variant="top" src={`/assets/media/image-29.svg`} />
+                        <Card style={{ width: '30rem', height: "35rem" }}  className="shadow">
+                            <Card.Img 
+                                variant="top" 
+                                src={`/assets/media/image-29.svg`} 
+                            />
 
-                            <div className="ml-3" style={{marginTop:"-35px"}}> 
+                            {/* <div className="ml-3" style={{marginTop:"-35px"}}> 
                                 <Image 
                                     src={`/assets/media/VSGA-tag.svg`}
                                     width={50}
                                     height={25}
                                 />
-                            </div>
+                            </div> */}
                             
                             <Card.Body>
                                 
-                                <Card.Text>
-                                    12 Mei 2021
-                                </Card.Text>
+                                <div className="d-flex justify-content-between">
+                                    <Card.Text>
+                                        12 Mei 2021
+                                    </Card.Text>
+
+                                    <Badge bg="light" className="mb-2">
+                                        <div className="text-info mt-1">
+                                            Kategori
+                                        </div>
+                                    </Badge>
+                                </div>
+                                
 
                                 <Card.Title>
                                     Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
@@ -363,22 +461,34 @@ const Beranda = () => {
                             </Card.Body>
                         </Card>
 
-                        <Card style={{ width: '30rem', height: "35rem" }}>
-                            <Card.Img variant="top" src={`/assets/media/image-29.svg`} />
+                        <Card style={{ width: '30rem', height: "35rem" }}  className="shadow">
+                            <Card.Img 
+                                variant="top" 
+                                src={`/assets/media/image-29.svg`} 
+                            />
 
-                            <div className="ml-3" style={{marginTop:"-35px"}}> 
+                            {/* <div className="ml-3" style={{marginTop:"-35px"}}> 
                                 <Image 
                                     src={`/assets/media/VSGA-tag.svg`}
                                     width={50}
                                     height={25}
                                 />
-                            </div>
+                            </div> */}
                             
                             <Card.Body>
                                 
-                                <Card.Text>
-                                    12 Mei 2021
-                                </Card.Text>
+                                <div className="d-flex justify-content-between">
+                                    <Card.Text>
+                                        12 Mei 2021
+                                    </Card.Text>
+
+                                    <Badge bg="light" className="mb-2">
+                                        <div className="text-info mt-1">
+                                            Kategori
+                                        </div>
+                                    </Badge>
+                                </div>
+                                
 
                                 <Card.Title>
                                     Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
@@ -401,9 +511,9 @@ const Beranda = () => {
                     </div>
 
                     <div className="text-center">
-                        <button className="btn btn-outline-primary rounded-pill">
+                        <button className="btn btn-outline-info rounded-pill">
                             <div className="font-weight-bolder">
-                                Lihat Selengkapnya
+                                Lihat Selengkapnya <i className="ri-arrow-right-s-line ml-2"></i>
                             </div>
                         </button>
                     </div>
@@ -414,6 +524,86 @@ const Beranda = () => {
                     width={1500}
                     height={380}
                 />
+
+                <div className="bg-light my-5" style={{height:"40vh"}}>
+                    <div className="row mx-3">
+                        <div className="col-6" style={{marginTop:"5vh"}}>
+                            <div className="p-5" style={{marginLeft:"10vh"}}>
+                                <h1 className="font-weight-bolder mb-3 display-4">
+                                    Galeri Terupdate dan Terkini
+                                </h1>
+
+                                <h4 className="mb-5">
+                                    Temukan konten terupdate dan terkini mengenai Digital Talent Scholarship
+                                </h4>
+
+                                <Button className="btn btn-outline-info rounded-pill mt-5">
+                                    <div className="px-5 py-1 font-weight-bolder">
+                                        Lihat Selengkapnya <i className="ri-arrow-right-s-line ml-2"></i>
+                                    </div>
+                                </Button>
+                            </div>
+                            
+                        </div>
+                        
+                        <div className="col-6 d-flex flex-row">
+                            <div className="mr-5">
+                                <Image 
+                                    src={`/assets/media/image-29.svg`}
+                                    width="500vh"
+                                    height="500vh"
+                                    rounded
+                                />
+                            </div>
+
+                            <div >
+                                <Image 
+                                    src={`/assets/media/image-29.svg`}
+                                    width="500vh"
+                                    height="500vh"
+                                    rounded
+                                />
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-white my-5" style={{height:"40vh"}}>
+                    <div className="row mx-3">
+                        
+                        
+                        <div className="col-6 d-flex justify-content-center">
+                            <div>
+                                <ReactPlayer 
+                                    url="https://www.youtube.com/watch?v=j27t8RHzo_o&ab_channel=DigitalentMedia"
+                                    width="80vh"
+                                    height="40vh"
+                                />
+                            </div>
+                           
+                        </div>
+
+                        <div className="col-6" style={{marginTop:"5vh"}}>
+                            <div className="p-5" style={{marginLeft:"10vh"}}>
+                                <h1 className="font-weight-bolder mb-3 display-4">
+                                    Informasi Dalam Video Terkini
+                                </h1>
+
+                                <h4 className="mb-5">
+                                    Temukan konten terupdate dan terkini mengenai Digital Talent Scholarship
+                                </h4>
+
+                                <Button className="btn btn-outline-info rounded-pill mt-5">
+                                    <div className="px-5 py-1 font-weight-bolder">
+                                        Lihat Selengkapnya <i className="ri-arrow-right-s-line ml-2"></i>
+                                    </div>
+                                </Button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
                 
                 <Footer />
 
