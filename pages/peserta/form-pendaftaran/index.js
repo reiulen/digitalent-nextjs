@@ -5,7 +5,10 @@ import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import { wrapper } from "../../../redux/store";
 import { getSession } from "next-auth/client";
 import { getDataPribadi } from "../../../redux/actions/pelatihan/function.actions";
-import { getFormBuilder } from "../../../redux/actions/pelatihan/register-training.actions";
+import {
+  getFormBuilder,
+  getPelatihan,
+} from "../../../redux/actions/pelatihan/register-training.actions";
 
 const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
@@ -29,7 +32,7 @@ export default function FormPendaftaran(props) {
   return (
     <>
       <Layout title="Form Pendaftaran Peserta - Pelatihan" session={session}>
-        <IndexForm />
+        <IndexForm token={session.token} />
       </Layout>
     </>
   );
@@ -60,6 +63,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       await store.dispatch(getDataPribadi(session.user.user.data.user.token));
       await store.dispatch(
         getFormBuilder(session.user.user.data.user.token, query.id)
+      );
+      await store.dispatch(
+        getPelatihan(session.user.user.data.user.token, query.id)
       );
 
       return {

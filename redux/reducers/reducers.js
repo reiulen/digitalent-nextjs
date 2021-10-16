@@ -280,6 +280,7 @@ import {
 // =================== rekap pelatihan ==================
 import {
   getFormBuilderReducer,
+  getPelatihanReducer,
   newPendaftaranPelatihanReducer,
 } from "./pelatihan/register-training.reducers";
 // ================ pendaftaran pelatihan ===============
@@ -551,6 +552,7 @@ const reducer = combineReducers({
 
   // ========== pendaftaran pelatihan ========
   getFormBuilder: getFormBuilderReducer,
+  getPelatihan: getPelatihanReducer,
   newPendaftaranPelatihan: newPendaftaranPelatihanReducer,
 
   getDataPribadi: getDataPribadiReducer,
