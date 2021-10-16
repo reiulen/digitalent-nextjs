@@ -89,7 +89,7 @@ const Header = () => {
                           ? "Survey"
                           : router.pathname.includes("trivia")
                           ? "Trivia"
-                          : "test"}
+                          : "Dashboard"}
                       </div>
                     </div>
                   </Col>
@@ -134,7 +134,7 @@ const Header = () => {
                       ? "Survey"
                       : router.pathname.includes("trivia")
                       ? "Trivia"
-                      : "test"}
+                      : "Dashboard"}
                   </div>
                 </div>
               </p>
