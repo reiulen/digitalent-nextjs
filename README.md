@@ -36,4 +36,3 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Deploy to dev Noted
 
 Version Deploy Saturday 15 oct 15:53
-Version Deploy Saturday 17 oct 24:47
