@@ -1,6 +1,8 @@
 import { getSession } from "next-auth/client";
 import dynamic from "next/dynamic";
 import LoadingSkeleton from "../../../../components/LoadingSkeleton";
+import { getRandomSubtanceQuestionDetail } from "../../../../redux/actions/subvit/subtance-question-detail.action";
+import { wrapper } from "../../../../redux/store";
 import Layout from "../../../../user-component/components/template/Layout.component";
 
 const SubtansiUser = dynamic(
@@ -13,33 +15,48 @@ const SubtansiUser = dynamic(
   }
 );
 
-export default function SubvitUserSubtansi() {
+export default function SubvitUserSubtansi(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Tes Subtansi">
-          <SubtansiUser />
+        <Layout title="Test Substansi - Subvit" session={session}>
+          <SubtansiUser token={session.token} />
         </Layout>
       </div>
     </>
   );
 }
 
-export async function getServerSideProps(context) {
-  // const session = await getSession({ req: context.req });
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: "http://dts-dev.majapahit.id/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query, req }) => {
+      const session = await getSession({ req });
+      // console.log(session.user.user.data); untuk cek role user
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/login",
+            permanent: false,
+          },
+        };
+      }
+      console.log(store);
 
-  return {
-    props: {
-      data: "auth",
-      title: "User Subtansi",
-    },
-  };
-}
+      await store.dispatch(
+        getRandomSubtanceQuestionDetail(
+          query.training_id,
+          query.theme_id,
+          query.category,
+          session.user.user.data.token
+        )
+      );
+      return {
+        props: {
+          data: "auth",
+          session,
+          title: "Test Substansi - Subvit ",
+        },
+      };
+    }
+);

@@ -12,15 +12,7 @@ const HeaderUser = () => {
   const router = useRouter();
   var date = new Date();
 
-  var myDays = [
-    "Minggu",
-    "Senin",
-    "Selasa",
-    "Rabu",
-    "Kamis",
-    "Jum&#39;at",
-    "Sabtu",
-  ];
+  var myDays = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
   var thisDay = date.getDay(),
     thisDay = myDays[thisDay];

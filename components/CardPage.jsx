@@ -24,6 +24,7 @@ const CardPage = ({
             backgroundRepeat: "no-repeat",
             backgroundPosition: "right top",
             backgroundSize: "100px",
+            
           }
           : {
             cursor: "default",
@@ -31,6 +32,7 @@ const CardPage = ({
             backgroundRepeat: "no-repeat",
             backgroundPosition: "right top",
             backgroundSize: "100px",
+            
           }
       }
     >

@@ -8,9 +8,9 @@ const BerandaWrapper = ({ children, title }) => {
             <Head>
                 <title>{title}</title>
             </Head>
-                <div>
-                    {children}
-                </div>
+            <div>
+                {children}
+            </div>
         </>
         
     )

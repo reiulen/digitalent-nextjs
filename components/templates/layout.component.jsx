@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Head from "next/head";
 import dynamic from "next/dynamic";
-import {wrapper} from '../../redux/store'
+import { wrapper } from "../../redux/store";
 
 import { signOut, getSession } from "next-auth/client";
 import { fetchReducerFunc } from "../../redux/actions/utils/functionals.actions";
@@ -41,7 +41,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
   const dispatch = useDispatch();
   const allFunctionls = useSelector((state) => state.allFunctionls);
   const [user, setUser] = useState();
-  const [session, setSession] = useState()
+  const [session, setSession] = useState();
   const handlerLogout = () => {
     signOut();
   };
@@ -57,7 +57,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
   useEffect(() => {
     getSession().then((session) => {
       setUser(session.user.user.data.user);
-      setSession(session)
+      setSession(session);
     });
   }, []);
 
@@ -67,7 +67,7 @@ const Layout = ({ children, title = "Dashboard" }) => {
         <title>{title}</title>
       </Head>
       <HeaderMobile />
-      <div div className="d-flex flex-row flex-column-fluid page">
+      <div className="d-flex flex-row flex-column-fluid page">
         <Sidebar session={session} />
         <div
           className="d-flex flex-column flex-row-fluid wrapper"
@@ -80,7 +80,8 @@ const Layout = ({ children, title = "Dashboard" }) => {
           </ContentWrapper>
           {/* <Footer /> */}
         </div>
-      </div> <div
+      </div>{" "}
+      <div
         id="kt_quick_user"
         className={`offcanvas offcanvas-right p-10 ${
           allFunctionls.isOverlayProfile && allFunctionls.isOverlayProfile
@@ -142,7 +143,6 @@ const Layout = ({ children, title = "Dashboard" }) => {
           <div className="separator separator-dashed mt-8 mb-5"></div>
         </div>
       </div>
-
       {allFunctionls.isOverlayProfile && allFunctionls.isOverlayProfile ? (
         <div
           className="offcanvas-overlay"
@@ -151,7 +151,6 @@ const Layout = ({ children, title = "Dashboard" }) => {
       ) : (
         ""
       )}
-
       <div id="kt_scrolltop" className="scrolltop">
         <span className="svg-icon">
           <i className="flaticon2-up"></i>
@@ -162,5 +161,3 @@ const Layout = ({ children, title = "Dashboard" }) => {
 };
 
 export default Layout;
-
-
