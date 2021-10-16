@@ -7,7 +7,7 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
     <>
       <Col md={6} className="mb-8">
         <Card
-          className="rounded-xl"
+          className="rounded-xl h-100"
           style={{
             backgroundImage:
               "url('/assets/icon/new-card-icon/" + backgroundImage + "')",
@@ -20,7 +20,7 @@ const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
               style={{
                 fontSize: "16px",
                 fontWeight: "600",
-                width: "150px",
+                width: "140px",
                 color: color,
               }}
             >
