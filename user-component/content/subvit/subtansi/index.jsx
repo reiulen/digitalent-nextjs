@@ -8,6 +8,7 @@ import HeaderUser from "../header";
 import axios from "axios";
 import Image from "next/dist/client/image";
 import { useSelector } from "react-redux";
+import Breadcrumb from "../breadcrumb";
 
 // import Cookies from "js-cookie";
 
@@ -19,7 +20,7 @@ const SubtansiUser = () => {
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
-  const [count, setCount] = useState(3600 * 2);
+  const [count, setCount] = useState(3600);
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
@@ -133,7 +134,8 @@ const SubtansiUser = () => {
 
   return (
     <>
-      <HeaderUser />
+      {/* <HeaderUser /> */}
+      {/* <Breadcrumb /> */}
       <Container className={styles.base}>
         <Card className={styles.mainCard}>
           <Row>

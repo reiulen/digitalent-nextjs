@@ -24,10 +24,37 @@ import {
   ERROR_DROPDOWN_KABUPATEN,
   GET_DROPDOWN_PENYELENGGARA,
   ERROR_DROPDOWN_PENYELENGGARA,
+  GET_DATA_PRIBADI_SUCCESS,
+  GET_DATA_PRIBADI_FAIL,
   CLEAR_ERRORS,
 } from "../../types/pelatihan/function.type";
 
 import axios from "axios";
+
+export const getDataPribadi = (token) => async (dispatch) => {
+  try {
+    let link =
+      process.env.END_POINT_API_PELATIHAN + `/api/v1/auth/get-data-pribadi`;
+
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    const { data } = await axios.get(link, config);
+
+    dispatch({
+      type: GET_DATA_PRIBADI_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_DATA_PRIBADI_FAIL,
+      payload: error.message,
+    });
+  }
+};
 
 export const getTrainingStep1 = () => async (dispatch) => {
   const data = {
@@ -336,4 +363,10 @@ export const dropdownPenyelenggara = (token) => async (dispatch) => {
       payload: error.message,
     });
   }
+};
+
+export const clearErrors = () => async (dispatch) => {
+  dispatch({
+    type: CLEAR_ERRORS,
+  });
 };
