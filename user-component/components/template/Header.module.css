@@ -8,7 +8,7 @@
 }
 
 .body {
-  padding: 20px;
+  padding: 40px 10px 60px 10px;
 }
 .cardBody {
   background-color: transparent;
@@ -44,7 +44,7 @@
   /* Neutral/White */
 
   color: #ffffff;
-  text-align: right;
+  float: right;
 }
 .mainText {
   font-family: Poppins;
@@ -68,7 +68,7 @@
   font-size: 15px;
   line-height: 140%;
   /* identical to box height, or 28px */
-  margin-bottom: 30px;
+  margin-bottom: 30px !important;
 
   letter-spacing: 0.015em;
 
