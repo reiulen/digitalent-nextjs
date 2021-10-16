@@ -55,6 +55,7 @@
     "next-auth": "^3.29.0",
     "next-images": "^1.8.1",
     "next-redux-wrapper": "^7.0.2",
+    "node-releases": "^2.0.0",
     "npm": "^7.24.2",
     "pdf-image": "2.0.0",
     "pdfjs-dist": "2.6.347",

@@ -2,6 +2,7 @@ import { getSession } from "next-auth/client";
 
 import LoadingSkeleton from "../../../components/LoadingSkeleton";
 import dynamic from "next/dynamic";
+import { wrapper } from "../../../redux/store";
 
 const Done = dynamic(() => import("../../../user-component/content/done"), {
   loading: function loadingNow() {
@@ -14,11 +15,12 @@ const Layout = dynamic(() =>
   import("../../../user-component/components/template/Layout.component")
 );
 
-export default function SubvitDone() {
+export default function SubvitDone(props) {
+  const session = props.session.user.user.data;
   return (
     <>
       <div className="d-flex flex-column flex-root">
-        <Layout title="Selesai Tes">
+        <Layout title="Test Substansi" session={session}>
           <Done />
         </Layout>
       </div>
@@ -26,21 +28,22 @@ export default function SubvitDone() {
   );
 }
 
-export async function getServerSideProps(context) {
-  // const session = await getSession({ req: context.req });
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: "http://dts-dev.majapahit.id/",
-  //       permanent: false,
-  //     },
-  //   };
-  // }
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ query, req }) => {
+      const session = await getSession({ req });
+      // console.log(session.user.user.data); untuk cek role user
+      if (!session) {
+        return {
+          redirect: {
+            destination: "/login",
+            permanent: false,
+          },
+        };
+      }
 
-  return {
-    props: {
-      data: "auth",
-      title: "Done",
-    },
-  };
-}
+      return {
+        props: { data: "auth", session, title: "Selesai Test Substansi" },
+      };
+    }
+);

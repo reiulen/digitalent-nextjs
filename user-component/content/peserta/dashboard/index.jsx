@@ -8,6 +8,7 @@ import CardPage from "../../../../components/CardPage";
 import { useRouter } from "next/router";
 
 const Dashboard = ({ session }) => {
+  const router = useRouter();
   console.log(session);
   const handlePublish = (val) => {};
 
