@@ -8,10 +8,8 @@ const BerandaWrapper = ({ children, title }) => {
             <Head>
                 <title>{title}</title>
             </Head>
-            <div className="d-flex flex-column-fluid "style={{backgroundColor: "#ffffff"}}>
-                <div>
-                    {children}
-                </div>
+            <div>
+                {children}
             </div>
         </>
         

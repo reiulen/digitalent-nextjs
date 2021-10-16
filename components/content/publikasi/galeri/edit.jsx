@@ -363,8 +363,22 @@ const EditGaleri = ({ token }) => {
         } else {
             const list = [...image];
             list.splice(index, 1);
-            setImage(list, { gambar: gambar, id: id });
+            setImage(list);
             setTotalImage((totalImage) - 1)
+
+            // for (let i = 0; i < deleteImg.length; i++) {
+    
+                // temps.push(image[i].imageBase64)
+                setDeleteImg([{
+                    gambar: gambar[index].gambar,
+                    id: index
+                }])
+                // temps.push(image[i])
+    
+                // if (flag === image.length) {
+                //     handleData(temps, updateGaleri)
+                // }
+            // }
 
             // deleteImg.push(list)
             // setDeleteImg(list, { gambar: gambar, id: id });
@@ -373,7 +387,7 @@ const EditGaleri = ({ token }) => {
             // setImage(list);
             // setTotalImage((totalImage) - 1)
         }
-        console.log("Delete :", deleteImg)
+        // console.log("Delete :", deleteImg)
     };
 
     const onAddImage = () => {
@@ -418,11 +432,11 @@ const EditGaleri = ({ token }) => {
                 tanggal_publish: moment(today).format("YYYY-MM-DD"),
                 id,
                 _method,
-                // image_delete: deleteImg
+                image_delete: deleteImg
             }
 
             // dispatch(newGaleri(data, token))
-            // dispatch(onCall(data, token))
+            dispatch(onCall(data, token))
             console.log("Unpublish : ", data)
             // console.log(image)
 
@@ -439,10 +453,10 @@ const EditGaleri = ({ token }) => {
                 tanggal_publish: moment(publishDate).format("YYYY-MM-DD"),
                 id,
                 _method,
-                // image_delete: deleteImg
+                image_delete: deleteImg
             }
 
-            // dispatch(onCall(data, token))
+            dispatch(onCall(data, token))
             console.log("Publish : ", data)
             // console.log(image)
         }
