@@ -6,6 +6,9 @@ import { ToastContainer } from "react-toastify";
 const Navbar = dynamic(() =>
   import("../../../user-component/components/template/Navbar.component")
 );
+const Header = dynamic(() =>
+  import("../../../user-component/components/template/Header.component")
+);
 
 const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
   return (
@@ -16,6 +19,7 @@ const Layout = ({ title = "Peserta - Pelatihan", session, children }) => {
         <meta name="viewport" content="initial-scale=1.0,width=device-width" />
       </Head>
       <Navbar session={session} />
+      <Header session={session} />
       <ToastContainer position="top-right" />
       {children}
     </>
