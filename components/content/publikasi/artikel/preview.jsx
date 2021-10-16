@@ -81,29 +81,6 @@ const Preview = () => {
                         </nav>
 
                         <div className="ml-0">
-                            {/* <div style={{ background: "#F3F6F9" }}
-                                className="mr-5 px-3 py-1 rounded mt-2">
-                                <i className="flaticon2-user"></i>
-                                <span className="ml-1">
-                                    User {user}
-                                </span>
-                            </div> */}
-
-                            {/* <div style={{ background: "#F3F6F9" }}
-                                className="mr-5 px-3 py-1 rounded mt-2">
-                                <i className="flaticon2-calendar-4"></i>
-                                <span className="ml-1">
-                                    Publish: {created_at}
-                                </span>
-                            </div> */}
-
-                            {/* <div style={{ background: "#F3F6F9" }}
-                                className="mr-5 px-3 py-1 rounded mt-2">
-                                <i className="flaticon2-setup"></i>
-                                <span className="ml-1">
-                                    {jenis_kategori}: {nama}
-                                </span>
-                            </div> */}
                             <h1 className={`${styles.titlePratinjau} font-weight-bold my-5`}>
                                 {judul_artikel}
                             </h1>
