@@ -22,3 +22,77 @@
   margin-top: 12px;
   margin-bottom: 0;
 }
+.confirmText {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 155%;
+  /* identical to box height, or 28px */
+
+  /* Neutral/Heading */
+
+  color: #fff;
+}
+.modalBody {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 26px */
+
+  color: #000000;
+}
+.btnCancel {
+  text-decoration: none !important;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 22px */
+
+  text-align: center;
+  letter-spacing: 0.015em;
+
+  /* Brand/Primary/Primary */
+  margin-right: 25px;
+  color: #007cff;
+}
+.btnStart {
+  background: #007cff !important;
+  border-radius: 30px;
+  padding: 10px 25px !important;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 22px */
+
+  text-align: center;
+  letter-spacing: 0.015em;
+
+  /* Neutral/White */
+
+  color: #ffffff;
+}
+.btnStart:hover {
+  background: #005cdd !important;
+  border-radius: 30px;
+  padding: 10px 25px !important;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 160%;
+  /* or 22px */
+
+  text-align: center;
+  letter-spacing: 0.015em;
+
+  /* Neutral/White */
+
+  color: #ffffff;
+}
