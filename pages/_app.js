@@ -6,6 +6,7 @@ import "../components/Table/tableStyle.css";
 import "remixicon/fonts/remixicon.css";
 import "react-toastify/dist/ReactToastify.css";
 import "../components/content/sertifikat/style.css";
+import "../styles/peserta/dashboard.css";
 import SimpleReactValidator from "simple-react-validator";
 import { wrapper } from "../redux/store";
 
