@@ -21,6 +21,7 @@ export default function DetailSubstansiPage(props) {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params, query, req }) => {
+      console.log(query);
       const session = await getSession({ req });
       if (!session) {
         return {

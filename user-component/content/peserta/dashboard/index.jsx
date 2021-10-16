@@ -16,6 +16,7 @@ import style from "../../../../styles/peserta/dashboard.module.css";
 import CardPill from "../../../components/peserta/CardPill";
 import CardPage from "../../../components/peserta/CardPage";
 import { useRouter } from "next/router";
+import Sidebar from "../components/sidebar";
 
 const Dashboard = ({ session }) => {
   const router = useRouter();
@@ -25,7 +26,7 @@ const Dashboard = ({ session }) => {
       <div className="container-fluid py-5">
         <Row>
           <Col md={3}>
-            <h1>On Develop ..........</h1>
+            <Sidebar />
           </Col>
           <Col md={9} style={{ marginTop: "-5%" }}>
             <Row>
@@ -54,7 +55,7 @@ const Dashboard = ({ session }) => {
                 title="Tidak Lulus Pelatihan"
               />
             </Row>
-            <Row >
+            <Row>
               <CardPage
                 backgroundImage="new-game-4.svg"
                 background="primary"
