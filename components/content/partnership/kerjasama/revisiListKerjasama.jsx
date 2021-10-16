@@ -21,6 +21,7 @@ function RevisiList({ token }) {
     background: "#FFF6E6",
     borderRadius: "4px",
     padding: "4px 10px",
+    width:"max-content"
   };
 
   const styleList = {
@@ -69,10 +70,10 @@ function RevisiList({ token }) {
                     return (
                       <li key={index} className="mt-5">
                         <div
-                          className="d-flex align-items-center justify-content-between"
+                          className="row align-items-center justify-content-between"
                           style={cardContainer}
                         >
-                          <div>
+                          <div className="col-12 col-sm-6">
                             <h1
                               className="fw-500 fz-20"
                               style={{ color: "#6C6C6C" }}
@@ -86,7 +87,7 @@ function RevisiList({ token }) {
                               Revisi Versi.{items.version}
                             </p>
                           </div>
-
+<div className="col-12 col-sm-6 d-flex justify-content-end">
                           {items.information2 === "Menunggu Mitra" ? (
                             <Link
                               href={{
@@ -99,7 +100,7 @@ function RevisiList({ token }) {
                                 },
                               }}
                             >
-                              <a style={labelStyle}>{items.information2}</a>
+                              <a className="mt-10 mt-sm-0" style={labelStyle}>{items.information2}</a>
                             </Link>
                           ) : (
                             <Link
@@ -113,11 +114,12 @@ function RevisiList({ token }) {
                                 },
                               }}
                             >
-                              <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white">
+                              <a className="btn btn-sm btn-rounded-full bg-blue-primary text-white mt-10 mt-sm-0">
                                 {items.information2}
                               </a>
                             </Link>
                           )}
+                        </div>
                         </div>
                       </li>
                     );

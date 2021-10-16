@@ -208,7 +208,7 @@ function ReviewDokumenKerjasama({ token }) {
     }
 
     setDataSingle(router.query.id);
-  }, [router.query.id, router, token]);
+  }, [router.query.id, token]);
 
   return (
     <PageWrapper>
@@ -260,7 +260,7 @@ function ReviewDokumenKerjasama({ token }) {
             </h3>
           </div>
           <div className="card-body pb-28">
-            <div className="row mt-8 mb-10">
+            <div className="row mt-8 mb-10 position-relative">
               <div className="col-2 p-0">
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
@@ -301,29 +301,13 @@ function ReviewDokumenKerjasama({ token }) {
                 </div>
               </div>
 
-              {!note === "-" ? (
-                <div className="col-2">
-                  <div className="progress-items">
-                    <div className="line-progress"></div>
-                    <div className="circle-progress">
-                      <span
-                        className="title-progress text-center"
-                        style={{ top: "-4rem" }}
-                      >
-                        Review Dokumen
-                        <br />
-                        Kerjasama
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
+             
                 <div className="col-2">
                   <div className="progress-items">
                     <div className="line-progress active-line"></div>
                     <div className="circle-progress active-circle">
                       <span
-                        className="title-progress text-center"
+                        className="title-progress text-center active"
                         style={{ top: "-4rem" }}
                       >
                         Review Dokumen
@@ -333,7 +317,6 @@ function ReviewDokumenKerjasama({ token }) {
                     </div>
                   </div>
                 </div>
-              )}
 
               <div className="col-2">
                 <div className="progress-items">
@@ -372,12 +355,6 @@ function ReviewDokumenKerjasama({ token }) {
                           Kembali
                         </a>
                       </Link>
-
-                      {/* <button
-                        className="btn btn-sm btn-rounded-full bg-blue-primary text-white "
-                      >
-                        Selesai
-                      </button> */}
                     </div>
                   </div>
                 </div>

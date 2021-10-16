@@ -174,7 +174,7 @@ const RevisiSubmit = ({token}) => {
           </div>
 
           <div className="card-body">
-            <div className="row mt-8 mb-10">
+            <div className="row mt-8 mb-10 relative-progress">
               <div className="col-2 p-0">
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
@@ -187,7 +187,7 @@ const RevisiSubmit = ({token}) => {
                 <div className="progress-items">
                   <div className="line-progress active-line"></div>
                   <div className="circle-progress active-circle">
-                    <span className="title-progress">Review Kerjasama</span>
+                    <span className="title-progress active">Review Kerjasama</span>
                   </div>
                 </div>
               </div>
