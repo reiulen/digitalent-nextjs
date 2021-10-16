@@ -89,6 +89,92 @@ const Dashboard = ({ session }) => {
                 desc="Anda Sudah bisa mengunduh Sertifikat"
               />
             </Row>
+            <Row>
+              {[1, 2, 3, 4].map((row, i) => (
+                <Col md={6} className="mb-8" key={i}>
+                  <Card className="rounded-xl h-100">
+                    <Card.Body>
+                      <Card.Title>
+                        <p className={style.card_title}>Pelatihan Terkini</p>
+                      </Card.Title>
+
+                      <Card className="shadow rounded-md">
+                        <Image
+                          className={`${style.image_dashboard}`}
+                          src="/assets/media/default-card.png"
+                          width={400}
+                          height={180}
+                          objectFit="cover"
+                        />
+                        <Card.ImgOverlay>
+                          <Badge bg="secondary text-white text-uppercase rounded-xl py-3 px-4">
+                            Pelatihan Online
+                          </Badge>
+                        </Card.ImgOverlay>
+                        <Card.Body className="position-relative">
+                          <div className={style.bungkus_mitra_pelatihan}>
+                            <Image
+                              src="/assets/media/logo-filter.svg"
+                              width={62}
+                              height={62}
+                              objectFit="cover"
+                              className={`${style.image_card_pelatihan} img-fluild`}
+                            />
+                          </div>
+                          <div
+                            className="d-flex justify-content-between position-relative pb-0 mb-0"
+                            style={{ top: "-15px" }}
+                          >
+                            <p className={`pl-20 my-0 ${style.text_mitra}`}>
+                              Gojek
+                            </p>
+                            <p
+                              className={`${style.status_mitra_open} text-uppercase font-weight-bolder my-0`}
+                            >
+                              Open
+                            </p>
+                          </div>
+
+                          <p className={`my-0 ${style.title_card}`}>
+                            Intermediate Multimedia Designer
+                          </p>
+                          <p style={{ fontSize: "14px", color: "#6C6C6C" }}>
+                            Vocational School Graduate Academy
+                          </p>
+                          <hr className="" />
+                          <div className="d-flex flex-column">
+                            <div className="date d-flex align-items-center align-middle mr-7">
+                              <i className="ri-time-line"></i>
+                              <span
+                                className={`${style.text_date_register} pl-2`}
+                              >
+                                Registrasi : 05 Jul 21 - 31 Jul 21
+                              </span>
+                            </div>
+                            <div className="date d-flex align-items-center align-middle">
+                              <i className="ri-group-line"></i>
+                              <span
+                                className={`${style.text_date_register} pl-2`}
+                              >
+                                Kuota : 1000 Peserta
+                              </span>
+                            </div>
+                            <div className="date d-flex align-items-center align-middle">
+                              <i className="ri-history-fill"></i>
+                              <span
+                                className={`${style.text_date_register} pl-2`}
+                              >
+                                Status : Test Substansi
+                              </span>
+                            </div>
+                          </div>
+                        </Card.Body>
+                      </Card>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
           </Col>
         </Row>
       </div>
