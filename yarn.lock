@@ -863,6 +863,10 @@
 
 "@next/swc-win32-x64-msvc@11.1.2":
   "integrity" "sha512-e/pIKVdB+tGQYa1cW3sAeHm8gzEri/HYLZHT4WZojrUxgWXqx8pk7S7Xs47uBcFTqBDRvK3EcQpPLf3XdVsDdg=="
+<<<<<<< HEAD
+=======
+  "resolved" "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-11.1.2.tgz"
+>>>>>>> 35d502ce49d55d5d0769d9c46a21037d823fc959
   "version" "11.1.2"
 
 "@node-rs/helper@1.2.1":
@@ -1092,6 +1096,18 @@
   "integrity" "sha512-3Zi2LGbCLDz4IIL7ir6wD0u/ggHotLkK5SlVzFzTcYaNgPR4MAt/9JYZqXWKcofPWEoptfpnCJU8Bq9sxw8QUg=="
   "resolved" "https://registry.npmjs.org/@rushstack/eslint-patch/-/eslint-patch-1.0.7.tgz"
   "version" "1.0.7"
+
+"@splidejs/react-splide@^0.5.3":
+  "integrity" "sha512-HptH1xLmIZ7nRUp0rCZTm7YQfVsrV3d78pMVN994E0tc0trBclu0MX1EMG47GNETf/T2rOiQMU4r9mkMRZ1veg=="
+  "resolved" "https://registry.npmjs.org/@splidejs/react-splide/-/react-splide-0.5.3.tgz"
+  "version" "0.5.3"
+  dependencies:
+    "@splidejs/splide" "^3.1.6"
+
+"@splidejs/splide@^3.1.6":
+  "integrity" "sha512-PkFAfCj/ADKTBzy/9CGrbtiPuEezTVFV0RZ8J/5qWIs7oSAbnUUtPcTY1/2nsCdAZq8XNDjs6ITjLyrot9s0Ow=="
+  "resolved" "https://registry.npmjs.org/@splidejs/splide/-/splide-3.1.6.tgz"
+  "version" "3.1.6"
 
 "@sqltools/formatter@^1.2.2":
   "integrity" "sha512-O3uyB/JbkAEMZaP3YqyHH7TMnex7tWyCbCI4EfJdOCoN6HIhqdJBWTM6aCCiWQ/5f5wxjgU735QAIpJbjDvmzg=="
