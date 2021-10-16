@@ -17,7 +17,7 @@ import ReactPlayer from 'react-player/youtube'
 // import Slider from "react-slick";
 // import CarouselMulti from "react-multi-carousel";
 
-import ImagetronCarousel from "../../components/ImagetronCarousel";
+// import ImagetronCarousel from "../../components/ImagetronCarousel";
 // import AkademiCarousel from "../../components/AkademiCarousel";
 import Footer from "../../../components/templates/footer.component"
 import BerandaWrapper from "../../../components/wrapper/beranda.wrapper";
@@ -26,6 +26,11 @@ import "../../../styles/beranda.module.css"
 // import "react-multi-carousel/lib/styles.css";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
+
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/splide/dist/css/splide.min.css";
+// import IconArrow from "../../../components/assets/icon/Arrow2";
+import CardsBeranda from "../../components/CardBeranda"
 
 const Navigationbar = dynamic(() => import("../../../components/templates/navbar.component"), {
     ssr: false,
@@ -44,23 +49,162 @@ const Beranda = () => {
         pelatihan,
     } = useSelector((state) => state.pelatihanByTema);
     
-    const [activeTab, setActiveTab] = useState ("VSGA")
-    const [activeAcademy, setActiveAcademy] = useState ("Vacational School Academy")
+    // const [activeTab, setActiveTab] = useState (1)
+    const [activeAcademy, setActiveAcademy] = useState (1)
     const [indexTab, setIndexTab] = useState (0)
-    const [show,setShow] = useState(false)
+    const [show,setShow] = useState(null)
     const [showDetail, setShowDetail] = useState(false)
     const [akademiItem, setAkademiItem] = useState (null)
     const [pelatihanItem, setPelatihanItem] = useState (null)
     const [slideAkademiToShow, setSlideAkademiToShow] = useState(4)
     const [slidePelatihanToShow, setSlidePelatihanToShow] = useState(3)
 
+    const optionsSliderImagetron = {
+        type: "loop",
+        gap: "1rem",
+        autoplay: true,
+        padding: "5rem",
+        height: "600px",
+        breakpoints: {
+            1669: {
+            height: "500px",
+            },
+            1262: {
+            height: "400px",
+            },
+            1062: {
+            height: "300px",
+            },
+            833: {
+            height: "270px",
+            },
+            726: {
+            height: "230px",
+            },
+            629: {
+            height: "210px",
+            },
+            590: {
+            height: "180px",
+            padding: "0",
+            gap: "0",
+            },
+            514: {
+            height: "160px",
+            padding: "0",
+            gap: "0",
+            },
+            450: {
+            height: "160px",
+            padding: "0",
+            gap: "0",
+            },
+            425: {
+            height: "160px",
+            padding: "0",
+            gap: "0",
+            },
+            320: {
+            height: "150px",
+            padding: "0",
+            gap: "0",
+            },
+        },
+                        
+    }
+    const optionsSliderAcademy = {
+            gap: "1rem",
+            drag: "free",
+            perPage: 4,
+            height: "200px",
+            type: "loop",
+            breakpoints: {
+                1262: {
+                height: "200px",
+                },
+                1062: {
+                height: "200px",
+                perPage: 3,
+                },
+                833: {
+                height: "150px",
+                perPage: 2,
+                },
+                726: {
+                height: "150px",
+                perPage: 2,
+                },
+                629: {
+                height: "130px",
+                perPage: 1,
+                },
+                590: {
+                height: "180px",
+                padding: "0",
+                gap: "0",
+                },
+                514: {
+                height: "160px",
+                padding: "0",
+                gap: "0",
+                perPage: 1,
+                },
+                450: {
+                height: "150px",
+                padding: "0",
+                gap: "0",
+                perPage: 1,
+                },
+                425: {
+                height: "150px",
+                padding: "0",
+                gap: "0",
+                perPage: 1,
+                },
+                320: {
+                height: "100px",
+                padding: "0",
+                gap: "0",
+                perPage: 1,
+                },
+            },
+        }
+
     useEffect(() => {
-        handleIndexShow ()
-        handleAkademiCarousel()
-        handlePelatihanCarousel()
+        handleHoverCard()
+        // handleIndexShow ()
+        // handleAkademiCarousel()
+        // handlePelatihanCarousel()
     }, [])
 
-    const handleDragStart = (e) => e.preventDefault();
+    // const handleDragStart = (e) => e.preventDefault();
+
+    const handleHoverCard = () => {
+        let arr = []
+
+        if (tema.length !== 0 && pelatihan.length !== 0){
+            for (let i = 0; i < tema.length; i++){
+                let obj = {
+                    id: tema[i].id,
+                    name: tema[i].Name,
+                    pelatihan: []
+                }
+
+                for (let j = 0; j < pelatihan.length; j++){
+                    let objPelatihan = {
+                        id: pelatihan[j].id,
+                        name: pelatihan[j].name,
+                        hover: false,
+                        showDetail: false
+                    }
+
+                    obj.pelatihan.push (objPelatihan)
+                }
+                arr.push (obj)
+            }
+            setShow(arr)
+        }
+    }
 
     const handleAkademiCarousel = () => {
         let arr = []
@@ -107,29 +251,50 @@ const Beranda = () => {
         // console.log (arrPelatihan)
     }
 
-    const handleMouseEnter = (index) =>{
-        let obj = show
-
-        for (let i = 0; i < obj.length; i++){
-            if (i == index){
-                obj[i].showButton = true
-            }
-        }
-
-        setShow(obj)
-        // console.log ("mouseOver")
+    const handleActiveAcademy= (i) => {
+        setActiveAcademy (i)
     }
 
-    const handleMouseLeave = (index) =>{
+    const handleMouseEnter = (indexTema, indexPelatihan) =>{
         let obj = show
+        // console.log (obj)
+        // console.log (indexTema)
+        // console.log (indexPelatihan)
 
         for (let i = 0; i < obj.length; i++){
-            if (i == index){
-                obj[i].showButton = false
+            for (let j = 0; j < obj[i].pelatihan.length; j++){
+                if ( i === indexTema && j === indexPelatihan){
+                    obj[i].pelatihan[j].hover = true
+                    console.log ('check 1')
+                    console.log (obj[i].pelatihan[j].hover)
+                }
             }
+            setShow(obj)
+            // console.log (obj)
         }
-        setShow(obj)
-        // console.log ("mouseOut")
+        // setShow(obj)
+        console.log ("mouseOver")
+    }
+
+    const handleMouseLeave = (indexTema, indexPelatihan) =>{
+        let obj = show
+        // console.log (obj)
+        // console.log (indexTema)
+        // console.log (indexPelatihan)
+
+        for (let i = 0; i < obj.length; i++){
+            for (let j = 0; j < obj[i].pelatihan.length; j++){
+                if ( i === indexTema && j === indexPelatihan){
+                    obj[i].pelatihan[j].hover = false
+                    console.log ('check 2')
+                    console.log (obj[i].pelatihan[j].hover)
+                }
+            }
+            setShow(obj)
+            // console.log (obj)
+        }
+        // setShow(obj)
+        console.log ("mouseOut")
     }
     
     const handleActive = (tab, index) => {
@@ -149,7 +314,7 @@ const Beranda = () => {
 
     return (
         <BerandaWrapper title= "Digitalent">
-            <div className="bg-white">
+            <div className="bg-white pb-20">
                 {
                     // console.log (akademi)
                 }
@@ -159,11 +324,11 @@ const Beranda = () => {
                 }
 
                 {
-                    console.log (pelatihan)
+                    // console.log (pelatihan)
                 }
 
                 {
-                    console.log (pelatihanItem)
+                    // console.log (pelatihanItem)
                 }
 
                 {
@@ -174,58 +339,103 @@ const Beranda = () => {
                     // console.log (showDetail)
                 }
 
+                {
+                    show ?
+                        console.log (show)
+                    :
+                        console.log ("no show")
+                }
+
                 <Navigationbar />
 
-                <ImagetronCarousel />
+                {/* <ImagetronCarousel /> */}
+
+                {/* Imagetron Carousel */}
+                <div className="carousel-primarys">
+                    <Splide
+                        options={optionsSliderImagetron}
+                        hasSliderWrapper
+                    >
+                        <SplideSlide>
+                        <Image
+                            layout="fill"
+                            objectFit="fill"
+                            src={`/assets/media/carousel-01.svg`}
+                            alt="First slide"
+                            className="mx-5"
+                        />
+                        </SplideSlide>
+                        <SplideSlide>
+                        <Image
+                            layout="fill"
+                            objectFit="fill"
+                            src={`/assets/media/carousel-01.svg`}
+                            alt="First slide"
+                            className="mx-5"
+                        />
+                        </SplideSlide>
+                        <SplideSlide>
+                        <Image
+                            layout="fill"
+                            objectFit="fill"
+                            src={`/assets/media/carousel-01.svg`}
+                            alt="First slide"
+                            className="mx-5"
+                        />
+                        </SplideSlide>
+                    </Splide>
+                </div>
 
                 {/* Akademi */}
                 {
-                    akademiItem ? 
-                        <div className="my-5">
-                            <Carousel
-                                indicators={false}
+                    akademi ?
+                        <div className="carousel-secondarys">
+                            <Splide
+                                options={optionsSliderAcademy}
+                                hasSliderWrapper
                             >
                                 {
-                                    akademiItem.map ((el, i) => {
+                                    akademi.map ((el, i) => {
                                         return (
-                                            <Carousel.Item key={i}>
-                                                <div className="row d-flex justify-content-around mx-5 px-5">
-                                                    {
-                                                        el.map ((element, index) => {
-                                                            return (
-                                                                <div 
-                                                                    key={i} 
-                                                                    className="row bg-secondary text-white rounded d-flex align-content-center" 
-                                                                    style={{height: "8vh", width:"40vh"}}
-                                                                >
-                                                                    <div className="col-6 text-center">
-                                                                        <h1 className="font-weight-bolder">
-                                                                            {element.slug}
-                                                                        </h1>
-                                                                    </div>
-                                                                    <div className="col-6">
-                                                                        {element.name}
-                                                                    </div>
+                                            <SplideSlide key={i}>
+                                                {
+                                                    activeAcademy === i ?
+                                                        <div className="d-flex align-items-center h-100" style={{marginLeft:"10vh", cursor:"pointer"}} onClick={() => handleActiveAcademy(i)}>
+                                                            <div className="row bg-secondary text-white rounded" style={{height:"10vh", width:"37vh"}}>
+                                                                <h1 className="mb-0 mr-2 fw-700 col-5 py-5 d-flex align-self-center" >{el.slug}</h1>
+                                                                <div className="col-6 d-flex align-items-center ">
+                                                                    <p className="mb-0">
+                                                                        {el.name}
+                                                                    </p>
                                                                 </div>
-                                                            )
-                                                        })
-                                                    }
-                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    :
+                                                        <div className="d-flex align-items-center h-100" style={{marginLeft:"10vh", cursor:"pointer"}} onClick={() => handleActiveAcademy(i)}>
+                                                            <div className="row rounded text-muted border " style={{height:"10vh", width:"37vh"}}>
+                                                                <h1 className="mb-0 mr-2 fw-700 col-5 py-5 d-flex align-self-center">{el.slug}</h1>
+                                                                <div className="col-6 d-flex align-items-center ">
+                                                                    <p className="mb-0">
+                                                                        {el.name}
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                }
                                                 
-                                            </Carousel.Item>
+                                            </SplideSlide>
                                         )
                                     })
                                 }
-                            </Carousel>
+                            </Splide>
                         </div>
                     :
                         null
                 }
-                
                     
                 {/* Tema */}
-                {
-                    tema  && pelatihan && pelatihanItem ?
+                {/* {
+                    tema  && pelatihan && show ?
                         
                         tema.map ((el, i) => {
                             return (
@@ -238,7 +448,7 @@ const Beranda = () => {
                                         </div>
                                         <div className="text-primary">
                                             <Link href="#">
-                                                <div className="font-weight-bolder d-flex justify-content-center">
+                                                <div className="font-weight-bolder d-flex justify-content-center" style={{cursor:"pointer"}}>
                                                     <span className="mt-1">
                                                         Lihat Semua
                                                     </span>  
@@ -249,82 +459,100 @@ const Beranda = () => {
                                     </div>
                                     <div className="row d-flex justify-content-around mx-5 px-5">
                                         {
+                                            
                                             pelatihan.map ((row, ind) => {
+                                                console.log ("test1")
+                                                // console.log ("render ulang")
                                                 return (
-                                                    <Card style={{ width: '30rem' }} className="shadow" key={ind}>
+                                                    show[i].pelatihan[ind].showDetail === false ?
+                                                        <Card style={{ width: '30rem' }} className="shadow" key={ind} onMouseEnter={() => handleMouseEnter(i, ind)} onMouseLeave={() => handleMouseLeave(i, ind)}>
 
-                                                        <div className="col-12 mt-3 d-flex flex-row  justify-content-between" style={{position:"absolute"}}>
-                                                            <Badge bg="light">
-                                                                <div className="text-info mt-1">
-                                                                    Pelatihan {row.metode_pelatihan}
-                                                                </div>
-                                                            </Badge>
+                                                            <div className="col-12 mt-3 d-flex flex-row  justify-content-between" style={{position:"absolute"}}>
+                                                                <Badge bg="light">
+                                                                    <div className="text-info mt-1">
+                                                                        Pelatihan {row.metode_pelatihan}
+                                                                    </div>
+                                                                </Badge>
 
-                                                            <div>
-                                                                <Button className="btn btn-white py-1 pl-2 pr-1 rounded-circle mr-2">
-                                                                    <i className="ri-share-line" />
-                                                                </Button>
-                                                                <Button className="btn btn-white py-1 pl-2 pr-1 mr-2 rounded-circle">
-                                                                    <i className="ri-heart-line" />
-                                                                </Button>
+                                                                {
+                                                                    show[i].pelatihan[ind].hover === true ?
+                                                                        <div>
+                                                                            <Button className="btn btn-white py-1 pl-2 pr-1 rounded-circle mr-2">
+                                                                                <i className="ri-share-line" />
+                                                                            </Button>
+                                                                            <Button className="btn btn-white py-1 pl-2 pr-1 mr-2 rounded-circle">
+                                                                                <i className="ri-heart-line" />
+                                                                            </Button>
+                                                                        </div>
+                                                                    :
+                                                                        <div>
+                                                                            <h1 className="text-white">Fail</h1>
+                                                                        </div>
+                                                                }
+
+                                                                {
+                                                                    console.log (show[i].pelatihan[ind].hover)
+                                                                }
+                                                                
                                                             </div>
-                                                        </div>
-                                                        
-                                                        <div>
-                                                            <Card.Img 
-                                                                variant="top"  
-                                                                src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${row.gambar}`} 
-                                                            />
-                                                        </div>
-
-                                                        <div className="ml-2 " style={{position:"absolute", marginTop:"28vh"}}>
-                                                            <Image 
-                                                                src={`/assets/media/Frame_6523.svg`}
-                                                                width="50vh"
-                                                                height="50vh"
-                                                                className="rounded"
-                                                            />
-                                                        </div>
-
-                                                        <div className="row d-flex justify-content-between mx-5 mt-3">
-                                                            <div style={{marginLeft:"7vh"}}>
-                                                                {row.mitra}
-                                                            </div>
-                                                            <Badge bg="light">
-                                                                <div className="text-danger mt-1">
-                                                                    {row.status}
-                                                                </div>
-                                                            </Badge>
-                                                        </div>
-
-                                                        <Card.Body>
                                                             
                                                             <div>
-                                                                <h4>{row.name}</h4>
+                                                                <Card.Img 
+                                                                    variant="top"  
+                                                                    src={`https://dts-beasiswa-dev.s3-ap-southeast-1.amazonaws.com/${row.gambar}`} 
+                                                                />
                                                             </div>
 
-                                                            <div className="text-muted">
-                                                                {
-                                                                    activeAcademy
-                                                                }
+                                                            <div className="ml-2 " style={{position:"absolute", marginTop:"28vh"}}>
+                                                                <Image 
+                                                                    src={`/assets/media/Frame_6523.svg`}
+                                                                    width="50vh"
+                                                                    height="50vh"
+                                                                    className="rounded"
+                                                                />
                                                             </div>
 
-                                                            <div 
-                                                                className="row my-3" 
-                                                                style={{height:"2px", backgroundColor:"#ADB5BD"}}
-                                                            >
+                                                            <div className="row d-flex justify-content-between mx-5 mt-3">
+                                                                <div style={{marginLeft:"7vh"}}>
+                                                                    {row.mitra}
+                                                                </div>
+                                                                <Badge bg="light">
+                                                                    <div className="text-danger mt-1">
+                                                                        {row.status}
+                                                                    </div>
+                                                                </Badge>
                                                             </div>
 
-                                                            <div className="d-flex align-content-center">
-                                                                <i className="ri-time-line mr-2"></i>
-                                                                <span className="mt-1">Registrasi: {new Date (row.pendaftaran_mulai).toLocaleDateString("en-GB")} - {new Date (row.pendaftaran_selesai).toLocaleDateString("en-GB")}</span>
-                                                            </div>
-                                                            <div className="d-flex align-content-center">
-                                                                <i className="ri-group-line mr-2"></i>
-                                                                <span className="mt-1">Kuota {row.kuota_peserta} Peserta</span>
-                                                            </div>
-                                                        </Card.Body>
-                                                    </Card>
+                                                            <Card.Body>
+                                                                
+                                                                <div>
+                                                                    <h4>{row.name}</h4>
+                                                                </div>
+
+                                                                <div className="text-muted">
+                                                                    {
+                                                                        activeAcademy
+                                                                    }
+                                                                </div>
+
+                                                                <div 
+                                                                    className="row my-3" 
+                                                                    style={{height:"2px", backgroundColor:"#ADB5BD"}}
+                                                                >
+                                                                </div>
+
+                                                                <div className="d-flex align-content-center">
+                                                                    <i className="ri-time-line mr-2"></i>
+                                                                    <span className="mt-1">Registrasi: {new Date (row.pendaftaran_mulai).toLocaleDateString("en-GB")} - {new Date (row.pendaftaran_selesai).toLocaleDateString("en-GB")}</span>
+                                                                </div>
+                                                                <div className="d-flex align-content-center">
+                                                                    <i className="ri-group-line mr-2"></i>
+                                                                    <span className="mt-1">Kuota {row.kuota_peserta} Peserta</span>
+                                                                </div>
+                                                            </Card.Body>
+                                                        </Card>
+                                                    :
+                                                        null
                                                 )
                                             })
                                         }
@@ -337,7 +565,9 @@ const Beranda = () => {
                        
                     :
                         null
-                }
+                } */}
+                
+                <CardsBeranda />
 
                 <div className="col-12 text-center my-5">
                     <button className="btn btn-outline-info rounded-pill ">
@@ -364,7 +594,7 @@ const Beranda = () => {
                         </h1>
                     </div>
                     
-                    {/* Card */}
+                
                     <div className="d-flex justify-content-around my-5">
 
                         <Card style={{ width: '30rem', height: "35rem" }}  className="shadow">
@@ -372,14 +602,6 @@ const Beranda = () => {
                                 variant="top" 
                                 src={`/assets/media/image-29.svg`} 
                             />
-
-                            {/* <div className="ml-3" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/VSGA-tag.svg`}
-                                    width={50}
-                                    height={25}
-                                />
-                            </div> */}
                             
                             <Card.Body>
                                 
@@ -419,14 +641,6 @@ const Beranda = () => {
                                 variant="top" 
                                 src={`/assets/media/image-29.svg`} 
                             />
-
-                            {/* <div className="ml-3" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/VSGA-tag.svg`}
-                                    width={50}
-                                    height={25}
-                                />
-                            </div> */}
                             
                             <Card.Body>
                                 
@@ -466,14 +680,6 @@ const Beranda = () => {
                                 variant="top" 
                                 src={`/assets/media/image-29.svg`} 
                             />
-
-                            {/* <div className="ml-3" style={{marginTop:"-35px"}}> 
-                                <Image 
-                                    src={`/assets/media/VSGA-tag.svg`}
-                                    width={50}
-                                    height={25}
-                                />
-                            </div> */}
                             
                             <Card.Body>
                                 
@@ -519,12 +725,16 @@ const Beranda = () => {
                     </div>
                 </div>
 
+                {/*                 
                 <Image 
-                    src={`/assets/media/banner-02.svg`}
+                    src={BgBanner}
                     width={1500}
                     height={380}
-                />
+                /> */}
+                
+                
 
+                {/* Galeri */}
                 <div className="bg-light my-5" style={{height:"40vh"}}>
                     <div className="row mx-3">
                         <div className="col-6" style={{marginTop:"5vh"}}>
@@ -569,6 +779,7 @@ const Beranda = () => {
                     </div>
                 </div>
 
+                {/* Video */}
                 <div className="bg-white my-5" style={{height:"40vh"}}>
                     <div className="row mx-3">
                         
@@ -604,6 +815,53 @@ const Beranda = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Banner */}
+                <div className="my-5 bg-banner" style={{ backgroundImage:"url('/assets/media/bg-home.svg')"}}>
+                    <div className="row mx-3 d-flex align-items-center">
+                        <div className="col-6">
+                            <h1 className="text-danger display-2 font-weight-bolder">
+                                Ayo Bergabung, Jadi Jagoan Digital!
+                            </h1>
+                            <Button className="btn btn-info rounded-pill mt-5">
+                                <div className="px-5 py-1 font-weight-bolder">
+                                    Daftar Sekarang!
+                                </div>
+                            </Button>
+                        </div>
+                        <div className="col-6 d-flex flex-row justify-content-around">
+                            <div className="rounded p-5 border bg-white d-flex flex-column" style={{backgroundColor:"white"}}>
+                                <h1 className="font-weight-bolder display-3 text-info">
+                                    260K+
+                                </h1>
+                                <div className="text-danger">
+                                    Pendaftar
+                                </div>
+                            </div>
+
+                            <div className="rounded p-5 border bg-white d-flex flex-column" style={{backgroundColor:"white"}}>
+                                <h1 className="font-weight-bolder display-3 text-info">
+                                    250K+
+                                </h1>
+                                <div className="text-danger">
+                                    Peserta
+                                </div>
+                            </div>
+
+                            <div className="rounded p-5 border bg-white d-flex flex-column" style={{backgroundColor:"white"}}>
+                                <h1 className="font-weight-bolder display-3 text-info">
+                                    100K+
+                                </h1>
+                                <div className="text-danger">
+                                    Pelatihan
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                
                 
                 <Footer />
 
