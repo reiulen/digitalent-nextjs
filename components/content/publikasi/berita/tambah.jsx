@@ -389,7 +389,7 @@ const TambahBerita = ({ token }) => {
                                         {simpleValidator.current.message(
                                             "isi_berita",
                                             isi_berita,
-                                            "required|min:100|max:2500",
+                                            "required|min:100|max:12000",
                                             { className: "text-danger" }
                                         )}
                                     </div>
@@ -458,7 +458,7 @@ const TambahBerita = ({ token }) => {
                                     }
                                 </div>
 
-                                <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
+                                <div className="mt-3 col-sm-6 col-md-6 col-lg-7 text-muted">
                                     <p>
                                         Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                     </p>
@@ -501,7 +501,7 @@ const TambahBerita = ({ token }) => {
                                     <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                         <option selected disabled value=''>-- Berita --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
+                                            <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                 return (

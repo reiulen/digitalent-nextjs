@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from 'react-redux'
 import Image from "next/image";
+import moment from "moment";
 
 // import PageWrapper from "../../../wrapper/page.wrapper";
 import PreviewWrapper from "../../../wrapper/preview.wrapper";
@@ -88,8 +89,8 @@ const Preview = () => {
                                 <div className="col-sm-8 col-md-10 col-11 mt-4 d-flex align-items-center">
                                     <div className={styles['titleSubMenu']}>
                                         <h5 className="font-weight-bold">Admin Pokja</h5>
-                                        <span className="text-muted">22 September 2021</span>
-                                        {/* <span className="text-muted">{moment({created_at}).format('LL')}</span> */}
+                                        {/* <span className="text-muted">22 September 2021</span> */}
+                                        <span className="text-muted">{moment({created_at}).format('LL')}</span>
                                     </div>
                                 </div>
 

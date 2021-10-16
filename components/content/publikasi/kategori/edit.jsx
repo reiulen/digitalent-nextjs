@@ -92,7 +92,7 @@ const EditKategori = ({token}) => {
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header">
-                        <h3 className="card-title font-weight-bolder text-dark">Ubah Kategori</h3>
+                        <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Ubah Kategori</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>

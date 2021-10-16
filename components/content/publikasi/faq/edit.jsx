@@ -231,7 +231,7 @@ const EditFaq = ({token}) => {
                                             >
                                                 <option value="" disabled selected>-- FAQ --</option>
                                                 {!kategori || (kategori && kategori.length === 0) ? (
-                                                    <option value="">Data kosong</option>
+                                                    <option value="">Data Tidak Ditemukan</option>
                                                 ) : (
                                                     kategori &&
                                                     kategori.kategori &&
