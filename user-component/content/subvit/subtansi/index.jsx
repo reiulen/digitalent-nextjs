@@ -20,10 +20,15 @@ const SubtansiUser = ({ token }) => {
   const [numberPage, setNumberPage] = useState("");
   const [numberAnswer, setNumberAnswer] = useState(false);
   const [modalSoal, setModalSoal] = useState(false);
-  const [count, setCount] = useState(3600);
+  const [count, setCount] = useState(
+    parseInt(sessionStorage.getItem("targetDate"))
+  );
   const [hour, setHour] = useState(0);
   const [minute, setMinute] = useState(0);
   const [second, setSecond] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(
+    sessionStorage.getItem("targetDate")
+  );
 
   const handleModalSoal = () => {
     setModalSoal(true);
@@ -72,7 +77,7 @@ const SubtansiUser = ({ token }) => {
   //   }, 1000);
   // }
   useEffect(() => {
-    console.log(random_subtance_question_detail);
+    console.log(timeLeft, "ini Time Left ");
     console.log(token);
     // window.onload = function () {
     //   var fiveMinutes = 1 * 60,
@@ -91,13 +96,18 @@ const SubtansiUser = ({ token }) => {
         sessionStorage.setItem("minute", minute);
         setSecond(timeLeftVar.s);
         sessionStorage.setItem("second", second);
+        console.log(secondsLeft);
       }, 1000);
+
       return () => clearInterval(secondsLeft);
     } else {
       console.log("time out");
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // return () => {
+    //   sessionStorage.setItem("cTimer", count);
+    // };
   }, [count]);
 
   const secondsToTime = (secs) => {
