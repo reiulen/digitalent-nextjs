@@ -49,7 +49,7 @@ const Sidebar = ({ session }) => {
     {
       id: 2,
       name: "Profil Lembaga",
-      href: "/partnership/user/profile-lembaga/input-profile",
+      href: "/partnership/user/profile-lembaga",
       icon: "assets/icon/sidebar_temp/mitra-prof.svg",
     },
     {

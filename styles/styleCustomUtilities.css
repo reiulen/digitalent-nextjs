@@ -439,6 +439,9 @@ margin-top: 1rem;
 .border-blue-primary{
   border: 1px solid #215480 !important;
 }
+.border-blue-secondary{
+  border: 1px solid #007CFF !important;
+}
 /* btn rounded-full */
 .btn-rounded-full{
   display: flex;

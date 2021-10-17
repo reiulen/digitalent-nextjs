@@ -63,7 +63,6 @@ export const getAllApi = (token) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: API_FAIL,
-      payload: error.response.data.message,
     });
   }
 };
