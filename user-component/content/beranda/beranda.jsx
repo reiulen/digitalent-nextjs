@@ -19,25 +19,22 @@ import ReactPlayer from 'react-player/youtube'
 
 // import ImagetronCarousel from "../../components/ImagetronCarousel";
 // import AkademiCarousel from "../../components/AkademiCarousel";
-import Footer from "../../../components/templates/footer.component";
+import Footer from "../../../components/templates/footer.component"
 import BerandaWrapper from "../../../components/wrapper/beranda.wrapper";
 
-import "../../../styles/beranda.module.css";
+import "../../../styles/beranda.module.css"
 // import "react-multi-carousel/lib/styles.css";
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
-import IconArrow from "../../../components/assets/icon/Arrow2";
+// import IconArrow from "../../../components/assets/icon/Arrow2";
 import CardsBeranda from "../../components/CardBeranda"
-import { ACADEMY_FAIL } from "../../../redux/types/pelatihan/academy.type";
-import { style } from "dom-helpers";
 
 const Navigationbar = dynamic(() => import("../../../components/templates/navbar.component"), {
     ssr: false,
-  }
-);
+  });
 
 const Beranda = () => {
     const {
@@ -252,19 +249,7 @@ const Beranda = () => {
 
         } else {
 
-<<<<<<< HEAD
         }
-=======
-  useEffect(() => {
-    handleIndexShow();
-    handleAkademiCarousel();
-  }, []);
-
-  const handleDragStart = (e) => e.preventDefault();
-
-    const handleActiveAcademy= (i) => {
-        setActiveAcademy (i)
->>>>>>> 2263ba32f104562ea3d64fbb2402b8529f33fd21
     }
 
     const handleMouseEnter = (indexTema, indexPelatihan) =>{
@@ -280,11 +265,6 @@ const Beranda = () => {
         
         console.log ("mouseOver")
     }
-    // console.log (arr)
-  
-
-  const handleTrainingCarousel = () => {
-    let arr = [];
 
     const handleMouseLeave = (indexTema, indexPelatihan) =>{
         let obj = [...show]
@@ -353,41 +333,41 @@ const Beranda = () => {
             }
         }
     }
-    // console.log (arr)
-  };
-
-  const handleIndexShow = () => {
-    let arrPelatihan = [];
-
-    if (pelatihan.length !== 0) {
-      for (let i = 0; i < pelatihan.length; i++) {
-        let obj = {
-          id: pelatihan[i].id,
-          name: pelatihan[i].name,
-          showButton: false,
-          showDetail: false,
-        };
-        arrPelatihan.push(obj);
-      }
+    
+    const handleActive = (tab, index) => {
+        setActiveTab (tab)
+        setIndexTab (index)
     }
 
-    setShow(arrPelatihan);
-    // console.log (arrPelatihan)
-  };
+    const handleQuickView = () => {
+        setShowDetail (true)
+        // console.log ("open")
+    }
 
-  // const handleMouseEnter = (index) => {
-  //   let obj = show;
+    const handleCloseQuickView = () => {
+        setShowDetail (false)
+        // console.log ("close")
+    }
 
-  //   for (let i = 0; i < obj.length; i++) {
-  //     if (i == index) {
-  //       obj[i].showButton = true;
-  //     }
-  //   }
+    return (
+        <BerandaWrapper title= "Digitalent">
+            <div className="bg-white pb-20">
+                {
+                    // console.log (akademi)
+                }
 
-  //   setShow(obj);
-  // };
+                {
+                    // console.log (tema)
+                }
 
-<<<<<<< HEAD
+                {
+                    // console.log (pelatihan)
+                }
+
+                {
+                    // console.log (pelatihanItem)
+                }
+
                 {
                     // console.log (show)
                 }
@@ -402,206 +382,46 @@ const Beranda = () => {
                     :
                         console.log ("no show")
                 } */}
-=======
-  const handleMouseLeave = (index) => {
-    let obj = show;
->>>>>>> 2263ba32f104562ea3d64fbb2402b8529f33fd21
 
-    for (let i = 0; i < obj.length; i++) {
-      if (i == index) {
-        obj[i].showButton = false;
-      }
-    }
-    setShow(obj);
-    // console.log ("mouseOut")
-  };
+                <Navigationbar />
 
-  const handleActive = (tab, index) => {
-    setActiveTab(tab);
-    setIndexTab(index);
-  };
+                {/* <ImagetronCarousel /> */}
 
-  const handleQuickView = () => {
-    setShowDetail(true);
-    // console.log ("open")
-  };
-
-  const handleCloseQuickView = () => {
-    setShowDetail(false);
-    // console.log ("close")
-  };
-
-  return (
-    <BerandaWrapper title="Digitalent">
-      <div className="bg-white container-fluid pb-20">
-        <Navigationbar />
-
-        {/* <ImagetronCarousel /> */}
-
-        {/* Carousel 1 */}
-        <div className="carousel-primarys">
-          <Splide
-            options={{
-              type: "loop",
-              gap: "1rem",
-              autoplay: true,
-              padding: "5rem",
-              height: "600px",
-              breakpoints: {
-                1669: {
-                  height: "500px",
-                },
-                1262: {
-                  height: "400px",
-                },
-                1062: {
-                  height: "300px",
-                },
-                833: {
-                  height: "270px",
-                },
-                726: {
-                  height: "230px",
-                },
-                629: {
-                  height: "210px",
-                },
-                590: {
-                  height: "180px",
-                  padding: "0",
-                  gap: "0",
-                },
-                514: {
-                  height: "160px",
-                  padding: "0",
-                  gap: "0",
-                },
-                450: {
-                  height: "160px",
-                  padding: "0",
-                  gap: "0",
-                },
-                425: {
-                  height: "160px",
-                  padding: "0",
-                  gap: "0",
-                },
-                320: {
-                  height: "150px",
-                  padding: "0",
-                  gap: "0",
-                },
-              },
-            }}
-            hasSliderWrapper
-          >
-            <SplideSlide>
-              <Image
-                layout="fill"
-                objectFit="fill"
-                src={`/assets/media/carousel-01.svg`}
-                alt="First slide"
-                className="mx-5"
-              />
-            </SplideSlide>
-            <SplideSlide>
-              <Image
-                layout="fill"
-                objectFit="fill"
-                src={`/assets/media/carousel-01.svg`}
-                alt="First slide"
-                className="mx-5"
-              />
-            </SplideSlide>
-            <SplideSlide>
-              <Image
-                layout="fill"
-                objectFit="fill"
-                src={`/assets/media/carousel-01.svg`}
-                alt="First slide"
-                className="mx-5"
-              />
-            </SplideSlide>
-          </Splide>
-        </div>
-
-        {/* Carousel 2 */}
-        <div className="carousel-secondarys">
-          <Splide
-            options={{
-              gap: "1rem",
-              drag: "free",
-              perPage: 4,
-              height: "200px",
-              type: "loop",
-              breakpoints: {
-                1262: {
-                  height: "200px",
-                },
-                1062: {
-                  height: "200px",
-                  perPage: 3,
-                },
-                833: {
-                  height: "150px",
-                  perPage: 2,
-                },
-                726: {
-                  height: "150px",
-                  perPage: 2,
-                },
-                629: {
-                  height: "130px",
-                  perPage: 1,
-                },
-                590: {
-                  height: "180px",
-                  padding: "0",
-                  gap: "0",
-                },
-                514: {
-                  height: "160px",
-                  padding: "0",
-                  gap: "0",
-                  perPage: 1,
-                },
-                450: {
-                  height: "150px",
-                  padding: "0",
-                  gap: "0",
-                  perPage: 1,
-                },
-                425: {
-                  height: "150px",
-                  padding: "0",
-                  gap: "0",
-                  perPage: 1,
-                },
-                320: {
-                  height: "100px",
-                  padding: "0",
-                  gap: "0",
-                  perPage: 1,
-                },
-              },
-            }}
-            hasSliderWrapper
-            // hasAutoplayControls
-            // hasAutoplayProgress
-          >
-            <SplideSlide>
-              <div className="d-flex align-items-center h-100">
-                <div className="card-1">
-                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
-                  <div>
-                    <p className="mb-0">
-                      Vocational School
-                      <br />
-                      Graduate Academy
-                    </p>
-                  </div>
+                {/* Imagetron Carousel */}
+                <div className="carousel-primarys">
+                    <Splide
+                        options={optionsSliderImagetron}
+                        hasSliderWrapper
+                    >
+                        <SplideSlide>
+                        <Image
+                            layout="fill"
+                            objectFit="fill"
+                            src={`/assets/media/carousel-01.svg`}
+                            alt="First slide"
+                            className="mx-5"
+                        />
+                        </SplideSlide>
+                        <SplideSlide>
+                        <Image
+                            layout="fill"
+                            objectFit="fill"
+                            src={`/assets/media/carousel-01.svg`}
+                            alt="First slide"
+                            className="mx-5"
+                        />
+                        </SplideSlide>
+                        <SplideSlide>
+                        <Image
+                            layout="fill"
+                            objectFit="fill"
+                            src={`/assets/media/carousel-01.svg`}
+                            alt="First slide"
+                            className="mx-5"
+                        />
+                        </SplideSlide>
+                    </Splide>
                 </div>
-<<<<<<< HEAD
 
                 {/* Akademi */}
                 {
@@ -781,155 +601,300 @@ const Beranda = () => {
                             Lebih Banyak Tema <i className="ri-arrow-right-s-line ml-2"></i>
                         </div>
                     </button>
-=======
-              </div>
-            </SplideSlide>
-            <SplideSlide>
-              <div className="d-flex align-items-center h-100">
-                <div className="card-1 active-card-1">
-                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
-                  <div>
-                    <p className="mb-0">
-                      Vocational School
-                      <br />
-                      Graduate Academy
-                    </p>
-                  </div>
->>>>>>> 2263ba32f104562ea3d64fbb2402b8529f33fd21
                 </div>
-              </div>
-            </SplideSlide>
-            <SplideSlide>
-              <div className="d-flex align-items-center h-100">
-                <div className="card-1">
-                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
-                  <div>
-                    <p className="mb-0">
-                      Vocational School
-                      <br />
-                      Graduate Academy
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </SplideSlide>
-            <SplideSlide>
-              <div className="d-flex align-items-center h-100">
-                <div className="card-1">
-                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
-                  <div>
-                    <p className="mb-0">
-                      Vocational School
-                      <br />
-                      Graduate Academy
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </SplideSlide>
-            <SplideSlide>
-              <div className="d-flex align-items-center h-100">
-                <div className="card-1">
-                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
-                  <div>
-                    <p className="mb-0">
-                      Vocational School
-                      <br />
-                      Graduate Academy
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </SplideSlide>
-            <SplideSlide>
-              <div className="d-flex align-items-center h-100">
-                <div className="card-1">
-                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
-                  <div>
-                    <p className="mb-0">
-                      Vocational School
-                      <br />
-                      Graduate Academy
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </SplideSlide>
-            <SplideSlide>
-              <div className="d-flex align-items-center h-100">
-                <div className="card-1">
-                  <h1 className="mb-0 mr-2 fw-700">VSGA</h1>
-                  <div>
-                    <p className="mb-0">
-                      Vocational School
-                      <br />
-                      Graduate Academy
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </SplideSlide>
-          </Splide>
-        </div>
 
-        {/* Card row */}
-        <div className="card-rows">
-          {/*  */}
-          <div className="d-flex align-items-center justify-content-between">
-            <h1 className="mb-0 fw-600 fz-20">Multimedia Designer</h1>
-            <div className="d-flex align-items-center">
-              <p className="mb-0 fz-14 fw-600" style={{ color: "#0063CC" }}>
-                Lihat Semua
-              </p>
-              <IconArrow
-                width="8"
-                height="10"
-                fill="#0063CC"
-                className="ml-2"
-                style={{ transform: "rotate(0)" }}
-              />
-            </div>
-          </div>
-          {/* card  */}
-          <div className="row mt-10">
-            <div className="col-12 col-sm-4">
-              {/* <Cardss /> */}
-            </div>
-            <div className="col-12 col-sm-4">
-              {/* <Cardss /> */}
-            </div>
-            <div className="col-12 col-sm-4">
-              {/* <Cardss /> */}
-            </div>
-            <div className="col-12 col-sm-4">
-              {/* <Cardss /> */}
-            </div>
-            <div className="col-12 col-sm-4">
-              {/* <Cardss /> */}
-            </div>
-          </div>
+                {/* H-Banner 01*/}
+                <Image 
+                    src={`/assets/media/tahapan-pendaftaran-3.svg`}
+                    width={1500}
+                    height={580}
+                    className="my-5"
+                />
 
-          <div className="row d-flex justify-content-center mt-10">
-              <Link href="/login">
-                <a>
-                  <button className="btn btn-sm btn-login-peserta">
-                    Lebih Banyak Tema
-                   <IconArrow
-                width="8"
-                height="10"
-                fill="#0063CC"
-                className="ml-2"
-                style={{ transform: "rotate(0)" }}
-              />
-                  </button>
-                </a>
-              </Link>
-          </div>
+                {/* H-Banner 02*/}
+                <div className="my-5">
 
-        </div>
-      </div>
-    </BerandaWrapper>
-  );
-};
+                    <div className="text-center mt-5 mb-3">
+                        <h1 className="font-weight-bolder">
+                            Rilis Media dan Informasi
+                        </h1>
+                    </div>
+                    
+                
+                    <div className="d-flex justify-content-around my-5">
 
-export default Beranda;
+                        <Card style={{ width: '30rem', height: "35rem" }}  className="shadow">
+                            <Card.Img 
+                                variant="top" 
+                                src={`/assets/media/image-29.svg`} 
+                            />
+                            
+                            <Card.Body>
+                                
+                                <div className="d-flex justify-content-between">
+                                    <Card.Text>
+                                        12 Mei 2021
+                                    </Card.Text>
+
+                                    <Badge bg="light" className="mb-2">
+                                        <div className="text-info mt-1">
+                                            Kategori
+                                        </div>
+                                    </Badge>
+                                </div>
+                                
+
+                                <Card.Title>
+                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
+                                </Card.Title>
+
+                                <div>
+                                    <Link href="#home">
+                                        <a className=" d-flex alignment-content-center justify-content-end">
+                                            <div className="pt-1 font-weight-bolder text-muted"> 
+                                                Lihat Detail
+                                            </div>
+                                            <i className="ri-arrow-right-line  ml-2 font-weight-bolder"></i>
+                                        </a>
+                                    </Link>
+                                </div>
+
+                            </Card.Body>
+                        </Card>
+
+                        <Card style={{ width: '30rem', height: "35rem" }}  className="shadow">
+                            <Card.Img 
+                                variant="top" 
+                                src={`/assets/media/image-29.svg`} 
+                            />
+                            
+                            <Card.Body>
+                                
+                                <div className="d-flex justify-content-between">
+                                    <Card.Text>
+                                        12 Mei 2021
+                                    </Card.Text>
+
+                                    <Badge bg="light" className="mb-2">
+                                        <div className="text-info mt-1">
+                                            Kategori
+                                        </div>
+                                    </Badge>
+                                </div>
+                                
+
+                                <Card.Title>
+                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
+                                </Card.Title>
+
+                                <div>
+                                    <Link href="#home">
+                                        <a className=" d-flex alignment-content-center justify-content-end">
+                                            <div className="pt-1 font-weight-bolder text-muted"> 
+                                                Lihat Detail
+                                            </div>
+                                            <i className="ri-arrow-right-line  ml-2 font-weight-bolder"></i>
+                                        </a>
+                                    </Link>
+                                </div>
+
+                            </Card.Body>
+                        </Card>
+
+                        <Card style={{ width: '30rem', height: "35rem" }}  className="shadow">
+                            <Card.Img 
+                                variant="top" 
+                                src={`/assets/media/image-29.svg`} 
+                            />
+                            
+                            <Card.Body>
+                                
+                                <div className="d-flex justify-content-between">
+                                    <Card.Text>
+                                        12 Mei 2021
+                                    </Card.Text>
+
+                                    <Badge bg="light" className="mb-2">
+                                        <div className="text-info mt-1">
+                                            Kategori
+                                        </div>
+                                    </Badge>
+                                </div>
+                                
+
+                                <Card.Title>
+                                    Pengumuman Kelulusan Peserta Pelatihan Daring Gelombang 1 Program VSGA DTS 2021
+                                </Card.Title>
+
+                                <div>
+                                    <Link href="#home">
+                                        <a className=" d-flex alignment-content-center justify-content-end">
+                                            <div className="pt-1 font-weight-bolder text-muted"> 
+                                                Lihat Detail
+                                            </div>
+                                            <i className="ri-arrow-right-line  ml-2 font-weight-bolder"></i>
+                                        </a>
+                                    </Link>
+                                </div>
+
+                            </Card.Body>
+                        </Card>
+
+                    </div>
+
+                    <div className="text-center">
+                        <button className="btn btn-outline-info rounded-pill">
+                            <div className="font-weight-bolder">
+                                Lihat Selengkapnya <i className="ri-arrow-right-s-line ml-2"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                {/*                 
+                <Image 
+                    src={BgBanner}
+                    width={1500}
+                    height={380}
+                /> */}
+                
+                
+
+                {/* Galeri */}
+                <div className="bg-light my-5" style={{height:"40vh"}}>
+                    <div className="row mx-3">
+                        <div className="col-6" style={{marginTop:"5vh"}}>
+                            <div className="p-5" style={{marginLeft:"10vh"}}>
+                                <h1 className="font-weight-bolder mb-3 display-4">
+                                    Galeri Terupdate dan Terkini
+                                </h1>
+
+                                <h4 className="mb-5">
+                                    Temukan konten terupdate dan terkini mengenai Digital Talent Scholarship
+                                </h4>
+
+                                <Button className="btn btn-outline-info rounded-pill mt-5">
+                                    <div className="px-5 py-1 font-weight-bolder">
+                                        Lihat Selengkapnya <i className="ri-arrow-right-s-line ml-2"></i>
+                                    </div>
+                                </Button>
+                            </div>
+                            
+                        </div>
+                        
+                        <div className="col-6 d-flex flex-row">
+                            <div className="mr-5">
+                                <Image 
+                                    src={`/assets/media/image-29.svg`}
+                                    width="500vh"
+                                    height="500vh"
+                                    rounded
+                                />
+                            </div>
+
+                            <div >
+                                <Image 
+                                    src={`/assets/media/image-29.svg`}
+                                    width="500vh"
+                                    height="500vh"
+                                    rounded
+                                />
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                {/* Video */}
+                <div className="bg-white my-5" style={{height:"40vh"}}>
+                    <div className="row mx-3">
+                        
+                        
+                        <div className="col-6 d-flex justify-content-center">
+                            <div>
+                                <ReactPlayer 
+                                    url="https://www.youtube.com/watch?v=j27t8RHzo_o&ab_channel=DigitalentMedia"
+                                    width="80vh"
+                                    height="40vh"
+                                />
+                            </div>
+                           
+                        </div>
+
+                        <div className="col-6" style={{marginTop:"5vh"}}>
+                            <div className="p-5" style={{marginLeft:"10vh"}}>
+                                <h1 className="font-weight-bolder mb-3 display-4">
+                                    Informasi Dalam Video Terkini
+                                </h1>
+
+                                <h4 className="mb-5">
+                                    Temukan konten terupdate dan terkini mengenai Digital Talent Scholarship
+                                </h4>
+
+                                <Button className="btn btn-outline-info rounded-pill mt-5">
+                                    <div className="px-5 py-1 font-weight-bolder">
+                                        Lihat Selengkapnya <i className="ri-arrow-right-s-line ml-2"></i>
+                                    </div>
+                                </Button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                {/* Banner */}
+                <div className="my-5 bg-banner" style={{ backgroundImage:"url('/assets/media/bg-home.svg')"}}>
+                    <div className="row mx-3 d-flex align-items-center">
+                        <div className="col-6">
+                            <h1 className="text-danger display-2 font-weight-bolder">
+                                Ayo Bergabung, Jadi Jagoan Digital!
+                            </h1>
+                            <Button className="btn btn-info rounded-pill mt-5">
+                                <div className="px-5 py-1 font-weight-bolder">
+                                    Daftar Sekarang!
+                                </div>
+                            </Button>
+                        </div>
+                        <div className="col-6 d-flex flex-row justify-content-around">
+                            <div className="rounded p-5 border bg-white d-flex flex-column" style={{backgroundColor:"white"}}>
+                                <h1 className="font-weight-bolder display-3 text-info">
+                                    260K+
+                                </h1>
+                                <div className="text-danger">
+                                    Pendaftar
+                                </div>
+                            </div>
+
+                            <div className="rounded p-5 border bg-white d-flex flex-column" style={{backgroundColor:"white"}}>
+                                <h1 className="font-weight-bolder display-3 text-info">
+                                    250K+
+                                </h1>
+                                <div className="text-danger">
+                                    Peserta
+                                </div>
+                            </div>
+
+                            <div className="rounded p-5 border bg-white d-flex flex-column" style={{backgroundColor:"white"}}>
+                                <h1 className="font-weight-bolder display-3 text-info">
+                                    100K+
+                                </h1>
+                                <div className="text-danger">
+                                    Pelatihan
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                
+                
+                <Footer />
+
+            </div>
+        </BerandaWrapper>
+        
+    )
+}
+
+export default Beranda
