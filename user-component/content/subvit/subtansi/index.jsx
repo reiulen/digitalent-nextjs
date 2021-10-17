@@ -78,7 +78,7 @@ const SubtansiUser = ({ token }) => {
   // }
   useEffect(() => {
     console.log(timeLeft, "ini Time Left ");
-    console.log(token);
+    sessionStorage.setItem("setTime", count);
     // window.onload = function () {
     //   var fiveMinutes = 1 * 60,
     //     display = document.querySelector("#time");
@@ -88,7 +88,7 @@ const SubtansiUser = ({ token }) => {
     if (count >= 0) {
       const secondsLeft = setInterval(() => {
         setCount((c) => c - 1);
-        let timeLeftVar = secondsToTime(count);
+        let timeLeftVar = secondsToTime(sessionStorage.getItem("setItem"));
         console.log(timeLeftVar);
         setHour(timeLeftVar.h);
         sessionStorage.setItem("hours", hour);

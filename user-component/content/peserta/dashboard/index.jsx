@@ -23,7 +23,7 @@ const Dashboard = ({ session }) => {
 
   return (
     <>
-      <div className="container-fluid py-5">
+      <div className="container-fluid py-5" style={{ padding: "0px 30px" }}>
         <Row>
           <Col md={3}>
             <Sidebar />
