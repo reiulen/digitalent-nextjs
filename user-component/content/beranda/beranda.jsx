@@ -279,6 +279,7 @@ const Beranda = () => {
         setShow(obj)
     }
 
+    
     // const handleAkademiCarousel = () => {
     //     let arr = []
 
