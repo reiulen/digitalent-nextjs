@@ -31,6 +31,8 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/splide/dist/css/splide.min.css";
 // import IconArrow from "../../../components/assets/icon/Arrow2";
 import CardsBeranda from "../../components/CardBeranda"
+import { ACADEMY_FAIL } from "../../../redux/types/pelatihan/academy.type";
+import { style } from "dom-helpers";
 
 const Navigationbar = dynamic(() => import("../../../components/templates/navbar.component"), {
     ssr: false,
@@ -50,7 +52,8 @@ const Beranda = () => {
     } = useSelector((state) => state.pelatihanByTema);
     
     // const [activeTab, setActiveTab] = useState (1)
-    const [activeAcademy, setActiveAcademy] = useState (1)
+    const [activeAcademyIndex, setActiveAcademyIndex] = useState (0)
+    const [activeAcademy, setActiveAcademy] = useState (null)
     const [indexTab, setIndexTab] = useState (0)
     const [show,setShow] = useState(null)
     const [showDetail, setShowDetail] = useState(false)
@@ -172,12 +175,11 @@ const Beranda = () => {
 
     useEffect(() => {
         handleHoverCard()
+        handleActiveAcademyIndex(0)
         // handleIndexShow ()
         // handleAkademiCarousel()
         // handlePelatihanCarousel()
     }, [])
-
-    // const handleDragStart = (e) => e.preventDefault();
 
     const handleHoverCard = () => {
         let arr = []
@@ -206,95 +208,132 @@ const Beranda = () => {
         }
     }
 
-    const handleAkademiCarousel = () => {
-        let arr = []
+    const renderShare = (metode, status) => {
+        if (status === true){
+            return (
 
-        if (akademi.length !== 0) {
-            for (let i = 0; i < akademi.length; i+= slideAkademiToShow){
-                arr.push (akademi.slice (i, i + slideAkademiToShow))
-            }
+                <div className="col-12 mt-3 d-flex flex-row  justify-content-between" style={{position:"absolute"}}>
+                    <Badge bg="light">
+                        <div className="text-info mt-1" style={{height:"2vh"}}>
+                            Pelatihan {metode}
+                        </div>
+                    </Badge>
 
-            setAkademiItem(arr)
+                    <div>
+                        <Button className="btn btn-white py-1 pl-2 pr-1 rounded-circle mr-2">
+                            <i className="ri-share-line" />
+                        </Button>
+                        <Button className="btn btn-white py-1 pl-2 pr-1 mr-2 rounded-circle">
+                            <i className="ri-heart-line" />
+                        </Button>
+                    </div>
+                    
+                </div>
+                
+            )
+            
+        } else {
+            return (
+                <div className="col-12 mt-3 d-flex flex-row  justify-content-between" style={{position:"absolute"}}>
+                    <Badge bg="light">
+                        <div className="text-info mt-1" style={{height:"2vh"}}>
+                            Pelatihan {metode}
+                        </div>
+                    </Badge>
+                    
+                </div>
+            )
         }
-        // console.log (arr)
     }
 
-    const handlePelatihanCarousel = () => {
-        let arr = []
+    const renderButton = (reg, quota, status) => {
+        if (status === true){
 
-        if (pelatihan.length !== 0) {
-            for (let i = 0; i < pelatihan.length; i+= slidePelatihanToShow){
-                arr.push (pelatihan.slice (i, i + slidePelatihanToShow))
-            }
+        } else {
 
-            setPelatihanItem(arr)
         }
-        // console.log (arr)
-    }
-
-    const handleIndexShow = () => {
-        let arrPelatihan = []
-
-        if (pelatihan.length !== 0){
-            for (let i = 0; i < pelatihan.length; i++){
-                let obj = {
-                    id: pelatihan[i].id,
-                    name: pelatihan[i].name,
-                    showButton: false,
-                    showDetail: false
-                }
-                arrPelatihan.push (obj)
-            }
-        }
-
-        setShow (arrPelatihan)
-        // console.log (arrPelatihan)
-    }
-
-    const handleActiveAcademy= (i) => {
-        setActiveAcademy (i)
     }
 
     const handleMouseEnter = (indexTema, indexPelatihan) =>{
-        let obj = show
-        // console.log (obj)
-        // console.log (indexTema)
-        // console.log (indexPelatihan)
-
+        let obj = [...show]
         for (let i = 0; i < obj.length; i++){
             for (let j = 0; j < obj[i].pelatihan.length; j++){
                 if ( i === indexTema && j === indexPelatihan){
                     obj[i].pelatihan[j].hover = true
-                    console.log ('check 1')
-                    console.log (obj[i].pelatihan[j].hover)
                 }
             }
-            setShow(obj)
-            // console.log (obj)
         }
-        // setShow(obj)
+        setShow(obj)
+        
         console.log ("mouseOver")
     }
 
     const handleMouseLeave = (indexTema, indexPelatihan) =>{
-        let obj = show
-        // console.log (obj)
-        // console.log (indexTema)
-        // console.log (indexPelatihan)
-
+        let obj = [...show]
+        
         for (let i = 0; i < obj.length; i++){
             for (let j = 0; j < obj[i].pelatihan.length; j++){
                 if ( i === indexTema && j === indexPelatihan){
                     obj[i].pelatihan[j].hover = false
-                    console.log ('check 2')
-                    console.log (obj[i].pelatihan[j].hover)
                 }
             }
-            setShow(obj)
-            // console.log (obj)
         }
-        // setShow(obj)
-        console.log ("mouseOut")
+        setShow(obj)
+    }
+
+    // const handleAkademiCarousel = () => {
+    //     let arr = []
+
+    //     if (akademi.length !== 0) {
+    //         for (let i = 0; i < akademi.length; i+= slideAkademiToShow){
+    //             arr.push (akademi.slice (i, i + slideAkademiToShow))
+    //         }
+
+    //         setAkademiItem(arr)
+    //     }
+    //     // console.log (arr)
+    // }
+
+    // const handlePelatihanCarousel = () => {
+    //     let arr = []
+
+    //     if (pelatihan.length !== 0) {
+    //         for (let i = 0; i < pelatihan.length; i+= slidePelatihanToShow){
+    //             arr.push (pelatihan.slice (i, i + slidePelatihanToShow))
+    //         }
+
+    //         setPelatihanItem(arr)
+    //     }
+    //     // console.log (arr)
+    // }
+
+    // const handleIndexShow = () => {
+    //     let arrPelatihan = []
+
+    //     if (pelatihan.length !== 0){
+    //         for (let i = 0; i < pelatihan.length; i++){
+    //             let obj = {
+    //                 id: pelatihan[i].id,
+    //                 name: pelatihan[i].name,
+    //                 showButton: false,
+    //                 showDetail: false
+    //             }
+    //             arrPelatihan.push (obj)
+    //         }
+    //     }
+
+    //     setShow (arrPelatihan)
+    //     // console.log (arrPelatihan)
+    // }
+
+    const handleActiveAcademyIndex= (index) => {
+        setActiveAcademyIndex (index)
+
+        for (let i = 0; i < akademi.length; i++){
+            if (i === index){
+                setActiveAcademy (akademi[i].name)
+            }
+        }
     }
     
     const handleActive = (tab, index) => {
@@ -339,12 +378,12 @@ const Beranda = () => {
                     // console.log (showDetail)
                 }
 
-                {
+                {/* {
                     show ?
                         console.log (show)
                     :
                         console.log ("no show")
-                }
+                } */}
 
                 <Navigationbar />
 
@@ -399,8 +438,8 @@ const Beranda = () => {
                                         return (
                                             <SplideSlide key={i}>
                                                 {
-                                                    activeAcademy === i ?
-                                                        <div className="d-flex align-items-center h-100" style={{marginLeft:"10vh", cursor:"pointer"}} onClick={() => handleActiveAcademy(i)}>
+                                                    activeAcademyIndex === i ?
+                                                        <div className="d-flex align-items-center h-100" style={{marginLeft:"10vh", cursor:"pointer"}} onClick={() => handleActiveAcademyIndex(i)}>
                                                             <div className="row bg-secondary text-white rounded" style={{height:"10vh", width:"37vh"}}>
                                                                 <h1 className="mb-0 mr-2 fw-700 col-5 py-5 d-flex align-self-center" >{el.slug}</h1>
                                                                 <div className="col-6 d-flex align-items-center ">
@@ -411,7 +450,7 @@ const Beranda = () => {
                                                             </div>
                                                         </div>
                                                     :
-                                                        <div className="d-flex align-items-center h-100" style={{marginLeft:"10vh", cursor:"pointer"}} onClick={() => handleActiveAcademy(i)}>
+                                                        <div className="d-flex align-items-center h-100" style={{marginLeft:"10vh", cursor:"pointer"}} onClick={() => handleActiveAcademyIndex(i)}>
                                                             <div className="row rounded text-muted border " style={{height:"10vh", width:"37vh"}}>
                                                                 <h1 className="mb-0 mr-2 fw-700 col-5 py-5 d-flex align-self-center">{el.slug}</h1>
                                                                 <div className="col-6 d-flex align-items-center ">
@@ -434,7 +473,7 @@ const Beranda = () => {
                 }
                     
                 {/* Tema */}
-                {/* {
+                {
                     tema  && pelatihan && show ?
                         
                         tema.map ((el, i) => {
@@ -461,13 +500,13 @@ const Beranda = () => {
                                         {
                                             
                                             pelatihan.map ((row, ind) => {
-                                                console.log ("test1")
+                                                // console.log ("test1")
                                                 // console.log ("render ulang")
                                                 return (
                                                     show[i].pelatihan[ind].showDetail === false ?
                                                         <Card style={{ width: '30rem' }} className="shadow" key={ind} onMouseEnter={() => handleMouseEnter(i, ind)} onMouseLeave={() => handleMouseLeave(i, ind)}>
 
-                                                            <div className="col-12 mt-3 d-flex flex-row  justify-content-between" style={{position:"absolute"}}>
+                                                            {/* <div className="col-12 mt-3 d-flex flex-row  justify-content-between" style={{position:"absolute"}}>
                                                                 <Badge bg="light">
                                                                     <div className="text-info mt-1">
                                                                         Pelatihan {row.metode_pelatihan}
@@ -475,26 +514,14 @@ const Beranda = () => {
                                                                 </Badge>
 
                                                                 {
-                                                                    show[i].pelatihan[ind].hover === true ?
-                                                                        <div>
-                                                                            <Button className="btn btn-white py-1 pl-2 pr-1 rounded-circle mr-2">
-                                                                                <i className="ri-share-line" />
-                                                                            </Button>
-                                                                            <Button className="btn btn-white py-1 pl-2 pr-1 mr-2 rounded-circle">
-                                                                                <i className="ri-heart-line" />
-                                                                            </Button>
-                                                                        </div>
-                                                                    :
-                                                                        <div>
-                                                                            <h1 className="text-white">Fail</h1>
-                                                                        </div>
-                                                                }
-
-                                                                {
-                                                                    console.log (show[i].pelatihan[ind].hover)
+                                                                    renderCard(show[i].pelatihan[ind].hover)
                                                                 }
                                                                 
-                                                            </div>
+                                                            </div> */}
+
+                                                            {
+                                                                renderShare(row.metode_pelatihan, show[i].pelatihan[ind].hover)
+                                                            }
                                                             
                                                             <div>
                                                                 <Card.Img 
@@ -540,15 +567,18 @@ const Beranda = () => {
                                                                     style={{height:"2px", backgroundColor:"#ADB5BD"}}
                                                                 >
                                                                 </div>
-
-                                                                <div className="d-flex align-content-center">
+                                                                
+                                                                {
+                                                                    renderButton()
+                                                                }
+                                                                {/* <div className="d-flex align-content-center">
                                                                     <i className="ri-time-line mr-2"></i>
                                                                     <span className="mt-1">Registrasi: {new Date (row.pendaftaran_mulai).toLocaleDateString("en-GB")} - {new Date (row.pendaftaran_selesai).toLocaleDateString("en-GB")}</span>
                                                                 </div>
                                                                 <div className="d-flex align-content-center">
                                                                     <i className="ri-group-line mr-2"></i>
                                                                     <span className="mt-1">Kuota {row.kuota_peserta} Peserta</span>
-                                                                </div>
+                                                                </div> */}
                                                             </Card.Body>
                                                         </Card>
                                                     :
@@ -565,9 +595,7 @@ const Beranda = () => {
                        
                     :
                         null
-                } */}
-                
-                <CardsBeranda />
+                }                
 
                 <div className="col-12 text-center my-5">
                     <button className="btn btn-outline-info rounded-pill ">
