@@ -503,7 +503,7 @@ const EditVideo = ({ token }) => {
                                         {simpleValidator.current.message(
                                             "judul_video",
                                             judul_video,
-                                            "required||min:5|max:50",
+                                            "required||min:5|max:200",
                                             { className: "text-danger" }
                                         )}
                                     </div>
@@ -513,7 +513,7 @@ const EditVideo = ({ token }) => {
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
                                     <div className="col-sm-12">
                                         <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("isi_video")} />
-                                        {simpleValidator.current.message("isi_video", isi_video, "required|max:160|min:5", { className: "text-danger" })}
+                                        {simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:5000", { className: "text-danger" })}
                                         {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                     </div>
                                 </div>

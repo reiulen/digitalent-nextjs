@@ -543,7 +543,7 @@ const TambahGaleri = ({ token }) => {
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
-                                        "required|min:5|max:50",
+                                        "required|min:5|max:200",
                                         { className: "text-danger" }
                                     )}
                                 </div>
@@ -556,7 +556,7 @@ const TambahGaleri = ({ token }) => {
                                     {simpleValidator.current.message(
                                         "judul",
                                         judul,
-                                        "required|min:5|max:50",
+                                        "required|min:5|max:5000",
                                         { className: "text-danger" }
                                     )}
                                     {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}

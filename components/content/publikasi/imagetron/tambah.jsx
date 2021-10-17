@@ -321,7 +321,7 @@ const TambahImagetron = ({ token }) => {
                   {simpleValidator.current.message(
                     "judul",
                     judul,
-                    "required|min:5|max:50",
+                    "required|min:5|max:200",
                     { className: "text-danger" }
                   )}
                 </div>

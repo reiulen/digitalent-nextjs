@@ -665,14 +665,21 @@ const EditGaleri = ({ token }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Masukkan Judul disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} />
+                                    <input type="text" className="form-control" placeholder="Masukkan Judul disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_galeri")} />
+                                    {simpleValidator.current.message(
+                                        "judul_galeri",
+                                        judul_galeri,
+                                        "required|min:5|max:200",
+                                        { className: "text-danger" }
+                                    )}
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Deskripsi Galeri</label>
                                 <div className="col-sm-12">
-                                    <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri}></textarea>
+                                    <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri}  onBlur={() => simpleValidator.current.showMessageFor("isi_galleri")}></textarea>
+                                    {simpleValidator.current.message("isi_galleri", isi_galleri, "required|min:5|max:5000", { className: "text-danger" })}
                                     {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>

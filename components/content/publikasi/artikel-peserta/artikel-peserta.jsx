@@ -9,6 +9,7 @@ import DatePicker from 'react-datepicker'
 import { addDays } from 'date-fns'
 import Swal from 'sweetalert2'
 import moment from "moment";
+import styles from "../../../../styles/previewGaleri.module.css";
 
 import PageWrapper from '../../../wrapper/page.wrapper'
 import CardPage from '../../../CardPage'

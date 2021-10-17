@@ -107,7 +107,7 @@ const EditKategori = ({token}) => {
                                         onChange={(e) => setNamaKategori(e.target.value)}
                                         onBlur={() => simpleValidator.current.showMessageFor("nama kategori")}
                                     />
-                                    {simpleValidator.current.message("nama kategori", nama, "required|min:5|max:25|string", { className: "text-danger" })}
+                                    {simpleValidator.current.message("nama kategori", nama, "required|min:5|max:200|string", { className: "text-danger" })}
                                 </div>
                             </div>
 

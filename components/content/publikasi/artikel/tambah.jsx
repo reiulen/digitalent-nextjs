@@ -447,7 +447,7 @@ const TambahArtikel = ({ token }) => {
                     {simpleValidator.current.message(
                       "judul_artikel",
                       judul_artikel,
-                      "required|min:5|max:50",
+                      "required|min:5|max:200",
                       { className: "text-danger" }
                     )}
                   </div>
@@ -745,7 +745,7 @@ const TambahArtikel = ({ token }) => {
                     }
                   </div>
 
-                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 text-muted">
+                  <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                     <p>
                       Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.
                     </p>

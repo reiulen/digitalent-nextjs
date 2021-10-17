@@ -195,7 +195,7 @@ const TambahFaq = ({token}) => {
                                         onChange={(e) => setJudulPertanyaan(e.target.value)}
                                         onBlur={() => simpleValidator.current.showMessageFor("judul pertanyaan")}
                                     />
-                                    {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:50", { className: "text-danger" })}
+                                    {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:200", { className: "text-danger" })}
                                 </div>
                             </div>
 
