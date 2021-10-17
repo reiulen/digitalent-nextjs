@@ -57,7 +57,6 @@ export const getAllPage = (token) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PAGE_FAIL,
-      payload: error.message,
     });
   }
 };

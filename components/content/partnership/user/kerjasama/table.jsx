@@ -349,7 +349,7 @@ const Table = ({token}) => {
             ) : isProfile === false ? (
               <Link
                 href={{
-                  pathname:"/partnership/user/profile-lembaga/input-profile",
+                  pathname:"/partnership/user/profile-lembaga",
                   query:{isProfile:false},
                 }}
                 passHref
@@ -630,18 +630,20 @@ const Table = ({token}) => {
                                 </td>
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
-                                    {moment(items.period_date_start).format(
-                                      "DD MMMM YYYY"
-                                    )}
-                                    {/* moment().format('MMMM Do YYYY, h:mm:ss a'); */}
-                                    {/* H, HHss     */}
+                                   {items.period_date_start === null
+                                      ? "-"
+                                      : moment(items.period_date_start).format(
+                                          "DD MMMM YYYY"
+                                        )}
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
                                   <p className="p-part-t">
-                                    {moment(items.period_date_end).format(
-                                      "DD MMMM YYYY"
-                                    )}
+                                    {items.period_date_end === null
+                                      ? "-"
+                                      : moment(items.period_date_end).format(
+                                          "DD MMMM YYYY"
+                                        )}
                                   </p>
                                 </td>
                                 <td className="align-middle text-left">
@@ -998,7 +1000,7 @@ const Table = ({token}) => {
                                     "pengajuan-review" ? (
                                       <Link
                                         href={{
-                                          pathname:"/partnership/user/kerjasama/review-kerjasama-1",
+                                          pathname:"/partnership/user/kerjasama/review-kerjasama",
                                           query:{id:items.id}
                                         }}
                                         passHref
@@ -1015,7 +1017,7 @@ const Table = ({token}) => {
                                       <Link
 
                                       href={{
-                                        pathname:"/partnership/user/kerjasama/review-kerjasama-2",
+                                        pathname:"/partnership/user/kerjasama/review-list-kerjasama",
                                         query:{id:items.id}
                                       }}
 
@@ -1036,7 +1038,7 @@ const Table = ({token}) => {
 
 
                                         href={{
-                                          pathname:"/partnership/user/kerjasama/pembahasan-2",
+                                          pathname:"/partnership/user/kerjasama/pembahasan",
                                           query:{id:items.id}
                                         }}
 
@@ -1063,7 +1065,7 @@ const Table = ({token}) => {
 
 
                                         href={{
-                                          pathname:"/partnership/user/kerjasama/pembahasan-2",
+                                          pathname:"/partnership/user/kerjasama/pembahasan",
                                           query:{id:items.id}
                                         }}
 

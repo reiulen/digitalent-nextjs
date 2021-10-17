@@ -11,7 +11,7 @@ const DetailDataKerjasamaById = dynamic(
   { loading: () => <LoadingPage />, ssr: false }
 );
 
-export default function DetailDataKerjasamaPage(props) {
+export default function subDetail(props) {
   const session = props.session.user.user.data;
   return (
     <>
@@ -40,3 +40,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
       };
     }
 );
+
+// import React from "react";
+
+// export default function index() {
+//   return <div>test</div>;
+// }

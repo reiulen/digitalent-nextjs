@@ -33,6 +33,7 @@ export const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         status: statuslist.error,
+        error: null,
       };
 
     default:

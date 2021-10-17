@@ -304,7 +304,7 @@ export const dropdownProvinsi = (token) => async (dispatch) => {
       },
     };
     const { data } = await axios.get(
-      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/33`,
+      process.env.END_POINT_API_SITE_MANAGEMENT + `api/reference/detail/10`,
       config
     );
     dispatch({

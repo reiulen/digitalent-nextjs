@@ -52,6 +52,7 @@ export const allTandaTanganReducer = (state = initialState, action) => {
       return {
         ...state,
         status: statuslist.error,
+        error: null,
       };
     case RELOAD_TABLE:
       return {

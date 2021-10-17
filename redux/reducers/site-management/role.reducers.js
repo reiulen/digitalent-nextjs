@@ -36,7 +36,7 @@ export const allRolesReducer = (state = { role: [] }, action) => {
     case ROLE_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
     case CLEAR_ERRORS:
