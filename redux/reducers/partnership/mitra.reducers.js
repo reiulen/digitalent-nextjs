@@ -79,7 +79,7 @@ export const allMitraReducer = (state = initialState, action) => {
       return {
         ...state,
         status: statuslist.error,
-        error: action.payload,
+        error: null,
       };
 
     case SEARCH_BY_KEY:

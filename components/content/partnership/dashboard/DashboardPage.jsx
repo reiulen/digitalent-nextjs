@@ -20,6 +20,7 @@ import axios from "axios";
 export default function DashboardPage({ token }) {
   let dispatch = useDispatch();
   const allDashboard = useSelector((state) => state.allDashboard);
+  console.log("allDashboard",allDashboard)
   const [user, setUser] = useState("")
 
   const colors = ["#215480", "#4299E1", "#357AB4"];
@@ -66,7 +67,7 @@ export default function DashboardPage({ token }) {
     }
     }
     fetchDashboards();
-    dispatch(fetchDashboard(token));
+    // dispatch(fetchDashboard(token));
     getSession().then((session) => {
       setUser(session.user.user.data.user);
     });
