@@ -503,7 +503,7 @@ const EditVideo = ({ token }) => {
                                         {simpleValidator.current.message(
                                             "judul_video",
                                             judul_video,
-                                            "required||min:5|max:50",
+                                            "required||min:5|max:200",
                                             { className: "text-danger" }
                                         )}
                                     </div>
@@ -513,7 +513,7 @@ const EditVideo = ({ token }) => {
                                     <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Deskripsi</label>
                                     <div className="col-sm-12">
                                         <textarea className="form-control" rows="10" placeholder="Deskripsi video" value={isi_video} onChange={e => setIsiVideo(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("isi_video")} />
-                                        {simpleValidator.current.message("isi_video", isi_video, "required|max:160|min:5", { className: "text-danger" })}
+                                        {simpleValidator.current.message("isi_video", isi_video, "required|min:5|max:5000", { className: "text-danger" })}
                                         {/* <small className='text-danger'>*Minimum 50 Karakter dan Maksimal 160 Karakter</small> */}
                                     </div>
                                 </div>
@@ -580,7 +580,7 @@ const EditVideo = ({ token }) => {
                                         }
                                     </div>
 
-                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
+                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                                         <p>
                                             Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                         </p>
@@ -622,7 +622,7 @@ const EditVideo = ({ token }) => {
                                         <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                             <option selected disabled value=''>-- Video --</option>
                                             {!kategori || (kategori && kategori.length === 0) ? (
-                                                <option value="">Data kosong</option>
+                                                <option value="">Data Tidak Ditemukan</option>
                                             ) : (
                                                 kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                     return (

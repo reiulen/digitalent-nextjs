@@ -251,16 +251,36 @@ const EditGaleri = ({ token }) => {
                 Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
             } else {
                 list[index].imageFile = e.target.files[0];
-                list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
-                list[index].imageName = e.target.files[0].name;
-                console.log("List :", list)
-                setImage(list);
+                const reader = new FileReader();
+
+                reader.onload = () => {
+                    if (reader.readyState === 2) {
+                        list[index].imagePreview = reader.result;
+                        list[index].imageBase64 = reader.result;
+                        // list[index].imageFile = e.target.files[0];
+                        // list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+                        // list[index].imageName = e.target.files[0].name;
+                        // console.log("List :", list)
+                        setImage(list);
+                    }
+                };
 
                 console.log("IMAGE :", image);
-                // reader.readAsDataURL(e.target.files[0]);
-                // list[index].imageName = e.target.files[0].name;
-                // setImage(list);
+                reader.readAsDataURL(e.target.files[0]);
+                list[index].imageName = e.target.files[0].name;
             }
+            // } else {
+            //     list[index].imageFile = e.target.files[0];
+            //     list[index].imagePreview = URL.createObjectURL(e.target.files[0]);
+            //     list[index].imageName = e.target.files[0].name;
+            //     console.log("List :", list)
+            //     setImage(list);
+
+            //     console.log("IMAGE :", image);
+            //     // reader.readAsDataURL(e.target.files[0]);
+            //     // list[index].imageName = e.target.files[0].name;
+            //     // setImage(list);
+            // }
             // if (e.target.files[0].size > 5000000) {
             //     e.target.value = null;
             //     Swal.fire("Oops !", "Gambar maksimal 5 MB.", "error");
@@ -365,29 +385,14 @@ const EditGaleri = ({ token }) => {
             list.splice(index, 1);
             setImage(list);
             setTotalImage((totalImage) - 1)
-
-            // for (let i = 0; i < deleteImg.length; i++) {
-    
-                // temps.push(image[i].imageBase64)
-                setDeleteImg([{
+            setDeleteImg([
+                ...deleteImg,
+                {
                     gambar: gambar[index].gambar,
                     id: index
-                }])
-                // temps.push(image[i])
-    
-                // if (flag === image.length) {
-                //     handleData(temps, updateGaleri)
-                // }
-            // }
-
-            // deleteImg.push(list)
-            // setDeleteImg(list, { gambar: gambar, id: id });
-            // const list = [...image];
-            // list.splice(index, 1);
-            // setImage(list);
-            // setTotalImage((totalImage) - 1)
+                }
+            ])
         }
-        // console.log("Delete :", deleteImg)
     };
 
     const onAddImage = () => {
@@ -471,7 +476,6 @@ const EditGaleri = ({ token }) => {
         if (success) {
             dispatch({
                 type: UPDATE_GALERI_RESET,
-                // type: NEW_GALERI_RESET,
             });
         }
 
@@ -489,11 +493,12 @@ const EditGaleri = ({ token }) => {
         for (let i = 0; i < image.length; i++) {
             flag += 1
 
-            // temps.push(image[i].imageBase64)
-            temps.push(image[i])
+            // temps.push(image[i])
+            temps.push(image[i].imageBase64)
 
             if (flag === image.length) {
                 handleData(temps, updateGaleri)
+                // console.log("Data Temp :", image)
             }
         }
         console.log("Temp :", temps)
@@ -660,14 +665,21 @@ const EditGaleri = ({ token }) => {
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-2 col-form-label font-weight-bolder">Judul</label>
                                 <div className="col-sm-12">
-                                    <input type="text" className="form-control" placeholder="Masukkan Judul disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} />
+                                    <input type="text" className="form-control" placeholder="Masukkan Judul disini" value={judul} onChange={(e) => setJudulGaleri(e.target.value)} onBlur={() => simpleValidator.current.showMessageFor("judul_galeri")} />
+                                    {simpleValidator.current.message(
+                                        "judul_galeri",
+                                        judul_galeri,
+                                        "required|min:5|max:200",
+                                        { className: "text-danger" }
+                                    )}
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="staticEmail" className="col-sm-4 col-form-label font-weight-bolder">Deskripsi Galeri</label>
                                 <div className="col-sm-12">
-                                    <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri}></textarea>
+                                    <textarea className='form-control' placeholder='isi deskripsi foto disini' name="deskripsi" id="" rows="10" onChange={e => setIsiGaleri(e.target.value)} value={isi_galleri}  onBlur={() => simpleValidator.current.showMessageFor("isi_galleri")}></textarea>
+                                    {simpleValidator.current.message("isi_galleri", isi_galleri, "required|min:5|max:5000", { className: "text-danger" })}
                                     {/* <small className='text-danger'>*Maksimal 160 Karakter</small> */}
                                 </div>
                             </div>
@@ -774,7 +786,7 @@ const EditGaleri = ({ token }) => {
                                                 </button>
                                             </div>
 
-                                            <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
+                                            <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                                                 <p>Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar.</p>
                                             </div>
                                         </div>
@@ -790,7 +802,7 @@ const EditGaleri = ({ token }) => {
                                     <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                         <option selected disabled value=''>-- Galeri --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
+                                            <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                 return (

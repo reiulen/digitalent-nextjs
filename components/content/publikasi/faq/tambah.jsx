@@ -180,7 +180,7 @@ const TambahFaq = ({token}) => {
                 {loading ? <LoadingPage loading={loading} /> : ""}
                 <div className="card card-custom card-stretch gutter-b">
                     <div className="card-header">
-                        <h3 className="card-title font-weight-bolder text-dark">Tambah FAQ</h3>
+                        <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Tambah FAQ</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={onSubmit}>
@@ -195,7 +195,7 @@ const TambahFaq = ({token}) => {
                                         onChange={(e) => setJudulPertanyaan(e.target.value)}
                                         onBlur={() => simpleValidator.current.showMessageFor("judul pertanyaan")}
                                     />
-                                    {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:50", { className: "text-danger" })}
+                                    {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:200", { className: "text-danger" })}
                                 </div>
                             </div>
 
@@ -229,7 +229,7 @@ const TambahFaq = ({token}) => {
                                     >
                                         <option value="" disabled selected>-- FAQ --</option>
                                         {!kategori || (kategori && kategori.length === 0) ? (
-                                            <option value="">Data kosong</option>
+                                            <option value="">Data Tidak Ditemukan</option>
                                         ) : (
                                             kategori &&
                                             kategori.kategori &&
