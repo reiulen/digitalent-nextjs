@@ -63,6 +63,7 @@ export const allApiReducer = (state = initialState, action) => {
       return {
         ...state,
         status: statuslist.error,
+        error: null,
       };
 
     case SEARCH_COORPORATION:
@@ -112,7 +113,7 @@ export const deleteApiReducer = (state = {}, action) => {
     case DELETE_API_FAIL:
       return {
         loading: false,
-        error: action.payload,
+        error: null,
       };
 
     case CLEAR_ERRORS:
