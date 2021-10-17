@@ -12,7 +12,7 @@ import Breadcrumb from "../breadcrumb";
 
 // import Cookies from "js-cookie";
 
-const SubtansiUser = () => {
+const SubtansiUser = ({ token }) => {
   const router = useRouter();
   const [data] = useState(random_subtance_question_detail);
   const [answer, setAnswer] = useState("");
@@ -73,7 +73,7 @@ const SubtansiUser = () => {
   // }
   useEffect(() => {
     console.log(random_subtance_question_detail);
-    console.log(data);
+    console.log(token);
     // window.onload = function () {
     //   var fiveMinutes = 1 * 60,
     //     display = document.querySelector("#time");

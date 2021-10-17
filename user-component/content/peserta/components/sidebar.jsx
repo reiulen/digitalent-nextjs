@@ -1,21 +1,31 @@
-import { Nav } from "react-bootstrap";
+import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
+import "react-pro-sidebar/dist/css/styles.css";
 
 const Sidebar = () => {
   return (
     <>
-      <Nav variant="tabs" defaultActiveKey="/home">
-        <Nav.Item>
-          <Nav.Link href="/home">Active</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="link-1">Option 2</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="disabled" disabled>
-            Disabled
-          </Nav.Link>
-        </Nav.Item>
-      </Nav>
+      <ProSidebar>
+        <Menu iconShape="square">
+          <MenuItem>PLATFORM</MenuItem>
+          <SubMenu title="Digital Talent Schoolarship">
+            <MenuItem>Component 1</MenuItem>
+            <MenuItem>Component 2</MenuItem>
+            <MenuItem>Component 1</MenuItem>
+            <MenuItem>Component 2</MenuItem>
+            <MenuItem>Component 1</MenuItem>
+            <MenuItem>Component 2</MenuItem>
+          </SubMenu>
+          <SubMenu title="SIMONAS">
+            <MenuItem>Component 1</MenuItem>
+            <MenuItem>Component 2</MenuItem>
+          </SubMenu>
+          <SubMenu title="Beasiswa">
+            <MenuItem>Component 1</MenuItem>
+            <MenuItem>Component 2</MenuItem>
+          </SubMenu>
+        </Menu>
+      </ProSidebar>
+      ;
     </>
   );
 };
