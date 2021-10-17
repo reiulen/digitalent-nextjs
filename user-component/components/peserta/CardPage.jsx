@@ -5,7 +5,7 @@ import Link from "next/link";
 const CardPage = ({ backgroundImage, background, color, link, text, desc }) => {
   return (
     <>
-      <Col md={6} className="mb-8">
+      <Col md={6} className="mb-4 px-2">
         <Card
           className="rounded-xl h-100"
           style={{

@@ -34,9 +34,9 @@
 }
 
 .status_mitra_close {
-  background: #e6fff7;
+  background: #ffe6e6;
   border-radius: 40px;
-  color: #00996a;
+  color: #990000;
   font-size: 12px;
   padding: 4px 12px;
 }
@@ -51,4 +51,42 @@
   font-size: 13px;
   color: #6c6c6c;
   line-height: 21px;
+}
+
+.btn_quick_view {
+  background-color: #ffffff !important;
+  border: 1px solid #007cff !important;
+  color: #007cff !important;
+  box-sizing: border-box;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.btn_quick_view:hover {
+  background-color: #007cff !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.badge_card {
+  background-color: #e6f2ff;
+  color: #0063cc;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.wishlist_card {
+  border-radius: 50%;
+  font-size: 20px;
+  width: 32px;
+  height: 32px;
+}
+
+.kunjungi_link {
+  font-size: 14px;
+  color: #203e80 !important;
+  cursor: pointer;
 }
