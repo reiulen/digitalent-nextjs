@@ -57,7 +57,6 @@ export const getAllDataReference = (token) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: DATA_REFERENCE_FAIL,
-      payload: error.response.data.message,
     });
   }
 };

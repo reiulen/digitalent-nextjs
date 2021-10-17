@@ -98,7 +98,6 @@ const Navigationbar = () => {
                     aria-expanded="false"
                   >
                     Pusat Informasi
-                    {/* <i className="ri-arrow-right-s-line text-dark"> </i> */}
                   </button>
                   <div className="dropdown-menu ml-3">
                     <a className="dropdown-item navdropdown-child" href="#">
@@ -121,7 +120,6 @@ const Navigationbar = () => {
                 >
                   Penyelenggara
                 </NavDropdown.Item>
-                {/* <NavDropdown.Item href="#action/3.4" className="navdropdown-child">Rilis Media</NavDropdown.Item> */}
                 <div className="btn-group dropright">
                   <button
                     type="button"

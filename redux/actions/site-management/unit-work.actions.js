@@ -57,7 +57,6 @@ export const getAllUnitWork = (token) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UNIT_WORK_FAIL,
-      payload: error.response.data.message,
     });
   }
 };
