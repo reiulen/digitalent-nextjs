@@ -280,7 +280,6 @@ export default function TambahMasterSertifikat({ token }) {
       cacheBust: true,
       canvasWidth: 842,
       canvasHeight: 595,
-      skipAutoScale: true,
     });
     return data;
   };
@@ -361,12 +360,14 @@ export default function TambahMasterSertifikat({ token }) {
           formData.append(`signature_certificate_image_syllabus[${i}]`, item);
         });
         const data = await convertDivToPng(divReference.current); // convert bg 1
+
         formData.append("certificate_result", data);
 
         if (certificate_type == "2 lembar") {
           const dataSyllabus = await convertDivToPng(
             divReferenceSilabus.current
           ); //convert bg 2
+
           formData.append("certificate_result_syllabus", dataSyllabus);
         }
 
@@ -469,7 +470,7 @@ export default function TambahMasterSertifikat({ token }) {
                 className="border-primary border col-lg-8 col-12 position-relative"
                 style={{ fontSize: "100%" }}
               >
-                <div className="p-0" ref={divReference}>
+                <div className="p-0 col-12" ref={divReference}>
                   {background ? (
                     <Image
                       src={background}
@@ -480,7 +481,10 @@ export default function TambahMasterSertifikat({ token }) {
                   ) : (
                     ""
                   )}
-                  <div className="row align-items-center zindex-1">
+                  <div
+                    className="row align-items-center m-0"
+                    style={{ width: "100%" }}
+                  >
                     <div className="position-relative">
                       <div
                         className="m-6 text-center d-flex align-items-center px-4 border-2"
@@ -502,7 +506,7 @@ export default function TambahMasterSertifikat({ token }) {
                       <div className="my-2">
                         <span
                           className="mx-2 px-2 px-10 w-100 font-weight-bold"
-                          style={{ fontSize: "150%" }}
+                          style={{ fontSize: "150%", height: "29px" }}
                         >
                           {namaPeserta ? namaPeserta : ""}
                         </span>

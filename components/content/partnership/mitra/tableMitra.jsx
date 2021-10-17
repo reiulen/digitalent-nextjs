@@ -375,13 +375,19 @@ const Table = ({ token }) => {
                           </td>
                           <td className="align-middle text-left">
                             <div className="d-flex align-items-center">
-                              <button
+
+
+                              <Link href={{
+                                pathname:"/partnership/mitra/detail-data-kerjasama-mitra",
+                                query:{id:item.id}
+                              }}>
+                              <a
                                 className="btn btn-link-action bg-blue-secondary position-relative btn-delete"
-                                onClick={() =>
-                                  router.push(
-                                    `/partnership/mitra/detail/${item.id}`
-                                  )
-                                }
+                                // onClick={() =>
+                                //   router.push(
+                                //     `/partnership/mitra/detail/${item.id}`
+                                //   )
+                                // }
                               >
                                 <IconEye
                                   width="14"
@@ -391,7 +397,11 @@ const Table = ({ token }) => {
                                 <div className="text-hover-show-hapus">
                                   Detail
                                 </div>
-                              </button>
+                              </a>
+                              </Link>
+
+
+
 
                               <button
                                 className="btn btn-link-action bg-blue-secondary mx-3 position-relative btn-delete"

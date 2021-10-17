@@ -116,7 +116,7 @@ const DetailDokumenKerjasama = ({ token }) => {
               }
             );
             router.push({
-              pathname: `/partnership/user/kerjasama/review-kerjasama-1`,
+              pathname: `/partnership/user/kerjasama/review-kerjasama`,
               query: { successSubmitKerjasama: true, id: data.data.id },
             });
           } catch (error) {
@@ -234,19 +234,14 @@ const DetailDokumenKerjasama = ({ token }) => {
           </div>
 
           <div className="card-body">
-            <div className="row mt-8 mb-10">
-              <div className="col-2 p-0">
+            <div className="row mt-8 mb-10 position-relative">
+              <div className="col-2 p-0 relative-progress">
                 <div className="progress-items">
                   {/* <div className="line-progress"></div> */}
                   <div className="circle-progress active-circle">
-                    <span
-                      className="title-progress"
-                    >
+                    <span className="title-progress active">
                       Submit Kerjasama
                     </span>
-
-                   
-
                   </div>
                 </div>
               </div>
@@ -396,16 +391,11 @@ const DetailDokumenKerjasama = ({ token }) => {
                           Tahun
                         </button>
                       </div>
-                      
                     </div>
                   </div>
                 </div>
               </div>
-              {error.period ? (
-                        <p className="error-text">{error.period}</p>
-                      ) : (
-                        ""
-                      )}
+              {error.period ? <p className="error-text">{error.period}</p> : ""}
               {/* looping */}
               {allCooperationUser.singleCooporationSelect.length === 0
                 ? ""

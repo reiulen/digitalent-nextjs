@@ -24,8 +24,8 @@
 }
 
 .a4-paper {
-    height: 21cm/2;
-    width: 29.7cm/2;
+    height: 595px !important;
+    width: 842px !important;
 }
 
 .a4-font-header {
@@ -36,12 +36,16 @@
     font-size: 3.8vw;
 }
 
-.responsive-margin {
-    margin-top: 45px;
+.responsive-margin-peserta {
+    top: 38px !important;
 }
 
-.responsive-font-size {
-    font-size: 10px;
+.responsive-margin-publish {
+    top: 42px
+}
+
+.responsive-font-size-peserta {
+    font-size: 8px !important
 }
 
 .responsive-width {
@@ -51,12 +55,16 @@
 
 /* tablet */
 @media(min-width: 768px) {
-    .responsive-margin {
-        margin-top: 130px;
+    .responsive-margin-peserta {
+        top: 120px !important
     }
 
-    .responsive-font-size {
-        font-size: 18px;
+    .responsive-font-size-peserta {
+        font-size: 16px !important
+    }
+
+    .responsive-margin-publish {
+        top: 135px
     }
 }
 
@@ -79,23 +87,32 @@
         font-size: 0.75vw;
     }
 
-    .responsive-margin {
-        margin-top: 120px;
+    .responsive-margin-peserta {
+        top: 110px !important
     }
 
-    .responsive-font-size {
-        font-size: 22px;
+    .responsive-font-size-peserta {
+        font-size: 20px !important
     }
+
+    .responsive-margin-publish {
+        top: 125px;
+    }
+
 }
 
 /* normal */
 @media (min-width: 1200px) {
-    .responsive-margin {
-        margin-top: 150px;
+    .responsive-margin-peserta {
+        top: 135px !important
     }
 
-    .responsive-font-size {
-        font-size: 24px;
+    .responsive-font-size-peserta {
+        font-size: 24px !important
     }
 
+    .responsive-margin-publish {
+        /* margin-top: 135px !important; */
+        top: 155px !important;
+    }
 }

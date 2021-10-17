@@ -378,7 +378,7 @@ const EditBerita = ({ token }) => {
                     }
                     <div className="card card-custom card-stretch gutter-b">
                         <div className="card-header">
-                            <h3 className="card-title font-weight-bolder text-dark">Ubah Berita</h3>
+                            <h3 className="col-sm-4 card-title font-weight-bolder text-dark">Ubah Berita</h3>
                         </div>
                         <div className="card-body">
                             <form onSubmit={onSubmit}>
@@ -389,7 +389,7 @@ const EditBerita = ({ token }) => {
                                         {simpleValidator.current.message(
                                             "judul_berita",
                                             judul_berita,
-                                            "required|min:5|max:50",
+                                            "required|min:5|max:200",
                                             { className: "text-danger" }
                                         )}
                                     </div>
@@ -422,7 +422,7 @@ const EditBerita = ({ token }) => {
                                             {simpleValidator.current.message(
                                                 "isi_berita",
                                                 isi_berita,
-                                                "required|min:100|max:2500",
+                                                "required|min:100|max:12000",
                                                 { className: "text-danger" }
                                             )}
                                         </div>
@@ -491,7 +491,7 @@ const EditBerita = ({ token }) => {
                                         }
                                     </div>
 
-                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-3 text-muted">
+                                    <div className="mt-3 col-sm-6 col-md-6 col-lg-7 col-xl-3 text-muted">
                                         <p>
                                             Resolusi yang direkomendasikan adalah 1024 * 512. Fokus visual pada bagian tengah gambar
                                         </p>
@@ -531,7 +531,7 @@ const EditBerita = ({ token }) => {
                                         <select name="" id="" className='form-control' value={kategori_id} onChange={e => setKategoriId(e.target.value)} onBlur={e => { setKategoriId(e.target.value); simpleValidator.current.showMessageFor('kategori_id') }} >
                                             <option selected disabled value=''>-- Berita --</option>
                                             {!kategori || (kategori && kategori.length === 0) ? (
-                                                <option value="">Data kosong</option>
+                                                <option value="">Data Tidak Ditemukan</option>
                                             ) : (
                                                 kategori && kategori.kategori && kategori.kategori.map((row) => {
                                                     return (
