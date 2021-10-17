@@ -85,7 +85,7 @@ export const getRandomSubtanceQuestionDetail =
       if (training_id) link = link.concat(`&training_id=${training_id}`);
       if (category) link = link.concat(`&category=${category}`);
       if (theme_id) link = link.concat(`&theme_id=${theme_id}`);
-      // console.log(link);
+      console.log(token);
 
       const config = {
         headers: {
@@ -94,14 +94,13 @@ export const getRandomSubtanceQuestionDetail =
       };
 
       const { data } = await axios.get(link, config);
-      console.log(data);
 
       dispatch({
         type: SUBTANCE_QUESTION_RANDOM_DETAIL_SUCCESS,
         payload: data,
       });
     } catch (error) {
-      // console.log(error.response);
+      console.log(error.response.data);
       dispatch({
         type: SUBTANCE_QUESTION_RANDOM_DETAIL_FAIL,
         payload: error.message,
