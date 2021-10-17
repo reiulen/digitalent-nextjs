@@ -200,7 +200,7 @@ const EditFaq = ({token}) => {
                                                 onChange={(e) => setJudulPertanyaan(e.target.value)}
                                                 onBlur={() => simpleValidator.current.showMessageFor("judul pertanyaan")}
                                             />
-                                            {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:50", { className: "text-danger" })}
+                                            {simpleValidator.current.message("judul pertanyaan", judul, "required|min:5|max:200", { className: "text-danger" })}
                                         </div>
                                     </div>
 
@@ -231,7 +231,7 @@ const EditFaq = ({token}) => {
                                             >
                                                 <option value="" disabled selected>-- FAQ --</option>
                                                 {!kategori || (kategori && kategori.length === 0) ? (
-                                                    <option value="">Data kosong</option>
+                                                    <option value="">Data Tidak Ditemukan</option>
                                                 ) : (
                                                     kategori &&
                                                     kategori.kategori &&

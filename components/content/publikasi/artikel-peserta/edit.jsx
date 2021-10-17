@@ -483,7 +483,7 @@ const EditArtikel = ({token}) => {
                     {simpleValidator.current.message(
                       "judul_artikel",
                       judul_artikel,
-                      "required|max:50",
+                      "required|max:200",
                       { className: "text-danger" }
                     )}
                   </div>
@@ -534,7 +534,7 @@ const EditArtikel = ({token}) => {
                       {simpleValidator.current.message(
                         "isi_artikel",
                         isi_artikel,
-                        "required|min:100|max:2500",
+                        "required|min:100|max:12000",
                         { className: "text-danger" }
                       )}
                     </div>
