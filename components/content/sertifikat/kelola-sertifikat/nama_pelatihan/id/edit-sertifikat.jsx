@@ -487,7 +487,7 @@ export default function EditSertifikat({ token }) {
   return (
     <PageWrapper>
       {/* error START */}
-      {error ? (
+      {error || updateError ? (
         <div
           className="alert alert-custom alert-light-danger fade show mb-5"
           role="alert"
@@ -495,7 +495,7 @@ export default function EditSertifikat({ token }) {
           <div className="alert-icon">
             <i className="flaticon-warning"></i>
           </div>
-          <div className="alert-text">{error}</div>
+          <div className="alert-text">{error || updateError}</div>
           <div className="alert-close">
             <button
               type="button"

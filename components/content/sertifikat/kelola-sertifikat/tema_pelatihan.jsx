@@ -17,9 +17,11 @@ import IconFilter from "../../../assets/icon/Filter";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import Select from "react-select";
+import { useDispatch } from "react-redux";
 
 export default function NamaPelatihan({ token }) {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { loading, error, certificate } = useSelector(
     state => state.allCertificates
@@ -108,7 +110,13 @@ export default function NamaPelatihan({ token }) {
     });
     setDataTemaPelatihan(newArr);
   };
-  const handleResetError = () => {};
+  const handleResetError = () => {
+    if (error) {
+      dispatch(clearErrors);
+    }
+  };
+
+  console.log(certificate);
   return (
     <PageWrapper>
       {/* error START */}
